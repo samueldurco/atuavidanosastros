@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
+		<meta name="theme-color" content="#FCFBF8" />
+		<script>
+			(function (w, d, id) {
+				try {
+					if (w.localStorage.getItem('atv-analytics-consent') !== 'granted') return;
+					w.dataLayer = w.dataLayer || [];
+					w.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+					var first = d.getElementsByTagName('script')[0];
+					var script = d.createElement('script');
+					script.async = true;
+					script.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
+					first.parentNode.insertBefore(script, first);
+				} catch (_) {}
+			})(window, document, 'GTM-T576R9MR');
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<noscript
+			><p class="no-script-note">
+				JavaScript está desativado. O site continua legível; ferramentas interativas e analytics
+				permanecem inativos.
+			</p></noscript
+		>
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+@font-face { font-family: "Bodoni Moda"; src: url("/brand/fonts/bodoni-moda-variable.woff2") format("woff2-variations"); font-weight: 400 900; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("/brand/fonts/newsreader-variable.woff2") format("woff2-variations"); font-weight: 200 800; font-display: swap; }
+@font-face { font-family: "Onest"; src: url("/brand/fonts/onest-variable.woff2") format("woff2-variations"); font-weight: 100 900; font-display: swap; }
+
+:root {
+  color-scheme: light;
+  --atv-night-950:#031744; --atv-night-900:#032c68; --atv-orbit-800:#073f87; --atv-pleiades-600:#3176c2;
+  --atv-lunar-mist-300:#aebfdc; --atv-gold-700:#966b36; --atv-gold-500:#bf9153; --atv-gold-300:#dab97b;
+  --atv-gold-200:#e9d5aa; --atv-paper-0:#fff; --atv-ivory-25:#fcfbf8; --atv-frost-50:#f7f9fc;
+  --atv-cloud-100:#f1f4f8; --atv-silver-200:#e4e8ef; --atv-slate-500:#6d778b; --atv-ink-900:#0b1635;
+  --atv-surface-page:var(--atv-ivory-25); --atv-surface-card:var(--atv-paper-0); --atv-surface-muted:var(--atv-frost-50);
+  --atv-text-primary:var(--atv-ink-900); --atv-text-secondary:var(--atv-slate-500); --atv-border:var(--atv-silver-200);
+  --atv-action:var(--atv-orbit-800); --atv-action-hover:var(--atv-night-900); --atv-focus:var(--atv-pleiades-600);
+  --atv-font-display:"Bodoni Moda",Didot,Georgia,serif; --atv-font-editorial:"Newsreader",Georgia,serif; --atv-font-ui:"Onest","Segoe UI",sans-serif;
+  --atv-radius-xs:4px; --atv-radius-sm:8px; --atv-radius-md:12px; --atv-radius-lg:18px; --atv-radius-xl:24px; --atv-radius-pill:999px;
+  --atv-shadow-1:0 1px 2px rgb(3 23 68 / 6%),0 4px 12px rgb(3 23 68 / 5%);
+  --atv-motion-fast:180ms; --atv-motion-base:260ms; --atv-motion-slow:420ms;
+}
+
+[data-theme="night"] { color-scheme:dark; --atv-surface-page:var(--atv-night-950); --atv-surface-card:var(--atv-night-900); --atv-surface-muted:#061f4a; --atv-text-primary:var(--atv-frost-50); --atv-text-secondary:var(--atv-lunar-mist-300); --atv-border:rgb(174 191 220 / 22%); --atv-action:var(--atv-gold-200); --atv-action-hover:var(--atv-gold-300); }
+
+@media (prefers-reduced-motion:reduce) { :root { --atv-motion-fast:0ms; --atv-motion-base:0ms; --atv-motion-slow:0ms; } *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; transition-duration:.01ms!important; } }

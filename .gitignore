@@ -1,0 +1,30 @@
+# Dependencies and build output
+node_modules/
+.svelte-kit/
+build/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Local environments and secrets
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+
+# Provider state
+.wrangler/
+.cloudflare/
+.supabase/
+supabase/.branches/
+supabase/.temp/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+

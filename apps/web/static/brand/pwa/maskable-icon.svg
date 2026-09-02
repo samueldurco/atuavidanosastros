@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="title desc">
+  <title id="title">Ícone maskable ATV</title>
+  <desc id="desc">Ícone seguro para recorte de sistemas operacionais.</desc>
+  <rect width="128" height="128" fill="#031744"/>
+  <path d="M 64.00 28.00 C 65.30 41.40, 65.80 41.80, 74.00 43.00 C 65.80 44.20, 65.30 44.60, 64.00 58.00 C 62.70 44.60, 62.20 44.20, 54.00 43.00 C 62.20 41.80, 62.70 41.40, 64.00 28.00 Z" fill="#BF9153"/>
+  <path d="M 35 73 C 46 69, 56 73, 64 83 C 72 73, 82 69, 93 73" fill="none" stroke="#BF9153" stroke-width="6" stroke-linecap="round"/>
+  <path d="M 40 88 C 49 85, 57 89, 64 97 C 71 89, 79 85, 88 88" fill="none" stroke="#DAB97B" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

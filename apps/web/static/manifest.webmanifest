@@ -1,0 +1,36 @@
+{
+  "name": "A Tua Vida nos Astros",
+  "short_name": "ATV Astros",
+  "description": "Um atlas editorial para a vida.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#031744",
+  "theme_color": "#031744",
+  "icons": [
+    {
+      "src": "/brand/pwa/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/pwa/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/pwa/maskable-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/brand/pwa/maskable-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
+

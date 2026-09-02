@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title desc">
+  <title id="title">Símbolo monocromático navy</title>
+  <desc id="desc">Versão monocromática do símbolo Atlas Essencial.</desc>
+  <circle cx="128" cy="128" r="108" fill="none" stroke="#031744" stroke-width="6"/>
+  <path d="M 128.00 40.00 C 130.21 62.28, 131.06 62.96, 145.00 65.00 C 131.06 67.04, 130.21 67.72, 128.00 90.00 C 125.79 67.72, 124.94 67.04, 111.00 65.00 C 124.94 62.96, 125.79 62.28, 128.00 40.00 Z" fill="#031744"/>
+  <path d="M 51 125 C 78 116, 104 124, 128 151 C 152 124, 178 116, 205 125" fill="none" stroke="#031744" stroke-width="12" stroke-linecap="round"/>
+  <path d="M 55 148 C 81 141, 105 150, 128 175 C 151 150, 175 141, 201 148" fill="none" stroke="#031744" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="128" cy="202" r="4.5" fill="#031744"/>
+  <path d="M 83 201 H 113 M 143 201 H 173" stroke="#031744" stroke-width="2" stroke-linecap="round"/>
+</svg>

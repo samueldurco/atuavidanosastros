@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-labelledby="title desc">
+  <title id="title">A Tua Vida nos Astros - micro marca</title>
+  <desc id="desc">Micro marca otimizada para favicon e ícone de aplicativo.</desc>
+<rect width="128" height="128" rx="28" fill="#031744"/>
+  <path d="M 64.00 21.00 C 65.56 37.08, 66.16 37.56, 76.00 39.00 C 66.16 40.44, 65.56 40.92, 64.00 57.00 C 62.44 40.92, 61.84 40.44, 52.00 39.00 C 61.84 37.56, 62.44 37.08, 64.00 21.00 Z" fill="#BF9153"/>
+  <path d="M 27 75 C 41 70, 54 75, 64 87 C 74 75, 87 70, 101 75" fill="none" stroke="#BF9153" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 34 91 C 46 88, 56 92, 64 101 C 72 92, 82 88, 94 91" fill="none" stroke="#DAB97B" stroke-width="3.5" stroke-linecap="round"/>
+</svg>

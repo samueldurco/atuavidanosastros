@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /biblioteca
+Disallow: /entrar
+
+Sitemap: https://atuavidanosastros.com.br/sitemap.xml
