@@ -2,10 +2,45 @@
 	let city = $state('');
 	let date = $state('');
 	let time = $state('');
-	let submitted = $state(false);
-	function submit(event: SubmitEvent) {
+	let latitude = $state('');
+	let longitude = $state('');
+	let utcOffset = $state('-03:00');
+	let pending = $state(false);
+	let error = $state('');
+	let result = $state<{
+		sign: string;
+		degree: number;
+		midheaven: number;
+		status: string;
+		warning: string | null;
+		provenance: { provider: string; providerVersion: string };
+	} | null>(null);
+	async function submit(event: SubmitEvent) {
 		event.preventDefault();
-		submitted = true;
+		pending = true;
+		error = '';
+		result = null;
+		try {
+			const localDateTime = `${date}T${time}:00`;
+			const response = await fetch('/api/astrology/midheaven', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					localDateTime,
+					timezone: `UTC${utcOffset}`,
+					utcInstant: new Date(`${localDateTime}${utcOffset}`).toISOString(),
+					latitude: Number(latitude),
+					longitude: Number(longitude),
+					locationSource: 'user-provided-coordinates'
+				})
+			});
+			if (!response.ok) throw new Error();
+			result = await response.json();
+		} catch {
+			error = 'Não foi possível calcular com esses dados. Revise data, hora, fuso e coordenadas.';
+		} finally {
+			pending = false;
+		}
 	}
 </script>
 
@@ -25,8 +60,7 @@
 			<h1 class="h1">Bússola de Carreira</h1>
 			<p class="lead">
 				Uma orientação inicial sobre contribuição, ambientes de trabalho e tensões a observar. O
-				resultado completo aparecerá antes de qualquer pedido de cadastro quando o motor validado
-				entrar em operação.
+				cálculo acontece sem cadastro e sem persistir seus dados de nascimento.
 			</p>
 		</div>
 		<form class="card" onsubmit={submit}>
@@ -55,15 +89,61 @@
 					autocomplete="address-level2"
 					placeholder="Cidade, estado, país"
 				/></label
-			><button class="button" type="submit">Calcular minha bússola</button>{#if submitted}<div
-					class="result"
-					role="status"
+			>
+			<div class="coordinates">
+				<label
+					>Latitude<input
+						bind:value={latitude}
+						type="number"
+						min="-90"
+						max="90"
+						step="any"
+						required
+						placeholder="-23.5505"
+					/></label
+				><label
+					>Longitude<input
+						bind:value={longitude}
+						type="number"
+						min="-180"
+						max="180"
+						step="any"
+						required
+						placeholder="-46.6333"
+					/></label
 				>
-					<strong>Seus dados foram validados apenas neste navegador.</strong>
+			</div>
+			<small
+				>Use coordenadas decimais; leste é positivo e oeste é negativo. Fonte: coordenadas
+				informadas por você.</small
+			>
+			<label
+				>Deslocamento UTC<input
+					bind:value={utcOffset}
+					type="text"
+					pattern="[+-][0-2][0-9]:[0-5][0-9]"
+					required
+					aria-describedby="offset-help"
+				/></label
+			>
+			<small id="offset-help"
+				>Exemplo: Brasília costuma usar −03:00. Confirme o fuso histórico da data.</small
+			>
+			<button class="button" type="submit" disabled={pending}
+				>{pending ? 'Calculando…' : 'Calcular minha bússola'}</button
+			>
+			{#if error}<p class="result error" role="alert">{error}</p>{/if}
+			{#if result}<div class="result" role="status">
+					<strong>Seu Meio do Céu está em {result.sign}, a {result.degree.toFixed(2)}°.</strong>
 					<p>
-						O motor astrológico gratuito ainda está no gauntlet de precisão. Nenhum resultado
-						aproximado será inventado; avisaremos quando o cálculo reproduzível estiver liberado.
+						Use este ponto como pergunta sobre contribuição pública, direção e ofício — não como uma
+						sentença sobre sua carreira.
 					</p>
+					{#if result.warning}<p>{result.warning}</p>{/if}
+					<small
+						>Cálculo tropical/Placidus: {result.provenance.provider}
+						{result.provenance.providerVersion}. Dados não armazenados.</small
+					>
 				</div>{/if}
 		</form>
 	</div>
@@ -93,6 +173,14 @@
 		padding: 0.7rem;
 		background: var(--atv-surface-page);
 		color: var(--atv-text-primary);
+	}
+	.coordinates {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+	}
+	.error {
+		border-left-color: #a12b2b;
 	}
 	small {
 		color: var(--atv-text-secondary);

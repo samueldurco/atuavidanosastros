@@ -23,3 +23,16 @@ test('healthcheck e autenticação degradam com segurança sem configuração', 
 	await page.goto('/entrar');
 	await expect(page.getByRole('button', { name: 'Continuar com Google' })).toBeDisabled();
 });
+
+test('Bússola calcula Meio do Céu sem cadastro', async ({ page }) => {
+	await page.goto('/bussola-de-carreira');
+	await page.getByLabel('Data de nascimento').fill('2000-01-01');
+	await page.getByLabel('Hora de nascimento').fill('09:00');
+	await page.getByLabel('Cidade de nascimento').fill('São Paulo, Brasil');
+	await page.getByLabel('Latitude').fill('-23.5505');
+	await page.getByLabel('Longitude').fill('-46.6333');
+	await page.getByLabel('Deslocamento UTC').fill('-03:00');
+	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
+	await expect(page.getByText(/Seu Meio do Céu está em/)).toBeVisible();
+	await expect(page.getByText(/Dados não armazenados/)).toBeVisible();
+});
