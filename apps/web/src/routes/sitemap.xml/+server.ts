@@ -10,6 +10,7 @@ const publicPaths = [
 	'/sonhos',
 	'/meio-do-ceu',
 	'/bussola-de-carreira',
+	'/mapa-de-proposito',
 	'/vocacao-no-mapa-astral',
 	'/carreira-no-mapa-astral',
 	'/casa-10',

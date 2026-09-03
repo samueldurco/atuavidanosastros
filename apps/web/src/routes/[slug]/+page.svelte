@@ -21,7 +21,7 @@
 				dizer com clareza.
 			</p>
 		</div>
-		<a class="button" href={data.slug === 'proposito' ? '/bussola-de-carreira' : '/entrar'}
+		<a class="button" href={data.slug === 'proposito' ? '/mapa-de-proposito' : '/entrar'}
 			>{data.page.cta}</a
 		>
 	</div>
