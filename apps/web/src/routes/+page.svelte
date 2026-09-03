@@ -17,8 +17,8 @@
 <section class="hero">
 	<div class="container hero-grid">
 		<div>
-			<p class="eyebrow">A Tua Vida nos Astros</p>
-			<h1 class="display">Um atlas editorial para a vida.</h1>
+			<p class="eyebrow">Um atlas editorial para a vida</p>
+			<h1 class="display">Uma linguagem para olhar a vida com mais clareza.</h1>
 			<p class="lead">
 				Astrologia, Tarot e símbolos com método, contexto e responsabilidade — para reconhecer
 				padrões e escolher seus próximos passos com mais clareza.
@@ -38,12 +38,23 @@
 		</div>
 	</div>
 </section>
+<section class="trust" aria-label="Princípios da experiência">
+	<div class="container trust-grid">
+		<p>Cálculo quando há cálculo. Interpretação quando há interpretação.</p>
+		<ul>
+			<li>Sem fatalismo</li>
+			<li>Privacidade por padrão</li>
+			<li>Brasil · pt-BR</li>
+		</ul>
+	</div>
+</section>
 <section id="universos" class="section">
 	<div class="container">
 		<p class="eyebrow">Seis caminhos, uma só linguagem</p>
 		<h2 class="h2">Comece pela pergunta que está viva agora.</h2>
 		<div class="grid grid-3 universe-grid">
 			{#each universes as universe (universe.slug)}<article class="card universe">
+					<span class="universe-rule" aria-hidden="true"></span>
 					<span>{universe.eyebrow}</span>
 					<h3>{universe.title}</h3>
 					<p>{universe.description}</p>
@@ -55,7 +66,7 @@
 <section class="method">
 	<div class="reading">
 		<p class="eyebrow">Método antes de promessa</p>
-		<h2 class="h2">O céu oferece linguagem. A vida continua sendo sua.</h2>
+		<h2 class="h2">Método antes de promessa.</h2>
 		<p class="lead">
 			Cada leitura registra o que foi calculado, o que foi interpretado e onde existe incerteza.
 			Nenhum resultado substitui contexto, cuidado profissional ou decisão humana.
@@ -70,9 +81,7 @@
 		display: grid;
 		align-items: center;
 		padding: 5rem 0 7rem;
-		background:
-			radial-gradient(circle at 80% 40%, rgb(218 185 123 / 18%), transparent 30%),
-			linear-gradient(180deg, var(--atv-ivory-25), var(--atv-frost-50));
+		background: linear-gradient(180deg, var(--atv-ivory-25), var(--atv-frost-50));
 	}
 	.hero-grid {
 		display: grid;
@@ -90,14 +99,16 @@
 		margin-top: 2rem;
 	}
 	.atlas {
-		aspect-ratio: 1;
+		aspect-ratio: 5 / 4;
 		position: relative;
 		display: grid;
 		place-items: center;
-		background: var(--atv-surface-card);
+		background:
+			radial-gradient(circle at 50% 50%, rgb(218 185 123 / 13%), transparent 25%),
+			var(--atv-surface-card);
 		border: 1px solid var(--atv-border);
-		border-radius: 50%;
-		box-shadow: 0 30px 90px rgb(3 23 68 / 12%);
+		border-radius: var(--atv-radius-lg);
+		box-shadow: 0 20px 60px rgb(3 23 68 / 8%);
 	}
 	.atlas img {
 		width: 42%;
@@ -107,6 +118,36 @@
 		position: absolute;
 		border: 1px solid var(--atv-gold-500);
 		border-radius: 50%;
+	}
+	.trust {
+		border-block: 1px solid var(--atv-border);
+		background: var(--atv-surface-card);
+	}
+	.trust-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+		gap: 2rem;
+		align-items: center;
+		padding-block: 1.4rem;
+	}
+	.trust p {
+		margin: 0;
+		font: 500 1.2rem/1.2 var(--atv-font-editorial);
+	}
+	.trust ul {
+		display: flex;
+		justify-content: flex-end;
+		gap: 1.1rem;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		font: 600 0.72rem var(--atv-font-ui);
+		color: var(--atv-text-secondary);
+	}
+	.trust li::before {
+		content: '✦';
+		margin-right: 0.4rem;
+		color: var(--atv-gold-500);
 	}
 	.orbit.one {
 		inset: 12%;
@@ -131,6 +172,12 @@
 		display: flex;
 		flex-direction: column;
 		min-height: 18rem;
+	}
+	.universe-rule {
+		width: 2.25rem;
+		height: 1px;
+		background: var(--atv-gold-500);
+		margin-bottom: 0.25rem;
 	}
 	.universe > span {
 		color: var(--atv-gold-700);
@@ -174,6 +221,13 @@
 		.atlas {
 			width: min(28rem, 90vw);
 			margin: auto;
+		}
+		.trust-grid {
+			grid-template-columns: 1fr;
+		}
+		.trust ul {
+			justify-content: flex-start;
+			flex-wrap: wrap;
 		}
 	}
 	@media (max-width: 520px) {

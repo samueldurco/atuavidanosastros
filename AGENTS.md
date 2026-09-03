@@ -10,4 +10,5 @@
 - Physical commerce remains disabled and must not expose fictitious products, prices, inventory or reviews.
 - Migrations use expand/contract and require a tested rollback or forward-fix path.
 - Append execution evidence to the canonical log outside this repository using the stable RUN_ID.
-
+- External providers are MCP-only: operate and inspect Stitch, Cloudflare, Supabase, Hotmart, GitHub, Google, analytics, email, DNS and any other connected provider through their dedicated MCP/API/CLI capability. Do not use Browser, Chrome or Computer Use as an operational or verification fallback unless the owner gives a new explicit written exception for that exact action.
+- Browser-rendering E2E tests remain limited to the local test suite; they are not a channel for provider administration or remote integration checks.
