@@ -36,5 +36,6 @@ test('Bússola calcula Meio do Céu sem cadastro', async ({ page }) => {
 	await page.getByLabel('Deslocamento UTC').fill('-03:00');
 	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
 	await expect(page.getByText(/Seu Meio do Céu está em/)).toBeVisible();
-	await expect(page.getByText(/Dados não armazenados/)).toBeVisible();
+	await expect(page.getByText(/Dados de nascimento não são armazenados/)).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Entrar para salvar na Biblioteca' })).toBeVisible();
 });

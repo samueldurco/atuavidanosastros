@@ -1,4 +1,5 @@
 <script lang="ts">
+	let { data } = $props();
 	let city = $state('');
 	let date = $state('');
 	let time = $state('');
@@ -6,6 +7,8 @@
 	let longitude = $state('');
 	let utcOffset = $state('-03:00');
 	let pending = $state(false);
+	let savePending = $state(false);
+	let saveMessage = $state('');
 	let error = $state('');
 	let result = $state<{
 		sign: string;
@@ -20,6 +23,7 @@
 		pending = true;
 		error = '';
 		result = null;
+		saveMessage = '';
 		try {
 			const localDateTime = `${date}T${time}:00`;
 			const response = await fetch('/api/astrology/midheaven', {
@@ -40,6 +44,33 @@
 			error = 'Não foi possível calcular com esses dados. Revise data, hora, fuso e coordenadas.';
 		} finally {
 			pending = false;
+		}
+	}
+	async function save() {
+		if (!result) return;
+		savePending = true;
+		saveMessage = '';
+		try {
+			const localDateTime = `${date}T${time}:00`;
+			const response = await fetch('/api/library/compass', {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({
+					localDateTime,
+					timezone: `UTC${utcOffset}`,
+					utcInstant: new Date(`${localDateTime}${utcOffset}`).toISOString(),
+					latitude: Number(latitude),
+					longitude: Number(longitude),
+					locationSource: 'user-provided-coordinates'
+				})
+			});
+			if (!response.ok) throw new Error();
+			saveMessage = 'Sua Bússola foi salva na Biblioteca.';
+		} catch {
+			saveMessage =
+				'Não foi possível salvar agora. Seu resultado continua disponível nesta página.';
+		} finally {
+			savePending = false;
 		}
 	}
 </script>
@@ -149,8 +180,17 @@
 						{#if result.warning}<p>{result.warning}</p>{/if}
 						<small
 							>Cálculo tropical/Placidus: {result.provenance.provider}
-							{result.provenance.providerVersion}. Dados não armazenados.</small
+							{result.provenance.providerVersion}. Dados de nascimento não são armazenados; ao
+							salvar, apenas o resultado e seu método entram na Biblioteca.</small
 						>
+						{#if data.canSave}
+							<button class="button secondary" type="button" onclick={save} disabled={savePending}
+								>{savePending ? 'Salvando…' : 'Salvar na Biblioteca'}</button
+							>
+						{:else}
+							<a class="button secondary" href="/entrar">Entrar para salvar na Biblioteca</a>
+						{/if}
+						{#if saveMessage}<p class="save-message" role="status">{saveMessage}</p>{/if}
 					</div>{/if}
 			</form>
 		</div>
@@ -235,6 +275,13 @@
 	}
 	.result p {
 		margin-bottom: 0;
+	}
+	.result .button {
+		margin-top: 1rem;
+	}
+	.save-message {
+		font: 600 0.84rem var(--atv-font-ui);
+		color: var(--atv-text-secondary);
 	}
 	.method-grid {
 		display: grid;
