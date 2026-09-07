@@ -1,7 +1,9 @@
 import { expect, test } from '@playwright/test';
 test('home entrega proposta e navegação principal', async ({ page }) => {
 	await page.goto('/');
-	await expect(page.getByRole('heading', { level: 1 })).toContainText('atlas editorial');
+	await expect(page.getByRole('heading', { level: 1 })).toContainText(
+		'Uma linguagem para olhar a vida com mais clareza.'
+	);
 	await expect(
 		page.getByRole('link', { name: 'Experimentar a Bússola de Carreira' })
 	).toBeVisible();

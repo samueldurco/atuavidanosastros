@@ -1,3 +1,7 @@
+<script lang="ts">
+	let { data } = $props();
+</script>
+
 <svelte:head
 	><title>Seu atlas — A Tua Vida nos Astros</title><meta
 		name="robots"
@@ -9,8 +13,12 @@
 		<p class="eyebrow">Área pessoal</p>
 		<h1 class="h1">Seu atlas, organizado pelo que pede atenção.</h1>
 		<p class="lead">
-			O dashboard autenticado será ligado ao Supabase Auth. Nesta prévia, nenhum dado pessoal é
-			carregado ou persistido.
+			{#if data.preview}
+				O dashboard está em modo de prévia: nenhum dado pessoal é carregado ou persistido.
+			{:else}
+				Sua conta está conectada. Leituras salvas e entregas disponíveis aparecem aqui sem expor
+				dados de nascimento.
+			{/if}
 		</p>
 		<div class="top-grid">
 			<article class="attention-panel">
@@ -21,12 +29,27 @@
 			</article>
 			<article class="card library-panel">
 				<p class="eyebrow">Biblioteca</p>
-				<h2>Nenhuma leitura salva por enquanto.</h2>
-				<p>
-					Quando você escolher salvar uma leitura, ela aparece aqui com o contexto e a versão do
-					resultado.
-				</p>
-				<a class="button secondary" href="/bussola-de-carreira">Explorar ferramentas</a>
+				{#if data.items.length}
+					<h2>
+						{data.items.length} item{data.items.length === 1 ? '' : 's'} recente{data.items
+							.length === 1
+							? ''
+							: 's'}.
+					</h2>
+					<ul>
+						{#each data.items as item (item.id)}
+							<li>{item.title}</li>
+						{/each}
+					</ul>
+					<a class="button secondary" href="/biblioteca">Abrir Biblioteca</a>
+				{:else}
+					<h2>Nenhuma leitura salva por enquanto.</h2>
+					<p>
+						Quando você escolher salvar uma leitura, ela aparece aqui com o contexto e a versão do
+						resultado.
+					</p>
+					<a class="button secondary" href="/bussola-de-carreira">Explorar ferramentas</a>
+				{/if}
 			</article>
 		</div>
 		<section class="continue">
@@ -113,6 +136,11 @@
 	.path-card p,
 	.privacy-panel > p {
 		color: var(--atv-text-secondary);
+		font-family: var(--atv-font-editorial);
+	}
+	.library-panel ul {
+		padding-left: 1.15rem;
+		margin: 0.4rem 0 1.25rem;
 		font-family: var(--atv-font-editorial);
 	}
 	.library-panel .button {
