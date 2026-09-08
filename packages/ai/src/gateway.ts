@@ -3,6 +3,7 @@ import {
   SCHEMA_VERSION,
   tierLimits,
   validateFacts,
+  hasInterpretiveBasis,
   type EditorialRequest,
   type Reading,
 } from "./contracts.ts";
@@ -117,6 +118,8 @@ export class EditorialGateway {
       return unavailable("consent_required");
     if (input.dataClass !== "synthetic")
       return unavailable("personal_data_not_approved");
+    if (!hasInterpretiveBasis(input.facts))
+      return unavailable("insufficient_facts");
     if (
       input.context !== undefined &&
       (typeof input.context !== "string" || input.context.length > 1200)

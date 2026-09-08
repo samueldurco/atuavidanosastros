@@ -1,5 +1,5 @@
 export const SCHEMA_VERSION = "atv-reading/1.0.0";
-export const PROMPT_VERSION = "atv-editorial/1.0.0";
+export const PROMPT_VERSION = "atv-editorial/1.0.1";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -167,4 +167,15 @@ export function validateFacts(value: FactsEnvelope): boolean {
     ids.add(fact.id);
   }
   return true;
+}
+
+/** A missing birth datum is not a calculated basis for a natal interpretation. */
+export function hasInterpretiveBasis(envelope: FactsEnvelope): boolean {
+  const kind =
+    envelope.capability === "dream-exploration"
+      ? "reported"
+      : envelope.capability === "tarot-reflection"
+        ? "drawn"
+        : "calculated";
+  return envelope.facts.some((fact) => fact.kind === kind);
 }

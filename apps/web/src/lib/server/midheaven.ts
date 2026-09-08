@@ -34,8 +34,14 @@ export function parseCalculationInput(value: unknown): CalculationInput | null {
 		typeof record.locationSource !== 'string'
 	)
 		return null;
-	const latitude = Number(record.latitude);
-	const longitude = Number(record.longitude);
+	const coordinate = (value: unknown) =>
+		typeof value === 'number'
+			? value
+			: typeof value === 'string' && /^[-+]?\d+(?:\.\d+)?$/.test(value.trim())
+				? Number(value)
+				: NaN;
+	const latitude = coordinate(record.latitude);
+	const longitude = coordinate(record.longitude);
 	if (
 		!Number.isFinite(latitude) ||
 		!Number.isFinite(longitude) ||
@@ -43,6 +49,13 @@ export function parseCalculationInput(value: unknown): CalculationInput | null {
 		latitude > 90 ||
 		longitude < -180 ||
 		longitude > 180 ||
+		!record.localDateTime.trim() ||
+		record.localDateTime.length > 40 ||
+		!record.timezone.trim() ||
+		record.timezone.length > 80 ||
+		!record.locationSource.trim() ||
+		record.locationSource.length > 80 ||
+		record.utcInstant.length > 40 ||
 		Number.isNaN(Date.parse(record.utcInstant))
 	)
 		return null;

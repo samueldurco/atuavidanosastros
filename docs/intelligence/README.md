@@ -10,7 +10,7 @@ O laboratório transforma fatos aprovados em candidatos editoriais. Não calcula
 | --- | --- |
 | Voice, Interpretation, Safety e Anti-Mediocrity Constitutions | `packages/ai/src/constitutions.ts`, `atv-constitutions/1.0.0` |
 | Seis especializações e limites por tier | `packages/ai/src/contracts.ts` |
-| System instruction/prompt | `packages/ai/src/prompt.ts`, `atv-editorial/1.0.0` |
+| System instruction/prompt | `packages/ai/src/prompt.ts`, `atv-editorial/1.0.1` (correção focal após baseline 1.0.0) |
 | Schema JSON e validação independente | `packages/ai/src/schema.ts`, `atv-reading/1.0.0` |
 | Director, thresholds e seleção de revisão | `packages/ai/src/director.ts`, `atv-director/1.0.0` |
 | 10 casos sintéticos e dois golden seeds | `packages/ai/src/lab/dataset.ts`, `atv-synthetic/1.0.0` |

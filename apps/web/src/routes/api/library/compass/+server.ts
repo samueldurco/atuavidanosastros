@@ -1,5 +1,6 @@
 import { sha256Hex } from '@atv/integrations';
 import { json } from '@sveltejs/kit';
+import { readSmallJson } from '$lib/server/request-json';
 import {
 	calculateMidheaven,
 	fingerprintMaterial,
@@ -13,7 +14,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	const userId = !claimsError ? claimsData?.claims?.sub : undefined;
 	if (!userId) return json({ code: 'auth_required' }, { status: 401 });
 
-	const input = parseCalculationInput(await request.json());
+	const input = parseCalculationInput(await readSmallJson(request));
 	if (!input) return json({ code: 'invalid_input' }, { status: 400 });
 
 	try {
@@ -43,19 +44,26 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			.single();
 		if (resultError || !savedResult) return json({ code: 'storage_unavailable' }, { status: 503 });
 
-		const { error: libraryError } = await locals.supabase.from('library_items').upsert(
-			{
-				user_id: userId,
-				title: `Bússola de Carreira — Meio do Céu em ${result.sign}`,
-				universe: 'proposito-prosperidade',
-				item_type: 'COMPASS_RESULT',
-				source_id: savedResult.id,
-				occurred_at: new Date().toISOString()
-			},
-			{ onConflict: 'user_id,item_type,source_id' }
+		const { data: libraryItem, error: libraryError } = await locals.supabase
+			.from('library_items')
+			.upsert(
+				{
+					user_id: userId,
+					title: `Bússola de Carreira — Meio do Céu em ${result.sign}`,
+					universe: 'proposito-prosperidade',
+					item_type: 'COMPASS_RESULT',
+					source_id: savedResult.id,
+					occurred_at: new Date().toISOString()
+				},
+				{ onConflict: 'user_id,item_type,source_id' }
+			)
+			.select('id')
+			.single();
+		if (libraryError || !libraryItem) return json({ code: 'library_unavailable' }, { status: 503 });
+		return json(
+			{ saved: true, resultId: savedResult.id, libraryItemId: libraryItem.id },
+			{ status: 201 }
 		);
-		if (libraryError) return json({ code: 'library_unavailable' }, { status: 503 });
-		return json({ saved: true, resultId: savedResult.id }, { status: 201 });
 	} catch {
 		return json({ code: 'calculation_failed' }, { status: 422 });
 	}

@@ -5,6 +5,7 @@
 	import Field from '$lib/components/ui/Field.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
+	import { isUuid } from '$lib/library-result';
 	let { data } = $props();
 	let city = $state('');
 	let date = $state('');
@@ -15,6 +16,7 @@
 	let pending = $state(false);
 	let savePending = $state(false);
 	let saveMessage = $state('');
+	let savedItemId = $state<string | null>(null);
 	let saveFailed = $state(false);
 	let error = $state('');
 	let submittedInput = $state<Record<string, string | number> | null>(null);
@@ -33,6 +35,7 @@
 		result = null;
 		submittedInput = null;
 		saveMessage = '';
+		savedItemId = null;
 		try {
 			const localDateTime = `${date}T${time}:00`;
 			const input = {
@@ -70,6 +73,15 @@
 			});
 			if (!response.ok) throw new Error();
 			saveMessage = 'Sua Bússola foi salva na Biblioteca.';
+			const saved = await response.json();
+			savedItemId =
+				saved &&
+				typeof saved === 'object' &&
+				'libraryItemId' in saved &&
+				typeof saved.libraryItemId === 'string' &&
+				isUuid(saved.libraryItemId)
+					? saved.libraryItemId
+					: null;
 		} catch {
 			saveFailed = true;
 			saveMessage =
@@ -244,8 +256,10 @@
 						</p>
 					</div>
 					{#if saveMessage}<StatePanel kind={saveFailed ? 'error' : 'success'} title={saveMessage}
-							>{#if !saveFailed}<Button href="/biblioteca" variant="tertiary"
-									>Abrir Biblioteca</Button
+							>{#if !saveFailed}<Button
+									href={savedItemId ? `/biblioteca/${savedItemId}` : '/biblioteca'}
+									variant="tertiary"
+									>{savedItemId ? 'Abrir resultado salvo' : 'Abrir Biblioteca'}</Button
 								>{/if}</StatePanel
 						>{/if}
 				{:else}<div class="result-empty">

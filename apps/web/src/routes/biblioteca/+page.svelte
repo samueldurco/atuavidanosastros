@@ -120,6 +120,11 @@
 								)}.
 							</p>
 							<span class="status">Na sua Biblioteca</span>
+							<a
+								class="read-link"
+								href={`/biblioteca/${item.id}`}
+								aria-label={`Abrir ${item.title}`}>Abrir resultado →</a
+							>
 						</div>
 					</article>{/each}
 			</div>
@@ -146,6 +151,13 @@
 </div>
 
 <style>
+	.read-link {
+		display: block;
+		width: fit-content;
+		padding-block: 0.75rem;
+		margin-top: 0.75rem;
+		font-size: 0.875rem;
+	}
 	.library-summary {
 		display: flex;
 		gap: 2rem;

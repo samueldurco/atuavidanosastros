@@ -15,6 +15,9 @@ describe('entrada de cálculo persistível', () => {
 		expect(parseCalculationInput(validInput)).toMatchObject(validInput);
 		expect(parseCalculationInput({ ...validInput, latitude: 91 })).toBeNull();
 		expect(parseCalculationInput({ ...validInput, utcInstant: 'not-a-date' })).toBeNull();
+		for (const latitude of [null, '', false, [], ' '])
+			expect(parseCalculationInput({ ...validInput, latitude })).toBeNull();
+		expect(parseCalculationInput({ ...validInput, timezone: '' })).toBeNull();
 	});
 
 	it('cria material de fingerprint estável sem armazenar dados em texto', () => {

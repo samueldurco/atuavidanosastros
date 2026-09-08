@@ -22,6 +22,22 @@ import { labCases, goldenSeed, goldenTensionSeed } from "./lab/dataset.ts";
 
 const request = labCases[0]!.request;
 const copy = () => structuredClone(goldenSeed);
+
+test("gateway não transforma ausência de dado em interpretação individual", async () => {
+  let calls = 0;
+  const provider = fixture();
+  const generate = provider.generate;
+  provider.generate = async (input, signal) => {
+    calls++;
+    return generate(input, signal);
+  };
+  const missing = labCases.find((item) => item.id === "birth-incomplete")!;
+  assert.deepEqual(await gateway([provider]).generate(missing.request), {
+    status: "unavailable",
+    reason: "insufficient_facts",
+  });
+  assert.equal(calls, 0);
+});
 function fixture(output: unknown = goldenSeed): EditorialProvider {
   return {
     id: "fixture",

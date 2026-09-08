@@ -5,10 +5,14 @@
 	import PublicShell from '$lib/components/shells/PublicShell.svelte';
 	import AuthenticatedShell from '$lib/components/shells/AuthenticatedShell.svelte';
 	let { children } = $props();
+	const reader = $derived(
+		/^\/biblioteca\/(?:[0-9a-f-]{36}|_spec\/leitor)\/?$/i.test(page.url.pathname)
+	);
 	const member = $derived(
-		['/dashboard', '/biblioteca', '/conta'].some(
-			(path) => page.url.pathname === path || page.url.pathname.startsWith(`${path}/`)
-		)
+		!reader &&
+			['/dashboard', '/biblioteca', '/conta'].some(
+				(path) => page.url.pathname === path || page.url.pathname.startsWith(`${path}/`)
+			)
 	);
 </script>
 

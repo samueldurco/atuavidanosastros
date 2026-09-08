@@ -64,8 +64,7 @@
 									)}
 								</p>
 							</div>
-							<a href="/biblioteca" aria-label={`Encontrar ${item.title} na Biblioteca`}
-								>Reencontrar →</a
+							<a href={`/biblioteca/${item.id}`} aria-label={`Abrir ${item.title}`}>Reencontrar →</a
 							>
 						</article>{/each}
 				</div>

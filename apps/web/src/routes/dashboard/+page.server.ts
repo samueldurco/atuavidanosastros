@@ -9,6 +9,8 @@ export const load: PageServerLoad = async ({ parent, locals }) => {
 	const { data, error } = await locals.supabase
 		.from('library_items')
 		.select('id,title,universe,item_type,occurred_at,created_at')
+		.eq('user_id', user.id)
+		.is('archived_at', null)
 		.order('created_at', { ascending: false })
 		.limit(3);
 	return { preview: false, user, items: data ?? [], libraryError: Boolean(error) };

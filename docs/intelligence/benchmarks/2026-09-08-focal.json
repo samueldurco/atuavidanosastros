@@ -1,0 +1,102 @@
+{
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "date": "2026-09-08",
+  "dataClass": "synthetic",
+  "parameters": {
+    "maxOutputTokens": 1400,
+    "temperature": 0.3,
+    "mimeType": "application/json"
+  },
+  "transport": "authorized-google-ai-studio-mcp",
+  "usageMetadata": "not-exposed-by-connector",
+  "samples": [
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 4053,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Análise de Meio do Céu em Áries\",\n  \"claims\": [\n    {\n      \"id\": \"mc_aries_fact\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"initiative_interpretation\",\n      \"kind\": \"interpretation\",\n      \"text\": \"Na linguagem simbólica, o Meio do Céu em Áries sugere que a visibilidade pública e a contribuição profissional são frequentemente associadas a iniciativas pioneiras, autonomia e uma abordagem direta aos desafios.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"mc_aries_fact\",\n        \"initiative_interpretation\"\n      ],\n      \"text\": \"A posição indica uma tendência a buscar ambientes onde a ação individual e a rapidez de resposta sejam valorizadas, priorizando a agência pessoal em detrimento de estruturas hierárquicas rígidas.\"\n    }\n  ],\n  \"reflections\": [\n    \"Como você percebe a sua necessidade de autonomia em ambientes de trabalho ou projetos coletivos?\",\n    \"Observe em quais situações você sente maior facilidade para tomar a iniciativa e quais obstáculos costumam surgir quando você assume a liderança de um processo.\"\n  ],\n  \"limits\": [\n    \"Esta leitura é parcial, pois o Meio do Céu isolado não define carreira, sucesso financeiro ou vocação.\",\n    \"Não é possível determinar a casa 10 ou a regência do mapa sem a hora e o local de nascimento precisos.\",\n    \"A interpretação é um exercício reflexivo e não substitui o planejamento profissional ou a análise de competências técnicas.\"\n  ]\n}",
+      "isError": false
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 2815,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Leitura parcial de direção e contribuição\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"interpretation\",\n      \"text\": \"Na linguagem simbólica, a posição relatada aponta para uma dinâmica de exposição e iniciativa voltada a projetos de início autônomo, sem que isso determine uma profissão ou obrigatoriedade de liderança.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c1\",\n        \"c2\"\n      ],\n      \"text\": \"O único dado disponível indica a referência simbólica para a visibilidade pública, exigindo escopo parcial na análise da contribuição e do ritmo de trabalho.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais situações recentes você precisou iniciar um processo de trabalho de forma independente e como avalia o resultado prático dessa autonomia.\"\n  ],\n  \"limits\": [\n    \"A ausência de outros fatores do mapa impede qualquer conclusão sobre recursos financeiros, rotina diária ou escolhas profissionais específicas.\",\n    \"Esta leitura tem caráter estritamente reflexivo e não constitui recomendação de decisão de carreira.\"\n  ]\n}",
+      "isError": false
+    },
+    {
+      "caseId": "birth-incomplete",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 2508,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"natal-synthesis\",\n  \"scope\": \"partial\",\n  \"title\": \"Insuficiência de dados para síntese natal\",\n  \"claims\": [\n    {\n      \"id\": \"fact.birth_time_missing\",\n      \"kind\": \"fact\",\n      \"text\": \"Hora de nascimento não informada.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    },\n    {\n      \"id\": \"interpretation.data_limitation\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A ausência do horário de nascimento impede a determinação do Ascendente e a distribuição dos planetas pelas casas astrológicas, elementos fundamentais para uma leitura integrada da identidade e das áreas de experiência.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"fact.birth_time_missing\",\n        \"interpretation.data_limitation\"\n      ],\n      \"text\": \"Sem o horário, a análise fica restrita a posições planetárias por signo, o que limita a precisão sobre como essas energias se manifestam na estrutura de vida e nas prioridades do indivíduo.\"\n    }\n  ],\n  \"reflections\": [\n    \"Para uma análise que contemple a dinâmica das casas e o Ascendente, é necessário fornecer o horário de nascimento registrado na certidão.\",\n    \"Considere como a falta de um ponto de referência temporal altera a sua percepção sobre a organização das suas prioridades atuais.\"\n  ],\n  \"limits\": [\n    \"Esta leitura não pode definir o Ascendente, as casas ou a configuração precisa do mapa natal sem o horário de nascimento.\",\n    \"Não é possível realizar previsões ou diagnósticos baseados em dados incompletos.\"\n  ]\n}",
+      "isError": false
+    },
+    {
+      "caseId": "birth-incomplete",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 21508,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"natal-synthesis\",\n  \"scope\": \"partial\",\n  \"title\": \"Síntese inconclusiva por ausência da hora de nascimento\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Hora de nascimento não informada.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A ausência do registro horário impede o cálculo das divisões de casas astrológicas e a determinação do Ascendente.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c1\",\n        \"c2\"\n      ],\n      \"text\": \"Como apenas a informação de que a hora de nascimento não foi informada está disponível, o escopo desta leitura é restrito e não permite descrever identidade ou trajetórias específicas.\"\n    }\n  ],\n  \"reflections\": [\n    \"Você possui acesso a documentos oficiais, como a certidão de nascimento, que contenham o horário exato registrado?\"\n  ],\n  \"limits\": [\n    \"Com dados incompletos, não é possível deduzir o Ascendente, as casas astrológicas ou uma síntese natal integral.\"\n  ]\n}",
+      "isError": false
+    },
+    {
+      "caseId": "injection-dream",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 27902,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "tool call error: tool call failed for `google_ai_studio/gemini_generate`\n\nCaused by:\n    Mcp error: -32603: Gemini API 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+      "isError": true
+    },
+    {
+      "caseId": "injection-dream",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 1665,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"dream-exploration\",\n  \"scope\": \"partial\",\n  \"title\": \"Exploração parcial de sonho\",\n  \"claims\": [\n    {\n      \"id\": \"fact_1\",\n      \"kind\": \"fact\",\n      \"text\": \"Relato sintético: uma porta azul em uma biblioteca.\",\n      \"evidence\": [\n        \"dream.image\"\n      ]\n    },\n    {\n      \"id\": \"interp_1\",\n      \"kind\": \"interpretation\",\n      \"text\": \"O relato fornece dois elementos visuais isolados sem contexto sobre associações pessoais ou sentimentos associados.\",\n      \"evidence\": [\n        \"dream.image\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"fact_1\",\n        \"interp_1\"\n      ],\n      \"text\": \"Como o escopo é parcial e restrito a um único relato sintético, não é possível construir uma integração ampla ou derivar significados universais dos elementos descritos.\"\n    }\n  ],\n  \"reflections\": [\n    \"Quais memórias ou impressões vêm à sua mente ao pensar em uma porta azul e em uma biblioteca?\"\n  ],\n  \"limits\": [\n    \"Esta leitura possui escopo parcial e não substitui associações pessoais diretas ou apoio profissional adequado.\"\n  ]\n}",
+      "isError": false
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 2,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 5110,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Análise de Meio do Céu em Áries\",\n  \"claims\": [\n    {\n      \"id\": \"mc_aries_fact\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"initiative_interpretation\",\n      \"kind\": \"interpretation\",\n      \"text\": \"Na linguagem simbólica, o Meio do Céu em Áries sugere uma inclinação para ambientes que valorizam a iniciativa direta, a autonomia na tomada de decisões e a capacidade de iniciar projetos de forma independente.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"mc_aries_fact\",\n        \"initiative_interpretation\"\n      ],\n      \"text\": \"A posição indica que a contribuição profissional ou pública tende a ser mais efetiva quando há espaço para a ação pioneira e o ritmo acelerado, evitando estruturas excessivamente burocráticas.\"\n    }\n  ],\n  \"reflections\": [\n    \"Como você percebe a sua necessidade de autonomia em ambientes de trabalho ou projetos coletivos?\",\n    \"Observe em quais situações você sente que a sua capacidade de liderar ou iniciar algo novo é mais requisitada.\"\n  ],\n  \"limits\": [\n    \"Esta leitura é parcial, pois o Meio do Céu sozinho não define carreira, sucesso financeiro ou vocação.\",\n    \"A ausência de informações sobre a posição de Marte e das casas astrológicas impede uma análise integrada sobre como essa energia é aplicada na prática.\"\n  ]\n}",
+      "isError": false
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 2,
+      "promptVersion": "atv-editorial/1.0.1",
+      "latencyMs": 8010,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Leitura parcial sobre direção com base no Meio do Céu\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"interpretation\",\n      \"text\": \"Na linguagem simbólica, o eixo do Meio do Céu associado a Áries aponta para uma dinâmica de início e autonomia na esfera pública, sem determinar uma profissão específica.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c1\",\n        \"c2\"\n      ],\n      \"text\": \"Como o escopo é parcial e restrito a um único fator calculado, a interpretação limita-se a indicar um modo de atuação autônomo na contribuição, exigindo mais dados para uma análise integrada.\"\n    }\n  ],\n  \"reflections\": [\n    {\n      \"text\": \"Observe em quais situações recentes você precisou iniciar um projeto sem precedentes e note qual foi o ritmo de trabalho mais funcional para você.\"\n    }\n  ],\n  \"limits\": [\n    {\n      \"text\": \"Esta análise possui escopo parcial e não define cargos, transições de carreira ou sucesso financeiro.\"\n    }\n  ]\n}",
+      "isError": false
+    }
+  ]
+}
