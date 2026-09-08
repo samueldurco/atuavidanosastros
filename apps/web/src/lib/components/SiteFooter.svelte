@@ -1,69 +1,77 @@
-<footer>
-	<div class="footer-grid">
-		<div>
-			<img
-				src="/brand/logo/horizontal/atv-logo-horizontal-on-dark.svg"
-				alt="A Tua Vida nos Astros"
-				width="1600"
-				height="360"
-			/>
+<script lang="ts">
+	import BrandLogo from './BrandLogo.svelte';
+</script>
+
+<footer data-stitch="SH-01">
+	<div class="container footer-grid">
+		<div class="footer-brand">
+			<BrandLogo />
 			<p>Um atlas editorial para a vida.</p>
 		</div>
 		<nav aria-label="Rodapé">
-			<a href="/metodo">Método</a><a href="/caderno">Caderno</a><a href="/loja">Loja dos Signos</a
+			<a href="/metodo">Nosso método</a><a href="/caderno">Caderno</a><a href="/loja"
+				>Loja dos Signos</a
 			><a href="/privacidade">Privacidade</a><a href="/suporte">Suporte</a>
 		</nav>
 	</div>
-	<p class="fineprint">
-		Conteúdo interpretativo para autoconhecimento. Não substitui orientação médica, jurídica,
-		financeira ou profissional.
-	</p>
+	<div class="container fineprint">
+		<p>Astrologia e símbolos com contexto, cuidado e espaço para escolha.</p>
+		<a href="/#universos">Explore os seis universos <span aria-hidden="true">↗</span></a>
+	</div>
 </footer>
 
 <style>
 	footer {
-		background: var(--atv-night-950);
-		color: var(--atv-frost-50);
-		padding: 4rem max(1.25rem, calc((100vw - 1376px) / 2)) 2rem;
+		border-top: 1px solid var(--atv-border);
+		padding-block: 3rem 1.5rem;
+		background: var(--atv-surface-page);
 	}
 	.footer-grid {
 		display: grid;
-		grid-template-columns: 1.3fr 1fr;
-		gap: 4rem;
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem;
 		align-items: start;
 	}
-	img {
-		width: min(22rem, 100%);
-		height: auto;
-	}
-	p {
-		color: var(--atv-lunar-mist-300);
-		font-family: var(--atv-font-editorial);
-		font-size: 1.1rem;
+	.footer-brand p {
+		font: 400 1.1875rem var(--atv-font-editorial);
+		color: var(--atv-text-secondary);
 	}
 	nav {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1rem;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-end;
+		gap: 0.5rem 1.5rem;
 	}
 	a {
-		color: var(--atv-frost-50);
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		color: var(--atv-text-secondary);
+		font-size: 0.8rem;
 		text-decoration: none;
-		font: 500 0.9rem var(--atv-font-ui);
 	}
 	a:hover {
 		text-decoration: underline;
 	}
 	.fineprint {
-		font: 400 0.75rem var(--atv-font-ui);
-		border-top: 1px solid rgb(174 191 220 / 22%);
-		margin-top: 3rem;
-		padding-top: 1.5rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem 2rem;
+		border-top: 1px solid var(--atv-border);
+		margin-top: 2rem;
+		padding-top: 1rem;
+		color: var(--atv-text-secondary);
+		font-size: 0.75rem;
 	}
-	@media (max-width: 700px) {
+	@media (max-width: 767px) {
 		.footer-grid {
 			grid-template-columns: 1fr;
-			gap: 2rem;
+			gap: 1rem;
+		}
+		nav {
+			justify-content: flex-start;
 		}
 	}
 </style>

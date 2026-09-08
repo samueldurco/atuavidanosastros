@@ -1,9 +1,15 @@
 <script lang="ts">
 	import '../app.css';
 	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
-	import PublicHeader from '$lib/components/PublicHeader.svelte';
-	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import { page } from '$app/state';
+	import PublicShell from '$lib/components/shells/PublicShell.svelte';
+	import AuthenticatedShell from '$lib/components/shells/AuthenticatedShell.svelte';
 	let { children } = $props();
+	const member = $derived(
+		['/dashboard', '/biblioteca', '/conta'].some(
+			(path) => page.url.pathname === path || page.url.pathname.startsWith(`${path}/`)
+		)
+	);
 </script>
 
 <svelte:head>
@@ -13,7 +19,7 @@
 </svelte:head>
 
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
-<PublicHeader />
-<main id="conteudo">{@render children()}</main>
-<SiteFooter />
+{#if member}<AuthenticatedShell>{@render children()}</AuthenticatedShell>{:else}<PublicShell
+		>{@render children()}</PublicShell
+	>{/if}
 <ConsentBanner />

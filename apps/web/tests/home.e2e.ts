@@ -12,7 +12,7 @@ test('loja comunica preparação sem oferta fictícia', async ({ page }) => {
 	await page.goto('/loja');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
 	await expect(
-		page.getByText('Ainda não há produtos, preços, estoque, prazo ou avaliações publicados.')
+		page.getByText(/Ainda não há\s+produtos, preços, estoque, prazo ou avaliações publicados/)
 	).toBeVisible();
 });
 
@@ -35,7 +35,7 @@ test('Bússola calcula Meio do Céu sem cadastro', async ({ page }) => {
 	await page.getByLabel('Longitude').fill('-46.6333');
 	await page.getByLabel('Deslocamento UTC').fill('-03:00');
 	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
-	await expect(page.getByText(/Seu Meio do Céu está em/)).toBeVisible();
+	await expect(page.getByRole('heading', { name: /Meio do Céu em/ })).toBeVisible();
 	await expect(page.getByText(/Dados de nascimento não são armazenados/)).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Entrar para salvar na Biblioteca' })).toBeVisible();
 });
