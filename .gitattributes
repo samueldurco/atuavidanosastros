@@ -1,0 +1,3 @@
+# Preserve upstream bytes, including trailing spaces, so SHA-256 remains verifiable.
+packages/astrology/fixtures/horizons/*.txt text eol=lf whitespace=-blank-at-eol
+packages/astrology/src/data-manifest.json text eol=lf

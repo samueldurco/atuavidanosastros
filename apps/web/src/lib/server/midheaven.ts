@@ -1,4 +1,8 @@
-import { CaelusEphemerisProvider, type CalculationInput } from '@atv/astrology';
+import {
+	CaelusEphemerisProvider,
+	validateCalculationInput,
+	type CalculationInput
+} from '@atv/astrology';
 
 export const zodiacSigns = [
 	'Áries',
@@ -59,7 +63,7 @@ export function parseCalculationInput(value: unknown): CalculationInput | null {
 		Number.isNaN(Date.parse(record.utcInstant))
 	)
 		return null;
-	return {
+	const input = {
 		utcInstant: record.utcInstant,
 		localDateTime: record.localDateTime,
 		timezone: record.timezone,
@@ -67,6 +71,12 @@ export function parseCalculationInput(value: unknown): CalculationInput | null {
 		longitude,
 		locationSource: record.locationSource
 	};
+	try {
+		validateCalculationInput(input);
+		return input;
+	} catch {
+		return null;
+	}
 }
 
 export function fingerprintMaterial(input: CalculationInput): string {

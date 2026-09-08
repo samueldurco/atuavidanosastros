@@ -8,8 +8,8 @@
     "build": "tsc --noEmit",
     "check": "tsc --noEmit",
     "lint": "tsc --noEmit",
-    "test": "node --test",
-    "test:unit": "node --test"
+    "test": "node ../../scripts/astrology-data-manifest.mjs && node --test",
+    "test:unit": "node ../../scripts/astrology-data-manifest.mjs && node --test"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

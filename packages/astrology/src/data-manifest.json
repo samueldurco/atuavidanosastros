@@ -1,0 +1,67 @@
+{
+  "provider": "caelus",
+  "version": "0.24.1",
+  "tier": "embedded",
+  "files": [
+    {
+      "path": "src/data-embedded.js",
+      "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+    },
+    {
+      "path": "data/vsop87d_mercury.embedded.json",
+      "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+    },
+    {
+      "path": "data/vsop87d_venus.embedded.json",
+      "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+    },
+    {
+      "path": "data/vsop87d_earth.embedded.json",
+      "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+    },
+    {
+      "path": "data/vsop87d_mars.embedded.json",
+      "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+    },
+    {
+      "path": "data/vsop87d_jupiter.embedded.json",
+      "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+    },
+    {
+      "path": "data/vsop87d_saturn.embedded.json",
+      "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+    },
+    {
+      "path": "data/vsop87d_uranus.embedded.json",
+      "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+    },
+    {
+      "path": "data/vsop87d_neptune.embedded.json",
+      "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+    },
+    {
+      "path": "data/nutation_iau1980.json",
+      "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+    },
+    {
+      "path": "data/moon_meeus47.json",
+      "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+    },
+    {
+      "path": "data/pluto_meeus37.json",
+      "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+    },
+    {
+      "path": "data/chiron_cheb.json",
+      "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+    },
+    {
+      "path": "data/fixed_stars.json",
+      "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+    },
+    {
+      "path": "data/constellations.json",
+      "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+    }
+  ]
+}
