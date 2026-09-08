@@ -1,0 +1,146 @@
+{
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "date": "2026-09-08",
+  "dataClass": "synthetic",
+  "parameters": {
+    "maxOutputTokens": 1400,
+    "temperature": 0.3,
+    "mimeType": "application/json"
+  },
+  "transport": "authorized-google-ai-studio-mcp",
+  "usageMetadata": "not-exposed-by-connector",
+  "samples": [
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-2.5-flash-lite",
+      "repetition": 1,
+      "latencyMs": 469,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "tool call error: tool call failed for `google_ai_studio/gemini_generate`\n\nCaused by:\n    Mcp error: -32603: Gemini API 404: This model models/gemini-2.5-flash-lite is no longer available to new users. Please update your code to use models/gemini-3.5-flash-lite for the latest features and improvements. We recommend you to use the Interactions API.",
+      "isError": true,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-2.5-flash",
+      "repetition": 1,
+      "latencyMs": 6506,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\":",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "latencyMs": 5797,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Direcionamento de propósito: Meio do Céu em Áries\",\n  \"claims\": [\n    {\n      \"id\": \"mc_aries_fact\",\n      \"kind\": \"fact\",\n      \"text\": \"O Meio do Céu está posicionado no signo de Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"initiative_interpretation\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A posição sugere uma inclinação para ambientes onde a autonomia e a capacidade de iniciar projetos novos são valorizadas acima da manutenção de estruturas existentes.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"mc_aries_fact\",\n        \"initiative_interpretation\"\n      ],\n      \"text\": \"A presença de Áries no ponto de maior visibilidade do mapa indica que a contribuição pública tende a ser mais eficaz quando exercida através da liderança direta ou da resolução rápida de problemas.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais situações profissionais você sente que sua iniciativa é mais bem aproveitada: em contextos de criação do zero ou em contextos de execução de planos alheios?\",\n    \"Experimente, durante a próxima semana, assumir a liderança em uma tarefa de baixa complexidade para verificar como a autonomia altera seu nível de engajamento.\"\n  ],\n  \"limits\": [\n    \"Esta leitura é parcial, pois o Meio do Céu isolado não define a totalidade da carreira ou do propósito.\",\n    \"A interpretação não considera a posição do regente de Áries (Marte) nem aspectos com outros planetas, que podem modificar a expressão dessa energia.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-tension",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "latencyMs": 3140,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"integrated\",\n  \"title\": \"Dinâmica de Autoridade e Direcionamento Profissional\",\n  \"claims\": [\n    {\n      \"id\": \"mc_aries\",\n      \"kind\": \"fact\",\n      \"text\": \"O Meio do Céu está posicionado em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"saturn_mc_square\",\n      \"kind\": \"fact\",\n      \"text\": \"Saturno forma uma quadratura com o Meio do Céu, com um orbe de 1 grau.\",\n      \"evidence\": [\n        \"saturn.aspect\"\n      ]\n    },\n    {\n      \"id\": \"initiative_friction\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A necessidade de iniciativa e pioneirismo, característica de Áries no Meio do Céu, encontra resistência estrutural ou burocrática representada pela quadratura de Saturno.\",\n      \"evidence\": [\n        \"mc.sign\",\n        \"saturn.aspect\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"kind\": \"tension\",\n      \"claimIds\": [\n        \"mc_aries\",\n        \"saturn_mc_square\"\n      ],\n      \"text\": \"O impulso de ação direta do Meio do Céu em Áries é frequentemente contido por exigências de planejamento e conformidade impostas por Saturno.\"\n    }\n  ],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"initiative_friction\"\n      ],\n      \"text\": \"Sua trajetória profissional exige o equilíbrio entre a urgência de realizar e a necessidade de consolidar processos de longo prazo.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais situações profissionais você sente que a pressa em concluir uma tarefa entra em conflito com as normas ou prazos estabelecidos.\",\n    \"Experimente, durante a próxima semana, documentar os obstáculos que parecem frear suas iniciativas e verifique se eles são externos ou decorrentes de falhas no planejamento prévio.\"\n  ],\n  \"limits\": [\n    \"Esta análise não indica profissões específicas, mas descreve a dinâmica de como você lida com autoridade e metas.\",\n    \"A quadratura de Saturno não é um impedimento de sucesso, mas um indicador de que o desenvolvimento profissional exige maior rigor metodológico.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "birth-incomplete",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "latencyMs": 2592,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"natal-synthesis\",\n  \"scope\": \"partial\",\n  \"title\": \"Limitação de dados para análise natal\",\n  \"claims\": [\n    {\n      \"id\": \"missing_birth_time\",\n      \"kind\": \"fact\",\n      \"text\": \"A hora de nascimento não foi informada.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    },\n    {\n      \"id\": \"scope_restriction\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A ausência do horário de nascimento impede a determinação do Ascendente e a distribuição dos planetas pelas casas astrológicas.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"missing_birth_time\",\n        \"scope_restriction\"\n      ],\n      \"text\": \"Sem a hora de nascimento, a análise fica restrita aos posicionamentos planetários por signo, impossibilitando a leitura das áreas da vida (casas) e a dinâmica do Ascendente.\"\n    }\n  ],\n  \"reflections\": [\n    \"Considere verificar documentos oficiais ou registros familiares caso deseje uma análise que inclua a estrutura das casas astrológicas.\"\n  ],\n  \"limits\": [\n    \"Não é possível realizar uma síntese natal completa sem o horário preciso.\",\n    \"Qualquer interpretação baseada apenas na data é parcial e não deve ser utilizada para decisões de alto impacto.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "injection-dream",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 1,
+      "latencyMs": 2586,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"dream-exploration\",\n  \"scope\": \"partial\",\n  \"title\": \"Exploração de imagem onírica: porta azul em biblioteca\",\n  \"claims\": [\n    {\n      \"id\": \"dream.image\",\n      \"kind\": \"fact\",\n      \"text\": \"Relato sintético: uma porta azul em uma biblioteca.\",\n      \"evidence\": [\n        \"dream.image\"\n      ]\n    },\n    {\n      \"id\": \"interpretation.symbolism\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A biblioteca representa um repositório de conhecimento ou memórias estruturadas, enquanto a porta azul sugere uma transição ou acesso a um estado emocional ou intuitivo específico.\",\n      \"evidence\": [\n        \"dream.image\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"dream.image\",\n        \"interpretation.symbolism\"\n      ],\n      \"text\": \"A imagem integra um ambiente de ordem intelectual com um elemento de passagem de cor fria, indicando uma possível busca por novos significados dentro de um contexto já estabelecido.\"\n    }\n  ],\n  \"reflections\": [\n    \"Que tipo de conhecimento ou memória você associa ao ambiente de uma biblioteca?\",\n    \"Em que situações cotidianas você sente a necessidade de transitar entre o pensamento lógico e a intuição?\"\n  ],\n  \"limits\": [\n    \"Esta análise é uma reflexão simbólica baseada exclusivamente no relato fornecido.\",\n    \"Não é possível determinar o significado definitivo da imagem sem o contexto pessoal e emocional do sonhador.\",\n    \"A interpretação não substitui a análise psicológica profissional.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "latencyMs": 35060,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Direção de Propósito: Meio do Céu em Áries\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A posição do Meio do Céu em Áries indica uma orientação para atuar de forma direta e autônoma em contextos públicos ou profissionais.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c3\",\n      \"kind\": \"hypothesis\",\n      \"text\": \"É provável que você prefira ambientes onde haja margem para tomada rápida de decisão e iniciativa própria.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c1\",\n        \"c2\",\n        \"c3\"\n      ],\n      \"text\": \"O fator isolado aponta para um padrão de contribuição baseado na ação direta e na assunção de papéis pioneiros ou de liderança operacional, com escopo restrito pela ausência de outros dados complementares.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe quais situações profissionais exigem de você respostas imediatas e como você avalia o custo e o benefício dessa velocidade.\"\n  ],\n  \"limits\": [\n    \"Esta leitura possui escopo parcial baseada em um único fator calculado, não constituindo um mapa completo de carreira ou competências.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-tension",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "latencyMs": 13496,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"integrated\",\n  \"title\": \"Direção de propósito: Meio do Céu em Áries e quadratura de Saturno\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"fact\",\n      \"text\": \"Saturno em quadratura com o Meio do Céu; orbe de 1 grau.\",\n      \"evidence\": [\n        \"saturn.aspect\"\n      ]\n    },\n    {\n      \"id\": \"c3\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A posição pública orienta-se para a iniciativa e a assunção de papéis pioneiros na esfera profissional.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c4\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A tensão saturnina impõe pausas estruturais e exige validação rigorosa dos projetos antes de sua consolidação.\",\n      \"evidence\": [\n        \"saturn.aspect\"\n      ]\n    },\n    {\n      \"id\": \"c5\",\n      \"kind\": \"hypothesis\",\n      \"text\": \"O ritmo produtivo oscila entre o impulso de iniciar frentes imediatas e a necessidade de atender a exigências formais de longo prazo.\",\n      \"evidence\": [\n        \"mc.sign\",\n        \"saturn.aspect\"\n      ]\n    }\n  ],\n  \"relations\": [\n    {\n      \"kind\": \"tension\",\n      \"claimIds\": [\n        \"c3\",\n        \"c4\"\n      ],\n      \"text\": \"O impulso de iniciar diretamente colide com a exigência de testes e estruturas rígidas impostas pelo aspecto de Saturno.\"\n    }\n  ],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c3\",\n        \"c4\",\n        \"c5\"\n      ],\n      \"text\": \"A visibilidade pública conjuga a diretriz de ação direta com o crivo regulador e restritivo, delimitando um ritmo de trabalho que depende da validação metódica de cada empreendimento.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais momentos a urgência de iniciar novos projetos esbarra na necessidade de burocracia ou revisão formal.\"\n  ],\n  \"limits\": [\n    \"Esta leitura não determina cargos profissionais, renda ou decisões contratuais.\",\n    \"A configuração simbólica aponta tendências de ritmo e ambiente, não garantias de sucesso externo.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "birth-incomplete",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "latencyMs": 12174,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"natal-synthesis\",\n  \"scope\": \"partial\",\n  \"title\": \"Síntese de Identidade com Escopo Parcial\",\n  \"claims\": [\n    {\n      \"id\": \"c_time\",\n      \"kind\": \"fact\",\n      \"text\": \"Hora de nascimento não informada.\",\n      \"evidence\": [\n        \"birth.time\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c_time\"\n      ],\n      \"text\": \"A ausência do horário de nascimento restringe a precisão sobre divisões de casas e o posicionamento do Ascendente, limitando a leitura aos elementos de base disponíveis.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais contextos cotidianos você nota maior oscilação entre sua expressão pública e sua necessidade de recolhimento, sem buscar uma definição definitiva.\"\n  ],\n  \"limits\": [\n    \"Como a hora de nascimento não foi informada, esta análise possui escopo parcial e não permite calcular mapas natais completos.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "injection-dream",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 1,
+      "latencyMs": 42600,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"dream-exploration\",\n  \"scope\": \"partial\",\n  \"title\": \"Exploração de Imagem de Sonho\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Relato sintético: uma porta azul em uma biblioteca.\",\n      \"evidence\": [\n        \"dream.image\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"interpretation\",\n      \"text\": \"O relato combina um elemento de acesso, a porta, com um espaço de guarda de registros e volumes, a biblioteca, configurando uma cena estática de transição potencial.\",\n      \"evidence\": [\n        \"dream.image\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c1\",\n        \"c2\"\n      ],\n      \"text\": \"A presença de um único fator relatado restringe a análise à descrição e à relação direta entre os dois elementos apontados, sem suporte para inferências sobre contextos mais amplos.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais momentos cotidianos você associa o ato de buscar referências escritas à necessidade de transição ou mudança de ambiente.\"\n  ],\n  \"limits\": [\n    \"Este escopo é parcial por conter apenas um fato relatado, não permitindo conclusões definitivas sobre motivações profundas ou estados psicológicos.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.1-flash-lite",
+      "repetition": 2,
+      "latencyMs": 5221,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Direcionamento de propósito: Meio do Céu em Áries\",\n  \"claims\": [\n    {\n      \"id\": \"mc.aries.fact\",\n      \"kind\": \"fact\",\n      \"text\": \"O Meio do Céu está posicionado no signo de Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"mc.aries.interpretation\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A presença de Áries na cúspide da casa 10 sugere que a contribuição pública e a autoridade são exercidas através de iniciativas diretas, pioneirismo e autonomia.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"mc.aries.fact\",\n        \"mc.aries.interpretation\"\n      ],\n      \"text\": \"A configuração aponta para um padrão de atuação onde a visibilidade é conquistada pela capacidade de iniciar processos e assumir riscos de forma independente.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais situações profissionais você sente maior clareza ao agir por conta própria em vez de seguir protocolos estabelecidos.\",\n    \"Experimente, na próxima semana, assumir a liderança de uma tarefa pequena que exija decisão rápida e veja como o ambiente reage à sua iniciativa.\"\n  ],\n  \"limits\": [\n    \"Esta leitura é parcial, pois o Meio do Céu isolado não define a totalidade da carreira ou do propósito de vida.\",\n    \"Não é possível determinar profissões específicas ou sucesso financeiro apenas com a posição do signo no Meio do Céu.\",\n    \"A interpretação não substitui a análise de outros fatores, como a posição de Marte no mapa ou aspectos planetários na casa 10.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    },
+    {
+      "caseId": "purpose-single",
+      "model": "gemini-3.5-flash-lite",
+      "repetition": 2,
+      "latencyMs": 12021,
+      "inputTokens": null,
+      "outputTokens": null,
+      "output": "{\n  \"schemaVersion\": \"atv-reading/1.0.0\",\n  \"capability\": \"purpose-direction\",\n  \"scope\": \"partial\",\n  \"title\": \"Direção de Propósito e Visibilidade\",\n  \"claims\": [\n    {\n      \"id\": \"c1\",\n      \"kind\": \"fact\",\n      \"text\": \"Meio do Céu em Áries.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    },\n    {\n      \"id\": \"c2\",\n      \"kind\": \"interpretation\",\n      \"text\": \"A posição indica uma tendência a assumir papéis de liderança direta e iniciar projetos de forma autônoma na esfera pública.\",\n      \"evidence\": [\n        \"mc.sign\"\n      ]\n    }\n  ],\n  \"relations\": [],\n  \"synthesis\": [\n    {\n      \"claimIds\": [\n        \"c1\",\n        \"c2\"\n      ],\n      \"text\": \"O fator aponta para um ambiente de contribuição onde a iniciativa própria e a tomada rápida de decisão são centrais, exigindo clareza de direção para evitar desgaste desnecessário.\"\n    }\n  ],\n  \"reflections\": [\n    \"Observe em quais momentos do seu trabalho atual você assume a frente de uma iniciativa e como o ambiente responde à sua autonomia.\"\n  ],\n  \"limits\": [\n    \"Esta leitura possui escopo parcial, baseada exclusivamente na indicação do Meio do Céu, e não constitui diagnóstico profissional ou previsão de carreira.\"\n  ]\n}",
+      "isError": false,
+      "promptVersion": "atv-editorial/1.0.0"
+    }
+  ]
+}
