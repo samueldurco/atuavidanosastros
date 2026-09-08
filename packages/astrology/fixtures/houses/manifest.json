@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-08T19:47:48.780918+00:00",
+  "fixtureSha256": "64997e8589ad41d024487781547db3b6bb17f34a378ee03ab2ff9f887238cdd8",
+  "generatorSha256": "6ebb1b7d341aeb5a92946838197923c75b7bfa8f51e1a0fdbff33fe32605e8cb",
+  "count": 168,
+  "sources": [
+    "https://pypi.org/project/pyerfa/2.0.1.5/",
+    "https://github.com/liberfa/erfa/blob/v2.0.1/src/gst06a.c",
+    "https://github.com/liberfa/erfa/blob/v2.0.1/src/obl06.c",
+    "https://github.com/liberfa/erfa/blob/v2.0.1/src/nut06a.c",
+    "https://ncgrastrology.org/wp-content/uploads/publications/geocosmic-journal-archive/2006_NCGR_Journal_Spring_2006.pdf"
+  ],
+  "formularyPages": "Michael P. Munkasey, An Astrological House Formulary; printed pp. 59-60 (PDF pp. 60-61)",
+  "promotion": false
+}

@@ -1,0 +1,4771 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "pyerfa": "2.0.1.5",
+    "erfa": "2.0.1",
+    "numpy": "2.2.6",
+    "license": "BSD-3-Clause (PyERFA/ERFA); no reference runtime shipped in app",
+    "orientation": "IAU 2006/2000A; gst06a + obl06 + nut06a; UT1 approximated by UTC",
+    "solver": "ATV independent vector intersections and bracketed ecliptic semi-arc bisection v1",
+    "timeLimit": "ERFA bundled leap-second table; no IERS DUT1, historical timezone or polar ASC certification"
+  },
+  "tolerancesArcsec": {
+    "midheaven": 60,
+    "ascendant": 60,
+    "cusp": 120
+  },
+  "cases": [
+    {
+      "id": "1972-01-01T12:00:00Z/equator",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.2487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 279.41846936513866,
+      "ascendant": 11.148709371673656,
+      "cusps": [
+        11.148709371673656,
+        42.697558484875564,
+        71.76704885509533,
+        99.41846936513862,
+        127.83437933966438,
+        158.62607370214116,
+        191.14870937167365,
+        222.69755848487557,
+        251.7670488550953,
+        279.41846936513866,
+        307.8343793396644,
+        338.6260737021411
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.24870646875162,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 99.41846936513868,
+      "ascendant": 191.14870937167368,
+      "cusps": [
+        191.14870937167368,
+        222.69755848487551,
+        251.7670488550953,
+        279.41846936513866,
+        307.83437933966434,
+        338.6260737021411,
+        11.148709371673643,
+        42.697558484875515,
+        71.76704885509533,
+        99.41846936513868,
+        127.83437933966434,
+        158.62607370214116
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.24870646875162,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 99.41846936513868,
+      "ascendant": 191.14870937167368,
+      "cusps": [
+        191.14870937167368,
+        222.69755848487551,
+        251.7670488550953,
+        279.41846936513866,
+        307.83437933966434,
+        338.6260737021411,
+        11.148709371673643,
+        42.697558484875515,
+        71.76704885509533,
+        99.41846936513868,
+        127.83437933966434,
+        158.62607370214116
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 233.6154064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 235.94052553870785,
+      "ascendant": 326.9583702883005,
+      "cusps": [
+        326.9583702883005,
+        353.8223714808255,
+        24.030565057882583,
+        55.940525538707845,
+        87.47011437339212,
+        117.81631971060413,
+        146.95837028830059,
+        173.82237148082547,
+        204.03056505788257,
+        235.94052553870785,
+        267.4701143733921,
+        297.81631971060415
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 326.8820064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 324.58575122802773,
+      "ascendant": 68.62230851147591,
+      "cusps": [
+        68.62230851147591,
+        93.78666972178628,
+        117.93032372869064,
+        144.5857512280278,
+        176.37382868087974,
+        212.76293849228816,
+        248.6223085114759,
+        273.78666972178627,
+        297.93032372869067,
+        324.58575122802773,
+        356.37382868087974,
+        32.76293849228815
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 206.2487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 208.2575145448299,
+      "ascendant": 274.0451350714296,
+      "cusps": [
+        274.0451350714296,
+        313.81931181247586,
+        355.3325251898771,
+        28.257514544829895,
+        53.05501997582912,
+        73.73808334194848,
+        94.04513507142964,
+        133.81931181247586,
+        175.3325251898771,
+        208.2575145448299,
+        233.0550199758291,
+        253.73808334194848
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.14870646875164,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 279.32626705812066,
+      "ascendant": 23.62066072398763,
+      "cusps": [
+        23.62066072398763,
+        60.79555863809629,
+        81.74038114378709,
+        99.32626705812069,
+        118.71843939625141,
+        147.20478427708207,
+        203.6206607239876,
+        240.79555863809628,
+        261.7403811437871,
+        279.32626705812066,
+        298.7184393962514,
+        327.20478427708207
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 71.45870646875163,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 72.89639587791255,
+      "ascendant": 152.18676745700776,
+      "cusps": [
+        152.18676745700776,
+        195.40387876987467,
+        227.91257515047732,
+        252.89639587791254,
+        275.36832028014334,
+        299.7513239778249,
+        332.18676745700776,
+        15.403878769874659,
+        47.91257515047734,
+        72.89639587791255,
+        95.36832028014338,
+        119.7513239778249
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 325.2487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 322.90404888232536,
+      "ascendant": 114.28008600054962,
+      "cusps": [
+        114.28008600054962,
+        120.04889394728062,
+        128.58845144576924,
+        142.90404888232536,
+        172.33913961040244,
+        250.2912117759171,
+        294.2800860005496,
+        300.0488939472806,
+        308.58845144576924,
+        322.90404888232536,
+        352.3391396104024,
+        70.2912117759171
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 145.2487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "ok",
+      "midheaven": 142.90404888232538,
+      "ascendant": 294.2800860005496,
+      "cusps": [
+        294.2800860005496,
+        300.0488939472806,
+        308.58845144576924,
+        322.90404888232536,
+        352.3391396104024,
+        70.2912117759171,
+        114.2800860005496,
+        120.04889394728062,
+        128.58845144576924,
+        142.90404888232538,
+        172.33913961040244,
+        250.2912117759171
+      ]
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 299.1487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 297.0973137123981,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 261.34870646875163,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 262.0533679947639,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.2487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 279.41846936513866,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "1972-01-01T12:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "1972-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "1972-01-01T12:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.2487064687516,
+        "trueObliquityDegrees": 23.444280028967306
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 279.41846936513866,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/equator",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.45707236053676,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 279.61108772073,
+      "ascendant": 11.37389953016421,
+      "cusps": [
+        11.37389953016421,
+        42.9066477998048,
+        71.96085373903479,
+        99.61108772072998,
+        128.04052156599246,
+        158.8494241035844,
+        191.3738995301642,
+        222.9066477998048,
+        251.9608537390348,
+        279.61108772073,
+        308.04052156599244,
+        338.8494241035844
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.45707236053677,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 99.61108772072998,
+      "ascendant": 191.3738995301642,
+      "cusps": [
+        191.3738995301642,
+        222.9066477998048,
+        251.9608537390348,
+        279.61108772073,
+        308.0405215659924,
+        338.84942410358434,
+        11.373899530164193,
+        42.9066477998048,
+        71.96085373903479,
+        99.61108772072998,
+        128.0405215659924,
+        158.84942410358437
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.45707236053677,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 99.61108772072998,
+      "ascendant": 191.3738995301642,
+      "cusps": [
+        191.3738995301642,
+        222.9066477998048,
+        251.9608537390348,
+        279.61108772073,
+        308.0405215659924,
+        338.84942410358434,
+        11.373899530164193,
+        42.9066477998048,
+        71.96085373903479,
+        99.61108772072998,
+        128.0405215659924,
+        158.84942410358437
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 233.82377236053674,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 236.1415828826354,
+      "ascendant": 327.1442150925552,
+      "cusps": [
+        327.1442150925552,
+        354.02390179137154,
+        24.23883031934644,
+        56.14158288263539,
+        87.66072966706791,
+        118.00280434072359,
+        147.14421509255516,
+        174.02390179137157,
+        204.23883031934645,
+        236.1415828826354,
+        267.6607296670679,
+        298.00280434072357
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 327.0903723605368,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 324.8022061893388,
+      "ascendant": 68.82986975952869,
+      "cusps": [
+        68.82986975952869,
+        93.97429885852601,
+        118.12350889536869,
+        144.80220618933873,
+        176.61628680607328,
+        213.00323658876468,
+        248.82986975952866,
+        273.974298858526,
+        298.1235088953687,
+        324.8022061893388,
+        356.6162868060733,
+        33.00323658876469
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 206.45707236053676,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 208.47531413886833,
+      "ascendant": 274.24983173967155,
+      "cusps": [
+        274.24983173967155,
+        314.0809469694813,
+        355.59197674040877,
+        28.475314138868313,
+        53.243890787716126,
+        73.9208304494965,
+        94.24983173967154,
+        134.08094696948135,
+        175.5919767404088,
+        208.47531413886833,
+        233.2438907877161,
+        253.9208304494965
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.3570723605368,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 279.51886228342653,
+      "ascendant": 24.06847355000188,
+      "cusps": [
+        24.06847355000188,
+        61.04028180342392,
+        81.93481236030273,
+        99.51886228342656,
+        118.94618542477731,
+        147.53288376493077,
+        204.0684735500019,
+        241.0402818034239,
+        261.9348123603027,
+        279.51886228342653,
+        298.9461854247773,
+        327.5328837649308
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 71.66707236053678,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 73.08983922300126,
+      "ascendant": 152.48944180713556,
+      "cusps": [
+        152.48944180713556,
+        195.67866329887653,
+        228.13249372525385,
+        253.08983922300123,
+        275.56381599802285,
+        299.97971814909033,
+        332.48944180713556,
+        15.678663298876543,
+        48.13249372525386,
+        73.08983922300126,
+        95.56381599802282,
+        119.97971814909033
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 325.45707236053676,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 323.11952435494595,
+      "ascendant": 114.36953169737185,
+      "cusps": [
+        114.36953169737185,
+        120.16398587023997,
+        128.74111145711498,
+        143.11952435494592,
+        172.67595126366416,
+        250.677768009051,
+        294.3695316973718,
+        300.16398587023997,
+        308.741111457115,
+        323.11952435494595,
+        352.67595126366416,
+        70.67776800905101
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 145.45707236053678,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "ok",
+      "midheaven": 143.11952435494595,
+      "ascendant": 294.3695316973718,
+      "cusps": [
+        294.3695316973718,
+        300.1639858702401,
+        308.741111457115,
+        323.11952435494595,
+        352.6759512636641,
+        70.67776800905101,
+        114.36953169737184,
+        120.16398587024007,
+        128.74111145711498,
+        143.11952435494595,
+        172.6759512636641,
+        250.677768009051
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 299.3570723605368,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 297.29715490585625,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 261.5570723605368,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 262.24482071416185,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.45707236053676,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 279.61108772073,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.45707236053676,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 279.61108772073,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/equator",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.83211748268812,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 99.95728731789514,
+      "ascendant": 191.77979578156,
+      "cusps": [
+        191.77979578156,
+        223.28455626145512,
+        252.31064903263638,
+        279.9572873178951,
+        308.41004093230214,
+        339.25037584843597,
+        11.77979578156,
+        43.28455626145514,
+        72.31064903263639,
+        99.95728731789514,
+        128.41004093230217,
+        159.25037584843597
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/date-line-east",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.8321174826881,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 279.95728731789507,
+      "ascendant": 11.77979578155999,
+      "cusps": [
+        11.77979578155999,
+        43.28455626145509,
+        72.31064903263628,
+        99.95728731789504,
+        128.41004093230217,
+        159.25037584843602,
+        191.77979578155998,
+        223.2845562614551,
+        252.3106490326363,
+        279.95728731789507,
+        308.41004093230214,
+        339.250375848436
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/date-line-west",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 280.8321174826881,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 279.95728731789507,
+      "ascendant": 11.77979578155999,
+      "cusps": [
+        11.77979578155999,
+        43.28455626145509,
+        72.31064903263628,
+        99.95728731789504,
+        128.41004093230217,
+        159.25037584843602,
+        191.77979578155998,
+        223.2845562614551,
+        252.3106490326363,
+        279.95728731789507,
+        308.41004093230214,
+        339.250375848436
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/south-tropical",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 54.19881748268811,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 56.50494575575392,
+      "ascendant": 134.29805288938098,
+      "cusps": [
+        134.29805288938098,
+        172.7745022780828,
+        207.75137888705686,
+        236.5049457557539,
+        261.379745002794,
+        285.92059710852135,
+        314.298052889381,
+        352.77450227808276,
+        27.75137888705686,
+        56.50494575575392,
+        81.37974500279401,
+        105.92059710852139
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/north-tropical",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 147.4654174826881,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 145.19033180222664,
+      "ascendant": 231.65936069252763,
+      "cusps": [
+        231.65936069252763,
+        261.096214575872,
+        292.367893884646,
+        325.19033180222664,
+        357.40145168993206,
+        26.384830957034097,
+        51.65936069252762,
+        81.09621457587203,
+        112.36789388464597,
+        145.19033180222664,
+        177.40145168993206,
+        206.3848309570341
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 26.832117482688112,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 28.86862577014381,
+      "ascendant": 130.2846988987101,
+      "cusps": [
+        130.2846988987101,
+        151.23880344323587,
+        176.92944625072133,
+        208.8686257701438,
+        245.24830691539069,
+        280.2433188752505,
+        310.2846988987101,
+        331.2388034432359,
+        356.9294462507213,
+        28.86862577014381,
+        65.24830691539069,
+        100.24331887525052
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/north-greenwich",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.73211748268812,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 99.86502511763689,
+      "ascendant": 187.56885374584138,
+      "cusps": [
+        187.56885374584138,
+        212.33055454338182,
+        243.25420505118493,
+        279.8650251176369,
+        315.4166554034557,
+        344.62432143024125,
+        7.568853745841402,
+        32.330554543381815,
+        63.25420505118494,
+        99.86502511763689,
+        135.4166554034557,
+        164.62432143024125
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 252.0421174826881,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 253.43893323794083,
+      "ascendant": 344.8631155610851,
+      "cusps": [
+        344.8631155610851,
+        10.979868007839855,
+        40.98377444231277,
+        73.43893323794084,
+        106.0551674895543,
+        136.8778546065295,
+        164.86311556108512,
+        190.97986800783985,
+        220.98377444231278,
+        253.43893323794083,
+        286.0551674895543,
+        316.87785460652947
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 145.83211748268812,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 143.50585891190326,
+      "ascendant": 210.43051895160494,
+      "cusps": [
+        210.43051895160494,
+        234.62517234166063,
+        270.2157420939845,
+        323.5058589119032,
+        356.5710147795399,
+        16.999632804108476,
+        30.430518951604917,
+        54.62517234166063,
+        90.21574209398452,
+        143.50585891190326,
+        176.5710147795399,
+        196.99963280410847
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 325.83211748268815,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "ok",
+      "midheaven": 323.50585891190326,
+      "ascendant": 30.430518951604952,
+      "cusps": [
+        30.430518951604952,
+        54.62517234166063,
+        90.21574209398452,
+        143.50585891190323,
+        176.57101477953995,
+        196.99963280410847,
+        210.43051895160497,
+        234.62517234166063,
+        270.2157420939845,
+        323.50585891190326,
+        356.57101477953995,
+        16.999632804108476
+      ]
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/north-boundary",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 119.73211748268811,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 117.65557911971308,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/south-boundary",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 81.93211748268811,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 82.58987522958128,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/north-pole",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.83211748268812,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 99.95728731789514,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2016-12-31T23:59:59Z/south-pole",
+      "input": {
+        "localDateTime": "2016-12-31T23:59:59",
+        "timezone": "UTC",
+        "utcInstant": "2016-12-31T23:59:59Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 100.83211748268812,
+        "trueObliquityDegrees": 23.434554757956743
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 99.95728731789514,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/equator",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 167.56792726829957,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 166.48929792385516,
+      "ascendant": 258.56551560323516,
+      "cusps": [
+        258.56551560323516,
+        286.19751697658023,
+        315.10440577271277,
+        346.4892979238552,
+        19.038261263186886,
+        50.01256588390875,
+        78.56551560323514,
+        106.19751697658026,
+        135.1044057727128,
+        166.48929792385516,
+        199.03826126318688,
+        230.01256588390874
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 347.56792726829957,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 346.48929792385513,
+      "ascendant": 78.56551560323513,
+      "cusps": [
+        78.56551560323513,
+        106.19751697658026,
+        135.1044057727128,
+        166.48929792385508,
+        199.03826126318683,
+        230.01256588390874,
+        258.56551560323516,
+        286.19751697658023,
+        315.10440577271277,
+        346.48929792385513,
+        19.038261263186833,
+        50.01256588390875
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 347.56792726829957,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 346.48929792385513,
+      "ascendant": 78.56551560323513,
+      "cusps": [
+        78.56551560323513,
+        106.19751697658026,
+        135.1044057727128,
+        166.48929792385508,
+        199.03826126318683,
+        230.01256588390874,
+        258.56551560323516,
+        286.19751697658023,
+        315.10440577271277,
+        346.48929792385513,
+        19.038261263186833,
+        50.01256588390875
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 120.93462726829956,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 118.8046317850294,
+      "ascendant": 219.9546581504928,
+      "cusps": [
+        219.9546581504928,
+        249.32669199403333,
+        274.17927832007973,
+        298.8046317850294,
+        326.8595573223728,
+        1.1654597303010144,
+        39.95465815049281,
+        69.32669199403334,
+        94.17927832007972,
+        118.8046317850294,
+        146.8595573223728,
+        181.16545973030102
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 214.20122726829956,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 216.52918805401796,
+      "ascendant": 292.4867571078673,
+      "cusps": [
+        292.4867571078673,
+        328.50623594042565,
+        4.884644695885766,
+        36.52918805401799,
+        63.07143045950222,
+        87.20167891354787,
+        112.48675710786726,
+        148.50623594042565,
+        184.88464469588575,
+        216.52918805401796,
+        243.0714304595022,
+        267.2016789135479
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 93.56792726829956,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 93.27420743973086,
+      "ascendant": 182.83214135525077,
+      "cusps": [
+        182.83214135525077,
+        209.10364968571122,
+        239.65356996688206,
+        273.2742074397309,
+        306.7787534165578,
+        337.0285844722483,
+        2.8321413552507773,
+        29.103649685711225,
+        59.65356996688205,
+        93.27420743973086,
+        126.77875341655779,
+        157.02858447224835
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 167.46792726829958,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 166.38125354070598,
+      "ascendant": 234.38987234235336,
+      "cusps": [
+        234.38987234235336,
+        265.89398004980296,
+        306.7397750881249,
+        346.381253540706,
+        16.06518422168299,
+        37.60286140429526,
+        54.38987234235336,
+        85.89398004980296,
+        126.73977508812487,
+        166.38125354070598,
+        196.06518422168298,
+        217.60286140429525
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 318.77792726829955,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 316.3214894428366,
+      "ascendant": 40.79348450535696,
+      "cusps": [
+        40.79348450535696,
+        69.96004066308844,
+        102.23185027254314,
+        136.32148944283665,
+        168.86749546688753,
+        197.0940027923065,
+        220.79348450535696,
+        249.96004066308842,
+        282.2318502725431,
+        316.3214894428366,
+        348.86749546688753,
+        17.094002792306505
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 212.56792726829957,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 214.8448607291216,
+      "ascendant": 244.63758572557026,
+      "cusps": [
+        244.63758572557026,
+        285.3265889083959,
+        4.142617612713136,
+        34.8448607291216,
+        49.77551922576775,
+        58.656391190679514,
+        64.63758572557026,
+        105.32658890839589,
+        184.14261761271314,
+        214.8448607291216,
+        229.77551922576774,
+        238.6563911906795
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 32.56792726829956,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "ok",
+      "midheaven": 34.844860729121606,
+      "ascendant": 64.63758572557025,
+      "cusps": [
+        64.63758572557025,
+        105.32658890839586,
+        184.1426176127132,
+        214.8448607291216,
+        229.77551922576774,
+        238.65639119067941,
+        244.63758572557026,
+        285.3265889083959,
+        4.142617612713187,
+        34.844860729121606,
+        49.775519225767766,
+        58.656391190679436
+      ]
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 186.46792726829955,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 187.04398163789566,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 148.66792726829956,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 146.43478251620434,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 167.56792726829957,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 166.48929792385516,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2026-09-08T12:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2026-09-08T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2026-09-08T12:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 167.56792726829957,
+        "trueObliquityDegrees": 23.43812074194901
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 166.48929792385516,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.0176425068657,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 177.83952175788704,
+      "ascendant": 268.1810996367036,
+      "cusps": [
+        268.1810996367036,
+        296.02156012304266,
+        325.7607880195552,
+        357.83952175788704,
+        30.111980798793155,
+        60.19090455846162,
+        88.18109963670359,
+        116.02156012304265,
+        145.76078801955524,
+        177.83952175788704,
+        210.11198079879316,
+        240.19090455846163
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.01764250686574,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 357.83952175788704,
+      "ascendant": 88.18109963670362,
+      "cusps": [
+        88.18109963670362,
+        116.02156012304265,
+        145.76078801955524,
+        177.83952175788704,
+        210.1119807987931,
+        240.19090455846163,
+        268.1810996367036,
+        296.02156012304266,
+        325.7607880195552,
+        357.83952175788704,
+        30.111980798793105,
+        60.19090455846162
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.01764250686574,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 357.83952175788704,
+      "ascendant": 88.18109963670362,
+      "cusps": [
+        88.18109963670362,
+        116.02156012304265,
+        145.76078801955524,
+        177.83952175788704,
+        210.1119807987931,
+        240.19090455846163,
+        268.1810996367036,
+        296.02156012304266,
+        325.7607880195552,
+        357.83952175788704,
+        30.111980798793105,
+        60.19090455846162
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 131.38434250686572,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 128.95302222211822,
+      "ascendant": 232.08071693126274,
+      "cusps": [
+        232.08071693126274,
+        259.4248806460198,
+        283.7112241008279,
+        308.9530222221182,
+        338.53074981764775,
+        14.13459036282762,
+        52.08071693126274,
+        79.42488064601982,
+        103.71122410082792,
+        128.95302222211822,
+        158.53074981764772,
+        194.13459036282762
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 224.6509425068657,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 227.11609990166644,
+      "ascendant": 303.5315019147399,
+      "cusps": [
+        303.5315019147399,
+        341.00932028711446,
+        16.95082111790553,
+        47.11609990166648,
+        72.6691961633659,
+        96.84287321363233,
+        123.53150191473995,
+        161.0093202871145,
+        196.95082111790552,
+        227.11609990166644,
+        252.66919616336588,
+        276.84287321363234
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 104.01764250686571,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 102.90133452043607,
+      "ascendant": 191.11922899634237,
+      "cusps": [
+        191.11922899634237,
+        218.01339040947482,
+        249.01060507636083,
+        282.9013345204361,
+        316.305926317588,
+        346.072741538429,
+        11.119228996342361,
+        38.01339040947484,
+        69.01060507636085,
+        102.90133452043607,
+        136.305926317588,
+        166.072741538429
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 177.91764250686572,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 177.7305540517365,
+      "ascendant": 241.90880491199175,
+      "cusps": [
+        241.90880491199175,
+        275.542228250385,
+        318.843990041061,
+        357.7305540517365,
+        25.568133836579527,
+        45.753839012616105,
+        61.90880491199176,
+        95.54222825038498,
+        138.84399004106098,
+        177.7305540517365,
+        205.56813383657953,
+        225.7538390126161
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 329.2276425068657,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 327.0156637314115,
+      "ascendant": 49.40118200577583,
+      "cusps": [
+        49.40118200577583,
+        79.14463214122381,
+        112.30671813626878,
+        147.01566373141145,
+        179.23262214503893,
+        206.5099911589902,
+        229.4011820057758,
+        259.1446321412238,
+        292.3067181362688,
+        327.0156637314115,
+        359.23262214503893,
+        26.509991158990196
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.0176425068657,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 225.48312865467778,
+      "ascendant": 249.90653120296918,
+      "cusps": [
+        249.90653120296918,
+        309.8648099545248,
+        20.852893515015964,
+        45.48312865467781,
+        57.564794750193265,
+        64.88284719061498,
+        69.90653120296918,
+        129.8648099545248,
+        200.85289351501595,
+        225.48312865467778,
+        237.56479475019327,
+        244.882847190615
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.01764250686572,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "ok",
+      "midheaven": 45.48312865467782,
+      "ascendant": 69.90653120296923,
+      "cusps": [
+        69.90653120296923,
+        129.8648099545248,
+        200.85289351501595,
+        225.4831286546778,
+        237.56479475019327,
+        244.88284719061488,
+        249.90653120296923,
+        309.8648099545248,
+        20.852893515015964,
+        45.48312865467782,
+        57.564794750193265,
+        64.88284719061491
+      ]
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 196.91764250686572,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 198.34108719428215,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 159.11764250686574,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 157.42142878025174,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.0176425068657,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 177.83952175788704,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T00:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T00:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T00:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.0176425068657,
+        "trueObliquityDegrees": 23.43870169524975
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 177.83952175788704,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.14084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 225.60659009952548,
+      "ascendant": 310.68881408281715,
+      "cusps": [
+        310.68881408281715,
+        341.7216685251899,
+        14.276229887716783,
+        45.60659009952548,
+        74.4619810769617,
+        102.0898075520769,
+        130.68881408281717,
+        161.72166852518987,
+        194.27622988771677,
+        225.60659009952548,
+        254.4619810769617,
+        282.0898075520769
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.14084851436252,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 45.606590099525455,
+      "ascendant": 130.68881408281717,
+      "cusps": [
+        130.68881408281717,
+        161.7216685251898,
+        194.27622988771677,
+        225.60659009952545,
+        254.4619810769617,
+        282.0898075520768,
+        310.68881408281715,
+        341.72166852518984,
+        14.276229887716783,
+        45.606590099525455,
+        74.46198107696168,
+        102.08980755207685
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.14084851436254,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 45.60659009952548,
+      "ascendant": 130.6888140828172,
+      "cusps": [
+        130.6888140828172,
+        161.7216685251898,
+        194.27622988771682,
+        225.60659009952548,
+        254.4619810769617,
+        282.0898075520769,
+        310.68881408281715,
+        341.72166852518984,
+        14.276229887716832,
+        45.60659009952548,
+        74.4619810769617,
+        102.08980755207688
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 176.50754851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 176.1943409557354,
+      "ascendant": 276.7125618902484,
+      "cusps": [
+        276.7125618902484,
+        300.4152566981689,
+        326.15848160516776,
+        356.1943409557354,
+        30.319602560095525,
+        64.91386466325557,
+        96.71256189024841,
+        120.4152566981689,
+        146.1584816051678,
+        176.1943409557354,
+        210.31960256009552,
+        244.91386466325557
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 269.77414851436254,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 269.7927842216094,
+      "ascendant": 359.6964854005749,
+      "cusps": [
+        359.6964854005749,
+        36.11253843621857,
+        64.94966106452601,
+        89.79278422160937,
+        114.60948626849357,
+        143.36800493240636,
+        179.69648540057486,
+        216.11253843621856,
+        244.949661064526,
+        269.7927842216094,
+        294.6094862684936,
+        323.36800493240634
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 149.14084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 146.92551050475973,
+      "ascendant": 226.56186552650428,
+      "cusps": [
+        226.56186552650428,
+        256.2410282318815,
+        290.7303134032388,
+        326.9255105047597,
+        359.1671497095509,
+        25.303705895194362,
+        46.56186552650431,
+        76.2410282318815,
+        110.73031340323884,
+        146.92551050475973,
+        179.1671497095509,
+        205.30370589519435
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.04084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 225.50638653824575,
+      "ascendant": 279.79215811040206,
+      "cusps": [
+        279.79215811040206,
+        331.7283969457651,
+        17.252636432049535,
+        45.506386538245756,
+        65.2535014638335,
+        82.0149372918593,
+        99.79215811040207,
+        151.7283969457651,
+        197.25263643204954,
+        225.50638653824575,
+        245.25350146383352,
+        262.01493729185927
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 14.350848514362527,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 15.58119448929546,
+      "ascendant": 87.66052000176175,
+      "cusps": [
+        87.66052000176175,
+        122.88987751952192,
+        161.24419683010274,
+        195.58119448929546,
+        223.15645948338351,
+        246.1033289161295,
+        267.6605200017617,
+        302.8898775195219,
+        341.24419683010274,
+        15.58119448929546,
+        43.15645948338351,
+        66.10332891612947
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.1408485143626,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 268.2941595647143,
+      "ascendant": 306.040962301014,
+      "cusps": [
+        306.040962301014,
+        76.0139357037672,
+        83.77034806672904,
+        88.29415956471429,
+        92.3958437476089,
+        97.88942434273854,
+        126.04096230101399,
+        256.0139357037672,
+        263.770348066729,
+        268.2941595647143,
+        272.39584374760886,
+        277.88942434273855
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.14084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "ok",
+      "midheaven": 88.29415956471426,
+      "ascendant": 126.04096230101378,
+      "cusps": [
+        126.04096230101378,
+        256.0139357037671,
+        263.77034806672896,
+        268.2941595647143,
+        272.39584374760886,
+        277.88942434273844,
+        306.0409623010138,
+        76.0139357037671,
+        83.77034806672893,
+        88.29415956471426,
+        92.39584374760885,
+        97.88942434273847
+      ]
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 242.04084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 244.03404232305397,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 204.24084851436254,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 206.14043716564606,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.14084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 225.60659009952548,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T03:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T03:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T03:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.14084851436255,
+        "trueObliquityDegrees": 23.43870320218774
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 225.60659009952548,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 268.4072168342498,
+      "ascendant": 358.10804133067154,
+      "cusps": [
+        358.10804133067154,
+        30.369775717535724,
+        60.42740999417805,
+        88.40721683424981,
+        116.25588622511503,
+        146.01599584528745,
+        178.10804133067157,
+        210.36977571753573,
+        240.42740999417805,
+        268.4072168342498,
+        296.25588622511503,
+        326.0159958452875
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 88.40721683424981,
+      "ascendant": 178.1080413306716,
+      "cusps": [
+        178.1080413306716,
+        210.36977571753573,
+        240.42740999417805,
+        268.4072168342498,
+        296.255886225115,
+        326.0159958452875,
+        358.10804133067154,
+        30.369775717535724,
+        60.42740999417805,
+        88.40721683424981,
+        116.25588622511499,
+        146.01599584528745
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 88.40721683424981,
+      "ascendant": 178.1080413306716,
+      "cusps": [
+        178.1080413306716,
+        210.36977571753573,
+        240.42740999417805,
+        268.4072168342498,
+        296.255886225115,
+        326.0159958452875,
+        358.10804133067154,
+        30.369775717535724,
+        60.42740999417805,
+        88.40721683424981,
+        116.25588622511499,
+        146.01599584528745
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 221.63075434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 224.09020681773,
+      "ascendant": 316.32653475554594,
+      "cusps": [
+        316.32653475554594,
+        342.28117929350014,
+        11.902785141184228,
+        44.09020681772998,
+        76.316812621267,
+        107.07710959464231,
+        136.326534755546,
+        162.28117929350014,
+        191.90278514118424,
+        224.09020681773,
+        256.316812621267,
+        287.0771095946423
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 314.89735434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 312.43369971644466,
+      "ascendant": 55.97432654176566,
+      "cusps": [
+        55.97432654176566,
+        82.73427308096498,
+        106.91803148671163,
+        132.43369971644466,
+        162.53231309169868,
+        198.4400286773777,
+        235.97432654176563,
+        262.73427308096495,
+        286.91803148671164,
+        312.43369971644466,
+        342.53231309169865,
+        18.440028677377725
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 194.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 195.48766825002,
+      "ascendant": 263.16339017478714,
+      "cusps": [
+        263.16339017478714,
+        299.7915591724976,
+        340.56882343433875,
+        15.487668250019988,
+        42.11276458253204,
+        63.524658959427974,
+        83.16339017478714,
+        119.79155917249761,
+        160.56882343433878,
+        195.48766825002,
+        222.11276458253204,
+        243.52465895942797
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.16405434607003,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 268.31545411542953,
+      "ascendant": 355.60613854155224,
+      "cusps": [
+        355.60613854155224,
+        45.05977329472306,
+        69.94807600098032,
+        88.31545411542955,
+        106.35732756546705,
+        129.87687956887754,
+        175.60613854155224,
+        225.05977329472304,
+        249.9480760009803,
+        268.31545411542953,
+        286.357327565467,
+        309.87687956887754
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 59.47405434607001,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 61.58659362548801,
+      "ascendant": 135.85591588977655,
+      "cusps": [
+        135.85591588977655,
+        179.28878647440266,
+        214.74373968383978,
+        241.586593625488,
+        264.3706206504841,
+        287.35944042570065,
+        315.85591588977655,
+        359.2887864744026,
+        34.74373968383979,
+        61.58659362548801,
+        84.37062065048411,
+        107.35944042570067
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 310.8109064514437,
+      "ascendant": 108.19587710891786,
+      "cusps": [
+        108.19587710891786,
+        112.90149565234819,
+        119.69361418589037,
+        130.81090645144369,
+        153.31356031017117,
+        219.90784823894967,
+        288.19587710891784,
+        292.90149565234816,
+        299.69361418589034,
+        310.8109064514437,
+        333.31356031017117,
+        39.907848238949676
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "ok",
+      "midheaven": 130.81090645144377,
+      "ascendant": 288.19587710891784,
+      "cusps": [
+        288.19587710891784,
+        292.9014956523483,
+        299.69361418589034,
+        310.81090645144377,
+        333.3135603101711,
+        39.907848238949676,
+        108.19587710891791,
+        112.90149565234829,
+        119.69361418589037,
+        130.81090645144377,
+        153.3135603101711,
+        219.90784823894967
+      ]
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 287.16405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 285.82160349113985,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 249.36405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 250.93907584702288,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 268.4072168342498,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T06:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T06:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T06:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.26405434607,
+        "trueObliquityDegrees": 23.438704738463386
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 268.4072168342498,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 310.9330434380742,
+      "ascendant": 45.853375208025795,
+      "cusps": [
+        45.853375208025795,
+        74.6910661404657,
+        102.31778528203522,
+        130.93304343807424,
+        161.98611883291207,
+        194.54217121998687,
+        225.8533752080258,
+        254.6910661404657,
+        282.31778528203523,
+        310.9330434380742,
+        341.9861188329121,
+        14.542171219986876
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 130.93304343807424,
+      "ascendant": 225.8533752080258,
+      "cusps": [
+        225.8533752080258,
+        254.6910661404657,
+        282.31778528203523,
+        310.9330434380742,
+        341.9861188329121,
+        14.542171219986876,
+        45.85337520802577,
+        74.6910661404657,
+        102.31778528203522,
+        130.93304343807424,
+        161.98611883291213,
+        194.54217121998687
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 130.93304343807424,
+      "ascendant": 225.8533752080258,
+      "cusps": [
+        225.8533752080258,
+        254.6910661404657,
+        282.31778528203523,
+        310.9330434380742,
+        341.9861188329121,
+        14.542171219986876,
+        45.85337520802577,
+        74.6910661404657,
+        102.31778528203522,
+        130.93304343807424,
+        161.98611883291213,
+        194.54217121998687
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 266.75396000015564,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 267.0212993754194,
+      "ascendant": 357.0245618632212,
+      "cusps": [
+        357.0245618632212,
+        25.710913186946797,
+        56.14711277728003,
+        87.02129937541939,
+        117.8120147669024,
+        148.1644034287188,
+        177.02456186322124,
+        205.71091318694678,
+        236.14711277728003,
+        267.0212993754194,
+        297.8120147669024,
+        328.1644034287188
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 0.020560000155693845,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 0.022409058289714935,
+      "ascendant": 99.85376377530034,
+      "cusps": [
+        99.85376377530034,
+        123.58131137087268,
+        149.6260858802521,
+        180.0224090582897,
+        214.1876389559065,
+        248.42295982487988,
+        279.85376377530037,
+        303.5813113708727,
+        329.6260858802521,
+        0.022409058289714935,
+        34.18763895590651,
+        68.4229598248799
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 239.3872600001557,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 241.50356334854146,
+      "ascendant": 311.2992365243966,
+      "cusps": [
+        311.2992365243966,
+        359.1111097599668,
+        35.631617351309444,
+        61.503563348541476,
+        82.79800692298123,
+        104.11793646109037,
+        131.29923652439663,
+        179.1111097599668,
+        215.63161735130944,
+        241.50356334854146,
+        262.79800692298124,
+        284.1179364610904
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.2872600001557,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 310.83390712566427,
+      "ascendant": 76.24845697457421,
+      "cusps": [
+        76.24845697457421,
+        94.77584497625753,
+        111.56072116287753,
+        130.83390712566424,
+        157.9824054270314,
+        202.3721803367867,
+        256.2484569745742,
+        274.77584497625753,
+        291.56072116287754,
+        310.83390712566427,
+        337.9824054270314,
+        22.3721803367867
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 104.59726000015569,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 103.43831436485928,
+      "ascendant": 202.09272537947956,
+      "cusps": [
+        202.09272537947956,
+        235.95506203357814,
+        260.9495873088717,
+        283.43831436485925,
+        307.91012111518165,
+        339.3938332911464,
+        22.09272537947957,
+        55.95506203357815,
+        80.94958730887167,
+        103.43831436485928,
+        127.91012111518165,
+        159.39383329114642
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 358.2423058767111,
+      "ascendant": 130.95533524833968,
+      "cusps": [
+        130.95533524833968,
+        140.16981227374984,
+        154.24560153884735,
+        178.24230587671113,
+        224.37379215992385,
+        283.90573462137746,
+        310.9553352483397,
+        320.1698122737498,
+        334.2456015388473,
+        358.2423058767111,
+        44.37379215992386,
+        103.90573462137746
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "ok",
+      "midheaven": 178.24230587671113,
+      "ascendant": 310.9553352483397,
+      "cusps": [
+        310.9553352483397,
+        320.1698122737498,
+        334.2456015388473,
+        358.2423058767111,
+        44.37379215992391,
+        103.90573462137736,
+        130.95533524833965,
+        140.16981227374984,
+        154.24560153884735,
+        178.24230587671113,
+        224.3737921599239,
+        283.90573462137735
+      ]
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 332.28726000015564,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 330.20723491404254,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 294.4872600001557,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 292.6788872667074,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 310.9330434380742,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T09:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T09:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T09:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.38726000015566,
+        "trueObliquityDegrees": 23.438706299859376
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 310.9330434380742,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.51046547519104,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 358.3765732834237,
+      "ascendant": 88.63332405204193,
+      "cusps": [
+        88.63332405204193,
+        116.49034956444164,
+        146.27137843147733,
+        178.3765732834237,
+        210.62740317608305,
+        240.6637642320096,
+        268.6333240520419,
+        296.49034956444166,
+        326.27137843147733,
+        358.3765732834237,
+        30.627403176083053,
+        60.66376423200962
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.51046547519107,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 178.37657328342374,
+      "ascendant": 268.6333240520419,
+      "cusps": [
+        268.6333240520419,
+        296.49034956444166,
+        326.2713784314774,
+        358.3765732834237,
+        30.627403176083053,
+        60.66376423200962,
+        88.63332405204191,
+        116.49034956444164,
+        146.27137843147742,
+        178.37657328342374,
+        210.62740317608305,
+        240.6637642320096
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.51046547519107,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 178.37657328342374,
+      "ascendant": 268.6333240520419,
+      "cusps": [
+        268.6333240520419,
+        296.49034956444166,
+        326.2713784314774,
+        358.3765732834237,
+        30.627403176083053,
+        60.66376423200962,
+        88.63332405204191,
+        116.49034956444164,
+        146.27137843147742,
+        178.37657328342374,
+        210.62740317608305,
+        240.6637642320096
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 311.877165475191,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 309.43912230523307,
+      "ascendant": 37.931784555089145,
+      "cusps": [
+        37.931784555089145,
+        67.10894479840812,
+        97.60958101529549,
+        129.43912230523313,
+        161.50260893593634,
+        191.47983388581432,
+        217.93178455508914,
+        247.10894479840812,
+        277.6095810152955,
+        309.43912230523307,
+        341.50260893593634,
+        11.479833885814324
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 45.143765475191096,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 47.60725364521999,
+      "ascendant": 139.4285635035579,
+      "cusps": [
+        139.4285635035579,
+        165.65265944596942,
+        195.4777168870618,
+        227.60725364521997,
+        259.61424441288693,
+        290.22331465237767,
+        319.4285635035579,
+        345.6526594459694,
+        15.47771688706182,
+        47.60725364521999,
+        79.61424441288696,
+        110.22331465237762
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 284.5104654751911,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 283.35787779462095,
+      "ascendant": 24.651563001365528,
+      "cusps": [
+        24.651563001365528,
+        58.835559674754194,
+        82.40563847845121,
+        103.35787779462093,
+        126.49713382769534,
+        157.8370928190739,
+        204.6515630013655,
+        238.8355596747542,
+        262.40563847845124,
+        283.35787779462095,
+        306.49713382769534,
+        337.8370928190739
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.4104654751911,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 358.2675945984092,
+      "ascendant": 115.39814270695751,
+      "cusps": [
+        115.39814270695751,
+        131.3846199220064,
+        151.12152797757867,
+        178.26759459840926,
+        216.71982206198112,
+        260.8627332361685,
+        295.39814270695746,
+        311.3846199220064,
+        331.12152797757864,
+        358.2675945984092,
+        36.719822061981134,
+        80.8627332361685
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 149.72046547519108,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 147.52796488170142,
+      "ascendant": 257.23610244190013,
+      "cusps": [
+        257.23610244190013,
+        279.9214128057101,
+        302.09324439826423,
+        327.52796488170145,
+        359.66259859141775,
+        38.72320384013344,
+        77.23610244190014,
+        99.9214128057101,
+        122.09324439826426,
+        147.52796488170142,
+        179.66259859141775,
+        218.72320384013344
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.510465475191076,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 45.976698910890065,
+      "ascendant": 154.56658930196863,
+      "cusps": [
+        154.56658930196863,
+        169.12149864167358,
+        191.0960099586845,
+        225.97669891089006,
+        277.6530764452087,
+        311.0256835647468,
+        334.5665893019686,
+        349.12149864167355,
+        11.096009958684514,
+        45.976698910890065,
+        97.65307644520868,
+        131.02568356474683
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.51046547519107,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "ok",
+      "midheaven": 225.97669891089006,
+      "ascendant": 334.5665893019686,
+      "cusps": [
+        334.5665893019686,
+        349.1214986416736,
+        11.096009958684514,
+        45.97669891089006,
+        97.65307644520868,
+        131.02568356474683,
+        154.5665893019686,
+        169.12149864167364,
+        191.0960099586845,
+        225.97669891089006,
+        277.6530764452087,
+        311.0256835647468
+      ]
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 17.41046547519107,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 18.869581456139393,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 339.61046547519106,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 337.9463184681015,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.51046547519104,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 358.3765732834237,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T12:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T12:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T12:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.51046547519104,
+        "trueObliquityDegrees": 23.438707882136633
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 358.3765732834237,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.63367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 46.099976741042276,
+      "ascendant": 131.17745143892827,
+      "cusps": [
+        131.17745143892827,
+        162.25068375455774,
+        194.80801594294232,
+        226.09997674104227,
+        254.92006402358146,
+        282.54583282262007,
+        311.17745143892824,
+        342.25068375455777,
+        14.808015942942312,
+        46.099976741042276,
+        74.92006402358146,
+        102.5458328226201
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.63367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 226.09997674104224,
+      "ascendant": 311.17745143892824,
+      "cusps": [
+        311.17745143892824,
+        342.25068375455777,
+        14.808015942942312,
+        46.099976741042255,
+        74.92006402358146,
+        102.54583282262007,
+        131.17745143892824,
+        162.25068375455774,
+        194.80801594294232,
+        226.09997674104224,
+        254.92006402358146,
+        282.54583282262007
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 223.63367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 226.09997674104224,
+      "ascendant": 311.17745143892824,
+      "cusps": [
+        311.17745143892824,
+        342.25068375455777,
+        14.808015942942312,
+        46.099976741042255,
+        74.92006402358146,
+        102.54583282262007,
+        131.17745143892824,
+        162.25068375455774,
+        194.80801594294232,
+        226.09997674104224,
+        254.92006402358146,
+        282.54583282262007
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 357.0003707701623,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 356.73116076075985,
+      "ascendant": 77.50065886435476,
+      "cusps": [
+        77.50065886435476,
+        108.64389028029635,
+        142.5700985602754,
+        176.73116076075982,
+        207.41386423136024,
+        233.72486599056668,
+        257.5006588643547,
+        288.6438902802964,
+        322.57009856027537,
+        356.73116076075985,
+        27.41386423136025,
+        53.7248659905667
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 90.26697077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 90.24494225119794,
+      "ascendant": 180.24473556437846,
+      "cusps": [
+        180.24473556437846,
+        209.03253902556003,
+        239.42419557498238,
+        270.2449422511979,
+        301.07258682027623,
+        331.4712046680203,
+        0.24473556437849273,
+        29.03253902556002,
+        59.4241955749824,
+        90.24494225119794,
+        121.07258682027624,
+        151.47120466802028
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 329.6336707701623,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 327.4376890876801,
+      "ascendant": 81.9805606187344,
+      "cusps": [
+        81.9805606187344,
+        102.69402876399297,
+        123.22641386100003,
+        147.4376890876801,
+        179.544028970055,
+        221.0330340891468,
+        261.9805606187344,
+        282.69402876399295,
+        303.226413861,
+        327.4376890876801,
+        359.544028970055,
+        41.0330340891468
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.53367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 45.999921640867846,
+      "ascendant": 147.36339335229775,
+      "cusps": [
+        147.36339335229775,
+        166.8538931081928,
+        192.46104004163823,
+        225.99992164086785,
+        264.9378671999116,
+        299.73700781227035,
+        327.36339335229775,
+        346.8538931081928,
+        12.461040041638222,
+        45.999921640867846,
+        84.9378671999116,
+        119.73700781227033
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 194.84367077016236,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 196.11200188782115,
+      "ascendant": 297.44567777677713,
+      "cusps": [
+        297.44567777677713,
+        319.34099402151855,
+        344.9834495155341,
+        16.11200188782117,
+        51.5019974239894,
+        86.41650666829794,
+        117.4456777767771,
+        139.34099402151855,
+        164.98344951553412,
+        196.11200188782115,
+        231.5019974239894,
+        266.4165066682979
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.63367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 88.74637432839563,
+      "ascendant": 179.24549653118643,
+      "cusps": [
+        179.24549653118643,
+        198.82424137546127,
+        226.8041337285672,
+        268.74637432839563,
+        311.1298041517451,
+        339.40031655397365,
+        359.2454965311864,
+        18.824241375461273,
+        46.80413372856719,
+        88.74637432839563,
+        131.1298041517451,
+        159.40031655397362
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.6336707701623,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "ok",
+      "midheaven": 268.74637432839563,
+      "ascendant": 359.2454965311864,
+      "cusps": [
+        359.2454965311864,
+        18.824241375461273,
+        46.80413372856714,
+        88.74637432839562,
+        131.1298041517451,
+        159.40031655397362,
+        179.2454965311864,
+        198.82424137546127,
+        226.80413372856714,
+        268.74637432839563,
+        311.1298041517451,
+        339.40031655397365
+      ]
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 62.533670770162345,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 64.50222075084217,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 24.73367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 26.66077934366912,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.63367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 46.099976741042276,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T15:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T15:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T15:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 43.63367077016235,
+        "trueObliquityDegrees": 23.438709481042334
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 46.099976741042276,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.75687588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 88.85942260246041,
+      "ascendant": 178.64511574365366,
+      "cusps": [
+        178.64511574365366,
+        210.88486243461602,
+        240.89996809938745,
+        268.8594226024604,
+        296.7249510794155,
+        326.5269352535326,
+        358.64511574365366,
+        30.88486243461603,
+        60.89996809938745,
+        88.85942260246041,
+        116.72495107941552,
+        146.5269352535326
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.756875884454,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 268.85942260246037,
+      "ascendant": 358.64511574365366,
+      "cusps": [
+        358.64511574365366,
+        30.88486243461598,
+        60.89996809938745,
+        88.85942260246038,
+        116.72495107941548,
+        146.52693525353266,
+        178.64511574365366,
+        210.88486243461597,
+        240.89996809938745,
+        268.85942260246037,
+        296.72495107941546,
+        326.52693525353266
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 268.756875884454,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 268.85942260246037,
+      "ascendant": 358.64511574365366,
+      "cusps": [
+        358.64511574365366,
+        30.88486243461598,
+        60.89996809938745,
+        88.85942260246038,
+        116.72495107941548,
+        146.52693525353266,
+        178.64511574365366,
+        210.88486243461597,
+        240.89996809938745,
+        268.85942260246037,
+        296.72495107941546,
+        326.52693525353266
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 42.12357588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 44.58584002895187,
+      "ascendant": 120.79304490588413,
+      "cusps": [
+        120.79304490588413,
+        157.94225254671633,
+        194.05013225878673,
+        224.58584002895185,
+        250.35716504796332,
+        274.4872691172168,
+        300.79304490588413,
+        337.9422525467163,
+        14.050132258786727,
+        44.58584002895187,
+        70.3571650479633,
+        94.48726911721681
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 135.39017588445404,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 132.92490990969569,
+      "ascendant": 221.04364404269847,
+      "cusps": [
+        221.04364404269847,
+        250.25478117318065,
+        280.88519424369235,
+        312.92490990969566,
+        345.0647229781621,
+        14.86051304122575,
+        41.04364404269846,
+        70.25478117318065,
+        100.88519424369233,
+        132.92490990969569,
+        165.06472297816208,
+        194.86051304122574
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 14.756875884454047,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 16.018547547464227,
+      "ascendant": 120.77807195334124,
+      "cusps": [
+        120.77807195334124,
+        140.94694264879885,
+        165.26129407850328,
+        196.0185475474642,
+        232.72083308245595,
+        269.41086703211505,
+        300.7780719533412,
+        320.9469426487989,
+        345.2612940785033,
+        16.018547547464227,
+        52.720833082455954,
+        89.41086703211508
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.65687588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 88.76766659630711,
+      "ascendant": 179.05250705181072,
+      "cusps": [
+        179.05250705181072,
+        202.82065460902552,
+        232.7833625885299,
+        268.7676665963071,
+        304.8829665393108,
+        335.05732308986103,
+        359.0525070518107,
+        22.82065460902553,
+        52.783362588529926,
+        88.76766659630711,
+        124.88296653931081,
+        155.05732308986106
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 239.96687588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 242.0577023616648,
+      "ascendant": 334.751552421889,
+      "cusps": [
+        334.751552421889,
+        359.9697628444894,
+        29.466564217256007,
+        62.05770236166482,
+        95.12085250989156,
+        126.3331733512896,
+        154.75155242188904,
+        179.96976284448945,
+        209.466564217256,
+        242.0577023616648,
+        275.12085250989156,
+        306.3331733512896
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.75687588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 131.2997225390364,
+      "ascendant": 203.96275692891336,
+      "cusps": [
+        203.96275692891336,
+        227.30968719863776,
+        260.2338482238698,
+        311.2997225390364,
+        346.6708184687915,
+        9.080607061741109,
+        23.96275692891335,
+        47.30968719863777,
+        80.23384822386983,
+        131.2997225390364,
+        166.6708184687915,
+        189.0806070617411
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.756875884454,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "ok",
+      "midheaven": 311.2997225390364,
+      "ascendant": 23.962756928913382,
+      "cusps": [
+        23.962756928913382,
+        47.30968719863777,
+        80.23384822386983,
+        131.29972253903637,
+        166.67081846879145,
+        189.08060706174115,
+        203.96275692891336,
+        227.30968719863776,
+        260.2338482238698,
+        311.2997225390364,
+        346.6708184687915,
+        9.08060706174116
+      ]
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 107.65687588445404,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 106.28025704905004,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 69.85687588445406,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 71.40008776309674,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.75687588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 88.85942260246041,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T18:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T18:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T18:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 88.75687588445405,
+        "trueObliquityDegrees": 23.43871109231776
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 88.85942260246041,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/equator",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 0,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.8800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 131.42203842890268,
+      "ascendant": 226.34639487524433,
+      "cusps": [
+        226.34639487524433,
+        255.14897592019645,
+        282.77395141373034,
+        311.4220384289027,
+        342.51536186621445,
+        15.073762487414706,
+        46.34639487524433,
+        75.14897592019645,
+        102.77395141373036,
+        131.42203842890268,
+        162.51536186621448,
+        195.0737624874147
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/date-line-east",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 0,
+        "longitude": 180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.88008081785773,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 311.42203842890274,
+      "ascendant": 46.34639487524436,
+      "cusps": [
+        46.34639487524436,
+        75.14897592019645,
+        102.77395141373036,
+        131.42203842890268,
+        162.51536186621448,
+        195.07376248741474,
+        226.34639487524436,
+        255.14897592019645,
+        282.77395141373034,
+        311.42203842890274,
+        342.51536186621445,
+        15.073762487414758
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/date-line-west",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 0,
+        "longitude": -180,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 313.88008081785773,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 311.42203842890274,
+      "ascendant": 46.34639487524436,
+      "cusps": [
+        46.34639487524436,
+        75.14897592019645,
+        102.77395141373036,
+        131.42203842890268,
+        162.51536186621448,
+        195.07376248741474,
+        226.34639487524436,
+        255.14897592019645,
+        282.77395141373034,
+        311.42203842890274,
+        342.51536186621445,
+        15.073762487414758
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": -23.55,
+        "longitude": -46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 87.24678081785771,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 87.47365218638913,
+      "ascendant": 176.30132586794562,
+      "cusps": [
+        176.30132586794562,
+        213.18588467956488,
+        242.47023197474633,
+        267.47365218638913,
+        292.1550985825189,
+        320.4821569564715,
+        356.30132586794565,
+        33.18588467956488,
+        62.470231974746326,
+        87.47365218638913,
+        112.15509858251887,
+        140.4821569564715
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/north-tropical",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 23.55,
+        "longitude": 46.6333,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 180.5133808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 180.55954880203097,
+      "ascendant": 260.6220701385406,
+      "cusps": [
+        260.6220701385406,
+        292.1067917111676,
+        326.3971961057749,
+        0.5595488020309678,
+        30.902584205222823,
+        56.90058634308989,
+        80.6220701385406,
+        112.1067917111676,
+        146.39719610577492,
+        180.55954880203097,
+        210.9025842052228,
+        236.90058634308988
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 40.71,
+        "longitude": -74,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 59.8800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 61.97477396834139,
+      "ascendant": 156.16463368053695,
+      "cusps": [
+        156.16463368053695,
+        179.89532708695938,
+        208.69645914781015,
+        241.97477396834137,
+        276.53952557743315,
+        308.39034811258597,
+        336.16463368053695,
+        359.8953270869594,
+        28.69645914781016,
+        61.97477396834139,
+        96.53952557743317,
+        128.390348112586
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/north-greenwich",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.7800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 131.3227563050517,
+      "ascendant": 210.76034612841886,
+      "cusps": [
+        210.76034612841886,
+        238.14765246709868,
+        272.55617022452833,
+        311.3227563050517,
+        345.07679141824093,
+        11.00590404665636,
+        30.760346128418853,
+        58.14765246709867,
+        92.55617022452834,
+        131.3227563050517,
+        165.07679141824093,
+        191.00590404665635
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/south-midlatitude",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": -33.87,
+        "longitude": 151.21,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 285.0900808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 283.8952147749371,
+      "ascendant": 12.725282625986521,
+      "cusps": [
+        12.725282625986521,
+        40.60068167080884,
+        71.35336319078766,
+        103.89521477493702,
+        136.31888356872517,
+        166.41354642761394,
+        192.7252826259865,
+        220.60068167080883,
+        251.35336319078766,
+        283.8952147749371,
+        316.31888356872514,
+        346.41354642761394
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/north-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 65.9999,
+        "longitude": 45,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 178.8800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 178.77939033042304,
+      "ascendant": 227.65071757115763,
+      "cusps": [
+        227.65071757115763,
+        254.41175366347733,
+        311.6267553697478,
+        358.77939033042304,
+        23.565335758068173,
+        38.12786365337864,
+        47.65071757115759,
+        74.41175366347733,
+        131.6267553697478,
+        178.77939033042304,
+        203.56533575806816,
+        218.12786365337863
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/south-boundary-inside",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": -65.9999,
+        "longitude": -135,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 358.8800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "ok",
+      "midheaven": 358.779390330423,
+      "ascendant": 47.65071757115761,
+      "cusps": [
+        47.65071757115761,
+        74.41175366347733,
+        131.6267553697478,
+        178.77939033042293,
+        203.56533575806816,
+        218.12786365337868,
+        227.6507175711576,
+        254.41175366347733,
+        311.6267553697478,
+        358.779390330423,
+        23.565335758068173,
+        38.1278636533787
+      ]
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/north-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 152.7800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 150.7237244359461,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/south-boundary",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": -66,
+        "longitude": -18.9,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 114.98008081785771,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 113.14392333954368,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/north-pole",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": 90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.8800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 131.42203842890268,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2024-03-20T21:00:00Z/south-pole",
+      "input": {
+        "localDateTime": "2024-03-20T21:00:00",
+        "timezone": "UTC",
+        "utcInstant": "2024-03-20T21:00:00Z",
+        "latitude": -90,
+        "longitude": 0,
+        "locationSource": "synthetic-reference-grid"
+      },
+      "orientation": {
+        "armcDegrees": 133.8800808178577,
+        "trueObliquityDegrees": 23.43871271170607
+      },
+      "expectedStatus": "not-applicable",
+      "midheaven": 131.42203842890268,
+      "ascendant": null,
+      "cusps": []
+    }
+  ]
+}
