@@ -1,3 +1,5 @@
+import { engineContract } from './contract.ts';
+
 export interface CalculationInput {
   localDateTime: string;
   timezone: string;
@@ -26,9 +28,10 @@ function strictDate(value: string): Date {
 
 /** UTC disambiguates DST folds; local time must resolve back to this exact instant. */
 export function validateCalculationInput(input: CalculationInput): TimeResolution {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) throw new TypeError('Entrada de cálculo inválida.');
   if (typeof input.utcInstant !== 'string' || !input.utcInstant.endsWith('Z')) throw new TypeError('utcInstant deve declarar UTC com Z.');
   const instant = strictDate(input.utcInstant.slice(0, -1));
-  if (instant.getUTCFullYear() < 1900 || instant.getUTCFullYear() > 2099) throw new RangeError('Intervalo experimental do motor: 1900–2099.');
+  if (instant.valueOf() < Date.parse(engineContract.minUtcInstant) || instant.valueOf() > Date.parse(engineContract.maxUtcInstant)) throw new RangeError('Intervalo experimental do motor: 1900–2099.');
   if (typeof input.localDateTime !== 'string') throw new TypeError('Data/hora local inválida.');
   const local = strictDate(input.localDateTime);
   if (!Number.isFinite(input.latitude) || input.latitude < -90 || input.latitude > 90) throw new RangeError('Latitude inválida.');

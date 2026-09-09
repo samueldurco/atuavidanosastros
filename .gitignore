@@ -4,6 +4,8 @@ node_modules/
 build/
 dist/
 coverage/
+!packages/astrology/fixtures/coverage/
+!packages/astrology/fixtures/coverage/**
 playwright-report/
 test-results/
 
@@ -27,4 +29,3 @@ supabase/.temp/
 Thumbs.db
 *.log
 .idea/
-

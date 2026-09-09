@@ -2,10 +2,13 @@ import { Engine, angles, deltaT, housesPlacidus } from 'caelus';
 import { embeddedData } from 'caelus/data-embedded';
 import dataManifest from './data-manifest.json' with { type: 'json' };
 import { validateCalculationInput, type CalculationInput } from './input.ts';
+import { bodies, type CelestialBody } from './bodies.ts';
+import { engineContract } from './contract.ts';
+export { engineContract } from './contract.ts';
 export { validateCalculationInput, type CalculationInput } from './input.ts';
+export { bodies, type CelestialBody } from './bodies.ts';
+export { calculateAspects, assessAspectStability, type AspectStability, type AspectPolicy, type AspectResult, type AspectCalculation, type AspectPosition, type MajorAspect } from './aspects.ts';
 
-export type CelestialBody = 'sun' | 'moon' | 'mercury' | 'venus' | 'mars' | 'jupiter' | 'saturn' | 'uranus' | 'neptune' | 'pluto';
-export const bodies: readonly CelestialBody[] = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn', 'uranus', 'neptune', 'pluto'];
 export interface Position { body: CelestialBody; longitude: number; latitude: number; distanceAu: number; retrograde: boolean; }
 interface HouseAngles { system: 'placidus'; ascendant: number; midheaven: number; }
 export type HouseResult = HouseAngles & (
@@ -17,7 +20,8 @@ export interface CalculationProvenance {
   zodiac: 'tropical'; houseSystem: 'placidus'; calculatedAt: string;
   referenceFrame: 'geocentric-apparent-ecliptic-of-date';
   dataManifest: typeof dataManifest;
-  temporal: { timezoneMode: 'fixed-offset' | 'iana'; timezoneRules: string; offsetSeconds: number; inputScale: 'UTC'; engineScale: 'UT1-approximated-by-UTC'; deltaTSeconds: number };
+  contract: typeof engineContract;
+  temporal: { utcInstant: string; julianDayUt1Approx: number; dut1Seconds: null; timezoneMode: 'fixed-offset' | 'iana'; timezoneRules: string; offsetSeconds: number; inputScale: 'UTC'; engineScale: 'UT1-approximated-by-UTC'; deltaTSeconds: number };
   accuracyStatus: 'experimental'; warnings: readonly string[];
 }
 export interface NatalChart { input: CalculationInput; positions: readonly Position[]; houses: HouseResult; provenance: CalculationProvenance; }
@@ -40,7 +44,7 @@ export class CaelusHouseCalculator implements HouseCalculator {
     if (!Number.isFinite(base.ascendant) || !Number.isFinite(base.midheaven)) throw new RangeError('Ângulos indisponíveis.');
     const unavailable = (): HouseResult => ({ ...base, cusps: [], status: 'not-applicable', code: 'PLACIDUS_UNAVAILABLE', warning: 'Placidus indisponível nesta condição; nenhuma cúspide substituta foi produzida. O Meio do Céu é calculado separadamente.' });
     // Conservative candidate boundary; not a universal mathematical cutoff.
-    if (Math.abs(input.latitude) >= 66) return unavailable();
+    if (Math.abs(input.latitude) >= engineContract.placidusAbsoluteLatitudeExclusive) return unavailable();
     try {
       const cusps = housesPlacidus(armc, input.latitude * Math.PI / 180, eps).map(degrees);
       if (cusps.length !== 12 || cusps.some((value) => !Number.isFinite(value))) return unavailable();
@@ -69,13 +73,14 @@ export class CaelusEphemerisProvider implements EphemerisProvider {
     return {
       input: { ...input }, positions, houses: this.houseCalculator.calculate(input),
       provenance: {
-        provider: this.name, providerVersion: this.version, algorithmVersion: 'atv-caelus-adapter-v2',
+        provider: this.name, providerVersion: this.version, algorithmVersion: 'atv-caelus-adapter-v3',
         zodiac: 'tropical', houseSystem: 'placidus', calculatedAt: new Date().toISOString(),
-        referenceFrame: 'geocentric-apparent-ecliptic-of-date', dataManifest,
-        temporal: { timezoneMode: time.timezoneMode, timezoneRules: time.timezoneRules, offsetSeconds: time.offsetSeconds, inputScale: 'UTC', engineScale: 'UT1-approximated-by-UTC', deltaTSeconds: deltaT(jd) },
+        referenceFrame: 'geocentric-apparent-ecliptic-of-date', dataManifest: structuredClone(dataManifest), contract: engineContract,
+        temporal: { utcInstant: time.instant.toISOString(), julianDayUt1Approx: jd, dut1Seconds: null, timezoneMode: time.timezoneMode, timezoneRules: time.timezoneRules, offsetSeconds: time.offsetSeconds, inputScale: 'UTC', engineScale: 'UT1-approximated-by-UTC', deltaTSeconds: deltaT(jd) },
         accuracyStatus: 'experimental', warnings: [
           'Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.',
           'UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.',
+          'Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.',
           ...(time.timezoneMode === 'iana' ? ['Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.'] : ['Offset histórico fornecido pelo usuário; DST não é inferido.'])
         ]
       }

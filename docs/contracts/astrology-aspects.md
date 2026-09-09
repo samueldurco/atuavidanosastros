@@ -1,0 +1,17 @@
+# Aspectos determinísticos — contrato v1
+
+`calculateAspects(positions, policy)` calcula aspectos maiores em longitudes eclípticas do mesmo mapa. Os chamadores devem fornecer posições no mesmo instante, zodíaco e referencial; a função geométrica não infere nem certifica essa proveniência. A chamada não consulta provedores, IA, dados pessoais ou serviços pagos.
+
+A política é obrigatória: `id`, `version` e lista explícita de aspectos com `kind` e `orbDegrees`. Não existe política de orbes padrão de produto. Os únicos ângulos suportados são conjunction 0°, sextile 60°, square 90°, trine 120° e opposition 180°. Cada orbe deve ser finito entre 0° e 180°. Intervalos habilitados não podem se sobrepor, inclusive no limite compartilhado. A política pode habilitar somente um subconjunto. Identificadores têm até 80 caracteres alfanuméricos e `._/-`, começando por alfanumérico.
+
+Entradas aceitam os dez corpos exportados por `bodies`, no máximo uma longitude finita em `[0, 360)` para cada corpo. Entradas desconhecidas, duplicadas ou inválidas falham antes do cálculo. Conjuntos vazios e unitários produzem zero pares. O módulo não normaliza dados inválidos nem acrescenta corpos ausentes.
+
+A separação é a menor distância longitudinal entre 0° e 180°. O desvio absoluto do ângulo exato deve ser menor ou igual ao orbe da política, sem tolerância adicional escondida. Pares são únicos e ordenados pela lista canônica de corpos; a ordem das entradas e das regras não altera o resultado. Entradas não são mutadas e a política retornada é uma cópia normalizada por ângulo.
+
+O resultado registra `atv-major-aspects/1`, coordenada `ecliptic-longitude`, pares avaliados, política e aspectos encontrados com separação, ângulo exato e desvio em graus. `inputPositions` conserva cópias canônicas das longitudes usadas e `inputPrecision: not-certified` impede inferir precisão da geometria. `motion: not-evaluated` é obrigatório: longitude e booleano retrógrado não bastam para afirmar aplicação/separação. Este contrato não implementa sinastria, aspectos a cúspides/ângulos, declinação ou interpretação editorial.
+
+`assessAspectStability(positions, policy, assumedLongitudeErrorDegrees)` registra `atv-aspect-stability/1` e avalia todos os pares, inclusive ausências. O orçamento explícito por longitude é nulo ou finito em `[0, 180]`; é uma hipótese do chamador, nunca uma garantia do provedor. Nulo produz `unknown-accuracy` e intervalo nulo. Para orçamento `e`, a separação nominal `s` tem intervalo conservador `[max(0, s − 2e − g), min(180, s + 2e + g)]`, com guarda aritmética externa `g = 1e-12°`. Intervalo inteiro dentro de um aspecto ou disjunto de todos resulta em `stable-under-budget`; atravessar uma fronteira resulta em `boundary-sensitive`. A guarda atua somente nessa análise, sem alterar o comparador nominal ou a política. Mesmo orçamento zero pode ser sensível no limite exato. Estabilidade sob hipótese não homologa a entrada nem converte resultado inconclusivo em aprovação.
+
+A WU-027 exporta uma função de domínio sem conectá-la ao resultado público do Meio do Céu ou acrescentar resultados ao mapa natal. Uma futura integração deve aprovar política editorial, transportar a proveniência das posições, tratar incerteza perto dos limites e cumprir os gates independentes de precisão e produto. `qa-major/1` pertence exclusivamente às fixtures; não é autorização de promoção.
+
+Validação e limitações: [relatório da WU-027](../qa/ASTROLOGY_ASPECTS_REFERENCE_2026-09-08.md).

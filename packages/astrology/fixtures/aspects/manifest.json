@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "atv-aspects-manifest/1",
+  "generatedAt": "2026-09-08T19:59:15.777633+00:00",
+  "method": "Python stdlib: ecliptic unit vectors, dot product and acos; independent from candidate arithmetic",
+  "qaPolicyOnly": true,
+  "productionPromotion": false,
+  "caseCount": 7,
+  "pairCount": 315,
+  "fixtureSha256": "5ebbc674a005010a7f2e1450dc5a4f9e5eee1ff359fee9550a96a7627be16442",
+  "generatorSha256": "ad0fd8f441b977f3794775cf4f8fec47ffe8cd64b2f91920712f17cf0af8c214",
+  "sourceManifestSha256": "e86fac93f9de4e48bd9dbe6fbfa33cdac8db4f95e422ad3e03f6ce7a25935daf",
+  "sources": [
+    {
+      "body": "sun",
+      "file": "sun.txt",
+      "sha256": "5eb44a0573c62fbee82246e1f4790d67efdbbc8fcec4fcd516235cbce1d48704"
+    },
+    {
+      "body": "moon",
+      "file": "moon.txt",
+      "sha256": "35581020eed41405abd3e7a9a3eb62c25b28304dab32de3684d451efaf78ea97"
+    },
+    {
+      "body": "mercury",
+      "file": "mercury.txt",
+      "sha256": "992d7240ded69ec473572c05e413722591f038b9a7912b325b8e5b2855f4c61b"
+    },
+    {
+      "body": "venus",
+      "file": "venus.txt",
+      "sha256": "1f547cc339d2dc0bd2cf99b32706a2faaa18f73a98b7417031f38d270443d50e"
+    },
+    {
+      "body": "mars",
+      "file": "mars.txt",
+      "sha256": "65a3b824d7821e958be07195df687790535d2a6bc4376178a0653a1c6702171c"
+    },
+    {
+      "body": "jupiter",
+      "file": "jupiter.txt",
+      "sha256": "626ada3f42a09ceb91a5a9926af303c9f1ae2b24d390db89282bec3cbe19db8f"
+    },
+    {
+      "body": "saturn",
+      "file": "saturn.txt",
+      "sha256": "46726e3d16e82d410c9ee9d34405719eebf1ca67b828eec7623fa7594a2fe47e"
+    },
+    {
+      "body": "uranus",
+      "file": "uranus.txt",
+      "sha256": "5c39f81d74da3393f23508ec2e2e578e64997647846d8818db987a5cba0ea945"
+    },
+    {
+      "body": "neptune",
+      "file": "neptune.txt",
+      "sha256": "5fceb47931b510b1df0bdf21a7a7e6659ff83aba7d798c9cb9f9451cc9b59513"
+    },
+    {
+      "body": "pluto",
+      "file": "pluto.txt",
+      "sha256": "666a559d1de2c410474761714b4a97b5a96a0d959ed4004498b69fc34d9090f9"
+    }
+  ],
+  "toleranceDegrees": {
+    "samePositions": 1e-07,
+    "candidatePositions": 0.03333333333333333
+  }
+}

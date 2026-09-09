@@ -1,0 +1,2881 @@
+{
+  "schemaVersion": "atv-aspects-reference/1",
+  "policy": {
+    "id": "qa-major",
+    "version": "1",
+    "aspects": [
+      {
+        "kind": "conjunction",
+        "orbDegrees": 8
+      },
+      {
+        "kind": "sextile",
+        "orbDegrees": 4
+      },
+      {
+        "kind": "square",
+        "orbDegrees": 6
+      },
+      {
+        "kind": "trine",
+        "orbDegrees": 6
+      },
+      {
+        "kind": "opposition",
+        "orbDegrees": 8
+      }
+    ]
+  },
+  "productionPromotion": false,
+  "cases": [
+    {
+      "epoch": "1900-01-01T12:00:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 280.6632209
+        },
+        {
+          "body": "moon",
+          "longitude": 279.6163189
+        },
+        {
+          "body": "mercury",
+          "longitude": 259.6392831
+        },
+        {
+          "body": "venus",
+          "longitude": 306.9960853
+        },
+        {
+          "body": "mars",
+          "longitude": 284.2529683
+        },
+        {
+          "body": "jupiter",
+          "longitude": 241.2335461
+        },
+        {
+          "body": "saturn",
+          "longitude": 267.7748827
+        },
+        {
+          "body": "uranus",
+          "longitude": 250.1667884
+        },
+        {
+          "body": "neptune",
+          "longitude": 85.2050798
+        },
+        {
+          "body": "pluto",
+          "longitude": 75.2427825
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 1.0469019999998657,
+          "kind": "conjunction",
+          "orbDegrees": 1.0469019999998657,
+          "boundaryMarginDegrees": 6.953098000000134
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 21.023937799999963,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 13.023937799999963
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 26.332864399999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 18.332864399999995
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 3.5897474000000242,
+          "kind": "conjunction",
+          "orbDegrees": 3.5897474000000242,
+          "boundaryMarginDegrees": 4.410252599999976
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 39.429674799999965,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.570325200000035
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 12.888338200000007,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.888338200000007
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 30.49643249999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.49643249999996
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 164.54185890000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.4581410999999775
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 154.57956160000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.420438399999966
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 19.977035800000014,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.977035800000014
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 27.37976639999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.37976639999995
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 4.636649399999949,
+          "kind": "conjunction",
+          "orbDegrees": 4.636649399999949,
+          "boundaryMarginDegrees": 3.363350600000051
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 38.38277280000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.617227199999988
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 11.841436200000054,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.8414362000000537
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 29.449530500000012,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.449530500000012
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 165.58876089999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.411239100000046
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 155.6264636,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.373536400000006
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 47.35680219999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.643197800000031
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 24.613685199999985,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.613685199999985
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 18.405737000000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 10.405737000000002
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 8.135599599999969,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.13559959999996885
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 9.472494699999988,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.472494699999988
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 174.43420329999998,
+          "kind": "opposition",
+          "orbDegrees": 5.565796700000021,
+          "boundaryMarginDegrees": 2.4342032999999788
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 175.60349940000003,
+          "kind": "opposition",
+          "orbDegrees": 4.396500599999968,
+          "boundaryMarginDegrees": 3.6034994000000324
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 22.743116999999987,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.743116999999987
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 65.76253919999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.7625391999999636
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 39.22120260000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.778797399999988
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 56.82929689999997,
+          "kind": "sextile",
+          "orbDegrees": 3.1707031000000327,
+          "boundaryMarginDegrees": 0.8292968999999673
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 138.20899450000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 12.208994500000017
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 128.24669720000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.2466972000000283
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 43.01942219999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 12.98057780000002
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 16.478085600000032,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.478085600000032
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 34.086179899999976,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.913820100000024
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 160.9521115,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.0478885
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 150.9898142,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.010185799999988
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 26.54133659999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 18.54133659999995
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 8.933242299999991,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.933242299999991
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 156.02846630000005,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 15.971533699999952
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 165.9907636,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.009236399999992
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 17.608094299999948,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.608094299999948
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 177.43019710000002,
+          "kind": "opposition",
+          "orbDegrees": 2.569802899999985,
+          "boundaryMarginDegrees": 5.430197100000015
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 167.4678998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.532100200000002
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 164.9617086,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.038291399999991
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 174.9240059,
+          "kind": "opposition",
+          "orbDegrees": 5.075994100000003,
+          "boundaryMarginDegrees": 2.9240058999999974
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 9.96229729999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.9622972999999906
+        }
+      ]
+    },
+    {
+      "epoch": "1950-06-21T12:00:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 89.5387857
+        },
+        {
+          "body": "moon",
+          "longitude": 157.9663716
+        },
+        {
+          "body": "mercury",
+          "longitude": 69.5734527
+        },
+        {
+          "body": "venus",
+          "longitude": 53.0334507
+        },
+        {
+          "body": "mars",
+          "longitude": 183.8026036
+        },
+        {
+          "body": "jupiter",
+          "longitude": 337.4034885
+        },
+        {
+          "body": "saturn",
+          "longitude": 163.7408063
+        },
+        {
+          "body": "uranus",
+          "longitude": 94.83669
+        },
+        {
+          "body": "neptune",
+          "longitude": 194.5824701
+        },
+        {
+          "body": "pluto",
+          "longitude": 136.4130181
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 68.42758590000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.427585900000011
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 19.96533300000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.965333000000012
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 36.505335,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.494664999999998
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 94.26381789999999,
+          "kind": "square",
+          "orbDegrees": 4.263817899999992,
+          "boundaryMarginDegrees": 1.7361821000000077
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 112.13529720000005,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.8647027999999466
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 74.20202060000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.797979399999988
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 5.297904300000054,
+          "kind": "conjunction",
+          "orbDegrees": 5.297904300000054,
+          "boundaryMarginDegrees": 2.702095699999946
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 105.0436844,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.956315599999996
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 46.87423239999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.125767600000017
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 88.3929189,
+          "kind": "square",
+          "orbDegrees": 1.607081100000002,
+          "boundaryMarginDegrees": 4.392918899999998
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 104.93292090000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.932920900000013
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 25.83623199999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.83623199999998
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 179.43711689999944,
+          "kind": "opposition",
+          "orbDegrees": 0.5628831000005619,
+          "boundaryMarginDegrees": 7.437116899999438
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 5.774434700000027,
+          "kind": "conjunction",
+          "orbDegrees": 5.774434700000027,
+          "boundaryMarginDegrees": 2.225565299999973
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 63.129681600000005,
+          "kind": "sextile",
+          "orbDegrees": 3.129681600000005,
+          "boundaryMarginDegrees": 0.870318399999995
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 36.616098499999985,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.383901500000015
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 21.55335350000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 13.55335350000001
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 16.540001999999994,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.540001999999994
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 114.22915089999998,
+          "kind": "trine",
+          "orbDegrees": 5.770849100000021,
+          "boundaryMarginDegrees": 0.22915089999997917
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 92.16996420000005,
+          "kind": "square",
+          "orbDegrees": 2.1699642000000523,
+          "boundaryMarginDegrees": 3.8300357999999477
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 94.16735360000001,
+          "kind": "square",
+          "orbDegrees": 4.167353600000013,
+          "boundaryMarginDegrees": 1.8326463999999874
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 25.263237300000007,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.263237300000007
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 125.0090174,
+          "kind": "trine",
+          "orbDegrees": 5.009017400000005,
+          "boundaryMarginDegrees": 0.9909825999999953
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 66.83956539999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.8395653999999837
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 130.7691529,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.769152899999995
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 75.62996220000005,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.370037799999949
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 110.70735560000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.292644399999986
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 41.80323930000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.196760699999992
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 141.5490194,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 15.549019399999992
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 83.37956739999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.6204326000000151
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 153.60088489999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 18.399115100000017
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 20.061797299999988,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 12.061797299999988
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 88.96591359999998,
+          "kind": "square",
+          "orbDegrees": 1.034086400000021,
+          "boundaryMarginDegrees": 4.965913599999979
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 10.779866499999994,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.7798664999999936
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 47.3895855,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.610414499999997
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 173.6626821999999,
+          "kind": "opposition",
+          "orbDegrees": 6.337317800000108,
+          "boundaryMarginDegrees": 1.6626821999998924
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 117.43320150000005,
+          "kind": "trine",
+          "orbDegrees": 2.5667984999999476,
+          "boundaryMarginDegrees": 3.4332015000000524
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 142.82101839999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.821018399999957
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 159.00952960000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 12.990470399999964
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 68.90411630000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.9041163000000125
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 30.841663799999985,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.841663799999985
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 27.327788200000036,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.327788200000036
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 99.74578009999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.7457800999999904
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 41.57632809999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.42367190000001
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 58.16945200000001,
+          "kind": "sextile",
+          "orbDegrees": 1.8305479999999932,
+          "boundaryMarginDegrees": 2.169452000000007
+        }
+      ]
+    },
+    {
+      "epoch": "2000-01-01T12:00:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 280.3689092
+        },
+        {
+          "body": "moon",
+          "longitude": 223.323786
+        },
+        {
+          "body": "mercury",
+          "longitude": 271.8892699
+        },
+        {
+          "body": "venus",
+          "longitude": 241.5657794
+        },
+        {
+          "body": "mars",
+          "longitude": 327.9632921
+        },
+        {
+          "body": "jupiter",
+          "longitude": 25.2530685
+        },
+        {
+          "body": "saturn",
+          "longitude": 40.3956366
+        },
+        {
+          "body": "uranus",
+          "longitude": 314.809168
+        },
+        {
+          "body": "neptune",
+          "longitude": 303.1930007
+        },
+        {
+          "body": "pluto",
+          "longitude": 251.4547644
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 57.045123200000035,
+          "kind": "sextile",
+          "orbDegrees": 2.9548767999999654,
+          "boundaryMarginDegrees": 1.0451232000000346
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 8.479639300000041,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.4796393000000414
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 38.80312980000005,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.19687019999995
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 47.59438289999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.40561710000005
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 104.88415929999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.884159299999965
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 120.02672739999997,
+          "kind": "trine",
+          "orbDegrees": 0.026727399999970203,
+          "boundaryMarginDegrees": 5.97327260000003
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 34.44025879999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.559741200000012
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 22.824091499999977,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.824091499999977
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 28.914144800000066,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 20.914144800000066
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 48.56548389999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.43451610000001
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 18.2419934,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 10.241993399999998
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 104.63950609999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.639506099999977
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 161.9292825,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 10.0707175
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 177.07185060000003,
+          "kind": "opposition",
+          "orbDegrees": 2.928149399999967,
+          "boundaryMarginDegrees": 5.071850600000033
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 91.48538200000002,
+          "kind": "square",
+          "orbDegrees": 1.4853820000000155,
+          "boundaryMarginDegrees": 4.5146179999999845
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 79.8692147,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.130785299999999
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 28.13097839999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 20.13097839999996
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 30.323490499999988,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.323490499999988
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 56.074022199999995,
+          "kind": "sextile",
+          "orbDegrees": 3.9259778000000054,
+          "boundaryMarginDegrees": 0.0740221999999946
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 113.36379860000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.6362013999999903
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 128.5063667,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.506366700000001
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 42.919898100000026,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 13.080101899999974
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 31.30373080000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 23.30373080000001
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 20.43450550000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 12.434505500000022
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 86.3975127,
+          "kind": "square",
+          "orbDegrees": 3.602487300000007,
+          "boundaryMarginDegrees": 2.397512699999993
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 143.68728910000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.687289100000015
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 158.82985720000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 13.17014279999998
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 73.24338860000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.243388600000017
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 61.62722130000001,
+          "kind": "sextile",
+          "orbDegrees": 1.6272213000000093,
+          "boundaryMarginDegrees": 2.3727786999999907
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 9.888984999999986,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.8889849999999857
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 57.289776400000015,
+          "kind": "sextile",
+          "orbDegrees": 2.710223599999985,
+          "boundaryMarginDegrees": 1.2897764000000151
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 72.43234450000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.432344500000013
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 13.154124099999956,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.154124099999956
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 24.77029139999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.77029139999999
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 76.50852770000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.491472299999984
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 15.14256809999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.1425680999999805
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 70.44390049999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.443900499999984
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 82.0600678,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.9399322000000012
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 133.79830410000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.798304100000024
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 85.58646859999999,
+          "kind": "square",
+          "orbDegrees": 4.413531400000011,
+          "boundaryMarginDegrees": 1.5864685999999892
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 97.2026359,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.2026359000000042
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 148.94087220000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.94087220000003
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 11.61616730000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.61616730000004
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 63.35440360000005,
+          "kind": "sextile",
+          "orbDegrees": 3.3544036000000474,
+          "boundaryMarginDegrees": 0.6455963999999526
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 51.73823630000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.2617636999999675
+        }
+      ]
+    },
+    {
+      "epoch": "2024-03-20T03:06:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 359.9997093
+        },
+        {
+          "body": "moon",
+          "longitude": 123.8151802
+        },
+        {
+          "body": "mercury",
+          "longitude": 17.4409072
+        },
+        {
+          "body": "venus",
+          "longitude": 340.1712838
+        },
+        {
+          "body": "mars",
+          "longitude": 327.7733973
+        },
+        {
+          "body": "jupiter",
+          "longitude": 44.8856241
+        },
+        {
+          "body": "saturn",
+          "longitude": 342.2254263
+        },
+        {
+          "body": "uranus",
+          "longitude": 50.2537683
+        },
+        {
+          "body": "neptune",
+          "longitude": 357.4602809
+        },
+        {
+          "body": "pluto",
+          "longitude": 301.6606576
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 123.8154709,
+          "kind": "trine",
+          "orbDegrees": 3.815470899999994,
+          "boundaryMarginDegrees": 2.184529100000006
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 17.441197899999963,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.441197899999963
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 19.82842549999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.82842549999998
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 32.22631200000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 23.773687999999957
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 44.88591479999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.11408520000002
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 17.774283000000015,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.774283000000015
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 50.25405899999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.74594100000003
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 2.539428400000033,
+          "kind": "conjunction",
+          "orbDegrees": 2.539428400000033,
+          "boundaryMarginDegrees": 5.460571599999967
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 58.33905170000005,
+          "kind": "sextile",
+          "orbDegrees": 1.6609482999999514,
+          "boundaryMarginDegrees": 2.3390517000000486
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 106.374273,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.625726999999998
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 143.64389639999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.64389639999996
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 156.04178290000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 15.958217099999956
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 78.9295561,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.070443900000001
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 141.5897539,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 15.589753900000005
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 73.56141190000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.56141190000001
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 126.35489930000006,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.35489930000005643
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 177.84547740000005,
+          "kind": "opposition",
+          "orbDegrees": 2.15452259999995,
+          "boundaryMarginDegrees": 5.84547740000005
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 37.269623399999965,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 18.730376600000035
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 49.66750990000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.332490099999973
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 27.444716900000007,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.444716900000007
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 35.21548090000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 20.78451909999999
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 32.81286109999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 23.187138900000008
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 19.980626300000043,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.980626300000043
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 75.78024960000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.219750399999981
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 12.397886500000089,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.397886500000089
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 64.71434029999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.7143402999999608
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 2.0541425000000966,
+          "kind": "conjunction",
+          "orbDegrees": 2.0541425000000966,
+          "boundaryMarginDegrees": 5.945857499999903
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 70.08248449999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.08248449999995
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 17.288997099999943,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.288997099999943
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 38.51062620000007,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.48937379999993
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 77.11222680000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.88777319999997
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 14.452029000000008,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.4520290000000085
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 82.48037100000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.5196289999999806
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 29.686883599999994,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.686883599999994
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 26.112739700000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 18.112739700000002
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 62.660197800000006,
+          "kind": "sextile",
+          "orbDegrees": 2.660197800000006,
+          "boundaryMarginDegrees": 1.339802199999994
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 5.3681441999999615,
+          "kind": "conjunction",
+          "orbDegrees": 5.3681441999999615,
+          "boundaryMarginDegrees": 2.6318558000000385
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 47.42534320000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.574656799999957
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 103.22496650000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.224966500000036
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 68.028342,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.028341999999995
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 15.23485459999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.23485459999997
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 40.56476870000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 15.43523129999997
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 52.79348740000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.206512599999961
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 108.59311070000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.406889299999975
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 55.799623299999986,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.20037670000001384
+        }
+      ]
+    },
+    {
+      "epoch": "2026-09-08T12:00:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 165.8622478
+        },
+        {
+          "body": "moon",
+          "longitude": 131.3958189
+        },
+        {
+          "body": "mercury",
+          "longitude": 176.2648745
+        },
+        {
+          "body": "venus",
+          "longitude": 208.7641849
+        },
+        {
+          "body": "mars",
+          "longitude": 108.1093675
+        },
+        {
+          "body": "jupiter",
+          "longitude": 135.2549377
+        },
+        {
+          "body": "saturn",
+          "longitude": 13.2258927
+        },
+        {
+          "body": "uranus",
+          "longitude": 65.6947394
+        },
+        {
+          "body": "neptune",
+          "longitude": 3.4764966
+        },
+        {
+          "body": "pluto",
+          "longitude": 303.3841331
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 34.466428900000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.533571099999996
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 10.402626700000008,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.402626700000008
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 42.9019371,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 13.098062900000002
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 57.75288029999999,
+          "kind": "sextile",
+          "orbDegrees": 2.247119700000013,
+          "boundaryMarginDegrees": 1.7528802999999868
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 30.60731009999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.60731009999999
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 152.6363551,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.363644899999997
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 100.1675084,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.167508400000003
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 162.3857512,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.614248800000013
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 137.52188529999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.52188529999998
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 44.869055599999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.130944400000004
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 77.368366,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.631634000000005
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 23.286451399999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 15.286451399999997
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 3.8591187999999694,
+          "kind": "conjunction",
+          "orbDegrees": 3.8591187999999694,
+          "boundaryMarginDegrees": 4.140881200000031
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 118.1699262,
+          "kind": "trine",
+          "orbDegrees": 1.8300737999999939,
+          "boundaryMarginDegrees": 4.169926200000006
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 65.7010795,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.7010795000000059
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 127.91932229999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.9193222999999904
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 171.9883142,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.011685800000009294
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 32.4993104,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 23.5006896
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 68.15550699999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.155506999999986
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 41.009936800000006,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.990063199999994
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 163.03898180000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.961018199999984
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 110.5701351,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.4298648999999983
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 172.78837789999997,
+          "kind": "opposition",
+          "orbDegrees": 7.211622100000028,
+          "boundaryMarginDegrees": 0.788377899999972
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 127.11925859999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.1192585999999807
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 100.65481739999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.654817399999985
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 73.5092472,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.509247200000004
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 164.46170780000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.538292199999972
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 143.06944550000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.06944550000003
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 154.71231170000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.287688299999985
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 94.61994819999998,
+          "kind": "square",
+          "orbDegrees": 4.619948199999982,
+          "boundaryMarginDegrees": 1.3800518000000181
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 27.145570199999987,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.145570199999987
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 94.8834748,
+          "kind": "square",
+          "orbDegrees": 4.883474800000002,
+          "boundaryMarginDegrees": 1.116525199999998
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 42.4146281,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 13.585371899999998
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 104.63287090000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.632870900000015
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 164.72523440000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.2747655999999665
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 122.02904500000001,
+          "kind": "trine",
+          "orbDegrees": 2.0290450000000106,
+          "boundaryMarginDegrees": 3.9709549999999894
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 69.5601983,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.560198299999996
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 131.7784411,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.778441100000009
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 168.12919540000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.8708045999999854
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 52.46884669999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.531153300000007
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 9.74939609999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.7493960999999896
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 69.84175960000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.841759600000032
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 62.2182428,
+          "kind": "sextile",
+          "orbDegrees": 2.2182427999999987,
+          "boundaryMarginDegrees": 1.7817572000000013
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 122.31060630000002,
+          "kind": "trine",
+          "orbDegrees": 2.3106063000000177,
+          "boundaryMarginDegrees": 3.6893936999999823
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 60.092363500000026,
+          "kind": "sextile",
+          "orbDegrees": 0.09236350000002602,
+          "boundaryMarginDegrees": 3.907636499999974
+        }
+      ]
+    },
+    {
+      "epoch": "2050-12-21T12:00:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 269.8028083
+        },
+        {
+          "body": "moon",
+          "longitude": 4.0297971
+        },
+        {
+          "body": "mercury",
+          "longitude": 251.4967857
+        },
+        {
+          "body": "venus",
+          "longitude": 223.0819296
+        },
+        {
+          "body": "mars",
+          "longitude": 358.8171302
+        },
+        {
+          "body": "jupiter",
+          "longitude": 155.8662522
+        },
+        {
+          "body": "saturn",
+          "longitude": 306.6581016
+        },
+        {
+          "body": "uranus",
+          "longitude": 175.5051399
+        },
+        {
+          "body": "neptune",
+          "longitude": 56.1119508
+        },
+        {
+          "body": "pluto",
+          "longitude": 338.6557302
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 94.22698880000004,
+          "kind": "square",
+          "orbDegrees": 4.2269888000000435,
+          "boundaryMarginDegrees": 1.7730111999999565
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 18.306022599999963,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 10.306022599999963
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 46.72087869999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.279121300000028
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 89.01432190000006,
+          "kind": "square",
+          "orbDegrees": 0.9856780999999444,
+          "boundaryMarginDegrees": 5.014321900000056
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 113.93655609999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.0634439000000242
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 36.85529330000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.14470669999998
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 94.29766839999996,
+          "kind": "square",
+          "orbDegrees": 4.297668399999964,
+          "boundaryMarginDegrees": 1.7023316000000364
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 146.30914250000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 20.309142500000036
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 68.85292190000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.852921900000041
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 112.5330114,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.4669885999999934
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 140.9478675,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.947867500000001
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 5.212666900000014,
+          "kind": "conjunction",
+          "orbDegrees": 5.212666900000014,
+          "boundaryMarginDegrees": 2.7873330999999864
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 151.8364551,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 20.163544900000005
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 57.37169550000003,
+          "kind": "sextile",
+          "orbDegrees": 2.6283044999999703,
+          "boundaryMarginDegrees": 1.3716955000000297
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 171.47534279999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.5246572000000356
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 52.08215370000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.9178462999999866
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 25.374066900000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.374066900000003
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 28.4148561,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 20.4148561
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 107.32034450000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.679655499999981
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 95.63053350000001,
+          "kind": "square",
+          "orbDegrees": 5.630533500000013,
+          "boundaryMarginDegrees": 0.36946649999998726
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 55.16131589999999,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.8386841000000089
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 75.9916458,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.0083542
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 164.6151651,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 7.384834899999987
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 87.1589445,
+          "kind": "square",
+          "orbDegrees": 2.841055499999996,
+          "boundaryMarginDegrees": 3.158944500000004
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 135.7352006,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.735200600000013
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 67.21567740000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.2156774000000183
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 83.576172,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.4238280000000003
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 47.576789700000006,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.423210299999994
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 166.96997879999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.03002120000005
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 115.57380060000001,
+          "kind": "trine",
+          "orbDegrees": 4.426199399999987,
+          "boundaryMarginDegrees": 1.5738006000000127
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 157.04912199999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 14.950878000000017
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 52.15902860000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.8409713999999795
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 176.68800969999992,
+          "kind": "opposition",
+          "orbDegrees": 3.311990300000076,
+          "boundaryMarginDegrees": 4.688009699999924
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 57.2948206,
+          "kind": "sextile",
+          "orbDegrees": 2.7051793999999987,
+          "boundaryMarginDegrees": 1.2948206000000013
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 20.1614,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 12.1614
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 150.79184940000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 21.208150599999982
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 19.63888770000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.638887700000009
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 99.75430139999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.7543013999999744
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 177.21052200000014,
+          "kind": "opposition",
+          "orbDegrees": 2.7894779999998605,
+          "boundaryMarginDegrees": 5.2105220000001395
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 131.1529617,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.152961699999992
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 109.45384920000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.546150799999964
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 31.997628600000017,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 23.997628600000017
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 119.39318909999999,
+          "kind": "trine",
+          "orbDegrees": 0.6068109000000135,
+          "boundaryMarginDegrees": 5.3931890999999865
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 163.15059030000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.849409699999967
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 77.45622060000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.543779399999991
+        }
+      ]
+    },
+    {
+      "epoch": "2099-12-31T12:00:00.000Z",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 280.094759
+        },
+        {
+          "body": "moon",
+          "longitude": 150.4129359
+        },
+        {
+          "body": "mercury",
+          "longitude": 287.1947809
+        },
+        {
+          "body": "venus",
+          "longitude": 319.4689649
+        },
+        {
+          "body": "mars",
+          "longitude": 29.3227071
+        },
+        {
+          "body": "jupiter",
+          "longitude": 201.1528507
+        },
+        {
+          "body": "saturn",
+          "longitude": 205.6024731
+        },
+        {
+          "body": "uranus",
+          "longitude": 17.7391396
+        },
+        {
+          "body": "neptune",
+          "longitude": 167.2940462
+        },
+        {
+          "body": "pluto",
+          "longitude": 32.4057819
+        }
+      ],
+      "pairs": [
+        {
+          "first": "sun",
+          "second": "moon",
+          "separationDegrees": 129.68182309999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.681823099999974
+        },
+        {
+          "first": "sun",
+          "second": "mercury",
+          "separationDegrees": 7.100021899999951,
+          "kind": "conjunction",
+          "orbDegrees": 7.100021899999951,
+          "boundaryMarginDegrees": 0.8999781000000491
+        },
+        {
+          "first": "sun",
+          "second": "venus",
+          "separationDegrees": 39.374205900000035,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 16.625794099999965
+        },
+        {
+          "first": "sun",
+          "second": "mars",
+          "separationDegrees": 109.2279481,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 4.772051899999994
+        },
+        {
+          "first": "sun",
+          "second": "jupiter",
+          "separationDegrees": 78.94190830000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.058091699999991
+        },
+        {
+          "first": "sun",
+          "second": "saturn",
+          "separationDegrees": 74.4922859,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 9.507714100000001
+        },
+        {
+          "first": "sun",
+          "second": "uranus",
+          "separationDegrees": 97.64438060000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.6443806000000194
+        },
+        {
+          "first": "sun",
+          "second": "neptune",
+          "separationDegrees": 112.8007128,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.1992872000000006
+        },
+        {
+          "first": "sun",
+          "second": "pluto",
+          "separationDegrees": 112.31102290000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 1.688977099999974
+        },
+        {
+          "first": "moon",
+          "second": "mercury",
+          "separationDegrees": 136.78184499999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 10.781844999999976
+        },
+        {
+          "first": "moon",
+          "second": "venus",
+          "separationDegrees": 169.05602900000005,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.943970999999948
+        },
+        {
+          "first": "moon",
+          "second": "mars",
+          "separationDegrees": 121.09022880000002,
+          "kind": "trine",
+          "orbDegrees": 1.0902288000000198,
+          "boundaryMarginDegrees": 4.90977119999998
+        },
+        {
+          "first": "moon",
+          "second": "jupiter",
+          "separationDegrees": 50.73991479999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.260085200000027
+        },
+        {
+          "first": "moon",
+          "second": "saturn",
+          "separationDegrees": 55.18953719999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.8104628000000318
+        },
+        {
+          "first": "moon",
+          "second": "uranus",
+          "separationDegrees": 132.67379630000002,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.673796300000021
+        },
+        {
+          "first": "moon",
+          "second": "neptune",
+          "separationDegrees": 16.88111029999995,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.88111029999995
+        },
+        {
+          "first": "moon",
+          "second": "pluto",
+          "separationDegrees": 118.007154,
+          "kind": "trine",
+          "orbDegrees": 1.9928460000000001,
+          "boundaryMarginDegrees": 4.007154
+        },
+        {
+          "first": "mercury",
+          "second": "venus",
+          "separationDegrees": 32.27418400000004,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 23.72581599999996
+        },
+        {
+          "first": "mercury",
+          "second": "mars",
+          "separationDegrees": 102.1279262,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.1279262000000045
+        },
+        {
+          "first": "mercury",
+          "second": "jupiter",
+          "separationDegrees": 86.04193020000001,
+          "kind": "square",
+          "orbDegrees": 3.95806979999999,
+          "boundaryMarginDegrees": 2.04193020000001
+        },
+        {
+          "first": "mercury",
+          "second": "saturn",
+          "separationDegrees": 81.59230780000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 2.4076921999999854
+        },
+        {
+          "first": "mercury",
+          "second": "uranus",
+          "separationDegrees": 90.54435870000002,
+          "kind": "square",
+          "orbDegrees": 0.5443587000000178,
+          "boundaryMarginDegrees": 5.455641299999982
+        },
+        {
+          "first": "mercury",
+          "second": "neptune",
+          "separationDegrees": 119.90073470000002,
+          "kind": "trine",
+          "orbDegrees": 0.09926529999998479,
+          "boundaryMarginDegrees": 5.900734700000015
+        },
+        {
+          "first": "mercury",
+          "second": "pluto",
+          "separationDegrees": 105.21100100000001,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.78899899999999
+        },
+        {
+          "first": "venus",
+          "second": "mars",
+          "separationDegrees": 69.85374219999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 5.853742199999971
+        },
+        {
+          "first": "venus",
+          "second": "jupiter",
+          "separationDegrees": 118.31611420000004,
+          "kind": "trine",
+          "orbDegrees": 1.6838857999999561,
+          "boundaryMarginDegrees": 4.316114200000044
+        },
+        {
+          "first": "venus",
+          "second": "saturn",
+          "separationDegrees": 113.86649180000005,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.13350819999995167
+        },
+        {
+          "first": "venus",
+          "second": "uranus",
+          "separationDegrees": 58.270174699999984,
+          "kind": "sextile",
+          "orbDegrees": 1.7298253000000159,
+          "boundaryMarginDegrees": 2.270174699999984
+        },
+        {
+          "first": "venus",
+          "second": "neptune",
+          "separationDegrees": 152.17491870000003,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 19.825081299999965
+        },
+        {
+          "first": "venus",
+          "second": "pluto",
+          "separationDegrees": 72.93681699999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.936816999999976
+        },
+        {
+          "first": "mars",
+          "second": "jupiter",
+          "separationDegrees": 171.83014359999996,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 0.1698564000000431
+        },
+        {
+          "first": "mars",
+          "second": "saturn",
+          "separationDegrees": 176.27976599999997,
+          "kind": "opposition",
+          "orbDegrees": 3.7202340000000333,
+          "boundaryMarginDegrees": 4.279765999999967
+        },
+        {
+          "first": "mars",
+          "second": "uranus",
+          "separationDegrees": 11.583567500000012,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.5835675000000116
+        },
+        {
+          "first": "mars",
+          "second": "neptune",
+          "separationDegrees": 137.9713391,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 11.971339099999994
+        },
+        {
+          "first": "mars",
+          "second": "pluto",
+          "separationDegrees": 3.0830747999999693,
+          "kind": "conjunction",
+          "orbDegrees": 3.0830747999999693,
+          "boundaryMarginDegrees": 4.916925200000031
+        },
+        {
+          "first": "jupiter",
+          "second": "saturn",
+          "separationDegrees": 4.449622399999959,
+          "kind": "conjunction",
+          "orbDegrees": 4.449622399999959,
+          "boundaryMarginDegrees": 3.550377600000041
+        },
+        {
+          "first": "jupiter",
+          "second": "uranus",
+          "separationDegrees": 176.58628889999997,
+          "kind": "opposition",
+          "orbDegrees": 3.413711100000029,
+          "boundaryMarginDegrees": 4.586288899999971
+        },
+        {
+          "first": "jupiter",
+          "second": "neptune",
+          "separationDegrees": 33.8588045,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.141195500000002
+        },
+        {
+          "first": "jupiter",
+          "second": "pluto",
+          "separationDegrees": 168.74706879999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 3.2529312000000346
+        },
+        {
+          "first": "saturn",
+          "second": "uranus",
+          "separationDegrees": 172.13666650000005,
+          "kind": "opposition",
+          "orbDegrees": 7.863333499999953,
+          "boundaryMarginDegrees": 0.13666650000004665
+        },
+        {
+          "first": "saturn",
+          "second": "neptune",
+          "separationDegrees": 38.3084269,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 17.6915731
+        },
+        {
+          "first": "saturn",
+          "second": "pluto",
+          "separationDegrees": 173.19669120000003,
+          "kind": "opposition",
+          "orbDegrees": 6.803308799999968,
+          "boundaryMarginDegrees": 1.196691200000032
+        },
+        {
+          "first": "uranus",
+          "second": "neptune",
+          "separationDegrees": 149.55490659999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 22.44509340000002
+        },
+        {
+          "first": "uranus",
+          "second": "pluto",
+          "separationDegrees": 14.666642299999998,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 6.666642299999998
+        },
+        {
+          "first": "neptune",
+          "second": "pluto",
+          "separationDegrees": 134.88826429999997,
+          "kind": null,
+          "orbDegrees": null,
+          "boundaryMarginDegrees": 8.888264299999975
+        }
+      ]
+    }
+  ]
+}

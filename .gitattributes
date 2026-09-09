@@ -3,3 +3,8 @@ packages/astrology/fixtures/horizons/*.txt text eol=lf whitespace=-blank-at-eol
 packages/astrology/src/data-manifest.json text eol=lf
 packages/astrology/fixtures/houses/*.json text eol=lf
 scripts/generate-house-reference.py text eol=lf
+packages/astrology/fixtures/aspects/*.json text eol=lf
+packages/astrology/fixtures/horizons/manifest.json text eol=lf
+scripts/generate-aspect-reference.py text eol=lf
+packages/astrology/fixtures/coverage/*.txt text eol=lf whitespace=-blank-at-eol
+packages/astrology/fixtures/coverage/*.json text eol=lf
