@@ -27,3 +27,4 @@ export * from "./director.ts";
 export * from "./prompt.ts";
 export * from "./gateway.ts";
 export * from "./memory.ts";
+export * from "./gemini.ts";

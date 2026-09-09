@@ -15,6 +15,8 @@ export interface ProviderOutput {
   output: unknown;
   inputTokens: number | null;
   outputTokens: number | null;
+  thoughtTokens?: number | null;
+  resolvedModel?: string | null;
 }
 export interface EditorialProvider {
   id: string;
@@ -38,15 +40,17 @@ export interface BudgetLedger {
     window: string,
     maxCalls: number,
     reservedTokens: number,
+    maxTokens?: number,
   ): Promise<boolean>;
 }
 /** Process-local laboratory ledger. Not safe as a distributed production quota store. */
 export class LabBudgetLedger implements BudgetLedger {
-  private windows = new Map<string, number>();
-  async reserve(window: string, maxCalls: number): Promise<boolean> {
-    const used = this.windows.get(window) ?? 0;
-    if (used >= maxCalls) return false;
-    this.windows.set(window, used + 1);
+  private windows = new Map<string, { calls: number; tokens: number }>();
+  async reserve(window: string, maxCalls: number, reservedTokens = 0, maxTokens = 200_000): Promise<boolean> {
+    if (![maxCalls, reservedTokens, maxTokens].every((n) => Number.isSafeInteger(n) && n >= 0)) return false;
+    const used = this.windows.get(window) ?? { calls: 0, tokens: 0 };
+    if (used.calls >= maxCalls || used.tokens + reservedTokens > maxTokens) return false;
+    this.windows.set(window, { calls: used.calls + 1, tokens: used.tokens + reservedTokens });
     return true;
   }
 }
@@ -62,6 +66,10 @@ export interface GatewayEvent {
   durationMs: number;
   inputTokens: number | null;
   outputTokens: number | null;
+  resolvedModel: string | null;
+  thoughtTokens: number | null;
+  totalDurationMs: number;
+  costBrl: 0;
 }
 export interface GatewayConfig {
   enabled?: boolean;
@@ -70,6 +78,7 @@ export interface GatewayConfig {
   providers: readonly EditorialProvider[];
   ledger: BudgetLedger;
   maxCallsPerDay?: number;
+  maxReservedTokensPerDay?: number;
   timeoutMs?: number;
   observe?: (event: GatewayEvent) => void;
 }
@@ -156,23 +165,29 @@ export class EditorialGateway {
     const payload = deepFreeze(buildPrompt(request));
     if (payload.prompt.length > tierLimits[request.tier].maxInputChars)
       return unavailable("input_limit");
+    const startedAt = performance.now();
     const timeoutMs =
       this.config.timeoutMs ?? tierLimits[request.tier].timeoutMs;
     const maxCalls = this.config.maxCallsPerDay ?? 20;
+    const maxTokens = this.config.maxReservedTokensPerDay ?? 200_000;
     if (
       !Number.isInteger(maxCalls) ||
       maxCalls < 1 ||
       maxCalls > 100 ||
       !Number.isFinite(timeoutMs) ||
       timeoutMs <= 0 ||
-      timeoutMs > 45000
+      timeoutMs > tierLimits[request.tier].timeoutMs ||
+      !Number.isSafeInteger(maxTokens) || maxTokens < 1 || maxTokens > 2_000_000
     )
       return unavailable("invalid_limits");
     // At most two attempts; fallback is only for transport failure, never poor editorial quality.
     for (const [attempt, provider] of this.config.providers
       .slice(0, 2)
       .entries()) {
+      let remainingMs = timeoutMs - (performance.now() - startedAt);
+      if (remainingMs <= 0) return unavailable("timeout");
       if (
+        !/^[a-z0-9._-]{1,80}$/.test(provider.id) ||
         !/^[a-z0-9._-]{1,80}$/.test(provider.model) ||
         /latest|preview/i.test(provider.model)
       )
@@ -180,20 +195,27 @@ export class EditorialGateway {
       if (provider.kind === "remote" && !this.config.freeTierConfirmed)
         return unavailable("free_tier_unconfirmed");
       let reserved: boolean;
+      let quotaTimer: ReturnType<typeof setTimeout> | undefined;
       try {
-        reserved = await this.config.ledger.reserve(
+        reserved = await Promise.race([this.config.ledger.reserve(
           new Date().toISOString().slice(0, 10),
           maxCalls,
-          payload.maxOutputTokens,
-        );
+          // UTF-8 bytes conservatively upper-bound text tokens; include system instructions.
+          new TextEncoder().encode(payload.system + payload.prompt).length + payload.maxOutputTokens,
+          maxTokens,
+        ), new Promise<false>((resolve) => { quotaTimer = setTimeout(() => resolve(false), remainingMs); })]);
       } catch {
         return unavailable("quota_unavailable");
-      }
+      } finally { if (quotaTimer !== undefined) clearTimeout(quotaTimer); }
+      remainingMs = timeoutMs - (performance.now() - startedAt);
+      if (remainingMs <= 0) return unavailable("timeout");
       if (!reserved) return unavailable("quota_exhausted");
       const controller = new AbortController();
       const start = performance.now();
       let timer: ReturnType<typeof setTimeout> | undefined;
       let eventStatus = "unavailable";
+      let resolvedModel: string | null = null;
+      let thoughtTokens: number | null = null;
       let usage: Pick<ProviderOutput, "inputTokens" | "outputTokens"> = {
         inputTokens: null,
         outputTokens: null,
@@ -203,7 +225,7 @@ export class EditorialGateway {
           timer = setTimeout(() => {
             controller.abort();
             reject(new ProviderFailure("timeout"));
-          }, timeoutMs);
+          }, remainingMs);
         });
         const response = await Promise.race([
           provider.generate(payload, controller.signal),
@@ -216,9 +238,13 @@ export class EditorialGateway {
           inputTokens: response.inputTokens,
           outputTokens: response.outputTokens,
         };
+        resolvedModel = typeof response.resolvedModel === "string" && /^[a-z0-9._-]{1,100}$/.test(response.resolvedModel) ? response.resolvedModel : null;
+        thoughtTokens = response.thoughtTokens ?? null;
+        if (thoughtTokens !== null && (!Number.isSafeInteger(thoughtTokens) || thoughtTokens < 0))
+          throw new ProviderFailure("invalid_response");
         if (
           response.outputTokens !== null &&
-          response.outputTokens > payload.maxOutputTokens
+          response.outputTokens + (thoughtTokens ?? 0) > payload.maxOutputTokens
         ) {
           eventStatus = "output_limit";
           return unavailable(eventStatus);
@@ -244,7 +270,7 @@ export class EditorialGateway {
       } catch (error) {
         eventStatus =
           error instanceof ProviderFailure ? error.code : "unavailable";
-        if (eventStatus === "invalid_response") return unavailable(eventStatus);
+        if (eventStatus === "invalid_response" || eventStatus === "timeout") return unavailable(eventStatus);
       } finally {
         if (timer !== undefined) clearTimeout(timer);
         controller.abort();
@@ -259,6 +285,8 @@ export class EditorialGateway {
             status: eventStatus,
             attempt: attempt + 1,
             durationMs: Math.round(performance.now() - start),
+            totalDurationMs: Math.round(performance.now() - startedAt),
+            resolvedModel, thoughtTokens, costBrl: 0,
             ...usage,
           });
         } catch {

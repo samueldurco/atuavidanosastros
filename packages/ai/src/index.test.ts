@@ -264,8 +264,7 @@ test("timeout aborta tentativa e fallback é limitado; falha editorial não rege
   const result = await gateway([slow, fixture()], { timeoutMs: 10 }).generate(
     request,
   );
-  assert.equal(result.status, "candidate");
-  if (result.status === "candidate") assert.equal(result.degraded, true);
+  assert.deepEqual(result, { status: "unavailable", reason: "timeout" });
   assert.equal(aborted, true);
   let fallbackCalls = 0;
   const unused = fixture();

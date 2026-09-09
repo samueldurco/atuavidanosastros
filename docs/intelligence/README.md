@@ -84,4 +84,10 @@ Fontes primárias consultadas em 08/09/2026: [saídas estruturadas Gemini](https
 
 ## Reproduzir
 
+WU-028 (09/09/2026): `promotion.ts` implementa a elegibilidade de release por capacidade/tier, sete estratos e três repetições independentes por caso, versões atuais, hashes de artefatos, identidade resolvida, tokens conhecidos, R$0, SLA e revisão autorizada vinculada ao digest exato. Elegibilidade não promove: `promotedModels` permanece vazio. Hashes e registros operacionais precisam ser confrontados com os arquivos pelo operador confiável; o gate não autentica assinaturas. Fixtures de teste com notas sintéticas provam a lógica de recusa, não qualidade editorial.
+
+`lab/release-dataset.ts` adiciona 42 casos sintéticos estratificados por contexto às seis capacidades. São uma base de ampliação, não corpus calibrado por produto: repetem fatores-base dentro de cada capacidade. O baseline de dez casos e suas vinte amostras históricas permanecem reproduzíveis; os dois golden seeds continuam sem calibração humana. Ainda faltam diversidade factual por produto, revisão factual/semântica independente e execuções repetidas válidas para homologação.
+
+O gateway reserva chamadas e teto conservador de tokens antes de cada tentativa, incluindo instruções de sistema. O prazo total inclui reserva e fallback. O ledger é somente local ao processo de laboratório; produção exige reserva distribuída. Telemetria não contém conteúdo nem credenciais. `gemini.ts` fornece o adaptador de API com schema nativo, abort, teto de bytes, rejeição de truncamento/tool calls e metadados de uso/versão; testes usam fetch falso. Nenhuma chave é lida ao construir o adaptador e não houve chamada externa nesta WU. Referência do protocolo: [API generateContent](https://ai.google.dev/api/generate-content).
+
 `pnpm --filter @atv/ai check` e `pnpm --filter @atv/ai test:unit` executam validação sem rede/segredos. Benchmark externo é operação explícita pelo MCP AI Studio, sempre com datasets sintéticos e cota confirmada. Resultados e decisão ficam em `docs/intelligence/benchmarks/`, sem inferir aprovação de geração pela mera listagem de modelos.

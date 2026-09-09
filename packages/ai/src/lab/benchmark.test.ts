@@ -14,7 +14,7 @@ test("baseline externo é reproduzível e não confunde schema, fatos, latência
     ),
   ) as { dataClass: string; samples: BenchmarkSample[] };
   assert.equal(run.dataClass, "synthetic");
-  const rows = run.samples.map(evaluateSample);
+  const rows = run.samples.map((sample) => evaluateSample(sample));
   assert.ok(rows.length >= 10);
   assert.ok(rows.every((r) => r.editorialStatus === "not_calibrated"));
   assert.ok(rows.every((r) => !r.tokenUsageKnown));

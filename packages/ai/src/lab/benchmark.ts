@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
-import { SCHEMA_VERSION, tierLimits } from "../contracts.ts";
+import { SCHEMA_VERSION, tierLimits, type Tier } from "../contracts.ts";
 import { RUBRIC_VERSION, inspectReading } from "../director.ts";
 import { parseReading } from "../schema.ts";
 import { DATASET_VERSION, labCases } from "./dataset.ts";
+import type { LabCase } from "./dataset.ts";
 
 export interface BenchmarkSample {
   promptVersion: string;
@@ -13,17 +14,19 @@ export interface BenchmarkSample {
   latencyMs: number;
   inputTokens: number | null;
   outputTokens: number | null;
+  tier?: Tier;
 }
-export function evaluateSample(sample: BenchmarkSample) {
-  const item = labCases.find((c) => c.id === sample.caseId);
+export function evaluateSample(sample: BenchmarkSample, corpus?: { version: string; cases: readonly LabCase[] }) {
+  const item = (corpus?.cases ?? labCases).find((c) => c.id === sample.caseId);
   if (!item) throw new Error("Unknown synthetic case");
-  const reading = parseReading(sample.output, item.request.tier);
+  const tier = sample.tier ?? item.request.tier;
+  const reading = parseReading(sample.output, tier);
   const review = reading ? inspectReading(reading, item.request.facts) : null;
   return {
     caseId: sample.caseId,
     model: sample.model,
     repetition: sample.repetition,
-    dataset: DATASET_VERSION,
+    dataset: corpus?.version ?? DATASET_VERSION,
     prompt: sample.promptVersion,
     schema: SCHEMA_VERSION,
     rubric: RUBRIC_VERSION,
@@ -37,7 +40,7 @@ export function evaluateSample(sample: BenchmarkSample) {
     ],
     editorialStatus: "not_calibrated" as const,
     latencyMs: sample.latencyMs,
-    latencyPass: sample.latencyMs <= tierLimits[item.request.tier].timeoutMs,
+    latencyPass: Number.isFinite(sample.latencyMs) && sample.latencyMs >= 0 && sample.latencyMs <= tierLimits[tier].timeoutMs,
     tokenUsageKnown:
       sample.inputTokens !== null && sample.outputTokens !== null,
     inputTokens: sample.inputTokens,
