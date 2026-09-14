@@ -10,6 +10,10 @@ Status: implementation contract, **not a production release**. All 25 product de
 
 State progression is QUEUED → CALCULATED → AWAITING_EDITORIAL → READY. Pending states may fail or cancel. READY/FAILED/CANCELLED are terminal. Service transitions use the fenced calculation RPCs described below, expected revision and row locking; every accepted transition appends an event. A calculation snapshot is immutable. READY requires an enabled definition, a current product/contract promotion and a reviewed editorial output. Astrological products also require engine approval, regardless of a caller-supplied calculation status. No service publication RPC is currently exposed.
 
+## Natal product calculations — WU-033
+
+`createNatalCalculators()` registers birth-chart, three-pillars, ascendant and midheaven with the existing experimental engine. Product projections preserve exact selected positions and copied provenance, validate civil/UTC correspondence and label contextual statements as reported. Tropical signs use half-open 30-degree sectors, without rounding display into the next sign. No aspect policy or interpretation is inferred. Outside the conservative house/angle contract, ASC and cusps are withheld rather than substituted; MC remains separately computed and experimental when requested. The original engine contract and all publication gates still apply. See `docs/qa/NATAL_PRODUCT_CALCULATORS_2026-09-14.md`.
+
 ## Symbolic calculations — WU-032
 
 `createSymbolicCalculators()` registers daily-card, three-questions, dream-reading and dream-journal with the portable processor. This is not hosted runtime wiring or a release flag. Tarot snapshots identify the candidate deck, algorithm and spread versions. A server-created UUID seeds SHA-256 counter words; rejection sampling and partial Fisher–Yates draw unique cards, independent of question text. One upright card per question is a candidate policy requiring editorial review. Only new requests draw; reprocessing preserves the saved snapshot.

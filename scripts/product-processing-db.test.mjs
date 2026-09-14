@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { setupProductDatabase, owner, other, file } from './helpers/product-database.mjs';
 import { createWorkflowRepository, processNextProductRun, ProcessingError } from '../apps/worker/src/product-processing.ts';
 import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
+import { createNatalCalculators } from '../apps/worker/src/natal-calculators.ts';
 
 const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Fixture only']};
 const calculation={version:'fixture/1',kind:'tarot',status:'recorded',facts:[{id:'card-0',kind:'drawn',display:'Fixture',source:'synthetic'}],data:{cards:[0]},limits:[]};
@@ -136,4 +137,31 @@ test('real symbolic calculators persist four product inputs, reach editorial rev
     }
   }
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
+});
+
+test('real natal projections persist for four products but do not bypass engine or editorial gates',async(t)=>{
+  const db=await boot(t),calculators=createNatalCalculators(),store=repository(db);
+  await db.exec("update workflow_releases set enabled=true,access_policy='free' where product_id in ('birth-chart','three-pillars','ascendant','midheaven')");
+  for(const product of Object.keys(calculators)) {
+    const data={version:input.version,productId:product,consent:input.consent,
+      birth:{localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'}};
+    const id=(await as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as data',[product,randomUUID(),data]))).rows[0].data;
+    assert.equal(await processNextProductRun(store,calculators),'calculated');
+    const saved=(await db.query('select calculation from product_runs where id=$1',[id])).rows[0].calculation;
+    assert.equal(saved.status,'experimental');assert.equal(saved.version,'atv-natal-product-calculation/1.0.0');
+    assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+    const result=await read(db,id);assert.equal(result.released,false);assert.equal(result.calculation,null);assert.ok(result.libraryItemId);
+    assert.equal(await read(db,id,other),null);
+  }
+  assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
+});
+
+test('invalid civil/UTC correspondence becomes a durable safe failure rather than a fabricated chart',async(t)=>{
+  const db=await boot(t);await db.exec("update workflow_releases set enabled=true where product_id='ascendant'");
+  const data={version:input.version,productId:'ascendant',consent:input.consent,
+    birth:{localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T13:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'}};
+  const id=(await as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as data',['ascendant',randomUUID(),data]))).rows[0].data;
+  assert.equal(await processNextProductRun(repository(db),createNatalCalculators()),'failed');
+  const result=await read(db,id);assert.equal(result.state,'FAILED');assert.equal(result.calculation,null);
+  assert.equal((await db.query('select error_code from product_runs where id=$1',[id])).rows[0].error_code,'input_invalid');
 });

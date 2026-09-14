@@ -102,6 +102,9 @@ importers:
 
   apps/worker:
     dependencies:
+      '@atv/astrology':
+        specifier: workspace:*
+        version: link:../../packages/astrology
       '@atv/domain':
         specifier: workspace:*
         version: link:../../packages/domain
