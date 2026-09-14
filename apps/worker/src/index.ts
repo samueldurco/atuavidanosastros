@@ -1,3 +1,5 @@
+export { processNextProductRun, createWorkflowRepository } from './product-processing.ts';
+
 export type WorkerJobName =
   | 'hotmart.reconcile'
   | 'delivery.render'

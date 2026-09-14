@@ -1,4 +1,4 @@
-export * from './catalog.js';
-export * from './commerce.js';
-export * from './events.js';
+export * from './catalog.ts';
+export * from './commerce.ts';
+export * from './events.ts';
 export * from './workflows.ts';
