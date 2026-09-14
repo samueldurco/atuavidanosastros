@@ -1,4 +1,5 @@
 export { processNextProductRun, createWorkflowRepository } from './product-processing.ts';
+export { createSymbolicCalculators } from './symbolic-calculators.ts';
 
 export type WorkerJobName =
   | 'hotmart.reconcile'

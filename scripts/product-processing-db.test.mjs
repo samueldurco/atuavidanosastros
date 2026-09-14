@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { setupProductDatabase, owner, other, file } from './helpers/product-database.mjs';
 import { createWorkflowRepository, processNextProductRun, ProcessingError } from '../apps/worker/src/product-processing.ts';
+import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
 
 const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Fixture only']};
 const calculation={version:'fixture/1',kind:'tarot',status:'recorded',facts:[{id:'card-0',kind:'drawn',display:'Fixture',source:'synthetic'}],data:{cards:[0]},limits:[]};
@@ -112,4 +113,27 @@ test('processing forward-fix preserves owner retrieval/deletion without reopenin
   await assert.rejects(()=>fail(db,current),/permission denied/);
   assert.equal((await read(db,id)).state,'QUEUED');
   assert.equal((await as(db,'authenticated',owner,()=>db.query('select delete_product_run($1) as data',[id]))).rows[0].data,true);
+});
+
+test('real symbolic calculators persist four product inputs, reach editorial review and preserve Tarot on reprocess',async(t)=>{
+  const db=await boot(t);const calculators=createSymbolicCalculators();
+  await db.exec("update workflow_releases set enabled=true,access_policy='free' where product_id in ('daily-card','three-questions','dream-reading','dream-journal')");
+  for(const product of Object.keys(calculators)) {
+    const data=product.startsWith('dream-')?{version:input.version,productId:product,consent:input.consent,
+      dream:{date:'2026-09-14',narrative:'Relato sintético com uma janela.',associations:[],emotions:['curiosidade']}}:
+      {...input,productId:product,questions:product==='three-questions'?['A','B','C']:['A']};
+    const request=()=>as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as data',[product,randomUUID(),data]));
+    const id=(await request()).rows[0].data;const store=repository(db);
+    assert.equal(await processNextProductRun(store,calculators),'calculated');
+    const saved=(await db.query('select calculation from product_runs where id=$1',[id])).rows[0].calculation;
+    assert.equal(saved.version,'atv-symbolic-calculation/1.0.0');
+    assert.equal(saved.status,'recorded');assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+    const result=await read(db,id);assert.equal(result.released,false);assert.equal(result.calculation,null);assert.ok(result.libraryItemId);
+    if(product==='daily-card') {
+      const child=await create(db,null,id);
+      assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+      assert.deepEqual((await db.query('select calculation from product_runs where id=$1',[child])).rows[0].calculation,saved);
+    }
+  }
+  assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
 });
