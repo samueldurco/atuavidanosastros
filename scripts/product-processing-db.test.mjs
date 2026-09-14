@@ -5,6 +5,7 @@ import { setupProductDatabase, owner, other, file } from './helpers/product-data
 import { createWorkflowRepository, processNextProductRun, ProcessingError } from '../apps/worker/src/product-processing.ts';
 import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
 import { createNatalCalculators } from '../apps/worker/src/natal-calculators.ts';
+import { prepareProductFacts, evaluateProductDraft } from '../apps/worker/src/product-editorial.ts';
 
 const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Fixture only']};
 const calculation={version:'fixture/1',kind:'tarot',status:'recorded',facts:[{id:'card-0',kind:'drawn',display:'Fixture',source:'synthetic'}],data:{cards:[0]},limits:[]};
@@ -164,4 +165,24 @@ test('invalid civil/UTC correspondence becomes a durable safe failure rather tha
   assert.equal(await processNextProductRun(repository(db),createNatalCalculators()),'failed');
   const result=await read(db,id);assert.equal(result.state,'FAILED');assert.equal(result.calculation,null);
   assert.equal((await db.query('select error_code from product_runs where id=$1',[id])).rows[0].error_code,'input_invalid');
+});
+
+test('persisted calculation enters offline Director without releasing content or changing durable state',async(t)=>{
+  const db=await boot(t);await enable(db);const id=await create(db),store=repository(db),calculators=createSymbolicCalculators();
+  assert.equal(await processNextProductRun(store,calculators),'calculated');
+  assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+  const saved=(await db.query('select calculation,revision,state,editorial from product_runs where id=$1',[id])).rows[0];
+  const prepared=prepareProductFacts('daily-card',saved.calculation);assert.equal(prepared.status,'prepared');
+  const fact=prepared.facts.facts.find(f=>f.kind==='drawn');
+  const output={schemaVersion:'atv-reading/1.0.0',capability:'tarot-reflection',scope:'partial',title:'Recorte sintético',
+    claims:[{id:'c1',kind:'fact',text:fact.display,evidence:[fact.id]}],relations:[],
+    synthesis:[{claimIds:['c1'],text:'O sorteio foi preservado; esta fixture não constitui uma interpretação.'}],
+    reflections:['Que associação pessoal essa imagem desperta?'],limits:['Sem homologação editorial.']};
+  const draft={runId:id,revision:saved.revision,productId:'daily-card',tier:'free',calculation:saved.calculation,output};
+  const assessed=await evaluateProductDraft(draft);assert.equal(assessed.status,'needs_editorial_review');
+  assert.match(assessed.basisDigest,/^[a-f0-9]{64}$/);assert.equal(assessed.publication,'blocked');
+  assert.deepEqual((await db.query('select calculation,revision,state,editorial from product_runs where id=$1',[id])).rows[0],saved);
+  assert.equal((await read(db,id)).released,false);assert.equal((await read(db,id)).calculation,null);
+  assert.equal(await read(db,id,other),null);
+  assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
 });
