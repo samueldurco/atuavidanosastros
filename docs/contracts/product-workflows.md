@@ -34,6 +34,10 @@ Reprocessing creates a new run linked to the owned prior version. It copies the 
 
 ## Durable calculation processing — WU-031
 
+### Internal composition — WU-037
+
+`createProductProcessor(rpc, options)` composes ten partial calculation bases behind an empty-by-default server-owned allowlist. It rejects invalid/unsupported/duplicate product IDs and deadlines, captures configuration against later mutation, and exposes one bounded `step()` with existing aggregate-only telemetry. The full catalog coverage report distinguishes partial bases from unavailable calculations and always states publication blocked. No scheduler or hosted transport is supplied. Database release/contract gates remain independently authoritative. See `docs/qa/PRODUCT_RUNTIME_2026-09-14.md` for the ten-product/six-universe local SQL integration proof.
+
 Migration `20260914140000_product_run_processing.sql` enqueues work in the run-creation transaction and backfills pending calculations. The private work table has no client or service-role direct access. Three service-only RPCs claim, complete and fail one step. Claims filter enabled, matching-contract products supported by the caller; row locks with `SKIP LOCKED` keep an already claimed row out of another consumer's selection ([PostgreSQL SELECT documentation](https://www.postgresql.org/docs/current/sql-select.html)). Local tests cover sequential fencing, not simultaneous independent connections.
 
 A random token fences a 60-second lease (SQL accepts 30–120 seconds). Completion requires the live token and expected revision. Token-keyed receipts make lost-response retries idempotent without changing the calculation. Five claims per run are the hard bound; safe transient failures defer the next claim by exponential backoff starting at five seconds. Expired leases can be reclaimed, exhausted work fails, invalid input/calculation fails permanently. Owner deletion cascades through work and prevents late completion.

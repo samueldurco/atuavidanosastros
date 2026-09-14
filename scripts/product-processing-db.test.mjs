@@ -6,6 +6,7 @@ import { createWorkflowRepository, processNextProductRun, ProcessingError } from
 import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
 import { createNatalCalculators } from '../apps/worker/src/natal-calculators.ts';
 import { createContextCalculators } from '../apps/worker/src/context-calculators.ts';
+import { createProductProcessor, productCalculationCoverage } from '../apps/worker/src/product-runtime.ts';
 import { prepareProductFacts, evaluateProductDraft } from '../apps/worker/src/product-editorial.ts';
 
 const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Fixture only']};
@@ -26,12 +27,15 @@ const fail=(db,c,code='transient_failure')=>service(db,'select fail_product_run_
 const read=(db,id,user=owner)=>as(db,'authenticated',user,()=>db.query('select read_product_run($1) as data',[id])).then(r=>r.rows[0].data);
 const expire=(db,id)=>db.query("update product_run_work set lease_until=clock_timestamp()-interval '1 second',available_at=clock_timestamp()-interval '1 second' where run_id=$1",[id]);
 function repository(db) {
-  return createWorkflowRepository(async(name,args,signal)=>{
+  return createWorkflowRepository(transport(db));
+}
+function transport(db) {
+  return async(name,args,signal)=>{
     signal.throwIfAborted();
     const entries=Object.entries(args);const params=entries.map(([key],index)=>key+' => $'+(index+1)).join(',');
     try{return await service(db,`select ${name}(${params}) as data`,entries.map(([,value])=>value));}
     catch(error){throw new ProcessingError(/lease_lost|stale_revision|run_not_found/.test(error.message)?'lease_lost':'unavailable');}
-  });
+  };
 }
 
 test('work queue is private, disabled by default, and old unfenced service writer is revoked',async(t)=>{
@@ -225,4 +229,37 @@ test('invalid partner UTC is a durable failure with no single-person fallback',a
   assert.equal(await processNextProductRun(repository(db),createContextCalculators()),'failed');
   const result=await read(db,id);assert.equal(result.state,'FAILED');assert.equal(result.calculation,null);
   assert.equal((await db.query('select error_code from product_runs where id=$1',[id])).rows[0].error_code,'input_invalid');
+});
+
+test('composed runtime crosses all six universes through SQL and stops every product at editorial review',async(t)=>{
+  const db=await boot(t),metrics=[];
+  const coverage=productCalculationCoverage().filter(p=>p.calculation==='partial-base');
+  const runtime=createProductProcessor(transport(db),{enabledProducts:coverage.map(p=>p.productId),emit:e=>metrics.push(e)});
+  assert.equal(await runtime.step(),'idle');
+  assert.equal((await db.query('select count(*)::int as n from workflow_releases where enabled')).rows[0].n,0);
+  const birth={localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'};
+  const universes=new Set();
+  for(const product of coverage) {
+    // Local-only activation proves processing, never changes the checked-in release defaults.
+    await db.query("update workflow_releases set enabled=true,access_policy='free' where product_id=$1",[product.productId]);
+    const data={version:input.version,productId:product.productId,consent:{...input.consent,partner:product.kind==='relationship'}};
+    if(['natal','cycles','relationship','purpose'].includes(product.kind)) data.birth=birth;
+    if(product.kind==='relationship') data.partner=birth;
+    if(product.kind==='cycles') data.targetDate='2026-09-14';
+    if(product.kind==='tarot') data.questions=product.productId==='three-questions'?['Um?','Dois?','Três?']:['Pergunta sintética?'];
+    if(product.kind==='dream') data.dream={date:'2026-09-14',narrative:'Relato sintético de uma ponte e uma porta.',associations:[],emotions:[]};
+    const id=(await as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as data',[product.productId,randomUUID(),data]))).rows[0].data;
+    assert.equal(await runtime.step(),'calculated',product.productId);
+    assert.equal(await runtime.step(),'awaiting_editorial',product.productId);
+    const saved=(await db.query('select calculation from product_runs where id=$1',[id])).rows[0].calculation;
+    assert.equal(prepareProductFacts(product.productId,saved).status,'prepared');
+    const result=await read(db,id);assert.equal(result.state,'AWAITING_EDITORIAL');assert.equal(result.released,false);
+    assert.equal(result.calculation,null);assert.equal(result.editorial,null);assert.ok(result.libraryItemId);
+    assert.equal(await read(db,id,other),null);universes.add(product.universe);
+    assert.equal(await runtime.step(),'idle');
+  }
+  assert.equal(universes.size,6);assert.equal(coverage.length,10);
+  assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
+  assert.ok(metrics.every(e=>Object.keys(e).sort().join(',')==='attempt,durationMs,event,outcome'));
+  assert.ok(!JSON.stringify(metrics).includes(owner));assert.ok(!JSON.stringify(metrics).includes('sintético'));
 });
