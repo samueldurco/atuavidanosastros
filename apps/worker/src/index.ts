@@ -1,6 +1,7 @@
 export { processNextProductRun, createWorkflowRepository } from './product-processing.ts';
 export { createSymbolicCalculators } from './symbolic-calculators.ts';
 export { createNatalCalculators } from './natal-calculators.ts';
+export { createContextCalculators } from './context-calculators.ts';
 export { prepareProductFacts, evaluateProductDraft } from './product-editorial.ts';
 
 export type WorkerJobName =

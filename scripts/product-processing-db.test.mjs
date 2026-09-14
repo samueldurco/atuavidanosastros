@@ -5,6 +5,7 @@ import { setupProductDatabase, owner, other, file } from './helpers/product-data
 import { createWorkflowRepository, processNextProductRun, ProcessingError } from '../apps/worker/src/product-processing.ts';
 import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
 import { createNatalCalculators } from '../apps/worker/src/natal-calculators.ts';
+import { createContextCalculators } from '../apps/worker/src/context-calculators.ts';
 import { prepareProductFacts, evaluateProductDraft } from '../apps/worker/src/product-editorial.ts';
 
 const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Fixture only']};
@@ -185,4 +186,43 @@ test('persisted calculation enters offline Director without releasing content or
   assert.equal((await read(db,id)).released,false);assert.equal((await read(db,id)).calculation,null);
   assert.equal(await read(db,id,other),null);
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
+});
+
+test('pair and date bases persist behind editorial gates and reprocess as separate immutable runs',async(t)=>{
+  const db=await boot(t),calculators=createContextCalculators(),store=repository(db);
+  await db.exec("update workflow_releases set enabled=true,access_policy='free' where product_id in ('pair-preview','date-reading')");
+  const birth={localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'};
+  for(const product of Object.keys(calculators)) {
+    const data={version:input.version,productId:product,birth,consent:{...input.consent,partner:product==='pair-preview'},
+      ...(product==='pair-preview'?{partner:{...birth,localDateTime:'2001-02-03T10:00:00',utcInstant:'2001-02-03T10:00:00Z'}}:{targetDate:'2026-09-14'})};
+    const request=parent=>as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3,$4) as data',[product,randomUUID(),data,parent])).then(r=>r.rows[0].data);
+    const id=await request(null);
+    assert.equal(await processNextProductRun(store,calculators),'calculated');
+    const saved=(await db.query('select calculation from product_runs where id=$1',[id])).rows[0].calculation;
+    assert.equal(saved.status,'experimental');assert.equal(saved.version,'atv-context-product-calculation/1.0.0');
+    assert.equal(prepareProductFacts(product,saved).status,'prepared');
+    assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+    const result=await read(db,id);assert.equal(result.released,false);assert.equal(result.calculation,null);assert.ok(result.libraryItemId);
+    assert.equal(await read(db,id,other),null);
+    const child=await request(id);
+    assert.equal(await processNextProductRun(store,calculators),'calculated');
+    assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+    const recalculated=(await db.query('select calculation from product_runs where id=$1',[child])).rows[0].calculation;
+    assert.deepEqual(recalculated.facts,saved.facts);
+    assert.deepEqual(recalculated.data.first.positions,saved.data.first.positions);
+    assert.deepEqual(recalculated.data.second.positions,saved.data.second.positions);
+    assert.deepEqual((await db.query('select calculation from product_runs where id=$1',[id])).rows[0].calculation,saved);
+    assert.equal((await read(db,child)).released,false);assert.equal(await read(db,child,other),null);
+  }
+  assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
+});
+
+test('invalid partner UTC is a durable failure with no single-person fallback',async(t)=>{
+  const db=await boot(t);await db.exec("update workflow_releases set enabled=true,access_policy='free' where product_id='pair-preview'");
+  const birth={localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'};
+  const data={version:input.version,productId:'pair-preview',consent:{...input.consent,partner:true},birth,partner:{...birth,utcInstant:'2000-01-01T13:00:00Z'}};
+  const id=(await as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as data',['pair-preview',randomUUID(),data]))).rows[0].data;
+  assert.equal(await processNextProductRun(repository(db),createContextCalculators()),'failed');
+  const result=await read(db,id);assert.equal(result.state,'FAILED');assert.equal(result.calculation,null);
+  assert.equal((await db.query('select error_code from product_runs where id=$1',[id])).rows[0].error_code,'input_invalid');
 });

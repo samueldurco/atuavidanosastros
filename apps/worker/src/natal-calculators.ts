@@ -1,6 +1,6 @@
 import { bodies, CaelusEphemerisProvider, engineContract, validateCalculationInput,
   type CelestialBody, type EphemerisProvider, type NatalChart } from '@atv/astrology';
-import { parseWorkflowInput, type CalculationSnapshot } from '@atv/domain';
+import { parseWorkflowInput, type BirthInput, type CalculationSnapshot } from '@atv/domain';
 import { ProcessingError, type ProductCalculator } from './product-processing.ts';
 
 export const natalProductContract = Object.freeze({
@@ -9,8 +9,8 @@ export const natalProductContract = Object.freeze({
   zodiac: 'tropical', presentation: 'zodiac-half-open-sectors/truncated-6-decimals/1',
   aspects: 'not-assessed', interpretation: 'not-produced', status: 'experimental'
 });
-const labels: Record<CelestialBody, string> = {sun:'Sol',moon:'Lua',mercury:'Mercúrio',venus:'Vênus',
-  mars:'Marte',jupiter:'Júpiter',saturn:'Saturno',uranus:'Urano',neptune:'Netuno',pluto:'Plutão'};
+export const bodyLabels: Readonly<Record<CelestialBody, string>> = Object.freeze({sun:'Sol',moon:'Lua',mercury:'Mercúrio',venus:'Vênus',
+  mars:'Marte',jupiter:'Júpiter',saturn:'Saturno',uranus:'Urano',neptune:'Netuno',pluto:'Plutão'});
 const signs = ['Áries','Touro','Gêmeos','Câncer','Leão','Virgem','Libra','Escorpião','Sagitário','Capricórnio','Aquário','Peixes'];
 const angle = (v: number) => Number.isFinite(v) && v >= 0 && v < 360;
 
@@ -36,29 +36,34 @@ function validateChart(chart: NatalChart): void {
     throw new ProcessingError('calculation_invalid');
 }
 
+/** Shared checked boundary for product projections. Aborting fences output, not synchronous CPU work. */
+export async function calculateValidatedChart(provider: EphemerisProvider, input: BirthInput, signal: AbortSignal): Promise<NatalChart> {
+  signal.throwIfAborted();
+  try { validateCalculationInput(input); } catch { throw new ProcessingError('input_invalid'); }
+  let chart: NatalChart;
+  try { chart = await provider.calculate({...input}); }
+  catch (error) { if(error instanceof TypeError || error instanceof RangeError) throw new ProcessingError('calculation_invalid'); throw error; }
+  signal.throwIfAborted();
+  validateChart(chart);
+  if (!chart.input || Object.entries(input).some(([key,value])=>chart.input[key as keyof typeof chart.input]!==value) ||
+      chart.provenance.temporal.utcInstant!==new Date(input.utcInstant).toISOString()) throw new ProcessingError('calculation_invalid');
+  return structuredClone(chart);
+}
+
 /** Trusted internal provider injection, never client supplied. Does not enable a release or infer a reading. */
 export function createNatalCalculators(provider: EphemerisProvider = new CaelusEphemerisProvider()): Readonly<Record<string, ProductCalculator>> {
   const calculate: ProductCalculator = async (value, {signal}) => {
     signal.throwIfAborted();
     const input = parseWorkflowInput(value);
     if (!input?.birth || !natalProductContract.products.includes(input.productId)) throw new ProcessingError('input_invalid');
-    try { validateCalculationInput(input.birth); } catch { throw new ProcessingError('input_invalid'); }
-    // The existing engine is synchronous CPU work behind a Promise. Cancellation fences its result,
-    // not CPU preemption; production runtime latency still needs measurement.
-    let chart: NatalChart;
-    try { chart = await provider.calculate({...input.birth}); }
-    catch (error) { if(error instanceof TypeError || error instanceof RangeError) throw new ProcessingError('calculation_invalid'); throw error; }
-    signal.throwIfAborted();
-    validateChart(chart);
-    if (!chart.input || Object.entries(input.birth).some(([key,value])=>chart.input[key as keyof typeof chart.input]!==value) ||
-        chart.provenance.temporal.utcInstant!==new Date(input.birth.utcInstant).toISOString()) throw new ProcessingError('calculation_invalid');
+    const chart = await calculateValidatedChart(provider, input.birth, signal);
     const full = input.productId==='birth-chart', pillars = input.productId==='three-pillars';
     const asc = full || pillars || input.productId==='ascendant', mc = full || input.productId==='midheaven';
     const housesAvailable = chart.houses.status==='ok' && Math.abs(input.birth.latitude)<engineContract.placidusAbsoluteLatitudeExclusive;
     const selected = chart.positions.filter(p=>full || (pillars && (p.body==='sun' || p.body==='moon')));
     const source = `${chart.provenance.provider}@${chart.provenance.providerVersion};${chart.provenance.algorithmVersion};${natalProductContract.version}`;
     const facts: CalculationSnapshot['facts'] = selected.map(p=>({id:`position-${p.body}`,kind:'calculated',
-      display:`${labels[p.body]}: ${zodiacPosition(p.longitude).display}; movimento ${p.retrograde?'retrógrado':'direto'} da candidata`,source}));
+      display:`${bodyLabels[p.body]}: ${zodiacPosition(p.longitude).display}; movimento ${p.retrograde?'retrógrado':'direto'} da candidata`,source}));
     if (asc) facts.push(housesAvailable ? {id:'angle-ascendant',kind:'calculated',display:`Ascendente: ${zodiacPosition(chart.houses.ascendant).display}`,source} :
       {id:'ascendant-unavailable',kind:'calculated',display:'Ascendente não disponibilizado: condições fora do contrato conservador de casas/ângulos.',source});
     if (mc) facts.push({id:'angle-midheaven',kind:'calculated',display:`Meio do Céu: ${zodiacPosition(chart.houses.midheaven).display}`,source});
