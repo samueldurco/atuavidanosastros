@@ -42,6 +42,12 @@ RLS isolates runs/events by owner. Migration `20260914120000_product_run_reader.
 
 The web boundary `/api/workflows` authenticates the session, checks same-origin mutations, bounds JSON input, preserves request idempotency and uses only owner RPCs. Reprocessing sends no new input and retries the original key. `/biblioteca/[id]` resolves an owned Library reference and verifies both run and Library IDs; the result is validated and escaped before rendering. Unreleased content is never shown as a finished reading. No download, audio or email is advertised as delivered without an actual artifact.
 
+## Private web export — WU-035
+
+`GET /api/workflows/[id]/download?format=web` authenticates and reads the current owner projection on every request. Only released, valid projections with catalog web eligibility render. No service-role read, cached authorization or public storage URL is accepted. Same-origin checks, strict query parameters, escaped content, restrictive CSP, attachment disposition and private/no-store headers protect the boundary. The response includes the export version and SHA-256 of its exact bytes, neither of which is a promotion credential.
+
+The self-contained HTML preserves the authorized reading, facts, provenance, limits and revision history. It is generated on demand, not a persisted artifact manifest. An offline copy does not update and cannot be revoked after download; deletion/revocation blocks subsequent requests. PDF, SVG and audio are explicitly refused until independently implemented. The reader keeps failures recoverable on the page. Detailed scope and evidence: `docs/qa/PRODUCT_WEB_EXPORT_2026-09-14.md`.
+
 ## Rollout and forward-fix
 
 Migration `20260909230000_product_runs.sql` is expand-only and has not been applied to hosted Supabase. `supabase/forward-fixes/20260909230000_disable_product_runs.sql` disables definitions and revokes creation/advancement without destroying history; authenticated retrieval/deletion remain available. Re-enable only through a reviewed release, never by seeding synthetic promotion records.

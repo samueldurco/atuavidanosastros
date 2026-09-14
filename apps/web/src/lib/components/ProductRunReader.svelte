@@ -8,7 +8,7 @@
 	import { isUuid } from '$lib/library-result';
 	import { parseProductRun, runLabels, type WorkflowReaderData } from '$lib/product-run';
 	let { data }: { data: WorkflowReaderData } = $props();
-	let busy = $state<'reprocess' | 'delete' | null>(null);
+	let busy = $state<'reprocess' | 'delete' | 'download' | null>(null);
 	let failure = $state('');
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
@@ -25,6 +25,36 @@
 				? 'Esta tentativa foi encerrada sem entregar uma leitura.'
 				: 'O registro está preservado. A interpretação só será exibida após as verificações de cálculo, qualidade editorial e segurança.'
 	);
+	async function download() {
+		if (busy || data.synthetic || !data.run.released) return;
+		busy = 'download';
+		failure = '';
+		try {
+			const response = await fetch(`/api/workflows/${data.run.id}/download?format=web`);
+			if (!response.ok || !response.headers.get('content-type')?.startsWith('text/html')) {
+				failure =
+					response.status === 401
+						? 'Entre novamente para baixar seu relatório.'
+						: response.status === 404 || response.status === 409
+							? 'Este relatório não está disponível para download. Atualize o estado do registro.'
+							: 'Não foi possível baixar o relatório. Tente novamente; seu registro permanece salvo.';
+				return;
+			}
+			const objectUrl = URL.createObjectURL(await response.blob());
+			const anchor = document.createElement('a');
+			anchor.href = objectUrl;
+			anchor.download = `atv-${data.run.id}-r${data.run.revision}.html`;
+			document.body.appendChild(anchor);
+			anchor.click();
+			anchor.remove();
+			setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+		} catch {
+			failure =
+				'Não foi possível baixar o relatório. Tente novamente; seu registro permanece salvo.';
+		} finally {
+			busy = null;
+		}
+	}
 	async function act(action: 'reprocess' | 'delete') {
 		if (busy || data.synthetic) return;
 		busy = action;
@@ -115,6 +145,18 @@
 			<div class="actions-panel">
 				<p class="eyebrow">Continuar</p>
 				<Button href="/biblioteca" variant="secondary">Voltar à Biblioteca</Button>
+				{#if data.run.released}
+					<Button
+						onclick={download}
+						disabled={!!busy || data.synthetic}
+						pending={busy === 'download'}
+						variant="secondary">Baixar relatório web</Button
+					>
+					<p>
+						Arquivo HTML para ler offline. O acesso será verificado novamente ao baixar. Cópias
+						baixadas não são removidas ao excluir o registro.
+					</p>
+				{/if}
 				<Button
 					variant="secondary"
 					disabled={!data.run.canReprocess || !!busy || data.synthetic}
