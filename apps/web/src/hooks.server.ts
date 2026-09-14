@@ -22,7 +22,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (!response.headers.has('referrer-policy'))
 		response.headers.set('referrer-policy', 'strict-origin-when-cross-origin');
 	if (
-		['/biblioteca', '/dashboard', '/conta'].some(
+		['/biblioteca', '/dashboard', '/conta', '/api/workflows'].some(
 			(path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`)
 		)
 	) {

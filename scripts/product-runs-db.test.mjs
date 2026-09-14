@@ -23,7 +23,7 @@ async function setup() {
     create function storage.foldername(text) returns text[] language sql immutable as $$ select string_to_array($1,'/') $$;
     alter default privileges in schema public grant all on tables to anon,authenticated,service_role;
     alter default privileges in schema public grant all on sequences to anon,authenticated,service_role;`);
-  for(const path of ['20260902170000_initial_platform.sql','20260907112000_saved_calculation_results.sql','20260909230000_product_runs.sql'])
+  for(const path of ['20260902170000_initial_platform.sql','20260907112000_saved_calculation_results.sql','20260909230000_product_runs.sql','20260914120000_product_run_reader.sql'])
     await db.exec(await file('supabase/migrations/'+path));
   await db.query('insert into auth.users(id) values ($1),($2)',[owner,other]);
   return db;
@@ -65,10 +65,18 @@ test('PostgreSQL workflow persistence, authorization, gates and recovery',async(
     await db.exec('drop trigger fixture_abort on library_items; drop function reject_fixture_library()');
   });
   await t.test('RLS hides other users; clients cannot self-approve or mutate release flags',async()=>{
-    for(const table of ['product_runs','product_run_events']) {
+    for(const table of ['product_run_events']) {
       assert.equal((await as(db,'authenticated',other,()=>db.query('select * from '+table))).rows.length,0);
       assert.equal((await as(db,'authenticated',owner,()=>db.query('select * from '+table))).rows.length,1);
     }
+    await assert.rejects(()=>as(db,'authenticated',owner,()=>db.query('select * from product_runs')),/permission denied/);
+    const view=(await as(db,'authenticated',owner,()=>db.query('select read_product_run($1) as view',[id]))).rows[0].view;
+    assert.equal(view.state,'QUEUED'); assert.equal(view.released,false);
+    assert.equal(view.calculation,null); assert.equal(view.editorial,null);
+    assert.equal(view.input,undefined); assert.equal(view.user_id,undefined); assert.equal(view.history.length,1);
+    assert.equal((await as(db,'authenticated',other,()=>db.query('select read_product_run($1) as view',[id]))).rows[0].view,null);
+    await assert.rejects(()=>as(db,'anon',null,()=>db.query('select read_product_run($1)',[id])),/permission denied/);
+    await assert.rejects(()=>as(db,'service_role',null,()=>db.query('select read_product_run($1)',[id])),/permission denied/);
     await assert.rejects(()=>as(db,'authenticated',owner,()=>db.exec("update product_runs set state='READY'")),/permission denied/);
     await assert.rejects(()=>as(db,'authenticated',owner,()=>db.exec('update workflow_releases set enabled=true')),/permission denied/);
     await assert.rejects(()=>as(db,'authenticated',owner,()=>db.query('select advance_product_run($1,$2,1,$3)',[id,owner,'CALCULATED'])),/permission denied/);
@@ -88,6 +96,16 @@ test('PostgreSQL workflow persistence, authorization, gates and recovery',async(
     // ONLY a synthetic test promotion, never a seeded or real approval.
     await db.query("insert into editorial_promotions values ('synthetic-only','daily-card','atv-workflow/1.0.0',$1,null)",['b'.repeat(64)]);
     await advance(db,id,3,'READY',null,editorial);
+    const read=()=>as(db,'authenticated',owner,()=>db.query('select read_product_run($1) as view',[id])).then(r=>r.rows[0].view);
+    let delivered=await read();
+    assert.equal(delivered.released,true); assert.equal(delivered.editorial.title,'Fixture');
+    assert.deepEqual(delivered.calculation.facts,draw.facts);
+    assert.equal(delivered.calculation.data,undefined); assert.equal(delivered.history.length,4);
+    await db.exec("update editorial_promotions set revoked_at=now()");
+    delivered=await read(); assert.equal(delivered.released,false); assert.equal(delivered.editorial,null); assert.equal(delivered.calculation,null);
+    await db.exec("update editorial_promotions set revoked_at=null; update workflow_releases set enabled=false where product_id='daily-card'");
+    delivered=await read(); assert.equal(delivered.released,false); assert.equal(delivered.canReprocess,false);
+    await db.exec("update workflow_releases set enabled=true where product_id='daily-card'");
     await assert.rejects(()=>advance(db,id,4,'FAILED',null,null,'safe'),/invalid_transition/);
     assert.equal((await db.query('select * from product_run_events where run_id=$1',[id])).rows.length,4);
     assert.equal((await as(db,'authenticated',other,()=>db.query('select delete_product_run($1) as deleted',[id]))).rows[0].deleted,false);
@@ -113,11 +131,15 @@ test('PostgreSQL workflow persistence, authorization, gates and recovery',async(
     assert.equal(await as(db,'authenticated',other,()=>request(db,'daily-card',key)),first);
   });
   await t.test('forward-fix halts new work, preserves authorized history and deletion',async()=>{
-    const before=(await as(db,'authenticated',owner,()=>db.query('select id from product_runs'))).rows;
+    const before=(await db.query('select id from product_runs where user_id=$1',[owner])).rows;
     await db.exec(await file('supabase/forward-fixes/20260909230000_disable_product_runs.sql'));
-    assert.deepEqual((await as(db,'authenticated',owner,()=>db.query('select id from product_runs'))).rows,before);
+    assert.deepEqual((await db.query('select id from product_runs where user_id=$1',[owner])).rows,before);
+    assert.equal((await as(db,'authenticated',owner,()=>db.query('select read_product_run($1) as view',[before[0].id]))).rows[0].view.released,false);
     await assert.rejects(()=>as(db,'authenticated',owner,()=>request(db)),/permission denied/);
     await assert.rejects(()=>advance(db,before[0].id,1,'FAILED',null,null,'safe'),/permission denied/);
     assert.ok((await db.query('select enabled from workflow_releases')).rows.every(p=>!p.enabled));
+    await db.exec(await file('supabase/forward-fixes/20260914120000_disable_product_run_reader.sql'));
+    await assert.rejects(()=>as(db,'authenticated',owner,()=>db.query('select read_product_run($1)',[before[0].id])),/permission denied/);
+    assert.equal((await as(db,'authenticated',owner,()=>db.query('select delete_product_run($1) as deleted',[before[0].id]))).rows[0].deleted,true);
   });
 });

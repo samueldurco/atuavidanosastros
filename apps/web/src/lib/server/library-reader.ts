@@ -1,7 +1,8 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { isUuid, parseSavedCompass, type LibraryReaderData } from '$lib/library-result';
+import { parseProductRun, type WorkflowReaderData } from '$lib/product-run';
 
-export type ReaderLookup = LibraryReaderData | { state: 'not-found' };
+export type ReaderLookup = LibraryReaderData | WorkflowReaderData | { state: 'not-found' };
 
 /** The caller passes the session client, never a service-role client. Explicit ownership complements RLS. */
 export async function readLibraryResult(
@@ -32,6 +33,15 @@ export async function readLibraryResult(
 			universe: item.universe,
 			created_at: item.created_at
 		};
+		if (item.item_type === 'PRODUCT_RUN') {
+			if (typeof item.source_id !== 'string' || !isUuid(item.source_id))
+				return { state: 'unavailable', item: summary, result: null };
+			const { data, error } = await client.rpc('read_product_run', { p_id: item.source_id });
+			const run = error ? null : parseProductRun(data);
+			return run && run.id === item.source_id && run.libraryItemId === itemId
+				? { state: 'workflow', item: summary, run }
+				: { state: 'unavailable', item: summary, result: null };
+		}
 		if (item.item_type !== 'COMPASS_RESULT')
 			return { state: 'unsupported', item: summary, result: null };
 		if (typeof item.source_id !== 'string' || !isUuid(item.source_id))

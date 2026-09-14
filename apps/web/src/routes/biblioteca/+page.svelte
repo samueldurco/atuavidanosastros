@@ -8,6 +8,11 @@
 	let universe = $state('all');
 	let sort = $state('recent');
 	const labels: Record<string, string> = {
+		'meu-ceu': 'Meu Céu',
+		'ciclos-tempo': 'Ciclos & Tempo',
+		'amor-relacoes': 'Amor & Relações',
+		'tarot-arcanos': 'Tarot',
+		'sonhos-simbolos': 'Sonhos',
 		'proposito-prosperidade': 'Propósito',
 		MEU_CEU: 'Meu Céu',
 		CYCLES: 'Ciclos',
@@ -69,7 +74,7 @@
 			</div>
 			<p class="item-count">
 				<strong>{data.items.length}</strong><span
-					>{data.items.length === 1 ? 'leitura salva' : 'leituras salvas'}</span
+					>{data.items.length === 1 ? 'registro salvo' : 'registros salvos'}</span
 				>
 			</p>
 		</section>
@@ -104,7 +109,7 @@
 		</div>
 		<p class="result-count" role="status">
 			{visible.length}
-			{visible.length === 1 ? 'leitura encontrada' : 'leituras encontradas'}
+			{visible.length === 1 ? 'registro encontrado' : 'registros encontrados'}
 		</p>
 		{#if visible.length}<div class="collection" aria-label="Itens salvos">
 				{#each visible as item (item.id)}<article class="card item">
