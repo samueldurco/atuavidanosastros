@@ -1,5 +1,17 @@
 import type { ProductRunView } from '../../src/lib/product-run';
 
+export function pdfFixture(): ProductRunView {
+	const run = exportFixture();
+	run.productId = 'birth-chart';
+	run.calculation!.facts[0] = {
+		id: 'card-0',
+		kind: 'calculated',
+		display: 'Referência técnica sintética: precisão de 0,01°.',
+		source: 'Fixture de paginação; não é cálculo de pessoa'
+	};
+	return run;
+}
+
 // Synthetic renderer/boundary fixture only. Never a registry promotion or product release.
 export function exportFixture(): ProductRunView {
 	const at = '2026-09-14T12:00:00Z';

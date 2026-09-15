@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { workflowFor } from '@atv/domain';
+	import { productCatalog, workflowFor } from '@atv/domain';
 	import ReadingShell from '$lib/components/shells/ReadingShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
@@ -10,8 +10,14 @@
 	let { data }: { data: WorkflowReaderData } = $props();
 	let busy = $state<'reprocess' | 'delete' | 'download' | null>(null);
 	let failure = $state('');
+	let downloadFormat = $state<'web' | 'pdf'>('web');
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
+	const pdfEligible = $derived(
+		productCatalog.some(
+			(entry) => entry.id === data.run.productId && entry.delivery.includes('pdf')
+		)
+	);
 	const date = (value: string) =>
 		new Intl.DateTimeFormat('pt-BR', {
 			dateStyle: 'medium',
@@ -25,13 +31,19 @@
 				? 'Esta tentativa foi encerrada sem entregar uma leitura.'
 				: 'O registro está preservado. A interpretação só será exibida após as verificações de cálculo, qualidade editorial e segurança.'
 	);
-	async function download() {
+	async function download(format: 'web' | 'pdf') {
 		if (busy || data.synthetic || !data.run.released) return;
 		busy = 'download';
+		downloadFormat = format;
 		failure = '';
 		try {
-			const response = await fetch(`/api/workflows/${data.run.id}/download?format=web`);
-			if (!response.ok || !response.headers.get('content-type')?.startsWith('text/html')) {
+			const response = await fetch(`/api/workflows/${data.run.id}/download?format=${format}`);
+			if (
+				!response.ok ||
+				!response.headers
+					.get('content-type')
+					?.startsWith(format === 'pdf' ? 'application/pdf' : 'text/html')
+			) {
 				failure =
 					response.status === 401
 						? 'Entre novamente para baixar seu relatório.'
@@ -43,7 +55,7 @@
 			const objectUrl = URL.createObjectURL(await response.blob());
 			const anchor = document.createElement('a');
 			anchor.href = objectUrl;
-			anchor.download = `atv-${data.run.id}-r${data.run.revision}.html`;
+			anchor.download = `atv-${data.run.id}-r${data.run.revision}.${format === 'pdf' ? 'pdf' : 'html'}`;
 			document.body.appendChild(anchor);
 			anchor.click();
 			anchor.remove();
@@ -147,13 +159,21 @@
 				<Button href="/biblioteca" variant="secondary">Voltar à Biblioteca</Button>
 				{#if data.run.released}
 					<Button
-						onclick={download}
+						onclick={() => download('web')}
 						disabled={!!busy || data.synthetic}
-						pending={busy === 'download'}
+						pending={busy === 'download' && downloadFormat === 'web'}
 						variant="secondary">Baixar relatório web</Button
 					>
+					{#if pdfEligible}
+						<Button
+							onclick={() => download('pdf')}
+							disabled={!!busy || data.synthetic}
+							pending={busy === 'download' && downloadFormat === 'pdf'}
+							variant="secondary">Baixar PDF</Button
+						>
+					{/if}
 					<p>
-						Arquivo HTML para ler offline. O acesso será verificado novamente ao baixar. Cópias
+						Relatório para ler offline. O acesso será verificado novamente ao baixar. Cópias
 						baixadas não são removidas ao excluir o registro.
 					</p>
 				{/if}
@@ -245,8 +265,8 @@
 					</li>{/each}
 			</ol>
 			<p>
-				PDF, áudio e outros formatos só aparecem quando houver um arquivo gerado, validado e
-				disponível para esta versão.
+				Relatórios web e PDF elegíveis são gerados ao baixar, após nova verificação de acesso.
+				Outros formatos permanecem indisponíveis.
 			</p>
 		</section>
 	</ReadingShell>

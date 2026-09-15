@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { createHash } from 'node:crypto';
 import { productCatalog } from '@atv/domain';
-import { exportFixture } from '../../../tests/fixtures/product-export';
+import { exportFixture, pdfFixture } from '../../../tests/fixtures/product-export';
 import { renderProductWebExport } from './product-export';
 import { workflowDownload } from './workflow-download';
 
@@ -27,6 +27,36 @@ function setup(initial: unknown = exportFixture()) {
 	return { state, rpc, getClaims, event };
 }
 describe('owner-scoped web deliverable', () => {
+	it('downloads eligible PDF bytes with a digest and rechecks access on each request', async () => {
+		const { event, rpc, state } = setup(pdfFixture());
+		const first = await workflowDownload(event('format=pdf'), exportFixture().id);
+		const bytes = new Uint8Array(await first.arrayBuffer());
+		expect(first.status).toBe(200);
+		expect(first.headers.get('content-type')).toBe('application/pdf');
+		expect(first.headers.get('cache-control')).toContain('no-store');
+		expect(first.headers.get('content-disposition')).toMatch(/r4\.pdf"$/);
+		expect(first.headers.get('x-atv-artifact-sha256')).toBe(
+			createHash('sha256').update(bytes).digest('hex')
+		);
+		expect(new TextDecoder().decode(bytes.slice(0, 8))).toBe('%PDF-1.7');
+		state.run = { ...pdfFixture(), released: false };
+		expect((await workflowDownload(event('format=pdf'), exportFixture().id)).status).toBe(409);
+		state.run = null;
+		expect((await workflowDownload(event('format=pdf'), exportFixture().id)).status).toBe(404);
+		state.authenticated = false;
+		expect((await workflowDownload(event('format=pdf'), exportFixture().id)).status).toBe(401);
+		expect(rpc).toHaveBeenCalledTimes(3);
+	});
+	it('refuses PDF ineligible products and unsupported content without a fallback artifact', async () => {
+		const { event, state } = setup();
+		expect((await workflowDownload(event('format=pdf'), exportFixture().id)).status).toBe(409);
+		const run = pdfFixture();
+		run.editorial!.sections[0].text = 'Não perder símbolos: 🌙';
+		state.run = run;
+		const response = await workflowDownload(event('format=pdf'), run.id);
+		expect(response.status).toBe(409);
+		expect(response.headers.get('content-type')).not.toBe('application/pdf');
+	});
 	it('exports the exact approved projection deterministically with safe headers and byte digest', async () => {
 		const { event, rpc } = setup();
 		const first = await workflowDownload(event(), exportFixture().id);
@@ -88,7 +118,6 @@ describe('owner-scoped web deliverable', () => {
 		const { event } = setup();
 		for (const query of [
 			'',
-			'format=pdf',
 			'format=svg',
 			'format=audio',
 			'format=WEB',

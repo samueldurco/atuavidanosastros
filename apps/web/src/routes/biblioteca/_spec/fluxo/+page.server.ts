@@ -7,6 +7,7 @@ export const load: PageServerLoad = ({ url }) => {
 	const ready = url.searchParams.get('state') === 'ready';
 	const failed = url.searchParams.get('state') === 'failed';
 	const revoked = url.searchParams.get('state') === 'revoked';
+	const pdf = url.searchParams.get('format') === 'pdf';
 	const states =
 		ready || revoked
 			? (['QUEUED', 'CALCULATED', 'AWAITING_EDITORIAL', 'READY'] as const)
@@ -20,13 +21,13 @@ export const load: PageServerLoad = ({ url }) => {
 		synthetic: true,
 		item: {
 			id,
-			title: 'Carta do Dia — referência sintética',
-			universe: 'tarot-arcanos',
+			title: pdf ? 'Mapa Natal — referência sintética' : 'Carta do Dia — referência sintética',
+			universe: pdf ? 'meu-ceu' : 'tarot-arcanos',
 			created_at: at
 		},
 		run: {
 			id,
-			productId: 'daily-card',
+			productId: pdf ? 'birth-chart' : 'daily-card',
 			state: states.at(-1)!,
 			revision: states.length,
 			parentId: null,
@@ -42,9 +43,11 @@ export const load: PageServerLoad = ({ url }) => {
 						facts: [
 							{
 								id: 'card-0',
-								kind: 'drawn',
-								display: 'O Louco — carta de referência para teste',
-								source: 'Fixture sintética; não houve sorteio'
+								kind: pdf ? 'calculated' : 'drawn',
+								display: pdf
+									? 'Referência técnica sintética: precisão de 0,01°.'
+									: 'O Louco — carta de referência para teste',
+								source: 'Fixture sintética; não é cálculo nem sorteio de pessoa'
 							}
 						],
 						limits: ['Este exemplo testa o leitor; não interpreta uma pessoa.']

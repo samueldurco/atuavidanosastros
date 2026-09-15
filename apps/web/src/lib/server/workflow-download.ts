@@ -26,28 +26,38 @@ export async function workflowDownload(
 		// Always query the current owner projection; never reuse an earlier page load, public URL or service-role read.
 		const response = await workflowApi(event, 'read', id);
 		if (!response.ok) return response;
+		const format = event.url.searchParams.get('format');
 		if (
-			event.url.searchParams.get('format') !== 'web' ||
+			!['web', 'pdf'].includes(format ?? '') ||
 			[...event.url.searchParams.keys()].some((key) => key !== 'format') ||
 			event.url.searchParams.getAll('format').length !== 1
 		)
 			return fail('format_unavailable', 400);
 		const payload = await response.json();
-		const artifact = renderProductWebExport(
-			payload && typeof payload === 'object' && 'run' in payload ? payload.run : null
-		);
+		const run = payload && typeof payload === 'object' && 'run' in payload ? payload.run : null;
+		let version = WEB_EXPORT_VERSION;
+		let artifact: { bytes: Uint8Array<ArrayBuffer>; filename: string } | null;
+		if (format === 'pdf') {
+			const { renderProductPdf, PDF_EXPORT_VERSION } = await import('./product-pdf');
+			version = PDF_EXPORT_VERSION;
+			const pdf = await renderProductPdf(run);
+			artifact = pdf ? { ...pdf, bytes: new Uint8Array(pdf.bytes) } : null;
+		} else {
+			const web = renderProductWebExport(run);
+			artifact = web ? { bytes: new TextEncoder().encode(web.html), filename: web.filename } : null;
+		}
 		if (!artifact) return fail('delivery_unavailable', 409);
-		const bytes = new TextEncoder().encode(artifact.html);
+		const bytes = artifact.bytes;
 		const digest = [...new Uint8Array(await crypto.subtle.digest('SHA-256', bytes))]
 			.map((byte) => byte.toString(16).padStart(2, '0'))
 			.join('');
 		return new Response(bytes, {
 			headers: {
 				...headers,
-				'content-type': 'text/html; charset=utf-8',
+				'content-type': format === 'pdf' ? 'application/pdf' : 'text/html; charset=utf-8',
 				'content-disposition': `attachment; filename="${artifact.filename}"`,
 				'content-security-policy': `${EXPORT_CSP}; sandbox; frame-ancestors 'none'`,
-				'x-atv-export-version': WEB_EXPORT_VERSION,
+				'x-atv-export-version': version,
 				'x-atv-artifact-sha256': digest
 			}
 		});

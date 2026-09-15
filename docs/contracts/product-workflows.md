@@ -54,7 +54,13 @@ The web boundary `/api/workflows` authenticates the session, checks same-origin 
 
 `GET /api/workflows/[id]/download?format=web` authenticates and reads the current owner projection on every request. Only released, valid projections with catalog web eligibility render. No service-role read, cached authorization or public storage URL is accepted. Same-origin checks, strict query parameters, escaped content, restrictive CSP, attachment disposition and private/no-store headers protect the boundary. The response includes the export version and SHA-256 of its exact bytes, neither of which is a promotion credential.
 
-The self-contained HTML preserves the authorized reading, facts, provenance, limits and revision history. It is generated on demand, not a persisted artifact manifest. An offline copy does not update and cannot be revoked after download; deletion/revocation blocks subsequent requests. PDF, SVG and audio are explicitly refused until independently implemented. The reader keeps failures recoverable on the page. Detailed scope and evidence: `docs/qa/PRODUCT_WEB_EXPORT_2026-09-14.md`.
+The self-contained HTML preserves the authorized reading, facts, provenance, limits and revision history. It is generated on demand, not a persisted artifact manifest. An offline copy does not update and cannot be revoked after download; deletion/revocation blocks subsequent requests. SVG and audio are explicitly refused until independently implemented. The reader keeps failures recoverable on the page. Detailed scope and evidence: `docs/qa/PRODUCT_WEB_EXPORT_2026-09-14.md`.
+
+## Private PDF export — WU-038
+
+`GET /api/workflows/[id]/download?format=pdf` uses the same fresh authenticated owner projection and private attachment boundary. It additionally requires catalog PDF eligibility. `atv-pdf-export/1.0.0` embeds local static subsets of Bodoni Moda, Newsreader and Onest; font derivation and OFL licenses are versioned. It never fetches a URL, embeds HTML or reads raw input. The complete reading, evidence references, facts, provenance, method limits and revision history are paginated, not summarized. Stable metadata and byte hashing identify a generated version without authorizing publication.
+
+Limits are 120,000 projected JSON characters, 40 pages, 8 MB and a cooperative five-second elapsed-work check. Unsupported glyphs or exceeded limits fail closed without a partial file. The deadline is not preemptive CPU isolation; hosted resource-budget verification remains a rollout gate. PDF is generated on demand, not stored or registered in an artifact manifest. Offline copies have the same irrevocability warning as HTML. The reader offers PDF only for an eligible released run, with recoverable failures; synthetic fixtures cannot download. No PDF/A, PDF/UA, encryption, digital-signature, full chart/cartography or hosted JWT certification is claimed. Evidence: `docs/qa/PRODUCT_PDF_EXPORT_2026-09-15.md`.
 
 ## Rollout and forward-fix
 
