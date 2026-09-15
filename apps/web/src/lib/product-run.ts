@@ -1,5 +1,6 @@
 import { workflowFor } from '@atv/domain';
 import { isUuid, type LibraryItemSummary } from './library-result';
+import { parseProductCartography, type ProductCartography } from './product-cartography';
 
 export const runStates = [
 	'QUEUED',
@@ -20,6 +21,7 @@ export interface ProductRunView {
 	updatedAt: string;
 	released: boolean;
 	canReprocess: boolean;
+	cartography?: ProductCartography | null;
 	libraryItemId: string | null;
 	history: { revision: number; state: RunState; at: string }[];
 	calculation: {
@@ -169,6 +171,10 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 		canReprocess: v.canReprocess,
 		libraryItemId: v.libraryItemId,
 		history,
+		cartography:
+			v.released && calculation
+				? parseProductCartography(v.cartography, v.productId, calculation.version)
+				: null,
 		calculation,
 		editorial
 	};

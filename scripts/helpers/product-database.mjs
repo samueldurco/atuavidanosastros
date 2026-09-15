@@ -18,7 +18,7 @@ export async function setupProductDatabase({processing=false}={}) {
     alter default privileges in schema public grant all on tables to anon,authenticated,service_role;
     alter default privileges in schema public grant all on sequences to anon,authenticated,service_role;`);
   for(const path of ['20260902170000_initial_platform.sql','20260907112000_saved_calculation_results.sql','20260909230000_product_runs.sql','20260914120000_product_run_reader.sql',
-    ...(processing?['20260914140000_product_run_processing.sql']:[])]) await db.exec(await file('supabase/migrations/'+path));
+    ...(processing?['20260914140000_product_run_processing.sql']:[]),'20260915130000_product_cartography.sql']) await db.exec(await file('supabase/migrations/'+path));
   await db.query('insert into auth.users(id) values ($1),($2)',[owner,other]);
   return db;
 }

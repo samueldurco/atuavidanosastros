@@ -32,6 +32,7 @@ const view = {
 	libraryItemId: libraryId,
 	history: [{ revision: 1, state: 'QUEUED', at }],
 	calculation: null,
+	cartography: null,
 	editorial: null
 };
 const ready = {

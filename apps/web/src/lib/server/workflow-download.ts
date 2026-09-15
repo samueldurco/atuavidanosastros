@@ -28,7 +28,7 @@ export async function workflowDownload(
 		if (!response.ok) return response;
 		const format = event.url.searchParams.get('format');
 		if (
-			!['web', 'pdf'].includes(format ?? '') ||
+			!['web', 'pdf', 'svg'].includes(format ?? '') ||
 			[...event.url.searchParams.keys()].some((key) => key !== 'format') ||
 			event.url.searchParams.getAll('format').length !== 1
 		)
@@ -36,12 +36,22 @@ export async function workflowDownload(
 		const payload = await response.json();
 		const run = payload && typeof payload === 'object' && 'run' in payload ? payload.run : null;
 		let version = WEB_EXPORT_VERSION;
+		let csp = EXPORT_CSP;
+		let mime = 'text/html; charset=utf-8';
 		let artifact: { bytes: Uint8Array<ArrayBuffer>; filename: string } | null;
 		if (format === 'pdf') {
 			const { renderProductPdf, PDF_EXPORT_VERSION } = await import('./product-pdf');
 			version = PDF_EXPORT_VERSION;
+			mime = 'application/pdf';
 			const pdf = await renderProductPdf(run);
 			artifact = pdf ? { ...pdf, bytes: new Uint8Array(pdf.bytes) } : null;
+		} else if (format === 'svg') {
+			const { renderProductSvg, SVG_EXPORT_VERSION, SVG_CSP } = await import('./product-svg');
+			version = SVG_EXPORT_VERSION;
+			csp = SVG_CSP;
+			mime = 'image/svg+xml; charset=utf-8';
+			const svg = renderProductSvg(run);
+			artifact = svg ? { bytes: new TextEncoder().encode(svg.svg), filename: svg.filename } : null;
 		} else {
 			const web = renderProductWebExport(run);
 			artifact = web ? { bytes: new TextEncoder().encode(web.html), filename: web.filename } : null;
@@ -54,9 +64,9 @@ export async function workflowDownload(
 		return new Response(bytes, {
 			headers: {
 				...headers,
-				'content-type': format === 'pdf' ? 'application/pdf' : 'text/html; charset=utf-8',
+				'content-type': mime,
 				'content-disposition': `attachment; filename="${artifact.filename}"`,
-				'content-security-policy': `${EXPORT_CSP}; sandbox; frame-ancestors 'none'`,
+				'content-security-policy': `${csp}; sandbox; frame-ancestors 'none'`,
 				'x-atv-export-version': version,
 				'x-atv-artifact-sha256': digest
 			}

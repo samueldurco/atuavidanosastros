@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { createHash } from 'node:crypto';
 import { productCatalog } from '@atv/domain';
-import { exportFixture, pdfFixture } from '../../../tests/fixtures/product-export';
+import { exportFixture, pdfFixture, svgFixture } from '../../../tests/fixtures/product-export';
 import { renderProductWebExport } from './product-export';
 import { workflowDownload } from './workflow-download';
 
@@ -27,6 +27,31 @@ function setup(initial: unknown = exportFixture()) {
 	return { state, rpc, getClaims, event };
 }
 describe('owner-scoped web deliverable', () => {
+	it('downloads only typed eligible SVG, privately, with fresh owner checks and exact digest', async () => {
+		const { event, state, rpc } = setup(svgFixture());
+		const first = await workflowDownload(event('format=svg'), exportFixture().id);
+		const svg = await first.text();
+		expect(first.status).toBe(200);
+		expect(first.headers.get('content-type')).toBe('image/svg+xml; charset=utf-8');
+		expect(first.headers.get('content-disposition')).toMatch(/r4\.svg"$/);
+		expect(first.headers.get('content-security-policy')).toContain('font-src data:');
+		expect(first.headers.get('content-security-policy')).toContain('sandbox');
+		expect(first.headers.get('cache-control')).toContain('no-store');
+		expect(first.headers.get('x-atv-artifact-sha256')).toBe(
+			createHash('sha256').update(svg).digest('hex')
+		);
+		state.run = { ...svgFixture(), released: false };
+		expect((await workflowDownload(event('format=svg'), exportFixture().id)).status).toBe(409);
+		state.run = pdfFixture();
+		expect((await workflowDownload(event('format=svg'), exportFixture().id)).status).toBe(409);
+		state.run = exportFixture();
+		expect((await workflowDownload(event('format=svg'), exportFixture().id)).status).toBe(409);
+		state.run = null;
+		expect((await workflowDownload(event('format=svg'), exportFixture().id)).status).toBe(404);
+		state.authenticated = false;
+		expect((await workflowDownload(event('format=svg'), exportFixture().id)).status).toBe(401);
+		expect(rpc).toHaveBeenCalledTimes(5);
+	});
 	it('downloads eligible PDF bytes with a digest and rechecks access on each request', async () => {
 		const { event, rpc, state } = setup(pdfFixture());
 		const first = await workflowDownload(event('format=pdf'), exportFixture().id);
@@ -118,7 +143,7 @@ describe('owner-scoped web deliverable', () => {
 		const { event } = setup();
 		for (const query of [
 			'',
-			'format=svg',
+			'format=svg&format=svg',
 			'format=audio',
 			'format=WEB',
 			'format=web&format=pdf',

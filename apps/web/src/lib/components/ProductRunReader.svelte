@@ -10,9 +10,15 @@
 	let { data }: { data: WorkflowReaderData } = $props();
 	let busy = $state<'reprocess' | 'delete' | 'download' | null>(null);
 	let failure = $state('');
-	let downloadFormat = $state<'web' | 'pdf'>('web');
+	let downloadFormat = $state<'web' | 'pdf' | 'svg'>('web');
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
+	const svgEligible = $derived(
+		!!data.run.cartography &&
+			productCatalog.some(
+				(entry) => entry.id === data.run.productId && entry.delivery.includes('svg')
+			)
+	);
 	const pdfEligible = $derived(
 		productCatalog.some(
 			(entry) => entry.id === data.run.productId && entry.delivery.includes('pdf')
@@ -31,7 +37,7 @@
 				? 'Esta tentativa foi encerrada sem entregar uma leitura.'
 				: 'O registro está preservado. A interpretação só será exibida após as verificações de cálculo, qualidade editorial e segurança.'
 	);
-	async function download(format: 'web' | 'pdf') {
+	async function download(format: 'web' | 'pdf' | 'svg') {
 		if (busy || data.synthetic || !data.run.released) return;
 		busy = 'download';
 		downloadFormat = format;
@@ -42,7 +48,9 @@
 				!response.ok ||
 				!response.headers
 					.get('content-type')
-					?.startsWith(format === 'pdf' ? 'application/pdf' : 'text/html')
+					?.startsWith(
+						format === 'pdf' ? 'application/pdf' : format === 'svg' ? 'image/svg+xml' : 'text/html'
+					)
 			) {
 				failure =
 					response.status === 401
@@ -55,7 +63,7 @@
 			const objectUrl = URL.createObjectURL(await response.blob());
 			const anchor = document.createElement('a');
 			anchor.href = objectUrl;
-			anchor.download = `atv-${data.run.id}-r${data.run.revision}.${format === 'pdf' ? 'pdf' : 'html'}`;
+			anchor.download = `atv-${data.run.id}-r${data.run.revision}.${format === 'web' ? 'html' : format}`;
 			document.body.appendChild(anchor);
 			anchor.click();
 			anchor.remove();
@@ -164,6 +172,14 @@
 						pending={busy === 'download' && downloadFormat === 'web'}
 						variant="secondary">Baixar relatório web</Button
 					>
+					{#if svgEligible}
+						<Button
+							onclick={() => download('svg')}
+							disabled={!!busy || !!data.synthetic}
+							pending={busy === 'download' && downloadFormat === 'svg'}
+							variant="secondary">Baixar cartografia SVG</Button
+						>
+					{/if}
 					{#if pdfEligible}
 						<Button
 							onclick={() => download('pdf')}
@@ -265,8 +281,8 @@
 					</li>{/each}
 			</ol>
 			<p>
-				Relatórios web e PDF elegíveis são gerados ao baixar, após nova verificação de acesso.
-				Outros formatos permanecem indisponíveis.
+				Relatórios web, PDF e cartografia SVG elegíveis são gerados ao baixar, após nova verificação
+				de acesso. Outros formatos permanecem indisponíveis.
 			</p>
 		</section>
 	</ReadingShell>

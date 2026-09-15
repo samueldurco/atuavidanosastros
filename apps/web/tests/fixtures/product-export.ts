@@ -1,4 +1,41 @@
 import type { ProductRunView } from '../../src/lib/product-run';
+import {
+	CARTOGRAPHY_VERSION,
+	NATAL_SOURCE_VERSION,
+	cartographyBodies
+} from '../../src/lib/product-cartography';
+
+export function svgFixture(variant = 'birth-chart'): ProductRunView {
+	const run = pdfFixture();
+	run.calculation!.version = NATAL_SOURCE_VERSION;
+	run.cartography = {
+		version: CARTOGRAPHY_VERSION,
+		sourceVersion: NATAL_SOURCE_VERSION,
+		zodiac: 'tropical',
+		referenceFrame: 'geocentric-apparent-ecliptic-of-date',
+		accuracyStatus: 'experimental',
+		positions: cartographyBodies.map((body, i) => ({
+			body,
+			longitude: variant === 'cluster' ? 0.001 : (i * 37.123456789) % 360
+		})),
+		angles: { ascendant: 21.56789, midheaven: 291.098765 },
+		houses: {
+			system: 'placidus',
+			status: 'ok',
+			cusps: Array.from({ length: 12 }, (_, i) => (21.56789 + 30 * i) % 360)
+		}
+	};
+	if (variant === 'ascendant') {
+		run.productId = 'ascendant';
+		run.cartography.positions = [];
+		run.cartography.angles.midheaven = null;
+		run.cartography.houses = { system: 'placidus', status: 'not-requested', cusps: [] };
+	} else if (variant === 'polar') {
+		run.cartography.angles.ascendant = null;
+		run.cartography.houses = { system: 'placidus', status: 'not-applicable', cusps: [] };
+	}
+	return run;
+}
 
 export function pdfFixture(): ProductRunView {
 	const run = exportFixture();

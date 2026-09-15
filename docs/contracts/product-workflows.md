@@ -54,7 +54,7 @@ The web boundary `/api/workflows` authenticates the session, checks same-origin 
 
 `GET /api/workflows/[id]/download?format=web` authenticates and reads the current owner projection on every request. Only released, valid projections with catalog web eligibility render. No service-role read, cached authorization or public storage URL is accepted. Same-origin checks, strict query parameters, escaped content, restrictive CSP, attachment disposition and private/no-store headers protect the boundary. The response includes the export version and SHA-256 of its exact bytes, neither of which is a promotion credential.
 
-The self-contained HTML preserves the authorized reading, facts, provenance, limits and revision history. It is generated on demand, not a persisted artifact manifest. An offline copy does not update and cannot be revoked after download; deletion/revocation blocks subsequent requests. SVG and audio are explicitly refused until independently implemented. The reader keeps failures recoverable on the page. Detailed scope and evidence: `docs/qa/PRODUCT_WEB_EXPORT_2026-09-14.md`.
+The self-contained HTML preserves the authorized reading, facts, provenance, limits and revision history. It is generated on demand, not a persisted artifact manifest. An offline copy does not update and cannot be revoked after download; deletion/revocation blocks subsequent requests. Additional formats require their independently implemented boundaries below; audio remains unavailable. The reader keeps failures recoverable on the page. Detailed scope and evidence: `docs/qa/PRODUCT_WEB_EXPORT_2026-09-14.md`.
 
 ## Private PDF export — WU-038
 
@@ -71,6 +71,12 @@ The WU-030 reader migration also remains local/versioned. Its forward-fix, `2026
 The WU-031 migration likewise remains local/versioned. `20260914140000_disable_product_run_processing.sql` revokes the three processing RPCs, keeps the old writer revoked and preserves owned retrieval/deletion. No hosted migration or scheduler was activated.
 
 `pnpm test:db` applies the real migration chain to [PGlite](https://pglite.dev/), with synthetic auth/storage stubs. It exercises SQL, RLS, grants, atomic rollback, CAS, quotas, gate refusal, reprocessing and the forward-fix. It does not certify hosted JWT/PostgREST/Storage behavior or simultaneous independent connections. A staging Supabase integration gate remains necessary before release.
+
+## Private cartography SVG — WU-039
+
+`GET /api/workflows/[id]/download?format=svg` shares the fresh authenticated owner boundary, additionally requiring catalog SVG eligibility and a validated `atv-cartography/1.0.0` projection from the saved `atv-natal-product-calculation/1.0.0` snapshot. Only birth-chart/ascendant are supported. SQL and application schemas validate and copy canonical longitudes, requested angles and supported cusps without raw input, inferred aspects, display-text parsing or fallback houses. Existing publication gates and RPC revocations are preserved. The forward-fix removes only geometry.
+
+`atv-svg-export/1.0.0` embeds local brand fonts and exact source angles, uses separated radial tracks rather than displaced longitudes, and marks experimental accuracy and unavailable geometry. SVG XML is inert, bounded to 2 MB, private/no-store and hashed. A file already downloaded cannot be revoked; future requests recheck access. No persistent artifact manifest, premium cartography completion or hosted integration claim. Evidence: `docs/qa/PRODUCT_SVG_EXPORT_2026-09-15.md`.
 
 ## WU-029 evidence — 2026-09-09
 
