@@ -28,9 +28,14 @@ export async function workflowDownload(
 		if (!response.ok) return response;
 		const format = event.url.searchParams.get('format');
 		if (
-			!['web', 'pdf', 'svg'].includes(format ?? '') ||
-			[...event.url.searchParams.keys()].some((key) => key !== 'format') ||
-			event.url.searchParams.getAll('format').length !== 1
+			!['web', 'pdf', 'svg', 'card'].includes(format ?? '') ||
+			[...event.url.searchParams.keys()].some(
+				(key) => key !== 'format' && !(format === 'card' && key === 'section')
+			) ||
+			event.url.searchParams.getAll('format').length !== 1 ||
+			(format === 'card' &&
+				(event.url.searchParams.getAll('section').length !== 1 ||
+					!/^(?:[0-9]|[1-3][0-9])$/.test(event.url.searchParams.get('section') ?? '')))
 		)
 			return fail('format_unavailable', 400);
 		const payload = await response.json();
@@ -39,7 +44,16 @@ export async function workflowDownload(
 		let csp = EXPORT_CSP;
 		let mime = 'text/html; charset=utf-8';
 		let artifact: { bytes: Uint8Array<ArrayBuffer>; filename: string } | null;
-		if (format === 'pdf') {
+		if (format === 'card') {
+			const { renderProductCard, CARD_EXPORT_VERSION, CARD_CSP } = await import('./product-card');
+			version = CARD_EXPORT_VERSION;
+			csp = CARD_CSP;
+			mime = 'image/svg+xml; charset=utf-8';
+			const card = renderProductCard(run, Number(event.url.searchParams.get('section')));
+			artifact = card
+				? { bytes: new TextEncoder().encode(card.svg), filename: card.filename }
+				: null;
+		} else if (format === 'pdf') {
 			const { renderProductPdf, PDF_EXPORT_VERSION } = await import('./product-pdf');
 			version = PDF_EXPORT_VERSION;
 			mime = 'application/pdf';

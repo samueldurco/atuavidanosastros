@@ -2,7 +2,12 @@ import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { createHash } from 'node:crypto';
 import { productCatalog } from '@atv/domain';
-import { exportFixture, pdfFixture, svgFixture } from '../../../tests/fixtures/product-export';
+import {
+	exportFixture,
+	pdfFixture,
+	svgFixture,
+	cardFixture
+} from '../../../tests/fixtures/product-export';
 import { renderProductWebExport } from './product-export';
 import { workflowDownload } from './workflow-download';
 
@@ -27,6 +32,57 @@ function setup(initial: unknown = exportFixture()) {
 	return { state, rpc, getClaims, event };
 }
 describe('owner-scoped web deliverable', () => {
+	it('downloads complete section cards with fresh owner checks, privacy headers and digest', async () => {
+		const { event, state, rpc } = setup(cardFixture());
+		const first = await workflowDownload(event('format=card&section=1'), exportFixture().id);
+		const svg = await first.text();
+		expect(first.status).toBe(200);
+		expect(first.headers.get('content-type')).toBe('image/svg+xml; charset=utf-8');
+		expect(first.headers.get('content-disposition')).toMatch(/r4-card-2\.svg"$/);
+		expect(first.headers.get('cache-control')).toBe('private, no-store');
+		expect(first.headers.get('content-security-policy')).toContain('sandbox');
+		expect(first.headers.get('cross-origin-resource-policy')).toBe('same-origin');
+		expect(first.headers.get('x-atv-artifact-sha256')).toBe(
+			createHash('sha256').update(svg).digest('hex')
+		);
+		expect(svg).toContain('Outra perspectiva');
+		expect(svg).not.toContain('O Louco');
+		state.run = { ...cardFixture(), released: false, editorial: null, calculation: null };
+		expect(
+			(await workflowDownload(event('format=card&section=1'), exportFixture().id)).status
+		).toBe(409);
+		expect(rpc).toHaveBeenCalledTimes(2);
+		state.run = null;
+		expect(
+			(await workflowDownload(event('format=card&section=1'), exportFixture().id)).status
+		).toBe(404);
+		state.authenticated = false;
+		expect(
+			(await workflowDownload(event('format=card&section=1'), exportFixture().id)).status
+		).toBe(401);
+	});
+	it('requires exactly one canonical card section and rejects oversized or unsupported content', async () => {
+		const { event, state } = setup(cardFixture());
+		for (const query of [
+			'format=card',
+			'format=card&section=',
+			'format=card&section=01',
+			'format=card&section=-1',
+			'format=card&section=1.0',
+			'format=card&section=40',
+			'format=card&section=0&section=1',
+			'format=card&section=0&url=https://untrusted.example',
+			'format=web&section=0'
+		])
+			expect((await workflowDownload(event(query), exportFixture().id)).status).toBe(400);
+		expect(
+			(await workflowDownload(event('format=card&section=39'), exportFixture().id)).status
+		).toBe(409);
+		state.run = exportFixture(); // emoji is unsupported; do not silently discard it.
+		const unsupported = await workflowDownload(event('format=card&section=0'), exportFixture().id);
+		expect(unsupported.status).toBe(409);
+		expect(await unsupported.text()).not.toContain('O Louco');
+	});
 	it('downloads only typed eligible SVG, privately, with fresh owner checks and exact digest', async () => {
 		const { event, state, rpc } = setup(svgFixture());
 		const first = await workflowDownload(event('format=svg'), exportFixture().id);

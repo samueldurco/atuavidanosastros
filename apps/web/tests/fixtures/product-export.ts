@@ -5,6 +5,30 @@ import {
 	cartographyBodies
 } from '../../src/lib/product-cartography';
 
+export function cardFixture(variant = 'standard'): ProductRunView {
+	const run = exportFixture();
+	run.calculation!.facts[0].display = 'O Louco — referência sintética, sem sorteio de pessoa.';
+	run.calculation!.facts.push({
+		id: 'context-1',
+		kind: 'reported',
+		display: 'Outro contexto sintético',
+		source: 'Relato de teste'
+	});
+	run.editorial!.sections.push({
+		title: 'Outra perspectiva',
+		text: 'Uma segunda pergunta de teste, sem aconselhamento ou previsão.',
+		evidence: ['context-1']
+	});
+	if (variant === 'long') {
+		run.editorial!.sections[0].title =
+			'Título extenso para conferir a quebra de linha e a preservação integral do conteúdo aprovado';
+		run.editorial!.sections[0].text =
+			'Uma pergunta de referência sintética para testar a continuidade da leitura. '.repeat(14) +
+			'palavralonga'.repeat(20);
+	}
+	return run;
+}
+
 export function svgFixture(variant = 'birth-chart'): ProductRunView {
 	const run = pdfFixture();
 	run.calculation!.version = NATAL_SOURCE_VERSION;

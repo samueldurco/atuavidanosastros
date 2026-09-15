@@ -78,6 +78,12 @@ The WU-031 migration likewise remains local/versioned. `20260914140000_disable_p
 
 `atv-svg-export/1.0.0` embeds local brand fonts and exact source angles, uses separated radial tracks rather than displaced longitudes, and marks experimental accuracy and unavailable geometry. SVG XML is inert, bounded to 2 MB, private/no-store and hashed. A file already downloaded cannot be revoked; future requests recheck access. No persistent artifact manifest, premium cartography completion or hosted integration claim. Evidence: `docs/qa/PRODUCT_SVG_EXPORT_2026-09-15.md`.
 
+## Private section cards — WU-040
+
+`GET /api/workflows/[id]/download?format=card&section=0` exports one complete selected editorial section, its cited facts and all calculation/editorial limitations. The shared boundary requires a fresh authenticated owner read, released editorial/calculation and catalog web eligibility. Exactly one canonical integer section in 0–39 is accepted; it must exist in the current revision. This is a derivative of the web reading, not a new catalog entitlement, summary, interpretation or public sharing link.
+
+`atv-reading-card/1.0.0` is inert self-contained SVG with embedded local brand fonts, escaped text, minimal revision/review provenance and offline/privacy notices. The 1080-pixel canvas grows to fit full content; limits are 24,000 projected JSON characters, 8192 pixels height, 2 MB and a cooperative five-second elapsed-work check. Unsupported glyphs or exceeded bounds fail closed without omissions. Hosted CPU/memory certification remains pending. Attachment, private/no-store, CSP, MIME verification and SHA-256 reuse the existing download protections. Cards are generated on demand, not persisted artifact manifests. Previously downloaded copies cannot be revoked. Evidence: `docs/qa/PRODUCT_CARD_EXPORT_2026-09-15.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.

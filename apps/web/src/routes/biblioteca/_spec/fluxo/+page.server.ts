@@ -1,21 +1,22 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import type { WorkflowReaderData } from '$lib/product-run';
-import { svgFixture } from '../../../../../tests/fixtures/product-export';
+import { svgFixture, cardFixture } from '../../../../../tests/fixtures/product-export';
 
 export const load: PageServerLoad = ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
 	const ready = url.searchParams.get('state') === 'ready';
-	if (ready && url.searchParams.get('format') === 'svg') {
-		const run = svgFixture();
+	if (ready && ['svg', 'card'].includes(url.searchParams.get('format') ?? '')) {
+		const card = url.searchParams.get('format') === 'card';
+		const run = card ? cardFixture() : svgFixture();
 		return {
 			state: 'workflow',
 			synthetic: true,
 			run,
 			item: {
 				id: run.libraryItemId!,
-				title: 'Mapa Natal — referência sintética',
-				universe: 'meu-ceu',
+				title: card ? 'Carta do Dia — referência sintética' : 'Mapa Natal — referência sintética',
+				universe: card ? 'tarot-arcanos' : 'meu-ceu',
 				created_at: run.createdAt
 			}
 		} satisfies WorkflowReaderData;

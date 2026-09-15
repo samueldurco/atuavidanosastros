@@ -10,7 +10,17 @@
 	let { data }: { data: WorkflowReaderData } = $props();
 	let busy = $state<'reprocess' | 'delete' | 'download' | null>(null);
 	let failure = $state('');
-	let downloadFormat = $state<'web' | 'pdf' | 'svg'>('web');
+	let downloadFormat = $state<'web' | 'pdf' | 'svg' | 'card'>('web');
+	let cardSection = $state(0);
+	$effect(() => {
+		void data.run.id;
+		cardSection = 0;
+	});
+	const cardEligible = $derived(
+		productCatalog.some(
+			(entry) => entry.id === data.run.productId && entry.delivery.includes('web')
+		)
+	);
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
 	const svgEligible = $derived(
@@ -37,33 +47,42 @@
 				? 'Esta tentativa foi encerrada sem entregar uma leitura.'
 				: 'O registro está preservado. A interpretação só será exibida após as verificações de cálculo, qualidade editorial e segurança.'
 	);
-	async function download(format: 'web' | 'pdf' | 'svg') {
+	async function download(format: 'web' | 'pdf' | 'svg' | 'card') {
 		if (busy || data.synthetic || !data.run.released) return;
 		busy = 'download';
 		downloadFormat = format;
 		failure = '';
 		try {
-			const response = await fetch(`/api/workflows/${data.run.id}/download?format=${format}`);
+			const section = cardSection;
+			const response = await fetch(
+				`/api/workflows/${data.run.id}/download?format=${format}${format === 'card' ? `&section=${section}` : ''}`
+			);
 			if (
 				!response.ok ||
 				!response.headers
 					.get('content-type')
 					?.startsWith(
-						format === 'pdf' ? 'application/pdf' : format === 'svg' ? 'image/svg+xml' : 'text/html'
+						format === 'pdf'
+							? 'application/pdf'
+							: format === 'svg' || format === 'card'
+								? 'image/svg+xml'
+								: 'text/html'
 					)
 			) {
 				failure =
 					response.status === 401
 						? 'Entre novamente para baixar seu relatório.'
 						: response.status === 404 || response.status === 409
-							? 'Este relatório não está disponível para download. Atualize o estado do registro.'
+							? format === 'card'
+								? 'Este card não está disponível. Atualize o estado do registro ou consulte o relatório completo.'
+								: 'Este relatório não está disponível para download. Atualize o estado do registro.'
 							: 'Não foi possível baixar o relatório. Tente novamente; seu registro permanece salvo.';
 				return;
 			}
 			const objectUrl = URL.createObjectURL(await response.blob());
 			const anchor = document.createElement('a');
 			anchor.href = objectUrl;
-			anchor.download = `atv-${data.run.id}-r${data.run.revision}.${format === 'web' ? 'html' : format}`;
+			anchor.download = `atv-${data.run.id}-r${data.run.revision}${format === 'card' ? `-card-${section + 1}.svg` : `.${format === 'web' ? 'html' : format}`}`;
 			document.body.appendChild(anchor);
 			anchor.click();
 			anchor.remove();
@@ -188,6 +207,26 @@
 							variant="secondary">Baixar PDF</Button
 						>
 					{/if}
+					{#if cardEligible && data.run.editorial}
+						<div class="card-choice">
+							<label for="card-section">Seção do card</label>
+							<select id="card-section" bind:value={cardSection} disabled={!!busy}>
+								{#each data.run.editorial.sections as section, index (index)}
+									<option value={index}>{index + 1}. {section.title}</option>
+								{/each}
+							</select>
+						</div>
+						<Button
+							onclick={() => download('card')}
+							disabled={!!busy || data.synthetic}
+							pending={busy === 'download' && downloadFormat === 'card'}
+							variant="secondary">Baixar card SVG</Button
+						>
+						<p>
+							Uma seção integral com suas bases e todos os limites. Não substitui a leitura
+							completa. Conteúdos extensos podem não caber no card.
+						</p>
+					{/if}
 					<p>
 						Relatório para ler offline. O acesso será verificado novamente ao baixar. Cópias
 						baixadas não são removidas ao excluir o registro.
@@ -281,8 +320,8 @@
 					</li>{/each}
 			</ol>
 			<p>
-				Relatórios web, PDF e cartografia SVG elegíveis são gerados ao baixar, após nova verificação
-				de acesso. Outros formatos permanecem indisponíveis.
+				Relatórios web, PDF, cards e cartografia SVG elegíveis são gerados ao baixar, após nova
+				verificação de acesso. Outros formatos permanecem indisponíveis.
 			</p>
 		</section>
 	</ReadingShell>
@@ -306,6 +345,25 @@
 	small {
 		font-size: 0.85rem;
 		color: var(--atv-text-secondary);
+	}
+	.card-choice {
+		display: grid;
+		gap: 0.5rem;
+		min-width: 0;
+	}
+	.card-choice label {
+		font-size: 0.85rem;
+	}
+	.card-choice select {
+		width: 100%;
+		min-width: 0;
+		padding: 0.75rem;
+		border: 1px solid var(--atv-border);
+		border-radius: 0.25rem;
+		color: var(--atv-text-primary);
+		background: var(--atv-surface-card);
+		font: inherit;
+		font-size: 0.85rem;
 	}
 	section {
 		scroll-margin-top: 2rem;
