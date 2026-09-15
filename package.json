@@ -14,7 +14,7 @@
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "test:unit": "pnpm -r test:unit",
-    "test:db": "node --test scripts/product-runs-db.test.mjs scripts/product-processing-db.test.mjs scripts/product-cartography-db.test.mjs",
+    "test:db": "node --test scripts/product-runs-db.test.mjs scripts/product-processing-db.test.mjs scripts/product-cartography-db.test.mjs scripts/product-artifacts-db.test.mjs",
     "test:e2e": "pnpm --filter @atv/web test:e2e",
     "format": "pnpm --filter @atv/web format",
     "supabase:start": "supabase start",

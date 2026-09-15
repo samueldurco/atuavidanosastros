@@ -84,6 +84,14 @@ The WU-031 migration likewise remains local/versioned. `20260914140000_disable_p
 
 `atv-reading-card/1.0.0` is inert self-contained SVG with embedded local brand fonts, escaped text, minimal revision/review provenance and offline/privacy notices. The 1080-pixel canvas grows to fit full content; limits are 24,000 projected JSON characters, 8192 pixels height, 2 MB and a cooperative five-second elapsed-work check. Unsupported glyphs or exceeded bounds fail closed without omissions. Hosted CPU/memory certification remains pending. Attachment, private/no-store, CSP, MIME verification and SHA-256 reuse the existing download protections. Cards are generated on demand, not persisted artifact manifests. Previously downloaded copies cannot be revoked. Evidence: `docs/qa/PRODUCT_CARD_EXPORT_2026-09-15.md`.
 
+## Private persisted binaries — WU-041
+
+The separate disabled-by-default artifact policy protects a bounded PostgreSQL binary store. `persist_product_artifact` is service-only; it binds immutable bytes and SHA-256 to the owner, run, exact revision/review digest, eligible format/section and trusted renderer version. Same tuple plus identical bytes returns the original receipt; conflicting bytes are refused. All direct table privileges are revoked. Owner quota checks and insertion are transactional, and deletion cascades with the run. This does not change legacy bucket policies or establish a public URL.
+
+`GET /api/workflows/[id]/artifacts` lists validated minimal manifests. `GET /api/workflows/[id]/artifacts/[artifactId]` recovers actual stored bytes with a fresh authenticated owner reading and a second gated SQL read. Both refuse extra parameters/cross-site requests and use private/no-store responses. Recovery validates canonical base64, byte count and SHA-256, then serves an inert attachment with CSP sandbox. Lists never expose bytes, input or service data. Revocation hides stored files without erasing state history; owner deletion removes binaries atomically. Previously downloaded copies cannot be recalled.
+
+The portable worker writer requires an injected trusted service transport and has a ten-second maximum deadline. No browser write, hosted transport, scheduling or automatic persistence of existing on-demand exports is supplied. Renderer safety is a privileged producer responsibility; SQL integrity checks do not sanitize arbitrary documents. Local bounds, forward-fix and rollout prerequisites are recorded in ADR 0005. No hosted migration, model promotion or product activation occurred.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.

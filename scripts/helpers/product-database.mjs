@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { PGlite } from '@electric-sql/pglite';
 import { pgcrypto } from '@electric-sql/pglite/contrib/pgcrypto';
 export const owner='00000000-0000-4000-8000-000000000001', other='00000000-0000-4000-8000-000000000002';
+/** @param {string} path */
 export const file=(path)=>readFile(new URL('../../'+path,import.meta.url),'utf8');
 // Synthetic auth/storage stubs. Does not certify hosted JWT, PostgREST or independent connections.
 export async function setupProductDatabase({processing=false}={}) {
