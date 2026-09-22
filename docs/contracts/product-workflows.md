@@ -96,6 +96,10 @@ The portable worker writer requires an injected trusted service transport and ha
 
 The released reader explicitly queries stored artifacts on request, separately from on-demand exports. The client validates current run/revision/review manifests and bounded response bytes, verifies receipt headers and SHA-256, and rejects redirects or provider-supplied URLs. Empty/unavailable/revoked/expired states never imply stored delivery; failed recovery discards the stale list and offers retry. Requests abort on reader destruction and have a 30-second timeout. Synthetic reader actions remain disabled. No persistence producer or policy is enabled by this UI. Evidence: `docs/qa/PRODUCT_ARTIFACT_READER_2026-09-22.md`.
 
+## Trusted artifact composition — WU-043
+
+The disabled-by-default server producer processes one pinned owner/run/revision/review/format/section job using a fresh owner read and fixed existing renderers. It does not accept document bytes, URLs or custom renderers. The private writer and SQL recheck current gates at persistence. A maximum 15-second overall deadline includes a bounded at-most-ten-second write; CPU cancellation is cooperative and uncertain commits are not reported as stored. Identical explicit retries are idempotent; no automatic retry, credential, route or scheduler is introduced. Minimal outcome/format/duration/byte telemetry excludes content and identities. Hosted runtime and policy activation remain pending. Evidence: `docs/qa/PRODUCT_ARTIFACT_PRODUCER_2026-09-22.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.

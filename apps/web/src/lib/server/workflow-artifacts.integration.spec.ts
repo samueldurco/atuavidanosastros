@@ -7,11 +7,9 @@ import {
 	file
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole, readyArtifactFixture } from '../../../../../scripts/helpers/artifact-fixture.mjs';
-import {
-	persistRenderedProductArtifact,
-	type ArtifactRpc
-} from '../../../../worker/src/product-artifacts';
-import { renderProductWebExport, WEB_EXPORT_VERSION } from './product-export';
+import type { ArtifactRpc } from '../../../../worker/src/product-artifacts';
+import { renderProductWebExport } from './product-export';
+import { createArtifactProducer } from './product-artifact-producer';
 import { workflowArtifacts } from './workflow-artifacts';
 
 it('renders a real report, stores its bytes and recovers through the owner API; revocation and deletion remain authoritative', async () => {
@@ -41,18 +39,42 @@ it('renders a real report, stores its bytes and recovers through the owner API; 
 		expect(report).not.toBeNull();
 		const input = {
 			owner,
-			reading,
+			runId: reading.id,
+			revision: reading.revision,
+			reviewDigest: reading.reviewDigest,
 			format: 'web' as const,
-			section: -1,
-			rendererVersion: WEB_EXPORT_VERSION,
-			bytes: new TextEncoder().encode(report!.html)
+			section: -1
 		};
 		const writer: ArtifactRpc = async (name, args, signal) => {
 			signal.throwIfAborted();
 			return query('service_role', null, name, args);
 		};
-		const saved = await persistRenderedProductArtifact(writer, input);
-		expect(await persistRenderedProductArtifact(writer, input)).toEqual(saved);
+		const producer = createArtifactProducer(
+			{
+				read: (user, id) => query('authenticated', user, 'read_product_run', { p_id: id }),
+				persist: writer
+			},
+			{ enabled: true }
+		);
+		const produced = await producer.produce(input);
+		if (produced.status !== 'stored') throw new Error('fixture_production_failed');
+		const saved = produced.artifact;
+		expect(await producer.produce(input)).toEqual(produced);
+		await expect(producer.produce({ ...input, owner: other })).rejects.toThrow(
+			'artifact_unavailable'
+		);
+		const revokedBetweenSteps = createArtifactProducer(
+			{
+				read: async () => {
+					await db.exec('update editorial_promotions set revoked_at=now()');
+					return run;
+				},
+				persist: writer
+			},
+			{ enabled: true }
+		);
+		await expect(revokedBetweenSteps.produce(input)).rejects.toThrow('artifact_unavailable');
+		await db.exec('update editorial_promotions set revoked_at=null');
 		const event = (user = owner) => {
 			const url = new URL(`http://localhost/api/workflows/${reading.id}/artifacts`);
 			return {
