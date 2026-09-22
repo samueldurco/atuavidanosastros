@@ -92,6 +92,10 @@ The separate disabled-by-default artifact policy protects a bounded PostgreSQL b
 
 The portable worker writer requires an injected trusted service transport and has a ten-second maximum deadline. No browser write, hosted transport, scheduling or automatic persistence of existing on-demand exports is supplied. Renderer safety is a privileged producer responsibility; SQL integrity checks do not sanitize arbitrary documents. Local bounds, forward-fix and rollout prerequisites are recorded in ADR 0005. No hosted migration, model promotion or product activation occurred.
 
+## Library artifact consultation — WU-042
+
+The released reader explicitly queries stored artifacts on request, separately from on-demand exports. The client validates current run/revision/review manifests and bounded response bytes, verifies receipt headers and SHA-256, and rejects redirects or provider-supplied URLs. Empty/unavailable/revoked/expired states never imply stored delivery; failed recovery discards the stale list and offers retry. Requests abort on reader destruction and have a 30-second timeout. Synthetic reader actions remain disabled. No persistence producer or policy is enabled by this UI. Evidence: `docs/qa/PRODUCT_ARTIFACT_READER_2026-09-22.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.

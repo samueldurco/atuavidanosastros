@@ -5,6 +5,7 @@
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import ProductArtifacts from '$lib/components/ProductArtifacts.svelte';
 	import { isUuid } from '$lib/library-result';
 	import { parseProductRun, runLabels, type WorkflowReaderData } from '$lib/product-run';
 	let { data }: { data: WorkflowReaderData } = $props();
@@ -161,7 +162,8 @@
 			...(data.run.released
 				? [
 						{ id: 'leitura', label: 'Sua leitura' },
-						{ id: 'origem', label: 'Base e limites' }
+						{ id: 'origem', label: 'Base e limites' },
+						{ id: 'arquivos', label: 'Arquivos guardados' }
 					]
 				: []),
 			{ id: 'historico', label: 'Histórico desta versão' }
@@ -251,8 +253,8 @@
 				>
 				{#if confirmDelete}
 					<p id="delete-warning">
-						Excluir remove esta versão e seu histórico. Outras versões reprocessadas continuam na
-						Biblioteca.
+						Excluir remove esta versão, seu histórico e seus arquivos guardados. Outras versões
+						reprocessadas continuam na Biblioteca.
 					</p>
 					<Button
 						variant="destructive"
@@ -307,6 +309,11 @@
 					: runLabels[data.run.state]}
 				description={explanation}
 			/>{/if}
+		{#if data.run.released && data.run.editorial && data.run.calculation}
+			{#key `${data.run.id}:${data.run.revision}:${data.run.editorial.reviewDigest}`}
+				<ProductArtifacts run={data.run} disabled={!!data.synthetic || !!busy} />
+			{/key}
+		{/if}
 		<section id="historico" aria-labelledby="history-title">
 			<h2 id="history-title">Histórico desta versão</h2>
 			{#if data.run.parentId}<p>
