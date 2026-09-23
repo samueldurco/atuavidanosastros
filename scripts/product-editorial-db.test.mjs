@@ -5,6 +5,7 @@ import { setupProductDatabase, owner, other, file } from './helpers/product-data
 import { asRole } from './helpers/artifact-fixture.mjs';
 import { createWorkflowRepository, processNextProductRun } from '../apps/worker/src/product-processing.ts';
 import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
+import { createProductPublisher } from '../apps/worker/src/product-publication.ts';
 
 const migration='supabase/migrations/20260923110000_product_editorial_publication.sql';
 const service=(db,sql,args=[])=>asRole(db,'service_role',null,()=>db.query(sql,args)).then(r=>r.rows[0]?.data);
@@ -42,6 +43,47 @@ async function receipt(db,r,overrides={}) {
   return args;
 }
 const enable=db=>db.exec('update product_editorial_policy set enabled=true');
+
+// Fixed transport map: no arbitrary SQL function name accepted by this adapter.
+const publicationRpc=db=>async(name,args,signal)=>{
+  signal.throwIfAborted();
+  if(name==='claim_product_editorial') return service(db,'select claim_product_editorial($1) as data',[args.p_products]);
+  assert.equal(name,'complete_product_editorial');
+  return service(db,'select complete_product_editorial($1,$2,$3,$4) as data',[args.p_id,args.p_receipt,args.p_token,args.p_revision]);
+};
+
+test('portable publisher integrates real SQL from waiting calculation to owned history without issuing approval',async t=>{
+  const db=await boot(t),r=await pending(db),events=[];
+  const publisher=createProductPublisher(publicationRpc(db),{enabledProducts:['daily-card'],emit:e=>events.push(e)});
+  assert.equal(await publisher.step(),'idle');await receipt(db,r);assert.equal(await publisher.step(),'idle');
+  await enable(db);assert.equal(await publisher.step(),'published');assert.equal(await publisher.step(),'idle');
+  const result=await read(db,r.id);assert.equal(result.released,true);assert.equal(result.history.at(-1).state,'READY');
+  assert.ok(result.libraryItemId);assert.equal(await read(db,r.id,other),null);
+  assert.ok(events.every(e=>Object.keys(e).sort().join(',')==='durationMs,event,outcome'));
+});
+
+test('lost completion response is uncertain although SQL committed, and next step does not duplicate publication',async t=>{
+  const db=await boot(t),r=await pending(db);await receipt(db,r);await enable(db);
+  const rpc=publicationRpc(db),calls=[];
+  const publisher=createProductPublisher(async(name,args,signal)=>{
+    calls.push(name);const result=await rpc(name,args,signal);
+    if(name==='complete_product_editorial') throw Error('response lost after commit');return result;
+  },{enabledProducts:['daily-card']});
+  assert.equal(await publisher.step(),'publication_uncertain');assert.deepEqual(calls,['claim_product_editorial','complete_product_editorial']);
+  assert.equal((await read(db,r.id)).released,true);assert.equal(await publisher.step(),'idle');
+  assert.equal((await db.query("select count(*)::int as n from product_run_events where run_id=$1 and state='READY'",[r.id])).rows[0].n,1);
+  assert.equal((await db.query('select attempts from product_editorial_work')).rows[0].attempts,1);
+});
+
+test('SQL gate revoked between publisher RPCs leaves run waiting and service cannot self-repair approval',async t=>{
+  const db=await boot(t),r=await pending(db);await receipt(db,r);await enable(db);const rpc=publicationRpc(db);let calls=0;
+  const publisher=createProductPublisher(async(name,args,signal)=>{
+    calls++;if(name==='complete_product_editorial')await db.exec('update product_editorial_receipts set revoked_at=now()');
+    return rpc(name,args,signal);
+  },{enabledProducts:['daily-card']});
+  assert.equal(await publisher.step(),'publication_uncertain');assert.equal(calls,2);
+  assert.equal((await read(db,r.id)).state,'AWAITING_EDITORIAL');assert.equal(await publisher.step(),'idle');
+});
 
 test('editorial authority is private and default-disabled; no service can fabricate review or promotion',async t=>{
   const db=await boot(t);const r=await pending(db);await receipt(db,r);
