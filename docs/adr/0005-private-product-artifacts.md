@@ -28,3 +28,5 @@ Forward-fix: `20260915180000_disable_product_artifacts.sql` disables the policy 
 Evidence: `docs/qa/PRODUCT_ARTIFACT_STORAGE_2026-09-15.md`.
 
 Producer composition evidence: `docs/qa/PRODUCT_ARTIFACT_PRODUCER_2026-09-22.md`. This does not satisfy hosted rollout prerequisites or enable policy.
+
+Native-calculation PDF/SVG/card local round-trip evidence: `docs/qa/PRODUCT_ARTIFACT_FORMATS_2026-09-23.md`. This closes the prior stub-receipt limitation for these formats, not the hosted activation gates.

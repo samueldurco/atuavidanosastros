@@ -68,19 +68,48 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 			gap = 24
 		) => {
 			const font = fonts[style];
+			const runs = (text: string) =>
+				!text.includes('Δ') || font.hasGlyphForCodePoint(916)
+					? [{ text, style }]
+					: text
+							.split(/(Δ)/)
+							.filter(Boolean)
+							.map((text) => ({ text, style: text === 'Δ' ? ('display' as const) : style }));
+			const measure = (text: string) =>
+				runs(text).reduce((sum, run) => sum + width(run.text, fonts[run.style], size), 0);
 			for (const c of value) {
 				if ('\r\n\t'.includes(c)) continue;
 				const cp = c.codePointAt(0)!;
-				if (cp < 32 || cp === 127 || !font.hasGlyphForCodePoint(cp)) throw new CardUnavailable();
+				if (
+					cp < 32 ||
+					cp === 127 ||
+					(!font.hasGlyphForCodePoint(cp) && !(c === 'Δ' && fonts.display.hasGlyphForCodePoint(cp)))
+				)
+					throw new CardUnavailable();
 			}
 			const line = (s: string) => {
 				check();
-				if (width(s, font, size) > 920.01) throw new CardUnavailable();
+				if (measure(s) > 920.01) throw new CardUnavailable();
+				const lineRuns = runs(s);
+				const mixed = lineRuns.some((run) => run.style !== style);
+				// Mixed brand fonts share an alphabetic baseline; reserve both fonts' metrics.
+				// Keep the original text-before-edge layout for previously supported lines.
+				const lineFonts = lineRuns.map((run) => fonts[run.style]);
+				const ascent = Math.max(...lineFonts.map((f) => (f.ascent * size) / f.unitsPerEm));
+				const descent = Math.max(...lineFonts.map((f) => (-f.descent * size) / f.unitsPerEm));
+				const spans = lineRuns
+					.map((run) =>
+						run.style === style
+							? escape(run.text)
+							: `<tspan class="${run.style}">${escape(run.text)}</tspan>`
+					)
+					.join('');
 				elements.push(
-					`<text x="80" y="${y}" dominant-baseline="text-before-edge" class="${style}" font-size="${size}">${escape(s)}</text>`
+					`<text x="80" y="${mixed ? y + ascent : y}" dominant-baseline="${mixed ? 'alphabetic' : 'text-before-edge'}" class="${style}" font-size="${size}">${spans}</text>`
 				);
 				y += Math.max(
 					leading,
+					mixed ? Math.ceil(ascent + descent) + 8 : 0,
 					Math.ceil(((font.ascent - font.descent + font.lineGap) * size) / font.unitsPerEm) + 8
 				);
 			};
@@ -89,14 +118,14 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 				for (const word of part.trim().split(/[ \t]+/)) {
 					check();
 					const next = pending ? `${pending} ${word}` : word;
-					if (width(next, font, size) <= 920) {
+					if (measure(next) <= 920) {
 						pending = next;
 						continue;
 					}
 					if (pending) line(pending);
 					pending = '';
 					for (const char of word) {
-						if (width(pending + char, font, size) > 920) {
+						if (measure(pending + char) > 920) {
 							line(pending);
 							pending = '';
 						}

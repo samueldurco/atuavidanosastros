@@ -53,7 +53,12 @@ export async function renderProductPdf(value: unknown) {
 			for (const character of text) {
 				if ('\n\r\t'.includes(character)) continue;
 				const point = character.codePointAt(0)!;
-				if (point < 32 || point === 127 || !fonts.get(font)!.has(point)) throw new PdfUnavailable();
+				if (
+					point < 32 ||
+					point === 127 ||
+					(!fonts.get(font)!.has(point) && !(character === 'Δ' && fonts.get(display)!.has(point)))
+				)
+					throw new PdfUnavailable();
 			}
 		};
 		let page = doc.addPage([width, height]);
@@ -84,17 +89,38 @@ export async function renderProductPdf(value: unknown) {
 		};
 		const paragraph = (text: string, font = body, size = 12, leading = 17, gap = 10) => {
 			validate(text, font);
+			// The motor's mandatory ΔT warning uses the embedded brand display glyph.
+			// Keep every original character; all previously supported text keeps its original font/layout.
+			const runs = (value: string) =>
+				!value.includes('Δ') || fonts.get(font)!.has(916)
+					? [{ text: value, font }]
+					: value
+							.split(/(Δ)/)
+							.filter(Boolean)
+							.map((text) => ({ text, font: text === 'Δ' ? display : font }));
+			const measure = (value: string) =>
+				runs(value).reduce((sum, run) => sum + run.font.widthOfTextAtSize(run.text, size), 0);
 			const line = (value: string) => {
 				ensure(leading);
-				if (font.widthOfTextAtSize(value, size) > contentWidth + 0.01) throw new PdfUnavailable();
-				page.drawText(value, { x: margin, y, size, font, color: font === label ? muted : ink });
+				if (measure(value) > contentWidth + 0.01) throw new PdfUnavailable();
+				let x = margin;
+				for (const run of runs(value)) {
+					page.drawText(run.text, {
+						x,
+						y,
+						size,
+						font: run.font,
+						color: font === label ? muted : ink
+					});
+					x += run.font.widthOfTextAtSize(run.text, size);
+				}
 				y -= leading;
 			};
 			for (const part of text.replace(/\r\n?/g, '\n').split('\n')) {
 				let pending = '';
 				for (const word of part.trim().split(/[ \t]+/)) {
 					const next = pending ? `${pending} ${word}` : word;
-					if (font.widthOfTextAtSize(next, size) <= contentWidth) {
+					if (measure(next) <= contentWidth) {
 						pending = next;
 						continue;
 					}
@@ -104,7 +130,7 @@ export async function renderProductPdf(value: unknown) {
 					}
 					// Break long identifiers without dropping or inserting characters.
 					for (const character of word) {
-						if (font.widthOfTextAtSize(pending + character, size) > contentWidth) {
+						if (measure(pending + character) > contentWidth) {
 							line(pending);
 							pending = '';
 						}

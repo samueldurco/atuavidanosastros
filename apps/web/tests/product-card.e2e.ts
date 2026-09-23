@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { cardFixture } from './fixtures/product-export';
 
-for (const variant of ['standard', 'long']) {
+for (const variant of ['standard', 'long', 'delta']) {
 	test(`private section card ${variant}: complete, inert, bounded and self-contained`, async ({
 		page
 	}, testInfo) => {

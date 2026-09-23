@@ -26,6 +26,12 @@ export function cardFixture(variant = 'standard'): ProductRunView {
 			'Uma pergunta de referência sintética para testar a continuidade da leitura. '.repeat(14) +
 			'palavralonga'.repeat(20);
 	}
+	if (variant === 'delta') {
+		run.calculation!.limits.push(
+			'UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.'
+		);
+		run.editorial!.sections[0].text = 'ΔT não é uma previsão. ' + 'ΔT '.repeat(35) + 'Δ'.repeat(60);
+	}
 	return run;
 }
 

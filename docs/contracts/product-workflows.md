@@ -100,6 +100,10 @@ The released reader explicitly queries stored artifacts on request, separately f
 
 The disabled-by-default server producer processes one pinned owner/run/revision/review/format/section job using a fresh owner read and fixed existing renderers. It does not accept document bytes, URLs or custom renderers. The private writer and SQL recheck current gates at persistence. A maximum 15-second overall deadline includes a bounded at-most-ten-second write; CPU cancellation is cooperative and uncertain commits are not reported as stored. Identical explicit retries are idempotent; no automatic retry, credential, route or scheduler is introduced. Minimal outcome/format/duration/byte telemetry excludes content and identities. Hosted runtime and policy activation remain pending. Evidence: `docs/qa/PRODUCT_ARTIFACT_PRODUCER_2026-09-22.md`.
 
+## Native calculation to stored formats — WU-044
+
+Local integration covers actual natal calculation → owner projection → PDF/SVG/card renderer → private SQL bytes → authenticated recovery, with exact bytes, retries, revocation, corruption refusal and polar exclusions. PDF/cards preserve the mandatory ΔT warning using the existing embedded display glyph and matching measurements; other unsupported glyphs remain refused. Previously supported content keeps its layout/version. Synthetic editorial fixtures are not model approvals or a production rollout. Evidence: `docs/qa/PRODUCT_ARTIFACT_FORMATS_2026-09-23.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.
