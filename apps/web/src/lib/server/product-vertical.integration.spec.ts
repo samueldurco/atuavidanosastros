@@ -4,6 +4,11 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { workflowFor, type WorkflowInput, type CalculationSnapshot } from '@atv/domain';
 import { SCHEMA_VERSION } from '../../../../../packages/ai/src/contracts';
 import {
+	dimensions,
+	RUBRIC_VERSION,
+	type ScoredReview
+} from '../../../../../packages/ai/src/director';
+import {
 	setupProductDatabase,
 	owner,
 	other,
@@ -14,6 +19,10 @@ import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
 import { prepareProductDelivery } from '../../../../worker/src/product-delivery';
+import {
+	evaluateProductDelivery,
+	DELIVERY_REVIEW_VERSION
+} from '../../../../worker/src/product-delivery-review';
 import { parseProductRun } from '../product-run';
 import { createArtifactProducer } from './product-artifact-producer';
 import { renderProductWebExport } from './product-export';
@@ -165,11 +174,11 @@ async function fixture(productId: string) {
 				receiptId = randomUUID();
 			const facts = prepareProductFacts(productId, r.calculation);
 			if (facts.status !== 'prepared') throw new Error('fixture_invalid_facts');
-			const candidate = await prepareProductDelivery({
+			const draft = {
 				runId: id,
 				revision: r.revision,
 				productId,
-				tier: 'free',
+				tier: 'free' as const,
 				calculation: r.calculation,
 				output: {
 					schemaVersion: SCHEMA_VERSION,
@@ -193,13 +202,46 @@ async function fixture(productId: string) {
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
 				}
-			});
+			};
+			const candidate = await prepareProductDelivery(draft);
 			if (candidate.status !== 'prepared_for_review') throw new Error('fixture_invalid_delivery');
-			// Test DB-owner issuance only. A content digest is NOT an actual approved review.
+			// Synthetic two-pass review tests the gate, never actual reviewer authentication/quality.
+			const score = (outputDigest: string): ScoredReview => ({
+				rubricVersion: RUBRIC_VERSION,
+				outputDigest,
+				reviewer: 'fixture-reviewer',
+				source: 'human',
+				calibrationId: null,
+				scores: Object.fromEntries(dimensions.map((d) => [d, 10])) as ScoredReview['scores'],
+				evidence: Object.fromEntries(
+					dimensions.map((d) => [d, 'Fixture de integração; não calibra qualidade.'])
+				) as ScoredReview['evidence']
+			});
+			const review = {
+				version: DELIVERY_REVIEW_VERSION,
+				basisDigest: candidate.basisDigest,
+				deliveryDigest: candidate.deliveryDigest,
+				draftReview: score(candidate.outputDigest),
+				deliveryReview: score(candidate.deliveryDigest)
+			};
+			const authority = { reviewers: ['fixture-reviewer'], calibrations: [] };
+			expect((await evaluateProductDelivery(draft, review)).reason).toBe('reviewer_not_authorized');
+			const assessed = await evaluateProductDelivery(draft, review, {
+				draft: authority,
+				delivery: authority
+			});
+			if (
+				assessed.status !== 'reviewed_delivery_candidate' ||
+				!assessed.content ||
+				!assessed.reviewDigest
+			)
+				throw new Error('fixture_invalid_review');
+			expect(assessed.publication).toBe('blocked');
+			// Test DB-owner issuance only. The audit digest does NOT authenticate this fixture review.
 			const editorial = {
-				...candidate.content,
+				...assessed.content,
 				promotionId,
-				reviewDigest: candidate.deliveryDigest
+				reviewDigest: assessed.reviewDigest
 			};
 			await db.query('insert into editorial_promotions values ($1,$2,$3,$4,null)', [
 				promotionId,
@@ -220,7 +262,7 @@ async function fixture(productId: string) {
 					promotionId,
 					'b'.repeat(64),
 					candidate.basisDigest,
-					candidate.deliveryDigest
+					assessed.reviewDigest
 				]
 			);
 			return receiptId;
