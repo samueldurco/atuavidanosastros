@@ -122,6 +122,10 @@ Local integration covers actual natal calculation → owner projection → PDF/S
 
 Six representative partial bases now have a local integration chain through actual HTTP handlers, calculation/SQL processing, private synthetic receipt publication, persisted web rendering, owner recovery/history and independent reprocessing approval. Parent revocation/deletion does not authorize or erase a separately reviewed child. Tarot preserves the exact draw. Fixture policy/reviewer approval is not production authority, and this does not certify all 25 products or hosted authentication. Evidence: `docs/qa/PRODUCT_VERTICAL_INTEGRATION_2026-09-23.md`.
 
+## Complete Lab-to-reader representation — WU-048
+
+`prepareProductDelivery` mechanically validates a captured draft and deterministically preserves all Lab claim types/IDs/text/evidence, ordered relation types/claim links, synthesis, exploratory questions, scope and limits. Relations may share bounded sections; questions are explicitly not factual assertions. Reader bounds and a 90,000-byte UTF-8 content budget reject unrepresentable output without truncation. A SHA-256 binds exact content/version to the original run/calculation/revision/tier basis and output digests. It is not authentication or approval: content omits promotion/review credentials and publication always remains blocked. Independent review of the final representation and trusted issuance remain required. Evidence: `docs/qa/PRODUCT_DELIVERY_PROJECTION_2026-09-23.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.

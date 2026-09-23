@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { expect, it } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { workflowFor, type WorkflowInput, type CalculationSnapshot } from '@atv/domain';
+import { SCHEMA_VERSION } from '../../../../../packages/ai/src/contracts';
 import {
 	setupProductDatabase,
 	owner,
@@ -11,6 +12,8 @@ import {
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
+import { prepareProductFacts } from '../../../../worker/src/product-editorial';
+import { prepareProductDelivery } from '../../../../worker/src/product-delivery';
 import { parseProductRun } from '../product-run';
 import { createArtifactProducer } from './product-artifact-producer';
 import { renderProductWebExport } from './product-export';
@@ -160,21 +163,43 @@ async function fixture(productId: string) {
 				.rows[0];
 			const promotionId = 'fixture-' + randomUUID(),
 				receiptId = randomUUID();
+			const facts = prepareProductFacts(productId, r.calculation);
+			if (facts.status !== 'prepared') throw new Error('fixture_invalid_facts');
+			const candidate = await prepareProductDelivery({
+				runId: id,
+				revision: r.revision,
+				productId,
+				tier: 'free',
+				calculation: r.calculation,
+				output: {
+					schemaVersion: SCHEMA_VERSION,
+					capability: facts.facts.capability,
+					scope: 'partial',
+					title: 'Leitura sintética de integração',
+					claims: [
+						{
+							id: 'c1',
+							kind: 'fact',
+							text: r.calculation.facts[0].display,
+							evidence: [r.calculation.facts[0].id]
+						}
+					],
+					relations: [],
+					synthesis: [
+						{ claimIds: ['c1'], text: 'Síntese sintética, sem interpretação homologada.' }
+					],
+					reflections: ['Que associação pessoal aparece nesse recorte?'],
+					limits: [
+						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
+					]
+				}
+			});
+			if (candidate.status !== 'prepared_for_review') throw new Error('fixture_invalid_delivery');
+			// Test DB-owner issuance only. A content digest is NOT an actual approved review.
 			const editorial = {
-				version: 'synthetic/1',
+				...candidate.content,
 				promotionId,
-				reviewDigest: 'a'.repeat(64),
-				title: 'Leitura sintética de integração',
-				sections: [
-					{
-						title: 'Base registrada',
-						text: 'Texto sintético, sem interpretação homologada.',
-						evidence: [r.calculation.facts[0].id]
-					}
-				],
-				limits: [
-					'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
-				]
+				reviewDigest: candidate.deliveryDigest
 			};
 			await db.query('insert into editorial_promotions values ($1,$2,$3,$4,null)', [
 				promotionId,
@@ -194,8 +219,8 @@ async function fixture(productId: string) {
 					editorial,
 					promotionId,
 					'b'.repeat(64),
-					'c'.repeat(64),
-					'a'.repeat(64)
+					candidate.basisDigest,
+					candidate.deliveryDigest
 				]
 			);
 			return receiptId;
@@ -268,6 +293,9 @@ for (const productId of products)
 			expect(html).toBe(renderProductWebExport(parent)?.html);
 			expect(html).toContain('&lt;script&gt;');
 			expect(html).not.toContain('<script>');
+			expect(html).toContain('Síntese sintética, sem interpretação homologada.');
+			expect(html).toContain('Que associação pessoal aparece nesse recorte?');
+			expect(html).toContain('Escopo declarado: parcial.');
 			expect((await workflowArtifacts(f.event(other), runId, artifact.id)).status).toBe(404);
 			const listed = (await (await workflowArtifacts(f.event(), runId)).json()) as {
 				artifacts: unknown[];
