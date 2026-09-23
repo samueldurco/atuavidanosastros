@@ -118,6 +118,10 @@ Local integration covers actual natal calculation → owner projection → PDF/S
 
 `createProductPublisher` in the worker is server-configured, default-off and performs at most one claim/completion per explicit step. It accepts only receipt identifiers and validates an exact READY/next-revision acknowledgement. Deadline is 20 seconds by default, at most 25 seconds; external abort and late-response suppression are supported. After completion dispatch, failures/invalid acknowledgements/deadlines produce `publication_uncertain`, never a fabricated success or an automatic retry/cleanup write. SQL controls durable lease, retries and revocation. Telemetry contains only event/outcome/duration; no transport, provider, review issuer or scheduler is installed. Evidence: `docs/qa/PRODUCT_EDITORIAL_EXECUTOR_2026-09-23.md`.
 
+## Six-universe vertical integration — WU-047
+
+Six representative partial bases now have a local integration chain through actual HTTP handlers, calculation/SQL processing, private synthetic receipt publication, persisted web rendering, owner recovery/history and independent reprocessing approval. Parent revocation/deletion does not authorize or erase a separately reviewed child. Tarot preserves the exact draw. Fixture policy/reviewer approval is not production authority, and this does not certify all 25 products or hosted authentication. Evidence: `docs/qa/PRODUCT_VERTICAL_INTEGRATION_2026-09-23.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.
