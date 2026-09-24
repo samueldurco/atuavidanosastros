@@ -7,7 +7,8 @@
 	let expanded = $state(false);
 	const primary = [
 		{ href: '/dashboard', label: 'Visão geral' },
-		{ href: '/biblioteca', label: 'Biblioteca' }
+		{ href: '/biblioteca', label: 'Biblioteca' },
+		{ href: '/conta/nascimento', label: 'Perfil natal' }
 	];
 </script>
 
