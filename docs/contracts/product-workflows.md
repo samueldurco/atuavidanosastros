@@ -26,6 +26,12 @@ Dream snapshots keep reported narrative, emotions, associations and context dist
 
 ## Recovery and privacy
 
+### Lost submission acknowledgement — WU-053
+
+`POST /api/workflows/recover` accepts only `{requestKey}` in a bounded, same-origin authenticated body; the key must never be placed in a URL. The read-only owner-scoped `recover_product_request` RPC returns only `runId`, `productId` and a nullable unarchived `libraryItemId`. It never returns input, calculation, editorial content or a release decision. The original authenticated owner may recover identifiers after a release is revoked; opening the result still uses the existing gated reader. Anonymous/service-role execution and raw client reads remain forbidden. Soft-deleted profiles and missing/deleted runs return null; archived Library references are not resurrected.
+
+Null means **not found at this read**, not proof that a submission failed: the original transaction may still be in flight. A client must retain the original correlation key and must not automatically resubmit input, rotate the key or claim delivery after an uncertain acknowledgement. Backend/auth/projection failures remain errors, never not-found. Recovery does not create a run/event/reference or process a pending run. Forward-fix revokes this RPC without deleting history or disabling the prior owner reader. Local PostgreSQL + HTTP evidence: `docs/qa/PRODUCT_REQUEST_RECOVERY_2026-09-24.md`. No hosted migration or real JWT/PostgREST certification is implied.
+
 ### Calculation to Editorial Director evidence — WU-034
 
 `prepareProductFacts` maps a validated persisted snapshot to the six Lab capabilities without changing facts or carrying raw data/history. Current scope is always partial; facts exceeding the tighter Lab bounds are explicitly blocked. `evaluateProductDraft` reuses schema and mechanical review, binds review to a SHA-256 of run/revision/product/tier/calculation/provenance/facts/reading/version labels, and requires server-owned reviewer/calibration authority. An otherwise passing review is only a reviewed candidate: publication remains blocked pending independently verified promotion and engine gates. It performs no provider call or persistence transition. See `docs/qa/PRODUCT_EDITORIAL_EVIDENCE_2026-09-14.md` for evidence and remaining boundaries.
