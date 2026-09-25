@@ -1,0 +1,15 @@
+# Saved natal profile to Leitura de Data — atv-date-request/1
+
+Local implementation only; `date-reading` remains disabled. This bridge is not an engine, editorial or model approval.
+
+`POST /api/workflows/date` accepts exactly `{requestKey,input}`. The input has exactly five fields: `version: atv-date-request/1`, `productId: date-reading`, positive integer `expectedRevision` below 2147483647, `targetDate` and product consent `{storage:true,policyVersion:atv-input-consent/1,partner:false,continuity:false}`. The date must be a real Gregorian date in canonical YYYY-MM-DD form between 1900-01-01 and 2099-12-31, inclusive. The HTTP parser and SQL bridge independently reject normalization, impossible dates and broader cycle products. No birth, owner, timezone, context, return year or timing may be supplied.
+
+The HTTP handler requires authenticated claims, same origin and a JSON body of at most 4096 bytes. Fixed errors and UUID-only acknowledgements use private/no-store/no-referrer/noindex headers. Unknown backend details never reach the client. A 202 acknowledges a saved request, not a ready result.
+
+`request_date_product_run` uses the existing owner advisory lock then the active profile row lock. The expected onboarding revision must match the current COMPLETE, consented, EXACT profile. It copies only the six BirthInput fields, keeps the explicit target date and delegates release, entitlement, quota and atomic run/event/Library writes to `request_product_run`. The separate private `date_product_requests` receipt binds the exact command to the original natal version. Its target date and revision are account-associated private data, not telemetry. Direct receipt access is revoked from public, anonymous, authenticated and service roles; the scoped RPC is authenticated-only.
+
+An existing owner/key with the identical command returns the original run after edits, profile removal or release revocation. A changed date/revision or collision with a generic/natal request is refused. Inactive accounts cannot retry. Browser clients must retain only the UUID and recover read-only after uncertainty, not automatically replay writes. Forgetting onboarding does not delete existing product snapshots; deleting a run cascades its receipt. `supabase/forward-fixes/disable_date_product_requests.sql` revokes only this bridge and preserves history and read recovery. No generic RPC contract or existing natal bridge is changed.
+
+The calculator's `atv-context-product-calculation/1.0.0` contract remains authoritative: one geocentric sample at 12:00 UTC on the selected date, plus the natal basis. The date does not establish local-day coverage, current location, favorable windows, exact transits, aspects, week/calendar coverage or solar return. No inference from birth timezone to current timezone is authorized. Interpretation and downloads still require independent gates.
+
+Migration `20260925190000_date_product_requests.sql` is local only. Real hosted JWT/PostgREST, independent-connection concurrency, retention review, authenticated UI and full vertical runtime evidence remain pending for this unit. No paid calls or release/policy changes.
