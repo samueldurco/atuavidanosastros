@@ -10,6 +10,7 @@ import {
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import { recoverWorkflowRequest } from './workflow-recovery';
 import { workflowApi } from './workflow-api';
+import { createWorkflowRequest } from '../workflow-request';
 import { POST } from '../../routes/api/workflows/recover/+server';
 
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
@@ -47,16 +48,18 @@ async function rpc(
 		const result =
 			name === 'recover_product_request'
 				? await db.query('select recover_product_request($1) as value', [args.p_request_key])
-				: name === 'request_product_run'
-					? await db.query('select request_product_run($1,$2,$3,$4) as value', [
-							args.p_product_id,
-							args.p_request_key,
-							args.p_input,
-							args.p_parent_id
-						])
-					: (() => {
-							throw new Error('unexpected RPC');
-						})();
+				: name === 'read_product_run'
+					? await db.query('select read_product_run($1) as value', [args.p_id])
+					: name === 'request_product_run'
+						? await db.query('select request_product_run($1,$2,$3,$4) as value', [
+								args.p_product_id,
+								args.p_request_key,
+								args.p_input,
+								args.p_parent_id
+							])
+						: (() => {
+								throw new Error('unexpected RPC');
+							})();
 		return (result.rows[0] as { value: unknown }).value;
 	});
 }
@@ -71,7 +74,10 @@ function event(
 			try {
 				return { data: await rpc(name, args, user), error: null };
 			} catch (error) {
-				return { data: null, error: { message: String(error) } };
+				return {
+					data: null,
+					error: { message: error instanceof Error ? error.message : String(error) }
+				};
 			}
 		};
 		return {
@@ -101,6 +107,91 @@ const create = async (key: string, user = owner) => {
 	expect(response.status).toBe(202);
 	return ((await response.json()) as { runId: string }).runId;
 };
+
+/** Local browser -> HTTP handler -> PostgreSQL adapter; not a hosted JWT/PostgREST test. */
+function browser(lostAcknowledgement = false) {
+	const values = new Map<string, string>();
+	const fetcher = vi.fn<typeof fetch>(async (path, init) => {
+		const url = new URL(String(path), 'http://localhost');
+		const e = event(init?.body ? JSON.parse(String(init.body)) : undefined);
+		e.url = url;
+		e.request = new Request(url, { ...init, headers: { ...init?.headers, origin: url.origin } });
+		if (url.pathname === '/api/workflows') {
+			const response = await workflowApi(e, 'create');
+			if (lostAcknowledgement && response.status === 202)
+				throw new TypeError('lost acknowledgement');
+			return response;
+		}
+		if (url.pathname === '/api/workflows/recover') return recoverWorkflowRequest(e);
+		return workflowApi(e, 'read', url.pathname.split('/').at(-1));
+	});
+	const options = {
+		operation: { kind: 'create' as const, ownerId: owner },
+		productId: 'daily-card',
+		storage: {
+			getItem: (id: string) => values.get(id) ?? null,
+			setItem: (id: string, value: string) => {
+				values.set(id, value);
+			},
+			removeItem: (id: string) => {
+				values.delete(id);
+			}
+		},
+		fetch: fetcher,
+		randomUUID
+	};
+	return { options, values, fetcher, client: createWorkflowRequest(options) };
+}
+
+it('client recovers a committed first submission after reload without another mutation or event', async () => {
+	const s = browser(true);
+	expect((await s.client.perform(true, input)).mode).toBe('recover');
+	expect(s.values.size).toBe(1);
+	expect(JSON.stringify([...s.values])).not.toMatch(/questions|confidencial|consent/);
+	const before = await db.query(
+		'select (select count(*) from product_runs) as runs,(select count(*) from product_run_events) as events,(select count(*) from library_items) as items'
+	);
+	expect(before.rows).toEqual([{ runs: 1, events: 1, items: 1 }]);
+	await db.exec('update workflow_releases set enabled=false');
+	const reloaded = createWorkflowRequest(s.options);
+	const result = await reloaded.perform(false);
+	expect(result.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
+	expect(result.message).toContain('não significa');
+	expect(s.fetcher.mock.calls.filter(([url]) => url === '/api/workflows')).toHaveLength(1);
+	expect(
+		await db.query(
+			'select (select count(*) from product_runs) as runs,(select count(*) from product_run_events) as events,(select count(*) from library_items) as items'
+		)
+	).toEqual(before);
+});
+
+it('server release gate refuses the first submission even if client allowNew is true', async () => {
+	await db.exec('update workflow_releases set enabled=false');
+	const s = browser();
+	expect(await s.client.perform(true, input)).toMatchObject({
+		mode: 'new',
+		message: expect.stringContaining('não está liberado')
+	});
+	expect(s.values.size).toBe(0);
+	expect((await db.query('select count(*) as n from product_runs')).rows).toEqual([{ n: 0 }]);
+});
+
+it('a separate explicit request preserves the first root reading and creates only one more', async () => {
+	const s = browser();
+	const first = await s.client.perform(true, input);
+	expect(first.href).toBeDefined();
+	expect(s.client.startAnother().mode).toBe('new');
+	const second = await s.client.perform(true, { ...input, questions: ['Nova pergunta sintética'] });
+	expect(second.href).toBeDefined();
+	expect(second.href).not.toBe(first.href);
+	expect(
+		(await db.query('select parent_id,input from product_runs order by created_at')).rows
+	).toEqual([
+		{ parent_id: null, input },
+		{ parent_id: null, input: { ...input, questions: ['Nova pergunta sintética'] } }
+	]);
+	expect((await db.query('select count(*) as n from product_run_events')).rows).toEqual([{ n: 2 }]);
+});
 
 it('recovers a committed request after discarding its HTTP acknowledgement without any write/replay', async () => {
 	const key = randomUUID();
