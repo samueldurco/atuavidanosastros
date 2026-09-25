@@ -9,7 +9,9 @@ export async function readIntakeAccess(
 ): Promise<IntakeAccess> {
 	if (
 		!client ||
-		(!symbolicProduct(productId) && !natalProducts.includes(productId as NatalProduct))
+		(!symbolicProduct(productId) &&
+			!natalProducts.includes(productId as NatalProduct) &&
+			productId !== 'date-reading')
 	)
 		return 'UNAVAILABLE';
 	try {

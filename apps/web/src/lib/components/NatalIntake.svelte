@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
-	import { workflowFor } from '@atv/domain';
+	import { validDate, workflowFor } from '@atv/domain';
 	import Button from '$lib/components/ui/Button.svelte';
+	import Field from '$lib/components/ui/Field.svelte';
 	import { NATAL_REQUEST_VERSION } from '$lib/natal-request';
+	import { DATE_REQUEST_VERSION } from '$lib/date-request';
 	import { parseOnboardingSnapshot, type OnboardingSnapshot } from '$lib/onboarding';
 	import type { IntakeAccess } from '$lib/symbolic-intake';
 	import { createWorkflowRequest, type WorkflowRequestState } from '$lib/workflow-request';
@@ -15,12 +17,15 @@
 	let loading = $state(false);
 	let busy = $state(false);
 	let consent = $state(false);
+	let targetDate = $state('');
 	let feedback: HTMLParagraphElement | undefined = $state();
 	let outcome = $state<WorkflowRequestState>({
 		mode: 'blocked',
 		message: 'Preparando recuperação segura nesta aba.'
 	});
 	const product = $derived(workflowFor(productId));
+	const isDate = $derived(productId === 'date-reading');
+	const dateValid = $derived(!isDate || validDate(targetDate));
 	const canEnter = $derived(
 		access === 'AVAILABLE' &&
 			outcome.mode === 'new' &&
@@ -41,7 +46,7 @@
 	onMount(() => {
 		try {
 			controller = createWorkflowRequest({
-				operation: { kind: 'create-natal', ownerId },
+				operation: { kind: isDate ? 'create-date' : 'create-natal', ownerId },
 				productId,
 				storage: sessionStorage,
 				fetch,
@@ -98,12 +103,13 @@
 	}
 	async function submit(event: SubmitEvent) {
 		event.preventDefault();
-		if (!controller || !canEnter || !consent || !snapshot) return;
+		if (!controller || !canEnter || !consent || !snapshot || !dateValid) return;
 		busy = true;
 		const input = {
-			version: NATAL_REQUEST_VERSION,
+			version: isDate ? DATE_REQUEST_VERSION : NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
+			...(isDate ? { targetDate } : {}),
 			consent: {
 				storage: true,
 				policyVersion: 'atv-input-consent/1',
@@ -112,6 +118,7 @@
 			}
 		};
 		outcome = await controller.perform(true, input);
+		targetDate = '';
 		consent = false;
 		snapshot = null;
 		profileMessage =
@@ -129,16 +136,25 @@
 	function another() {
 		if (!controller || busy || loading) return;
 		outcome = controller.startAnother();
+		targetDate = '';
 		consent = false;
 		snapshot = null;
 	}
 </script>
 
-<section class="intake" data-stitch="ID-02 SH-02" aria-labelledby="natal-product-title">
+<section
+	class="intake"
+	data-stitch={isDate ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
+	aria-labelledby="natal-product-title"
+>
 	<header>
-		<p class="eyebrow">Meu Céu · novo pedido</p>
+		<p class="eyebrow">{isDate ? 'Ciclos & Tempo' : 'Meu Céu'} · novo pedido</p>
 		<h1 id="natal-product-title">{product?.name}</h1>
-		<p class="lead">Seu céu começa nos dados que você escolheu guardar.</p>
+		<p class="lead">
+			{isDate
+				? 'Uma data escolhida por você, com o método à vista.'
+				: 'Seu céu começa nos dados que você escolheu guardar.'}
+		</p>
 		<p class="access-note">{accessMessage}</p>
 	</header>
 	<div class="workspace">
@@ -185,22 +201,51 @@
 			</section>
 			<form method="POST" onsubmit={submit}>
 				<fieldset disabled={!canEnter}>
-					<legend>2. Autorize este pedido</legend>
+					<legend>{isDate ? '2. Escolha a data e autorize' : '2. Autorize este pedido'}</legend>
+					{#if isDate}
+						<Field
+							id="target-date"
+							label="Data da leitura"
+							help="De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Não calcula aspectos, eventos nem horários favoráveis."
+							error={targetDate && !dateValid
+								? 'Escolha uma data válida dentro do intervalo informado.'
+								: undefined}
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="target-date"
+									type="date"
+									required
+									min="1900-01-01"
+									max="2099-12-31"
+									autocomplete="off"
+									bind:value={targetDate}
+									oninput={() => {
+										consent = false;
+									}}
+									aria-describedby={describedBy}
+									aria-invalid={!!targetDate && !dateValid}
+								/>
+							{/snippet}
+						</Field>
+					{/if}
 					<label class="consent"
 						><input
 							type="checkbox"
 							required
 							bind:checked={consent}
 							aria-describedby="natal-retention"
-						/>Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na
-						minha conta.</label
+						/>{isDate
+							? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida e dos resultados deste pedido na minha conta.'
+							: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
 						histórico são gerenciados separadamente na Biblioteca. Esta autorização não inclui
 						marketing nem continuidade automática ATV+.
 					</p>
-					<Button type="submit" pending={busy} disabled={!canEnter || !consent}>Criar pedido</Button
+					<Button type="submit" pending={busy} disabled={!canEnter || !consent || !dateValid}
+						>Criar pedido</Button
 					>
 				</fieldset>
 			</form>
@@ -231,10 +276,18 @@
 				revisão editorial têm limites próprios.
 			</p>
 			<ol>
-				<li>O pedido guarda uma cópia imutável do perfil conferido.</li>
+				<li>
+					O pedido guarda uma cópia imutável do perfil conferido{isDate
+						? ' e da data escolhida'
+						: ''}.
+				</li>
 				<li>O motor valida e calcula os dados separadamente.</li>
 				<li>A interpretação depende de avaliação e liberação editorial.</li>
 			</ol>
+			{#if isDate}<p>
+					A base temporal é experimental. Seu fuso de nascimento não define sua localização atual.
+					Esta amostra não cobre uma semana, um calendário ou uma revolução solar.
+				</p>{/if}
 			<p>
 				Você acompanha o estado na Biblioteca. Um pedido salvo não é uma leitura pronta; não
 				prometemos PDF, áudio ou outros downloads antes da liberação.
@@ -321,6 +374,13 @@
 		gap: 0.8rem;
 		min-height: 44px;
 		line-height: 1.6;
+		margin-top: 1rem;
+	}
+	input[type='date'] {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: 0;
+		min-height: 44px;
 	}
 	.consent input {
 		flex: 0 0 auto;

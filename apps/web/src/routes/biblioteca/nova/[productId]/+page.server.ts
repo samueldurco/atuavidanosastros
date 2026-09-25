@@ -13,7 +13,8 @@ export const load: PageServerLoad = async ({ parent, params, locals, setHeaders 
 	});
 	if (
 		!symbolicProduct(params.productId) &&
-		!natalProducts.includes(params.productId as NatalProduct)
+		!natalProducts.includes(params.productId as NatalProduct) &&
+		params.productId !== 'date-reading'
 	)
 		error(404, 'Entrada de produto não disponível');
 	const { user } = await parent();

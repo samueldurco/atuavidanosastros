@@ -13,7 +13,9 @@ export const load: PageServerLoad = ({ url, setHeaders }) => {
 	const productId = url.searchParams.get('product') ?? 'daily-card';
 	const access = url.searchParams.get('access') ?? 'AVAILABLE';
 	if (
-		(!symbolicProduct(productId) && !natalProducts.includes(productId as NatalProduct)) ||
+		(!symbolicProduct(productId) &&
+			!natalProducts.includes(productId as NatalProduct) &&
+			productId !== 'date-reading') ||
 		!['AVAILABLE', 'UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE'].includes(access)
 	)
 		error(404);

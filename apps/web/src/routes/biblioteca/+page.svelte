@@ -63,10 +63,12 @@
 			: 'Leituras para reencontrar. Perguntas para continuar. Tudo o que você escolheu guardar no seu atlas.'}
 	/>
 	<details class="intake-options">
-		<summary>Meu Céu, Tarot e Sonhos · consultar disponibilidade de novos pedidos</summary>
+		<summary
+			>Meu Céu, Ciclos &amp; Tempo, Tarot e Sonhos · consultar disponibilidade de novos pedidos</summary
+		>
 		<p>As entradas abaixo dependem de liberação e acesso. Nenhum modelo está homologado.</p>
 		<ul>
-			{#each [...natalProducts, ...symbolicProducts] as productId (productId)}<li>
+			{#each [...natalProducts, 'date-reading', ...symbolicProducts] as productId (productId)}<li>
 					<a href={`/biblioteca/nova/${productId}`}
 						>{symbolicProduct(productId)?.name ?? workflowFor(productId)?.name}</a
 					>

@@ -79,12 +79,27 @@ it('rejects a product without an implemented form before querying', async () => 
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
-it.each(natalProducts)('loads only minimal access for natal product %s', async (productId) => {
-	const e = event({ id: owner }, productId);
-	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
-	expect(e.m.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
-		p_product_id: productId
-	});
+it.each([...natalProducts, 'date-reading'])(
+	'loads only minimal access for profile product %s',
+	async (productId) => {
+		const e = event({ id: owner }, productId);
+		expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
+		expect(e.m.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
+			p_product_id: productId
+		});
+	}
+);
+it('requires authentication before loading date access', async () => {
+	const e = event(null, 'date-reading');
+	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
+	expect(e.m.rpc).not.toHaveBeenCalled();
+});
+it('does not imply availability of broader cycle products', async () => {
+	for (const product of ['week-ahead', 'solar-return']) {
+		const e = event({ id: owner }, product);
+		await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
+		expect(e.m.rpc).not.toHaveBeenCalled();
+	}
 });
 it.each([
 	'https://example.com/biblioteca/_spec/entrada',
