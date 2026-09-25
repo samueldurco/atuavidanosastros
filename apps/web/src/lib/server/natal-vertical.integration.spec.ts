@@ -17,10 +17,12 @@ import { createNatalCalculators } from '../../../../worker/src/natal-calculators
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
+import { parsePairRequestInput } from '../pair-request';
 import { parseOnboardingSnapshot } from '../onboarding';
 import { createWorkflowRequest } from '../workflow-request';
 import { natalRequestApi } from './natal-request-api';
 import { dateRequestApi } from './date-request-api';
+import { pairRequestApi } from './pair-request-api';
 import { onboardingApi } from './onboarding-api';
 import { workflowApi } from './workflow-api';
 import { recoverWorkflowRequest } from './workflow-recovery';
@@ -30,12 +32,34 @@ import { readLibraryResult } from './library-reader';
 // Local PostgreSQL/RLS and actual handlers/calculators. Synthetic claims, one connection.
 // Never seed editorial approval, promotions or READY output to make a vertical pass.
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
-const profileProducts = [...natalProducts, 'date-reading'] as const;
+const profileProducts = [...natalProducts, 'date-reading', 'pair-preview'] as const;
 const targetDate = '2028-02-29';
 const requestPath = (productId: string) =>
-	productId === 'date-reading' ? '/api/workflows/date' : '/api/workflows/natal';
+	productId === 'pair-preview'
+		? '/api/workflows/pair'
+		: productId === 'date-reading'
+			? '/api/workflows/date'
+			: '/api/workflows/natal';
 const requestApi = (productId: string) =>
-	productId === 'date-reading' ? dateRequestApi : natalRequestApi;
+	productId === 'pair-preview'
+		? pairRequestApi
+		: productId === 'date-reading'
+			? dateRequestApi
+			: natalRequestApi;
+const partner = {
+	localDateTime: '2000-02-29T10:00:00.125',
+	utcInstant: '2000-02-29T10:00:00.125Z',
+	timezone: 'UTC',
+	latitude: 51.5,
+	longitude: -0.12,
+	locationSource: 'synthetic-fixture/1'
+};
+const partnerConsent = {
+	storage: true,
+	policyVersion: 'atv-partner-storage/1',
+	permissionDeclared: true,
+	sharing: false
+};
 const birth = {
 	localDateTime: '1990-06-15T12:30:00.123',
 	utcInstant: '1990-06-15T15:30:00.123Z',
@@ -65,7 +89,8 @@ beforeAll(async () => {
 		'20260924170000_product_request_recovery.sql',
 		'20260925140000_product_request_access.sql',
 		'20260925160000_natal_product_requests.sql',
-		'20260925190000_date_product_requests.sql'
+		'20260925190000_date_product_requests.sql',
+		'20260925200000_pair_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -78,6 +103,10 @@ beforeEach(async () => {
 	);
 });
 const statements = {
+	request_pair_product_run: [
+		'select request_pair_product_run($1,$2) as value',
+		['p_request_key', 'p_command']
+	],
 	read_natal_onboarding: ['select read_natal_onboarding() as value', []],
 	update_natal_onboarding: ['select update_natal_onboarding($1) as value', ['p_command']],
 	request_natal_product_run: [
@@ -226,19 +255,32 @@ async function forget(expectedRevision: number) {
 		).status
 	).toBe(200);
 }
-async function command(productId: string, date = targetDate) {
+async function command(productId: string, date = targetDate, pairBirth = partner) {
 	const response = await onboardingApi(event('/api/onboarding'), 'read');
 	expect(response.status).toBe(200);
 	const payload = (await response.json()) as { onboarding: unknown };
 	const snapshot = parseOnboardingSnapshot(payload.onboarding);
 	expect(snapshot).toMatchObject({ state: 'COMPLETE', natal: { timePrecision: 'EXACT' } });
-	const parse = productId === 'date-reading' ? parseDateRequestInput : parseNatalRequestInput;
+	const parse =
+		productId === 'pair-preview'
+			? parsePairRequestInput
+			: productId === 'date-reading'
+				? parseDateRequestInput
+				: parseNatalRequestInput;
 	const input = parse({
-		version: productId === 'date-reading' ? 'atv-date-request/1' : 'atv-natal-request/1',
+		version:
+			productId === 'pair-preview'
+				? 'atv-pair-request/1'
+				: productId === 'date-reading'
+					? 'atv-date-request/1'
+					: 'atv-natal-request/1',
 		productId,
 		...(productId === 'date-reading' ? { targetDate: date } : {}),
 		expectedRevision: snapshot!.revision,
-		consent
+		consent: { ...consent, partner: productId === 'pair-preview' },
+		...(productId === 'pair-preview'
+			? { partner: { ...pairBirth, timePrecision: 'EXACT' }, partnerConsent }
+			: {})
 	});
 	if (!input) throw new Error('invalid_fixture');
 	return input;
@@ -259,7 +301,12 @@ function browser(productId: string, lostAcknowledgement = false) {
 	const options = {
 		productId,
 		operation: {
-			kind: productId === 'date-reading' ? ('create-date' as const) : ('create-natal' as const),
+			kind:
+				productId === 'pair-preview'
+					? ('create-pair' as const)
+					: productId === 'date-reading'
+						? ('create-date' as const)
+						: ('create-natal' as const),
 			ownerId: owner
 		},
 		randomUUID,
@@ -293,7 +340,9 @@ function deterministicSnapshot(value: unknown) {
 	const snapshot = structuredClone(value) as CalculationSnapshot;
 	expect(snapshot.facts.length).toBeGreaterThan(0);
 	const projections =
-		snapshot.kind === 'cycles' ? [snapshot.data.first, snapshot.data.second] : [snapshot.data];
+		snapshot.kind === 'cycles' || snapshot.kind === 'relationship'
+			? [snapshot.data.first, snapshot.data.second]
+			: [snapshot.data];
 	for (const projection of projections) {
 		const provenance = (projection as { provenance: Record<string, unknown> }).provenance;
 		expect(provenance.calculatedAt).toEqual(expect.any(String));
@@ -314,7 +363,7 @@ async function stored(id?: string) {
 async function counts() {
 	return (
 		await db.query(
-			'select (select count(*) from product_runs) runs,(select count(*) from product_run_events) events,(select count(*) from library_items) items,((select count(*) from natal_product_requests)+(select count(*) from date_product_requests)) receipts'
+			'select (select count(*) from product_runs) runs,(select count(*) from product_run_events) events,(select count(*) from library_items) items,((select count(*) from natal_product_requests)+(select count(*) from date_product_requests)+(select count(*) from pair_product_requests)) receipts'
 		)
 	).rows[0];
 }
@@ -332,7 +381,7 @@ async function process(productId: string) {
 	expect(await processor.step()).toBe('awaiting_editorial');
 	expect(await processor.step()).toBe('idle');
 	expect(JSON.stringify(metrics)).not.toMatch(
-		/1990|privad|runId|owner|latitude|longitude|timezone|token/
+		/1990-06-15|2000-02-29|privad|runId|owner|latitude|longitude|timezone|token/
 	);
 }
 
@@ -411,6 +460,162 @@ it('date-reading: an explicit second date creates a separate snapshot without mo
 	expect(await counts()).toEqual({ runs: 2, events: 2, items: 2, receipts: 2 });
 });
 
+it.each([
+	partner,
+	{
+		...partner,
+		localDateTime: '2024-11-03T01:30:00',
+		utcInstant: '2024-11-03T05:30:00Z',
+		timezone: 'America/New_York'
+	},
+	{
+		...partner,
+		localDateTime: '2024-11-03T01:30:00',
+		utcInstant: '2024-11-03T06:30:00Z',
+		timezone: 'America/New_York'
+	}
+])(
+	'pair-preview: separate A/B projections for $utcInstant, never compatibility or sharing',
+	async (pairBirth) => {
+		await save();
+		await enable('pair-preview');
+		const s = browser('pair-preview');
+		expect(
+			(await s.client.perform(true, await command('pair-preview', targetDate, pairBirth))).href
+		).toBeTruthy();
+		await process('pair-preview');
+		const run = await stored();
+		expect(run.input.partner).toEqual(pairBirth);
+		const calculation = run.calculation!;
+		expect(calculation).toMatchObject({
+			kind: 'relationship',
+			status: 'experimental',
+			data: {
+				sampleInstant: null,
+				targetDate: null,
+				aspects: [],
+				events: [],
+				compatibilityScore: null,
+				sharing: 'not-authorized',
+				projection: {
+					completeness: 'partial',
+					interpretation: 'not-produced',
+					compatibility: 'not-scored',
+					houses: 'not-projected'
+				},
+				first: { role: 'person-a' },
+				second: { role: 'person-b' }
+			}
+		});
+		const selected = bodies.filter((body) => ['moon', 'venus', 'mars'].includes(body));
+		for (const [key, input] of [
+			['first', birth],
+			['second', pairBirth]
+		] as const) {
+			const independent = await new CaelusEphemerisProvider().calculate(input);
+			const projection = calculation.data[key] as Record<string, unknown>;
+			expect(Object.keys(projection).sort()).toEqual(['positions', 'provenance', 'role']);
+			expect(projection.positions).toEqual(
+				selected.map((body) => independent.positions.find((p) => p.body === body))
+			);
+			expect(projection.provenance).toMatchObject({
+				temporal: { utcInstant: new Date(input.utcInstant).toISOString() }
+			});
+		}
+		expect(calculation.facts.map((fact) => fact.id)).toEqual(
+			['person-a', 'person-b'].flatMap((role) => selected.map((body) => `${role}-${body}`))
+		);
+		expect(calculation.limits).toContain(
+			'Consentimento registrado para dados do par não autoriza compartilhar a leitura; identidade e autorização bilateral não foram verificadas.'
+		);
+		expect(calculation.limits).toContain(
+			'Lua, Vênus e Marte de A e B são posições separadas; não estabelecem compatibilidade, sentimentos, gênero ou destino da relação.'
+		);
+		expect(run.state).toBe('AWAITING_EDITORIAL');
+		expect((await db.query('select count(*) n from natal_profiles')).rows).toEqual([{ n: 1 }]);
+		const receipt = (
+			await db.query('select command,natal_version from pair_product_requests where run_id=$1', [
+				run.id
+			])
+		).rows[0];
+		expect(receipt).toMatchObject({
+			command: { partnerConsent, partner: { ...pairBirth, timePrecision: 'EXACT' } },
+			natal_version: 1
+		});
+		expect(JSON.stringify(run.input)).not.toMatch(
+			/permissionDeclared|partnerConsent|timePrecision/
+		);
+		expect(await counts()).toEqual({ runs: 1, events: 3, items: 1, receipts: 1 });
+	}
+);
+
+it('pair-preview: explicit new partner creates a separate snapshot and declaration', async () => {
+	await save();
+	await enable('pair-preview');
+	const s = browser('pair-preview');
+	await s.client.perform(true, await command('pair-preview'));
+	const first = await stored();
+	await process('pair-preview');
+	const original = await stored(first.id);
+	expect(s.client.startAnother().mode).toBe('new');
+	const nextPartner = {
+		...partner,
+		latitude: 10,
+		utcInstant: '2000-03-01T10:00:00.125Z',
+		localDateTime: '2000-03-01T10:00:00.125'
+	};
+	expect(
+		(await s.client.perform(true, await command('pair-preview', targetDate, nextPartner))).href
+	).toBeTruthy();
+	await process('pair-preview');
+	const rows = (await db.query<StoredRun>('select * from product_runs where id<>$1', [first.id]))
+		.rows;
+	expect(rows).toHaveLength(1);
+	expect(rows[0].input).toEqual({ ...original.input, partner: nextPartner });
+	expect(rows[0].calculation?.data.second).not.toEqual(original.calculation?.data.second);
+	expect(await stored(first.id)).toEqual(original);
+	expect(await counts()).toEqual({ runs: 2, events: 6, items: 2, receipts: 2 });
+});
+
+it.each([
+	{ partner: { ...partner, timePrecision: 'APPROXIMATE' } },
+	{
+		partner: {
+			...partner,
+			timePrecision: 'EXACT',
+			localDateTime: '2001-02-29T10:00:00',
+			utcInstant: '2001-02-29T10:00:00Z'
+		}
+	},
+	{
+		partner: {
+			...partner,
+			timePrecision: 'EXACT',
+			localDateTime: '2024-03-10T02:30:00',
+			utcInstant: '2024-03-10T07:30:00Z',
+			timezone: 'America/New_York'
+		}
+	},
+	{ partnerConsent: { ...partnerConsent, permissionDeclared: false } },
+	{ partnerConsent: { ...partnerConsent, sharing: true } }
+])(
+	'pair-preview: invalid time or declaration refuses before any vertical persistence (%#)',
+	async (changes) => {
+		await save();
+		await enable('pair-preview');
+		const input = { ...(await command('pair-preview')), ...changes };
+		const response = await pairRequestApi(
+			event('/api/workflows/pair', { requestKey: randomUUID(), input })
+		);
+		expect(response.status).toBe(400);
+		expect(await response.json()).toEqual({ error: 'invalid_input' });
+		expect(await counts()).toEqual({ runs: 0, events: 0, items: 0, receipts: 0 });
+		expect(
+			await createProductProcessor(workerRpc, { enabledProducts: ['pair-preview'] }).step()
+		).toBe('idle');
+	}
+);
+
 it.each(profileProducts)(
 	'%s: consented profile → controller → SQL → deterministic calculation → pending Library',
 	async (productId) => {
@@ -425,7 +630,8 @@ it.each(profileProducts)(
 			version: 'atv-workflow/1.0.0',
 			productId,
 			birth,
-			consent,
+			consent: { ...consent, partner: productId === 'pair-preview' },
+			...(productId === 'pair-preview' ? { partner } : {}),
 			...(productId === 'date-reading' ? { targetDate } : {})
 		});
 		expect(run.state).toBe('QUEUED');
@@ -437,7 +643,9 @@ it.each(profileProducts)(
 		const calculated = await stored(run.id);
 		expect(calculated).toMatchObject({ state: 'AWAITING_EDITORIAL', revision: 3, parent_id: null });
 		const calculators =
-			productId === 'date-reading' ? createContextCalculators() : createNatalCalculators();
+			productId === 'date-reading' || productId === 'pair-preview'
+				? createContextCalculators()
+				: createNatalCalculators();
 		const expected = await calculators[productId](run.input, {
 			signal: new AbortController().signal,
 			runId: run.id
@@ -464,7 +672,7 @@ it.each(profileProducts)(
 			[3, 'AWAITING_EDITORIAL']
 		]);
 		expect(JSON.stringify(library)).not.toMatch(
-			/1990|privad|latitude|longitude|utcInstant|position-sun/
+			/1990-06-15|2000-02-29|privad|latitude|longitude|utcInstant|position-sun|permissionDeclared|partnerConsent/
 		);
 		expect(
 			(await workflowArtifacts(event(`/api/workflows/${run.id}/artifacts`), run.id)).status
