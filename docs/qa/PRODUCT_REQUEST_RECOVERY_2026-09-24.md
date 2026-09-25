@@ -17,8 +17,6 @@ Oito testes de integração usam PostgreSQL local PGlite, papéis reais e handle
 - Falhas de backend, projeções inválidas e transporte nunca são convertidas em not-found; resposta sanitizada.
 - Contenção testada: revoga recuperação sem apagar eventos nem interromper o leitor já existente.
 
-## Limites
-
 ## Verificações executadas
 
 - Suíte web: 155 testes / 21 arquivos PASS (`test-results/wu053-web.log`). Após correções de tipos, os oito testes focais passaram novamente (`wu053-focused.log`).

@@ -6,8 +6,8 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import ProductArtifacts from '$lib/components/ProductArtifacts.svelte';
-	import { isUuid } from '$lib/library-result';
-	import { parseProductRun, runLabels, type WorkflowReaderData } from '$lib/product-run';
+	import ReprocessAction from '$lib/components/ReprocessAction.svelte';
+	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	let { data }: { data: WorkflowReaderData } = $props();
 	let busy = $state<'reprocess' | 'delete' | 'download' | null>(null);
 	let failure = $state('');
@@ -95,61 +95,42 @@
 			busy = null;
 		}
 	}
-	async function act(action: 'reprocess' | 'delete') {
+	async function remove() {
 		if (busy || data.synthetic) return;
-		busy = action;
+		busy = 'delete';
 		failure = '';
 		try {
 			const keyName = `atv-reprocess:${data.run.id}`;
-			let requestKey = sessionStorage.getItem(keyName);
-			if (action === 'reprocess' && (!requestKey || !isUuid(requestKey))) {
-				requestKey = crypto.randomUUID();
-				sessionStorage.setItem(keyName, requestKey);
-			}
-			const response = await fetch(
-				`/api/workflows/${data.run.id}${action === 'reprocess' ? '/reprocess' : ''}`,
-				{
-					method: action === 'delete' ? 'DELETE' : 'POST',
-					headers: { 'content-type': 'application/json' },
-					...(action === 'reprocess' ? { body: JSON.stringify({ requestKey }) } : {})
-				}
-			);
+			const response = await fetch(`/api/workflows/${data.run.id}`, {
+				method: 'DELETE',
+				credentials: 'same-origin',
+				cache: 'no-store',
+				signal: AbortSignal.timeout(15000)
+			});
 			if (!response.ok) {
 				failure =
 					response.status === 401
-						? 'Entre novamente para continuar. Seu registro não foi alterado.'
-						: response.status === 409
-							? 'O reprocessamento não está liberado neste momento. A versão original permanece intacta.'
-							: response.status === 403
-								? 'Seu acesso não permite esta ação agora.'
-								: response.status === 429
-									? 'O limite de tentativas foi atingido. Aguarde antes de tentar novamente.'
-									: 'Não foi possível confirmar a ação. Você pode tentar novamente com segurança.';
+						? 'Entre novamente para consultar seu registro.'
+						: 'Não foi possível confirmar a exclusão. Atualize o estado ou consulte sua Biblioteca.';
 				return;
 			}
-			if (action === 'delete') {
-				sessionStorage.removeItem(keyName);
-				await goto('/biblioteca', { invalidateAll: true });
-				return;
-			}
-			const created = await response.json();
-			if (!created || typeof created !== 'object' || !('runId' in created))
+			const payload: unknown = await response.json();
+			if (
+				!payload ||
+				typeof payload !== 'object' ||
+				!('deleted' in payload) ||
+				payload.deleted !== true
+			)
 				throw new Error('invalid_response');
-			const { runId } = created;
-			if (typeof runId !== 'string' || !isUuid(runId)) throw new Error('invalid_response');
-			const recovered = await fetch(`/api/workflows/${runId}`);
-			if (!recovered.ok) throw new Error('recovery_unavailable');
-			const payload = await recovered.json();
-			const run =
-				payload && typeof payload === 'object' && 'run' in payload
-					? parseProductRun(payload.run)
-					: null;
-			if (!run?.libraryItemId || run.id !== runId) throw new Error('recovery_unavailable');
-			// Keep the key for this source version: retry/reload always recovers the same new version.
-			await goto(`/biblioteca/${run.libraryItemId}`, { invalidateAll: true });
+			try {
+				sessionStorage.removeItem(keyName);
+			} catch {
+				/* Deletion is already confirmed. */
+			}
+			await goto('/biblioteca', { invalidateAll: true });
 		} catch {
 			failure =
-				'Não foi possível confirmar a ação. Tente novamente; a mesma solicitação será recuperada sem duplicação.';
+				'Não foi possível confirmar a exclusão. Atualize o estado ou consulte sua Biblioteca antes de continuar.';
 		} finally {
 			busy = null;
 		}
@@ -234,12 +215,16 @@
 						baixadas não são removidas ao excluir o registro.
 					</p>
 				{/if}
-				<Button
-					variant="secondary"
-					disabled={!data.run.canReprocess || !!busy || data.synthetic}
-					pending={busy === 'reprocess'}
-					onclick={() => act('reprocess')}>Reprocessar em nova versão</Button
-				>
+				{#key data.run.id}
+					<ReprocessAction
+						runId={data.run.id}
+						productId={data.run.productId}
+						allowed={data.run.canReprocess}
+						disabled={!!busy && busy !== 'reprocess'}
+						synthetic={data.synthetic}
+						onBusyChange={(active) => (busy = active ? 'reprocess' : null)}
+					/>
+				{/key}
 				<p>
 					{product?.kind === 'tarot'
 						? 'O reprocessamento preserva as cartas já registradas. Não é um novo sorteio.'
@@ -261,7 +246,7 @@
 						aria-describedby="delete-warning"
 						pending={busy === 'delete'}
 						disabled={!!busy || data.synthetic}
-						onclick={() => act('delete')}>Confirmar exclusão</Button
+						onclick={remove}>Confirmar exclusão</Button
 					>
 					<Button variant="tertiary" disabled={!!busy} onclick={() => (confirmDelete = false)}
 						>Manter registro</Button
