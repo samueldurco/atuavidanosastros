@@ -3,6 +3,7 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
+	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
 	let { data } = $props();
 	let query = $state('');
 	let universe = $state('all');
@@ -59,6 +60,15 @@
 			? 'Uma prévia do lugar onde suas leituras ficam guardadas. Entre para acessar seu acervo.'
 			: 'Leituras para reencontrar. Perguntas para continuar. Tudo o que você escolheu guardar no seu atlas.'}
 	/>
+	<details class="intake-options">
+		<summary>Tarot e Sonhos · consultar disponibilidade de novos pedidos</summary>
+		<p>As entradas abaixo dependem de liberação e acesso. Nenhum modelo está homologado.</p>
+		<ul>
+			{#each symbolicProducts as productId (productId)}<li>
+					<a href={`/biblioteca/nova/${productId}`}>{symbolicProduct(productId)?.name}</a>
+				</li>{/each}
+		</ul>
+	</details>
 	{#if data.libraryError}<StatePanel
 			kind="error"
 			title="Não foi possível carregar sua Biblioteca."

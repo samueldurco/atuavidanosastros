@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
 	let { data } = $props();
 </script>
 
@@ -21,6 +22,21 @@
 				dizer com clareza.
 			</p>
 		</div>
+		{#if data.slug === 'tarot' || data.slug === 'sonhos'}
+			<section aria-label="Entradas de produto">
+				<h2>Seu próximo ponto de partida</h2>
+				<p>
+					Consulte a disponibilidade na sua conta. Os pedidos permanecem bloqueados até a liberação
+					do produto.
+				</p>
+				<ul>
+					{#each symbolicProducts.filter((id) => symbolicProduct(id)?.kind === (data.slug === 'tarot' ? 'tarot' : 'dream')) as id (id)}<li
+						>
+							<a href={`/biblioteca/nova/${id}`}>{symbolicProduct(id)?.name}</a>
+						</li>{/each}
+				</ul>
+			</section>
+		{/if}
 		<a class="button" href={data.slug === 'proposito' ? '/mapa-de-proposito' : '/entrar'}
 			>{data.page.cta}</a
 		>
