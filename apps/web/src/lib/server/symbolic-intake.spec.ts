@@ -79,7 +79,7 @@ it('rejects a product without an implemented form before querying', async () => 
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
-it.each([...natalProducts, 'date-reading'])(
+it.each([...natalProducts, 'date-reading', 'pair-preview'])(
 	'loads only minimal access for profile product %s',
 	async (productId) => {
 		const e = event({ id: owner }, productId);
@@ -89,11 +89,14 @@ it.each([...natalProducts, 'date-reading'])(
 		});
 	}
 );
-it('requires authentication before loading date access', async () => {
-	const e = event(null, 'date-reading');
-	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
-	expect(e.m.rpc).not.toHaveBeenCalled();
-});
+it.each(['date-reading', 'pair-preview'])(
+	'requires authentication before loading %s access',
+	async (productId) => {
+		const e = event(null, productId);
+		await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
+		expect(e.m.rpc).not.toHaveBeenCalled();
+	}
+);
 it('does not imply availability of broader cycle products', async () => {
 	for (const product of ['week-ahead', 'solar-return']) {
 		const e = event({ id: owner }, product);

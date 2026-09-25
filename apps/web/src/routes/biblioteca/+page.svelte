@@ -68,7 +68,8 @@
 		>
 		<p>As entradas abaixo dependem de liberação e acesso. Nenhum modelo está homologado.</p>
 		<ul>
-			{#each [...natalProducts, 'date-reading', ...symbolicProducts] as productId (productId)}<li>
+			{#each [...natalProducts, 'date-reading', 'pair-preview', ...symbolicProducts] as productId (productId)}<li
+				>
 					<a href={`/biblioteca/nova/${productId}`}
 						>{symbolicProduct(productId)?.name ?? workflowFor(productId)?.name}</a
 					>

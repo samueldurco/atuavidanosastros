@@ -5,6 +5,9 @@
 	import Field from '$lib/components/ui/Field.svelte';
 	import { NATAL_REQUEST_VERSION } from '$lib/natal-request';
 	import { DATE_REQUEST_VERSION } from '$lib/date-request';
+	import { PAIR_REQUEST_VERSION } from '$lib/pair-request';
+	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
+	import PartnerBirthFields from './PartnerBirthFields.svelte';
 	import { parseOnboardingSnapshot, type OnboardingSnapshot } from '$lib/onboarding';
 	import type { IntakeAccess } from '$lib/symbolic-intake';
 	import { createWorkflowRequest, type WorkflowRequestState } from '$lib/workflow-request';
@@ -18,6 +21,8 @@
 	let busy = $state(false);
 	let consent = $state(false);
 	let targetDate = $state('');
+	let partnerForm = $state(emptyPartnerForm());
+	let partnerConsent = $state(false);
 	let feedback: HTMLParagraphElement | undefined = $state();
 	let outcome = $state<WorkflowRequestState>({
 		mode: 'blocked',
@@ -25,6 +30,13 @@
 	});
 	const product = $derived(workflowFor(productId));
 	const isDate = $derived(productId === 'date-reading');
+	const isPair = $derived(productId === 'pair-preview');
+	const partnerValue = $derived(partnerFormValue(partnerForm));
+	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
+	function resetConsents() {
+		consent = false;
+		partnerConsent = false;
+	}
 	const dateValid = $derived(!isDate || validDate(targetDate));
 	const canEnter = $derived(
 		access === 'AVAILABLE' &&
@@ -46,7 +58,10 @@
 	onMount(() => {
 		try {
 			controller = createWorkflowRequest({
-				operation: { kind: isDate ? 'create-date' : 'create-natal', ownerId },
+				operation: {
+					kind: isPair ? 'create-pair' : isDate ? 'create-date' : 'create-natal',
+					ownerId
+				},
 				productId,
 				storage: sessionStorage,
 				fetch,
@@ -65,7 +80,7 @@
 	async function readProfile() {
 		if (loading || busy) return;
 		loading = true;
-		consent = false;
+		resetConsents();
 		snapshot = null;
 		profileMessage = 'Consultando perfil salvo…';
 		try {
@@ -103,23 +118,39 @@
 	}
 	async function submit(event: SubmitEvent) {
 		event.preventDefault();
-		if (!controller || !canEnter || !consent || !snapshot || !dateValid) return;
+		if (!controller || !canEnter || !consent || !snapshot || !dateValid || !pairValid) return;
 		busy = true;
 		const input = {
-			version: isDate ? DATE_REQUEST_VERSION : NATAL_REQUEST_VERSION,
+			version: isPair
+				? PAIR_REQUEST_VERSION
+				: isDate
+					? DATE_REQUEST_VERSION
+					: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
 			...(isDate ? { targetDate } : {}),
+			...(isPair
+				? {
+						partner: partnerValue.partner,
+						partnerConsent: {
+							storage: true,
+							policyVersion: 'atv-partner-storage/1',
+							permissionDeclared: true,
+							sharing: false
+						}
+					}
+				: {}),
 			consent: {
 				storage: true,
 				policyVersion: 'atv-input-consent/1',
-				partner: false,
+				partner: isPair,
 				continuity: false
 			}
 		};
 		outcome = await controller.perform(true, input);
 		targetDate = '';
-		consent = false;
+		partnerForm = emptyPartnerForm();
+		resetConsents();
 		snapshot = null;
 		profileMessage =
 			'Para preparar outro envio, consulte novamente o perfil e revise o consentimento.';
@@ -137,23 +168,28 @@
 		if (!controller || busy || loading) return;
 		outcome = controller.startAnother();
 		targetDate = '';
-		consent = false;
+		partnerForm = emptyPartnerForm();
+		resetConsents();
 		snapshot = null;
 	}
 </script>
 
 <section
 	class="intake"
-	data-stitch={isDate ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
+	data-stitch={isDate || isPair ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
 	aria-labelledby="natal-product-title"
 >
 	<header>
-		<p class="eyebrow">{isDate ? 'Ciclos & Tempo' : 'Meu Céu'} · novo pedido</p>
+		<p class="eyebrow">
+			{isPair ? 'Amor & Relações' : isDate ? 'Ciclos & Tempo' : 'Meu Céu'} · novo pedido
+		</p>
 		<h1 id="natal-product-title">{product?.name}</h1>
 		<p class="lead">
-			{isDate
-				? 'Uma data escolhida por você, com o método à vista.'
-				: 'Seu céu começa nos dados que você escolheu guardar.'}
+			{isPair
+				? 'Duas origens, dados separados e limites claros.'
+				: isDate
+					? 'Uma data escolhida por você, com o método à vista.'
+					: 'Seu céu começa nos dados que você escolheu guardar.'}
 		</p>
 		<p class="access-note">{accessMessage}</p>
 	</header>
@@ -201,7 +237,34 @@
 			</section>
 			<form method="POST" onsubmit={submit}>
 				<fieldset disabled={!canEnter}>
-					<legend>{isDate ? '2. Escolha a data e autorize' : '2. Autorize este pedido'}</legend>
+					<legend
+						>{isPair
+							? '2. Dados da outra pessoa e autorizações'
+							: isDate
+								? '2. Escolha a data e autorize'
+								: '2. Autorize este pedido'}</legend
+					>
+					{#if isPair}
+						<PartnerBirthFields
+							bind:form={partnerForm}
+							onchange={resetConsents}
+							error={partnerValue.error}
+						/>
+						<label class="consent"
+							><input
+								type="checkbox"
+								required
+								bind:checked={partnerConsent}
+								aria-describedby="partner-privacy"
+							/>Declaro ter permissão da outra pessoa para armazenar e processar seus dados de
+							nascimento neste pedido.</label
+						>
+						<p id="partner-privacy" class="privacy">
+							Esta é a sua declaração; não é consentimento bilateral verificado. Não autoriza
+							contato, e-mail, publicação ou compartilhamento com a outra pessoa. Ao alterar os
+							dados, confirme novamente as duas autorizações.
+						</p>
+					{/if}
 					{#if isDate}
 						<Field
 							id="target-date"
@@ -235,17 +298,21 @@
 							required
 							bind:checked={consent}
 							aria-describedby="natal-retention"
-						/>{isDate
-							? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida e dos resultados deste pedido na minha conta.'
-							: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+						/>{isPair
+							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
+							: isDate
+								? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida e dos resultados deste pedido na minha conta.'
+								: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
 						histórico são gerenciados separadamente na Biblioteca. Esta autorização não inclui
 						marketing nem continuidade automática ATV+.
 					</p>
-					<Button type="submit" pending={busy} disabled={!canEnter || !consent || !dateValid}
-						>Criar pedido</Button
+					<Button
+						type="submit"
+						pending={busy}
+						disabled={!canEnter || !consent || !dateValid || !pairValid}>Criar pedido</Button
 					>
 				</fieldset>
 			</form>
@@ -277,13 +344,20 @@
 			</p>
 			<ol>
 				<li>
-					O pedido guarda uma cópia imutável do perfil conferido{isDate
-						? ' e da data escolhida'
-						: ''}.
+					O pedido guarda uma cópia imutável do perfil conferido{isPair
+						? ' e dos dados da outra pessoa'
+						: isDate
+							? ' e da data escolhida'
+							: ''}.
 				</li>
 				<li>O motor valida e calcula os dados separadamente.</li>
 				<li>A interpretação depende de avaliação e liberação editorial.</li>
 			</ol>
+			{#if isPair}<p>
+					A base do par é parcial e experimental: posições separadas de Lua, Vênus e Marte. Não
+					calcula aspectos entre mapas, casas ou pontuação de compatibilidade; não revela
+					sentimentos, gênero ou destino de ninguém.
+				</p>{/if}
 			{#if isDate}<p>
 					A base temporal é experimental. Seu fuso de nascimento não define sua localização atual.
 					Esta amostra não cobre uma semana, um calendário ou uma revolução solar.

@@ -15,7 +15,8 @@ export const load: PageServerLoad = ({ url, setHeaders }) => {
 	if (
 		(!symbolicProduct(productId) &&
 			!natalProducts.includes(productId as NatalProduct) &&
-			productId !== 'date-reading') ||
+			productId !== 'date-reading' &&
+			productId !== 'pair-preview') ||
 		!['AVAILABLE', 'UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE'].includes(access)
 	)
 		error(404);

@@ -11,7 +11,8 @@ export async function readIntakeAccess(
 		!client ||
 		(!symbolicProduct(productId) &&
 			!natalProducts.includes(productId as NatalProduct) &&
-			productId !== 'date-reading')
+			productId !== 'date-reading' &&
+			productId !== 'pair-preview')
 	)
 		return 'UNAVAILABLE';
 	try {
