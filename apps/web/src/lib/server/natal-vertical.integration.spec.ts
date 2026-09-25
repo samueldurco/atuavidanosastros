@@ -3,6 +3,7 @@ import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { WorkflowInput, CalculationSnapshot } from '@atv/domain';
+import { bodies, CaelusEphemerisProvider } from '@atv/astrology';
 import {
 	setupProductDatabase,
 	owner,
@@ -13,10 +14,13 @@ import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
+import { createContextCalculators } from '../../../../worker/src/context-calculators';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
+import { parseDateRequestInput } from '../date-request';
 import { parseOnboardingSnapshot } from '../onboarding';
 import { createWorkflowRequest } from '../workflow-request';
 import { natalRequestApi } from './natal-request-api';
+import { dateRequestApi } from './date-request-api';
 import { onboardingApi } from './onboarding-api';
 import { workflowApi } from './workflow-api';
 import { recoverWorkflowRequest } from './workflow-recovery';
@@ -26,6 +30,12 @@ import { readLibraryResult } from './library-reader';
 // Local PostgreSQL/RLS and actual handlers/calculators. Synthetic claims, one connection.
 // Never seed editorial approval, promotions or READY output to make a vertical pass.
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
+const profileProducts = [...natalProducts, 'date-reading'] as const;
+const targetDate = '2028-02-29';
+const requestPath = (productId: string) =>
+	productId === 'date-reading' ? '/api/workflows/date' : '/api/workflows/natal';
+const requestApi = (productId: string) =>
+	productId === 'date-reading' ? dateRequestApi : natalRequestApi;
 const birth = {
 	localDateTime: '1990-06-15T12:30:00.123',
 	utcInstant: '1990-06-15T15:30:00.123Z',
@@ -54,7 +64,8 @@ beforeAll(async () => {
 		'20260923180000_natal_onboarding.sql',
 		'20260924170000_product_request_recovery.sql',
 		'20260925140000_product_request_access.sql',
-		'20260925160000_natal_product_requests.sql'
+		'20260925160000_natal_product_requests.sql',
+		'20260925190000_date_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -71,6 +82,10 @@ const statements = {
 	update_natal_onboarding: ['select update_natal_onboarding($1) as value', ['p_command']],
 	request_natal_product_run: [
 		'select request_natal_product_run($1,$2) as value',
+		['p_request_key', 'p_command']
+	],
+	request_date_product_run: [
+		'select request_date_product_run($1,$2) as value',
 		['p_request_key', 'p_command']
 	],
 	request_product_run: [
@@ -211,15 +226,17 @@ async function forget(expectedRevision: number) {
 		).status
 	).toBe(200);
 }
-async function command(productId: string) {
+async function command(productId: string, date = targetDate) {
 	const response = await onboardingApi(event('/api/onboarding'), 'read');
 	expect(response.status).toBe(200);
 	const payload = (await response.json()) as { onboarding: unknown };
 	const snapshot = parseOnboardingSnapshot(payload.onboarding);
 	expect(snapshot).toMatchObject({ state: 'COMPLETE', natal: { timePrecision: 'EXACT' } });
-	const input = parseNatalRequestInput({
-		version: 'atv-natal-request/1',
+	const parse = productId === 'date-reading' ? parseDateRequestInput : parseNatalRequestInput;
+	const input = parse({
+		version: productId === 'date-reading' ? 'atv-date-request/1' : 'atv-natal-request/1',
 		productId,
+		...(productId === 'date-reading' ? { targetDate: date } : {}),
 		expectedRevision: snapshot!.revision,
 		consent
 	});
@@ -230,8 +247,8 @@ function browser(productId: string, lostAcknowledgement = false) {
 	const values = new Map<string, string>();
 	const fetcher = vi.fn<typeof fetch>(async (path, init) => {
 		const e = event(String(path), init?.body ? JSON.parse(String(init.body)) : undefined);
-		if (e.url.pathname === '/api/workflows/natal') {
-			const response = await natalRequestApi(e);
+		if (e.url.pathname === requestPath(productId)) {
+			const response = await requestApi(productId)(e);
 			if (lostAcknowledgement && response.status === 202)
 				throw new TypeError('lost acknowledgement');
 			return response;
@@ -241,7 +258,10 @@ function browser(productId: string, lostAcknowledgement = false) {
 	});
 	const options = {
 		productId,
-		operation: { kind: 'create-natal' as const, ownerId: owner },
+		operation: {
+			kind: productId === 'date-reading' ? ('create-date' as const) : ('create-natal' as const),
+			ownerId: owner
+		},
 		randomUUID,
 		fetch: fetcher,
 		storage: {
@@ -272,11 +292,15 @@ function deterministicSnapshot(value: unknown) {
 	});
 	const snapshot = structuredClone(value) as CalculationSnapshot;
 	expect(snapshot.facts.length).toBeGreaterThan(0);
-	const provenance = snapshot.data.provenance as Record<string, unknown>;
-	expect(provenance.calculatedAt).toEqual(expect.any(String));
-	expect(Number.isFinite(Date.parse(String(provenance.calculatedAt)))).toBe(true);
-	// Execution time is provenance, not an astronomical result. Keep every other field.
-	provenance.calculatedAt = '<validated-execution-time>';
+	const projections =
+		snapshot.kind === 'cycles' ? [snapshot.data.first, snapshot.data.second] : [snapshot.data];
+	for (const projection of projections) {
+		const provenance = (projection as { provenance: Record<string, unknown> }).provenance;
+		expect(provenance.calculatedAt).toEqual(expect.any(String));
+		expect(Number.isFinite(Date.parse(String(provenance.calculatedAt)))).toBe(true);
+		// Execution time is provenance, not an astronomical result. Keep every other field.
+		provenance.calculatedAt = '<validated-execution-time>';
+	}
 	return snapshot;
 }
 async function stored(id?: string) {
@@ -290,7 +314,7 @@ async function stored(id?: string) {
 async function counts() {
 	return (
 		await db.query(
-			'select (select count(*) from product_runs) runs,(select count(*) from product_run_events) events,(select count(*) from library_items) items,(select count(*) from natal_product_requests) receipts'
+			'select (select count(*) from product_runs) runs,(select count(*) from product_run_events) events,(select count(*) from library_items) items,((select count(*) from natal_product_requests)+(select count(*) from date_product_requests)) receipts'
 		)
 	).rows[0];
 }
@@ -312,7 +336,82 @@ async function process(productId: string) {
 	);
 }
 
-it.each(natalProducts)(
+it.each(['1900-01-01', '2028-02-29', '2099-12-31'])(
+	'date-reading %s: persisted basis is one UTC sample, not birth-location noon or a local day',
+	async (date) => {
+		await save();
+		await enable('date-reading');
+		const s = browser('date-reading');
+		expect((await s.client.perform(true, await command('date-reading', date))).href).toBeTruthy();
+		await process('date-reading');
+		const run = await stored();
+		expect(run.input.targetDate).toBe(date);
+		const calculation = run.calculation!;
+		expect(calculation).toMatchObject({
+			kind: 'cycles',
+			status: 'experimental',
+			data: {
+				targetDate: date,
+				sampleInstant: `${date}T12:00:00.000Z`,
+				aspects: [],
+				events: [],
+				compatibilityScore: null,
+				sharing: 'not-authorized',
+				projection: {
+					completeness: 'partial',
+					interpretation: 'not-produced',
+					dateSampling: 'one-instant-at-12:00:00Z/not-local-day/not-event-search'
+				},
+				first: { role: 'natal', provenance: { temporal: { utcInstant: birth.utcInstant } } },
+				second: {
+					role: 'sample',
+					provenance: { temporal: { utcInstant: `${date}T12:00:00.000Z`, offsetSeconds: 0 } }
+				}
+			}
+		});
+		const independent = await new CaelusEphemerisProvider().calculate({
+			localDateTime: `${date}T12:00:00`,
+			utcInstant: `${date}T12:00:00Z`,
+			timezone: 'UTC',
+			latitude: 0,
+			longitude: 0,
+			locationSource: 'internal-geocentric-reference/no-local-houses'
+		});
+		const sample = calculation.data.second as Record<string, unknown>;
+		expect(sample.positions).toEqual(independent.positions);
+		expect(Object.keys(sample).sort()).toEqual(['positions', 'provenance', 'role']);
+		expect(calculation.facts.map((f) => f.id)).toEqual([
+			...bodies.map((body) => `natal-${body}`),
+			...bodies.map((body) => `sample-${body}`),
+			'sample-instant'
+		]);
+		expect(calculation.limits).toContain(
+			'A data foi amostrada somente às 12:00 UTC. Não é meio-dia local, cobertura do dia, janela favorável, previsão ou busca de trânsito exato.'
+		);
+		expect(run.state).toBe('AWAITING_EDITORIAL');
+		expect(await counts()).toEqual({ runs: 1, events: 3, items: 1, receipts: 1 });
+	}
+);
+
+it('date-reading: an explicit second date creates a separate snapshot without modifying the original', async () => {
+	await save();
+	await enable('date-reading');
+	const s = browser('date-reading');
+	const firstResult = await s.client.perform(true, await command('date-reading'));
+	const first = await stored();
+	expect(s.client.startAnother().mode).toBe('new');
+	const secondResult = await s.client.perform(true, await command('date-reading', '2028-03-01'));
+	expect(secondResult.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
+	expect(secondResult.href).not.toBe(firstResult.href);
+	const rows = (await db.query<StoredRun>('select * from product_runs where id<>$1', [first.id]))
+		.rows;
+	expect(rows).toHaveLength(1);
+	expect(rows[0].input).toEqual({ ...first.input, targetDate: '2028-03-01' });
+	expect(await stored(first.id)).toEqual(first);
+	expect(await counts()).toEqual({ runs: 2, events: 2, items: 2, receipts: 2 });
+});
+
+it.each(profileProducts)(
 	'%s: consented profile → controller → SQL → deterministic calculation → pending Library',
 	async (productId) => {
 		await save();
@@ -322,7 +421,13 @@ it.each(natalProducts)(
 		const result = await s.client.perform(true, input);
 		expect(result.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
 		const run = await stored();
-		expect(run.input).toEqual({ version: 'atv-workflow/1.0.0', productId, birth, consent });
+		expect(run.input).toEqual({
+			version: 'atv-workflow/1.0.0',
+			productId,
+			birth,
+			consent,
+			...(productId === 'date-reading' ? { targetDate } : {})
+		});
 		expect(run.state).toBe('QUEUED');
 		const idle = vi.fn(workerRpc);
 		expect(await createProductProcessor(idle).step()).toBe('idle');
@@ -331,7 +436,9 @@ it.each(natalProducts)(
 		await process(productId);
 		const calculated = await stored(run.id);
 		expect(calculated).toMatchObject({ state: 'AWAITING_EDITORIAL', revision: 3, parent_id: null });
-		const expected = await createNatalCalculators()[productId](run.input, {
+		const calculators =
+			productId === 'date-reading' ? createContextCalculators() : createNatalCalculators();
+		const expected = await calculators[productId](run.input, {
 			signal: new AbortController().signal,
 			runId: run.id
 		});
@@ -369,7 +476,7 @@ it.each(natalProducts)(
 	}
 );
 
-it.each(natalProducts)(
+it.each(profileProducts)(
 	'%s: edit then forget cannot change queued snapshot; lost acknowledgement recovers without replay',
 	async (productId) => {
 		await save();
@@ -389,7 +496,7 @@ it.each(natalProducts)(
 		expect(recovered.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
 		expect(await stored(initial.id)).toEqual(before);
 		expect(await counts()).toEqual(totals);
-		expect(s.fetcher.mock.calls.filter(([path]) => path === '/api/workflows/natal')).toHaveLength(
+		expect(s.fetcher.mock.calls.filter(([path]) => path === requestPath(productId))).toHaveLength(
 			1
 		);
 		expect([...s.values.keys()]).toEqual([`atv-create:${owner}:${productId}`]);
@@ -398,7 +505,7 @@ it.each(natalProducts)(
 	}
 );
 
-it.each(natalProducts)(
+it.each(profileProducts)(
 	'%s: session ownership fences profile, recovery, Library, calculation and downloads',
 	async (productId) => {
 		await save();
@@ -441,7 +548,7 @@ it.each(natalProducts)(
 	}
 );
 
-it.each(natalProducts)(
+it.each(profileProducts)(
 	'%s: stale revision and current release/entitlement refuse before persistence',
 	async (productId) => {
 		await save();
@@ -469,7 +576,7 @@ it.each(natalProducts)(
 	}
 );
 
-it.each(natalProducts)(
+it.each(profileProducts)(
 	'%s: explicit reprocessing recalculates parent snapshot, never the edited or forgotten profile',
 	async (productId) => {
 		await save();
@@ -504,7 +611,7 @@ it.each(natalProducts)(
 	}
 );
 
-it.each(natalProducts)(
+it.each(profileProducts)(
 	'%s: precision downgrade between read and submission never creates an exact run',
 	async (productId) => {
 		await save();
@@ -513,8 +620,8 @@ it.each(natalProducts)(
 			original = await command(productId);
 		await save(1, { timePrecision: 'APPROXIMATE' });
 		expect((await s.client.perform(true, original)).mode).toBe('new');
-		const response = await natalRequestApi(
-			event('/api/workflows/natal', {
+		const response = await requestApi(productId)(
+			event(requestPath(productId), {
 				requestKey: randomUUID(),
 				input: { ...original, expectedRevision: 2 }
 			})
