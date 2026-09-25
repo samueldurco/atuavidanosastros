@@ -4,6 +4,8 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
 	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
+	import { natalProducts } from '$lib/natal-request';
+	import { workflowFor } from '@atv/domain';
 	let { data } = $props();
 	let query = $state('');
 	let universe = $state('all');
@@ -61,11 +63,13 @@
 			: 'Leituras para reencontrar. Perguntas para continuar. Tudo o que você escolheu guardar no seu atlas.'}
 	/>
 	<details class="intake-options">
-		<summary>Tarot e Sonhos · consultar disponibilidade de novos pedidos</summary>
+		<summary>Meu Céu, Tarot e Sonhos · consultar disponibilidade de novos pedidos</summary>
 		<p>As entradas abaixo dependem de liberação e acesso. Nenhum modelo está homologado.</p>
 		<ul>
-			{#each symbolicProducts as productId (productId)}<li>
-					<a href={`/biblioteca/nova/${productId}`}>{symbolicProduct(productId)?.name}</a>
+			{#each [...natalProducts, ...symbolicProducts] as productId (productId)}<li>
+					<a href={`/biblioteca/nova/${productId}`}
+						>{symbolicProduct(productId)?.name ?? workflowFor(productId)?.name}</a
+					>
 				</li>{/each}
 		</ul>
 	</details>

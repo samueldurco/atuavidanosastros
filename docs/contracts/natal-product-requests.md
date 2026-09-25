@@ -19,3 +19,13 @@ The same owner/key/command returns the original run even after a profile edit/fo
 Forgetting natal onboarding does not delete an existing product snapshot or its provenance receipt. Deleting the product run cascades its receipt. The UI must explain these independent scopes. Quota refusal or any transactional failure leaves no partial receipt. `supabase/forward-fixes/disable_natal_product_requests.sql` revokes this RPC without deleting runs, receipts, Library or read-only recovery. It does not restore bypass writes or alter the previous generic request contract.
 
 Migration `20260925160000_natal_product_requests.sql` and forward-fix were tested only with synthetic local PostgreSQL. Independent connection concurrency, real hosted JWT/PostgREST, retention review and hosted migration remain pending. Lock ordering is implemented, not a certified hosted concurrency test.
+
+## Authenticated intake and read-only recovery
+
+`/biblioteca/nova/{birth-chart,three-pillars,ascendant,midheaven}` authenticates before reading the minimal release/access projection. It does not preload natal data into page data. The user explicitly reads `/api/onboarding`, reviews the saved exact profile and separately consents to the product snapshot. A reported exact time is not engine certification. Missing, approximate, malformed or unavailable profiles cannot enable creation. No geocoder, time correction or inference of unknown birth time is added.
+
+The browser sends only the strict command above. It stores only a correlation UUID in `sessionStorage` under the same owner/product slot used by generic creation. Natal data, consent and commands are not stored there. Controls remain disabled until recovery initialization. A pending UUID permits read-only recovery, never automatic resubmission; recovery remains available after profile removal or release/access revocation. A 202 must be verified through the existing recovery and root-run reader before a Library link appears.
+
+Every attempted creation clears the displayed profile and checkbox. Another attempt requires an explicit fresh profile read and fresh consent. Only recognized pre-write refusals may clear a fresh pending key; an idempotency conflict, malformed acknowledgement or uncertain network failure preserves it. A profile revision conflict cannot silently use changed data. Preparing another request is available only after the original request has been located and verified.
+
+The shared Library links expose availability consultation, not a release promise. PDF/audio/download delivery and ATV+ continuity are not implied by saving a request. Intake E2E uses loopback-only synthetic API fixtures; it does not certify hosted persistence or end-to-end editorial delivery.

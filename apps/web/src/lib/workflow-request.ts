@@ -1,6 +1,7 @@
 import { parseWorkflowInput, workflowFor } from '@atv/domain';
 import { isUuid } from './library-result';
 import { parseProductRun } from './product-run';
+import { natalProducts, parseNatalRequestInput, type NatalProduct } from './natal-request';
 
 export type WorkflowRequestState = {
 	mode: 'new' | 'recover' | 'blocked';
@@ -38,7 +39,22 @@ const refused: Record<string, { status: number; message: string }> = {
 	same_origin_required: { status: 403, message: 'Abra esta página novamente para continuar.' }
 };
 
-type Operation = { kind: 'create'; ownerId: string } | { kind: 'reprocess'; runId: string };
+const natalRefused: Record<string, { status: number; message: string }> = {
+	revision_conflict: {
+		status: 409,
+		message: 'Seu perfil mudou. Atualize os dados e revise o consentimento.'
+	},
+	natal_profile_required: {
+		status: 409,
+		message: 'Complete seu perfil natal antes de criar este pedido.'
+	},
+	exact_time_required: { status: 409, message: 'Este pedido exige horário de nascimento exato.' },
+	profile_unavailable: { status: 409, message: 'Seu perfil não está disponível. Entre novamente.' }
+};
+type Operation =
+	| { kind: 'create'; ownerId: string }
+	| { kind: 'create-natal'; ownerId: string }
+	| { kind: 'reprocess'; runId: string };
 
 /** A pending slot holds only a UUID. Existing keys permit reads, never replay. */
 export function createWorkflowRequest(options: {
@@ -61,7 +77,8 @@ export function createWorkflowRequest(options: {
 		try {
 			if (
 				!workflowFor(productId) ||
-				!isUuid(operation.kind === 'create' ? operation.ownerId : operation.runId)
+				!isUuid(operation.kind === 'reprocess' ? operation.runId : operation.ownerId) ||
+				(operation.kind === 'create-natal' && !natalProducts.includes(productId as NatalProduct))
 			)
 				return storageBlocked();
 			const key = storage.getItem(name);
@@ -147,13 +164,18 @@ export function createWorkflowRequest(options: {
 			if (remembered !== null && previous !== remembered) return storageBlocked();
 			if (previous !== null) return uuid(previous) ? await recover(previous) : storageBlocked();
 			if (!allowNew) return { mode: 'new', message: 'Um novo pedido não está disponível agora.' };
-			const input = operation.kind === 'create' ? parseWorkflowInput(rawInput) : null;
-			if (operation.kind === 'create' && (!input || input.productId !== productId))
+			const input =
+				operation.kind === 'create-natal'
+					? parseNatalRequestInput(rawInput)
+					: operation.kind === 'create'
+						? parseWorkflowInput(rawInput)
+						: null;
+			if (operation.kind !== 'reprocess' && (!input || input.productId !== productId))
 				return { mode: 'new', message: 'Revise os dados e o consentimento antes de enviar.' };
 			const key = options.randomUUID();
 			if (!uuid(key)) return storageBlocked();
 			const body = JSON.stringify(
-				operation.kind === 'create' ? { requestKey: key, input } : { requestKey: key }
+				operation.kind !== 'reprocess' ? { requestKey: key, input } : { requestKey: key }
 			);
 			if (new TextEncoder().encode(body).byteLength > 20000)
 				return {
@@ -168,9 +190,11 @@ export function createWorkflowRequest(options: {
 				return storageBlocked();
 			}
 			const response = await post(
-				operation.kind === 'create'
-					? '/api/workflows'
-					: `/api/workflows/${operation.runId}/reprocess`,
+				operation.kind === 'create-natal'
+					? '/api/workflows/natal'
+					: operation.kind === 'create'
+						? '/api/workflows'
+						: `/api/workflows/${operation.runId}/reprocess`,
 				body
 			);
 			const payload: unknown = await response.json();
@@ -179,7 +203,11 @@ export function createWorkflowRequest(options: {
 				Object.keys(payload).length === 1 &&
 				typeof payload.error === 'string'
 			) {
-				const refusal = Object.hasOwn(refused, payload.error) ? refused[payload.error] : null;
+				const refusal = Object.hasOwn(refused, payload.error)
+					? refused[payload.error]
+					: operation.kind === 'create-natal' && Object.hasOwn(natalRefused, payload.error)
+						? natalRefused[payload.error]
+						: null;
 				if (
 					refusal?.status === response.status &&
 					(operation.kind === 'reprocess' || !payload.error.startsWith('parent_'))
@@ -218,7 +246,7 @@ export function createWorkflowRequest(options: {
 	}
 	/** Explicit UI action only, after verified recovery. Never retries or discards an uncertain key. */
 	function startAnother(): WorkflowRequestState {
-		if (busy || operation.kind !== 'create' || !located || located !== remembered)
+		if (busy || operation.kind === 'reprocess' || !located || located !== remembered)
 			return uncertain();
 		try {
 			if (storage.getItem(name) !== located) return storageBlocked();

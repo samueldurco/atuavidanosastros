@@ -1,6 +1,7 @@
 import { expect, it, vi } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { readIntakeAccess } from './symbolic-intake';
+import { natalProducts } from '../natal-request';
 import { load } from '../../routes/biblioteca/nova/[productId]/+page.server';
 import { load as specLoad } from '../../routes/biblioteca/_spec/entrada/+page.server';
 const owner = '00000000-0000-4000-8000-000000000056';
@@ -37,7 +38,7 @@ it('fails closed on missing RPC, transport exception, client or unknown product'
 	m.abortSignal.mockRejectedValue(new Error('PRIVATE'));
 	expect(await readIntakeAccess(m.client, 'daily-card')).toBe('UNAVAILABLE');
 	m.rpc.mockClear();
-	expect(await readIntakeAccess(m.client, 'birth-chart')).toBe('UNAVAILABLE');
+	expect(await readIntakeAccess(m.client, 'unknown')).toBe('UNAVAILABLE');
 	expect(await readIntakeAccess(undefined, 'daily-card')).toBe('UNAVAILABLE');
 	expect(m.rpc).not.toHaveBeenCalled();
 });
@@ -74,9 +75,16 @@ it('returns private minimal data without form input or entitlement rows', async 
 	});
 });
 it('rejects a product without an implemented form before querying', async () => {
-	const e = event({ id: owner }, 'birth-chart');
+	const e = event({ id: owner }, 'life-atlas');
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
+});
+it.each(natalProducts)('loads only minimal access for natal product %s', async (productId) => {
+	const e = event({ id: owner }, productId);
+	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
+	expect(e.m.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
+		p_product_id: productId
+	});
 });
 it.each([
 	'https://example.com/biblioteca/_spec/entrada',
