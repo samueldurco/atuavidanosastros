@@ -1,5 +1,10 @@
 export const SCHEMA_VERSION = "atv-reading/1.0.0";
-export const PROMPT_VERSION = "atv-editorial/1.0.1";
+import {
+  CAREER_COMPASS_EDITORIAL_VERSION,
+  validCareerCompassFacts,
+} from "./career-compass.ts";
+
+export const PROMPT_VERSION = "atv-editorial/1.0.2";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -22,6 +27,8 @@ export interface FactsEnvelope {
   capability: Capability;
   completeness: "partial" | "complete";
   facts: readonly ApprovedFact[];
+  /** Optional versioned product requirements; selected by trusted preparation. */
+  editorialProfile?: typeof CAREER_COMPASS_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -166,7 +173,11 @@ export function validateFacts(value: FactsEnvelope): boolean {
       return false;
     ids.add(fact.id);
   }
-  return true;
+  return (
+    value.editorialProfile === undefined ||
+    (value.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION &&
+      validCareerCompassFacts(value))
+  );
 }
 
 /** A missing birth datum is not a calculated basis for a natal interpretation. */

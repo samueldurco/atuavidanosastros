@@ -7,6 +7,10 @@ import {
   type EditorialRequest,
 } from "./contracts.ts";
 import { readingJsonSchema } from "./schema.ts";
+import {
+  CAREER_COMPASS_EDITORIAL_VERSION,
+  careerCompassInstructions,
+} from "./career-compass.ts";
 
 /** Defense in depth, not a guarantee of anonymization. Personal data is blocked remotely. */
 export function redact(text: string): string {
@@ -29,6 +33,9 @@ export function buildPrompt(request: EditorialRequest) {
       ...rules,
     ]),
     `Especialização: ${specialization.focus} Exigência: ${specialization.required} Evitar: ${specialization.avoid}`,
+    ...(request.facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION
+      ? [careerCompassInstructions]
+      : []),
     `Nível: ${request.tier}. Máximo de ${tierLimits[request.tier].maxClaims} afirmações e ${tierLimits[request.tier].maxRelations} relações. Não preencha o máximo sem necessidade.`,
     "Responda somente com JSON válido no schema fornecido. Sem ferramentas nem estado comercial. IDs de evidência apontam para fatos; claimIds apontam para afirmações.",
     "Afirmações kind=fact reproduzem exatamente display de um único fato. Interpretações e hipóteses também precisam de evidência pertinente. Inclua síntese, perguntas e limites.",
@@ -45,6 +52,9 @@ export function buildPrompt(request: EditorialRequest) {
       version: request.facts.version,
       capability: request.facts.capability,
       completeness: request.facts.completeness,
+      ...(request.facts.editorialProfile
+        ? { editorialProfile: request.facts.editorialProfile }
+        : {}),
       facts: request.facts.facts.map((f) => ({
         id: f.id,
         kind: f.kind,

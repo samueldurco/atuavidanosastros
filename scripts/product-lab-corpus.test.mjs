@@ -92,14 +92,17 @@ function careerDraft(item) {
   return { runId: item.runId, revision: 0, productId: item.productId, tier: 'intermediate',
     calculation: item.calculation, output: { schemaVersion: SCHEMA_VERSION, capability: 'purpose-direction',
       scope: 'partial', title: 'Recorte factual para revisão',
-      claims: [{ id: 'c1', kind: 'fact', text: fact.display, evidence: [fact.id] }], relations: [],
-      synthesis: [{ claimIds: ['c1'], text: 'Este recorte não decide uma escolha profissional.' }],
-      reflections: ['Que condições concretas precisam ser consideradas antes de uma mudança?'],
+      claims: [{ id: 'c1', kind: 'fact', text: fact.display, evidence: [fact.id] },
+        ...['public-direction', 'work-possibilities', 'tension-or-excess'].map(id =>
+          ({ id, kind: 'hypothesis', text: `Fixture estrutural do papel ${id}; conteúdo não homologado.`, evidence: [fact.id] }))], relations: [],
+      synthesis: [{ claimIds: ['public-direction', 'work-possibilities', 'tension-or-excess'], text: 'Este recorte não decide uma escolha profissional.' }],
+      reflections: ['Que contribuição quero experimentar?', 'Que ambiente permite observá-la?', 'Que condições concretas preciso considerar?'],
       limits: ['Fixture de contrato, sem interpretação ou revisão humana aprovada.'] } };
 }
 
 test('career drafts require an authorized review even when all mechanical checks pass', async () => {
   for (const item of careerCases) {
+    assert.equal(item.request.facts.editorialProfile, 'atv-career-compass-editorial/1.0.0');
     const draft = careerDraft(item);
     const result = await evaluateProductDraft(draft);
     assert.equal(result.status, 'needs_editorial_review');
@@ -115,6 +118,9 @@ test('career drafts require an authorized review even when all mechanical checks
 test('career draft gates reject altered MC, invented houses, expanded scope, commands and known unsafe prescriptions', async () => {
   const item = careerCases.find(item => item.category === 'adversarial');
   const mutations = [
+    ['career_role_missing', output => { output.claims = output.claims.filter(claim => claim.id !== 'work-possibilities'); }],
+    ['career_synthesis_incomplete', output => { output.synthesis[0].claimIds = ['public-direction']; }],
+    ['career_three_questions_required', output => { output.reflections.pop(); }],
     ['altered_fact', output => { output.claims[0].text = 'Meio do Céu: dado substituído pelo relato.'; }],
     ['unknown_fact', output => { output.claims[0].evidence = ['house-10']; }],
     ['overstated_scope', output => { output.scope = 'integrated'; }],
@@ -186,13 +192,13 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.4.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.5.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    'edde71a4d22332655441b5a322bddf446d72f5b3c98588b265977a4d406cc228');
+    'c5327c09e8aacd257fb8930982998c360d92e81ec7f043edc93957fbdc81347c');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    '9b89443867a4483245c623bbc6b88192886499d608fdcda7d500ef3e5edbfe6f');
+    'd9ad1945a9528bf3d065137714d3f2c9f00461dfc89fc44f2a6c494acf2b2fe5');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    '2bfb070b0b5c7a9a5171ef5040350a9dd68ad4b60085dd6e25afd2600ba3809d');
+    'b997c07339fa23c9ec6fe2e7f4670aca0dd05e720f5372684a994508e00f5986');
   // The 1.1.0 baseline remains unchanged; 1.2.0 appends career compass cases.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     '49ff8dedac35ca3a028d7bd610895f316858e3ce5df57ad69df8d24ead520d1f');

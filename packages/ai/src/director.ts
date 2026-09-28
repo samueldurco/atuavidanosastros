@@ -1,4 +1,8 @@
 import type { FactsEnvelope, Reading, Tier } from "./contracts.ts";
+import {
+  CAREER_COMPASS_EDITORIAL_VERSION,
+  inspectCareerCompass,
+} from "./career-compass.ts";
 
 export const RUBRIC_VERSION = "atv-director/1.0.0";
 export const dimensions = [
@@ -130,6 +134,8 @@ export function inspectReading(
     if (seen.has(text)) fail("repetition", `passages.${i}`);
     seen.add(text);
   }
+  if (facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION)
+    findings.push(...inspectCareerCompass(reading));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

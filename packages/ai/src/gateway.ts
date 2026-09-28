@@ -46,11 +46,25 @@ export interface BudgetLedger {
 /** Process-local laboratory ledger. Not safe as a distributed production quota store. */
 export class LabBudgetLedger implements BudgetLedger {
   private windows = new Map<string, { calls: number; tokens: number }>();
-  async reserve(window: string, maxCalls: number, reservedTokens = 0, maxTokens = 200_000): Promise<boolean> {
-    if (![maxCalls, reservedTokens, maxTokens].every((n) => Number.isSafeInteger(n) && n >= 0)) return false;
+  async reserve(
+    window: string,
+    maxCalls: number,
+    reservedTokens = 0,
+    maxTokens = 200_000,
+  ): Promise<boolean> {
+    if (
+      ![maxCalls, reservedTokens, maxTokens].every(
+        (n) => Number.isSafeInteger(n) && n >= 0,
+      )
+    )
+      return false;
     const used = this.windows.get(window) ?? { calls: 0, tokens: 0 };
-    if (used.calls >= maxCalls || used.tokens + reservedTokens > maxTokens) return false;
-    this.windows.set(window, { calls: used.calls + 1, tokens: used.tokens + reservedTokens });
+    if (used.calls >= maxCalls || used.tokens + reservedTokens > maxTokens)
+      return false;
+    this.windows.set(window, {
+      calls: used.calls + 1,
+      tokens: used.tokens + reservedTokens,
+    });
     return true;
   }
 }
@@ -148,6 +162,9 @@ export class EditorialGateway {
               version: input.facts.version,
               capability: input.facts.capability,
               completeness: input.facts.completeness,
+              ...(input.facts.editorialProfile
+                ? { editorialProfile: input.facts.editorialProfile }
+                : {}),
               facts: input.facts.facts.map((f) => ({
                 id: f.id,
                 kind: f.kind,
@@ -177,7 +194,9 @@ export class EditorialGateway {
       !Number.isFinite(timeoutMs) ||
       timeoutMs <= 0 ||
       timeoutMs > tierLimits[request.tier].timeoutMs ||
-      !Number.isSafeInteger(maxTokens) || maxTokens < 1 || maxTokens > 2_000_000
+      !Number.isSafeInteger(maxTokens) ||
+      maxTokens < 1 ||
+      maxTokens > 2_000_000
     )
       return unavailable("invalid_limits");
     // At most two attempts; fallback is only for transport failure, never poor editorial quality.
@@ -197,16 +216,24 @@ export class EditorialGateway {
       let reserved: boolean;
       let quotaTimer: ReturnType<typeof setTimeout> | undefined;
       try {
-        reserved = await Promise.race([this.config.ledger.reserve(
-          new Date().toISOString().slice(0, 10),
-          maxCalls,
-          // UTF-8 bytes conservatively upper-bound text tokens; include system instructions.
-          new TextEncoder().encode(payload.system + payload.prompt).length + payload.maxOutputTokens,
-          maxTokens,
-        ), new Promise<false>((resolve) => { quotaTimer = setTimeout(() => resolve(false), remainingMs); })]);
+        reserved = await Promise.race([
+          this.config.ledger.reserve(
+            new Date().toISOString().slice(0, 10),
+            maxCalls,
+            // UTF-8 bytes conservatively upper-bound text tokens; include system instructions.
+            new TextEncoder().encode(payload.system + payload.prompt).length +
+              payload.maxOutputTokens,
+            maxTokens,
+          ),
+          new Promise<false>((resolve) => {
+            quotaTimer = setTimeout(() => resolve(false), remainingMs);
+          }),
+        ]);
       } catch {
         return unavailable("quota_unavailable");
-      } finally { if (quotaTimer !== undefined) clearTimeout(quotaTimer); }
+      } finally {
+        if (quotaTimer !== undefined) clearTimeout(quotaTimer);
+      }
       remainingMs = timeoutMs - (performance.now() - startedAt);
       if (remainingMs <= 0) return unavailable("timeout");
       if (!reserved) return unavailable("quota_exhausted");
@@ -238,9 +265,16 @@ export class EditorialGateway {
           inputTokens: response.inputTokens,
           outputTokens: response.outputTokens,
         };
-        resolvedModel = typeof response.resolvedModel === "string" && /^[a-z0-9._-]{1,100}$/.test(response.resolvedModel) ? response.resolvedModel : null;
+        resolvedModel =
+          typeof response.resolvedModel === "string" &&
+          /^[a-z0-9._-]{1,100}$/.test(response.resolvedModel)
+            ? response.resolvedModel
+            : null;
         thoughtTokens = response.thoughtTokens ?? null;
-        if (thoughtTokens !== null && (!Number.isSafeInteger(thoughtTokens) || thoughtTokens < 0))
+        if (
+          thoughtTokens !== null &&
+          (!Number.isSafeInteger(thoughtTokens) || thoughtTokens < 0)
+        )
           throw new ProviderFailure("invalid_response");
         if (
           response.outputTokens !== null &&
@@ -270,7 +304,8 @@ export class EditorialGateway {
       } catch (error) {
         eventStatus =
           error instanceof ProviderFailure ? error.code : "unavailable";
-        if (eventStatus === "invalid_response" || eventStatus === "timeout") return unavailable(eventStatus);
+        if (eventStatus === "invalid_response" || eventStatus === "timeout")
+          return unavailable(eventStatus);
       } finally {
         if (timer !== undefined) clearTimeout(timer);
         controller.abort();
@@ -286,7 +321,9 @@ export class EditorialGateway {
             attempt: attempt + 1,
             durationMs: Math.round(performance.now() - start),
             totalDurationMs: Math.round(performance.now() - startedAt),
-            resolvedModel, thoughtTokens, costBrl: 0,
+            resolvedModel,
+            thoughtTokens,
+            costBrl: 0,
             ...usage,
           });
         } catch {

@@ -15,6 +15,7 @@ import {
 	file
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
+import { careerEditorialTestFixture } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
 import {
 	createProductCalculators,
 	createProductProcessor
@@ -215,6 +216,7 @@ async function fixture(productId: string) {
 						{ claimIds: ['c1'], text: 'Síntese sintética, sem interpretação homologada.' }
 					],
 					reflections: ['Que associação pessoal aparece nesse recorte?'],
+					...careerEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -356,8 +358,20 @@ for (const productId of products)
 			expect(html).toBe(renderProductWebExport(parent)?.html);
 			expect(html).toContain('&lt;script&gt;');
 			expect(html).not.toContain('<script>');
-			expect(html).toContain('Síntese sintética, sem interpretação homologada.');
-			expect(html).toContain('Que associação pessoal aparece nesse recorte?');
+			if (productId === 'career-compass') {
+				expect(html).toContain('Síntese sintética sem revisão editorial.');
+				for (const role of ['public-direction', 'work-possibilities', 'tension-or-excess'])
+					expect(html).toContain(role);
+				for (const question of [
+					'Que contribuição quero observar?',
+					'Em qual ambiente posso testá-la?',
+					'Qual experimento reversível cabe nesta semana?'
+				])
+					expect(html).toContain(question);
+			} else {
+				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
+				expect(html).toContain('Que associação pessoal aparece nesse recorte?');
+			}
 			expect(html).toContain('Escopo declarado: parcial.');
 			expect((await workflowArtifacts(f.event(other), runId, artifact.id)).status).toBe(404);
 			const listed = (await (await workflowArtifacts(f.event(), runId)).json()) as {
