@@ -44,6 +44,8 @@ Código0 exige que **ambas** as capturas cubram integralmente os casos preparado
 
 ## Limites editoriais
 
+WU-111 acrescenta um [handoff offline de revisão humana](product-benchmark-review.md): `--review-template` gera campos nulos vinculados à captura; `--review` verifica declarações sem autenticá-las. Não altera as saídas mecânicas/ comparativas deste contrato nem converte formulários preenchidos em homologação.
+
 O Editorial Director existente detecta apenas suas regras mecânicas. Não avalia automaticamente os critérios semânticos de cada cenário, profundidade, precisão de interpretação temporal, qualidade de síntese ou cuidado contextual. Não há nova nota, revisão humana, golden case calibrado, chamada externa ou modelo homologado nesta WU. Fixtures deliberadamente genéricas que passam nos testes comprovam essa distinção, não qualidade de leitura.
 
 OpenAI Docs orientou a separação entre regressões específicas e calibração humana, conforme [Evaluation best practices](https://developers.openai.com/api/docs/guides/evaluation-best-practices). Formato, limites, cobertura e bloqueios são decisões locais ATV; não houve uso da API Evals ou de modelos.

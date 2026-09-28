@@ -2,6 +2,7 @@ import { open, stat } from 'node:fs/promises';
 import { buildProductLabCorpus } from './helpers/product-lab-corpus.mjs';
 import { evaluateProductBenchmark, MAX_CAPTURE_BYTES, parseProductCapture, productBenchmarkManifest } from './helpers/product-benchmark.mjs';
 import { compareProductBenchmarks } from './helpers/product-benchmark-comparison.mjs';
+import { evaluateProductReview, productReviewTemplate } from './helpers/product-benchmark-review.mjs';
 
 async function readCapture(path) {
   const info = await stat(path);
@@ -24,9 +25,18 @@ async function readCapture(path) {
 try {
   const args = process.argv.slice(2);
   const comparison = args.length === 3 && args[0] === '--compare';
-  if (!comparison && (args.length !== 1 || args[0] === '--compare')) throw new Error('usage');
+  const template = args.length === 2 && args[0] === '--review-template';
+  const review = args.length === 3 && args[0] === '--review';
+  if (!comparison && !template && !review && (args.length !== 1 ||
+    (args[0].startsWith('--') && args[0] !== '--manifest'))) throw new Error('usage');
   const corpus = await buildProductLabCorpus();
-  if (comparison) {
+  if (template) {
+    process.stdout.write(JSON.stringify(productReviewTemplate(await readCapture(args[1]), corpus), null, 2) + '\n');
+  } else if (review) {
+    const report = evaluateProductReview(await readCapture(args[1]), await readCapture(args[2]), corpus);
+    process.stdout.write(JSON.stringify(report, null, 2) + '\n');
+    process.exitCode = report.summary.preparedDiagnosticsComplete ? 0 : 1;
+  } else if (comparison) {
     const report = compareProductBenchmarks(await readCapture(args[1]), await readCapture(args[2]), corpus);
     process.stdout.write(JSON.stringify(report, null, 2) + '\n');
     process.exitCode = report.summary.preparedChecksComplete ? 0 : 1;
@@ -39,7 +49,7 @@ try {
   }
 } catch (error) {
   // File paths, payloads and raw parser/provider exceptions must not leak into reports.
-  const code = error instanceof Error && /^(?:capture_[a-z_]+|corpus_not_synthetic|usage)$/.test(error.message)
+  const code = error instanceof Error && /^(?:(?:capture|review)_[a-z_]+|corpus_not_synthetic|usage)$/.test(error.message)
     ? error.message : 'capture_read_or_evaluation_failed';
   process.stderr.write(JSON.stringify({ status: 'rejected', code, promotionEligible: false }) + '\n');
   process.exitCode = 2;
