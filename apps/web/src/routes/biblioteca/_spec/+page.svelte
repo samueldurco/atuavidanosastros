@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Library from '../+page.svelte';
+	import Library from '$lib/components/LibraryCollection.svelte';
 	let { data } = $props();
 </script>
 

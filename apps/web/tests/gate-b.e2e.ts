@@ -106,7 +106,7 @@ test('Biblioteca filtra o acervo sintético sem confundir vazio e erro', async (
 	await expect(page.getByRole('article')).toHaveCount(3);
 	await page.getByRole('button', { name: 'Propósito', exact: true }).click();
 	await expect(page.getByRole('article')).toHaveCount(2);
-	await page.getByLabel('Buscar na Biblioteca').fill('sem correspondência');
+	await page.getByLabel('Buscar nesta página').fill('sem correspondência');
 	await expect(
 		page.getByRole('heading', { name: 'Nenhuma leitura com esses filtros.' })
 	).toBeVisible();

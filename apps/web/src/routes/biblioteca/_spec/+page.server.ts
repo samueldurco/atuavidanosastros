@@ -8,6 +8,7 @@ export const load: PageServerLoad = ({ url }) => {
 	return {
 		preview: false,
 		libraryError,
+		pagination: { before: null, next: null, expired: false },
 		items: libraryError
 			? []
 			: [

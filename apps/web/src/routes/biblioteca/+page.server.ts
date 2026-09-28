@@ -1,15 +1,23 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { readLibraryPage } from '$lib/server/library-page';
+import type { LibraryPageData } from '$lib/library-page';
 
-export const load: PageServerLoad = async ({ parent, locals }) => {
+export const load: PageServerLoad = async ({ parent, locals, url, setHeaders }) => {
+	setHeaders({
+		'cache-control': 'private, no-store',
+		'referrer-policy': 'no-referrer',
+		'x-robots-tag': 'noindex, nofollow'
+	});
 	const { authConfigured, user } = await parent();
 	if (authConfigured && !user) redirect(303, '/entrar');
-	if (!user || !locals.supabase) return { preview: true, items: [], libraryError: false };
-	const { data, error } = await locals.supabase
-		.from('library_items')
-		.select('id,title,universe,item_type,source_id,occurred_at,created_at')
-		.eq('user_id', user.id)
-		.is('archived_at', null)
-		.order('created_at', { ascending: false });
-	return { preview: false, items: data ?? [], libraryError: Boolean(error) };
+	if (!user)
+		return {
+			preview: true,
+			items: [],
+			libraryError: false,
+			pagination: { before: null, next: null, expired: false }
+		} satisfies LibraryPageData;
+	const cursors = url.searchParams.getAll('before');
+	return readLibraryPage(locals.supabase, user.id, cursors.length > 1 ? '' : (cursors[0] ?? null));
 };

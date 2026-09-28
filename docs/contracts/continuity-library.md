@@ -8,6 +8,8 @@ Composição de MEM-02 (`f5af4d1cdd4542488d60e94fa2c9bafb`), CMP-02 (`7e5a59578f
 
 Consultar é uma ação explícita, sem busca automática ao montar a página. O snapshot estrito habilita a gestão, não autoriza inferência ou certifica disponibilidade da fonte. O aceite inicia desmarcado, é invalidado quando o escopo muda e deve ser renovado após cada consulta ou mutação. Escopo persistido pode aparecer selecionado, mas nunca equivale ao novo aceite.
 
+A WU-110 limita a listagem a 50 registros por página com [navegação privada por fronteira](library-pagination.md). Fontes candidatas vêm da página atual; navegação não revoga autorização nem apaga registros de continuidade. Fontes previamente persistidas fora da página usam o fallback por ID, sem reconstruir títulos ou presumir elegibilidade.
+
 Usuário pode guardar nota própria de até 600 unidades UTF-16 ou referência ao resultado; revisar relevância, texto e categoria; revogar autorização; excluir um registro nomeado em diálogo. Hipóteses e fatos já salvos são exibidos como referências, com revisão de relevância sem reconstrução de conteúdo. Não há extração automática de temas, recorrências ou fatos; relato continua distinto de cálculo e hipótese.
 
 ## Persistência e recuperação
