@@ -30,7 +30,7 @@ Success is `{receipt}`: acceptance returns 202, recovery/cancellation return 200
 
 The `history` HTTP response is `{receipts}` with status 200. The entire projection must validate: maximum eight, requested run only, distinct receipt IDs and strictly descending revisions; malformed/null/extra-field responses fail with redacted 503, without partial results or retries. A discovered receipt ID may be submitted to the existing owner-scoped cancellation endpoint. Discovery does not grant reading access or delivery permission. The dedicated history forward-fix revokes only discovery execution and retains records and exact-key recovery/cancellation. The acceptance forward-fix also preserves discovery.
 
-Browser history controls are a separate integration step; this backend capability has not been migrated to a hosted environment.
+The Library offers explicit discovery and cancellation controls. This backend capability has not been migrated to a hosted environment; unavailable lookup is reported as a failure, never an empty successful history.
 
 ## Browser request controller
 
@@ -46,7 +46,11 @@ The authenticated workflow reader supplies the verified owner ID, not an address
 
 No automatic POST occurs on mount. Consultation and cancellation are explicit, with one pending action, disabled conflicting reader actions, live feedback and keyboard focus after completion. Consent starts unchecked and is cleared after each completed action; it is never restored from storage. A receipt is described only as registered or cancelled, never delivered. Controls retain an uncertain key through reload and cannot resend or reset it.
 
-Recovery is currently limited to this tab's retained UUID for the same owner/run/revision. Losing the tab key, another device or an advanced run revision is not receipt discovery. The UI discloses this limitation; a future owner-scoped durable lookup is required for cross-session recovery. Cancelling does not disclose the withheld reading or restore its release. No transport or hosted migration is introduced by the reader.
+The additional `createProductEmailHistory` controller discovers up to eight revisions of the same run through the authenticated history endpoint, without a tab key, current revision/digest or browser storage. It sends only the run ID for lookup, and only an acknowledged receipt ID for cancellation. New runs created by reprocessing remain separate scopes. No automatic lookup, creation, resend or transport exists. Receipts and terminal identity pins live only in component memory and are not put in storage, URLs or analytics.
+
+Selecting durable history switches away from the exact-key/new-request controls for that component visit, clears transient consent and shares the reader pending lock. This prevents using an earlier exact-key acknowledgement after cancelling through history. The stored recovery key is untouched; reloading restores the initial explicit controls without automatically fetching. History remains available when tab storage is corrupt or inaccessible. Rows identify the revision and registered/cancelled state, never delivery.
+
+Discovery validates the complete projection and pins receipt identity, review and creation time per revision. Confirmed cancellation cannot regress or change its timestamp during the visit. Missing/invalid acknowledgements, network failures and timeouts clear actionable rows and require a new explicit read-only lookup before another cancellation. A successful empty list is distinct from unavailable/auth-expired states. One action is in flight; responses are redacted and not retried automatically. Cancelling does not disclose the withheld reading or restore its release. No transport or hosted migration is introduced by these controls.
 
 ## Remaining delivery requirements
 

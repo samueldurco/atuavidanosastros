@@ -132,7 +132,8 @@ test('disabled and corrupt storage states cannot issue network mutations', async
 	await retained(page, 'corrupt');
 	await page.reload();
 	await expect(page.locator('#email [role=status]')).toContainText('Nenhuma alteração foi enviada');
-	await expect(page.locator('#email button')).toHaveCount(0);
+	await expect(page.locator('#email button')).toHaveCount(1);
+	await expect(page.getByRole('button', { name: 'Consultar pedidos desta leitura' })).toBeEnabled();
 	expect(calls).toBe(0);
 });
 test('pending request locks controls and cancellation failure requires recovery', async ({

@@ -2,6 +2,10 @@
 	import { onMount, onDestroy, tick } from 'svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import {
+		createProductEmailHistory,
+		type ProductEmailHistoryState
+	} from '$lib/product-email-history';
+	import {
 		createProductEmailRequest,
 		type ProductEmailRequestState
 	} from '$lib/product-email-request';
@@ -26,6 +30,10 @@
 	} = $props();
 	let outcome = $state<ProductEmailRequestState>({ mode: 'new', message: '' });
 	let client: ReturnType<typeof createProductEmailRequest> | undefined;
+	let historyClient: ReturnType<typeof createProductEmailHistory> | undefined;
+	let history = $state<ProductEmailHistoryState>({ mode: 'idle', message: '', receipts: [] });
+	let historySelected = $state(false);
+	let historyReady = $state(false);
 	let consent = $state(false);
 	let ready = $state(false);
 	let busy = $state(false);
@@ -33,6 +41,9 @@
 	let alive = true;
 	onMount(() => {
 		if (synthetic || !ownerId) return;
+		historyClient = createProductEmailHistory({ ownerId, runId, fetch });
+		history = historyClient.inspect();
+		historyReady = history.mode !== 'blocked';
 		try {
 			client = createProductEmailRequest({
 				ownerId,
@@ -56,7 +67,7 @@
 		alive = false;
 	});
 	async function act(action: 'perform' | 'recover' | 'cancel') {
-		if (!client || !ready || busy || disabled || synthetic) return;
+		if (!client || !ready || historySelected || busy || disabled || synthetic) return;
 		busy = true;
 		onBusyChange(true);
 		try {
@@ -65,6 +76,25 @@
 			if (!alive) return;
 			outcome = result;
 			consent = false;
+		} finally {
+			if (alive) {
+				busy = false;
+				onBusyChange(false);
+				await tick();
+				if (alive) feedback?.focus();
+			}
+		}
+	}
+	async function consult(receiptId?: string) {
+		if (!historyClient || !historyReady || busy || disabled || synthetic) return;
+		// Use one source of acknowledged state; do not reuse stale exact-key controls.
+		historySelected = true;
+		consent = false;
+		busy = true;
+		onBusyChange(true);
+		try {
+			const result = receiptId ? await historyClient.cancel(receiptId) : await historyClient.list();
+			if (alive) history = result;
 		} finally {
 			if (alive) {
 				busy = false;
@@ -85,11 +115,11 @@
 	</p>
 	{#if !allowNew || synthetic || !ownerId}
 		<p>
-			Novos pedidos de e-mail estão indisponíveis. Se esta aba preservou a chave de um pedido desta
-			versão, você pode consultar seu estado e cancelá-lo.
+			Novos pedidos de e-mail estão indisponíveis. Você pode consultar os pedidos desta leitura,
+			inclusive de revisões anteriores, e cancelar os que ainda estiverem registrados.
 		</p>
 	{/if}
-	{#if outcome.mode === 'new'}
+	{#if !historySelected && outcome.mode === 'new'}
 		{#if allowNew && !synthetic && ownerId}
 			<label class="consent"
 				><input type="checkbox" bind:checked={consent} disabled={disabled || busy || !ready} />
@@ -105,7 +135,7 @@
 			pending={busy}
 			onclick={() => act('perform')}>Solicitar e-mail</Button
 		>
-	{:else if outcome.mode === 'recover' || outcome.mode === 'requested' || outcome.mode === 'cancelled'}
+	{:else if !historySelected && (outcome.mode === 'recover' || outcome.mode === 'requested' || outcome.mode === 'cancelled')}
 		<div class="controls">
 			<Button
 				variant="secondary"
@@ -123,6 +153,39 @@
 			{/if}
 		</div>
 	{/if}
+	<div class="history-controls">
+		<Button
+			variant="secondary"
+			disabled={!historyReady || disabled || synthetic}
+			pending={busy}
+			onclick={() => consult()}>Consultar pedidos desta leitura</Button
+		>
+	</div>
+	{#if historySelected && history.mode === 'ready' && history.receipts.length === 0}
+		<p class="history-empty">
+			Não há pedidos de e-mail nesta leitura. Consultar não cria um pedido.
+		</p>
+	{:else if historySelected && history.mode === 'ready' && history.receipts.length > 0}
+		<ul class="receipts" aria-label="Pedidos de e-mail desta leitura">
+			{#each history.receipts as receipt (receipt.id)}
+				<li>
+					<div>
+						<h3>Revisão {receipt.revision}</h3>
+						<p>{receipt.state === 'CANCELLED' ? 'Pedido cancelado' : 'Solicitação registrada'}</p>
+					</div>
+					{#if receipt.state === 'REQUESTED'}
+						<Button
+							variant="tertiary"
+							disabled={disabled || synthetic}
+							pending={busy}
+							onclick={() => consult(receipt.id)}
+							>Cancelar pedido da revisão {receipt.revision}</Button
+						>
+					{/if}
+				</li>
+			{/each}
+		</ul>
+	{/if}
 	<p
 		class="feedback"
 		bind:this={feedback}
@@ -131,12 +194,12 @@
 		aria-atomic="true"
 		tabindex="-1"
 	>
-		{busy ? 'Confirmando o estado do pedido…' : outcome.message}
+		{busy ? 'Confirmando o estado do pedido…' : historySelected ? history.message : outcome.message}
 	</p>
 	<p class="privacy">
-		A recuperação depende da chave guardada nesta aba para esta conta e versão. Fechar a aba ou
-		limpar seus dados pode remover essa chave; abrir outra sessão não recupera pedidos
-		automaticamente. Nenhuma consulta cria ou reativa um pedido.
+		A consulta usa sua conta autenticada e não depende da chave desta aba. Os recibos são exibidos
+		apenas durante esta visita, sem serem guardados no navegador. Nada é consultado automaticamente.
+		Nenhuma consulta cria, reativa ou envia um pedido.
 	</p>
 </section>
 
@@ -155,6 +218,30 @@
 		display: flex;
 		gap: 0.75rem;
 		flex-wrap: wrap;
+	}
+	.history-controls {
+		margin-top: 1rem;
+	}
+	.receipts {
+		list-style: none;
+		padding: 0;
+		margin: 1.5rem 0;
+	}
+	.receipts li {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		border-top: 1px solid var(--atv-border);
+		padding-block: 1rem;
+	}
+	.receipts h3 {
+		margin: 0;
+		font-size: 1rem;
+	}
+	.receipts p {
+		margin: 0.25rem 0 0;
 	}
 	.consent {
 		display: flex;

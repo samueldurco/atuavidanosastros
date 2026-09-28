@@ -3,6 +3,7 @@ import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { parseProductEmailReceipt, parseProductEmailHistory } from '$lib/product-email';
 import { createProductEmailRequest } from '$lib/product-email-request';
+import { createProductEmailHistory } from '$lib/product-email-history';
 import {
 	setupProductDatabase,
 	owner,
@@ -130,6 +131,35 @@ it('lost acknowledgement and browser key recover through owner history after rev
 	expect(await count()).toBe(1);
 	await db.exec('delete from product_runs');
 	expect(await (await history(event({ runId: reading.id }))).json()).toEqual({ receipts: [] });
+});
+it('keyless browser controller reconciles a committed cancellation through real HTTP and SQL', async () => {
+	await db.exec('update product_email_policy set enabled=true');
+	await request(event({ requestKey: randomUUID(), command: command() }));
+	await db.exec(
+		'update product_email_policy set enabled=false; update workflow_releases set enabled=false; update profiles set deleted_at=now(); update product_runs set revision=5'
+	);
+	const fetcher = vi.fn<typeof fetch>(async (path, init) => {
+		const body: unknown = JSON.parse(init!.body as string);
+		if (path === '/api/product-email/history') return history(event(body));
+		if (path === '/api/product-email/cancel') return cancel(event(body, owner, true));
+		throw new Error('unexpected mutation');
+	});
+	const browser = createProductEmailHistory({ ownerId: owner, runId: reading.id, fetch: fetcher });
+	expect(browser.inspect().mode).toBe('idle');
+	expect(fetcher).not.toHaveBeenCalled();
+	const discovered = await browser.list();
+	expect(discovered.receipts).toHaveLength(1);
+	const receipt = discovered.receipts[0];
+	expect(receipt.revision).toBe(4);
+	expect((await browser.cancel(receipt.id)).mode).toBe('unavailable');
+	await browser.cancel(receipt.id);
+	expect(fetcher).toHaveBeenCalledTimes(2);
+	expect((await browser.list()).receipts[0].state).toBe('CANCELLED');
+	await browser.cancel(receipt.id);
+	expect(fetcher).toHaveBeenCalledTimes(3);
+	expect(await count()).toBe(1);
+	await db.exec('delete from product_runs');
+	expect(await browser.list()).toMatchObject({ mode: 'ready', receipts: [] });
 });
 it('real SQL policy blocks acceptance by default, regardless of valid owner and consent', async () => {
 	const response = await request(event({ requestKey: randomUUID(), command: command() }));
