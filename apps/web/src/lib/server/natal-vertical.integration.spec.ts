@@ -16,6 +16,7 @@ import { createProductPublisher } from '../../../../worker/src/product-publicati
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
 import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
+import { prepareProductFacts } from '../../../../worker/src/product-editorial';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
 import { parsePairRequestInput } from '../pair-request';
@@ -664,6 +665,18 @@ it.each(profileProducts)(
 			runId: run.id
 		});
 		expect(deterministicSnapshot(calculated.calculation)).toEqual(deterministicSnapshot(expected));
+		if (productId === 'three-pillars') {
+			const snapshot = calculated.calculation as CalculationSnapshot;
+			expect(prepareProductFacts(productId, snapshot).status).toBe('prepared');
+			const altered = structuredClone(snapshot);
+			const ascendant = altered.facts.find((fact) => fact.id === 'angle-ascendant')!;
+			ascendant.display = 'Ascendente: 0.000000° de Áries';
+			expect(prepareProductFacts(productId, altered)).toEqual({
+				status: 'blocked',
+				reason: 'calculation_invalid'
+			});
+			expect(await stored(run.id)).toEqual(calculated);
+		}
 		if (productId === 'career-compass' || productId === 'date-reading') {
 			expect(calculated.calculation?.facts).toContainEqual({
 				id: 'personal-context',
@@ -713,6 +726,33 @@ it.each(profileProducts)(
 		]);
 	}
 );
+
+it('three-pillars: persisted polar calculation withholds preparation and publication', async () => {
+	await save(0, { latitude: 70 });
+	await enable('three-pillars');
+	const s = browser('three-pillars');
+	const result = await s.client.perform(true, await command('three-pillars'));
+	expect(result.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
+	await process('three-pillars');
+	const run = await stored();
+	expect(run).toMatchObject({ state: 'AWAITING_EDITORIAL', revision: 3 });
+	const snapshot = run.calculation as CalculationSnapshot;
+	expect(snapshot.data.angles).toEqual({ ascendant: null, midheaven: null });
+	expect(snapshot.facts.map((fact) => fact.id)).toEqual([
+		'position-sun',
+		'position-moon',
+		'ascendant-unavailable'
+	]);
+	expect(prepareProductFacts('three-pillars', snapshot)).toEqual({
+		status: 'blocked',
+		reason: 'insufficient_facts'
+	});
+	expect(
+		await createProductPublisher(workerRpc, { enabledProducts: ['three-pillars'] }).step()
+	).toBe('idle');
+	expect(await counts()).toEqual({ runs: 1, events: 3, items: 1, receipts: 1 });
+	expect((await db.query('select count(*) n from editorial_promotions')).rows).toEqual([{ n: 0 }]);
+});
 
 it.each(profileProducts)(
 	'%s: edit then forget cannot change queued snapshot; lost acknowledgement recovers without replay',

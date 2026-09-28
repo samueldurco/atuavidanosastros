@@ -192,24 +192,24 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.5.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.6.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    'c5327c09e8aacd257fb8930982998c360d92e81ec7f043edc93957fbdc81347c');
+    '477b3abdc963084ac5ee194e98e9d3176511481c3488218a99a1193768f01cfc');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    'd9ad1945a9528bf3d065137714d3f2c9f00461dfc89fc44f2a6c494acf2b2fe5');
+    'bb28c17cac25b556f3a85c0863da549bc602b6e99542029f3e989a1d3a4c25f0');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    'b997c07339fa23c9ec6fe2e7f4670aca0dd05e720f5372684a994508e00f5986');
-  // The 1.1.0 baseline remains unchanged; 1.2.0 appends career compass cases.
+    '5686f59c952fe576c3b9a0cc5b0bb46d8c9a9d0757d563efdbf52ac98196b8c1');
+  // Version 1.6.0 withholds the existing polar Three Pillars case; no cases were added.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
-    '49ff8dedac35ca3a028d7bd610895f316858e3ce5df57ad69df8d24ead520d1f');
+    '8ab8027fc47e4b36932816b5b1fce00b9f479b1c64589853080f00802dafc1b5');
 });
 
 test('offline corpus covers 13 partial bases, six capabilities and seven strata without claiming release', () => {
   assert.deepEqual([...corpusProducts].sort(), Object.keys(createProductCalculators()).sort());
   assert.equal(corpus.cases.length, 105);
-  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 104);
+  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 103);
   assert.deepEqual(corpus.cases.filter(item => item.preparation === 'blocked').map(item => [item.id, item.blockReason]),
-    [['ascendant-boundary', 'insufficient_facts']]);
+    [['three-pillars-boundary', 'insufficient_facts'], ['ascendant-boundary', 'insufficient_facts']]);
   assert.equal(new Set(corpus.cases.map(item => item.id)).size, 105);
   assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 105);
   assert.equal(corpus.unavailableProducts.length, 12);

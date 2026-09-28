@@ -22,6 +22,48 @@ export function zodiacPosition(longitude: number): { sign: string; signIndex: nu
     display: `${(Math.floor(degrees * 1e6) / 1e6).toFixed(6)}° de ${signs[signIndex]}` };
 }
 
+const record = (v: unknown): v is Record<string, unknown> => v !== null && typeof v === 'object' && !Array.isArray(v);
+const sameContract = (v: unknown, expected: Record<string, unknown>): boolean => record(v) &&
+  Object.keys(v).length === Object.keys(expected).length && Object.entries(expected).every(([key, wanted]) =>
+    Array.isArray(wanted) ? JSON.stringify(v[key]) === JSON.stringify(wanted) : v[key] === wanted);
+
+/** Persisted projection coherence only, never origin authentication or precision certification. */
+export function inspectThreePillarsProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
+  const { data } = value, { positions, angles, houses, provenance } = data;
+  if (value.version !== natalProductContract.version || value.kind !== 'natal' || value.status !== 'experimental' ||
+      data.productId !== 'three-pillars' || Object.keys(data).length !== 6 ||
+      !sameContract(data.projection, natalProductContract) || !Array.isArray(positions) || positions.length !== 2 ||
+      !record(angles) || Object.keys(angles).length !== 2 || angles.midheaven !== null ||
+      !(angles.ascendant === null || (typeof angles.ascendant === 'number' && angle(angles.ascendant))) ||
+      !record(houses) || Object.keys(houses).length !== 3 || houses.system !== 'placidus' ||
+      houses.status !== 'not-requested' || !Array.isArray(houses.cusps) || houses.cusps.length ||
+      !record(provenance) || !sameContract(provenance.contract, engineContract) ||
+      provenance.accuracyStatus !== 'experimental' || provenance.zodiac !== 'tropical' ||
+      provenance.houseSystem !== 'placidus' || provenance.referenceFrame !== 'geocentric-apparent-ecliptic-of-date' ||
+      [provenance.provider, provenance.providerVersion, provenance.algorithmVersion].some(part =>
+        typeof part !== 'string' || !part.trim()) || !Array.isArray(provenance.warnings) || !provenance.warnings.length ||
+      provenance.warnings.some(warning => typeof warning !== 'string' || !warning.trim() || !value.limits.includes(warning))) return null;
+  const source = `${provenance.provider}@${provenance.providerVersion};${provenance.algorithmVersion};${natalProductContract.version}`;
+  const expected = new Map<string, string>();
+  for (const body of ['sun', 'moon'] as const) {
+    const p = positions.find(p => record(p) && p.body === body);
+    if (!record(p) || Object.keys(p).length !== 5 || typeof p.longitude !== 'number' || !angle(p.longitude) ||
+        typeof p.latitude !== 'number' || !Number.isFinite(p.latitude) || Math.abs(p.latitude) > 90 ||
+        typeof p.distanceAu !== 'number' || !Number.isFinite(p.distanceAu) || p.distanceAu <= 0 ||
+        typeof p.retrograde !== 'boolean') return null;
+    expected.set(`position-${body}`, `${bodyLabels[body]}: ${zodiacPosition(p.longitude).display}; movimento ${p.retrograde ? 'retrógrado' : 'direto'} da candidata`);
+  }
+  const available = angles.ascendant !== null;
+  expected.set(available ? 'angle-ascendant' : 'ascendant-unavailable', available
+    ? `Ascendente: ${zodiacPosition(angles.ascendant as number).display}`
+    : 'Ascendente não disponibilizado: condições fora do contrato conservador de casas/ângulos.');
+  if (!value.facts.every(fact => expected.has(fact.id)
+    ? fact.kind === 'calculated' && fact.source === source && fact.display === expected.get(fact.id)
+    : fact.id === 'personal-context' && fact.kind === 'reported' && fact.source === 'input.context') ||
+    [...expected].some(([id]) => !value.facts.some(fact => fact.id === id))) return null;
+  return available ? 'available' : 'unavailable';
+}
+
 function validateChart(chart: NatalChart): void {
   if (!chart || !Array.isArray(chart.positions) || chart.positions.length !== bodies.length ||
       new Set(chart.positions.map(p=>p.body)).size !== bodies.length ||

@@ -32,10 +32,10 @@ function sample(item = first, repetition = 1) {
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'synthetic-test-not-a-receipt' } };
 }
 
-test('manifest preserves corpus identity, 104 prepared cases, blocked polar case and 12 unavailable products', async () => {
-  assert.equal(manifest.corpusFingerprint, 'c5327c09e8aacd257fb8930982998c360d92e81ec7f043edc93957fbdc81347c');
+test('manifest preserves corpus identity, 103 prepared cases, two blocked polar cases and 12 unavailable products', async () => {
+  assert.equal(manifest.corpusFingerprint, '477b3abdc963084ac5ee194e98e9d3176511481c3488218a99a1193768f01cfc');
   assert.equal(manifest.cases.length, 105);
-  assert.equal(prepared.length, 104);
+  assert.equal(prepared.length, 103);
   assert.equal(manifest.unavailableProducts.length, 12);
   assert.equal(manifest.cases.find(item => item.caseId === 'ascendant-boundary').requestDigest, null);
   assert.ok(prepared.every(item => /^[a-f0-9]{64}$/.test(item.promptDigest)));
@@ -44,8 +44,8 @@ test('manifest preserves corpus identity, 104 prepared cases, blocked polar case
 
 test('empty capture reports missing repetitions, never zero-cost success or fabricated outputs', () => {
   const report = evaluateProductBenchmark(envelope(), corpus);
-  assert.equal(report.summary.expectedSamples, 312);
-  assert.equal(report.summary.missingSamples, 312);
+  assert.equal(report.summary.expectedSamples, 309);
+  assert.equal(report.summary.missingSamples, 309);
   assert.equal(report.summary.receivedSamples, 0);
   assert.equal(report.products.length, 13);
   assert.equal(report.summary.preparedChecksComplete, false);
@@ -70,17 +70,17 @@ test('valid sample is bound to exact case and prompt, hashes output without retu
   assert.equal('output' in result, false);
   assert.equal('request' in report.cases[0], false);
   assert.equal(JSON.stringify(capture), before);
-  assert.equal(report.summary.missingSamples, 311);
+  assert.equal(report.summary.missingSamples, 308);
 });
 
 test('full mechanically passing fixture batch still cannot promote, publish or review semantics', () => {
   const samples = prepared.flatMap(item => [1, 2, 3].map(rep => sample(item, rep)));
   const report = evaluateProductBenchmark(envelope(samples), corpus);
   assert.equal(report.summary.preparedChecksComplete, true);
-  assert.equal(report.summary.mechanicalPasses, 312);
-  assert.equal(report.summary.unreviewedPreparedCases, 104);
-  assert.equal(report.summary.unreviewedSamples, 312);
-  assert.equal(report.summary.blockedCases, 1);
+  assert.equal(report.summary.mechanicalPasses, 309);
+  assert.equal(report.summary.unreviewedPreparedCases, 103);
+  assert.equal(report.summary.unreviewedSamples, 309);
+  assert.equal(report.summary.blockedCases, 2);
   assert.equal(report.unavailableProducts.length, 12);
   assert.equal(report.promotionEligible, false);
   assert.equal(report.publication, 'blocked');
@@ -182,7 +182,7 @@ test('CLI emits manifest/report with distinct exit codes and sanitized errors; s
     await writeFile(path, source);
     const partial = invoke([path]);
     assert.equal(partial.status, 1, partial.stderr);
-    assert.equal(JSON.parse(partial.stdout).summary.missingSamples, 311);
+    assert.equal(JSON.parse(partial.stdout).summary.missingSamples, 308);
     assert.equal(await readFile(path, 'utf8'), source);
     await writeFile(path, JSON.stringify(envelope(prepared.flatMap(item => [1, 2, 3].map(rep => sample(item, rep))))));
     const complete = invoke([path]);

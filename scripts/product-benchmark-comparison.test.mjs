@@ -36,14 +36,14 @@ const rowFor = report => report.rows.find(row => row.caseId === prepared[0].case
 test('empty captures retain every prepared slot, blocked case and unavailable product', () => {
   const report = compare();
   assert.equal(report.version, PRODUCT_COMPARISON_VERSION);
-  assert.equal(report.summary.expectedSlots, 312);
-  assert.equal(report.summary.missingBothSlots, 312);
+  assert.equal(report.summary.expectedSlots, 309);
+  assert.equal(report.summary.missingBothSlots, 309);
   assert.equal(report.summary.regressedSlots, 0);
   assert.equal(report.summary.preparedChecksComplete, false);
   assert.equal(report.products.length, 13);
   assert.equal(report.unavailableProducts.length, 12);
-  assert.equal(report.blockedCases[0].caseId, 'ascendant-boundary');
-  assert.ok(report.blockedCases[0].blockReason);
+  assert.deepEqual(report.blockedCases.map(item => item.caseId), ['three-pillars-boundary', 'ascendant-boundary']);
+  assert.ok(report.blockedCases.every(item => item.blockReason));
   assert.equal(rowFor(report).baselineChecks, null);
   assert.deepEqual(rowFor(report).metricDelta, { latencyMs: null, inputTokens: null, outputTokens: null, costBrl: null });
 });
@@ -109,7 +109,7 @@ test('removing failures creates coverage gaps instead of inflating improvements'
   const report = compare([before], [sample('candidate', prepared[1])]);
   assert.equal(report.summary.missingCandidateSlots, 1);
   assert.equal(report.summary.addedCandidateSlots, 1);
-  assert.equal(report.summary.missingBothSlots, 310);
+  assert.equal(report.summary.missingBothSlots, 307);
   assert.equal(report.summary.pairedSlots, 0);
   assert.equal(report.summary.improvedSlots, 0);
   assert.equal(report.summary.regressedSlots, 0);
@@ -159,13 +159,13 @@ test('comparison is stable under sample ordering and never mutates or returns pa
   assert.equal(report.provenance, 'declared-not-authenticated');
 });
 
-test('624 mechanically passing synthetic fixtures still cannot promote or review semantics', () => {
+test('618 mechanically passing synthetic fixtures still cannot promote or review semantics', () => {
   const complete = prefix => prepared.flatMap(item => [1, 2, 3].map(rep => sample(prefix, item, rep)));
   const report = compare(complete('baseline'), complete('candidate'));
   assert.equal(report.summary.preparedChecksComplete, true);
-  assert.equal(report.summary.pairedSlots, 312);
-  assert.equal(report.baseline.summary.unreviewedSamples, 312);
-  assert.equal(report.candidate.summary.unreviewedSamples, 312);
+  assert.equal(report.summary.pairedSlots, 309);
+  assert.equal(report.baseline.summary.unreviewedSamples, 309);
+  assert.equal(report.candidate.summary.unreviewedSamples, 309);
   assert.equal(report.summary.regressedSlots, 0);
   assert.equal(report.editorialReview, 'not-reviewed');
   assert.equal(report.promotionEligible, false);

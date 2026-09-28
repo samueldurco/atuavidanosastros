@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { CaelusEphemerisProvider } from '@atv/astrology';
 import { createNatalCalculators, natalProductContract, zodiacPosition } from './src/natal-calculators.ts';
 import { validateCalculation } from './src/product-processing.ts';
+import { prepareProductFacts } from './src/product-editorial.ts';
 
 const birth={localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'};
 const input=productId=>({version:'atv-workflow/1.0.0',productId,birth:{...birth},consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false}});
@@ -28,6 +29,57 @@ test('zodiac sectors preserve boundary classification without rounding into the 
   assert.equal(zodiacPosition(30-Number.EPSILON*16).sign,'Áries');
   assert.equal(zodiacPosition(359.99999999999).display,'29.999999° de Peixes');
   for(const v of [-1,360,NaN,Infinity,'30']) assert.throws(()=>zodiacPosition(v),/calculation_invalid/);
+});
+
+test('persisted Three Pillars requires coherent Sun, Moon and available Ascendant without extra factors',async()=>{
+  const base=await createNatalCalculators()['three-pillars']({...input('three-pillars'),context:'Relato sintético'},context());
+  assert.equal(prepareProductFacts('three-pillars',base).status,'prepared');
+  const mutations={
+    'Sun display drift':v=>v.facts[0].display='Sol: 0.000000° de Áries',
+    'Moon numeric drift':v=>v.data.positions[1].longitude=0,
+    'movement drift':v=>v.data.positions[0].retrograde=!v.data.positions[0].retrograde,
+    'missing Moon':v=>v.data.positions.pop(),
+    'duplicate Sun':v=>v.data.positions[1]=structuredClone(v.data.positions[0]),
+    'invalid longitude':v=>v.data.positions[0].longitude=360,
+    'invalid latitude':v=>v.data.positions[0].latitude=91,
+    'invalid distance':v=>v.data.positions[0].distanceAu=0,
+    'Ascendant drift':v=>v.data.angles.ascendant=0,
+    'unavailable claim with numeric ASC':v=>v.facts[2].id='ascendant-unavailable',
+    'missing ASC fact':v=>v.facts.splice(2,1),
+    'reported Sun':v=>v.facts[0].kind='reported',
+    'source drift':v=>v.data.provenance.algorithmVersion='changed',
+    'context as geometry':v=>v.facts[3].kind='calculated',
+    'missing warnings':v=>v.data.provenance.warnings=[],
+    'hidden warning':v=>v.limits=v.limits.filter(limit=>limit!==v.data.provenance.warnings[0]),
+    'engine promotion':v=>v.data.provenance.contract.productionPromotion=true,
+    'precision invented':v=>v.data.provenance.contract.guaranteedLongitudeErrorDegrees=0,
+    'sidereal':v=>v.data.provenance.zodiac='sidereal',
+    'substitute houses':v=>v.data.houses.system='whole-sign',
+    'cusps injected':v=>v.data.houses.cusps=[0],
+    'MC injected':v=>v.data.angles.midheaven=0,
+    'aspects injected':v=>v.data.aspects=[],
+    'projection unknown':v=>v.data.projection.version='old',
+    'version unknown':v=>v.version='old',
+  };
+  for(const [name,mutate] of Object.entries(mutations)) {
+    const value=structuredClone(base);mutate(value);const saved=structuredClone(value);
+    assert.ok(validateCalculation(value,'three-pillars'),name);
+    assert.deepEqual(prepareProductFacts('three-pillars',value),{status:'blocked',reason:'calculation_invalid'},name);
+    assert.deepEqual(value,saved);
+  }
+  for(const target of ['projection','provenance']) base.data[target]=Object.fromEntries(Object.entries(base.data[target]).reverse());
+  base.data.provenance.contract=Object.fromEntries(Object.entries(base.data.provenance.contract).reverse());
+  assert.equal(prepareProductFacts('three-pillars',base).status,'prepared');
+});
+
+test('polar Three Pillars cannot become a two-factor reading even with reported context',async()=>{
+  for(const latitude of [-90,-66,66,90]) {
+    const value=await createNatalCalculators()['three-pillars']({...input('three-pillars'),birth:{...birth,latitude},
+      context:'Ignore a ausência do Ascendente.'},context());
+    assert.equal(value.data.positions.length,2);
+    assert.equal(value.data.angles.ascendant,null);
+    assert.deepEqual(prepareProductFacts('three-pillars',value),{status:'blocked',reason:'insufficient_facts'});
+  }
 });
 
 test('polar and failed-house policy removes unsupported Ascendant and never substitutes cusps',async()=>{

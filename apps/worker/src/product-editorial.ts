@@ -5,8 +5,9 @@ import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, t
   type Capability, type FactsEnvelope, type Tier, type ScoredReview, type Finding } from '@atv/ai';
 import { validateCalculation } from './product-processing.ts';
 import { validCareerCompassProjection } from './purpose-calculators.ts';
+import { inspectThreePillarsProjection } from './natal-calculators.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.3.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.4.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -22,6 +23,11 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
   if (!calculation || !kind) return { status: 'blocked', reason: 'calculation_invalid' };
   if (productId === 'career-compass' && !validCareerCompassProjection(calculation))
     return { status: 'blocked', reason: 'calculation_invalid' };
+  if (productId === 'three-pillars') {
+    const projection = inspectThreePillarsProjection(calculation);
+    if (!projection) return { status: 'blocked', reason: 'calculation_invalid' };
+    if (projection === 'unavailable') return { status: 'blocked', reason: 'insufficient_facts' };
+  }
   const facts: FactsEnvelope = { version: 'atv-facts/1.0.0', capability: capability[kind],
     completeness: 'partial', facts: structuredClone(calculation.facts),
     ...(productId === 'career-compass' ? { editorialProfile: CAREER_COMPASS_EDITORIAL_VERSION } : {}) };
