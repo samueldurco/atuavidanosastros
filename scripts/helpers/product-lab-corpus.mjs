@@ -4,8 +4,9 @@ import { prepareProductFacts } from '../../apps/worker/src/product-editorial.ts'
 import { parseWorkflowInput, workflowFor } from '../../packages/domain/src/workflows.ts';
 import { releaseCases, RELEASE_DATASET_VERSION } from '../../packages/ai/src/lab/release-dataset.ts';
 import { careerContextCases, CAREER_CONTEXT_VERSION } from './career-context-cases.mjs';
+import { dateContextCases, DATE_CONTEXT_VERSION } from './date-context-cases.mjs';
 
-export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.3.0';
+export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.4.0';
 // Explicit frozen scope: newly added calculators must receive a deliberate corpus revision.
 export const corpusProducts = Object.freeze(['birth-chart', 'three-pillars', 'ascendant', 'midheaven',
   'pair-preview', 'date-reading', 'daily-card', 'three-questions', 'tarot-focus', 'tarot-yes-no',
@@ -71,27 +72,32 @@ export async function buildProductLabCorpus() {
       cases.push(entry);
     }
   }
-  // Same birth data across this supplement: report variation is NOT factual diversity.
-  for (const [index, scenario] of careerContextCases.entries()) {
-    const productId = 'career-compass';
-    const id = `career-context-${scenario.category}`;
-    const runId = `00000000-0000-4000-8000-${String(10000 + index).padStart(12, '0')}`;
-    const input = productCorpusInput(productId, 'common');
-    delete input.context;
-    if (scenario.context !== undefined) input.context = scenario.context;
-    if (!parseWorkflowInput(input)) throw new Error('invalid_career_context_fixture');
-    const calculation = await calculators[productId](input, { runId, signal: new AbortController().signal });
-    const prepared = prepareProductFacts(productId, calculation);
-    if (prepared.status !== 'prepared') throw new Error('career_context_facts_unavailable');
-    const request = { correlationId: id, tier: 'intermediate', dataClass: 'synthetic',
-      consentToProcess: true, facts: prepared.facts, context: input.context };
-    cases.push({ id, productId, category: scenario.category, suite: 'career-context', runId, input, calculation,
-      inputDigest: corpusDigest(input), calculationDigest: corpusDigest(calculation),
-      preparation: prepared.status, editorialReview: 'not-reviewed', publication: 'blocked',
-      criteria: [scenario.criterion, ...calculation.limits], request, factsDigest: corpusDigest(prepared.facts) });
+  // Same calculation inputs per supplement: report variation is NOT factual diversity.
+  for (const { productId, suite, scenarios, offset } of [
+    { productId: 'career-compass', suite: 'career-context', scenarios: careerContextCases, offset: 10000 },
+    { productId: 'date-reading', suite: 'date-context', scenarios: dateContextCases, offset: 20000 },
+  ]) {
+    for (const [index, scenario] of scenarios.entries()) {
+      const id = `${suite}-${scenario.category}`;
+      const runId = `00000000-0000-4000-8000-${String(offset + index).padStart(12, '0')}`;
+      const input = productCorpusInput(productId, 'common');
+      delete input.context;
+      if (scenario.context !== undefined) input.context = scenario.context;
+      if (!parseWorkflowInput(input)) throw new Error(`invalid_${suite}_fixture`);
+      const calculation = await calculators[productId](input, { runId, signal: new AbortController().signal });
+      const prepared = prepareProductFacts(productId, calculation);
+      if (prepared.status !== 'prepared') throw new Error(`${suite}_facts_unavailable`);
+      const request = { correlationId: id, tier: 'intermediate', dataClass: 'synthetic',
+        consentToProcess: true, facts: prepared.facts, context: input.context };
+      cases.push({ id, productId, category: scenario.category, suite, runId, input, calculation,
+        inputDigest: corpusDigest(input), calculationDigest: corpusDigest(calculation),
+        preparation: prepared.status, editorialReview: 'not-reviewed', publication: 'blocked',
+        criteria: [scenario.criterion, ...calculation.limits], request, factsDigest: corpusDigest(prepared.facts) });
+    }
   }
   return { version: PRODUCT_CORPUS_VERSION, scenarioSource: RELEASE_DATASET_VERSION,
     supplementSource: CAREER_CONTEXT_VERSION,
+    supplementSources: [CAREER_CONTEXT_VERSION, DATE_CONTEXT_VERSION],
     dataClass: 'synthetic', editorialReview: 'not-reviewed', promotionEligible: false,
     scope: 'experimental-partial-product-bases',
     unavailableProducts: productCalculationCoverage().filter(item => item.calculation === 'unavailable').map(item => item.productId),
