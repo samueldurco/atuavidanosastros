@@ -12,7 +12,7 @@ const birth={localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00
 const calculators={...createNatalCalculators(),...createSymbolicCalculators()};
 async function calculation(productId='daily-card') {
   const input={version:'atv-workflow/1.0.0',productId,consent};
-  if(['daily-card','three-questions'].includes(productId)) input.questions=Array(productId==='daily-card'?1:3).fill('Que alternativa posso observar?');
+  if(['daily-card','three-questions','tarot-focus','tarot-yes-no'].includes(productId)) input.questions=Array(productId==='three-questions'?3:1).fill('Que alternativa posso observar?');
   else if(productId.startsWith('dream-')) input.dream={date:'2026-09-14',narrative:'Uma ponte apareceu no sonho.',emotions:['curiosidade'],associations:['travessia']};
   else input.birth=birth;
   return calculators[productId](input,{runId,signal:new AbortController().signal});
@@ -35,7 +35,7 @@ function bound(assessment) {
     scores:Object.fromEntries(dimensions.map(d=>[d,10])),evidence:Object.fromEntries(dimensions.map(d=>[d,'Fixture de regra; não calibra qualidade.']))}};
 }
 
-test('all eight real calculators project exact, isolated, partial facts into the Lab',async()=>{
+test('all natal and symbolic calculators project exact, isolated, partial facts into the Lab',async()=>{
   for(const productId of Object.keys(calculators)) {
     const calc=await calculation(productId);const prepared=prepareProductFacts(productId,calc);
     assert.equal(prepared.status,'prepared',productId);assert.deepEqual(prepared.facts.facts,calc.facts);

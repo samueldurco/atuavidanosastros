@@ -3,6 +3,8 @@ import { parseWorkflowInput, workflowFor, WORKFLOW_VERSION, validDate } from '@a
 export const symbolicProducts = [
 	'daily-card',
 	'three-questions',
+	'tarot-focus',
+	'tarot-yes-no',
 	'dream-reading',
 	'dream-journal'
 ] as const;

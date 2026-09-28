@@ -6,6 +6,47 @@ const library = '00000000-0000-4000-8000-000000000059';
 const path = '/biblioteca/_spec/entrada';
 const slot = (product: string) => `atv-create:${owner}:${product}`;
 const privacy = 'Autorizo guardar os dados deste pedido e seus resultados na minha conta.';
+
+for (const product of ['tarot-focus', 'tarot-yes-no']) {
+	test(`${product}: candidate copy and closed gate never submit`, async ({ page }) => {
+		let writes = 0;
+		await page.route('**/api/workflows', (route) => {
+			writes++;
+			return route.abort();
+		});
+		await page.goto(`${path}?product=${product}&access=UNRELEASED`);
+		await expect(page.getByText('Nenhum modelo está homologado', { exact: false })).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+		await expect(
+			page.getByText(
+				product === 'tarot-yes-no'
+					? 'Esta leitura não produz um veredito automático'
+					: 'Traga uma questão do momento',
+				{ exact: false }
+			)
+		).toBeVisible();
+		expect(writes).toBe(0);
+	});
+}
+for (const width of [320, 390, 820, 1440]) {
+	test(`question Tarot: focus, reduced motion and no overflow at ${width}px`, async ({ page }) => {
+		await page.setViewportSize({ width, height: 1000 });
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		for (const product of ['tarot-focus', 'tarot-yes-no']) {
+			await page.goto(`${path}?product=${product}`);
+			await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeEnabled();
+			await page.getByLabel('Sua pergunta').focus();
+			await expect(page.getByLabel('Sua pergunta')).toBeFocused();
+			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+				true
+			);
+			await page.screenshot({
+				path: `../../test-results/wu074-${product}-${width}.png`,
+				fullPage: true
+			});
+		}
+	});
+}
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
@@ -48,7 +89,14 @@ async function mockRecovery(page: Page, product = 'daily-card') {
 		})
 	);
 }
-for (const product of ['daily-card', 'three-questions', 'dream-reading', 'dream-journal']) {
+for (const product of [
+	'daily-card',
+	'three-questions',
+	'tarot-focus',
+	'tarot-yes-no',
+	'dream-reading',
+	'dream-journal'
+]) {
 	test(`${product}: explicit validated input, UUID-only storage and verified Library link`, async ({
 		page
 	}) => {
@@ -94,9 +142,9 @@ for (const product of ['daily-card', 'three-questions', 'dream-reading', 'dream-
 			page.getByLabel(
 				product.startsWith('dream')
 					? 'O que você lembra?'
-					: product === 'daily-card'
-						? 'Sua pergunta'
-						: 'Pergunta 1'
+					: product === 'three-questions'
+						? 'Pergunta 1'
+						: 'Sua pergunta'
 			)
 		).toHaveValue('');
 		expect(await page.evaluate((name) => sessionStorage.getItem(name), slot(product))).toBeNull();

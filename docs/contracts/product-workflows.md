@@ -24,6 +24,12 @@ State progression is QUEUED → CALCULATED → AWAITING_EDITORIAL → READY. Pen
 
 Dream snapshots keep reported narrative, emotions, associations and context distinct from interpretations. No universal symbol meaning, inferred emotion, clinical diagnosis or recurrence is generated. Continuity consent is recorded, but historyLoaded and recurrenceAssessed remain false. All four adapters stop before editorial publication and retain the empty promotion registry. See `docs/qa/SYMBOLIC_CALCULATORS_2026-09-14.md` for local verification and limits.
 
+### Question Tarot products — WU-074
+
+`tarot-focus` and `tarot-yes-no` extend the same registry and authenticated intake with exactly one explicit question. Both draw one card using the unchanged deck, seed and spread algorithm. Existing snapshots and golden draws are unchanged. The additive `atv-tarot-question-products/1.0.0` policy records `interpretationStatus: not-evaluated` and `binaryVerdict: null`; no yes/no verdict, recommendation or interpretation is calculated. The candidate one-card policy still requires editorial evaluation and does not fulfill the catalog's finished reading promise.
+
+The existing owner-scoped request, local SQL processing, pending Library projection, lost-acknowledgement recovery and frozen-draw reprocessing now cover these products. Intake remains server-gated; local enabled fixtures do not activate releases. Runtime coverage is twelve partial bases and thirteen unavailable calculations, not twelve completed products. No model or prompt is promoted. Evidence: `docs/qa/TAROT_QUESTION_PRODUCTS_2026-09-28.md`.
+
 ## Recovery and privacy
 
 ### Lost submission acknowledgement — WU-053
@@ -56,7 +62,7 @@ Reprocessing creates a new run linked to the owned prior version. It copies the 
 
 ### Internal composition — WU-037
 
-`createProductProcessor(rpc, options)` composes ten partial calculation bases behind an empty-by-default server-owned allowlist. It rejects invalid/unsupported/duplicate product IDs and deadlines, captures configuration against later mutation, and exposes one bounded `step()` with existing aggregate-only telemetry. The full catalog coverage report distinguishes partial bases from unavailable calculations and always states publication blocked. No scheduler or hosted transport is supplied. Database release/contract gates remain independently authoritative. See `docs/qa/PRODUCT_RUNTIME_2026-09-14.md` for the ten-product/six-universe local SQL integration proof.
+`createProductProcessor(rpc, options)` composes twelve partial calculation bases after WU-074 behind an empty-by-default server-owned allowlist. It rejects invalid/unsupported/duplicate product IDs and deadlines, captures configuration against later mutation, and exposes one bounded `step()` with existing aggregate-only telemetry. The full catalog coverage report distinguishes partial bases from unavailable calculations and always states publication blocked. No scheduler or hosted transport is supplied. Database release/contract gates remain independently authoritative. See `docs/qa/PRODUCT_RUNTIME_2026-09-14.md` for the original ten-product/six-universe local SQL integration proof and WU-074 evidence above for the two additional Tarot products.
 
 Migration `20260914140000_product_run_processing.sql` enqueues work in the run-creation transaction and backfills pending calculations. The private work table has no client or service-role direct access. Three service-only RPCs claim, complete and fail one step. Claims filter enabled, matching-contract products supported by the caller; row locks with `SKIP LOCKED` keep an already claimed row out of another consumer's selection ([PostgreSQL SELECT documentation](https://www.postgresql.org/docs/current/sql-select.html)). Local tests cover sequential fencing, not simultaneous independent connections.
 

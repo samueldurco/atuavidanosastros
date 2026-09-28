@@ -33,10 +33,38 @@ test('draw slots preserve question correspondence, source and no replacement for
   assert.equal(daily.data.cards.length,1);assert.equal(daily.facts.at(-1).source,'input.context');
 });
 test('invalid IDs, unsupported spreads, wrong counts and cancellation fail closed',async()=>{
-  for(const [input,run] of [[tarot,'client-key'],[{...tarot,productId:'tarot-yes-no',questions:['A']},id],[{...tarot,questions:['A']},id]])
+  for(const [input,run] of [[tarot,'client-key'],[{...tarot,productId:'tarot-journey',questions:['A']},id],[{...tarot,questions:['A']},id]])
     await assert.rejects(()=>calculateTarot(input,run,signal()),/invalid_tarot_input/);
   const controller=new AbortController();controller.abort();await assert.rejects(()=>calculateTarot(tarot,id,controller.signal),{name:'AbortError'});
 });
+
+for(const [productId,golden] of [['tarot-focus','cups-14'],['tarot-yes-no','pentacles-10']]) {
+  test(`${productId}: candidate one-question golden preserves provenance without a binary verdict`,async()=>{
+    const input={...tarot,productId,questions:['Que possibilidades considerar?']};
+    const result=await calculateTarot(input,id,signal());
+    assert.deepEqual(result.data.cards.map(c=>c.cardId),[golden]);
+    assert.deepEqual(result.data.productPolicy,{version:'atv-tarot-question-products/1.0.0',productId,
+      interpretationStatus:'not-evaluated',binaryVerdict:null});
+    assert.equal(result.data.reviewStatus,'candidate');assert.equal(result.data.reversals,false);
+    assert.deepEqual(result.facts.map(f=>f.kind),['reported','drawn']);
+    assert.ok(result.facts[1].source.includes(symbolicContract.spreadVersion));
+    assert.ok(result.limits.some(limit=>limit.includes('A carta não decide por você')));
+    const parallel=await Promise.all(Array.from({length:16},(_,n)=>calculateTarot(
+      {...input,questions:[`Texto ${n}`],context:`Contexto ${n}`},id,signal())));
+    assert.ok(parallel.every(snapshot=>JSON.stringify(snapshot.data.cards)===JSON.stringify(result.data.cards)));
+    result.data.cards[0].name='mutated';result.data.productPolicy.binaryVerdict='yes';
+    assert.equal(parallel[0].data.cards[0].name,tarotDeck.find(card=>card.id===golden).name);
+    assert.equal(parallel[0].data.productPolicy.binaryVerdict,null);
+  });
+  test(`${productId}: rejects extra questions, injected draws/verdicts and missing consent; respects abort`,async()=>{
+    const input={...tarot,productId,questions:['Uma pergunta']};
+    for(const invalid of [{...input,questions:[]},{...input,questions:['A','B']},
+      {...input,cards:['major-0']},{...input,binaryVerdict:'yes'},{...input,consent:{...consent,storage:false}}])
+      await assert.rejects(()=>calculateTarot(invalid,id,signal()),/invalid_tarot_input/);
+    const controller=new AbortController();controller.abort();
+    await assert.rejects(()=>calculateTarot(input,id,controller.signal),{name:'AbortError'});
+  });
+}
 test('dream record keeps narrative, personal associations and reported emotions separate without inference',()=>{
   const result=calculateDreamRecord(dream);
   assert.deepEqual(result.data.entry,dream.dream);assert.ok(result.facts.every(f=>f.kind==='reported'));

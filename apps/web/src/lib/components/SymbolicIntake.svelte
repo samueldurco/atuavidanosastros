@@ -91,6 +91,17 @@
 				: 'Registre o que ficou, antes de buscar um significado.'}
 		</p>
 		<p class="access-note">{accessMessage}</p>
+		{#if productId === 'tarot-yes-no'}
+			<p>
+				Esta leitura não produz um veredito automático de sim ou não. A carta não decide por você; a
+				interpretação responsável ainda depende de revisão e homologação.
+			</p>
+		{:else if productId === 'tarot-focus'}
+			<p>
+				Traga uma questão do momento. O registro de uma carta é o ponto de partida, não uma previsão
+				nem uma instrução sobre o que fazer.
+			</p>
+		{/if}
 	</header>
 	<div class="workspace">
 		<div class="writing">

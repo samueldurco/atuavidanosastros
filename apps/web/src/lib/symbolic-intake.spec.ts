@@ -24,6 +24,16 @@ it.each(symbolicProducts)('parses explicit consent and inputs for %s', (id) => {
 		consent: { storage: true, continuity: false, partner: false }
 	});
 });
+it.each(['tarot-focus', 'tarot-yes-no'])(
+	'rejects client-chosen card and extra question for %s',
+	(id) => {
+		for (const field of ['question2', 'cards', 'binaryVerdict']) {
+			const data = form(id);
+			data.set(field, 'client choice');
+			expect(parseSymbolicForm(id, data).input).toBeNull();
+		}
+	}
+);
 it.each(['birth-chart', 'yes-no', 'dream-atlas', '', '../daily-card'])(
 	'rejects unsupported product %s',
 	(id) => {

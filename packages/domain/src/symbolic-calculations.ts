@@ -14,16 +14,19 @@ export const symbolicContract = Object.freeze({
   version:'atv-symbolic-calculation/1.0.0', deckVersion:'atv-tarot-78/1.0.0',
   drawAlgorithm:'sha256-counter-rejection-fisher-yates/1', spreadVersion:'atv-question-slots/1.0.0',
   reviewStatus:'candidate', reversals:false,
-  products:Object.freeze(['daily-card','three-questions','dream-reading','dream-journal'])
+  products:Object.freeze(['daily-card','three-questions','tarot-focus','tarot-yes-no','dream-reading','dream-journal'])
 });
+// Additive product policy; existing deck/seed/spread and persisted snapshots remain unchanged.
+const questionProducts = Object.freeze(['tarot-focus','tarot-yes-no']);
 const runIdPattern=/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 /** Server-created UUID fixes the draw before a retry. Input text and client idempotency keys are not seeds. */
 export async function calculateTarot(value: unknown, runId: string, signal: AbortSignal): Promise<CalculationSnapshot> {
   const input=parseWorkflowInput(value);
-  if(!input || !['daily-card','three-questions'].includes(input.productId) || !runIdPattern.test(runId))
+  if(!input || !['daily-card','three-questions',...questionProducts].includes(input.productId) || !runIdPattern.test(runId))
     throw new TypeError('invalid_tarot_input');
-  const count=input.productId==='daily-card'?1:3;
+  const count=input.productId==='three-questions'?3:1;
+  const questionProduct=questionProducts.includes(input.productId);
   const seed=[symbolicContract.drawAlgorithm,symbolicContract.deckVersion,symbolicContract.spreadVersion,input.productId,runId.toLowerCase()].join('|');
   let block=new Uint32Array(0),cursor=0,counter=0;
   async function next(bound: number): Promise<number> {
@@ -55,10 +58,13 @@ export async function calculateTarot(value: unknown, runId: string, signal: Abor
     ]),...(input.context?[{id:'tarot-context',kind:'reported' as const,display:input.context,source:'input.context'}]:[])],
     data:{deckVersion:symbolicContract.deckVersion,spreadVersion:symbolicContract.spreadVersion,
       drawAlgorithm:symbolicContract.drawAlgorithm,seedSource:'server-run-uuid',replacement:false,reversals:false,
-      cards,questions:input.questions,reviewStatus:'candidate'},
+      cards,questions:input.questions,reviewStatus:'candidate',
+      ...(questionProduct?{productPolicy:{version:'atv-tarot-question-products/1.0.0',
+        productId:input.productId,interpretationStatus:'not-evaluated',binaryVerdict:null}}:{})},
     limits:['Registro de sorteio, não previsão nem interpretação homologada.',
       'Uma carta por pergunta; cartas sem reposição, somente na posição direta. Política candidata sujeita à revisão editorial.',
-      'Reprocessar preserva as cartas registradas. Nova consulta cria uma nova execução.']};
+      'Reprocessar preserva as cartas registradas. Nova consulta cria uma nova execução.',
+      ...(questionProduct?['Nenhuma resposta sim/não, recomendação de decisão ou interpretação foi calculada. A carta não decide por você.']:[])]};
 }
 
 // Keep every original UTF-16 character, without splitting a surrogate pair at the fact boundary.
