@@ -16,7 +16,9 @@ beforeAll(async () => {
 	db = await setupProductDatabase();
 	for (const migration of [
 		'20260928130000_product_continuity.sql',
-		'20260928133000_product_continuity_selection.sql'
+		'20260928133000_product_continuity_selection.sql',
+		'20260928140000_product_continuity_profile_guard.sql',
+		'20260928160000_product_continuity_access.sql'
 	])
 		await db.exec(await file(`supabase/migrations/${migration}`));
 }, 20000);
@@ -28,7 +30,7 @@ beforeEach(async () => {
 		'grant execute on function public.read_product_continuity_selection(uuid[]) to authenticated'
 	);
 	await db.exec(
-		'delete from product_runs; delete from product_continuity_consents; update product_continuity_policy set enabled=true; update profiles set deleted_at=null'
+		'delete from product_runs; delete from product_continuity_consents; update product_continuity_policy set enabled=true,access_retention_days=7; update profiles set deleted_at=null'
 	);
 	run = await readyArtifactFixture(db);
 	await db.query(
@@ -73,6 +75,8 @@ const save = (
 	]);
 const raw = (selected = ids, user = owner) =>
 	rpc('select read_product_continuity_selection($1) as data', [selected], user);
+const countRows = async (table: 'product_continuity_access' | 'product_continuity_items') =>
+	(await db.query<{ n: number }>(`select count(*) as n from ${table}`)).rows[0].n;
 function port(user = owner) {
 	return vi.fn(async (selected: string[], signal: AbortSignal) => {
 		signal.throwIfAborted();
@@ -125,11 +129,37 @@ it('default off never invokes repository; SQL independently refuses off and soft
 		await prepareStoredContinuity({ ownerId: owner, selectedIds: ids, readSelection })
 	).toEqual({ status: 'blocked', code: 'disabled' });
 	expect(readSelection).not.toHaveBeenCalled();
+	expect(await countRows('product_continuity_access')).toBe(0);
 	await db.exec('update product_continuity_policy set enabled=false');
 	expect(await prepare()).toEqual({ status: 'blocked', code: 'disabled' });
 	await db.exec('update product_continuity_policy set enabled=true');
 	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
 	expect(await prepare()).toEqual({ status: 'blocked', code: 'source_unavailable' });
+});
+
+it('audit configuration/write failures block preparation without returning text or a partial receipt', async () => {
+	await db.exec('update product_continuity_policy set access_retention_days=null');
+	expect(await prepare()).toEqual({ status: 'blocked', code: 'continuity_service_unavailable' });
+	expect(await countRows('product_continuity_access')).toBe(0);
+	await db.exec('update product_continuity_policy set access_retention_days=7');
+	await db.exec(
+		"create function qa_refuse_access() returns trigger language plpgsql as $$ begin raise exception 'PRIVATE_NOTE_NEVER'; end $$; create trigger qa_refuse_access before insert on product_continuity_access_items for each row execute function qa_refuse_access()"
+	);
+	try {
+		expect(await prepare()).toEqual({ status: 'blocked', code: 'continuity_service_unavailable' });
+		expect(await countRows('product_continuity_access')).toBe(0);
+	} finally {
+		await db.exec(
+			'drop trigger qa_refuse_access on product_continuity_access_items; drop function qa_refuse_access()'
+		);
+	}
+	expect((await prepare()).status).toBe('prepared');
+	expect(await countRows('product_continuity_access')).toBe(1);
+	await rpc('select set_product_continuity_consent($1,$2,$3) as data', [1, [], false]);
+	expect(await prepare()).toEqual({ status: 'blocked', code: 'consent_required' });
+	expect(await countRows('product_continuity_access')).toBe(1);
+	await rpc('select clear_product_continuity_access() as data');
+	expect(await countRows('product_continuity_items')).toBe(3);
 });
 
 it('rejects invalid, missing, foreign or irrelevant selections atomically, never partial data', async () => {
