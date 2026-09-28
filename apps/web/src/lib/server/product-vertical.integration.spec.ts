@@ -32,7 +32,7 @@ import { renderProductWebExport } from './product-export';
 import { workflowApi } from './workflow-api';
 import { workflowArtifacts } from './workflow-artifacts';
 
-// All twelve existing partial bases, not a claim that all 25 products are finished/homologated.
+// All thirteen existing partial bases, not a claim that all 25 products are finished/homologated.
 const products = [
 	'birth-chart',
 	'three-pillars',
@@ -45,7 +45,8 @@ const products = [
 	'tarot-yes-no',
 	'midheaven',
 	'dream-reading',
-	'dream-journal'
+	'dream-journal',
+	'career-compass'
 ];
 interface FixtureRun {
 	id: string;

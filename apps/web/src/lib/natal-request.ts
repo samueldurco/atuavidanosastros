@@ -1,5 +1,11 @@
 export const NATAL_REQUEST_VERSION = 'atv-natal-request/1';
-export const natalProducts = ['birth-chart', 'three-pillars', 'ascendant', 'midheaven'] as const;
+export const natalProducts = [
+	'birth-chart',
+	'three-pillars',
+	'ascendant',
+	'midheaven',
+	'career-compass'
+] as const;
 export type NatalProduct = (typeof natalProducts)[number];
 export interface NatalRequestInput {
 	version: typeof NATAL_REQUEST_VERSION;

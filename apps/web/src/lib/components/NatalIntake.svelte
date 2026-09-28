@@ -31,6 +31,7 @@
 	const product = $derived(workflowFor(productId));
 	const isDate = $derived(productId === 'date-reading');
 	const isPair = $derived(productId === 'pair-preview');
+	const isCareer = $derived(productId === 'career-compass');
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
 	function resetConsents() {
@@ -181,7 +182,13 @@
 >
 	<header>
 		<p class="eyebrow">
-			{isPair ? 'Amor & Relações' : isDate ? 'Ciclos & Tempo' : 'Meu Céu'} · novo pedido
+			{isPair
+				? 'Amor & Relações'
+				: isDate
+					? 'Ciclos & Tempo'
+					: isCareer
+						? 'Propósito & Prosperidade'
+						: 'Meu Céu'} · novo pedido
 		</p>
 		<h1 id="natal-product-title">{product?.name}</h1>
 		<p class="lead">
@@ -189,7 +196,9 @@
 				? 'Duas origens, dados separados e limites claros.'
 				: isDate
 					? 'Uma data escolhida por você, com o método à vista.'
-					: 'Seu céu começa nos dados que você escolheu guardar.'}
+					: isCareer
+						? 'Uma base natal para reflexão sobre carreira, sem prescrição de profissão.'
+						: 'Seu céu começa nos dados que você escolheu guardar.'}
 		</p>
 		<p class="access-note">{accessMessage}</p>
 	</header>

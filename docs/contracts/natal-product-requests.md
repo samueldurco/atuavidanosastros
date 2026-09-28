@@ -1,6 +1,6 @@
 # Natal profile to product — atv-natal-request/1
 
-Local implementation only. Four partial bases: birth-chart, three-pillars, ascendant and midheaven. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
+Local implementation only. Five profile-backed partial bases: birth-chart, three-pillars, ascendant, midheaven and career-compass. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
 
 ## Command and atomic snapshot
 
@@ -22,10 +22,16 @@ Migration `20260925160000_natal_product_requests.sql` and forward-fix were teste
 
 ## Authenticated intake and read-only recovery
 
-`/biblioteca/nova/{birth-chart,three-pillars,ascendant,midheaven}` authenticates before reading the minimal release/access projection. It does not preload natal data into page data. The user explicitly reads `/api/onboarding`, reviews the saved exact profile and separately consents to the product snapshot. A reported exact time is not engine certification. Missing, approximate, malformed or unavailable profiles cannot enable creation. No geocoder, time correction or inference of unknown birth time is added.
+`/biblioteca/nova/{birth-chart,three-pillars,ascendant,midheaven,career-compass}` authenticates before reading the minimal release/access projection. It does not preload natal data into page data. The user explicitly reads `/api/onboarding`, reviews the saved exact profile and separately consents to the product snapshot. A reported exact time is not engine certification. Missing, approximate, malformed or unavailable profiles cannot enable creation. No geocoder, time correction or inference of unknown birth time is added.
 
 The browser sends only the strict command above. It stores only a correlation UUID in `sessionStorage` under the same owner/product slot used by generic creation. Natal data, consent and commands are not stored there. Controls remain disabled until recovery initialization. A pending UUID permits read-only recovery, never automatic resubmission; recovery remains available after profile removal or release/access revocation. A 202 must be verified through the existing recovery and root-run reader before a Library link appears.
 
 Every attempted creation clears the displayed profile and checkbox. Another attempt requires an explicit fresh profile read and fresh consent. Only recognized pre-write refusals may clear a fresh pending key; an idempotency conflict, malformed acknowledgement or uncertain network failure preserves it. A profile revision conflict cannot silently use changed data. Preparing another request is available only after the original request has been located and verified.
 
 The shared Library links expose availability consultation, not a release promise. PDF/audio/download delivery and ATV+ continuity are not implied by saving a request. Intake E2E uses loopback-only synthetic API fixtures; it does not certify hosted persistence or end-to-end editorial delivery.
+
+## Career compass expansion (WU099)
+
+Migration `20260928170000_career_compass_requests.sql` expands only the product allowlist of the existing function; the v1 command shape, exact-profile requirement, locks, quotas, owner isolation and grants are unchanged. It does not enable any release or engine. Professional context is optional in the base workflow but is not collected by this strict profile command; context injection remains invalid. The experimental MC calculation is described in `career-compass-calculation.md`. Public direction, work environments, tensions and practical questions still require approved interpretation and are not produced by this intake.
+
+`supabase/forward-fixes/disable_career_compass_requests.sql` restores the four-product allowlist without deleting existing career snapshots, receipts or Library items. It rejects career writes, including same-key command retries; existing read-only recovery remains available. Original four products retain their normal gates. Reapplying the expansion restores idempotent same-key recovery without enabling releases. Both paths are tested locally with synthetic PostgreSQL; no hosted migration or real identity/concurrency certification is implied.

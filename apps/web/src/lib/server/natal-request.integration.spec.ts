@@ -127,7 +127,8 @@ beforeAll(async () => {
 	for (const name of [
 		'20260923180000_natal_onboarding.sql',
 		'20260924170000_product_request_recovery.sql',
-		'20260925160000_natal_product_requests.sql'
+		'20260925160000_natal_product_requests.sql',
+		'20260928170000_career_compass_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -321,6 +322,40 @@ it('refuses an existing generic request key instead of falsely claiming profile 
 	const runId = await submit(body);
 	await db.query('delete from natal_product_requests where run_id=$1', [runId]);
 	await expect(submit(body)).rejects.toThrow('idempotency_conflict');
+});
+
+it('career forward-fix preserves prior products, snapshots and read-only recovery without enabling releases', async () => {
+	await save();
+	const body = request({ productId: 'career-compass' });
+	await expect(submit(body)).rejects.toThrow('workflow_unreleased');
+	await db.exec('update workflow_releases set enabled=true');
+	const runId = await submit(body);
+	const original = (await db.query('select * from product_runs where id=$1', [runId])).rows;
+	await db.exec(await file('supabase/forward-fixes/disable_career_compass_requests.sql'));
+	try {
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+		await expect(submit(request({ productId: 'career-compass' }))).rejects.toThrow('invalid_input');
+		expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+		const recovered = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+				body.requestKey
+			])
+		);
+		expect(recovered.rows[0].value.runId).toBe(runId);
+		for (const productId of ['birth-chart', 'three-pillars', 'ascendant', 'midheaven']) {
+			expect(await submit(request({ productId }))).toBeTruthy();
+		}
+		expect((await db.query('select * from product_runs where id=$1', [runId])).rows).toEqual(
+			original
+		);
+	} finally {
+		await db.exec('update workflow_releases set enabled=false');
+		await db.exec(await file('supabase/migrations/20260928170000_career_compass_requests.sql'));
+	}
+	expect(await submit(body)).toBe(runId);
+	await expect(submit(request({ productId: 'career-compass' }))).rejects.toThrow(
+		'workflow_unreleased'
+	);
 });
 
 it('deleting a run removes its receipt; forward-fix disables writes but retains recovery and snapshots', async () => {

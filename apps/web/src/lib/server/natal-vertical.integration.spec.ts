@@ -15,6 +15,7 @@ import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
+import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
 import { parsePairRequestInput } from '../pair-request';
@@ -90,7 +91,8 @@ beforeAll(async () => {
 		'20260925140000_product_request_access.sql',
 		'20260925160000_natal_product_requests.sql',
 		'20260925190000_date_product_requests.sql',
-		'20260925200000_pair_product_requests.sql'
+		'20260925200000_pair_product_requests.sql',
+		'20260928170000_career_compass_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -645,7 +647,9 @@ it.each(profileProducts)(
 		const calculators =
 			productId === 'date-reading' || productId === 'pair-preview'
 				? createContextCalculators()
-				: createNatalCalculators();
+				: productId === 'career-compass'
+					? createPurposeCalculators()
+					: createNatalCalculators();
 		const expected = await calculators[productId](run.input, {
 			signal: new AbortController().signal,
 			runId: run.id

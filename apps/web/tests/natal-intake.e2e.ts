@@ -67,7 +67,13 @@ async function recovery(page: Page, product = 'birth-chart') {
 		})
 	);
 }
-for (const product of ['birth-chart', 'three-pillars', 'ascendant', 'midheaven']) {
+for (const product of [
+	'birth-chart',
+	'three-pillars',
+	'ascendant',
+	'midheaven',
+	'career-compass'
+]) {
 	test(`${product}: reviewed profile → exact command → verified Library, no birth browser storage`, async ({
 		page
 	}) => {
@@ -93,6 +99,14 @@ for (const product of ['birth-chart', 'three-pillars', 'ascendant', 'midheaven']
 			await route.fulfill({ status: 202, json: { runId } });
 		});
 		await ready(page, product);
+		if (product === 'career-compass') {
+			await expect(
+				page.getByRole('heading', { name: 'Bússola de Carreira', exact: true })
+			).toBeVisible();
+			await expect(
+				page.getByText('Propósito & Prosperidade · novo pedido', { exact: true })
+			).toBeVisible();
+		}
 		expect(writes).toBe(0);
 		await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
@@ -214,36 +228,40 @@ test('denied recovery storage never enables creation', async ({ page }) => {
 		page.getByText('Não foi possível preservar a chave', { exact: false })
 	).toBeVisible();
 });
-for (const width of [1440, 820, 390, 320]) {
-	test(`visual/keyboard/reflow ${width}`, async ({ page }, testInfo) => {
-		await page.setViewportSize({
-			width,
-			height: width === 820 ? 1180 : width === 1440 ? 1000 : 844
+for (const product of ['birth-chart', 'career-compass']) {
+	for (const width of [1440, 820, 390, 320]) {
+		test(`${product}: visual/keyboard/reflow ${width}`, async ({ page }, testInfo) => {
+			await page.setViewportSize({
+				width,
+				height: width === 820 ? 1180 : width === 1440 ? 1000 : 844
+			});
+			await page.emulateMedia({ reducedMotion: 'reduce' });
+			await ready(page, product);
+			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+				true
+			);
+			await page.getByLabel(privacy, { exact: false }).focus();
+			await page.keyboard.press('Space');
+			await expect(page.getByLabel(privacy, { exact: false })).toBeChecked();
+			await page.keyboard.press('Tab');
+			await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeFocused();
+			expect(
+				await page.locator('.skip-link').evaluate((link) => getComputedStyle(link).clipPath)
+			).toBe('inset(50%)');
+			await page.screenshot({
+				path: testInfo.outputPath(`${product}-intake-${width}.png`),
+				fullPage: true
+			});
 		});
-		await page.emulateMedia({ reducedMotion: 'reduce' });
-		await ready(page);
-		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
-			true
-		);
-		await page.getByLabel(privacy, { exact: false }).focus();
-		await page.keyboard.press('Space');
-		await expect(page.getByLabel(privacy, { exact: false })).toBeChecked();
-		await page.keyboard.press('Tab');
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeFocused();
-		expect(
-			await page.locator('.skip-link').evaluate((link) => getComputedStyle(link).clipPath)
-		).toBe('inset(50%)');
-		await page.screenshot({
-			path: testInfo.outputPath(`natal-intake-${width}.png`),
-			fullPage: true
-		});
+	}
+}
+for (const product of ['birth-chart', 'career-compass']) {
+	test(`real ${product} intake requires authentication`, async ({ page }) => {
+		await page.goto(`/biblioteca/nova/${product}`);
+		await expect(page).toHaveURL(/\/entrar/);
 	});
 }
-test('real natal intake requires authentication', async ({ page }) => {
-	await page.goto('/biblioteca/nova/birth-chart');
-	await expect(page).toHaveURL(/\/entrar/);
-});
 test('skip link is revealed on keyboard focus and reaches main content', async ({ page }) => {
 	await ready(page);
 	const skip = page.getByRole('link', { name: 'Ir para o conteúdo' });
