@@ -3,8 +3,9 @@ import { PROMPT_VERSION, SCHEMA_VERSION, tierLimits, type Capability, type Tier 
 import { RUBRIC_VERSION, editorialDecision, type ScoredReview } from "./director.ts";
 import { RELEASE_DATASET_VERSION, releaseCases } from "./lab/release-dataset.ts";
 import { evaluateSample, type BenchmarkSample } from "./lab/benchmark.ts";
+import { artifactKeys, validArtifactManifest, type ArtifactDigests, type ArtifactManifest } from "./artifacts.ts";
 
-export const PROMOTION_POLICY_VERSION = "atv-promotion/1.2.0";
+export const PROMOTION_POLICY_VERSION = "atv-promotion/1.3.0";
 export interface EvaluatedSample extends BenchmarkSample {
   resolvedModel: string;
   tier: Tier;
@@ -19,8 +20,8 @@ export interface PromotionCandidate {
   model: string;
   resolvedModel: string;
   versions: { constitution: string; prompt: string; schema: string; rubric: string; dataset: string };
-  /** Hashes of repository artifacts, checked by the release operator against disk. */
-  artifactDigests: { prompt: string; schema: string; rubric: string; dataset: string };
+  /** Hashes must match the independently supplied trusted repository manifest. */
+  artifactDigests: ArtifactDigests;
   samples: EvaluatedSample[];
   privacyReview: string;
   fallbackEvaluation: string;
@@ -29,6 +30,8 @@ export interface PromotionCandidate {
 export interface ReviewAuthority {
   reviewers: readonly string[];
   calibrations: readonly string[];
+  /** Independent trusted input, never copied from the candidate. Missing proof fails closed. */
+  artifacts?: ArtifactManifest;
 }
 
 /** An evidence gate, not a signature verifier. Only trusted server/repository records may enter here. */
@@ -41,8 +44,12 @@ export function assessPromotion(candidate: PromotionCandidate, authority: Review
   };
   for (const [key, version] of Object.entries(expected))
     if (candidate.versions[key as keyof typeof expected] !== version) reject(`stale_${key}`);
-  for (const key of ["prompt", "schema", "rubric", "dataset"] as const)
+  const artifacts = validArtifactManifest(authority.artifacts) ? authority.artifacts : null;
+  if (!artifacts) reject("artifact_manifest_missing_or_invalid");
+  for (const key of artifactKeys) {
     if (!/^[a-f0-9]{64}$/.test(candidate.artifactDigests[key])) reject(`missing_${key}_digest`);
+    if (artifacts && candidate.artifactDigests[key] !== artifacts.artifactDigests[key]) reject(`artifact_mismatch:${key}`);
+  }
   if (!candidate.owner.trim() || !candidate.privacyReview.trim() || !candidate.fallbackEvaluation.trim())
     reject("operational_reviews_missing");
   if (!candidate.provider.trim() || !/^[a-z0-9._-]{1,100}$/.test(candidate.model) ||

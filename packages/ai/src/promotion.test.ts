@@ -4,7 +4,8 @@ import { createHash } from "node:crypto";
 import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, dimensions, RUBRIC_VERSION } from "./index.ts";
 import { goldenSeed } from "./lab/dataset.ts";
 import { RELEASE_DATASET_VERSION, releaseCases } from "./lab/release-dataset.ts";
-import { assessPromotion, promotedModels, type PromotionCandidate } from "./promotion.ts";
+import { assessPromotion, promotedModels, type PromotionCandidate, type ReviewAuthority } from "./promotion.ts";
+import { ARTIFACT_MANIFEST_VERSION, artifactKeys } from "./artifacts.ts";
 
 const digest = createHash("sha256").update(JSON.stringify(goldenSeed)).digest("hex");
 function candidate(): PromotionCandidate {
@@ -23,7 +24,27 @@ function candidate(): PromotionCandidate {
     }))),
   };
 }
-const authority = { reviewers: ["test-only"], calibrations: [] };
+const authority = { reviewers: ["test-only"], calibrations: [], artifacts: {
+  version: ARTIFACT_MANIFEST_VERSION, commit: "1".repeat(40),
+  artifactDigests: { prompt: digest, schema: digest, rubric: digest, dataset: digest },
+} } satisfies ReviewAuthority;
+
+test("release blocks missing/invalid independent manifest and every mismatched artifact", () => {
+  for (const artifacts of [undefined, null, {}, { ...authority.artifacts, version: "stale" },
+    { ...authority.artifacts, commit: "HEAD" }, { ...authority.artifacts, extra: "untrusted" },
+    { ...authority.artifacts, artifactDigests: { ...authority.artifacts.artifactDigests, prompt: "bad" } }]) {
+    const decision = assessPromotion(candidate(), { ...authority, artifacts: artifacts as never });
+    assert.equal(decision.status, "blocked");
+    assert.ok(decision.reasons.includes("artifact_manifest_missing_or_invalid"));
+  }
+  for (const key of artifactKeys) {
+    const value = candidate(); value.artifactDigests[key] = "0".repeat(64);
+    const decision = assessPromotion(value, authority);
+    assert.equal(decision.status, "blocked");
+    assert.ok(decision.reasons.includes(`artifact_mismatch:${key}`));
+  }
+  assert.deepEqual(promotedModels, []);
+});
 test("promotion exige corpus completo, identidade, custo, SLA e crítica autorizada", () => {
   assert.equal(releaseCases.length, 42);
   assert.equal(assessPromotion(candidate(), authority).status, "eligible-for-release");

@@ -15,6 +15,7 @@ O laboratório transforma fatos aprovados em candidatos editoriais. Não calcula
 | Director, thresholds e seleção de revisão | `packages/ai/src/director.ts`, `atv-director/1.0.0` |
 | 10 casos sintéticos e dois golden seeds | `packages/ai/src/lab/dataset.ts`, `atv-synthetic/1.0.0` |
 | Avaliação reproduzível | `packages/ai/src/lab/benchmark.ts` |
+| Manifesto independente de artefatos | `packages/ai/src/artifacts.ts`, `scripts/lab-artifacts.mjs` |
 | Gateway com providers substituíveis | `packages/ai/src/gateway.ts` |
 | Projeção de memória consentida | `packages/ai/src/memory.ts` |
 
@@ -82,7 +83,7 @@ WU-075: benchmark `atv-benchmark/1.1.0` e promoção `atv-promotion/1.1.0` não 
 
 Para promoção: schema e hard checks em todos os casos; revisão factual/segurança em todos; dimensões acima dos pisos; repetições e estabilidade; testes adversariais; cota/custo/latência e privacidade verificadas; fallback avaliado; decisão versionada com responsável e hashes. Dataset de 10 casos é baseline pequeno, não evidência suficiente para todos os produtos. Nenhum modelo está promovido nesta fundação.
 
-WU-076: políticas atuais de benchmark/promoção `1.2.0`. Uma única representação JSON congelada alimenta schema, hard checks, contagem e digest, preservando os hashes históricos. Saída não serializável é rejeitada com `outputSerialization:unserializable`, `digest:null` e `outputChars:null`, sem interromper o lote ou divulgar a exceção. JSON serializável mas inválido conserva seu hash para investigação, sem aprovação. A revisão nunca pode substituir um digest ausente.
+WU-076: benchmark `1.2.0` (promoção atual `1.3.0`, WU-094). Uma única representação JSON congelada alimenta schema, hard checks, contagem e digest, preservando os hashes históricos. Saída não serializável é rejeitada com `outputSerialization:unserializable`, `digest:null` e `outputChars:null`, sem interromper o lote ou divulgar a exceção. JSON serializável mas inválido conserva seu hash para investigação, sem aprovação. A revisão nunca pode substituir um digest ausente.
 
 Fontes primárias consultadas em 08/09/2026: [saídas estruturadas Gemini](https://ai.google.dev/gemini-api/docs/structured-output), [preços e Free Tier](https://ai.google.dev/gemini-api/docs/pricing), [termos do Gemini](https://ai.google.dev/gemini-api/terms). O proprietário confirmou Free Tier sem cobrança em conversa; o MCP disponível não expõe billing nem usage metadata. Conteúdo pessoal não é usado no laboratório.
 
@@ -92,7 +93,9 @@ WU-077 acrescenta `scripts/helpers/product-lab-corpus.mjs`: corpus separado, atu
 
 Esse corpus não substitui o dataset de release, não contém respostas/notas/goldens aprovados e não amplia entitlements. Todos os casos continuam sintéticos, parciais, `not-reviewed`, com publicação bloqueada. Os 13 produtos sem calculador ficam explicitamente listados como não cobertos. O tier intermediário descreve somente o contrato de teste; não autoriza chamada ou venda. O fingerprint detecta mudanças, não certifica exatidão astronômica ou qualidade editorial.
 
-WU-028 (09/09/2026): `promotion.ts` implementa a elegibilidade de release por capacidade/tier, sete estratos e três repetições independentes por caso, versões atuais, hashes de artefatos, identidade resolvida, tokens conhecidos, R$0, SLA e revisão autorizada vinculada ao digest exato. Elegibilidade não promove: `promotedModels` permanece vazio. Hashes e registros operacionais precisam ser confrontados com os arquivos pelo operador confiável; o gate não autentica assinaturas. Fixtures de teste com notas sintéticas provam a lógica de recusa, não qualidade editorial.
+WU-028 (09/09/2026): `promotion.ts` implementa a elegibilidade de release por capacidade/tier, sete estratos e três repetições independentes por caso, versões atuais, hashes de artefatos, identidade resolvida, tokens conhecidos, R$0, SLA e revisão autorizada vinculada ao digest exato. Elegibilidade não promove: `promotedModels` permanece vazio. Fixtures de teste com notas sintéticas provam a lógica de recusa, não qualidade editorial.
+
+WU-094: promoção `atv-promotion/1.3.0` exige `authority.artifacts` independente do candidato. O operador confiável gera o manifesto offline com `node scripts/lab-artifacts.mjs` (HEAD resolvido para SHA imutável) ou um SHA completo aprovado. São quatro digests de grupos de blobs Git, incluindo dependências transitivas explícitas. Ausência/formato inválido da referência ou qualquer divergência bloqueiam elegibilidade; o candidato não pode fornecer sua própria referência. Isso não autentica assinaturas, revisores ou recibos e não garante que a execução tenha usado esses artefatos: a proveniência operacional continua sujeita à revisão. Mudanças locais não commitadas não entram no snapshot. Contrato completo: [artefatos do Lab](../contracts/lab-artifacts.md). Nenhum modelo homologado, chamada externa ou alteração do registro de promoção.
 
 `lab/release-dataset.ts` adiciona 42 casos sintéticos estratificados por contexto às seis capacidades. São uma base de ampliação, não corpus calibrado por produto: repetem fatores-base dentro de cada capacidade. O baseline de dez casos e suas vinte amostras históricas permanecem reproduzíveis; os dois golden seeds continuam sem calibração humana. Ainda faltam diversidade factual por produto, revisão factual/semântica independente e execuções repetidas válidas para homologação.
 
