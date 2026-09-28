@@ -35,7 +35,7 @@ export async function dateRequestApi(
 		const { data: session, error: authError } = await client.auth.getClaims();
 		if (authError || !session?.claims?.sub || !isUuid(session.claims.sub))
 			return fail('auth_required', 401);
-		const body = await readSmallJson(event.request, 4096);
+		const body = await readSmallJson(event.request, 8192);
 		if (
 			!body ||
 			typeof body !== 'object' ||

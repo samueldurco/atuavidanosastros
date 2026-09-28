@@ -131,7 +131,8 @@ beforeAll(async () => {
 		'20260923180000_natal_onboarding.sql',
 		'20260924170000_product_request_recovery.sql',
 		'20260925160000_natal_product_requests.sql',
-		'20260925190000_date_product_requests.sql'
+		'20260925190000_date_product_requests.sql',
+		'20260928190000_date_reading_context.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -382,7 +383,7 @@ it('rejects cross-origin, malformed, oversized or extra HTTP fields before persi
 		[],
 		{ ...body, ownerId: other },
 		{ ...body, requestKey: 'invalid' },
-		{ ...body, input: 'x'.repeat(5000) }
+		{ ...body, input: 'x'.repeat(9000) }
 	])
 		expect((await dateRequestApi(event(invalid))).status).toBe(400);
 	const malformed = event(body);
@@ -401,6 +402,150 @@ it.each(['throw', 'error', 'bad-id'])('redacts backend failures: %s', async (mod
 	expect(await response.json()).toEqual({ error: 'workflow_unavailable' });
 	expect(response.headers.get('cache-control')).toBe('private, no-store');
 	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+
+it.each([
+	undefined,
+	'  Relato privado sintético\ncom pausas\t  ',
+	'界'.repeat(1200),
+	'🌌'.repeat(600)
+])('v2 report %# is exact, optional and private through HTTP and SQL', async (context) => {
+	await save();
+	await enable();
+	const body = request({
+		version: 'atv-date-request/2',
+		...(context === undefined ? {} : { context })
+	});
+	const response = await dateRequestApi(event(body));
+	expect(response.status).toBe(202);
+	const payload = (await response.json()) as { runId: string };
+	expect(Object.keys(payload)).toEqual(['runId']);
+	const run = (
+		await db.query<{ input: Record<string, unknown> }>(
+			'select input from product_runs where id=$1',
+			[payload.runId]
+		)
+	).rows[0];
+	expect(run.input.context).toBe(context);
+	expect(Object.hasOwn(run.input, 'context')).toBe(context !== undefined);
+	expect(parseWorkflowInput(run.input)).toEqual(run.input);
+	expect(
+		(await db.query<{ command: unknown }>('select command from date_product_requests')).rows[0]
+			.command
+	).toEqual(body.input);
+	await save(1, { latitude: 10 });
+	await forget(2);
+	await db.exec('update workflow_releases set enabled=false');
+	expect(await submit(body)).toBe(payload.runId);
+	await expect(
+		submit(request({ ...body.input, context: 'Alterado' }, body.requestKey))
+	).rejects.toThrow('idempotency_conflict');
+	const recovered = await asRole(db, 'authenticated', owner, () =>
+		db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+			body.requestKey
+		])
+	);
+	expect(recovered.rows[0].value.runId).toBe(payload.runId);
+	expect(JSON.stringify(recovered)).not.toContain('context');
+	const foreign = await asRole(db, 'authenticated', other, () =>
+		db.query<{ value: unknown }>('select recover_product_request($1) value', [body.requestKey])
+	);
+	expect(foreign.rows[0].value).toBeNull();
+	expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+});
+
+it('rejects invalid v2 context and broader commands consistently before any persistence', async () => {
+	await save();
+	await enable();
+	for (const change of [
+		...[
+			null,
+			1,
+			{},
+			[],
+			'',
+			' \t\n',
+			'\u00a0\u2000\ufeff',
+			'a'.repeat(1201),
+			'🌌'.repeat(601),
+			'a\u0008',
+			'a\u007f',
+			'a\u0085'
+		].map((context) => ({ context })),
+		{ dateContext: 'alias' },
+		{ ownerId: other },
+		{ birth: natal },
+		{ timezone: 'UTC' },
+		{ productId: 'weekly-sky' },
+		{ productId: 'solar-return' },
+		{ version: 'atv-date-request/3' },
+		{ consent: { ...input().consent, continuity: true } }
+	]) {
+		const body = request({ version: 'atv-date-request/2', ...change });
+		expect(parseDateRequestInput(body.input)).toBeNull();
+		expect((await dateRequestApi(event(body))).status).toBe(400);
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+	}
+	// PostgreSQL rejects NUL/unpaired surrogates before PL/pgSQL; HTTP must refuse them too.
+	for (const context of ['a\u0000', '\ud800', '\udfff']) {
+		const body = request({ version: 'atv-date-request/2', context });
+		expect((await dateRequestApi(event(body))).status).toBe(400);
+		await expect(submit(body)).rejects.toThrow();
+	}
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+
+it('accepts maximum escaped Unicode within 8192 bytes, rejects larger wire bodies', async () => {
+	await save();
+	await enable();
+	const body = request({ version: 'atv-date-request/2', context: '界'.repeat(1200) });
+	const serialized = JSON.stringify(body).replaceAll('界', '\\u754c');
+	expect(new TextEncoder().encode(serialized).length).toBeLessThan(8192);
+	const accepted = event(body);
+	accepted.request = new Request(accepted.url, {
+		method: 'POST',
+		headers: { origin: accepted.url.origin, 'content-type': 'application/json' },
+		body: serialized
+	});
+	expect((await dateRequestApi(accepted)).status).toBe(202);
+	const oversized = event(body);
+	oversized.request = new Request(oversized.url, {
+		method: 'POST',
+		headers: { origin: oversized.url.origin, 'content-type': 'application/json' },
+		body: serialized + ' '.repeat(8192)
+	});
+	expect((await dateRequestApi(oversized)).status).toBe(400);
+	expect((await counts()).runs).toBe(1);
+});
+
+it('context forward-fix restores v1 writes without losing v2 history or recovery; migration reapplies', async () => {
+	await save();
+	await enable();
+	const body = request({ version: 'atv-date-request/2', context: 'Relato privado sintético' });
+	const runId = await submit(body);
+	const before = (await db.query('select input from product_runs where id=$1', [runId])).rows[0];
+	await db.exec(await file('supabase/forward-fixes/disable_date_reading_context.sql'));
+	try {
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+		await expect(submit(request({ version: 'atv-date-request/2' }))).rejects.toThrow(
+			'invalid_input'
+		);
+		await submit(request());
+		const recovered = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+				body.requestKey
+			])
+		);
+		expect(recovered.rows[0].value.runId).toBe(runId);
+		expect((await db.query('select input from product_runs where id=$1', [runId])).rows[0]).toEqual(
+			before
+		);
+	} finally {
+		await db.exec(await file('supabase/migrations/20260928190000_date_reading_context.sql'));
+	}
+	expect(await submit(body)).toBe(runId);
+	await submit(request({ version: 'atv-date-request/2' }));
+	expect((await counts()).receipts).toBe(3);
 });
 
 it('cascades receipt deletion; forward-fix preserves snapshots and read-only recovery', async () => {

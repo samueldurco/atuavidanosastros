@@ -93,7 +93,8 @@ beforeAll(async () => {
 		'20260925190000_date_product_requests.sql',
 		'20260925200000_pair_product_requests.sql',
 		'20260928170000_career_compass_requests.sql',
-		'20260928180000_career_compass_context.sql'
+		'20260928180000_career_compass_context.sql',
+		'20260928190000_date_reading_context.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -259,6 +260,7 @@ async function forget(expectedRevision: number) {
 	).toBe(200);
 }
 const careerContext = 'Contexto profissional privado sintético: refletir sobre colaboração.';
+const dateContext = 'Contexto privado sintético: organizar uma conversa nesta data.';
 async function command(productId: string, date = targetDate, pairBirth = partner) {
 	const response = await onboardingApi(event('/api/onboarding'), 'read');
 	expect(response.status).toBe(200);
@@ -276,13 +278,13 @@ async function command(productId: string, date = targetDate, pairBirth = partner
 			productId === 'pair-preview'
 				? 'atv-pair-request/1'
 				: productId === 'date-reading'
-					? 'atv-date-request/1'
+					? 'atv-date-request/2'
 					: productId === 'career-compass'
 						? 'atv-natal-request/2'
 						: 'atv-natal-request/1',
 		productId,
 		...(productId === 'career-compass' ? { context: careerContext } : {}),
-		...(productId === 'date-reading' ? { targetDate: date } : {}),
+		...(productId === 'date-reading' ? { targetDate: date, context: dateContext } : {}),
 		expectedRevision: snapshot!.revision,
 		consent: { ...consent, partner: productId === 'pair-preview' },
 		...(productId === 'pair-preview'
@@ -439,7 +441,8 @@ it.each(['1900-01-01', '2028-02-29', '2099-12-31'])(
 		expect(calculation.facts.map((f) => f.id)).toEqual([
 			...bodies.map((body) => `natal-${body}`),
 			...bodies.map((body) => `sample-${body}`),
-			'sample-instant'
+			'sample-instant',
+			'personal-context'
 		]);
 		expect(calculation.limits).toContain(
 			'A data foi amostrada somente às 12:00 UTC. Não é meio-dia local, cobertura do dia, janela favorável, previsão ou busca de trânsito exato.'
@@ -640,7 +643,7 @@ it.each(profileProducts)(
 			...(productId === 'career-compass' ? { context: careerContext } : {}),
 			consent: { ...consent, partner: productId === 'pair-preview' },
 			...(productId === 'pair-preview' ? { partner } : {}),
-			...(productId === 'date-reading' ? { targetDate } : {})
+			...(productId === 'date-reading' ? { targetDate, context: dateContext } : {})
 		});
 		expect(run.state).toBe('QUEUED');
 		const idle = vi.fn(workerRpc);
@@ -661,11 +664,11 @@ it.each(profileProducts)(
 			runId: run.id
 		});
 		expect(deterministicSnapshot(calculated.calculation)).toEqual(deterministicSnapshot(expected));
-		if (productId === 'career-compass') {
+		if (productId === 'career-compass' || productId === 'date-reading') {
 			expect(calculated.calculation?.facts).toContainEqual({
 				id: 'personal-context',
 				kind: 'reported',
-				display: careerContext,
+				display: productId === 'career-compass' ? careerContext : dateContext,
 				source: 'input.context'
 			});
 			const withoutContext = { ...run.input };

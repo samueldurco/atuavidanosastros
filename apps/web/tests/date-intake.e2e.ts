@@ -7,6 +7,8 @@ const productId = 'date-reading';
 const path = '/biblioteca/_spec/entrada?product=date-reading';
 const slot = `atv-create:${owner}:${productId}`;
 const privacy = 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida';
+const contextLabel = 'Contexto da consulta (opcional)';
+const report = '  Relato privado sintético: preparar uma conversa\ncom calma.  ';
 const snapshot = () => ({
 	version: 'atv-onboarding/1',
 	revision: 2,
@@ -71,10 +73,11 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 		writes++;
 		const body = route.request().postDataJSON();
 		expect(body.input).toEqual({
-			version: 'atv-date-request/1',
+			version: 'atv-date-request/2',
 			productId,
 			expectedRevision: 2,
 			targetDate: '2028-02-29',
+			context: report,
 			consent: {
 				storage: true,
 				policyVersion: 'atv-input-consent/1',
@@ -95,6 +98,9 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	await expect(submit).toBeDisabled();
 	await date.fill('2028-02-29');
 	await expect(consent).not.toBeChecked();
+	await consent.check();
+	await page.getByLabel(contextLabel, { exact: true }).fill(report);
+	await expect(consent).not.toBeChecked();
 	await expect(
 		page.getByText('O cálculo atual usa uma única amostra', { exact: false })
 	).toBeVisible();
@@ -109,6 +115,8 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	expect(Object.keys(stored)).toEqual([slot]);
 	expect(stored[slot]).toMatch(/^[a-f0-9-]{36}$/);
 	await expect(date).toHaveValue('');
+	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
+	expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).not.toContain(report);
 	await page.getByRole('button', { name: 'Preparar outro pedido' }).click();
 	await expect(submit).toBeDisabled();
 	await expect(consent).not.toBeChecked();
@@ -149,9 +157,12 @@ test('lost acknowledgement reload uses UUID recovery without profile/date or rep
 	});
 	await ready(page);
 	await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
+	await page.getByLabel(contextLabel, { exact: true }).fill(report);
 	await page.getByLabel(privacy, { exact: false }).check();
 	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeVisible();
+	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
+	expect(Object.keys(await page.evaluate(() => ({ ...sessionStorage })))).toEqual([slot]);
 	await page.unroute('**/api/onboarding');
 	let reads = 0;
 	await page.route('**/api/onboarding', (route) => {
@@ -210,6 +221,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await page.emulateMedia({ reducedMotion: 'reduce' });
 		await ready(page);
 		await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
+		await page.getByLabel(contextLabel, { exact: true }).fill(report);
 		const consent = page.getByLabel(privacy, { exact: false });
 		await consent.focus();
 		await page.keyboard.press('Space');
@@ -228,4 +240,39 @@ for (const width of [1440, 820, 390, 320]) {
 test('real date intake requires authentication', async ({ page }) => {
 	await page.goto('/biblioteca/nova/date-reading');
 	await expect(page).toHaveURL(/\/entrar/);
+});
+
+test('blank report is optional; whitespace is invalid and max length is enforced', async ({
+	page
+}) => {
+	let writes = 0;
+	await recovery(page);
+	await page.route('**/api/workflows/date', (route) => {
+		writes++;
+		const body = route.request().postDataJSON();
+		expect(body.input.version).toBe('atv-date-request/2');
+		expect(body.input).not.toHaveProperty('context');
+		return route.fulfill({ status: 202, json: { runId } });
+	});
+	await ready(page);
+	await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
+	const context = page.getByLabel(contextLabel, { exact: true });
+	const consent = page.getByLabel(privacy, { exact: false });
+	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
+	await expect(context).toHaveAttribute('maxlength', '1200');
+	await context.fill('   ');
+	await expect(context).toHaveAttribute('aria-invalid', 'true');
+	await consent.check();
+	await expect(submit).toBeDisabled();
+	await context.fill('a'.repeat(1200));
+	await context.press('End');
+	await context.pressSequentially('b');
+	await expect(context).toHaveValue('a'.repeat(1200));
+	await expect(context).toHaveAttribute('aria-invalid', 'false');
+	await context.fill('');
+	await expect(consent).not.toBeChecked();
+	await consent.check();
+	await submit.click();
+	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+	expect(writes).toBe(1);
 });

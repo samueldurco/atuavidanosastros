@@ -3,13 +3,9 @@
 	import { validDate, workflowFor } from '@atv/domain';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
-	import {
-		NATAL_REQUEST_VERSION,
-		CAREER_REQUEST_VERSION,
-		CAREER_CONTEXT_LIMIT,
-		validCareerContext
-	} from '$lib/natal-request';
-	import { DATE_REQUEST_VERSION } from '$lib/date-request';
+	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
+	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
+	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import { PAIR_REQUEST_VERSION } from '$lib/pair-request';
 	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
 	import PartnerBirthFields from './PartnerBirthFields.svelte';
@@ -26,7 +22,7 @@
 	let busy = $state(false);
 	let consent = $state(false);
 	let targetDate = $state('');
-	let careerContext = $state('');
+	let reportedContext = $state('');
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
 	let feedback: HTMLParagraphElement | undefined = $state();
@@ -38,8 +34,10 @@
 	const isDate = $derived(productId === 'date-reading');
 	const isPair = $derived(productId === 'pair-preview');
 	const isCareer = $derived(productId === 'career-compass');
-	const careerValid = $derived(
-		!isCareer || careerContext === '' || validCareerContext(careerContext)
+	const acceptsContext = $derived(isCareer || isDate);
+	const contextId = $derived(isDate ? 'date-context' : 'career-context');
+	const contextValid = $derived(
+		!acceptsContext || reportedContext === '' || validReportedContext(reportedContext)
 	);
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
@@ -135,7 +133,7 @@
 			!snapshot ||
 			!dateValid ||
 			!pairValid ||
-			!careerValid
+			!contextValid
 		)
 			return;
 		busy = true;
@@ -143,13 +141,13 @@
 			version: isPair
 				? PAIR_REQUEST_VERSION
 				: isDate
-					? DATE_REQUEST_VERSION
+					? DATE_CONTEXT_REQUEST_VERSION
 					: isCareer
 						? CAREER_REQUEST_VERSION
 						: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
-			...(isCareer && careerContext !== '' ? { context: careerContext } : {}),
+			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),
 			...(isDate ? { targetDate } : {}),
 			...(isPair
 				? {
@@ -170,7 +168,7 @@
 			}
 		};
 		outcome = await controller.perform(true, input);
-		careerContext = '';
+		reportedContext = '';
 		targetDate = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
@@ -190,7 +188,7 @@
 	function another() {
 		if (!controller || busy || loading) return;
 		outcome = controller.startAnother();
-		careerContext = '';
+		reportedContext = '';
 		targetDate = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
@@ -326,29 +324,31 @@
 							{/snippet}
 						</Field>
 					{/if}
-					{#if isCareer}
+					{#if acceptsContext}
 						<Field
-							id="career-context"
-							label="Contexto profissional (opcional)"
+							id={contextId}
+							label={isDate
+								? 'Contexto da consulta (opcional)'
+								: 'Contexto profissional (opcional)'}
 							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
-							error={!careerValid
+							error={!contextValid
 								? 'Escreva até 1.200 caracteres válidos ou deixe o campo vazio.'
 								: undefined}
 						>
 							{#snippet children(describedBy)}
 								<textarea
-									id="career-context"
+									id={contextId}
 									rows="5"
-									maxlength={CAREER_CONTEXT_LIMIT}
+									maxlength={REPORTED_CONTEXT_LIMIT}
 									autocomplete="off"
-									bind:value={careerContext}
+									bind:value={reportedContext}
 									oninput={resetConsents}
-									aria-describedby={describedBy + ' career-context-count'}
-									aria-invalid={!careerValid}></textarea>
+									aria-describedby={describedBy + ' ' + contextId + '-count'}
+									aria-invalid={!contextValid}></textarea>
 							{/snippet}
 						</Field>
-						<p id="career-context-count" class="privacy">
-							{careerContext.length} / 1.200 caracteres. O relato será guardado somente neste pedido;
+						<p id={contextId + '-count'} class="privacy">
+							{reportedContext.length} / 1.200 caracteres. O relato será guardado somente neste pedido;
 							não atualiza o perfil natal nem autoriza memória ATV+.
 						</p>
 					{/if}
@@ -361,7 +361,7 @@
 						/>{isPair
 							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
 							: isDate
-								? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida e dos resultados deste pedido na minha conta.'
+								? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 								: isCareer
 									? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
 									: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
@@ -374,7 +374,7 @@
 					<Button
 						type="submit"
 						pending={busy}
-						disabled={!canEnter || !consent || !dateValid || !pairValid || !careerValid}
+						disabled={!canEnter || !consent || !dateValid || !pairValid || !contextValid}
 						>Criar pedido</Button
 					>
 				</fieldset>
