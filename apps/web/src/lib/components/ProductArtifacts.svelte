@@ -30,7 +30,6 @@
 		message = '';
 		failed = false;
 		controller = new AbortController();
-		const timeout = setTimeout(() => controller?.abort(), 30000);
 		try {
 			if (!artifact) {
 				artifacts = null;
@@ -59,7 +58,6 @@
 						: 'A consulta foi interrompida. Tente novamente; seu registro permanece salvo.';
 			}
 		} finally {
-			clearTimeout(timeout);
 			if (alive) {
 				busy = false;
 				await tick();

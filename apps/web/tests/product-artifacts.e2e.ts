@@ -19,6 +19,80 @@ const manifest = {
 	createdAt: run.createdAt
 };
 const endpoint = `/api/workflows/${run.id}/artifacts`;
+
+for (const stalled of ['list', 'download']) {
+	test(`stored ${stalled} timeout permits explicit recovery and ignores a late response`, async ({
+		page
+	}) => {
+		let release!: () => void;
+		const held = new Promise<void>((resolve) => {
+			release = resolve;
+		});
+		let calls = 0;
+		let downloads = 0;
+		page.on('download', () => downloads++);
+		await page.addInitScript((path) => {
+			const original = window.fetch.bind(window);
+			// Test-only transport ignores AbortSignal; the client must still settle its wait.
+			window.fetch = (input, init) =>
+				original(
+					input,
+					typeof input === 'string' && input.startsWith(path)
+						? { ...init, signal: undefined }
+						: init
+				);
+		}, endpoint);
+		await page.route(`**${endpoint}`, async (route) => {
+			if (stalled === 'list' && ++calls === 1) {
+				await held;
+				await route.fulfill({ json: { artifacts: [] } });
+			} else await route.fulfill({ json: { artifacts: [manifest] } });
+		});
+		await page.route(`**${endpoint}/${manifest.id}`, async (route) => {
+			if (stalled === 'download' && ++calls === 1) await held;
+			await route.fulfill({
+				body,
+				headers: {
+					'content-type': artifactFormats.web.mime,
+					'x-atv-artifact-id': manifest.id,
+					'x-atv-export-version': manifest.rendererVersion,
+					'x-atv-artifact-sha256': manifest.sha256
+				}
+			});
+		});
+		await page.goto('/biblioteca/_spec/arquivos');
+		await page.clock.install();
+		const consult = page.getByRole('button', { name: 'Consultar arquivos guardados' });
+		await consult.click();
+		if (stalled === 'download')
+			await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+		await expect.poll(() => calls).toBe(1);
+		await page.clock.fastForward(30001);
+		await expect(
+			page.getByText('A consulta foi interrompida. Tente novamente; seu registro permanece salvo.')
+		).toBeVisible();
+		await expect(consult).toBeEnabled();
+		await expect(consult).toBeFocused();
+		await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toHaveCount(0);
+		expect(calls).toBe(1);
+		expect(downloads).toBe(0);
+		await consult.click();
+		await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toBeVisible();
+		const lateResponse = page.waitForResponse((response) =>
+			response.url().endsWith(stalled === 'list' ? endpoint : `${endpoint}/${manifest.id}`)
+		);
+		release();
+		await lateResponse;
+		await page.clock.runFor(100);
+		await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toBeVisible();
+		expect(downloads).toBe(0);
+		const download = page.waitForEvent('download');
+		await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+		expect(await readFile((await (await download).path())!, 'utf8')).toBe(body);
+		expect(downloads).toBe(1);
+	});
+}
+
 for (const width of [1440, 820, 390, 320]) {
 	test(`stored artifact consultation and exact recovery ${width}`, async ({ page }, testInfo) => {
 		let lists = 0;
