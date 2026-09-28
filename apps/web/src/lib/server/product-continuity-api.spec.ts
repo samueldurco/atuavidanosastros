@@ -5,12 +5,17 @@ import { POST as readRoute } from '../../routes/api/continuity/read/+server';
 import { POST as consentRoute } from '../../routes/api/continuity/consent/+server';
 import { POST as saveRoute } from '../../routes/api/continuity/save/+server';
 import { POST as deleteRoute } from '../../routes/api/continuity/delete/+server';
+import { POST as accessRoute } from '../../routes/api/continuity/access/+server';
+import { POST as clearAccessRoute } from '../../routes/api/continuity/clear-access/+server';
 
 // Fixtures supply the common request fields; route params are intentionally unused.
 const read = (event: RequestEvent) => readRoute(event as Parameters<typeof readRoute>[0]);
 const consent = (event: RequestEvent) => consentRoute(event as Parameters<typeof consentRoute>[0]);
 const save = (event: RequestEvent) => saveRoute(event as Parameters<typeof saveRoute>[0]);
 const remove = (event: RequestEvent) => deleteRoute(event as Parameters<typeof deleteRoute>[0]);
+const access = (event: RequestEvent) => accessRoute(event as Parameters<typeof accessRoute>[0]);
+const clearAccess = (event: RequestEvent) =>
+	clearAccessRoute(event as Parameters<typeof clearAccessRoute>[0]);
 
 const owner = '00000000-0000-4000-8000-000000000001';
 const runId = '00000000-0000-4000-8000-000000000002';
@@ -144,7 +149,7 @@ it('consent/save/delete routes send only narrow session-bound arguments and vali
 	).toEqual({ revision: 3 });
 });
 
-it.each(['read', 'consent', 'save', 'delete'] as const)(
+it.each(['read', 'consent', 'save', 'delete', 'access', 'clear-access'] as const)(
 	'rejects method/origin/query/auth before %s repository access',
 	async (action) => {
 		const s = setup();
@@ -169,6 +174,57 @@ it.each(['read', 'consent', 'save', 'delete'] as const)(
 		const absent = s.event();
 		absent.locals = {};
 		expect((await productContinuityApi(absent, action)).status).toBe(503);
+	}
+);
+
+it('access routes only inspect/clear metadata using the verified session and empty arguments', async () => {
+	const empty = { version: 'atv-continuity-access/1', events: [] };
+	const s = setup({ data: empty });
+	expect(await body(await access(s.event()))).toEqual(empty);
+	expect(s.rpc).toHaveBeenCalledExactlyOnceWith('read_product_continuity_access', {});
+	for (const deleted of [0, 1, 1000]) {
+		const c = setup({ data: deleted });
+		expect(await body(await clearAccess(c.event()))).toEqual({ deleted });
+		expect(c.rpc).toHaveBeenCalledExactlyOnceWith('clear_product_continuity_access', {});
+	}
+});
+
+it.each(['access', 'clear-access'] as const)(
+	'rejects extra input, sanitizes failure and never retries %s',
+	async (action) => {
+		for (const input of [
+			{ ownerId: owner },
+			{ id },
+			{ retentionDays: 7 },
+			{ selectedIds: [id] },
+			[],
+			null
+		]) {
+			const s = setup();
+			expect((await productContinuityApi(s.event(input), action)).status).toBe(400);
+			expect(s.rpc).not.toHaveBeenCalled();
+		}
+		for (const opts of [
+			{ data: null },
+			{ data: { text: 'PRIVATE' } },
+			{ error: { message: 'PRIVATE_SQL' } },
+			{ throws: true }
+		]) {
+			const s = setup(opts);
+			const response = await productContinuityApi(s.event(), action);
+			expect(response.status).toBe(503);
+			expect(await body(response)).toEqual({ error: 'continuity_service_unavailable' });
+			expect(s.rpc).toHaveBeenCalledTimes(1);
+		}
+	}
+);
+
+it.each([-1, 1.5, '1', true, 2147483648])(
+	'rejects invalid clear-access receipt %#',
+	async (data) => {
+		const s = setup({ data });
+		expect((await clearAccess(s.event())).status).toBe(503);
+		expect(s.rpc).toHaveBeenCalledTimes(1);
 	}
 );
 

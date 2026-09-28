@@ -7,6 +7,7 @@ import {
 	type ContinuityItem
 } from '@atv/domain';
 import { readSmallJson } from './request-json';
+import { parseContinuityAccess } from '$lib/product-continuity-access';
 
 const headers = {
 	'cache-control': 'private, no-store',
@@ -41,7 +42,7 @@ const errors: Record<string, number> = {
 	revision_conflict: 409,
 	item_limit: 429
 };
-type Action = 'read' | 'consent' | 'save' | 'delete';
+type Action = 'read' | 'consent' | 'save' | 'delete' | 'access' | 'clear-access';
 type Event = Pick<RequestEvent, 'request' | 'url' | 'locals'>;
 type ManagedItem = Omit<ContinuityItem, 'ownerId' | 'version'> & {
 	revision: number;
@@ -122,7 +123,10 @@ export async function productContinuityApi(event: Event, action: Action): Promis
 			event.request.headers.get('sec-fetch-site') === 'cross-site'
 		)
 			return fail('same_origin_required', 403);
-		if (event.url.search || !['read', 'consent', 'save', 'delete'].includes(action))
+		if (
+			event.url.search ||
+			!['read', 'consent', 'save', 'delete', 'access', 'clear-access'].includes(action)
+		)
 			return fail('invalid_input', 400);
 		const client = event.locals.supabase;
 		if (!client) return fail('auth_unavailable', 503);
@@ -132,9 +136,14 @@ export async function productContinuityApi(event: Event, action: Action): Promis
 		const value = await readSmallJson(event.request, 8192);
 		if (!object(value)) return fail('invalid_input', 400);
 		let name: string, args: Record<string, unknown>, expectedRevision: number | undefined;
-		if (action === 'read') {
+		if (action === 'read' || action === 'access' || action === 'clear-access') {
 			if (!exact(value, [])) return fail('invalid_input', 400);
-			name = 'read_product_continuity';
+			name =
+				action === 'read'
+					? 'read_product_continuity'
+					: action === 'access'
+						? 'read_product_continuity_access'
+						: 'clear_product_continuity_access';
 			args = {};
 		} else if (action === 'consent') {
 			if (
@@ -192,6 +201,14 @@ export async function productContinuityApi(event: Event, action: Action): Promis
 			const management = parseContinuityManagement(data, ownerId);
 			return management ? reply(management) : fail('continuity_service_unavailable', 503);
 		}
+		if (action === 'access') {
+			const access = parseContinuityAccess(data);
+			return access ? reply(access) : fail('continuity_service_unavailable', 503);
+		}
+		if (action === 'clear-access')
+			return revision(data)
+				? reply({ deleted: data })
+				: fail('continuity_service_unavailable', 503);
 		if (action === 'delete')
 			return typeof data === 'boolean'
 				? reply({ deleted: data })

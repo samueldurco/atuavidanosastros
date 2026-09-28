@@ -18,7 +18,8 @@ beforeAll(async () => {
 	for (const migration of [
 		'20260928130000_product_continuity.sql',
 		'20260928133000_product_continuity_selection.sql',
-		'20260928140000_product_continuity_profile_guard.sql'
+		'20260928140000_product_continuity_profile_guard.sql',
+		'20260928160000_product_continuity_access.sql'
 	])
 		await db.exec(await file(`supabase/migrations/${migration}`));
 }, 20000);
@@ -27,12 +28,20 @@ afterAll(async () => {
 });
 beforeEach(async () => {
 	await db.exec(
-		'delete from product_runs; delete from product_continuity_consents; update product_continuity_policy set enabled=true; update profiles set deleted_at=null; grant execute on function save_product_continuity_item(uuid,uuid,integer,text,jsonb),read_product_continuity_selection(uuid[]) to authenticated'
+		'delete from product_runs; delete from product_continuity_consents; update product_continuity_policy set enabled=true,access_retention_days=7; update profiles set deleted_at=null; grant execute on function save_product_continuity_item(uuid,uuid,integer,text,jsonb),read_product_continuity_selection(uuid[]) to authenticated'
 	);
 	run = await readyArtifactFixture(db);
 });
 type Action = Parameters<typeof productContinuityApi>[1];
 const sql: Record<string, { query: string; keys: string[] }> = {
+	read_product_continuity_access: {
+		query: 'select read_product_continuity_access() as data',
+		keys: []
+	},
+	clear_product_continuity_access: {
+		query: 'select clear_product_continuity_access() as data',
+		keys: []
+	},
 	read_product_continuity: { query: 'select read_product_continuity() as data', keys: [] },
 	set_product_continuity_consent: {
 		query: 'select set_product_continuity_consent($1,$2,$3) as data',
@@ -133,6 +142,60 @@ const prepare = (id: string) =>
 			};
 		}
 	});
+
+it('HTTP access history is owner-only metadata; clearing after revoke/disable preserves notes and scope', async () => {
+	await request('consent', grant());
+	const item = note();
+	await request('save', item);
+	expect((await prepare(item.id)).status).toBe('prepared');
+	const history = await request('access');
+	expect(history.status).toBe(200);
+	expect(history.body).toMatchObject({
+		events: [
+			{
+				consentRevision: 1,
+				items: [{ itemId: item.id, itemRevision: 1, runId: run.id, runRevision: 4 }]
+			}
+		]
+	});
+	for (const secret of [item.selection.text, owner, 'editorial', 'calculation', 'selection'])
+		expect(JSON.stringify(history.body)).not.toContain(secret);
+	expect((await request('access', {}, other)).body).toMatchObject({ events: [] });
+	expect((await request('clear-access', {}, other)).body).toEqual({ deleted: 0 });
+	await request('consent', grant(1, false));
+	await db.exec('update product_continuity_policy set enabled=false');
+	expect((await request('access')).body).toMatchObject({ events: [expect.any(Object)] });
+	expect(await request('clear-access')).toEqual({ status: 200, body: { deleted: 1 } });
+	expect((await request('clear-access')).body).toEqual({ deleted: 0 });
+	expect((await request('read')).body).toMatchObject({
+		consent: { revision: 2, state: 'revoked' },
+		items: [{ id: item.id }]
+	});
+});
+
+it('lost clear response is recoverable by inspection without automatic mutation retry', async () => {
+	await request('consent', grant());
+	const item = note();
+	await request('save', item);
+	await prepare(item.id);
+	expect((await request('clear-access', {}, owner, true)).status).toBe(503);
+	expect((await request('access')).body).toMatchObject({ events: [] });
+	expect((await request('read')).body).toMatchObject({ items: [{ id: item.id }] });
+});
+
+it('soft-deleted profile cannot inspect audit but can erase it; expiry is hidden', async () => {
+	await request('consent', grant());
+	const item = note();
+	await request('save', item);
+	await prepare(item.id);
+	await db.exec(
+		"update product_continuity_access set created_at=now()-interval '8 days',expires_at=now()-interval '1 day'"
+	);
+	expect((await request('access')).body).toMatchObject({ events: [] });
+	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
+	expect(await request('access')).toEqual({ status: 403, body: { error: 'profile_unavailable' } });
+	expect(await request('clear-access')).toEqual({ status: 200, body: { deleted: 1 } });
+});
 
 it('HTTP → SQL → management → selected context honors edits, revoke and delete', async () => {
 	expect((await request('read')).body).toMatchObject({
