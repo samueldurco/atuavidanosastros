@@ -2,6 +2,19 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 import type { DashboardData, NatalSummary } from '$lib/dashboard';
 import { parseOnboardingSnapshot } from '$lib/onboarding';
 import { isUuid } from '$lib/library-result';
+import { parseContinuitySummary, type ContinuitySummary } from '$lib/continuity-summary';
+
+async function readContinuity(client: SupabaseClient): Promise<ContinuitySummary> {
+	try {
+		const { data, error } = await client
+			.rpc('read_product_continuity_summary')
+			.abortSignal(AbortSignal.timeout(10000));
+		const snapshot = error ? null : parseContinuitySummary(data);
+		return snapshot ? { state: 'AVAILABLE', snapshot } : { state: 'UNAVAILABLE' };
+	} catch {
+		return { state: 'UNAVAILABLE' };
+	}
+}
 
 async function readNatal(client: SupabaseClient): Promise<NatalSummary> {
 	try {
@@ -55,7 +68,17 @@ export async function readDashboard(
 	owner: string
 ): Promise<DashboardData> {
 	if (!client || !isUuid(owner))
-		return { preview: false, items: [], libraryError: true, natal: { state: 'UNAVAILABLE' } };
-	const [library, natal] = await Promise.all([readLibrary(client, owner), readNatal(client)]);
-	return { preview: false, ...library, natal };
+		return {
+			preview: false,
+			items: [],
+			libraryError: true,
+			natal: { state: 'UNAVAILABLE' },
+			continuity: { state: 'UNAVAILABLE' }
+		};
+	const [library, natal, continuity] = await Promise.all([
+		readLibrary(client, owner),
+		readNatal(client),
+		readContinuity(client)
+	]);
+	return { preview: false, ...library, natal, continuity };
 }

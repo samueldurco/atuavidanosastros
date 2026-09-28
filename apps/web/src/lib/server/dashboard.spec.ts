@@ -4,6 +4,7 @@ import { readDashboard } from './dashboard';
 import { load } from '../../routes/dashboard/+page.server';
 import { load as specLoad } from '../../routes/dashboard/_spec/+page.server';
 import { ONBOARDING_VERSION } from '$lib/onboarding';
+import { CONTINUITY_SUMMARY_VERSION } from '$lib/continuity-summary';
 
 const owner = '00000000-0000-4000-8000-000000000052';
 const initial = { version: ONBOARDING_VERSION, revision: 0, state: 'NOT_STARTED', natal: null };
@@ -25,10 +26,25 @@ const complete = (precision = 'APPROXIMATE') => ({
 	}
 });
 const item = { id: owner, title: 'Leitura sintética', created_at: '2026-09-24T12:00:00Z' };
+const summary = {
+	version: CONTINUITY_SUMMARY_VERSION,
+	enabled: false,
+	consentState: 'revoked',
+	counts: { total: 4, relevant: 2, irrelevant: 1, unreviewed: 1 }
+};
+const continuity = { state: 'AVAILABLE', snapshot: summary };
 function clientFor(
 	natal: unknown = initial,
 	items: unknown = [],
-	fail: 'natal' | 'library' | 'throw-natal' | 'throw-library' | null = null
+	fail:
+		| 'natal'
+		| 'library'
+		| 'throw-natal'
+		| 'throw-library'
+		| 'continuity'
+		| 'throw-continuity'
+		| null = null,
+	continuityData: unknown = summary
 ) {
 	const query = {
 		select: vi.fn(),
@@ -48,12 +64,49 @@ function clientFor(
 		if (fail === 'throw-natal') throw new Error('PRIVATE');
 		return { data: natal, error: fail === 'natal' ? { message: 'PRIVATE' } : null };
 	});
-	const rpc = vi.fn().mockReturnValue({ abortSignal: rpcRead });
+	const continuityRead = vi.fn().mockImplementation(async () => {
+		if (fail === 'throw-continuity') throw new Error('PRIVATE');
+		return { data: continuityData, error: fail === 'continuity' ? { message: 'PRIVATE' } : null };
+	});
+	const rpc = vi.fn().mockImplementation((name: string) => {
+		if (name === 'read_natal_onboarding') return { abortSignal: rpcRead };
+		if (name === 'read_product_continuity_summary') return { abortSignal: continuityRead };
+		throw new Error('Unexpected RPC');
+	});
 	const from = vi.fn().mockReturnValue(query);
-	return { client: { rpc, from } as unknown as SupabaseClient, query, rpc, from, rpcRead };
+	return {
+		client: { rpc, from } as unknown as SupabaseClient,
+		query,
+		rpc,
+		from,
+		rpcRead,
+		continuityRead
+	};
 }
 
 describe('dashboard minimal authenticated recovery', () => {
+	it.each(['continuity', 'throw-continuity'] as const)(
+		'isolates %s failures without retry or private error text',
+		async (fail) => {
+			const mock = clientFor(complete(), [item], fail);
+			const result = await readDashboard(mock.client, owner);
+			expect(result).toMatchObject({
+				items: [item],
+				libraryError: false,
+				natal: { state: 'COMPLETE' },
+				continuity: { state: 'UNAVAILABLE' }
+			});
+			expect(mock.continuityRead).toHaveBeenCalledTimes(1);
+			expect(JSON.stringify(result)).not.toContain('PRIVATE');
+		}
+	);
+	it('rejects continuity content leakage; a new read recovers current counts', async () => {
+		const mock = clientFor(initial, [], null, { ...summary, notes: 'PRIVATE' });
+		expect((await readDashboard(mock.client, owner)).continuity).toEqual({ state: 'UNAVAILABLE' });
+		mock.continuityRead.mockResolvedValueOnce({ data: summary, error: null });
+		expect((await readDashboard(mock.client, owner)).continuity).toEqual(continuity);
+		expect(mock.rpc).not.toHaveBeenCalledWith('read_product_continuity');
+	});
 	it.each(['NOT_STARTED', 'IN_PROGRESS'])(
 		'recovers %s without inventing completion',
 		async (state) => {
@@ -62,7 +115,8 @@ describe('dashboard minimal authenticated recovery', () => {
 				preview: false,
 				items: [],
 				libraryError: false,
-				natal: { state }
+				natal: { state },
+				continuity
 			});
 		}
 	);
@@ -75,12 +129,16 @@ describe('dashboard minimal authenticated recovery', () => {
 				preview: false,
 				items: [item],
 				libraryError: false,
-				natal: { state: 'COMPLETE', timePrecision: precision }
+				natal: { state: 'COMPLETE', timePrecision: precision },
+				continuity
 			});
 			expect(JSON.stringify(result)).not.toMatch(
 				/PRIVATE|latitude|longitude|2000-01-01|timezone|countryCode/
 			);
-			expect(mock.rpc).toHaveBeenCalledExactlyOnceWith('read_natal_onboarding');
+			expect(mock.rpc).toHaveBeenCalledTimes(2);
+			expect(mock.rpc).toHaveBeenCalledWith('read_natal_onboarding');
+			expect(mock.rpc).toHaveBeenCalledWith('read_product_continuity_summary');
+			expect(mock.continuityRead).toHaveBeenCalledExactlyOnceWith(expect.any(AbortSignal));
 			expect(mock.from).toHaveBeenCalledExactlyOnceWith('library_items');
 			expect(mock.query.select).toHaveBeenCalledWith('id,title,created_at');
 			expect(mock.query.eq).toHaveBeenCalledWith('user_id', owner);
@@ -97,7 +155,8 @@ describe('dashboard minimal authenticated recovery', () => {
 				preview: false,
 				items: [item],
 				libraryError: false,
-				natal: { state: 'UNAVAILABLE' }
+				natal: { state: 'UNAVAILABLE' },
+				continuity
 			});
 		}
 	);
@@ -108,7 +167,8 @@ describe('dashboard minimal authenticated recovery', () => {
 				preview: false,
 				items: [],
 				libraryError: true,
-				natal: { state: 'NOT_STARTED' }
+				natal: { state: 'NOT_STARTED' },
+				continuity
 			});
 		}
 	);
@@ -163,7 +223,11 @@ describe('dashboard minimal authenticated recovery', () => {
 				locals: { supabase: mock.client },
 				setHeaders: vi.fn()
 			} as unknown as Parameters<typeof load>[0])
-		).toMatchObject({ preview: true, natal: { state: 'PREVIEW' } });
+		).toMatchObject({
+			preview: true,
+			natal: { state: 'PREVIEW' },
+			continuity: { state: 'PREVIEW' }
+		});
 		expect(mock.rpc).not.toHaveBeenCalled();
 	});
 	it('uses the verified parent subject and does not return a natal payload', async () => {

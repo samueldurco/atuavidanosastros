@@ -16,7 +16,8 @@ export const load: PageServerLoad = async ({ parent, locals, setHeaders }) => {
 			preview: true,
 			items: [],
 			libraryError: false,
-			natal: { state: 'PREVIEW' }
+			natal: { state: 'PREVIEW' },
+			continuity: { state: 'PREVIEW' }
 		} satisfies DashboardData;
 	return readDashboard(locals.supabase, user.id);
 };

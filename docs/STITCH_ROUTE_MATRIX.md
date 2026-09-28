@@ -82,3 +82,5 @@ Esta matriz distingue rotas existentes de destinos planejados. Mapear não signi
 Evidência das primeiras superfícies: `qa/GATE_B_LOCAL_2026-09-08.md`. Bússola implementada pelo arquétipo P0-01 + VRT-05 não promove os produtos premium dessas pranchas. Shells e componentes são reutilizáveis; não homologam automaticamente todas as rotas consumidoras.
 
 WU-087, MEM-03/SH-03: referências explícitas de continuidade no leitor, com consentimento separado e recuperação. QA `qa/CONTINUITY_READER_2026-09-28.md`; reflow 1440/390/320 e revisão direta 1440/390. Extensão `LOCAL_QA / VISUAL_REVIEW_PARTIAL`, sem elevar a aprovação visual restrita do leitor a Gate B integral ou homologar comércio/ATV+.
+
+WU-088, MEM-01: resumo privado de continuidade no dashboard, somente estado/contagens e acesso à gestão. QA `qa/CONTINUITY_DASHBOARD_2026-09-28.md`; reflow 1440/820/390/320 e revisão direta 1440/390. Extensão `LOCAL_QA_PASS / VISUAL_REVIEW_PARTIAL`, sem Gate B integral ou ativação ATV+.

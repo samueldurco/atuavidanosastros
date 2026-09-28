@@ -18,4 +18,4 @@ Valem os contratos de [gestão](continuity-library.md) e [API](continuity-api.md
 
 ## Limites
 
-Não fecha Gate B integral, QA de JWT/PostgREST hospedado ou concorrência externa. Auditoria persistente de acesso sem conteúdo, descarte de derivados, dashboard de continuidade e executor com revalidação continuam pendentes. Policy permanece default-off; nenhum modelo homologado, migração hospedada, gasto, envio ou ativação ATV+.
+Não fecha Gate B integral, QA de JWT/PostgREST hospedado ou concorrência externa. WU-088 acrescenta [resumo mínimo no dashboard](continuity-dashboard.md). Auditoria persistente de acesso sem conteúdo, descarte de derivados e executor com revalidação continuam pendentes. Policy permanece default-off; nenhum modelo homologado, migração hospedada, gasto, envio ou ativação ATV+.

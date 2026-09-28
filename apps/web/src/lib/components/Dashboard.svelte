@@ -5,6 +5,7 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { natalSummaryCopy, type DashboardData } from '$lib/dashboard';
+	import DashboardContinuity from '$lib/components/DashboardContinuity.svelte';
 	let { data }: { data: DashboardData } = $props();
 	const natalCopy = $derived(natalSummaryCopy(data.natal));
 </script>
@@ -49,34 +50,38 @@
 		</div>
 	</section>
 	<div class="dashboard-grid">
-		<section aria-labelledby="resume-title">
-			<div class="section-label">
-				<h2 id="resume-title">Leituras para reencontrar</h2>
-				<a href="/biblioteca">Ver Biblioteca →</a>
-			</div>
-			{#if data.items.length}<div class="recent-list">
-					{#each data.items as item (item.id)}<article class="recent-item">
-							<span class="paper-mark" aria-hidden="true"></span>
-							<div>
-								<p class="eyebrow">Na sua Biblioteca</p>
-								<h3>{item.title}</h3>
-								<p>
-									Salvo em {new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium' }).format(
-										new Date(item.created_at)
-									)}
-								</p>
-							</div>
-							<a href={`/biblioteca/${item.id}`} aria-label={`Abrir ${item.title}`}>Reencontrar →</a
-							>
-						</article>{/each}
+		<div>
+			<section aria-labelledby="resume-title">
+				<div class="section-label">
+					<h2 id="resume-title">Leituras para reencontrar</h2>
+					<a href="/biblioteca">Ver Biblioteca →</a>
 				</div>
-			{:else if !data.libraryError}<StatePanel
-					title="Sua primeira leitura pode começar agora."
-					description="Ao salvar um resultado, ele ganha lugar na sua Biblioteca para você voltar quando quiser."
-					><Button href="/bussola-de-carreira" variant="secondary">Experimentar a Bússola</Button
-					></StatePanel
-				>{/if}
-		</section>
+				{#if data.items.length}<div class="recent-list">
+						{#each data.items as item (item.id)}<article class="recent-item">
+								<span class="paper-mark" aria-hidden="true"></span>
+								<div>
+									<p class="eyebrow">Na sua Biblioteca</p>
+									<h3>{item.title}</h3>
+									<p>
+										Salvo em {new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium' }).format(
+											new Date(item.created_at)
+										)}
+									</p>
+								</div>
+								<a href={`/biblioteca/${item.id}`} aria-label={`Abrir ${item.title}`}
+									>Reencontrar →</a
+								>
+							</article>{/each}
+					</div>
+				{:else if !data.libraryError}<StatePanel
+						title="Sua primeira leitura pode começar agora."
+						description="Ao salvar um resultado, ele ganha lugar na sua Biblioteca para você voltar quando quiser."
+						><Button href="/bussola-de-carreira" variant="secondary">Experimentar a Bússola</Button
+						></StatePanel
+					>{/if}
+			</section>
+			<DashboardContinuity summary={data.continuity} />
+		</div>
 		<aside>
 			<Card eyebrow="Seu contexto importa" title="Método, antes de promessa."
 				><p class="context-copy">

@@ -18,6 +18,7 @@ Itens guardam somente seleção/relevância, proprietário e referência à leit
 | `set_product_continuity_consent(expectedRevision, runIds, granted)` | Revisão 0 cria o primeiro registro; retorna nova revisão. Compare-and-swap rejeita grant/revogação obsoletos; após conflito a UI deve reler e pedir nova decisão, sem retry cego. Revogação preservada no forward-fix. |
 | `save_product_continuity_item(id, runId, expectedRevision, relevance, selection)` | UUID é gerado pelo cliente. Revisão 0 cria; outra revisão exata edita, inclusive relevância. Até 100 itens por proprietário. Requer consentimento atual cobrindo fonte liberada; não permite mudar o parent nem editar UUID alheio. Retorna nova revisão. |
 | `delete_product_continuity_item(id)` | Remove somente item próprio; ausente/alheio retorna false. Disponível sem gate/consentimento; idempotente e sem reutilizar texto. |
+| `read_product_continuity_summary()` | WU-088: somente estado e contagens próprias, sem conteúdo/IDs. Disponível desligado/revogado; não atesta elegibilidade. Ver [continuity-dashboard.md](continuity-dashboard.md). |
 
 Advisory lock transacional por proprietário serializa quota e CAS entre essas RPCs; grant/save leem policy com lock compartilhado. Isso não certifica concorrência multi-conexão hospedada nem protege um executor externo que envie um contexto previamente preparado. Nenhum executor é adicionado aqui.
 

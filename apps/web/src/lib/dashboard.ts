@@ -1,3 +1,5 @@
+import type { ContinuitySummary } from '$lib/continuity-summary';
+
 export type NatalSummary =
 	| { state: 'PREVIEW' | 'UNAVAILABLE' | 'NOT_STARTED' | 'IN_PROGRESS' }
 	| { state: 'COMPLETE'; timePrecision: 'EXACT' | 'APPROXIMATE' };
@@ -7,6 +9,7 @@ export interface DashboardData {
 	items: { id: string; title: string; created_at: string }[];
 	libraryError: boolean;
 	natal: NatalSummary;
+	continuity: ContinuitySummary;
 }
 
 export function natalSummaryCopy(natal: NatalSummary) {
