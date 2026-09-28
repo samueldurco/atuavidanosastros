@@ -8,7 +8,8 @@ test('continuity access receipts are private, atomic, bounded and disposable', a
   const db=await setupProductDatabase();
   t.after(()=>db.close());
   for(const name of ['20260928130000_product_continuity.sql','20260928133000_product_continuity_selection.sql',
-    '20260928140000_product_continuity_profile_guard.sql','20260928160000_product_continuity_access.sql'])
+    '20260928140000_product_continuity_profile_guard.sql','20260928160000_product_continuity_access.sql',
+    '20260928170000_product_continuity_maintenance.sql'])
     await db.exec(await file(`supabase/migrations/${name}`));
   const rpc=(sql,params=[],user=owner,role='authenticated')=>asRole(db,role,user,async()=>
     (await db.query(sql,params)).rows[0].data);
@@ -125,6 +126,47 @@ test('continuity access receipts are private, atomic, bounded and disposable', a
     await select([chosen[1]]);
     ids=[chosen[1]];
   });
+  await t.test('service maintenance drains only expired receipts in bounded oldest-first batches',async()=>{
+    const before=await count('product_continuity_access');
+    const notes=await count('product_continuity_items');
+    const consent=(await db.query('select * from product_continuity_consents order by user_id')).rows;
+    await db.query(`insert into product_continuity_access(user_id,consent_revision,created_at,expires_at)
+      select case when n%2=0 then $1::uuid else $2::uuid end,1,
+        now()-interval '30 days',now()-interval '2 days'+n*interval '1 second'
+      from generate_series(1,1203) n`,[owner,other]);
+    const expired=(await db.query('select id,user_id from product_continuity_access where expires_at<=now() order by expires_at,id')).rows;
+    const parent=expired.find(row=>row.user_id===owner);
+    await db.query(`insert into product_continuity_access_items(access_id,user_id,position,item_id,item_revision,run_id,run_revision)
+      select $1,$2,1,id,revision,run_id,4 from product_continuity_items where id=$3`,[parent.id,owner,ids[0]]);
+    for(const role of ['anon','authenticated'])
+      await assert.rejects(rpc('select purge_expired_product_continuity_access() as data',[],owner,role),/permission denied/);
+    const proc=(await db.query("select prosecdef,proconfig from pg_proc where oid='purge_expired_product_continuity_access()'::regprocedure")).rows[0];
+    assert.equal(proc.prosecdef,true);assert.deepEqual(proc.proconfig,['search_path=""']);
+    let removed=0;
+    for(const expected of [500,500,203,0]){
+      assert.equal(await rpc('select purge_expired_product_continuity_access() as data',[],null,'service_role'),expected);
+      removed+=expected;
+      assert.equal(await count('product_continuity_access'),before+1203-removed);
+      const remaining=(await db.query('select id from product_continuity_access where expires_at<=now() order by expires_at,id')).rows;
+      assert.deepEqual(remaining.map(row=>row.id),expired.slice(removed).map(row=>row.id));
+    }
+    assert.equal((await db.query('select count(*)::int n from product_continuity_access_items where access_id=$1',[parent.id])).rows[0].n,0);
+    assert.equal(await count('product_continuity_items'),notes);
+    assert.deepEqual((await db.query('select * from product_continuity_consents order by user_id')).rows,consent);
+    assert.equal((await history()).events.length,1);assert.equal((await history(other)).events.length,1);
+  });
+  await t.test('failed batch rolls back every deletion and leaves recovery to a new explicit call',async()=>{
+    await db.query(`insert into product_continuity_access(user_id,consent_revision,created_at,expires_at)
+      select $1,1,now()-interval '2 days',now()-interval '1 day' from generate_series(1,3)`,[owner]);
+    const before=await count('product_continuity_access');
+    await db.exec(`create function qa_refuse_purge() returns trigger language plpgsql as $$
+      begin raise exception 'fixture purge failure'; end $$;
+      create trigger qa_refuse_purge after delete on product_continuity_access for each statement execute function qa_refuse_purge()`);
+    await assert.rejects(rpc('select purge_expired_product_continuity_access() as data',[],null,'service_role'),/fixture purge failure/);
+    assert.equal(await count('product_continuity_access'),before);
+    await db.exec('drop trigger qa_refuse_purge on product_continuity_access; drop function qa_refuse_purge()');
+    assert.equal(await rpc('select purge_expired_product_continuity_access() as data',[],null,'service_role'),3);
+  });
   await t.test('forward-fix never restores unaudited core; revocation, inspection and erasure survive',async()=>{
     await db.exec(await file('supabase/forward-fixes/disable_product_continuity_access.sql'));
     await assert.rejects(select([ids[0]]),/permission denied/);
@@ -139,5 +181,16 @@ test('continuity access receipts are private, atomic, bounded and disposable', a
     assert.equal(await count('product_continuity_access'),0);
     assert.equal(await count('product_continuity_access_items'),0);
     assert.equal(await rpc('select clear_product_continuity_access() as data'),0);
+  });
+  await t.test('maintenance forward-fix closes service purge without removing owner controls or data',async()=>{
+    await db.exec(await file('supabase/forward-fixes/disable_product_continuity_maintenance.sql'));
+    assert.equal((await db.query('select enabled from product_continuity_policy')).rows[0].enabled,false);
+    for(const role of ['anon','authenticated','service_role'])
+      await assert.rejects(rpc('select purge_expired_product_continuity_access() as data',[],owner,role),/permission denied/);
+    assert.equal(await rpc('select clear_product_continuity_access() as data'),0);
+    await db.query('update profiles set deleted_at=null where id=$1',[owner]);
+    assert.deepEqual((await history()).events,[]);
+    assert.equal(await rpc('select set_product_continuity_consent($1,$2,$3) as data',[3,[],false]),4);
+    assert.equal(await count('product_continuity_items'),1);
   });
 });
