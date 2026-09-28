@@ -158,6 +158,10 @@ Six representative partial bases now have a local integration chain through actu
 
 `evaluateProductDelivery` reconstructs WU-048 from a captured draft and requires two strict, bounded Director reviews: one for the original Reading output digest, another for the final delivery digest. The bundle also pins the original basis, and server-owned stage-specific reviewer/calibration allowlists default to empty. Both reviews enforce the existing tier thresholds and safety/fidelity floors. A canonical audit digest binds both complete reviews to the exact basis/output/delivery; it is not authentication. Passing returns only a publication-blocked reviewed candidate, with no receipt or promotion credentials. Authentication, actual model/prompt provenance, eval-backed promotion and trusted issuance remain separate release blockers. Evidence: `docs/qa/PRODUCT_DELIVERY_REVIEW_2026-09-23.md`.
 
+## Twelve-base vertical coverage — WU-079
+
+The local HTTP/SQL/web-recovery chain now covers all twelve registered partial calculators, with registry equality preventing silent coverage drift. Every Tarot variant retains its draw on reprocessing. An additional persisted polar Ascendant cannot prepare editorial delivery or obtain artifacts even with a structurally valid draft and fixture policies enabled. No hosted release, real reviewer/model approval or certification of the remaining thirteen products is implied. Evidence: `docs/qa/PRODUCT_VERTICAL_COVERAGE_2026-09-28.md`.
+
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.

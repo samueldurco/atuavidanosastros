@@ -15,7 +15,10 @@ import {
 	file
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
-import { createProductProcessor } from '../../../../worker/src/product-runtime';
+import {
+	createProductCalculators,
+	createProductProcessor
+} from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
 import { prepareProductDelivery } from '../../../../worker/src/product-delivery';
@@ -29,14 +32,20 @@ import { renderProductWebExport } from './product-export';
 import { workflowApi } from './workflow-api';
 import { workflowArtifacts } from './workflow-artifacts';
 
-// Six representative bases, not a claim that all 25 products are finished/homologated.
+// All twelve existing partial bases, not a claim that all 25 products are finished/homologated.
 const products = [
 	'birth-chart',
+	'three-pillars',
+	'ascendant',
 	'date-reading',
 	'pair-preview',
 	'daily-card',
+	'three-questions',
+	'tarot-focus',
+	'tarot-yes-no',
 	'midheaven',
-	'dream-reading'
+	'dream-reading',
+	'dream-journal'
 ];
 interface FixtureRun {
 	id: string;
@@ -83,7 +92,14 @@ function inputFor(productId: string): WorkflowInput {
 		...(['natal', 'cycles', 'relationship', 'purpose'].includes(kind) ? { birth } : {}),
 		...(kind === 'cycles' ? { targetDate: '2026-09-20' } : {}),
 		...(kind === 'relationship' ? { partner: { ...birth, latitude: 10 } } : {}),
-		...(kind === 'tarot' ? { questions: ['Qual aspecto posso observar?'] } : {}),
+		...(kind === 'tarot'
+			? {
+					questions: Array.from(
+						{ length: productId === 'three-questions' ? 3 : 1 },
+						(_, index) => `Questão ${index + 1}: qual aspecto posso observar?`
+					)
+				}
+			: {}),
 		...(kind === 'dream'
 			? {
 					dream: {
@@ -298,6 +314,10 @@ async function fixture(productId: string) {
 	}
 }
 
+it('vertical integration explicitly covers every registered partial calculator', () => {
+	expect([...products].sort()).toEqual(Object.keys(createProductCalculators()).sort());
+});
+
 for (const productId of products)
 	it(`${productId}: real base → private publication → persisted web → owner history → independently reviewed reprocessing`, async () => {
 		const f = await fixture(productId);
@@ -369,7 +389,8 @@ for (const productId of products)
 			expect(child.input).toEqual(source.input);
 			expect(child.editorial).toBeNull();
 			expect(child.editorial_receipt_id).toBeNull();
-			if (productId === 'daily-card') expect(child.calculation).toEqual(source.calculation);
+			if (workflowFor(productId)!.kind === 'tarot')
+				expect(child.calculation).toEqual(source.calculation);
 			else expect(await f.processor.step()).toBe('calculated');
 			expect(await f.processor.step()).toBe('awaiting_editorial');
 			expect(await f.publisher.step()).toBe('idle');
@@ -406,3 +427,82 @@ for (const productId of products)
 			await f.db.close();
 		}
 	}, 30000);
+
+it('polar Ascendant persists its unavailable basis but cannot produce reviewed delivery or artifacts', async () => {
+	const f = await fixture('ascendant');
+	try {
+		const input = inputFor('ascendant');
+		input.birth!.latitude = 70;
+		const created = await workflowApi(
+			f.event(owner, { requestKey: randomUUID(), input }),
+			'create'
+		);
+		expect(created.status).toBe(202);
+		const { runId } = (await created.json()) as { runId: string };
+		expect(await f.processor.step()).toBe('calculated');
+		expect(await f.processor.step()).toBe('awaiting_editorial');
+		const saved = (await f.db.query<FixtureRun>('select * from product_runs where id=$1', [runId]))
+			.rows[0];
+		expect((saved.calculation.data.angles as { ascendant: number | null }).ascendant).toBeNull();
+		expect(prepareProductFacts('ascendant', saved.calculation)).toEqual({
+			status: 'blocked',
+			reason: 'insufficient_facts'
+		});
+		expect(
+			(
+				await prepareProductDelivery({
+					runId,
+					revision: saved.revision,
+					productId: 'ascendant',
+					tier: 'free',
+					calculation: saved.calculation,
+					output: {
+						schemaVersion: SCHEMA_VERSION,
+						capability: 'natal-synthesis',
+						scope: 'partial',
+						title: 'Tentativa sintética sem base disponível',
+						claims: [
+							{
+								id: 'c1',
+								kind: 'fact',
+								text: saved.calculation.facts[0].display,
+								evidence: [saved.calculation.facts[0].id]
+							}
+						],
+						relations: [],
+						synthesis: [{ claimIds: ['c1'], text: 'A forma válida não substitui a base ausente.' }],
+						reflections: ['Que informação ainda falta?'],
+						limits: ['Fixture sintética; não é interpretação homologada.']
+					}
+				})
+			).reason
+		).toBe('insufficient_facts');
+		await f.db.exec(
+			'update product_editorial_policy set enabled=true; update product_artifact_policy set enabled=true'
+		);
+		await expect(f.approve(runId)).rejects.toThrow('fixture_invalid_facts');
+		expect(await f.publisher.step()).toBe('idle');
+		const pending = await f.read(runId);
+		expect(pending?.released).toBe(false);
+		expect(pending?.libraryItemId).toBeTruthy();
+		expect(pending?.history.map((event) => event.state)).toEqual([
+			'QUEUED',
+			'CALCULATED',
+			'AWAITING_EDITORIAL'
+		]);
+		await expect(f.store(runId)).rejects.toThrow('fixture_unreleased');
+		expect((await workflowArtifacts(f.event(), runId)).status).toBe(404);
+		expect((await workflowApi(f.event(other), 'read', runId)).status).toBe(404);
+		const after = (await f.db.query<FixtureRun>('select * from product_runs where id=$1', [runId]))
+			.rows[0];
+		expect(after.calculation).toEqual(saved.calculation);
+		expect(after.editorial).toBeNull();
+		expect(after.editorial_receipt_id).toBeNull();
+		for (const table of ['product_editorial_receipts', 'product_artifacts'])
+			expect(
+				(await f.db.query<{ n: number }>(`select count(*)::int as n from ${table}`)).rows[0].n
+			).toBe(0);
+	} finally {
+		await f.db.close();
+	}
+}, 30000);
