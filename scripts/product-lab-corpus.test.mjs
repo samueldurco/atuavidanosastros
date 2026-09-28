@@ -8,20 +8,23 @@ import { releaseCases } from '../packages/ai/src/lab/release-dataset.ts';
 const corpus = await buildProductLabCorpus();
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.1.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.2.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
+    '2bfb070b0b5c7a9a5171ef5040350a9dd68ad4b60085dd6e25afd2600ba3809d');
+  // The 1.1.0 baseline remains unchanged; 1.2.0 appends career compass cases.
+  assert.equal(corpusDigest(corpus.cases.filter(item => item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     '49ff8dedac35ca3a028d7bd610895f316858e3ce5df57ad69df8d24ead520d1f');
 });
 
-test('offline corpus covers 12 partial bases, six capabilities and seven strata without claiming release', () => {
+test('offline corpus covers 13 partial bases, six capabilities and seven strata without claiming release', () => {
   assert.deepEqual([...corpusProducts].sort(), Object.keys(createProductCalculators()).sort());
-  assert.equal(corpus.cases.length, 84);
-  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 83);
+  assert.equal(corpus.cases.length, 91);
+  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 90);
   assert.deepEqual(corpus.cases.filter(item => item.preparation === 'blocked').map(item => [item.id, item.blockReason]),
     [['ascendant-boundary', 'insufficient_facts']]);
-  assert.equal(new Set(corpus.cases.map(item => item.id)).size, 84);
-  assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 84);
-  assert.equal(corpus.unavailableProducts.length, 13);
+  assert.equal(new Set(corpus.cases.map(item => item.id)).size, 91);
+  assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 91);
+  assert.equal(corpus.unavailableProducts.length, 12);
   assert.equal(corpus.promotionEligible, false);
   assert.equal(new Set(corpus.cases.filter(item => item.request).map(item => item.request.facts.capability)).size, 6);
   for (const product of corpusProducts) {

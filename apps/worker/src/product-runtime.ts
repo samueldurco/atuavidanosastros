@@ -2,11 +2,12 @@ import { workflows } from '@atv/domain';
 import { createNatalCalculators } from './natal-calculators.ts';
 import { createSymbolicCalculators } from './symbolic-calculators.ts';
 import { createContextCalculators } from './context-calculators.ts';
+import { createPurposeCalculators } from './purpose-calculators.ts';
 import { createWorkflowRepository, processNextProductRun, type WorkflowRpc, type ProcessingEvent } from './product-processing.ts';
 
 /** Calculation availability is not entitlement, release or editorial/motor approval. */
 export function createProductCalculators() {
-  return Object.freeze({...createNatalCalculators(),...createSymbolicCalculators(),...createContextCalculators()});
+  return Object.freeze({...createNatalCalculators(),...createSymbolicCalculators(),...createContextCalculators(),...createPurposeCalculators()});
 }
 
 export function productCalculationCoverage() {

@@ -6,6 +6,7 @@ import { createWorkflowRepository, processNextProductRun, ProcessingError } from
 import { createSymbolicCalculators } from '../apps/worker/src/symbolic-calculators.ts';
 import { createNatalCalculators } from '../apps/worker/src/natal-calculators.ts';
 import { createContextCalculators } from '../apps/worker/src/context-calculators.ts';
+import { createPurposeCalculators, careerCompassContract } from '../apps/worker/src/purpose-calculators.ts';
 import { createProductProcessor, productCalculationCoverage } from '../apps/worker/src/product-runtime.ts';
 import { prepareProductFacts, evaluateProductDraft } from '../apps/worker/src/product-editorial.ts';
 
@@ -259,8 +260,34 @@ test('composed runtime crosses all six universes through SQL and stops every pro
     assert.equal(await read(db,id,other),null);universes.add(product.universe);
     assert.equal(await runtime.step(),'idle');
   }
-  assert.equal(universes.size,6);assert.equal(coverage.length,12);
+  assert.equal(universes.size,6);assert.equal(coverage.length,13);
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
   assert.ok(metrics.every(e=>Object.keys(e).sort().join(',')==='attempt,durationMs,event,outcome'));
   assert.ok(!JSON.stringify(metrics).includes(owner));assert.ok(!JSON.stringify(metrics).includes('sintético'));
+});
+
+test('career compass persists MC, recovers an idempotent request and reprocesses without releasing an interpretation',async(t)=>{
+  const db=await boot(t),calculators=createPurposeCalculators(),store=repository(db),key=randomUUID();
+  const data={version:input.version,productId:'career-compass',consent:input.consent,context:'Contexto profissional sintético',
+    birth:{localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:0,longitude:0,locationSource:'synthetic'}};
+  const request=(requestKey=key,parent=null)=>as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3,$4) as data',
+    [data.productId,requestKey,data,parent])).then(r=>r.rows[0].data);
+  await assert.rejects(()=>request());
+  await db.exec("update workflow_releases set enabled=true where product_id='career-compass'");
+  const id=await request();assert.equal(await request(),id);
+  assert.equal(await processNextProductRun(store,calculators),'calculated');
+  assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+  const snapshot=async runId=>(await db.query('select calculation from product_runs where id=$1',[runId])).rows[0].calculation;
+  const saved=await snapshot(id);assert.equal(saved.version,careerCompassContract.version);
+  assert.equal(saved.facts[0].id,'angle-midheaven');assert.equal(saved.facts[1].kind,'reported');
+  assert.equal(prepareProductFacts(data.productId,saved).status,'prepared');
+  const result=await read(db,id);assert.equal(result.state,'AWAITING_EDITORIAL');assert.ok(result.libraryItemId);
+  assert.equal(result.released,false);assert.equal(result.calculation,null);assert.equal(result.editorial,null);
+  assert.equal(await read(db,id,other),null);
+  const child=await request(randomUUID(),id);assert.notEqual(child,id);
+  assert.equal(await processNextProductRun(store,calculators),'calculated');
+  assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+  assert.deepEqual((await snapshot(child)).facts,saved.facts);assert.deepEqual(await snapshot(id),saved);
+  assert.equal((await read(db,child)).released,false);assert.equal(await read(db,child,other),null);
+  assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
 });

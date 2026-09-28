@@ -3,11 +3,11 @@ import assert from 'node:assert/strict';
 import { workflows } from '@atv/domain';
 import { createProductCalculators, createProductProcessor, productCalculationCoverage } from './src/product-runtime.ts';
 
-test('coverage distinguishes twelve partial calculation bases across six universes from releases',()=>{
+test('coverage distinguishes thirteen partial calculation bases across six universes from releases',()=>{
   const calculators=createProductCalculators(),coverage=productCalculationCoverage();
-  assert.ok(Object.isFrozen(calculators));assert.equal(Object.keys(calculators).length,12);
+  assert.ok(Object.isFrozen(calculators));assert.equal(Object.keys(calculators).length,13);
   assert.equal(coverage.length,25);assert.deepEqual(coverage.map(p=>p.productId),workflows.map(p=>p.id));
-  const implemented=coverage.filter(p=>p.calculation==='partial-base');assert.equal(implemented.length,12);
+  const implemented=coverage.filter(p=>p.calculation==='partial-base');assert.equal(implemented.length,13);
   assert.equal(new Set(implemented.map(p=>p.universe)).size,6);
   assert.ok(coverage.every(p=>p.publication==='blocked'));assert.ok(coverage.every(Object.isFrozen));
 });
