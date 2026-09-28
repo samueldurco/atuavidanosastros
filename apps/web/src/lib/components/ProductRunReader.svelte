@@ -44,6 +44,12 @@
 	);
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
+	function factLabel(id: string): string {
+		if (data.run.productId !== 'career-compass') return id;
+		if (id === 'angle-midheaven') return `Meio do Céu (${id})`;
+		if (id === 'personal-context') return `Contexto profissional relatado (${id})`;
+		return id;
+	}
 	const svgEligible = $derived(
 		!!data.run.cartography &&
 			productCatalog.some(
@@ -283,7 +289,7 @@
 				{#each data.run.editorial.sections as section, index (index)}<article>
 						<h3>{section.title}</h3>
 						<p class="editorial">{section.text}</p>
-						<p class="evidence">Base: {section.evidence.join(' · ')}</p>
+						<p class="evidence">Base: {section.evidence.map(factLabel).join(' · ')}</p>
 					</article>{/each}
 			</section>
 			<ReaderContinuity
@@ -296,7 +302,7 @@
 				<h2 id="source-title">Base e limites</h2>
 				<dl>
 					{#each data.run.calculation.facts as fact (fact.id)}<div>
-							<dt>{fact.id}</dt>
+							<dt>{factLabel(fact.id)}</dt>
 							<dd>{fact.display}<small>{fact.source}</small></dd>
 						</div>{/each}
 				</dl>

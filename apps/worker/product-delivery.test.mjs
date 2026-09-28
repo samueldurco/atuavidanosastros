@@ -2,6 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { SCHEMA_VERSION } from "@atv/ai";
+import { createPurposeCalculators } from "./src/purpose-calculators.ts";
+import { prepareProductFacts } from "./src/product-editorial.ts";
+import { careerEditorialTestFixture } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
   PRODUCT_DELIVERY_VERSION,
@@ -83,6 +86,85 @@ function draft() {
 function contentTexts(content) {
   return content.sections.map((section) => section.text).join("\n");
 }
+
+test("career compass delivers recognizable headings while preserving every claim, question and reference", async () => {
+  const input = draft();
+  input.productId = "career-compass";
+  input.calculation = await createPurposeCalculators()["career-compass"](
+    {
+      version: "atv-workflow/1.0.0",
+      productId: input.productId,
+      birth: {
+        localDateTime: "2000-01-01T12:00:00",
+        utcInstant: "2000-01-01T12:00:00Z",
+        timezone: "UTC",
+        latitude: 0,
+        longitude: 0,
+        locationSource: "synthetic",
+      },
+      context: "Contexto profissional sintético",
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    { runId: input.runId, signal: new AbortController().signal },
+  );
+  const facts = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(facts.status, "prepared");
+  input.output = {
+    ...input.output,
+    capability: "purpose-direction",
+    relations: [],
+    ...careerEditorialTestFixture(facts.facts),
+  };
+  const captured = structuredClone(input);
+  const pending = prepareProductDelivery(input);
+  input.productId = "daily-card";
+  const result = await pending;
+  const expected = await prepareProductDelivery(captured);
+  assert.deepEqual(result, expected);
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.deepEqual(
+    result.content.sections.map((section) => section.title),
+    [
+      "Seu Meio do Céu — Fato [mc]",
+      "Direção pública e contribuição — Hipótese [public-direction]",
+      "Ambientes e modos de trabalhar — Hipótese [work-possibilities]",
+      "Tensão ou excesso possível — Hipótese [tension-or-excess]",
+      "Síntese (1) e três perguntas práticas",
+    ],
+  );
+  for (const [index, claim] of captured.output.claims.entries()) {
+    assert.equal(result.content.sections[index].text, claim.text);
+    assert.deepEqual(result.content.sections[index].evidence, claim.evidence);
+  }
+  const all = contentTexts(result.content);
+  for (const question of captured.output.reflections)
+    assert.equal(all.split(question).length, 2);
+  assert.ok(all.includes(captured.output.synthesis[0].text));
+  assert.ok(
+    all.includes("public-direction, work-possibilities, tension-or-excess"),
+  );
+  // The new version requires a new final-delivery review, even when content otherwise matches.
+  const legacy = { ...result.content, version: "atv-product-delivery/1.0.0" };
+  const legacyDigest = createHash("sha256")
+    .update(
+      JSON.stringify({
+        version: legacy.version,
+        basisDigest: result.basisDigest,
+        outputDigest: result.outputDigest,
+        content: legacy,
+      }),
+    )
+    .digest("hex");
+  assert.notEqual(legacyDigest, result.deliveryDigest);
+});
 
 test("projects every Lab passage, semantic type, claim link and fact reference without granting publication", async () => {
   const input = draft(),

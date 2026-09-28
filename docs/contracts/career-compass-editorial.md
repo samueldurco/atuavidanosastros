@@ -27,3 +27,9 @@ O Director verifica presença, tipo e evidência dos papéis, ligação na sínt
 Gateway e Lab preservam o perfil durante minimização e avaliação. Um candidato estruturalmente válido continua sujeito à revisão legítima e à promoção independente; produção continua `promotion_required`. Não há mudança de política, emissor de recibos, preço, entitlement, estado persistido ou modelo aprovado. Fixtures exercitam o contrato e nunca satisfazem E2.
 
 As condições do cálculo continuam em `career-compass-calculation.md`. Provas locais e pendências: `../qa/CAREER_COMPASS_EDITORIAL_PROFILE_2026-09-28.md`.
+
+## Apresentação web
+
+WU-117 usa `atv-product-delivery/1.1.0`: os papéis recebem títulos compreensíveis de direção/contribuição, ambientes/modos de trabalho e tensão/excesso. O MC factual é identificado como “Seu Meio do Céu”; os tipos, IDs, textos, evidências, vínculos da síntese e três perguntas continuam preservados. O leitor identifica o MC e o contexto profissional relatado junto dos IDs de origem. A versão da representação entra no digest de revisão; candidatos preparados antes da mudança precisam de revisão da representação atual. Snapshots já publicados não são reescritos.
+
+A rota de prova permanece restrita a localhost, usa cálculo experimental e texto sintético, e desabilita ações de publicação/download. QA responsivo e estados de ocultação validam a apresentação local, sem satisfazer conteúdo aprovado, sessão hospedada ou E4 integral. Provas: `../qa/CAREER_COMPASS_READER_2026-09-28.md`.

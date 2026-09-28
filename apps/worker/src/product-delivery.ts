@@ -5,7 +5,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.0.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.1.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -29,18 +29,41 @@ const labels = {
   hypothesis: "Hipótese",
 };
 const unique = (values: string[]) => [...new Set(values)];
+const careerTitles = new Map([
+  ["public-direction", "Direção pública e contribuição"],
+  ["work-possibilities", "Ambientes e modos de trabalhar"],
+  ["tension-or-excess", "Tensão ou excesso possível"],
+]);
+function claimTitle(
+  claim: Reading["claims"][number],
+  productId: string,
+): string {
+  const subject =
+    productId === "career-compass"
+      ? (careerTitles.get(claim.id) ??
+        (claim.kind === "fact" &&
+        claim.evidence.length === 1 &&
+        claim.evidence[0] === "angle-midheaven"
+          ? "Seu Meio do Céu"
+          : ""))
+      : "";
+  return `${subject ? subject + " — " : ""}${labels[claim.kind]} [${claim.id}]`;
+}
 
 /** Fixed text projection, not summarization. Claim references remain visible as well as resolved
  * fact evidence. Reflections share the final synthesis section, but are explicitly not evidence.
  * Oversized content fails closed instead of disappearing from the delivered representation. */
-function project(reading: Reading): ProductDeliveryContent | null {
+function project(
+  reading: Reading,
+  productId: string,
+): ProductDeliveryContent | null {
   if (reading.limits.some((limit) => limit.length > 1200)) return null;
   const claims = new Map(reading.claims.map((claim) => [claim.id, claim]));
   const evidence = (ids: string[]) =>
     unique(ids.flatMap((id) => claims.get(id)!.evidence));
   const sections: EditorialSnapshot["sections"] = reading.claims.map(
     (claim) => ({
-      title: `${labels[claim.kind]} [${claim.id}]`,
+      title: claimTitle(claim, productId),
       text: claim.text,
       evidence: [...claim.evidence],
     }),
@@ -75,7 +98,7 @@ function project(reading: Reading): ProductDeliveryContent | null {
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `Síntese (${index + 1})${last ? " e perguntas" : ""}`,
+      title: `Síntese (${index + 1})${last ? (productId === "career-compass" ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
@@ -117,6 +140,7 @@ export async function prepareProductDelivery(
     return reject("invalid_input");
   const reading = parseReading(input.output, input.tier);
   if (!reading) return reject("invalid_schema");
+  const productId = input.productId;
   // parseReading owns a JSON copy; evaluateProductDraft captures its other inputs before awaiting.
   const assessment = await evaluateProductDraft({ ...input, output: reading });
   if (
@@ -125,7 +149,7 @@ export async function prepareProductDelivery(
     !assessment.outputDigest
   )
     return reject(assessment.reason);
-  const content = project(reading);
+  const content = project(reading, productId);
   if (!content) return reject("delivery_not_representable");
   const encoded = JSON.stringify({
     version: PRODUCT_DELIVERY_VERSION,
