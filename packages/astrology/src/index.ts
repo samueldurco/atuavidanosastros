@@ -8,6 +8,7 @@ export { engineContract } from './contract.ts';
 export { validateCalculationInput, type CalculationInput } from './input.ts';
 export { bodies, type CelestialBody } from './bodies.ts';
 export { calculateAspects, assessAspectStability, type AspectStability, type AspectPolicy, type AspectResult, type AspectCalculation, type AspectPosition, type MajorAspect } from './aspects.ts';
+export { calculateCrossAspects, assessCrossAspectStability, type CrossAspectCalculation, type CrossAspectStability } from './aspects.ts';
 
 export interface Position { body: CelestialBody; longitude: number; latitude: number; distanceAu: number; retrograde: boolean; }
 interface HouseAngles { system: 'placidus'; ascendant: number; midheaven: number; }

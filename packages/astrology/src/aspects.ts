@@ -27,8 +27,7 @@ export interface AspectCalculation {
   readonly aspects: readonly AspectResult[];
 }
 
-/** No editorial orb default: every caller supplies and retains its own versioned policy. */
-export function calculateAspects(positions: readonly AspectPosition[], policy: AspectPolicy): AspectCalculation {
+function capturePolicy(policy: AspectPolicy): AspectPolicy {
   if (!policy || ![policy.id, policy.version].every((value) => typeof value === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,79}$/.test(value))) {
     throw new RangeError('A política de aspectos exige identificador e versão explícitos.');
   }
@@ -46,6 +45,10 @@ export function calculateAspects(positions: readonly AspectPosition[], policy: A
       throw new RangeError('A política contém aspectos duplicados ou intervalos de orbe sobrepostos.');
     }
   }
+  return { id: policy.id, version: policy.version, aspects: rules };
+}
+
+function capturePositions(positions: readonly AspectPosition[]): AspectPosition[] {
   if (!Array.isArray(positions)) throw new RangeError('Posições inválidas.');
   const longitudes = new Map<CelestialBody, number>();
   for (const position of positions) {
@@ -54,7 +57,16 @@ export function calculateAspects(positions: readonly AspectPosition[], policy: A
     }
     longitudes.set(position.body, position.longitude);
   }
-  const ordered = bodies.filter((body) => longitudes.has(body));
+  return bodies.filter((body) => longitudes.has(body)).map((body) => ({ body, longitude: longitudes.get(body)! }));
+}
+
+/** No editorial orb default: every caller supplies and retains its own versioned policy. */
+export function calculateAspects(positions: readonly AspectPosition[], policy: AspectPolicy): AspectCalculation {
+  const capturedPolicy = capturePolicy(policy);
+  const capturedPositions = capturePositions(positions);
+  const ordered = capturedPositions.map((position) => position.body);
+  const longitudes = new Map(capturedPositions.map((position) => [position.body, position.longitude]));
+  const rules = capturedPolicy.aspects;
   const aspects: AspectResult[] = [];
   for (let i = 0; i < ordered.length; i++) {
     for (let j = i + 1; j < ordered.length; j++) {
@@ -72,9 +84,83 @@ export function calculateAspects(positions: readonly AspectPosition[], policy: A
   return {
     algorithmVersion: 'atv-major-aspects/1', coordinate: 'ecliptic-longitude', motion: 'not-evaluated',
     inputPrecision: 'not-certified', inputPositions: ordered.map((body) => ({ body, longitude: longitudes.get(body)! })),
-    policy: { id: policy.id, version: policy.version, aspects: rules },
+    policy: capturedPolicy,
     pairsEvaluated: ordered.length > 1 ? ordered.length * (ordered.length - 1) / 2 : 0, aspects
   };
+}
+
+export interface CrossAspectCalculation {
+  readonly algorithmVersion: 'atv-cross-major-aspects/1';
+  readonly coordinate: 'ecliptic-longitude';
+  readonly motion: 'not-evaluated';
+  readonly inputPrecision: 'not-certified';
+  readonly roles: readonly ['person-a', 'person-b'];
+  readonly inputPositions: { readonly first: readonly AspectPosition[]; readonly second: readonly AspectPosition[] };
+  readonly policy: AspectPolicy;
+  readonly pairsEvaluated: number;
+  /** first always belongs to person-a; second always belongs to person-b, including same-body pairs. */
+  readonly aspects: readonly AspectResult[];
+}
+
+/** Cross-chart geometry only: no editorial policy default, scoring, sharing grant or interpretation.
+ * Callers must establish compatible zodiac/reference frames and retain both charts' provenance. */
+export function calculateCrossAspects(first: readonly AspectPosition[], second: readonly AspectPosition[], policy: AspectPolicy): CrossAspectCalculation {
+  const capturedPolicy = capturePolicy(policy);
+  const a = capturePositions(first), b = capturePositions(second);
+  const aspects: AspectResult[] = [];
+  for (const left of a) for (const right of b) {
+    const difference = Math.abs(left.longitude - right.longitude);
+    const separationDegrees = Math.min(difference, 360 - difference);
+    for (const rule of capturedPolicy.aspects) {
+      const exactAngleDegrees = targets[rule.kind];
+      const orbDegrees = Math.abs(separationDegrees - exactAngleDegrees);
+      if (orbDegrees <= rule.orbDegrees) aspects.push({ first: left.body, second: right.body, kind: rule.kind, exactAngleDegrees, separationDegrees, orbDegrees });
+    }
+  }
+  return {
+    algorithmVersion: 'atv-cross-major-aspects/1', coordinate: 'ecliptic-longitude', motion: 'not-evaluated',
+    inputPrecision: 'not-certified', roles: ['person-a', 'person-b'], inputPositions: { first: a, second: b },
+    policy: capturedPolicy, pairsEvaluated: a.length * b.length, aspects
+  };
+}
+
+export interface CrossAspectStability {
+  readonly algorithmVersion: 'atv-cross-aspect-stability/1';
+  readonly calculation: CrossAspectCalculation;
+  readonly assumedLongitudeErrorDegrees: { readonly first: number | null; readonly second: number | null };
+  readonly numericalGuardDegrees: number;
+  readonly pairs: readonly {
+    first: CelestialBody; second: CelestialBody;
+    separationIntervalDegrees: readonly [number, number] | null;
+    status: 'stable-under-budget' | 'boundary-sensitive' | 'unknown-accuracy';
+  }[];
+}
+
+/** Independent caller assumptions for the two charts; neither is a provider accuracy certificate. */
+export function assessCrossAspectStability(first: readonly AspectPosition[], second: readonly AspectPosition[], policy: AspectPolicy,
+  assumedLongitudeErrorDegrees: { readonly first: number | null; readonly second: number | null }): CrossAspectStability {
+  if (!assumedLongitudeErrorDegrees || [assumedLongitudeErrorDegrees.first, assumedLongitudeErrorDegrees.second].some(
+    (value) => value !== null && (!Number.isFinite(value) || typeof value !== 'number' || value < 0 || value > 180)
+  )) throw new RangeError('Orçamentos de erro devem ser nulos ou finitos em [0, 180].');
+  const budgets = { first: assumedLongitudeErrorDegrees.first, second: assumedLongitudeErrorDegrees.second };
+  const calculation = calculateCrossAspects(first, second, policy);
+  const numericalGuardDegrees = 1e-12;
+  const pairs: CrossAspectStability['pairs'][number][] = [];
+  for (const a of calculation.inputPositions.first) for (const b of calculation.inputPositions.second) {
+    if (budgets.first === null || budgets.second === null) {
+      pairs.push({ first: a.body, second: b.body, separationIntervalDegrees: null, status: 'unknown-accuracy' });
+      continue;
+    }
+    const difference = Math.abs(a.longitude - b.longitude);
+    const separation = Math.min(difference, 360 - difference);
+    const radius = budgets.first + budgets.second + numericalGuardDegrees;
+    const low = Math.max(0, separation - radius), high = Math.min(180, separation + radius);
+    const intervals = calculation.policy.aspects.map((rule) => ({ low: Math.max(0, targets[rule.kind] - rule.orbDegrees), high: Math.min(180, targets[rule.kind] + rule.orbDegrees) }));
+    const contained = intervals.some((rule) => low >= rule.low && high <= rule.high);
+    const disjoint = intervals.every((rule) => high < rule.low || low > rule.high);
+    pairs.push({ first: a.body, second: b.body, separationIntervalDegrees: [low, high], status: contained || disjoint ? 'stable-under-budget' : 'boundary-sensitive' });
+  }
+  return { algorithmVersion: 'atv-cross-aspect-stability/1', calculation, assumedLongitudeErrorDegrees: budgets, numericalGuardDegrees, pairs };
 }
 
 export interface AspectStability {

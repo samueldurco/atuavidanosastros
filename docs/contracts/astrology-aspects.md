@@ -15,3 +15,5 @@ O resultado registra `atv-major-aspects/1`, coordenada `ecliptic-longitude`, par
 A WU-027 exporta uma função de domínio sem conectá-la ao resultado público do Meio do Céu ou acrescentar resultados ao mapa natal. Uma futura integração deve aprovar política editorial, transportar a proveniência das posições, tratar incerteza perto dos limites e cumprir os gates independentes de precisão e produto. `qa-major/1` pertence exclusivamente às fixtures; não é autorização de promoção.
 
 Validação e limitações: [relatório da WU-027](../qa/ASTROLOGY_ASPECTS_REFERENCE_2026-09-08.md).
+
+WU-080 acrescenta uma API distinta para [geometria cruzada entre mapas](astrology-cross-aspects.md), com papéis A/B e orçamentos independentes. O contrato natal acima, sua versão e resultados permanecem inalterados; nenhuma política de produto ou integração Sinastria é aprovada por essa extensão.
