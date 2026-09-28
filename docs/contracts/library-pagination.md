@@ -20,6 +20,12 @@ As fontes candidatas da gestão de continuidade vêm da página atual. Mudar de 
 
 ## Evidência e limites
 
+### Retorno do leitor — WU-112
+
+Os cards levam `fromBefore=<UUID>` quando abertos de uma página histórica. O carregamento privado do leitor aceita exatamente um UUID, normalizado para minúsculas; metadado ausente, repetido, malformado ou endereço externo retorna à primeira página. Não há parâmetro de URL de retorno arbitrária. O breadcrumb, a ação “Voltar à Biblioteca” e a navegação após exclusão confirmada usam o mesmo destino interno validado. Os links existem no HTML renderizado no servidor e sobrevivem à recarga; não dependem do histórico do navegador ou de armazenamento local.
+
+O cursor não autoriza acesso ao registro nem consulta dados de outra pessoa. A leitura do registro permanece vinculada à sessão, com os mesmos 404 e cabeçalhos privados. Sua fronteira só é resolvida, com o proprietário atual, ao voltar à lista. Cursor sintaticamente válido mas removido/estranho mantém o tratamento expirado da WU-110; não garante uma página imutável. Filtros, busca, scroll e seleção local não são preservados. Uma nova versão reprocessada continua usando o destino da recuperação existente, sem herdar este cursor. Não muda o protocolo de exclusão, a disponibilidade dos produtos ou as autorizações.
+
 Testes unitários exercitam fronteira, isolamento no construtor de consultas, prazo e erros. Um teste usa o cliente Supabase instalado com `fetch` sintético para atravessar 1.051 registros em 22 páginas; não é prova de RLS/JWT/PostgREST implantados. A fixture `/biblioteca/_spec/historico` só responde em localhost/127.0.0.1 e reduz a página a três itens para testar navegação/estados/viewport. A produção mantém 50+1.
 
 Extensão funcional MEM-02 (`f5af4d1cdd4542488d60e94fa2c9bafb`, projeto `2141801333950500965`), reutilizando Atlas/Button/StatePanel e tokens existentes. Evidência visual local não equivale a Gate B integral nem completa produtos sem cálculo/editorial homologados. Nenhum modelo promovido, transporte de e-mail ativado, migração hospedada ou gasto pago.

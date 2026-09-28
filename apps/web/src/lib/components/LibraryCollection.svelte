@@ -9,7 +9,7 @@
 	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
 	import { natalProducts } from '$lib/natal-request';
 	import { workflowFor } from '@atv/domain';
-	import { libraryPageHref, type LibraryPageData } from '$lib/library-page';
+	import { libraryItemHref, libraryPageHref, type LibraryPageData } from '$lib/library-page';
 	let {
 		data,
 		pageHref = libraryPageHref
@@ -164,7 +164,7 @@
 							<span class="status">Na sua Biblioteca</span>
 							<a
 								class="read-link"
-								href={`/biblioteca/${item.id}`}
+								href={libraryItemHref(item.id, data.pagination.before)}
 								aria-label={`Abrir ${item.title}`}>Abrir resultado →</a
 							>
 						</div>

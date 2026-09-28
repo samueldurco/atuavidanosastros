@@ -10,4 +10,7 @@
 		content="noindex,nofollow"
 	/><meta name="referrer" content="no-referrer" /></svelte:head
 >
-{#if data.state === 'workflow'}<ProductRunReader {data} />{:else}<CompassReader {data} />{/if}
+{#if data.state === 'workflow'}<ProductRunReader
+		{data}
+		libraryBefore={data.libraryBefore}
+	/>{:else}<CompassReader {data} libraryBefore={data.libraryBefore} />{/if}

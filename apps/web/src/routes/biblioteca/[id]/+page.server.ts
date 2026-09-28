@@ -1,8 +1,9 @@
 import { error, redirect } from '@sveltejs/kit';
 import { readLibraryResult } from '$lib/server/library-reader';
+import { libraryReturnCursor } from '$lib/library-page';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ parent, locals, params, setHeaders }) => {
+export const load: PageServerLoad = async ({ parent, locals, params, url, setHeaders }) => {
 	setHeaders({
 		'cache-control': 'private, no-store',
 		'x-robots-tag': 'noindex, nofollow',
@@ -13,5 +14,8 @@ export const load: PageServerLoad = async ({ parent, locals, params, setHeaders 
 	if (!locals.supabase) error(503, 'Não foi possível acessar sua Biblioteca.');
 	const data = await readLibraryResult(locals.supabase, user.id, params.id);
 	if (data.state === 'not-found') error(404, 'Este item não está disponível na sua Biblioteca.');
-	return data.state === 'workflow' ? { ...data, ownerId: user.id } : data;
+	const libraryBefore = libraryReturnCursor(url.searchParams);
+	return data.state === 'workflow'
+		? { ...data, ownerId: user.id, libraryBefore }
+		: { ...data, libraryBefore };
 };

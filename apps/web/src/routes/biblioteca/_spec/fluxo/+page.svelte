@@ -1,5 +1,7 @@
 <script lang="ts">
 	import ProductRunReader from '$lib/components/ProductRunReader.svelte';
+	import { page } from '$app/state';
+	import { libraryReturnCursor } from '$lib/library-page';
 	let { data } = $props();
 </script>
 
@@ -9,4 +11,4 @@
 		content="noindex,nofollow"
 	/></svelte:head
 >
-<ProductRunReader {data} />
+<ProductRunReader {data} libraryBefore={libraryReturnCursor(page.url.searchParams)} />

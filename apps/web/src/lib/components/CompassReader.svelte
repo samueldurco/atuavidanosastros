@@ -4,7 +4,10 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import type { LibraryReaderData } from '$lib/library-result';
-	let { data }: { data: LibraryReaderData } = $props();
+	import { libraryPageHref } from '$lib/library-page';
+	let { data, libraryBefore = null }: { data: LibraryReaderData; libraryBefore?: string | null } =
+		$props();
+	const backHref = $derived(libraryPageHref(libraryBefore));
 	const number = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 4 });
 	const date = (value: string) =>
 		new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long', timeZone: 'America/Sao_Paulo' }).format(
@@ -24,8 +27,8 @@
 	>
 		{#snippet heading()}
 			<nav class="breadcrumb" aria-label="Caminho do resultado">
-				<a href="/biblioteca">Biblioteca</a><span aria-hidden="true">/</span><span
-					aria-current="page">Resultado salvo</span
+				<a href={backHref}>Biblioteca</a><span aria-hidden="true">/</span><span aria-current="page"
+					>Resultado salvo</span
 				>
 			</nav>
 			{#if data.synthetic}<p class="fixture-notice">
@@ -42,7 +45,7 @@
 		{#snippet actions()}
 			<div class="actions-panel">
 				<p class="eyebrow">Continuar</p>
-				<Button href="/biblioteca" variant="secondary">Voltar à Biblioteca</Button><a
+				<Button href={backHref} variant="secondary">Voltar à Biblioteca</Button><a
 					href="/bussola-de-carreira">Fazer outro cálculo →</a
 				>
 				<p>Um novo cálculo não altera automaticamente este resultado salvo.</p>

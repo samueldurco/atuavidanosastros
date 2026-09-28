@@ -1,5 +1,7 @@
 <script lang="ts">
 	import CompassReader from '$lib/components/CompassReader.svelte';
+	import { page } from '$app/state';
+	import { libraryReturnCursor } from '$lib/library-page';
 	let { data } = $props();
 </script>
 
@@ -9,4 +11,4 @@
 		content="noindex,nofollow"
 	/></svelte:head
 >
-<CompassReader {data} />
+<CompassReader {data} libraryBefore={libraryReturnCursor(page.url.searchParams)} />

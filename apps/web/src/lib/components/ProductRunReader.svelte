@@ -10,7 +10,10 @@
 	import ReprocessAction from '$lib/components/ReprocessAction.svelte';
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
-	let { data }: { data: WorkflowReaderData } = $props();
+	import { libraryPageHref } from '$lib/library-page';
+	let { data, libraryBefore = null }: { data: WorkflowReaderData; libraryBefore?: string | null } =
+		$props();
+	const backHref = $derived(libraryPageHref(libraryBefore));
 	let busy = $state<'reprocess' | 'delete' | 'download' | 'email' | null>(null);
 	let failure = $state('');
 	let downloadFormat = $state<'web' | 'pdf' | 'svg' | 'card'>('web');
@@ -129,7 +132,7 @@
 			} catch {
 				/* Deletion is already confirmed. */
 			}
-			await goto('/biblioteca', { invalidateAll: true });
+			await goto(backHref, { invalidateAll: true });
 		} catch {
 			failure =
 				'Não foi possível confirmar a exclusão. Atualize o estado ou consulte sua Biblioteca antes de continuar.';
@@ -155,7 +158,7 @@
 	>
 		{#snippet heading()}
 			<nav aria-label="Caminho do resultado">
-				<a href="/biblioteca">Biblioteca</a> / <span aria-current="page">Seu registro</span>
+				<a href={backHref}>Biblioteca</a> / <span aria-current="page">Seu registro</span>
 			</nav>
 			{#if data.synthetic}<p class="fixture-notice">
 					Referência sintética local — não é uma leitura homologada nem pertence a uma pessoa.
@@ -169,7 +172,7 @@
 		{#snippet actions()}
 			<div class="actions-panel">
 				<p class="eyebrow">Continuar</p>
-				<Button href="/biblioteca" variant="secondary">Voltar à Biblioteca</Button>
+				<Button href={backHref} variant="secondary">Voltar à Biblioteca</Button>
 				{#if data.run.released}
 					<Button
 						onclick={() => download('web')}
