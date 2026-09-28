@@ -5,6 +5,12 @@ import { parseReading } from "../schema.ts";
 import { DATASET_VERSION, labCases } from "./dataset.ts";
 import type { LabCase } from "./dataset.ts";
 
+export const BENCHMARK_POLICY_VERSION = "atv-benchmark/1.1.0";
+export interface CostEvidence {
+  basis: "owner-confirmed-free-tier" | "provider-receipt";
+  /** Opaque repository evidence ID, verified by the release operator; no raw receipts or secrets. */
+  reference: string;
+}
 export interface BenchmarkSample {
   promptVersion: string;
   caseId: string;
@@ -15,14 +21,29 @@ export interface BenchmarkSample {
   inputTokens: number | null;
   outputTokens: number | null;
   tier?: Tier;
+  costBrl?: number | null;
+  costEvidence?: CostEvidence;
 }
+const validTokens = (value: unknown): value is number =>
+  typeof value === "number" && Number.isSafeInteger(value) && value >= 0;
+
 export function evaluateSample(sample: BenchmarkSample, corpus?: { version: string; cases: readonly LabCase[] }) {
   const item = (corpus?.cases ?? labCases).find((c) => c.id === sample.caseId);
   if (!item) throw new Error("Unknown synthetic case");
   const tier = sample.tier ?? item.request.tier;
+  const limits = Object.hasOwn(tierLimits, tier) ? tierLimits[tier] : null;
   const reading = parseReading(sample.output, tier);
   const review = reading ? inspectReading(reading, item.request.facts) : null;
+  const inputTokens = validTokens(sample.inputTokens) ? sample.inputTokens : null;
+  const outputTokens = validTokens(sample.outputTokens) ? sample.outputTokens : null;
+  const tokenUsageKnown = inputTokens !== null && outputTokens !== null;
+  const evidence = sample.costEvidence;
+  const costKnown = typeof sample.costBrl === "number" && Number.isFinite(sample.costBrl) && sample.costBrl >= 0 &&
+    !!evidence && Object.keys(evidence).length === 2 &&
+    typeof evidence.reference === "string" && /^[a-zA-Z0-9][a-zA-Z0-9._:-]{0,119}$/.test(evidence.reference) &&
+    (evidence.basis === "provider-receipt" || (evidence.basis === "owner-confirmed-free-tier" && sample.costBrl === 0));
   return {
+    policyVersion: BENCHMARK_POLICY_VERSION,
     caseId: sample.caseId,
     model: sample.model,
     repetition: sample.repetition,
@@ -40,13 +61,15 @@ export function evaluateSample(sample: BenchmarkSample, corpus?: { version: stri
     ],
     editorialStatus: "not_calibrated" as const,
     latencyMs: sample.latencyMs,
-    latencyPass: Number.isFinite(sample.latencyMs) && sample.latencyMs >= 0 && sample.latencyMs <= tierLimits[tier].timeoutMs,
-    tokenUsageKnown:
-      sample.inputTokens !== null && sample.outputTokens !== null,
-    inputTokens: sample.inputTokens,
-    outputTokens: sample.outputTokens,
+    latencyPass: !!limits && Number.isFinite(sample.latencyMs) && sample.latencyMs >= 0 && sample.latencyMs <= limits.timeoutMs,
+    tokenUsageKnown,
+    tokenUsagePass: tokenUsageKnown && !!limits && outputTokens <= limits.maxOutputTokens,
+    inputTokens,
+    outputTokens,
     outputChars: JSON.stringify(sample.output)?.length ?? 0,
-    costBrl: 0,
-    costBasis: "owner-confirmed-free-tier" as const,
+    costKnown,
+    costBrl: costKnown ? sample.costBrl! : null,
+    costBasis: costKnown ? evidence!.basis : "unknown" as const,
+    costEvidenceReference: costKnown ? evidence!.reference : null,
   };
 }

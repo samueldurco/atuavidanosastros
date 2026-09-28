@@ -4,7 +4,7 @@ import { RUBRIC_VERSION, editorialDecision, type ScoredReview } from "./director
 import { RELEASE_DATASET_VERSION, releaseCases } from "./lab/release-dataset.ts";
 import { evaluateSample, type BenchmarkSample } from "./lab/benchmark.ts";
 
-export const PROMOTION_POLICY_VERSION = "atv-promotion/1.0.0";
+export const PROMOTION_POLICY_VERSION = "atv-promotion/1.1.0";
 export interface EvaluatedSample extends BenchmarkSample {
   resolvedModel: string;
   tier: Tier;
@@ -49,7 +49,7 @@ export function assessPromotion(candidate: PromotionCandidate, authority: Review
       !/^[a-z0-9._-]{1,100}$/.test(candidate.resolvedModel) || /latest|preview/i.test(candidate.model + candidate.resolvedModel))
     reject("model_not_pinned");
   const cases = releaseCases.filter((item) => item.request.facts.capability === candidate.capability);
-  if (!cases.length || !tierLimits[candidate.tier]) return { policyVersion: PROMOTION_POLICY_VERSION,
+  if (!cases.length || !Object.hasOwn(tierLimits, candidate.tier)) return { policyVersion: PROMOTION_POLICY_VERSION,
     status: "blocked", reasons: [...reasons, "unknown_scope"] } as const;
   // Release policy: three independent repetitions for EVERY case in this capability.
   // Refusal cases are evaluated as model outputs too; the runtime still refuses insufficient facts before generation.
@@ -69,7 +69,8 @@ export function assessPromotion(candidate: PromotionCandidate, authority: Review
       reject(`latency:${sample.caseId}`);
     if (![sample.inputTokens, sample.outputTokens].every((n) => n !== null && Number.isSafeInteger(n) && n >= 0) ||
         sample.outputTokens! > tierLimits[candidate.tier].maxOutputTokens) reject("usage_unknown_or_exceeded");
-    if (sample.costBrl !== 0) reject("zero_cost_policy");
+    if (!evaluation.costKnown) reject("cost_evidence_missing_or_invalid");
+    if (evaluation.costBrl !== 0) reject("zero_cost_policy");
     const review = sample.review;
     if (!review || !authority.reviewers.includes(review.reviewer) ||
         (review.source === "calibrated-reviewer" && !authority.calibrations.includes(review.calibrationId ?? ""))) {
