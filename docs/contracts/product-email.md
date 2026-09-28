@@ -24,6 +24,14 @@ Three fixed POST paths under `/api/product-email/`: `request` accepts `{requestK
 
 Success is `{receipt}`: acceptance returns 202, recovery/cancellation return 200 and may return null for an absent or unowned key/ID. Exact receipt fields, version linkage, state and timestamps are validated before return. REQUESTED and CANCELLED never mean sent or delivered. Private/no-store, no-referrer and noindex headers apply to success and error responses. A 503 may represent a committed request whose acknowledgement was lost: recover the original key before any new submission. The HTTP boundary does not enable acceptance or implement browser controls/transport.
 
+## Browser request controller
+
+`createProductEmailRequest` requires explicit availability and fresh transactional consent for a new request. Availability is a UX hint, never authorization: SQL still rechecks every gate. The controller stores only the recovery UUID in tab storage, scoped to canonical owner/run/revision; it stores no address, consent, reading, digest or receipt. Storage must succeed and read back before POST. Missing, corrupt or replaced remembered keys fail closed.
+
+Existing keys always recover through the read-only endpoint, including after reload, expired sessions, disabled acceptance and changed editorial review. Recovery validates run/revision and receipt identity, not current review eligibility; cancelling an older review must remain possible. Only a new acceptance must match the pinned review digest. A recovered receipt is not proof of current release or delivery permission. One in-flight action is allowed per controller; database uniqueness remains authoritative across tabs/devices.
+
+Timeouts, invalid responses, conflicts and lost acknowledgements retain the key. They never generate another key or automatically retry. Only an exact allowlisted pre-write refusal to a freshly generated key permits removing it. Missing recovery results also retain the key. Cancellation requires an acknowledged receipt, clears that acknowledgement while pending, and requires read-only recovery on uncertainty. Confirmed cancellation is final and cannot be regressed by a later stale response. No reset/resend action exists in this controller. Controls and delivery transport remain separate work.
+
 ## Remaining delivery requirements
 
 A future email should contain a minimal account Library link, not reading content, public result tokens or attachments by default. Origin/sender must be fixed trusted configuration, not request input. The provider integration needs recipient verification, opt-in UX, secrets rotation, approved spend/rate/latency caps, deduplication and uncertain-ack reconciliation, bounce/complaint handling and privacy-safe observability. Provider acceptance must never be called inbox delivery. UI and actual dispatch are separate work; until implemented this receipt is not an advertised delivered email.

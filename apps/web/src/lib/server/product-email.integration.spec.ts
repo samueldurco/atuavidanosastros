@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { parseProductEmailReceipt } from '$lib/product-email';
+import { createProductEmailRequest } from '$lib/product-email-request';
 import {
 	setupProductDatabase,
 	owner,
@@ -184,4 +185,119 @@ it('deleting the owned reading removes its email request and recovery returns nu
 	);
 	expect(await count()).toBe(0);
 	expect(await (await recover(event({ requestKey: key }))).json()).toEqual({ receipt: null });
+});
+
+function browser() {
+	const stored = new Map<string, string>();
+	const storage = {
+		getItem: (name: string) => stored.get(name) ?? null,
+		setItem: (name: string, value: string) => {
+			stored.set(name, value);
+		},
+		removeItem: (name: string) => {
+			stored.delete(name);
+		}
+	};
+	let user: string | null = owner;
+	let lostAction: string | null = null;
+	const fetcher = vi.fn<typeof fetch>(async (path, init) => {
+		const routes = {
+			'/api/product-email/request': request,
+			'/api/product-email/recover': recover,
+			'/api/product-email/cancel': cancel
+		};
+		if (typeof path !== 'string' || !Object.hasOwn(routes, path))
+			throw new Error('unexpected path');
+		const e = event(JSON.parse(String(init?.body)), user);
+		e.url = new URL(path, e.url);
+		const response = await routes[path as keyof typeof routes](e);
+		if (lostAction === path) {
+			lostAction = null;
+			throw new Error('synthetic response lost after commit');
+		}
+		return response;
+	});
+	const options = {
+		ownerId: owner,
+		runId: reading.id,
+		revision: reading.revision,
+		reviewDigest: reading.reviewDigest,
+		storage,
+		fetch: fetcher,
+		randomUUID
+	};
+	return {
+		stored,
+		fetcher,
+		options,
+		client: createProductEmailRequest(options),
+		lose: (action: string) => {
+			lostAction = `/api/product-email/${action}`;
+		},
+		session: (id: string | null) => {
+			user = id;
+		}
+	};
+}
+it('browser availability cannot override disabled SQL acceptance or bypass explicit consent', async () => {
+	const b = browser();
+	expect((await b.client.perform(true, false)).mode).toBe('new');
+	expect(b.fetcher).not.toHaveBeenCalled();
+	expect((await b.client.perform(true, true)).mode).toBe('new');
+	expect(b.stored.size).toBe(0);
+	expect(await count()).toBe(0);
+});
+it('browser remount recovers lost commit and cancels after account and release revocation', async () => {
+	await db.exec('update product_email_policy set enabled=true');
+	const b = browser();
+	b.lose('request');
+	expect((await b.client.perform(true, true)).mode).toBe('recover');
+	expect(await count()).toBe(1);
+	expect([...b.stored.values()]).toHaveLength(1);
+	expect([...b.stored.values()][0]).toMatch(/^[a-f0-9-]{36}$/);
+	await db.exec(
+		'update product_email_policy set enabled=false; update workflow_releases set enabled=false'
+	);
+	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
+	const restored = createProductEmailRequest(b.options);
+	expect((await restored.perform(false, false)).mode).toBe('requested');
+	expect((await restored.cancel()).mode).toBe('cancelled');
+	expect((await restored.perform(true, true)).mode).toBe('cancelled');
+	expect(await count()).toBe(1);
+	expect(b.fetcher.mock.calls.map(([path]) => path)).toEqual([
+		'/api/product-email/request',
+		'/api/product-email/recover',
+		'/api/product-email/cancel',
+		'/api/product-email/recover'
+	]);
+});
+it('browser recovers an uncertain cancellation without another mutation', async () => {
+	await db.exec('update product_email_policy set enabled=true');
+	const b = browser();
+	expect((await b.client.perform(true, true)).mode).toBe('requested');
+	b.lose('cancel');
+	expect((await b.client.cancel()).mode).toBe('recover');
+	expect((await b.client.cancel()).mode).toBe('recover');
+	expect(b.fetcher).toHaveBeenCalledTimes(2);
+	expect((await b.client.recover()).mode).toBe('cancelled');
+	expect(await count()).toBe(1);
+});
+it('browser retained key cannot cross sessions and session recovery never submits again', async () => {
+	await db.exec('update product_email_policy set enabled=true');
+	const b = browser();
+	await b.client.perform(true, true);
+	b.session(null);
+	expect((await b.client.recover()).mode).toBe('recover');
+	b.session(other);
+	expect((await b.client.recover()).mode).toBe('recover');
+	expect((await b.client.cancel()).mode).toBe('recover');
+	b.session(owner);
+	expect((await b.client.recover()).mode).toBe('requested');
+	expect(
+		b.fetcher.mock.calls.filter(([path]) => path === '/api/product-email/request')
+	).toHaveLength(1);
+	expect(
+		b.fetcher.mock.calls.filter(([path]) => path === '/api/product-email/cancel')
+	).toHaveLength(0);
+	expect(await count()).toBe(1);
 });
