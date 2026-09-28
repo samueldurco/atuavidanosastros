@@ -4,7 +4,7 @@ import {
   validCareerCompassFacts,
 } from "./career-compass.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.2";
+export const PROMPT_VERSION = "atv-editorial/1.0.3";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",

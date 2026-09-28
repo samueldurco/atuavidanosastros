@@ -12,6 +12,7 @@ import {
 } from "./contracts.ts";
 import { inspectReading } from "./director.ts";
 import { buildPrompt } from "./prompt.ts";
+import { parseReading } from "./schema.ts";
 import { EditorialGateway, LabBudgetLedger } from "./gateway.ts";
 
 const facts: FactsEnvelope = {
@@ -168,6 +169,22 @@ test("exact MC projection and three distinct reflections are mandatory; generic 
   value.synthesis[0]!.claimIds = ["mc"];
   value.reflections = ["Pergunta genérica?"];
   assert.equal(inspectReading(value, generic).status, "needs_editorial_review");
+});
+
+test("schema-valid claim IDs cannot stand in for the calculated MC evidence", () => {
+  const value = reading();
+  for (const claim of value.claims.slice(1)) claim.evidence = ["mc"];
+  assert.ok(parseReading(value, "free"));
+  const review = inspectReading(value, facts);
+  assert.equal(review.status, "rejected");
+  for (const role of careerCompassRoles) {
+    assert.ok(
+      review.findings.some(
+        (finding) =>
+          finding.code === "unknown_fact" && finding.location === role,
+      ),
+    );
+  }
 });
 
 test("product instructions are trusted and context cannot select or overwrite their version", () => {

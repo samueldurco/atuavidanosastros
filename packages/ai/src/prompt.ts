@@ -46,6 +46,13 @@ export function buildPrompt(request: EditorialRequest) {
     "Não transforme uma leitura simbólica em afirmação causal sobre a pessoa. Prefira 'na linguagem simbólica, este fator permite explorar...' a 'sua trajetória exige', 'impõe' ou 'você tende'. Não infira casa 10 apenas pelo Meio do Céu; só mencione casas se recebidas.",
     "Se o único dado é uma informação ausente, o título e a síntese devem comunicar insuficiência de dados, não identidade ou carreira. A reflexão deve pedir o dado necessário, sem inventar dinâmica pessoal. Não suponha que posições por signo estejam disponíveis quando não foram fornecidas.",
     "Em Sonhos sem associação pessoal, não atribua significado à cor ou aos objetos. Descreva a imagem e formule uma pergunta sobre a associação que a pessoa tem com ela; não use biblioteca=conhecimento ou porta=transição como fato universal.",
+    ...(request.facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION
+      ? [
+          'VERIFICAÇÃO FINAL DA BÚSSOLA: nas afirmações public-direction, work-possibilities e tension-or-excess, use evidence=["angle-midheaven"]. evidence referencia facts.facts[].id, nunca claims[].id; mesmo que sua afirmação factual tenha id="mc-fact", esse ID não pode ser evidência. Apenas synthesis[].claimIds e relations[].claimIds referenciam afirmações.',
+          "Cada uma das três reflections deve ser uma pergunta prática distinta, terminada em ponto de interrogação: contribuição; ambiente/modo de trabalhar; pequeno experimento reversível. Não substitua a terceira pergunta por uma ordem para a pessoa executar uma tarefa.",
+          "Nos limits, declare literalmente que a base é parcial e experimental e que não há garantia global de precisão. Mantenha a linguagem simbólica e condicional também na síntese; não converta uma possibilidade em inclinação pessoal, exigência ou diagnóstico.",
+        ]
+      : []),
   ].join("\n");
   const prompt = JSON.stringify({
     facts: {

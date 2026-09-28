@@ -6,7 +6,7 @@ WU-115 · RUN_ID `ATV-20260902-170644Z-01A0630F` · 28/09/2026.
 
 `atv-career-compass-editorial/1.0.0` é selecionado pelo servidor ao preparar a projeção persistida de `career-compass`. O envelope continua `atv-facts/1.0.0`, com `editorialProfile` opcional; versões desconhecidas são recusadas. O perfil exige capacidade `purpose-direction`, escopo parcial, `angle-midheaven` calculado e permite apenas `personal-context` relatado como fato adicional. Contexto livre não seleciona instruções nem altera geometria.
 
-O prompt passa a `atv-editorial/1.0.2`, a evidência do produto a `atv-product-editorial-evidence/1.3.0` (1.2.0 na introdução do perfil, 1.3.0 após a checagem de coerência persistida) e o corpus sintético a `atv-product-facts-synthetic/1.5.0`. Fatos, perfil e versões entram nos vínculos existentes de prompt/requisição/revisão; avaliações anteriores não constituem prova deste prompt. Preparações sem perfil preservam o comportamento genérico.
+O prompt atual é `atv-editorial/1.0.3` (1.0.2 na introdução do perfil), a evidência do produto é `atv-product-editorial-evidence/1.3.0` (1.2.0 na introdução do perfil, 1.3.0 após a checagem de coerência persistida) e o corpus sintético é `atv-product-facts-synthetic/1.5.0`. Fatos, perfil e versões entram nos vínculos existentes de prompt/requisição/revisão; avaliações anteriores não constituem prova deste prompt. Preparações sem perfil preservam as instruções genéricas.
 
 ## Conteúdo exigido
 
@@ -27,6 +27,8 @@ O Director verifica presença, tipo e evidência dos papéis, ligação na sínt
 Gateway e Lab preservam o perfil durante minimização e avaliação. Um candidato estruturalmente válido continua sujeito à revisão legítima e à promoção independente; produção continua `promotion_required`. Não há mudança de política, emissor de recibos, preço, entitlement, estado persistido ou modelo aprovado. Fixtures exercitam o contrato e nunca satisfazem E2.
 
 As condições do cálculo continuam em `career-compass-calculation.md`. Provas locais e pendências: `../qa/CAREER_COMPASS_EDITORIAL_PROFILE_2026-09-28.md`.
+
+WU-118 acrescenta uma verificação final do prompt, exclusiva do perfil da Bússola, após o schema: distingue IDs de fatos em `evidence` de IDs de afirmações em `claimIds`, exige três perguntas e reforça os limites experimentais e a linguagem condicional na síntese. O perfil e suas regras estruturais permanecem 1.0.0; a alteração das instruções está identificada pelo novo prompt e digest. Uma chamada real sintética com cada versão mostrou falha de evidência no 1.0.2 e aprovação apenas mecânica no 1.0.3. A segunda saída ainda omitiu limites experimentais e não satisfaz revisão editorial; duas chamadas não demonstram causalidade ou qualidade geral. O MCP não retornou usage nem revisão resolvida do modelo. Nenhuma saída foi promovida, publicada ou convertida em revisão autorizada. Capturas e formulário em branco estão ignorados pelo Git; diagnóstico e bloqueadores: `../qa/CAREER_COMPASS_MODEL_DIAGNOSTIC_2026-09-28.md`.
 
 ## Apresentação web
 
