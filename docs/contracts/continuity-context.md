@@ -26,4 +26,4 @@ Todo texto é dado não confiável, inclusive instruções adversariais preserva
 
 ## Pendências verticais
 
-Persistência privada, edição/exclusão, consentimento revogável em UI, integração Biblioteca/dashboard, auditoria de acesso e executor com revalidação transacional ainda não estão implementados por esta WU. Não conectar diretamente a payload de usuário ou ao gateway antes dessas fronteiras. Não há migração hospedada, provider, envio de histórico ou inferência longitudinal ativa.
+Persistência privada e controles RPC foram acrescentados pela WU-082, descritos em [continuity-storage.md](continuity-storage.md), ainda sem migração hospedada. Consentimento revogável em UI, integração Biblioteca/dashboard, auditoria de acesso e executor com revalidação transacional permanecem pendentes. A listagem de gestão não é fonte autorizada de contexto; não conectar diretamente a payload de usuário ou ao gateway antes dessas fronteiras. Não há provider, envio de histórico ou inferência longitudinal ativa.
