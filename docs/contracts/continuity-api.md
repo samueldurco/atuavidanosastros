@@ -21,4 +21,4 @@ Consentimento e save usam compare-and-swap; somente recibo inteiro exatamente ex
 
 ## Limites explícitos
 
-Testes usam handlers reais com claims/porta RPC simulados e PostgreSQL local PGlite. Não certificam JWT/PostgREST hospedados, CSRF em navegador implantado ou concorrência multi-conexão. UI/Biblioteca, auditoria sem conteúdo, descarte de derivados e executor continuam pendentes. A leitura selecionada rejeita perfil soft-deleted; WU-085 acrescenta [guard de ciclo de vida](continuity-profile-lifecycle.md) para grant/save preservando revogação/exclusão. Nenhum modelo homologado ou publicação permitida.
+Testes usam handlers reais com claims/porta RPC simulados e PostgreSQL local PGlite. Não certificam JWT/PostgREST hospedados, CSRF em navegador implantado ou concorrência multi-conexão. WU-086 acrescenta [gestão na Biblioteca](continuity-library.md); auditoria sem conteúdo, descarte de derivados e executor continuam pendentes. A leitura selecionada rejeita perfil soft-deleted; WU-085 acrescenta [guard de ciclo de vida](continuity-profile-lifecycle.md) para grant/save preservando revogação/exclusão. Nenhum modelo homologado ou publicação permitida.

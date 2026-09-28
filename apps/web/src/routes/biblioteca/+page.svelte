@@ -3,6 +3,7 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
+	import ContinuityManager from '$lib/components/ContinuityManager.svelte';
 	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
 	import { natalProducts } from '$lib/natal-request';
 	import { workflowFor } from '@atv/domain';
@@ -76,6 +77,7 @@
 				</li>{/each}
 		</ul>
 	</details>
+	{#if !data.preview}<ContinuityManager sources={data.items} />{/if}
 	{#if data.libraryError}<StatePanel
 			kind="error"
 			title="Não foi possível carregar sua Biblioteca."

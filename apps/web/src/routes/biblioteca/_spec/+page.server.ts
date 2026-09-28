@@ -16,6 +16,7 @@ export const load: PageServerLoad = ({ url }) => {
 						title: 'Bússola de Carreira — referência sintética A',
 						universe: 'proposito-prosperidade',
 						item_type: 'COMPASS_RESULT',
+						source_id: null,
 						occurred_at: '2026-09-01T12:00:00Z',
 						created_at: '2026-09-01T12:00:00Z'
 					},
@@ -24,6 +25,7 @@ export const load: PageServerLoad = ({ url }) => {
 						title: 'Bússola de Carreira — referência sintética B',
 						universe: 'proposito-prosperidade',
 						item_type: 'COMPASS_RESULT',
+						source_id: null,
 						occurred_at: '2026-09-02T12:00:00Z',
 						created_at: '2026-09-02T12:00:00Z'
 					},
@@ -32,6 +34,7 @@ export const load: PageServerLoad = ({ url }) => {
 						title: 'Caderno de símbolos — referência sintética',
 						universe: 'SONHOS',
 						item_type: 'TEST_FIXTURE',
+						source_id: null,
 						occurred_at: '2026-09-03T12:00:00Z',
 						created_at: '2026-09-03T12:00:00Z'
 					}
