@@ -8,6 +8,7 @@ import {
   type Reading,
 } from "./contracts.ts";
 import { buildPrompt } from "./prompt.ts";
+import { BIRTH_CHART_EDITORIAL_VERSION } from "./birth-chart.ts";
 import { parseReading } from "./schema.ts";
 import { inspectReading, type MechanicalReview } from "./director.ts";
 
@@ -143,6 +144,11 @@ export class EditorialGateway {
       return unavailable("personal_data_not_approved");
     if (!hasInterpretiveBasis(input.facts))
       return unavailable("insufficient_facts");
+    if (
+      input.facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
+      input.tier === "free"
+    )
+      return unavailable("insufficient_tier");
     if (
       input.context !== undefined &&
       (typeof input.context !== "string" || input.context.length > 1200)

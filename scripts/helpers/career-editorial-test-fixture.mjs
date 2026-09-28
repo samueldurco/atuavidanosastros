@@ -1,5 +1,6 @@
 import { CAREER_COMPASS_EDITORIAL_VERSION, careerCompassRoles } from '../../packages/ai/src/career-compass.ts';
 import { THREE_PILLARS_EDITORIAL_VERSION, threePillarsFactIds, threePillarsRoles } from '../../packages/ai/src/three-pillars.ts';
+import { BIRTH_CHART_EDITORIAL_VERSION, birthChartRoles } from '../../packages/ai/src/birth-chart.ts';
 
 // Test-only structural overrides. No interpretation, review or release authority.
 /** @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts */
@@ -31,5 +32,20 @@ export function threePillarsEditorialTestFixture(facts) {
     relations: [{kind: 'convergence', claimIds: [...threePillarsRoles], text: 'Relação simbólica sintética para teste de referência.'}],
     synthesis: [{claimIds: [...threePillarsRoles], text: 'Síntese integrada de fixture sem autoridade editorial.'}],
     reflections: ['Que intenção quero observar?', 'Qual necessidade pede espaço?', 'Qual abordagem posso experimentar de modo reversível?'],
+  };
+}
+
+/** Test-only coverage; the text is not a birth-chart interpretation or approval.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function birthChartEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== BIRTH_CHART_EDITORIAL_VERSION) return {};
+  const ids = Object.keys(birthChartRoles);
+  return {
+    claims: Object.entries(birthChartRoles).map(([id, evidence]) => ({id, kind: 'hypothesis',
+      text: `Fixture estrutural do Mapa Astral: ${id}; sem conteúdo homologado.`, evidence: [...evidence]})),
+    relations: [{kind: 'convergence', claimIds: ids, text: 'Relação de teste entre planetas, ângulos e cúspides; não representa aspecto.'}],
+    synthesis: [{claimIds: ids, text: 'Síntese de fixture cobrindo referências; sem revisão legítima.'}],
+    reflections: ['Que intenção e necessidade quero observar?', 'Quais recursos posso considerar no cotidiano?', 'Qual experimento reversível cabe nesta semana?'],
   };
 }

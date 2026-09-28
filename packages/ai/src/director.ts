@@ -1,5 +1,9 @@
 import type { FactsEnvelope, Reading, Tier } from "./contracts.ts";
 import {
+  BIRTH_CHART_EDITORIAL_VERSION,
+  inspectBirthChart,
+} from "./birth-chart.ts";
+import {
   CAREER_COMPASS_EDITORIAL_VERSION,
   inspectCareerCompass,
 } from "./career-compass.ts";
@@ -142,6 +146,8 @@ export function inspectReading(
     findings.push(...inspectCareerCompass(reading));
   if (facts.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION)
     findings.push(...inspectThreePillars(reading));
+  if (facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION)
+    findings.push(...inspectBirthChart(reading));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

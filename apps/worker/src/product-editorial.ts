@@ -1,13 +1,13 @@
 import { workflowFor, type CalculationSnapshot, type WorkflowKind } from '@atv/domain';
 import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, tierLimits,
   validateFacts, hasInterpretiveBasis, parseReading, inspectReading, editorialDecision, revisionStrategy,
-  CAREER_COMPASS_EDITORIAL_VERSION, THREE_PILLARS_EDITORIAL_VERSION,
+  CAREER_COMPASS_EDITORIAL_VERSION, THREE_PILLARS_EDITORIAL_VERSION, BIRTH_CHART_EDITORIAL_VERSION,
   type Capability, type FactsEnvelope, type Tier, type ScoredReview, type Finding } from '@atv/ai';
 import { validateCalculation } from './product-processing.ts';
 import { validCareerCompassProjection } from './purpose-calculators.ts';
 import { inspectBirthChartProjection, inspectThreePillarsProjection } from './natal-calculators.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.6.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.7.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -32,7 +32,8 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
   const facts: FactsEnvelope = { version: 'atv-facts/1.0.0', capability: capability[kind],
     completeness: 'partial', facts: structuredClone(calculation.facts),
     ...(productId === 'career-compass' ? { editorialProfile: CAREER_COMPASS_EDITORIAL_VERSION } :
-      productId === 'three-pillars' ? { editorialProfile: THREE_PILLARS_EDITORIAL_VERSION } : {}) };
+      productId === 'three-pillars' ? { editorialProfile: THREE_PILLARS_EDITORIAL_VERSION } :
+      productId === 'birth-chart' ? { editorialProfile: BIRTH_CHART_EDITORIAL_VERSION } : {}) };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts)) return { status: 'blocked', reason: 'facts_not_representable' };
   // An unavailability notice is calculated evidence, but cannot support an Ascendant reading.

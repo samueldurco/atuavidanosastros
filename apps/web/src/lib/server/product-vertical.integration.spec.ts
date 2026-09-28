@@ -16,6 +16,7 @@ import {
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import {
+	birthChartEditorialTestFixture,
 	careerEditorialTestFixture,
 	threePillarsEditorialTestFixture
 } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
@@ -199,7 +200,7 @@ async function fixture(productId: string) {
 				runId: id,
 				revision: r.revision,
 				productId,
-				tier: 'free' as const,
+				tier: productId === 'birth-chart' ? ('intermediate' as const) : ('free' as const),
 				calculation: r.calculation,
 				output: {
 					schemaVersion: SCHEMA_VERSION,
@@ -221,6 +222,7 @@ async function fixture(productId: string) {
 					reflections: ['Que associação pessoal aparece nesse recorte?'],
 					...careerEditorialTestFixture(facts.facts),
 					...threePillarsEditorialTestFixture(facts.facts),
+					...birthChartEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -382,6 +384,19 @@ for (const productId of products)
 					'Qual abordagem posso experimentar de modo reversível?'
 				])
 					expect(html).toContain(question);
+			} else if (productId === 'birth-chart') {
+				const persisted = (
+					await f.db.query<FixtureRun>('select * from product_runs where id=$1', [runId])
+				).rows[0];
+				const prepared = prepareProductFacts(productId, persisted.calculation);
+				if (prepared.status !== 'prepared') throw new Error('natal_facts_not_prepared');
+				const fixture = birthChartEditorialTestFixture(prepared.facts);
+				for (const claim of fixture.claims ?? []) {
+					expect(html).toContain(claim.id);
+					for (const factId of claim.evidence) expect(html).toContain(factId);
+				}
+				for (const question of fixture.reflections ?? []) expect(html).toContain(question);
+				expect(html).toContain('Síntese de fixture cobrindo referências; sem revisão legítima.');
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

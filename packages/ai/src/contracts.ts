@@ -7,8 +7,12 @@ import {
   THREE_PILLARS_EDITORIAL_VERSION,
   validThreePillarsFacts,
 } from "./three-pillars.ts";
+import {
+  BIRTH_CHART_EDITORIAL_VERSION,
+  validBirthChartFacts,
+} from "./birth-chart.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.4";
+export const PROMPT_VERSION = "atv-editorial/1.0.5";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -34,7 +38,8 @@ export interface FactsEnvelope {
   /** Optional versioned product requirements; selected by trusted preparation. */
   editorialProfile?:
     | typeof CAREER_COMPASS_EDITORIAL_VERSION
-    | typeof THREE_PILLARS_EDITORIAL_VERSION;
+    | typeof THREE_PILLARS_EDITORIAL_VERSION
+    | typeof BIRTH_CHART_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -184,7 +189,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION &&
       validCareerCompassFacts(value)) ||
     (value.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION &&
-      validThreePillarsFacts(value))
+      validThreePillarsFacts(value)) ||
+    (value.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
+      validBirthChartFacts(value))
   );
 }
 

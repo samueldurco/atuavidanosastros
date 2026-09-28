@@ -192,16 +192,16 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.8.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.9.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    '4b7d081497073d0b62e170e74effc1b54e035e1c3a65fc10e0ccea82ec13dcae');
+    '870a360458e37d3e7ef49f201ad557a7fc5810828204541fbc38852828627a68');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    '1aac9a3fb00361e7552bedb48c02edb9c4246c3615ebc005f255877c7c68ebfc');
+    'dd7763656b3233ba10c27625195e473a6b417a3ab913f0e41f97d45316357736');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    '8a7ab3e97c639c2f233e5fc50374e6b47cfa95f783266bcc97ddb98cf139c1cc');
-  // Version 1.8.0 withholds the existing incomplete polar birth chart; no new corpus cases.
+    'a46d39ebcebf9d2d4252292a41f35f48b3ba8bc41935ba40f0d2b87e442991fe');
+  // Version 1.9.0 binds the natal editorial profile; incomplete polar cases remain withheld.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
-    '167bc7718b11ff3d1e9e8d1e40890b93d6d8318ba1b5a8d27743f74b18a0342e');
+    '6c59a8014d964d8c3f27cb4c89de916d3c00c43efc78c2260c2330c21eaf2808');
 });
 
 test('offline corpus covers 13 partial bases, six capabilities and seven strata without claiming release', () => {
