@@ -11,6 +11,11 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.getByRole('heading', { name: 'Espaço para uma pergunta' })).toBeVisible();
 		await expect(page.getByRole('button', { name: 'Reprocessar em nova versão' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
+		await expect(page.getByRole('link', { name: 'Pedido de e-mail', exact: true })).toHaveAttribute(
+			'href',
+			'#email'
+		);
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
@@ -42,6 +47,10 @@ for (const width of [1440, 820, 390, 320]) {
 		});
 		await page.goto('/biblioteca/_spec/fluxo?state=revoked&format=pdf');
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
+		await expect(
+			page.getByRole('heading', { name: 'Pedido de e-mail', exact: true })
+		).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 	});
 }
 test('unapproved/revoked/failed results never masquerade as delivered readings', async ({

@@ -43,13 +43,15 @@ export function createProductEmailRequest(options: {
 	ownerId: string;
 	runId: string;
 	revision: number;
-	reviewDigest: string;
+	reviewDigest: string | null;
 	storage: StoragePort;
 	fetch: typeof fetch;
 	randomUUID: () => string;
 }) {
 	const { storage, fetch: fetcher, randomUUID } = options;
 	const owner = options.ownerId;
+	const runId = options.runId;
+	const revision = options.revision;
 	const command = parseProductEmailCommand({
 		version: 'atv-email-request/1',
 		runId: options.runId,
@@ -61,6 +63,15 @@ export function createProductEmailRequest(options: {
 			recipient: 'account-owner'
 		}
 	});
+	// A revoked reader deliberately withholds editorial content and its digest.
+	// The immutable owner/run/revision still identifies the existing receipt.
+	const contextValid =
+		emailUuid(owner) &&
+		emailUuid(runId) &&
+		Number.isInteger(revision) &&
+		revision >= 1 &&
+		revision <= 8 &&
+		(options.reviewDigest === null || !!command);
 	const name = `atv-email:${owner.toLowerCase()}:${options.runId.toLowerCase()}:${options.revision}`;
 	let remembered: string | null = null;
 	let receipt: ProductEmailReceipt | null = null;
@@ -80,7 +91,7 @@ export function createProductEmailRequest(options: {
 	}
 	function inspect(): ProductEmailRequestState {
 		try {
-			if (!emailUuid(owner) || !command) return blocked();
+			if (!contextValid) return blocked();
 			const key = storage.getItem(name);
 			if (remembered !== null && key !== remembered) return blocked();
 			if (key === null) return { mode: 'new', message: '' };
@@ -118,13 +129,13 @@ export function createProductEmailRequest(options: {
 			};
 		const parsed = parseProductEmailReceipt(payload.receipt);
 		if (
-			!command ||
+			!contextValid ||
 			!parsed ||
-			parsed.runId.toLowerCase() !== command.runId.toLowerCase() ||
-			parsed.revision !== command.expectedRevision ||
+			parsed.runId.toLowerCase() !== runId.toLowerCase() ||
+			parsed.revision !== revision ||
 			(receiptId !== null && parsed.id.toLowerCase() !== receiptId) ||
 			(cancelled && parsed.state !== 'CANCELLED') ||
-			(action === 'request' && parsed.reviewDigest !== command.reviewDigest) ||
+			(action === 'request' && (!command || parsed.reviewDigest !== command.reviewDigest)) ||
 			(action === 'cancel' && parsed.state !== 'CANCELLED')
 		)
 			return uncertain();
@@ -150,6 +161,8 @@ export function createProductEmailRequest(options: {
 				return { mode: 'new', message: 'Pedidos de e-mail ainda não estão habilitados.' };
 			if (consent !== true)
 				return { mode: 'new', message: 'Confirme o pedido de e-mail para sua própria conta.' };
+			if (!command)
+				return { mode: 'new', message: 'Esta versão não está disponível para um novo pedido.' };
 			const key = randomUUID();
 			if (!emailUuid(key)) return blocked();
 			try {

@@ -6,10 +6,11 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import ProductArtifacts from '$lib/components/ProductArtifacts.svelte';
+	import ProductEmailRequest from '$lib/components/ProductEmailRequest.svelte';
 	import ReprocessAction from '$lib/components/ReprocessAction.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	let { data }: { data: WorkflowReaderData } = $props();
-	let busy = $state<'reprocess' | 'delete' | 'download' | null>(null);
+	let busy = $state<'reprocess' | 'delete' | 'download' | 'email' | null>(null);
 	let failure = $state('');
 	let downloadFormat = $state<'web' | 'pdf' | 'svg' | 'card'>('web');
 	let cardSection = $state(0);
@@ -147,6 +148,7 @@
 						{ id: 'arquivos', label: 'Arquivos guardados' }
 					]
 				: []),
+			{ id: 'email', label: 'Pedido de e-mail' },
 			{ id: 'historico', label: 'Histórico desta versão' }
 		]}
 	>
@@ -299,6 +301,17 @@
 				<ProductArtifacts run={data.run} disabled={!!data.synthetic || !!busy} />
 			{/key}
 		{/if}
+		{#key `${data.ownerId}:${data.run.id}:${data.run.revision}:${data.run.editorial?.reviewDigest}`}
+			<ProductEmailRequest
+				ownerId={data.ownerId}
+				runId={data.run.id}
+				revision={data.run.revision}
+				reviewDigest={data.run.editorial?.reviewDigest ?? null}
+				synthetic={data.synthetic}
+				disabled={!!busy && busy !== 'email'}
+				onBusyChange={(active) => (busy = active ? 'email' : null)}
+			/>
+		{/key}
 		<section id="historico" aria-labelledby="history-title">
 			<h2 id="history-title">Histórico desta versão</h2>
 			{#if data.run.parentId}<p>

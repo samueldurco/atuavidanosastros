@@ -50,6 +50,39 @@ function setup(previous?: string) {
 }
 
 describe('private owner email request controller', () => {
+	it('recovers and cancels without editorial digest after revocation', async () => {
+		const s = setup(key);
+		const client = createProductEmailRequest({ ...s.options, reviewDigest: null });
+		expect(client.inspect().mode).toBe('recover');
+		s.fetcher
+			.mockResolvedValueOnce(json({ receipt }))
+			.mockResolvedValueOnce(json({ receipt: cancelled }));
+		expect((await client.recover()).mode).toBe('requested');
+		expect((await client.cancel()).mode).toBe('cancelled');
+		expect(s.fetcher.mock.calls.map(([path]) => path)).toEqual([
+			'/api/product-email/recover',
+			'/api/product-email/cancel'
+		]);
+	});
+	it('cannot create a request without current editorial digest even with consent and availability', async () => {
+		const s = setup();
+		const client = createProductEmailRequest({ ...s.options, reviewDigest: null });
+		expect((await client.perform(true, true)).mode).toBe('new');
+		expect(s.storage.setItem).not.toHaveBeenCalled();
+		expect(s.fetcher).not.toHaveBeenCalled();
+	});
+	it.each([
+		{ runId: 'invalid' },
+		{ revision: 0 },
+		{ revision: 9 },
+		{ revision: 1.5 },
+		{ ownerId: 'invalid' }
+	])('rejects invalid receipt context without digest: %j', (change) => {
+		const s = setup(key);
+		expect(
+			createProductEmailRequest({ ...s.options, ...change, reviewDigest: null }).inspect().mode
+		).toBe('blocked');
+	});
 	it.each([
 		[false, false],
 		[false, true],

@@ -43,6 +43,7 @@ export interface WorkflowReaderData {
 	item: LibraryItemSummary;
 	run: ProductRunView;
 	synthetic?: boolean;
+	ownerId?: string;
 }
 export const runLabels: Record<RunState, string> = {
 	QUEUED: 'Na fila de processamento',

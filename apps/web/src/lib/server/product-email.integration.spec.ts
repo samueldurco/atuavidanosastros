@@ -259,7 +259,7 @@ it('browser remount recovers lost commit and cancels after account and release r
 		'update product_email_policy set enabled=false; update workflow_releases set enabled=false'
 	);
 	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
-	const restored = createProductEmailRequest(b.options);
+	const restored = createProductEmailRequest({ ...b.options, reviewDigest: null });
 	expect((await restored.perform(false, false)).mode).toBe('requested');
 	expect((await restored.cancel()).mode).toBe('cancelled');
 	expect((await restored.perform(true, true)).mode).toBe('cancelled');

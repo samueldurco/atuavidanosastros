@@ -13,5 +13,5 @@ export const load: PageServerLoad = async ({ parent, locals, params, setHeaders 
 	if (!locals.supabase) error(503, 'Não foi possível acessar sua Biblioteca.');
 	const data = await readLibraryResult(locals.supabase, user.id, params.id);
 	if (data.state === 'not-found') error(404, 'Este item não está disponível na sua Biblioteca.');
-	return data;
+	return data.state === 'workflow' ? { ...data, ownerId: user.id } : data;
 };
