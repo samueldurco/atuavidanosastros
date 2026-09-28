@@ -58,4 +58,3 @@ $$;
 revoke all on function public.request_natal_product_run(uuid,jsonb) from public, anon, service_role;
 grant execute on function public.request_natal_product_run(uuid,jsonb) to authenticated;
 commit;
-

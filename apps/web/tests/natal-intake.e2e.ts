@@ -83,7 +83,7 @@ for (const product of [
 			writes++;
 			const body = route.request().postDataJSON();
 			expect(body.input).toEqual({
-				version: 'atv-natal-request/1',
+				version: product === 'career-compass' ? 'atv-natal-request/2' : 'atv-natal-request/1',
 				productId: product,
 				expectedRevision: 2,
 				consent: {
@@ -125,6 +125,52 @@ for (const product of [
 		await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 	});
 }
+test('career report: reconsent, exact private command, lost acknowledgement and UUID-only reload', async ({
+	page
+}) => {
+	const context = '  Relato sintético profissional\nDesejo explorar colaboração.  ';
+	let writes = 0;
+	await page.route('**/api/workflows/natal', (route) => {
+		writes++;
+		expect(route.request().postDataJSON().input).toMatchObject({
+			version: 'atv-natal-request/2',
+			productId: 'career-compass',
+			context,
+			consent: { continuity: false }
+		});
+		return route.abort();
+	});
+	await ready(page, 'career-compass');
+	const report = page.getByLabel('Contexto profissional (opcional)', { exact: true });
+	await expect(report).toHaveAttribute('maxlength', '1200');
+	await page.getByLabel(privacy, { exact: false }).check();
+	await report.fill('   ');
+	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
+	await expect(report).toHaveAttribute('aria-invalid', 'true');
+	await page.getByLabel(privacy, { exact: false }).check();
+	await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+	await report.fill(context);
+	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
+	await page.getByLabel(privacy, { exact: false }).check();
+	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
+	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeVisible();
+	const stored = await page.evaluate(() => ({
+		session: { ...sessionStorage },
+		local: { ...localStorage }
+	}));
+	expect(Object.keys(stored.session)).toEqual([slot('career-compass')]);
+	expect(stored.session[slot('career-compass')]).toMatch(/^[a-f0-9-]{36}$/);
+	expect(JSON.stringify(stored)).not.toContain(context.trim());
+	await page.reload();
+	await recovery(page, 'career-compass');
+	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+	expect(writes).toBe(1);
+	await page.getByRole('button', { name: 'Preparar outro pedido' }).click();
+	await page.getByRole('button', { name: 'Consultar perfil salvo', exact: true }).click();
+	await expect(report).toHaveValue('');
+	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
+});
 for (const state of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 	test(`${state}: closed creation keeps recovery without any profile read`, async ({ page }) => {
 		let mutations = 0;
@@ -237,6 +283,10 @@ for (const product of ['birth-chart', 'career-compass']) {
 			});
 			await page.emulateMedia({ reducedMotion: 'reduce' });
 			await ready(page, product);
+			if (product === 'career-compass')
+				await page
+					.getByLabel('Contexto profissional (opcional)', { exact: true })
+					.fill('Quero refletir sobre meu momento profissional.\nRelato sintético para revisão.');
 			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 				true

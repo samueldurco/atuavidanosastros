@@ -1,3 +1,4 @@
+-- Restore v1 writes; preserve v2 history, snapshots, receipts and read-only recovery.
 begin;
 -- Add career compass to profile-backed intake without enabling its release.
 create or replace function public.request_natal_product_run(p_request_key uuid, p_command jsonb)

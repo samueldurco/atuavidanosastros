@@ -3,7 +3,12 @@
 	import { validDate, workflowFor } from '@atv/domain';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
-	import { NATAL_REQUEST_VERSION } from '$lib/natal-request';
+	import {
+		NATAL_REQUEST_VERSION,
+		CAREER_REQUEST_VERSION,
+		CAREER_CONTEXT_LIMIT,
+		validCareerContext
+	} from '$lib/natal-request';
 	import { DATE_REQUEST_VERSION } from '$lib/date-request';
 	import { PAIR_REQUEST_VERSION } from '$lib/pair-request';
 	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
@@ -21,6 +26,7 @@
 	let busy = $state(false);
 	let consent = $state(false);
 	let targetDate = $state('');
+	let careerContext = $state('');
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
 	let feedback: HTMLParagraphElement | undefined = $state();
@@ -32,6 +38,9 @@
 	const isDate = $derived(productId === 'date-reading');
 	const isPair = $derived(productId === 'pair-preview');
 	const isCareer = $derived(productId === 'career-compass');
+	const careerValid = $derived(
+		!isCareer || careerContext === '' || validCareerContext(careerContext)
+	);
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
 	function resetConsents() {
@@ -119,16 +128,28 @@
 	}
 	async function submit(event: SubmitEvent) {
 		event.preventDefault();
-		if (!controller || !canEnter || !consent || !snapshot || !dateValid || !pairValid) return;
+		if (
+			!controller ||
+			!canEnter ||
+			!consent ||
+			!snapshot ||
+			!dateValid ||
+			!pairValid ||
+			!careerValid
+		)
+			return;
 		busy = true;
 		const input = {
 			version: isPair
 				? PAIR_REQUEST_VERSION
 				: isDate
 					? DATE_REQUEST_VERSION
-					: NATAL_REQUEST_VERSION,
+					: isCareer
+						? CAREER_REQUEST_VERSION
+						: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
+			...(isCareer && careerContext !== '' ? { context: careerContext } : {}),
 			...(isDate ? { targetDate } : {}),
 			...(isPair
 				? {
@@ -149,6 +170,7 @@
 			}
 		};
 		outcome = await controller.perform(true, input);
+		careerContext = '';
 		targetDate = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
@@ -168,6 +190,7 @@
 	function another() {
 		if (!controller || busy || loading) return;
 		outcome = controller.startAnother();
+		careerContext = '';
 		targetDate = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
@@ -251,7 +274,9 @@
 							? '2. Dados da outra pessoa e autorizações'
 							: isDate
 								? '2. Escolha a data e autorize'
-								: '2. Autorize este pedido'}</legend
+								: isCareer
+									? '2. Seu contexto e sua autorização'
+									: '2. Autorize este pedido'}</legend
 					>
 					{#if isPair}
 						<PartnerBirthFields
@@ -301,6 +326,32 @@
 							{/snippet}
 						</Field>
 					{/if}
+					{#if isCareer}
+						<Field
+							id="career-context"
+							label="Contexto profissional (opcional)"
+							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
+							error={!careerValid
+								? 'Escreva até 1.200 caracteres válidos ou deixe o campo vazio.'
+								: undefined}
+						>
+							{#snippet children(describedBy)}
+								<textarea
+									id="career-context"
+									rows="5"
+									maxlength={CAREER_CONTEXT_LIMIT}
+									autocomplete="off"
+									bind:value={careerContext}
+									oninput={resetConsents}
+									aria-describedby={describedBy + ' career-context-count'}
+									aria-invalid={!careerValid}></textarea>
+							{/snippet}
+						</Field>
+						<p id="career-context-count" class="privacy">
+							{careerContext.length} / 1.200 caracteres. O relato será guardado somente neste pedido;
+							não atualiza o perfil natal nem autoriza memória ATV+.
+						</p>
+					{/if}
 					<label class="consent"
 						><input
 							type="checkbox"
@@ -311,7 +362,9 @@
 							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
 							: isDate
 								? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida e dos resultados deste pedido na minha conta.'
-								: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+								: isCareer
+									? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
+									: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
@@ -321,7 +374,8 @@
 					<Button
 						type="submit"
 						pending={busy}
-						disabled={!canEnter || !consent || !dateValid || !pairValid}>Criar pedido</Button
+						disabled={!canEnter || !consent || !dateValid || !pairValid || !careerValid}
+						>Criar pedido</Button
 					>
 				</fieldset>
 			</form>
@@ -370,6 +424,11 @@
 			{#if isDate}<p>
 					A base temporal é experimental. Seu fuso de nascimento não define sua localização atual.
 					Esta amostra não cobre uma semana, um calendário ou uma revolução solar.
+				</p>{/if}
+			{#if isCareer}<p>
+					Carreira não se resume a um signo: formação, território, condições de vida, saúde,
+					oportunidades e escolhas importam. A base atual é parcial e experimental; não indica
+					profissão, emprego ou renda.
 				</p>{/if}
 			<p>
 				Você acompanha o estado na Biblioteca. Um pedido salvo não é uma leitura pronta; não

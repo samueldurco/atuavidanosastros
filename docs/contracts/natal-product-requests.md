@@ -1,4 +1,4 @@
-# Natal profile to product — atv-natal-request/1
+# Natal profile to product — atv-natal-request/1 and career-only /2
 
 Local implementation only. Five profile-backed partial bases: birth-chart, three-pillars, ascendant, midheaven and career-compass. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
 
@@ -6,7 +6,7 @@ Local implementation only. Five profile-backed partial bases: birth-chart, three
 
 `POST /api/workflows/natal` accepts exactly `{requestKey,input}`. `input` has `version: atv-natal-request/1`, one supported `productId`, positive integer `expectedRevision` below 2147483647 and explicit product consent `{storage:true,policyVersion:atv-input-consent/1,partner:false,continuity:false}`. No owner, birth coordinates, time precision, context or profile version can be injected by the caller. Consent to save the profile does not substitute for this product consent.
 
-Claims, same origin, JSON size (4096 bytes) and structural validation precede the RPC. Responses are private/no-store/no-referrer/noindex. A 202 contains only `runId`, not a delivered result. Errors expose only fixed codes, never raw SQL or birth data.
+Claims, same origin, JSON size (8192 bytes, including escaped Unicode) and structural validation precede the RPC. Responses are private/no-store/no-referrer/noindex. A 202 contains only `runId`, not a delivered result. Errors expose only fixed codes, never raw SQL, birth data or professional context.
 
 `request_natal_product_run` independently validates the command, acquires the same owner advisory lock as the existing request RPC and then locks the active account profile. It checks the expected onboarding revision and reads only the current profile with a valid storage receipt. Missing/forgotten/legacy-unconsented profiles are rejected. Only `EXACT` is accepted; `APPROXIMATE` and unknown time cannot become an exact input by projection. The six BirthInput fields are copied explicitly; location labels/country/precision are not silently cast into that contract. The deterministic worker still independently validates calendar, civil/UTC correspondence, coordinates and its experimental engine contract.
 
@@ -32,6 +32,16 @@ The shared Library links expose availability consultation, not a release promise
 
 ## Career compass expansion (WU099)
 
-Migration `20260928170000_career_compass_requests.sql` expands only the product allowlist of the existing function; the v1 command shape, exact-profile requirement, locks, quotas, owner isolation and grants are unchanged. It does not enable any release or engine. Professional context is optional in the base workflow but is not collected by this strict profile command; context injection remains invalid. The experimental MC calculation is described in `career-compass-calculation.md`. Public direction, work environments, tensions and practical questions still require approved interpretation and are not produced by this intake.
+Migration `20260928170000_career_compass_requests.sql` expands only the product allowlist of the existing function; the v1 command shape, exact-profile requirement, locks, quotas, owner isolation and grants are unchanged. It does not enable any release or engine. Professional context is not accepted in v1. The experimental MC calculation is described in `career-compass-calculation.md`. Public direction, work environments, tensions and practical questions still require approved interpretation and are not produced by this intake.
 
 `supabase/forward-fixes/disable_career_compass_requests.sql` restores the four-product allowlist without deleting existing career snapshots, receipts or Library items. It rejects career writes, including same-key command retries; existing read-only recovery remains available. Original four products retain their normal gates. Reapplying the expansion restores idempotent same-key recovery without enabling releases. Both paths are tested locally with synthetic PostgreSQL; no hosted migration or real identity/concurrency certification is implied.
+
+## Optional professional context (WU100)
+
+Migration `20260928180000_career_compass_context.sql` preserves v1 for all five products and adds `atv-natal-request/2` exclusively for `career-compass`. Its four required fields are unchanged; only this version/product accepts a fifth optional `context` string. Omission is valid. A present value must contain non-whitespace text, have at most 1200 UTF-16 code units, valid Unicode and no C0/C1 controls except tab, LF and CR. Whitespace is preserved exactly, not normalized. SQL and TypeScript independently enforce the same boundaries; malformed Unicode is additionally rejected by PostgreSQL JSON parsing. There is no owner/birth/profile field injection or context alias.
+
+The career intake sends v2, omits an empty field, resets consent when the draft changes and clears the in-memory draft after an attempt. It never stores the report in browser storage. The checkbox explicitly authorizes storing the optional report with this request, not in the natal profile or ATV+ memory. The immutable run input and private command receipt retain it, so both are personal account data; forgetting natal onboarding does not erase them. Existing account/run deletion and retention constraints still apply.
+
+The calculator emits context only as `kind: reported`, source `input.context`; it cannot alter MC geometry or become an astrological finding. Pending Library/recovery responses and metrics do not expose the report. Reprocessing uses the original snapshot, not new profile data or a new report. No model, prompt promotion, provider call or artifact release is added.
+
+`supabase/forward-fixes/disable_career_compass_context.sql` restores the five-product v1 command. It refuses all v2 writes, including idempotent command retries, but preserves runs, receipts and read-only recovery. Reapplying migration 100 restores exact v2 idempotency even after release closure; new keys still fail closed. This is local synthetic evidence, not a hosted migration or concurrency certification.

@@ -128,7 +128,8 @@ beforeAll(async () => {
 		'20260923180000_natal_onboarding.sql',
 		'20260924170000_product_request_recovery.sql',
 		'20260925160000_natal_product_requests.sql',
-		'20260928170000_career_compass_requests.sql'
+		'20260928170000_career_compass_requests.sql',
+		'20260928180000_career_compass_context.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -351,11 +352,152 @@ it('career forward-fix preserves prior products, snapshots and read-only recover
 	} finally {
 		await db.exec('update workflow_releases set enabled=false');
 		await db.exec(await file('supabase/migrations/20260928170000_career_compass_requests.sql'));
+		await db.exec(await file('supabase/migrations/20260928180000_career_compass_context.sql'));
 	}
 	expect(await submit(body)).toBe(runId);
 	await expect(submit(request({ productId: 'career-compass' }))).rejects.toThrow(
 		'workflow_unreleased'
 	);
+});
+
+it('accepts escaped Unicode within the bounded HTTP envelope, rejects padding beyond it', async () => {
+	await save();
+	await db.exec("update workflow_releases set enabled=true where product_id='career-compass'");
+	const body = request({
+		version: 'atv-natal-request/2',
+		productId: 'career-compass',
+		context: '界'.repeat(1200)
+	});
+	const encoded = JSON.stringify(body).replaceAll('界', '\\u754c');
+	expect(encoded.length).toBeGreaterThan(4096);
+	const oversized = event(body);
+	oversized.request = new Request(oversized.url, {
+		method: 'POST',
+		headers: oversized.request.headers,
+		body: encoded.padEnd(8193, ' ')
+	});
+	expect((await natalRequestApi(oversized)).status).toBe(400);
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+	const valid = event(body);
+	valid.request = new Request(valid.url, {
+		method: 'POST',
+		headers: valid.request.headers,
+		body: encoded
+	});
+	expect((await natalRequestApi(valid)).status).toBe(202);
+	expect(
+		(await db.query<{ context: string }>("select input->>'context' context from product_runs"))
+			.rows[0].context
+	).toBe('界'.repeat(1200));
+});
+
+it.each([
+	'Relato sintético privado',
+	'  transição\ncom pausas\t  ',
+	'界'.repeat(1200),
+	'🌌'.repeat(600),
+	undefined
+])('v2 persists exact optional context without changing the profile %#', async (context) => {
+	await save();
+	await db.exec("update workflow_releases set enabled=true where product_id='career-compass'");
+	const profileBefore = (await db.query('select * from natal_profiles')).rows;
+	const body = request({
+		version: 'atv-natal-request/2',
+		productId: 'career-compass',
+		...(context === undefined ? {} : { context })
+	});
+	const response = await natalRequestApi(event(body));
+	expect(response.status).toBe(202);
+	const { runId } = (await response.json()) as { runId: string };
+	const row = (
+		await db.query<{ input: unknown }>('select input from product_runs where id=$1', [runId])
+	).rows[0];
+	expect(parseWorkflowInput(row.input)?.context).toBe(context);
+	expect((await db.query('select * from natal_profiles')).rows).toEqual(profileBefore);
+	expect(
+		(await db.query<{ command: unknown }>('select command from natal_product_requests')).rows[0]
+			.command
+	).toEqual(body.input);
+	expect(await submit(body)).toBe(runId);
+	await forget(1);
+	await db.exec('update workflow_releases set enabled=false');
+	expect(await submit(body)).toBe(runId);
+	await expect(
+		submit({ ...body, input: input({ ...body.input, context: 'Outro relato' }) })
+	).rejects.toThrow('idempotency_conflict');
+	expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+	const hidden = await asRole(db, 'authenticated', other, () =>
+		db.query<{ value: unknown }>('select recover_product_request($1) value', [body.requestKey])
+	);
+	expect(hidden.rows[0].value).toBeNull();
+});
+
+it.each([
+	null,
+	1,
+	{},
+	[],
+	'',
+	' \t\n',
+	'\u00a0\u2000\ufeff',
+	'a'.repeat(1201),
+	'🌌'.repeat(601),
+	'a\u0008',
+	'a\u007f',
+	'a\u0085'
+])('v2 rejects invalid context consistently in parser, API and direct SQL %#', async (context) => {
+	const body = request({ version: 'atv-natal-request/2', productId: 'career-compass', context });
+	expect(parseNatalRequestInput(body.input)).toBeNull();
+	expect((await natalRequestApi(event(body))).status).toBe(400);
+	await expect(submit(body)).rejects.toThrow('invalid_input');
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+
+it.each([
+	{ version: 'atv-natal-request/1', productId: 'career-compass', context: 'Relato' },
+	{ version: 'atv-natal-request/2', productId: 'career-compass', context: 'Relato', birth: {} },
+	...['birth-chart', 'three-pillars', 'ascendant', 'midheaven'].map((productId) => ({
+		version: 'atv-natal-request/2',
+		productId,
+		context: 'Relato'
+	}))
+])('v2 rejects unrelated product/version and forged fields %#', async (changes) => {
+	const body = request(changes);
+	expect(parseNatalRequestInput(body.input)).toBeNull();
+	await expect(submit(body)).rejects.toThrow('invalid_input');
+});
+
+it('context forward-fix preserves old and new receipts and recovery; reapply restores v2 idempotency', async () => {
+	await save();
+	await db.exec('update workflow_releases set enabled=true');
+	const old = request({ productId: 'career-compass' });
+	const oldId = await submit(old);
+	const body = request({
+		version: 'atv-natal-request/2',
+		productId: 'career-compass',
+		context: 'Relato privado sintético'
+	});
+	const runId = await submit(body);
+	const before = (await db.query('select * from product_runs order by id')).rows;
+	await db.exec(await file('supabase/forward-fixes/disable_career_compass_context.sql'));
+	try {
+		expect(await submit(old)).toBe(oldId);
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+		const found = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+				body.requestKey
+			])
+		);
+		expect(found.rows[0].value.runId).toBe(runId);
+		expect((await db.query('select * from product_runs order by id')).rows).toEqual(before);
+		expect(await submit(request())).toBeTruthy();
+	} finally {
+		await db.exec('update workflow_releases set enabled=false');
+		await db.exec(await file('supabase/migrations/20260928180000_career_compass_context.sql'));
+	}
+	expect(await submit(body)).toBe(runId);
+	expect(await submit(old)).toBe(oldId);
+	await expect(submit(request({ ...body.input }))).rejects.toThrow('workflow_unreleased');
 });
 
 it('deleting a run removes its receipt; forward-fix disables writes but retains recovery and snapshots', async () => {

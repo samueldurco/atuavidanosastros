@@ -92,7 +92,8 @@ beforeAll(async () => {
 		'20260925160000_natal_product_requests.sql',
 		'20260925190000_date_product_requests.sql',
 		'20260925200000_pair_product_requests.sql',
-		'20260928170000_career_compass_requests.sql'
+		'20260928170000_career_compass_requests.sql',
+		'20260928180000_career_compass_context.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -257,6 +258,7 @@ async function forget(expectedRevision: number) {
 		).status
 	).toBe(200);
 }
+const careerContext = 'Contexto profissional privado sintético: refletir sobre colaboração.';
 async function command(productId: string, date = targetDate, pairBirth = partner) {
 	const response = await onboardingApi(event('/api/onboarding'), 'read');
 	expect(response.status).toBe(200);
@@ -275,8 +277,11 @@ async function command(productId: string, date = targetDate, pairBirth = partner
 				? 'atv-pair-request/1'
 				: productId === 'date-reading'
 					? 'atv-date-request/1'
-					: 'atv-natal-request/1',
+					: productId === 'career-compass'
+						? 'atv-natal-request/2'
+						: 'atv-natal-request/1',
 		productId,
+		...(productId === 'career-compass' ? { context: careerContext } : {}),
 		...(productId === 'date-reading' ? { targetDate: date } : {}),
 		expectedRevision: snapshot!.revision,
 		consent: { ...consent, partner: productId === 'pair-preview' },
@@ -632,6 +637,7 @@ it.each(profileProducts)(
 			version: 'atv-workflow/1.0.0',
 			productId,
 			birth,
+			...(productId === 'career-compass' ? { context: careerContext } : {}),
 			consent: { ...consent, partner: productId === 'pair-preview' },
 			...(productId === 'pair-preview' ? { partner } : {}),
 			...(productId === 'date-reading' ? { targetDate } : {})
@@ -655,6 +661,23 @@ it.each(profileProducts)(
 			runId: run.id
 		});
 		expect(deterministicSnapshot(calculated.calculation)).toEqual(deterministicSnapshot(expected));
+		if (productId === 'career-compass') {
+			expect(calculated.calculation?.facts).toContainEqual({
+				id: 'personal-context',
+				kind: 'reported',
+				display: careerContext,
+				source: 'input.context'
+			});
+			const withoutContext = { ...run.input };
+			delete withoutContext.context;
+			const withoutReport = await calculators[productId](withoutContext, {
+				signal: new AbortController().signal,
+				runId: run.id
+			});
+			expect(deterministicSnapshot(expected).data).toEqual(
+				deterministicSnapshot(withoutReport).data
+			);
+		}
 		expect(await createProductPublisher(workerRpc, { enabledProducts: [productId] }).step()).toBe(
 			'idle'
 		);
