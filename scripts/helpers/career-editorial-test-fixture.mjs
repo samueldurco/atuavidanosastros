@@ -16,7 +16,9 @@ export function careerEditorialTestFixture(facts) {
   };
 }
 
-/** Test-only structural projection; never editorial content or approval. */
+/** Test-only structural projection; never editorial content or approval.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
 export function threePillarsEditorialTestFixture(facts) {
   if (facts.editorialProfile !== THREE_PILLARS_EDITORIAL_VERSION) return {};
   return {
