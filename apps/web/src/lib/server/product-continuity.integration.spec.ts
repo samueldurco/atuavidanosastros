@@ -316,6 +316,29 @@ it('captures caller identity and selection before asynchronous repository access
 	expect((await prepareStoredContinuity(input)).status).toBe('prepared');
 });
 
+it('lost response after audit commit is unavailable, never retried; a fresh read sees revocation', async () => {
+	const readSelection = vi.fn(async (selected: string[]) => {
+		await raw(selected);
+		throw new Error('PRIVATE_LOST_RESPONSE_AFTER_COMMIT');
+	});
+	expect(
+		await prepareStoredContinuity({
+			enabled: true,
+			ownerId: owner,
+			selectedIds: ids,
+			readSelection
+		})
+	).toEqual({
+		status: 'blocked',
+		code: 'continuity_service_unavailable'
+	});
+	expect(readSelection).toHaveBeenCalledTimes(1);
+	expect(await countRows('product_continuity_access')).toBe(1);
+	await rpc('select set_product_continuity_consent($1,$2,$3) as data', [1, [], false]);
+	expect(await prepare()).toEqual({ status: 'blocked', code: 'consent_required' });
+	expect(await countRows('product_continuity_access')).toBe(1);
+});
+
 it('RPC denies anon/service/no auth; emergency fix preserves management', async () => {
 	for (const role of ['anon', 'service_role'])
 		await expect(

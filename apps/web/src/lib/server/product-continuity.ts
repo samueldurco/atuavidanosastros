@@ -121,10 +121,21 @@ export async function prepareStoredContinuity(input: {
 		return { status: 'blocked', code: 'invalid_selection' };
 	const selectedIds = [...input.selectedIds];
 	const ownerId = input.ownerId;
+	const controller = new AbortController();
+	let timer: ReturnType<typeof setTimeout> | undefined;
 	try {
-		const signal = AbortSignal.timeout(10000);
-		const { data, error } = await input.readSelection([...selectedIds], signal);
-		signal.throwIfAborted();
+		const deadline = new Promise<never>((_, reject) => {
+			timer = setTimeout(() => {
+				controller.abort();
+				reject(new Error('continuity_timeout'));
+			}, 10000);
+		});
+		// Bound waiting even when a transport ignores abort. SQL may still have committed its audit.
+		const { data, error } = await Promise.race([
+			input.readSelection([...selectedIds], controller.signal),
+			deadline
+		]);
+		controller.signal.throwIfAborted();
 		if (error || !object(data) || JSON.stringify(data).length > 196608) return unavailable();
 		if (data.status === 'blocked' && exact(data, ['status', 'code'])) {
 			const code = blockedCodes.find((c) => c === data.code);
@@ -191,5 +202,7 @@ export async function prepareStoredContinuity(input: {
 	} catch {
 		// No raw errors, arguments, notes or SQL in telemetry/responses; no fallback or retry.
 		return unavailable();
+	} finally {
+		clearTimeout(timer);
 	}
 }
