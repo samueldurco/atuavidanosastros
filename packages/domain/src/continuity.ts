@@ -3,7 +3,7 @@ import { workflowFor, type ProductRun, type CalculationSnapshot, type EditorialS
 export const CONTINUITY_VERSION = 'atv-continuity/1.0.0';
 export const CONTINUITY_CONSENT_VERSION = 'atv-continuity-consent/1';
 const categories = ['theme', 'event', 'recurrence', 'preference', 'symbol', 'change'] as const;
-type Selection =
+export type ContinuitySelection =
   | { kind: 'reported'; category: typeof categories[number]; text: string }
   | { kind: 'result' }
   | { kind: 'hypothesis'; sectionIndex: number }
@@ -12,7 +12,7 @@ export interface ContinuityItem {
   version: typeof CONTINUITY_VERSION;
   id: string; ownerId: string; runId: string; productId: string;
   relevance: 'relevant' | 'irrelevant' | 'unreviewed';
-  selection: Selection;
+  selection: ContinuitySelection;
 }
 export interface ContinuityConsent {
   version: typeof CONTINUITY_CONSENT_VERSION;
@@ -36,12 +36,17 @@ export function parseContinuityItem(v: unknown): ContinuityItem | null {
       v.version !== CONTINUITY_VERSION || !id(v.id) || !id(v.ownerId) || !id(v.runId) ||
       typeof v.productId !== 'string' || !workflowFor(v.productId) ||
       typeof v.relevance !== 'string' || !['relevant', 'irrelevant', 'unreviewed'].includes(v.relevance) || !object(v.selection)) return null;
-  const s = v.selection;
+  return parseContinuitySelection(v.selection) ? structuredClone(v) as unknown as ContinuityItem : null;
+}
+
+/** Shared validation for owner-curated commands and stored projections; no source authorization. */
+export function parseContinuitySelection(s: unknown): ContinuitySelection | null {
+  if (!object(s)) return null;
   const valid = s.kind === 'reported' ? keys(s, ['kind', 'category', 'text']) && categories.some(c => c === s.category) && text(s.text, 600)
     : s.kind === 'result' ? keys(s, ['kind'])
     : s.kind === 'hypothesis' ? keys(s, ['kind', 'sectionIndex']) && Number.isInteger(s.sectionIndex) && Number(s.sectionIndex) >= 0 && Number(s.sectionIndex) < 64
     : s.kind === 'cycle' ? keys(s, ['kind', 'factId']) && id(s.factId) : false;
-  return valid ? structuredClone(v) as unknown as ContinuityItem : null;
+  return valid ? structuredClone(s) as unknown as ContinuitySelection : null;
 }
 
 export function parseContinuityConsent(v: unknown): ContinuityConsent | null {
