@@ -1,4 +1,4 @@
-import { careerEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { careerEditorialTestFixture, threePillarsEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { mkdtemp, rm, writeFile } from 'node:fs/promises';
@@ -25,7 +25,7 @@ function capture(prefix, full = false) {
         title: 'Fixture sem autoridade editorial',
         claims: [{ id: 'fixture', kind: 'interpretation', text: 'CANARY-OUTPUT: teste sintético.', evidence: [request.facts.facts[0].id] }],
         relations: [], synthesis: [{ claimIds: ['fixture'], text: 'Síntese de fixture.' }],
-        reflections: ['Qual informação falta?'], limits: ['Sem homologação.'], ...careerEditorialTestFixture(request.facts) },
+        reflections: ['Qual informação falta?'], limits: ['Sem homologação.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts) },
       latencyMs: 100, inputTokens: 2000, outputTokens: 800, costBrl: 0,
       costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'CANARY-RECEIPT' } };
   }));

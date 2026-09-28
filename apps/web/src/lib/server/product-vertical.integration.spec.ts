@@ -15,7 +15,10 @@ import {
 	file
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
-import { careerEditorialTestFixture } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
+import {
+	careerEditorialTestFixture,
+	threePillarsEditorialTestFixture
+} from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
 import {
 	createProductCalculators,
 	createProductProcessor
@@ -217,6 +220,7 @@ async function fixture(productId: string) {
 					],
 					reflections: ['Que associação pessoal aparece nesse recorte?'],
 					...careerEditorialTestFixture(facts.facts),
+					...threePillarsEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -366,6 +370,16 @@ for (const productId of products)
 					'Que contribuição quero observar?',
 					'Em qual ambiente posso testá-la?',
 					'Qual experimento reversível cabe nesta semana?'
+				])
+					expect(html).toContain(question);
+			} else if (productId === 'three-pillars') {
+				expect(html).toContain('Síntese integrada de fixture sem autoridade editorial.');
+				for (const role of ['sun-moon-dynamics', 'ascendant-expression'])
+					expect(html).toContain(role);
+				for (const question of [
+					'Que intenção quero observar?',
+					'Qual necessidade pede espaço?',
+					'Qual abordagem posso experimentar de modo reversível?'
 				])
 					expect(html).toContain(question);
 			} else {

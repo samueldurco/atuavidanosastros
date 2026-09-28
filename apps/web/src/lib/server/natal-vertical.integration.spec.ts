@@ -667,7 +667,12 @@ it.each(profileProducts)(
 		expect(deterministicSnapshot(calculated.calculation)).toEqual(deterministicSnapshot(expected));
 		if (productId === 'three-pillars') {
 			const snapshot = calculated.calculation as CalculationSnapshot;
-			expect(prepareProductFacts(productId, snapshot).status).toBe('prepared');
+			const prepared = prepareProductFacts(productId, snapshot);
+			expect(prepared.status).toBe('prepared');
+			if (prepared.status === 'prepared') {
+				expect(prepared.facts.editorialProfile).toBe('atv-three-pillars-editorial/1.0.0');
+				expect(prepared.facts.facts).toEqual(snapshot.facts);
+			}
 			const altered = structuredClone(snapshot);
 			const ascendant = altered.facts.find((fact) => fact.id === 'angle-ascendant')!;
 			ascendant.display = 'Ascendente: 0.000000° de Áries';

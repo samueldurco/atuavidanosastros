@@ -26,6 +26,7 @@ export * from "./schema.ts";
 export * from "./director.ts";
 export * from "./prompt.ts";
 export * from "./career-compass.ts";
+export * from "./three-pillars.ts";
 export * from "./gateway.ts";
 export * from "./memory.ts";
 export * from "./gemini.ts";

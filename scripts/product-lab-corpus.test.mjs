@@ -192,16 +192,16 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.6.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.7.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    '477b3abdc963084ac5ee194e98e9d3176511481c3488218a99a1193768f01cfc');
+    '1a0eca409cdc725000e7d2b44781677eface58b426281213ad64b36683191061');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    'bb28c17cac25b556f3a85c0863da549bc602b6e99542029f3e989a1d3a4c25f0');
+    '259ae67ff1ad9072a66c1e8340b550c4c0be196983c7673f4f6ba4703783b717');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    '5686f59c952fe576c3b9a0cc5b0bb46d8c9a9d0757d563efdbf52ac98196b8c1');
-  // Version 1.6.0 withholds the existing polar Three Pillars case; no cases were added.
+    'ab3ec54420ad2b7a83feb2ed2affae5eed61d647133027e3f7a2b3fd60897b58');
+  // Version 1.7.0 binds the Three Pillars profile; the existing polar case remains withheld.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
-    '8ab8027fc47e4b36932816b5b1fce00b9f479b1c64589853080f00802dafc1b5');
+    '1edeb2a3b51bc48a72ee366b28bcfdef4626d15e161d824dae75ebcd1415c943');
 });
 
 test('offline corpus covers 13 partial bases, six capabilities and seven strata without claiming release', () => {

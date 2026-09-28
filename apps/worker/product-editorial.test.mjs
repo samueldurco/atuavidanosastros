@@ -5,6 +5,7 @@ import { dimensions, RUBRIC_VERSION, SCHEMA_VERSION, EditorialGateway, LabBudget
 import { prepareProductFacts, evaluateProductDraft } from './src/product-editorial.ts';
 import { createNatalCalculators } from './src/natal-calculators.ts';
 import { createSymbolicCalculators } from './src/symbolic-calculators.ts';
+import { threePillarsEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
 
 const runId='00000000-0000-4000-8000-000000000001';
 const consent={storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false};
@@ -21,7 +22,7 @@ function reading(facts) {
   return {schemaVersion:SCHEMA_VERSION,capability:facts.capability,scope:'partial',title:'Um recorte para observar',
     claims:[{id:'c1',kind:'fact',text:facts.facts[0].display,evidence:[facts.facts[0].id]}],relations:[],
     synthesis:[{claimIds:['c1'],text:'Este recorte preserva a informação recebida e não encerra uma leitura.'}],
-    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.']};
+    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts)};
 }
 async function draft(productId='daily-card') {
   const calc=await calculation(productId); const prepared=prepareProductFacts(productId,calc);
@@ -44,6 +45,24 @@ test('all natal and symbolic calculators project exact, isolated, partial facts 
     assert.notEqual(prepared.calculation.facts[0].display,'changed');
     const evaluated=await evaluateProductDraft(await draft(productId));
     assert.equal(evaluated.status,'needs_editorial_review');assert.equal(evaluated.publication,'blocked');
+  }
+});
+
+test('three-pillars persisted profile rejects missing integration even with a fixture review, and binds coverage to its basis', async()=>{
+  const input = await draft('three-pillars');
+  const prepared = prepareProductFacts('three-pillars',input.calculation);
+  assert.equal(prepared.facts.editorialProfile,'atv-three-pillars-editorial/1.0.0');
+  const assessed = await evaluateProductDraft(input);
+  assert.equal(assessed.status,'needs_editorial_review');
+  const fixtureReview = bound(assessed);
+  assert.equal((await evaluateProductDraft(input,fixtureReview,authority)).reason,'promotion_required');
+  for(const mutate of [d=>d.output.relations=[], d=>d.output.claims=d.output.claims.slice(0,4),
+    d=>d.output.synthesis[0].claimIds=['sun-moon-dynamics'], d=>d.output.reflections.pop()]) {
+    const changed = structuredClone(input); mutate(changed);
+    const result = await evaluateProductDraft(changed,fixtureReview,authority);
+    assert.equal(result.reason,'mechanical_rejected');
+    assert.equal(result.publication,'blocked');
+    assert.notEqual(result.basisDigest,assessed.basisDigest);
   }
 });
 

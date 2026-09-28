@@ -11,6 +11,10 @@ import {
   CAREER_COMPASS_EDITORIAL_VERSION,
   careerCompassInstructions,
 } from "./career-compass.ts";
+import {
+  THREE_PILLARS_EDITORIAL_VERSION,
+  threePillarsInstructions,
+} from "./three-pillars.ts";
 
 /** Defense in depth, not a guarantee of anonymization. Personal data is blocked remotely. */
 export function redact(text: string): string {
@@ -52,6 +56,9 @@ export function buildPrompt(request: EditorialRequest) {
           "Cada uma das três reflections deve ser uma pergunta prática distinta, terminada em ponto de interrogação: contribuição; ambiente/modo de trabalhar; pequeno experimento reversível. Não substitua a terceira pergunta por uma ordem para a pessoa executar uma tarefa.",
           "Nos limits, declare literalmente que a base é parcial e experimental e que não há garantia global de precisão. Mantenha a linguagem simbólica e condicional também na síntese; não converta uma possibilidade em inclinação pessoal, exigência ou diagnóstico.",
         ]
+      : []),
+    ...(request.facts.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION
+      ? [threePillarsInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

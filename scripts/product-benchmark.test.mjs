@@ -1,4 +1,4 @@
-import { careerEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { careerEditorialTestFixture, threePillarsEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -27,13 +27,13 @@ function sample(item = first, repetition = 1) {
       title: 'Fixture de encanamento, não leitura editorial',
       claims: [{ id: 'fixture', kind: 'interpretation', text: 'Conteúdo sintético para exercitar uma referência de evidência.', evidence: [request.facts.facts[0].id] }],
       relations: [], synthesis: [{ claimIds: ['fixture'], text: 'Síntese genérica sem qualquer nota de qualidade.' }],
-      reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts) },
+      reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts) },
     latencyMs: 100, inputTokens: 2000, outputTokens: 800, costBrl: 0,
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'synthetic-test-not-a-receipt' } };
 }
 
 test('manifest preserves corpus identity, 103 prepared cases, two blocked polar cases and 12 unavailable products', async () => {
-  assert.equal(manifest.corpusFingerprint, '477b3abdc963084ac5ee194e98e9d3176511481c3488218a99a1193768f01cfc');
+  assert.equal(manifest.corpusFingerprint, '1a0eca409cdc725000e7d2b44781677eface58b426281213ad64b36683191061');
   assert.equal(manifest.cases.length, 105);
   assert.equal(prepared.length, 103);
   assert.equal(manifest.unavailableProducts.length, 12);

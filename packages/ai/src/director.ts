@@ -3,6 +3,10 @@ import {
   CAREER_COMPASS_EDITORIAL_VERSION,
   inspectCareerCompass,
 } from "./career-compass.ts";
+import {
+  THREE_PILLARS_EDITORIAL_VERSION,
+  inspectThreePillars,
+} from "./three-pillars.ts";
 
 export const RUBRIC_VERSION = "atv-director/1.0.0";
 export const dimensions = [
@@ -136,6 +140,8 @@ export function inspectReading(
   }
   if (facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION)
     findings.push(...inspectCareerCompass(reading));
+  if (facts.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION)
+    findings.push(...inspectThreePillars(reading));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

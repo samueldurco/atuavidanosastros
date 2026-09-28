@@ -3,8 +3,12 @@ import {
   CAREER_COMPASS_EDITORIAL_VERSION,
   validCareerCompassFacts,
 } from "./career-compass.ts";
+import {
+  THREE_PILLARS_EDITORIAL_VERSION,
+  validThreePillarsFacts,
+} from "./three-pillars.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.3";
+export const PROMPT_VERSION = "atv-editorial/1.0.4";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -28,7 +32,9 @@ export interface FactsEnvelope {
   completeness: "partial" | "complete";
   facts: readonly ApprovedFact[];
   /** Optional versioned product requirements; selected by trusted preparation. */
-  editorialProfile?: typeof CAREER_COMPASS_EDITORIAL_VERSION;
+  editorialProfile?:
+    | typeof CAREER_COMPASS_EDITORIAL_VERSION
+    | typeof THREE_PILLARS_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -176,7 +182,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
   return (
     value.editorialProfile === undefined ||
     (value.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION &&
-      validCareerCompassFacts(value))
+      validCareerCompassFacts(value)) ||
+    (value.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION &&
+      validThreePillarsFacts(value))
   );
 }
 
