@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFileSync } from "node:fs";
+import { createHash } from "node:crypto";
 import { BENCHMARK_POLICY_VERSION, evaluateSample, type BenchmarkSample } from "./benchmark.ts";
 import { goldenSeed } from "./dataset.ts";
 import { PROMPT_VERSION, tierLimits } from "../contracts.ts";
@@ -97,4 +98,41 @@ test("token and latency metrics fail closed for missing, invalid and out-of-budg
     assert.equal(evaluateSample({ ...base, latencyMs }).latencyPass, false);
   for (const tier of ["invalid", "toString"])
     assert.equal(evaluateSample({ ...base, tier: tier as never }).latencyPass, false);
+});
+
+test("non-JSON outputs reject safely without fabricated digests or raw exception messages", () => {
+  const cycle: Record<string, unknown> = {}; cycle.self = cycle;
+  for (const output of [undefined, Symbol("fixture"), () => undefined, 1n, cycle,
+    { toJSON() { throw new Error("private fixture error"); } }]) {
+    const row = evaluateSample({ ...sample(), output });
+    assert.equal(row.outputSerialization, "unserializable");
+    assert.equal(row.digest, null);
+    assert.equal(row.outputChars, null);
+    assert.equal(row.schemaPass, false);
+    assert.equal(row.mechanicalPass, false);
+    assert.deepEqual(row.findings, [{ code: "invalid_schema", location: "root" }]);
+    assert.ok(!JSON.stringify(row).includes("private fixture error"));
+  }
+  const malformed = evaluateSample({ ...sample(), output: "not json" });
+  assert.equal(malformed.outputSerialization, "serialized");
+  assert.equal(malformed.schemaPass, false);
+  assert.match(malformed.digest!, /^[a-f0-9]{64}$/);
+});
+
+test("one immutable snapshot drives schema, mechanical checks, character count and digest", () => {
+  const digest = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
+  let calls = 0;
+  const output = { toJSON() { calls++; return calls === 1 ? goldenSeed : { changed: true }; } };
+  const row = evaluateSample({ ...sample(), output });
+  assert.equal(calls, 1);
+  assert.equal(row.schemaPass, true);
+  assert.equal(row.mechanicalPass, true);
+  assert.equal(row.digest, digest(goldenSeed));
+  assert.equal(row.outputChars, JSON.stringify(goldenSeed).length);
+  // Historical object/string digest representations remain distinct and stable.
+  for (const value of [goldenSeed, JSON.stringify(goldenSeed)]) {
+    const report = evaluateSample({ ...sample(), output: value });
+    assert.equal(report.digest, digest(value));
+    assert.equal(report.schemaPass, true);
+  }
 });

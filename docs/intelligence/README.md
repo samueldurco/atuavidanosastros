@@ -82,6 +82,8 @@ WU-075: benchmark `atv-benchmark/1.1.0` e promoção `atv-promotion/1.1.0` não 
 
 Para promoção: schema e hard checks em todos os casos; revisão factual/segurança em todos; dimensões acima dos pisos; repetições e estabilidade; testes adversariais; cota/custo/latência e privacidade verificadas; fallback avaliado; decisão versionada com responsável e hashes. Dataset de 10 casos é baseline pequeno, não evidência suficiente para todos os produtos. Nenhum modelo está promovido nesta fundação.
 
+WU-076: políticas atuais de benchmark/promoção `1.2.0`. Uma única representação JSON congelada alimenta schema, hard checks, contagem e digest, preservando os hashes históricos. Saída não serializável é rejeitada com `outputSerialization:unserializable`, `digest:null` e `outputChars:null`, sem interromper o lote ou divulgar a exceção. JSON serializável mas inválido conserva seu hash para investigação, sem aprovação. A revisão nunca pode substituir um digest ausente.
+
 Fontes primárias consultadas em 08/09/2026: [saídas estruturadas Gemini](https://ai.google.dev/gemini-api/docs/structured-output), [preços e Free Tier](https://ai.google.dev/gemini-api/docs/pricing), [termos do Gemini](https://ai.google.dev/gemini-api/terms). O proprietário confirmou Free Tier sem cobrança em conversa; o MCP disponível não expõe billing nem usage metadata. Conteúdo pessoal não é usado no laboratório.
 
 ## Reproduzir

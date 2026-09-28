@@ -5,7 +5,7 @@ import { parseReading } from "../schema.ts";
 import { DATASET_VERSION, labCases } from "./dataset.ts";
 import type { LabCase } from "./dataset.ts";
 
-export const BENCHMARK_POLICY_VERSION = "atv-benchmark/1.1.0";
+export const BENCHMARK_POLICY_VERSION = "atv-benchmark/1.2.0";
 export interface CostEvidence {
   basis: "owner-confirmed-free-tier" | "provider-receipt";
   /** Opaque repository evidence ID, verified by the release operator; no raw receipts or secrets. */
@@ -32,7 +32,15 @@ export function evaluateSample(sample: BenchmarkSample, corpus?: { version: stri
   if (!item) throw new Error("Unknown synthetic case");
   const tier = sample.tier ?? item.request.tier;
   const limits = Object.hasOwn(tierLimits, tier) ? tierLimits[tier] : null;
-  const reading = parseReading(sample.output, tier);
+  // Freeze the JSON representation once so validation and review digests cannot observe different outputs.
+  // Preserve the historical JSON.stringify digest contract for both objects and JSON strings.
+  let encoded: string | null = null;
+  let snapshot: unknown;
+  try {
+    const value = JSON.stringify(sample.output);
+    if (typeof value === "string") { snapshot = JSON.parse(value); encoded = value; }
+  } catch { /* Non-JSON outputs are rejected evidence, not a crashed benchmark batch. */ }
+  const reading = encoded !== null && limits ? parseReading(snapshot, tier) : null;
   const review = reading ? inspectReading(reading, item.request.facts) : null;
   const inputTokens = validTokens(sample.inputTokens) ? sample.inputTokens : null;
   const outputTokens = validTokens(sample.outputTokens) ? sample.outputTokens : null;
@@ -51,9 +59,8 @@ export function evaluateSample(sample: BenchmarkSample, corpus?: { version: stri
     prompt: sample.promptVersion,
     schema: SCHEMA_VERSION,
     rubric: RUBRIC_VERSION,
-    digest: createHash("sha256")
-      .update(JSON.stringify(sample.output))
-      .digest("hex"),
+    outputSerialization: encoded === null ? "unserializable" as const : "serialized" as const,
+    digest: encoded === null ? null : createHash("sha256").update(encoded).digest("hex"),
     schemaPass: Boolean(reading),
     mechanicalPass: review?.status === "needs_editorial_review",
     findings: review?.findings ?? [
@@ -66,7 +73,7 @@ export function evaluateSample(sample: BenchmarkSample, corpus?: { version: stri
     tokenUsagePass: tokenUsageKnown && !!limits && outputTokens <= limits.maxOutputTokens,
     inputTokens,
     outputTokens,
-    outputChars: JSON.stringify(sample.output)?.length ?? 0,
+    outputChars: encoded?.length ?? null,
     costKnown,
     costBrl: costKnown ? sample.costBrl! : null,
     costBasis: costKnown ? evidence!.basis : "unknown" as const,

@@ -65,3 +65,15 @@ test("promotion distinguishes verified zero cost from unknown and paid receipts"
   assert.ok(assessPromotion(value, authority).reasons.includes("cost_evidence_missing_or_invalid"));
   assert.deepEqual(promotedModels, []);
 });
+
+test("non-serializable samples cannot interrupt the gate or reuse a valid review digest", () => {
+  const cyclic: Record<string, unknown> = {}; cyclic.self = cyclic;
+  for (const output of [undefined, 1n, cyclic, { toJSON() { throw new Error("fixture only"); } }]) {
+    const value = candidate(); value.samples[0]!.output = output;
+    const decision = assessPromotion(value, authority);
+    assert.equal(decision.status, "blocked");
+    assert.ok(decision.reasons.includes(`output_rejected:${value.samples[0]!.caseId}`));
+    assert.ok(decision.reasons.includes(`editorial_review:${value.samples[0]!.caseId}`));
+  }
+  assert.deepEqual(promotedModels, []);
+});

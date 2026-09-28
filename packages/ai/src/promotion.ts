@@ -4,7 +4,7 @@ import { RUBRIC_VERSION, editorialDecision, type ScoredReview } from "./director
 import { RELEASE_DATASET_VERSION, releaseCases } from "./lab/release-dataset.ts";
 import { evaluateSample, type BenchmarkSample } from "./lab/benchmark.ts";
 
-export const PROMOTION_POLICY_VERSION = "atv-promotion/1.1.0";
+export const PROMOTION_POLICY_VERSION = "atv-promotion/1.2.0";
 export interface EvaluatedSample extends BenchmarkSample {
   resolvedModel: string;
   tier: Tier;
@@ -76,7 +76,7 @@ export function assessPromotion(candidate: PromotionCandidate, authority: Review
         (review.source === "calibrated-reviewer" && !authority.calibrations.includes(review.calibrationId ?? ""))) {
       reject("reviewer_not_authorized"); continue;
     }
-    if (editorialDecision({ status: evaluation.mechanicalPass ? "needs_editorial_review" : "rejected",
+    if (evaluation.digest === null || editorialDecision({ status: evaluation.mechanicalPass ? "needs_editorial_review" : "rejected",
       findings: evaluation.findings, rubricVersion: RUBRIC_VERSION }, review, evaluation.digest, candidate.tier) !== "approved")
       reject(`editorial_review:${sample.caseId}`);
   }
