@@ -54,4 +54,16 @@ Discovery validates the complete projection and pins receipt identity, review an
 
 ## Remaining delivery requirements
 
+### Private composition, not dispatch
+
+`prepareProductEmailMessage` implements `atv-email-message/1.0.0` as a pure, server-only composition function. It accepts trusted owner-scoped reader and receipt projections, not browser claims. It refuses absent/malformed projections, withheld or non-READY readings, missing Library linkage, cancelled receipts and mismatched run/revision/review. Fresh SQL integration tests cover ownership, cancellation, release revocation and deletion. Parsing and matching are not authentication; the caller must obtain both projections through the same authenticated owner context.
+
+The configuration is absent by default. `accountOrigin` must be a fixed trusted server setting, canonical HTTPS DNS origin without credentials, port, query, fragment or path. It cannot come from a request/header. Validation is syntactic, not domain ownership or DNS verification. No production origin is selected here.
+
+Only `message.subject` and `message.text` are customer-facing: a fixed Portuguese plain-text message and a generic `/biblioteca` account link. No reading content, product title, birth data, recipient, run/request ID, public result token, HTML, headers or attachment enters that message. Account access still rechecks availability. This is not a MIME serializer or a provider payload.
+
+Private `basis` pins receipt/run/product/revision/review/creation time/origin; SHA-256 `messageDigest` and `basisDigest` describe the exact JSON composition. These are integrity metadata, not signatures, review approval, fresh consent, recipient verification or authorization. Basis must not be included in email content or telemetry. Inputs are captured before asynchronous hashing, but an already prepared snapshot is not invalidated automatically by later cancellation or policy changes. A future dispatcher must reauthorize immediately before an authorized send.
+
+The result explicitly reports `prepared`, `dispatch: blocked`, `providerAcceptance: not-attempted`. No RPC, storage write, queue, API endpoint, network call, sender, transport or recipient resolution is introduced; only local unit/SQL fixtures call this function. Receipt acceptance remains disabled in production. No sent/delivered state is inferred.
+
 A future email should contain a minimal account Library link, not reading content, public result tokens or attachments by default. Origin/sender must be fixed trusted configuration, not request input. The provider integration needs recipient verification, secrets rotation, approved spend/rate/latency caps, deduplication and uncertain-ack reconciliation, bounce/complaint handling and privacy-safe observability. Provider acceptance must never be called inbox delivery. Actual dispatch remains separate work; until implemented this receipt is not an advertised delivered email.
