@@ -80,3 +80,5 @@ Esta matriz distingue rotas existentes de destinos planejados. Mapear não signi
 | CMP-04 — COMPONENTS / ASTRO MEDIA & COMMERCE | `9f9f31fa58974a20a06cfa88d07a3a8f` | CMP | /mapa-de-proposito; /loja | CommercialShell / StoreShell | ProductCard, media, chart | Referência desktop | Derivar 768–1023 | Derivar 320–767 | Contrato Gate B | MAPPED / NOT_VISUAL_PASS |
 
 Evidência das primeiras superfícies: `qa/GATE_B_LOCAL_2026-09-08.md`. Bússola implementada pelo arquétipo P0-01 + VRT-05 não promove os produtos premium dessas pranchas. Shells e componentes são reutilizáveis; não homologam automaticamente todas as rotas consumidoras.
+
+WU-087, MEM-03/SH-03: referências explícitas de continuidade no leitor, com consentimento separado e recuperação. QA `qa/CONTINUITY_READER_2026-09-28.md`; reflow 1440/390/320 e revisão direta 1440/390. Extensão `LOCAL_QA / VISUAL_REVIEW_PARTIAL`, sem elevar a aprovação visual restrita do leitor a Gate B integral ou homologar comércio/ATV+.

@@ -13,8 +13,12 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
 	import Dialog from '$lib/components/ui/Dialog.svelte';
+	import type { ReaderContinuityReference } from '$lib/reader-continuity';
 
-	let { sources = [] }: { sources?: ContinuityLibrarySource[] } = $props();
+	let {
+		sources = [],
+		references = []
+	}: { sources?: ContinuityLibrarySource[]; references?: ReaderContinuityReference[] } = $props();
 	let snapshot = $state<ContinuityManagement | null>(null);
 	let busy = $state(false);
 	let failure = $state('');
@@ -22,7 +26,9 @@
 	let selected = $state<string[]>([]);
 	let authorized = $state(false);
 	let runId = $state('');
-	let kind = $state<'reported' | 'result'>('reported');
+	let kind = $state<'reported' | 'result' | 'reference'>('reported');
+	let referenceKey = $state('');
+	const referenceOptions = $derived(references.filter((ref) => ref.runId === runId));
 	let category = $state<Extract<ContinuitySelection, { kind: 'reported' }>['category']>('theme');
 	let text = $state('');
 	let relevance = $state<ManagedContinuityItem['relevance']>('unreviewed');
@@ -42,17 +48,19 @@
 			!busy &&
 			snapshot.consent.revision < 2147483647
 	);
-	const selection = $derived<ContinuitySelection>(
+	const selection = $derived<ContinuitySelection | null>(
 		editing && editing.selection.kind !== 'reported' && editing.selection.kind !== 'result'
 			? editing.selection
-			: kind === 'reported'
-				? { kind, category, text }
-				: { kind: 'result' }
+			: kind === 'reference'
+				? (referenceOptions.find((ref) => ref.key === referenceKey)?.selection ?? null)
+				: kind === 'reported'
+					? { kind, category, text }
+					: { kind: 'result' }
 	);
 	const valid = $derived(
 		writable &&
 			snapshot?.consent.runIds.includes(runId) &&
-			!!parseContinuitySelection(selection) &&
+			!!parseContinuitySelection($state.snapshot(selection)) &&
 			(editing?.revision ?? 0) < 2147483647
 	);
 	function title(id: string) {
@@ -63,6 +71,7 @@
 		runId = '';
 		text = '';
 		kind = 'reported';
+		referenceKey = '';
 		category = 'theme';
 		relevance = 'unreviewed';
 		authorized = false;
@@ -156,6 +165,7 @@
 		);
 	}
 	function edit(item: ManagedContinuityItem) {
+		referenceKey = '';
 		editing = item;
 		runId = item.runId;
 		relevance = item.relevance;
@@ -286,6 +296,7 @@
 					>{#snippet children(describedBy)}<select
 							id="continuity-run"
 							bind:value={runId}
+							onchange={() => (referenceKey = '')}
 							disabled={!!editing}
 							aria-describedby={describedBy}
 							required
@@ -300,13 +311,40 @@
 						>{#snippet children(describedBy)}<select
 								id="continuity-kind"
 								bind:value={kind}
+								onchange={() => (referenceKey = '')}
 								aria-describedby={describedBy}
 								><option value="reported">Nota escrita por mim</option><option value="result"
 									>Referência ao resultado</option
-								></select
+								>{#if !editing && referenceOptions.length}<option value="reference"
+										>Seção ou ciclo desta leitura</option
+									>{/if}</select
 							>{/snippet}</Field
 					>
-					{#if kind === 'reported'}
+					{#if kind === 'reference'}
+						<Field
+							id="continuity-reference"
+							label="Referência da leitura"
+							help="Escolha explicitamente. Hipóteses não são fatos; referências de ciclos dependem de validação no servidor."
+						>
+							{#snippet children(describedBy)}<select
+									id="continuity-reference"
+									bind:value={referenceKey}
+									aria-describedby={describedBy}
+									required
+								>
+									<option value="">Escolha uma seção ou ciclo</option>
+									{#each referenceOptions as ref (ref.key)}<option value={ref.key}
+											>{ref.label}</option
+										>{/each}
+								</select>{/snippet}
+						</Field>
+						{#if referenceKey}
+							<p class="note">
+								Referência escolhida: {referenceOptions.find((ref) => ref.key === referenceKey)
+									?.label}
+							</p>
+						{/if}
+					{:else if kind === 'reported'}
 						<Field id="continuity-category" label="Categoria da nota"
 							>{#snippet children(describedBy)}<select
 									id="continuity-category"

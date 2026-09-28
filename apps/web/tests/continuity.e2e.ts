@@ -14,7 +14,7 @@ const initial = (): ContinuityManagement => ({
 	},
 	items: []
 });
-async function fixture(page: Page, value = initial()) {
+async function fixture(page: Page, value = initial(), fixturePath = path) {
 	const state = {
 		value,
 		failMutation: false,
@@ -65,7 +65,7 @@ async function fixture(page: Page, value = initial()) {
 			json: action === 'delete' ? { deleted: true } : { revision: body.expectedRevision + 1 }
 		});
 	});
-	await page.goto(path);
+	await page.goto(fixturePath);
 	return state;
 }
 async function load(page: Page) {
@@ -87,6 +87,119 @@ async function note(page: Page, text = 'Tema sintético escrito por mim.') {
 	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
 	await expect(page.getByText(text, { exact: true })).toBeVisible();
 }
+async function readerFixture(page: Page) {
+	const state = await fixture(page, initial(), '/biblioteca/_spec/referencias');
+	expect(state.reads).toBe(0);
+	await page.getByText('Guardar referências para continuidade', { exact: true }).click();
+	expect(state.reads).toBe(0);
+	await load(page);
+	await authorize(page);
+	return state;
+}
+async function chooseReference(page: Page, key: string) {
+	await page.getByLabel('Leitura de origem', { exact: true }).selectOption(runId);
+	await page.getByLabel('Tipo de registro', { exact: true }).selectOption('reference');
+	await expect(page.getByRole('button', { name: 'Salvar registro revisado' })).toBeDisabled();
+	await page.getByLabel('Referência da leitura', { exact: true }).selectOption(key);
+}
+test('leitor: hipótese e ciclo explícitos, seletores mínimos e revisão preserva fonte', async ({
+	page
+}) => {
+	const errors: string[] = [];
+	page.on('pageerror', (error) => errors.push(error.message));
+	const state = await readerFixture(page);
+	await chooseReference(page, 'hypothesis-0');
+	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
+	await expect(page.getByText('Hipótese editorial · seção 1', { exact: true })).toBeVisible();
+	expect(state.writes[1].body.selection).toEqual({ kind: 'hypothesis', sectionIndex: 0 });
+	await page.getByRole('button', { name: 'Revisar registro' }).click();
+	await expect(page.getByLabel('Leitura de origem', { exact: true })).toBeDisabled();
+	await page.getByLabel('Relevância para você').selectOption('relevant');
+	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
+	await expect(page.getByText('Hipótese editorial · seção 1', { exact: true })).toBeVisible();
+	expect(state.writes[2].body).toMatchObject({
+		expectedRevision: 1,
+		relevance: 'relevant',
+		selection: { kind: 'hypothesis', sectionIndex: 0 }
+	});
+	await chooseReference(page, 'cycle-cycle-1');
+	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
+	await expect(page.getByText('Referência de cálculo · cycle-1', { exact: true })).toBeVisible();
+	expect(state.writes[3].body.selection).toEqual({ kind: 'cycle', factId: 'cycle-1' });
+	expect(JSON.stringify(state.writes)).not.toContain('Ciclo de referência sintética');
+	expect(page.url()).not.toContain(runId);
+	expect(errors).toEqual([]);
+});
+test('leitor: trocar tipo ou origem exige escolher a referência novamente', async ({ page }) => {
+	await readerFixture(page);
+	await chooseReference(page, 'hypothesis-0');
+	await page.getByLabel('Tipo de registro', { exact: true }).selectOption('result');
+	await page.getByLabel('Tipo de registro', { exact: true }).selectOption('reference');
+	await expect(page.getByLabel('Referência da leitura', { exact: true })).toHaveValue('');
+	await page.getByLabel('Referência da leitura', { exact: true }).selectOption('hypothesis-0');
+	await page.getByLabel('Leitura de origem', { exact: true }).selectOption('');
+	await page.getByLabel('Leitura de origem', { exact: true }).selectOption(runId);
+	await expect(page.getByRole('button', { name: 'Salvar registro revisado' })).toBeDisabled();
+});
+test('leitor: navegação limpa consulta, aceite e rascunho; sintético/revogado não expõe gestão', async ({
+	page
+}) => {
+	const state = await readerFixture(page);
+	await chooseReference(page, 'hypothesis-0');
+	const reads = state.reads;
+	await page.getByRole('button', { name: 'Trocar leitura de teste' }).click();
+	await page.getByText('Guardar referências para continuidade', { exact: true }).click();
+	await expect(
+		page.getByRole('button', { name: 'Consultar continuidade', exact: true })
+	).toBeVisible();
+	await expect(page.getByLabel('Referência da leitura', { exact: true })).toHaveCount(0);
+	expect(state.reads).toBe(reads);
+	await page.getByRole('button', { name: 'Alternar modo sintético' }).click();
+	await expect(page.locator('.reader-continuity')).toHaveCount(0);
+	await page.getByRole('button', { name: 'Alternar modo sintético' }).click();
+	await page.getByRole('button', { name: 'Revogar fonte de teste' }).click();
+	await expect(page.locator('.reader-continuity')).toHaveCount(0);
+	expect(state.writes).toHaveLength(1);
+});
+test('leitor: perda de resposta recupera referência sem repetir save', async ({ page }) => {
+	const state = await readerFixture(page);
+	await chooseReference(page, 'cycle-cycle-1');
+	state.failMutation = true;
+	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
+	await expect(page.getByRole('alert')).toContainText('pode ter sido salva');
+	await load(page);
+	await expect(page.getByText('Referência de cálculo · cycle-1', { exact: true })).toBeVisible();
+	expect(state.writes.filter((w) => w.action === 'save')).toHaveLength(1);
+});
+test('leitor: fonte recusada exige consulta e nova decisão', async ({ page }) => {
+	const state = await readerFixture(page);
+	await chooseReference(page, 'hypothesis-0');
+	state.rejectMutation = 409;
+	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
+	await expect(page.getByRole('alert')).toContainText('pode ter sido salva');
+	await expect(page.getByLabel('Referência da leitura', { exact: true })).toHaveCount(0);
+	await load(page);
+	expect(state.value.items).toHaveLength(0);
+	expect(state.writes.filter((w) => w.action === 'save')).toHaveLength(1);
+});
+for (const width of [1440, 390, 320])
+	test(`leitor: referências refluem em ${width}`, async ({ page }, info) => {
+		await page.setViewportSize({ width, height: 1000 });
+		await page.emulateMedia({ reducedMotion: 'reduce' });
+		await readerFixture(page);
+		await chooseReference(page, 'cycle-cycle-1');
+		await expect(
+			page.getByText('Referência escolhida: Ciclo · cycle-1 ·', { exact: false })
+		).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Salvar registro revisado' })).toBeEnabled();
+		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+			true
+		);
+		await page.screenshot({
+			path: info.outputPath(`reader-continuity-${width}.png`),
+			fullPage: true
+		});
+	});
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });

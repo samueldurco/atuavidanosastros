@@ -12,6 +12,9 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.getByRole('button', { name: 'Reprocessar em nova versão' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
+		await expect(
+			page.getByText('Guardar referências para continuidade', { exact: true })
+		).toHaveCount(0);
 		await expect(page.getByRole('link', { name: 'Pedido de e-mail', exact: true })).toHaveAttribute(
 			'href',
 			'#email'
@@ -66,6 +69,9 @@ test('unapproved/revoked/failed results never masquerade as delivered readings',
 		await expect(page.getByRole('heading', { name: label, exact: true })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Espaço para uma pergunta' })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toHaveCount(0);
+		await expect(
+			page.getByText('Guardar referências para continuidade', { exact: true })
+		).toHaveCount(0);
 	}
 	const response = await request.get('/api/workflows/00000000-0000-4000-8000-000000000001');
 	expect([401, 503]).toContain(response.status());

@@ -20,4 +20,4 @@ Policy desligada bloqueia nova autorização/edição, mas preserva consulta, re
 
 ## Não entregue por esta unidade
 
-Sem seleção diretamente no leitor, execução com contexto, auditoria persistente sem conteúdo ou descarte de derivados. Sem modelo homologado, migração hospedada, ativação ATV+, chamadas pagas, scheduler ou e-mail. A suíte de navegador usa fixture localhost e intercepta o transporte com dados sintéticos; a integração HTTP→PostgreSQL é evidência separada das WUs 084/085, não certificação de sessão/JWT/PostgREST implantados.
+A WU-087 acrescenta [seleção diretamente no leitor](continuity-reader.md). Permanecem pendentes execução com contexto, auditoria persistente sem conteúdo e descarte de derivados. Sem modelo homologado, migração hospedada, ativação ATV+, chamadas pagas, scheduler ou e-mail. A suíte de navegador usa fixture localhost e intercepta o transporte com dados sintéticos; a integração HTTP→PostgreSQL é evidência separada das WUs 084/085, não certificação de sessão/JWT/PostgREST implantados.

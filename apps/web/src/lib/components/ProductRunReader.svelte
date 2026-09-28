@@ -8,6 +8,7 @@
 	import ProductArtifacts from '$lib/components/ProductArtifacts.svelte';
 	import ProductEmailRequest from '$lib/components/ProductEmailRequest.svelte';
 	import ReprocessAction from '$lib/components/ReprocessAction.svelte';
+	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	let { data }: { data: WorkflowReaderData } = $props();
 	let busy = $state<'reprocess' | 'delete' | 'download' | 'email' | null>(null);
@@ -271,6 +272,12 @@
 						<p class="evidence">Base: {section.evidence.join(' · ')}</p>
 					</article>{/each}
 			</section>
+			<ReaderContinuity
+				run={data.run}
+				title={data.item.title}
+				synthetic={data.synthetic}
+				ownerId={data.ownerId}
+			/>
 			<section id="origem" aria-labelledby="source-title">
 				<h2 id="source-title">Base e limites</h2>
 				<dl>
