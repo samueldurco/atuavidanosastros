@@ -9,7 +9,8 @@
 	import { PAIR_REQUEST_VERSION } from '$lib/pair-request';
 	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
 	import PartnerBirthFields from './PartnerBirthFields.svelte';
-	import { parseOnboardingSnapshot, type OnboardingSnapshot } from '$lib/onboarding';
+	import type { OnboardingSnapshot } from '$lib/onboarding';
+	import { requestOnboarding } from '$lib/onboarding-client';
 	import type { IntakeAccess } from '$lib/symbolic-intake';
 	import { createWorkflowRequest, type WorkflowRequestState } from '$lib/workflow-request';
 	let { ownerId, productId, access }: { ownerId: string; productId: string; access: IntakeAccess } =
@@ -92,21 +93,9 @@
 		snapshot = null;
 		profileMessage = 'Consultando perfil salvo…';
 		try {
-			const response = await fetch('/api/onboarding', {
-				credentials: 'same-origin',
-				cache: 'no-store',
-				signal: AbortSignal.timeout(10000)
-			});
-			const payload: unknown = await response.json();
-			const value =
-				payload &&
-				typeof payload === 'object' &&
-				!Array.isArray(payload) &&
-				Object.keys(payload).length === 1 &&
-				'onboarding' in payload
-					? parseOnboardingSnapshot(payload.onboarding)
-					: null;
-			if (!response.ok || !value) throw new Error('unavailable');
+			const response = await requestOnboarding(fetch, { intake: true });
+			if (!response.ok) throw new Error('unavailable');
+			const value = response.snapshot;
 			snapshot = value;
 			profileMessage = !value.natal
 				? 'Complete e consinta o armazenamento do perfil natal antes de criar este pedido.'

@@ -5,10 +5,10 @@
 	import Dialog from './ui/Dialog.svelte';
 	import {
 		ONBOARDING_VERSION,
-		parseOnboardingSnapshot,
 		type OnboardingSnapshot,
 		type OnboardingCommand
 	} from '$lib/onboarding';
+	import { requestOnboarding } from '$lib/onboarding-client';
 	import { emptyNatalForm, formFromNatal, natalFormCommand } from '$lib/natal-form';
 	let snapshot = $state<OnboardingSnapshot | null>(null);
 	let form = $state(emptyNatalForm());
@@ -36,30 +36,15 @@
 		error = '';
 		message = '';
 		try {
-			const response = await fetch('/api/onboarding', {
-				method: command ? 'POST' : 'GET',
-				credentials: 'same-origin',
-				cache: 'no-store',
-				signal: AbortSignal.timeout(15000),
-				...(command
-					? { headers: { 'content-type': 'application/json' }, body: JSON.stringify(command) }
-					: {})
-			});
-			const payload: unknown = await response.json();
-			const body =
-				payload && typeof payload === 'object' && !Array.isArray(payload)
-					? (payload as Record<string, unknown>)
-					: {};
-			const errorCode = typeof body.error === 'string' ? body.error : '';
+			const response = await requestOnboarding(fetch, { command });
 			if (!response.ok) {
 				error =
-					messages[errorCode] ??
+					messages[response.error] ??
 					'Não foi possível acessar seu perfil agora. Tente recuperar os dados salvos antes de enviar novamente.';
-				uncertain = !command || response.status !== 400 || errorCode !== 'invalid_input';
+				uncertain = !command || response.status !== 400 || response.error !== 'invalid_input';
 				return;
 			}
-			const next = parseOnboardingSnapshot(body?.onboarding);
-			if (!next) throw new Error('invalid_response');
+			const next = response.snapshot;
 			snapshot = next;
 			// Explicit recovery discards the unsaved draft; a successful begin does not.
 			if (!command || command.action !== 'begin') form = formFromNatal(next.natal);
