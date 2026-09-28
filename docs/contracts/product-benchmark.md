@@ -32,6 +32,16 @@ O relatório inclui lacunas por caso/repetição, recorte por produto, bloqueios
 
 Códigos de saída:0 para manifesto emitido ou cobertura mecânica preparada completa;1 para diagnóstico válido com falhas/lacunas;2 para entrada/operação rejeitada, sem relatório parcial otimista. Código0 **não é aprovação de modelo/produto**. Erros imprimem somente código sanitizado; não incluem caminho privado, payload ou exceção original. A função auxiliar espera objetos JSON já lidos de uma captura; não é endpoint público para objetos executáveis/getters nem um sandbox de código não confiável.
 
+## Comparação de capturas (WU-109)
+
+`node scripts/evaluate-product-benchmark.mjs --compare baseline.json candidato.json` reavalia duas capturas sintéticas com o mesmo corpus/prompt atual e emite `atv-product-comparison/1.0.0`. Não aceita relatórios prontos como autoridade, nem compara versões antigas de prompt/corpus. Cada arquivo mantém o limite de16MiB. Referência `(provider, executionId)` reutilizada entre os lotes rejeita toda a comparação, inclusive quando o modelo/caso muda. Isso detecta duplicação declarada, não autentica execuções reais.
+
+As312 posições esperadas são classificadas como `paired`, `missing-candidate`, `added-candidate` ou `missing-both`. Uma amostra removida é lacuna de cobertura, nunca melhora. Caso bloqueado e produtos indisponíveis permanecem explícitos. Por posição pareada, cada checagem tem estado `pass`, `fail` ou `unknown`: schema/mecânica são decidíveis; latência, tokens e custo podem carecer de evidência. `regressions` é somente pass→fail; `improvements`, fail→pass; `unchangedFailures`, fail→fail. `evidenceLost`/`evidenceRecovered` registram separadamente transições de/para unknown. As contagens por produto e totais podem se sobrepor: uma mesma posição pode melhorar em latência e continuar falhando em schema.
+
+`metricDelta` é candidato menos baseline, somente quando ambas as medições do campo são conhecidas e a diferença é finita; caso contrário, `null`. Para custo, exige a evidência estruturada aceita pelo avaliador. Não há médias agregadas, ranking, vencedor, significância estatística ou nota editorial. Digests das respostas aparecem, mas não prompts, requests, outputs brutos, IDs de execução ou referências de recibo.
+
+Código0 exige que **ambas** as capturas cubram integralmente os casos preparados e passem em todas as checagens; código1 indica diagnóstico válido incompleto/com falhas, código2 rejeição sanitizada sem relatório parcial. Ausência de regressões não torna o candidato elegível. Mesmo624 fixtures mecânicas aprovadas não alteram `promotionEligible=false`, `publication=blocked`, `editorialReview=not-reviewed` ou a procedência declarada/não autenticada. A comparação não chama modelo, não modifica capturas e não concede release.
+
 ## Limites editoriais
 
 O Editorial Director existente detecta apenas suas regras mecânicas. Não avalia automaticamente os critérios semânticos de cada cenário, profundidade, precisão de interpretação temporal, qualidade de síntese ou cuidado contextual. Não há nova nota, revisão humana, golden case calibrado, chamada externa ou modelo homologado nesta WU. Fixtures deliberadamente genéricas que passam nos testes comprovam essa distinção, não qualidade de leitura.
