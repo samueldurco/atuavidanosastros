@@ -4,3 +4,4 @@ export * from './events.ts';
 export * from './workflows.ts';
 export * from './symbolic-calculations.ts';
 export * from './artifacts.ts';
+export * from './continuity.ts';
