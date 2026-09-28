@@ -103,7 +103,7 @@ export function selectionLabel(s: ContinuitySelection): string {
 
 /** Single attempt; even an error response may follow a committed mutation. */
 export async function continuityRequest(
-	action: 'read' | 'consent' | 'save' | 'delete',
+	action: 'read' | 'consent' | 'save' | 'delete' | 'access' | 'clear-access',
 	body: unknown,
 	request: typeof fetch = fetch
 ): Promise<unknown> {

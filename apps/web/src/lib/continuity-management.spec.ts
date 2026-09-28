@@ -106,4 +106,25 @@ describe('private continuity management view', () => {
 		await expect(continuityRequest('read', {}, request)).rejects.toThrow();
 		expect(request).toHaveBeenCalledTimes(2);
 	});
+	it.each(['access', 'clear-access'] as const)(
+		'sends %s once without identifiers',
+		async (action) => {
+			const request = vi.fn<typeof fetch>().mockResolvedValue(new Response('{}'));
+			await continuityRequest(action, {}, request);
+			expect(request).toHaveBeenCalledExactlyOnceWith(
+				`/api/continuity/${action}`,
+				expect.objectContaining({
+					method: 'POST',
+					credentials: 'same-origin',
+					cache: 'no-store',
+					redirect: 'error',
+					body: '{}',
+					signal: expect.any(AbortSignal)
+				})
+			);
+			request.mockRejectedValue(new Error('lost'));
+			await expect(continuityRequest(action, {}, request)).rejects.toThrow();
+			expect(request).toHaveBeenCalledTimes(2);
+		}
+	);
 });

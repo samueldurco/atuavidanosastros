@@ -4,6 +4,7 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
 	import ContinuityManager from '$lib/components/ContinuityManager.svelte';
+	import ContinuityAccess from '$lib/components/ContinuityAccess.svelte';
 	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
 	import { natalProducts } from '$lib/natal-request';
 	import { workflowFor } from '@atv/domain';
@@ -77,7 +78,7 @@
 				</li>{/each}
 		</ul>
 	</details>
-	{#if !data.preview}<ContinuityManager sources={data.items} />{/if}
+	{#if !data.preview}<ContinuityManager sources={data.items} /><ContinuityAccess />{/if}
 	{#if data.libraryError}<StatePanel
 			kind="error"
 			title="Não foi possível carregar sua Biblioteca."
