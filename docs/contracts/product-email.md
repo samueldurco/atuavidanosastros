@@ -1,0 +1,23 @@
+# Owner-requested reading email — atv-email-request/1
+
+This contract records an explicit transactional-delivery request, not an email delivery. No transport, sender, provider, credential, scheduler, marketing enrollment or product release is enabled. Resend remains subject to the external-systems contract and production approval. The independent `product_email_policy` starts disabled and only controls accepting new requests; it never authorizes sending.
+
+## Request and ownership
+
+`request_product_email(p_request_key, p_command)` accepts exactly `version`, `runId`, `expectedRevision`, `reviewDigest`, and `consent`. Version is `atv-email-request/1`. Consent is exactly `{transactional:true,policyVersion:"atv-email-delivery/1",recipient:"account-owner"}`. Request key and run ID are UUIDs, revision is 1–8, and review digest is lowercase SHA-256. No address, subject, URL, HTML, attachment, provider, birth input or free text is accepted. Owner is derived only from authenticated SQL identity. Direct table access is revoked for clients and service role.
+
+Creation requires an active account profile and a freshly released owner reading through `read_product_run`, with matching revision/review and an active Library item. Release, engine, contract and editorial promotion revocation close new requests. Existing reading access after commercial entitlement expiry follows the reader contract; requesting email does not grant entitlement. Profile, run and relevant policies are locked within the transaction.
+
+The receipt stores the minimal command and owner/run/version linkage, with `REQUESTED` or `CANCELLED`, never `SENT` or `DELIVERED`. It stores no destination address or result content. A future dispatcher must resolve and verify the current owner's account email using a trusted identity channel, obtain any required confirmation after an address change, and check consent, gates, current version and cancellation immediately before sending. A receipt alone is not dispatch permission.
+
+## Recovery, cancellation and bounds
+
+Same owner/key/identical command returns the original receipt, including cancellation, after release/policy revocation; it never creates another request. An inactive account cannot create or replay a mutation, but can recover or cancel its existing receipt. Changed commands conflict. One request is permitted per run/revision, including cancelled requests; new keys cannot silently resend or re-enroll. A reprocessed run requires its own explicit request. Limits are 20 requests per owner per rolling 24 hours and 100 retained receipts, including cancelled requests. Exact-key recovery remains valid at capacity.
+
+`read_product_email_request(p_request_key)` is read-only, owner-scoped and remains available after gate revocation. `cancel_product_email_request(p_id)` is idempotent and owner-scoped; cancellation is final for this contract, even when acceptance is disabled. Both return only receipt ID, run ID, revision, review digest, state and creation/cancellation timestamps. Deleting a run cascades its receipt. Neither deletion nor cancellation can recall a future email already accepted by a provider; no provider acceptance currently exists.
+
+The forward-fix disables acceptance and revokes only request execution, preserving recovery/cancellation and all records. No hosted migration has been applied. Synthetic single-connection PostgreSQL tests are not certification of hosted JWT/PostgREST or concurrent independent connections.
+
+## Remaining delivery requirements
+
+A future email should contain a minimal account Library link, not reading content, public result tokens or attachments by default. Origin/sender must be fixed trusted configuration, not request input. The provider integration needs recipient verification, opt-in UX, secrets rotation, approved spend/rate/latency caps, deduplication and uncertain-ack reconciliation, bounce/complaint handling and privacy-safe observability. Provider acceptance must never be called inbox delivery. UI/API and actual dispatch are separate work; until implemented this receipt is not an advertised delivered email.
