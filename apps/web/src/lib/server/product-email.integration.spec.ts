@@ -57,7 +57,12 @@ const command = () => ({
 const count = async () =>
 	(await db.query<{ count: number }>('select count(*) as count from product_email_requests'))
 		.rows[0].count;
-function event(body: unknown, user: string | null = owner, lostAck = false) {
+function event(
+	body: unknown,
+	user: string | null = owner,
+	lostAck = false,
+	afterCommit?: () => Promise<never>
+) {
 	const rpc = vi.fn((name: string, args: Record<string, unknown>) => ({
 		abortSignal: async (signal: AbortSignal) => {
 			signal.throwIfAborted();
@@ -76,6 +81,7 @@ function event(body: unknown, user: string | null = owner, lostAck = false) {
 						return db.query('select list_product_email_requests($1) as data', [args.p_run_id]);
 					throw new Error('unexpected RPC');
 				});
+				if (afterCommit) return await afterCommit();
 				if (lostAck) throw new Error('synthetic lost acknowledgement after SQL commit');
 				return { data: (result.rows[0] as { data: unknown }).data, error: null };
 			} catch (error) {
@@ -191,6 +197,39 @@ it('lost HTTP acknowledgement recovers the committed receipt without renewed con
 	expect(await readReceipt(retry)).toEqual(receipt);
 	expect(await count()).toBe(1);
 	expect(JSON.stringify(receipt)).not.toMatch(/email|subject|provider|body|consent|SENT|DELIVERED/);
+});
+it('hard deadline preserves a committed request for read-only recovery after revocation', async () => {
+	await db.exec('update product_email_policy set enabled=true');
+	const key = randomUUID();
+	let committed!: () => void;
+	const saved = new Promise<void>((resolve) => {
+		committed = resolve;
+	});
+	const e = event({ requestKey: key, command: command() }, owner, false, () => {
+		committed();
+		return new Promise<never>(() => {});
+	});
+	vi.useFakeTimers();
+	try {
+		const pending = request(e);
+		await saved;
+		await vi.advanceTimersByTimeAsync(10000);
+		const response = await pending;
+		expect(response.status).toBe(503);
+		expect(await response.json()).toEqual({ error: 'email_service_unavailable' });
+		expect(e.locals.supabase?.rpc).toHaveBeenCalledTimes(1);
+		expect(vi.getTimerCount()).toBe(0);
+	} finally {
+		vi.useRealTimers();
+	}
+	expect(await count()).toBe(1);
+	await db.exec(
+		'update product_email_policy set enabled=false; update workflow_releases set enabled=false; update profiles set deleted_at=now()'
+	);
+	const recovered = await recover(event({ requestKey: key }));
+	expect(recovered.status).toBe(200);
+	expect(await readReceipt(recovered)).toMatchObject({ runId: reading.id, state: 'REQUESTED' });
+	expect(await count()).toBe(1);
 });
 it('real SQL isolates owners and cancellation remains final and idempotent after disable', async () => {
 	await db.exec('update product_email_policy set enabled=true');

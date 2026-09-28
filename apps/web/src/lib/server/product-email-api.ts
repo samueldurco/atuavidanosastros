@@ -31,6 +31,7 @@ export async function productEmailApi(
 	event: Event,
 	action: 'request' | 'recover' | 'cancel' | 'history'
 ): Promise<Response> {
+	let timer: ReturnType<typeof setTimeout> | undefined;
 	try {
 		if (
 			event.request.method !== 'POST' ||
@@ -80,7 +81,18 @@ export async function productEmailApi(
 					: action === 'history'
 						? { p_run_id: value.runId }
 						: { p_id: value.receiptId };
-		const { data, error } = await client.rpc(name, args).abortSignal(AbortSignal.timeout(10000));
+		const controller = new AbortController();
+		const deadline = new Promise<never>((_, reject) => {
+			timer = setTimeout(() => {
+				// End our wait even when the transport ignores abort. SQL may already have committed.
+				reject(new Error('email_rpc_deadline'));
+				controller.abort();
+			}, 10000);
+		});
+		const { data, error } = await Promise.race([
+			client.rpc(name, args).abortSignal(controller.signal),
+			deadline
+		]);
 		if (error)
 			return Object.hasOwn(errors, error.message)
 				? fail(error.message, errors[error.message])
@@ -106,5 +118,7 @@ export async function productEmailApi(
 	} catch {
 		// A timeout can occur after commit. Recovery must precede any new key.
 		return fail('email_service_unavailable', 503);
+	} finally {
+		clearTimeout(timer);
 	}
 }
