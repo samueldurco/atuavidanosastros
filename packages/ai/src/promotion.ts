@@ -5,8 +5,11 @@ import { RELEASE_DATASET_VERSION, releaseCases } from "./lab/release-dataset.ts"
 import { evaluateSample, type BenchmarkSample } from "./lab/benchmark.ts";
 import { artifactKeys, validArtifactManifest, type ArtifactDigests, type ArtifactManifest } from "./artifacts.ts";
 
-export const PROMOTION_POLICY_VERSION = "atv-promotion/1.3.0";
+export const PROMOTION_POLICY_VERSION = "atv-promotion/1.4.0";
 export interface EvaluatedSample extends BenchmarkSample {
+  provider: string;
+  /** Opaque reference to an independently captured invocation, not a provider secret or receipt. */
+  executionId: string;
   resolvedModel: string;
   tier: Tier;
   costBrl: number;
@@ -52,7 +55,9 @@ export function assessPromotion(candidate: PromotionCandidate, authority: Review
   }
   if (!candidate.owner.trim() || !candidate.privacyReview.trim() || !candidate.fallbackEvaluation.trim())
     reject("operational_reviews_missing");
-  if (!candidate.provider.trim() || !/^[a-z0-9._-]{1,100}$/.test(candidate.model) ||
+  if (typeof candidate.provider !== "string" || !/^[a-z0-9][a-z0-9._-]{0,99}$/.test(candidate.provider))
+    reject("provider_invalid");
+  if (!/^[a-z0-9._-]{1,100}$/.test(candidate.model) ||
       !/^[a-z0-9._-]{1,100}$/.test(candidate.resolvedModel) || /latest|preview/i.test(candidate.model + candidate.resolvedModel))
     reject("model_not_pinned");
   const cases = releaseCases.filter((item) => item.request.facts.capability === candidate.capability);
@@ -65,7 +70,18 @@ export function assessPromotion(candidate: PromotionCandidate, authority: Review
     const repetitions = new Set(samples.map((s) => s.repetition));
     if (samples.length < 3 || repetitions.size !== samples.length) reject(`coverage:${item.id}`);
   }
+  const executions = new Set<string>();
   for (const sample of candidate.samples) {
+    if (typeof sample.provider !== "string" || sample.provider !== candidate.provider)
+      reject("sample_provider_mismatch");
+    if (typeof sample.executionId !== "string" || !/^[A-Za-z0-9][A-Za-z0-9._-]{0,119}$/.test(sample.executionId)) {
+      reject("execution_id_missing_or_invalid");
+    } else {
+      // A distinct repetition number cannot turn the same captured invocation into new evidence.
+      // This checks trusted references only; it cannot authenticate an invented reference.
+      if (executions.has(sample.executionId)) reject("execution_id_reused");
+      executions.add(sample.executionId);
+    }
     if (!cases.some((item) => item.id === sample.caseId)) { reject("foreign_case"); continue; }
     if (sample.model !== candidate.model || sample.resolvedModel !== candidate.resolvedModel ||
         sample.promptVersion !== candidate.versions.prompt || sample.tier !== candidate.tier ||
