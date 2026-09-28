@@ -9,6 +9,17 @@ test('manifest is a minimal frozen projection and never exposes storage data',()
  const parsed=parseArtifactManifest({...manifest,bodyBase64:'SECRET',input:'PRIVATE'},reading);
  assert.deepEqual(parsed,manifest);assert.ok(Object.isFrozen(parsed));
 });
+
+test('web and PDF retain the exact historical renderer while rejecting unrecognized versions',()=>{
+ const birth={...reading,productId:'birth-chart'};
+ for(const [format,prefix] of [['web','atv-web-export'],['pdf','atv-pdf-export']]) {
+  for(const version of ['1.0.0','1.1.0']) {
+   const input={...manifest,format,section:-1,rendererVersion:`${prefix}/${version}`};
+   assert.deepEqual(parseArtifactManifest(input,birth),input);
+  }
+  assert.equal(parseArtifactManifest({...manifest,format,section:-1,rendererVersion:`${prefix}/1.2.0`},birth),null);
+ }
+});
 test('manifest binds exact run, revision, review and section and supported renderer',()=>{
  for(const [key,value] of [['runId',manifest.id],['revision',3],['reviewDigest','c'.repeat(64)],['section',2],['section',-1],['rendererVersion','unknown'],['format','audio'],['bytes',0],['bytes',2000001],['bytes',1.5],['createdAt','invalid'],['sha256','z'.repeat(64)],['id','invalid']])
   assert.equal(parseArtifactManifest({...manifest,[key]:value},reading),null,key);

@@ -1,12 +1,18 @@
 import { productCatalog } from './catalog.ts';
 
 export const artifactFormats = {
-  web: { renderer: 'atv-web-export/1.0.0', mime: 'text/html; charset=utf-8', extension: 'html', maxBytes: 8388608 },
-  pdf: { renderer: 'atv-pdf-export/1.0.0', mime: 'application/pdf', extension: 'pdf', maxBytes: 8388608 },
+  web: { renderer: 'atv-web-export/1.1.0', mime: 'text/html; charset=utf-8', extension: 'html', maxBytes: 8388608 },
+  pdf: { renderer: 'atv-pdf-export/1.1.0', mime: 'application/pdf', extension: 'pdf', maxBytes: 8388608 },
   svg: { renderer: 'atv-svg-export/1.0.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 },
   card: { renderer: 'atv-reading-card/1.0.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 }
 } as const;
 export type ArtifactFormat = keyof typeof artifactFormats;
+/** Retain byte-identical recovery of immutable artifacts from the preceding renderers. */
+export function artifactRendererSupported(format: ArtifactFormat, version: unknown): version is string {
+  return version === artifactFormats[format].renderer ||
+    (format === 'web' && version === 'atv-web-export/1.0.0') ||
+    (format === 'pdf' && version === 'atv-pdf-export/1.0.0');
+}
 export interface ArtifactManifest {
   id: string; runId: string; revision: number; reviewDigest: string; format: ArtifactFormat;
   section: number; rendererVersion: string; sha256: string; bytes: number; createdAt: string;
@@ -33,8 +39,8 @@ export function parseArtifactManifest(value: unknown, reading: ArtifactReading):
   const format=value.format as ArtifactFormat, policy=artifactFormats[format];
   if (!artifactEligible(reading.productId,format) || !Number.isInteger(reading.sectionCount) || reading.sectionCount<1 || reading.sectionCount>40 ||
     !Number.isInteger(value.section) || (format==='card' ? Number(value.section)<0 || Number(value.section)>=reading.sectionCount : value.section!==-1) ||
-    value.rendererVersion!==policy.renderer || !artifactDigest(value.sha256) || !Number.isInteger(value.bytes) || Number(value.bytes)<1 || Number(value.bytes)>policy.maxBytes ||
+    !artifactRendererSupported(format,value.rendererVersion) || !artifactDigest(value.sha256) || !Number.isInteger(value.bytes) || Number(value.bytes)<1 || Number(value.bytes)>policy.maxBytes ||
     typeof value.createdAt!=='string' || value.createdAt.length>40 || !Number.isFinite(Date.parse(value.createdAt))) return null;
   return Object.freeze({id:value.id,runId:value.runId,revision:value.revision as number,reviewDigest:value.reviewDigest,
-    format,section:value.section as number,rendererVersion:policy.renderer,sha256:value.sha256,bytes:value.bytes as number,createdAt:value.createdAt});
+    format,section:value.section as number,rendererVersion:value.rendererVersion,sha256:value.sha256,bytes:value.bytes as number,createdAt:value.createdAt});
 }

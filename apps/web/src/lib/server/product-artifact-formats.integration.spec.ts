@@ -12,19 +12,27 @@ import {
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { validateCalculation } from '../../../../worker/src/product-processing';
+import { SCHEMA_VERSION } from '../../../../../packages/ai/src/contracts';
+import { prepareProductFacts } from '../../../../worker/src/product-editorial';
+import { prepareProductDelivery } from '../../../../worker/src/product-delivery';
+import { birthChartEditorialTestFixture } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
 import { parseProductRun } from '../product-run';
 import { createArtifactProducer, type ArtifactJob } from './product-artifact-producer';
 import { renderProductPdf } from './product-pdf';
 import { renderProductSvg } from './product-svg';
 import { renderProductCard } from './product-card';
+import { renderProductWebExport } from './product-export';
 import { workflowArtifacts } from './workflow-artifacts';
 
 // Local PGlite only: synthetic identity/editorial approval, real natal calculator and renderers.
 // This does not certify a model, hosted JWT/PostgREST, transport or a production release.
-async function fixture(product = 'birth-chart', latitude = 0) {
+async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope = false) {
 	const db = await setupProductDatabase();
 	try {
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
+		await db.exec(
+			await file('supabase/migrations/20260928234000_product_artifact_renderer_versions.sql')
+		);
 		const query = async (
 			role: string,
 			user: string | null,
@@ -97,6 +105,27 @@ async function fixture(product = 'birth-chart', latitude = 0) {
 			],
 			limits: ['Somente QA local; nenhum modelo homologado.']
 		};
+		if (completeBirthScope) {
+			const prepared = prepareProductFacts(product, calculation);
+			if (prepared.status !== 'prepared') throw new Error('fixture_facts_failed');
+			const delivery = await prepareProductDelivery({
+				runId: id,
+				revision: 3,
+				productId: product,
+				tier: 'intermediate',
+				calculation,
+				output: {
+					schemaVersion: SCHEMA_VERSION,
+					capability: 'natal-synthesis',
+					scope: 'partial',
+					title: 'Mapa Astral - prova sintética dos formatos',
+					limits: ['Somente QA local; leitura e motor não homologados.'],
+					...birthChartEditorialTestFixture(prepared.facts)
+				}
+			});
+			if (delivery.status !== 'prepared_for_review') throw new Error('fixture_delivery_failed');
+			Object.assign(editorial, delivery.content);
+		}
 		for (const [revision, state, calc, edit] of [
 			[1, 'CALCULATED', calculation, null],
 			[2, 'AWAITING_EDITORIAL', null, null],
@@ -144,7 +173,7 @@ async function fixture(product = 'birth-chart', latitude = 0) {
 				}
 			} as unknown as RequestEvent;
 		};
-		return { db, id, calculation, producer, job, event, read };
+		return { db, id, calculation, editorial, producer, job, event, read };
 	} catch (error) {
 		await db.close();
 		throw error;
@@ -215,6 +244,68 @@ it('persists and privately recovers exact PDF, SVG and card bytes from a real na
 		expect(list.artifacts.map((a: { id: string }) => a.id).sort()).toEqual(ids.sort());
 		await f.db.exec('update editorial_promotions set revoked_at=now()');
 		for (const id of ids) expect((await workflowArtifacts(f.event(), f.id, id)).status).toBe(404);
+	} finally {
+		await f.db.close();
+	}
+}, 30000);
+
+it('recovers the full birth editorial projection and exact web, PDF and SVG artifacts privately', async () => {
+	const f = await fixture('birth-chart', 0, true);
+	try {
+		const raw = await f.read(owner, f.id);
+		const run = parseProductRun(raw);
+		expect(run?.editorial?.sections).toEqual(f.editorial.sections);
+		expect(run?.editorial?.sections).toHaveLength(13);
+		expect(run?.calculation?.facts).toHaveLength(24);
+		const web = renderProductWebExport(raw),
+			pdf = await renderProductPdf(raw),
+			svg = renderProductSvg(raw);
+		if (!web || !pdf || !svg) throw new Error('birth_scope_render_failed');
+		for (const section of f.editorial.sections) {
+			expect(web.html).toContain(section.title);
+			expect(web.html).toContain(section.text);
+			for (const id of section.evidence) expect(web.html).toContain(`(${id})`);
+		}
+		for (const fact of f.calculation.facts) {
+			expect(web.html).toContain(fact.display);
+			expect(web.html).toContain(fact.source);
+		}
+		for (let i = 1; i <= 12; i++) expect(web.html).toContain(`Cúspide da Casa ${i} (house-${i})`);
+		expect(web.html).toContain('Síntese do Mapa Astral (1) e três perguntas práticas');
+		expect(svg.svg.match(/data-body=/g)).toHaveLength(10);
+		expect(svg.svg.match(/data-house=/g)).toHaveLength(12);
+		expect(svg.svg.match(/data-angle=/g)).toHaveLength(2);
+		if (process.env.ATV_BIRTH_QA === '1') {
+			await mkdir('../../test-results/wu124', { recursive: true });
+			await writeFile('../../test-results/wu124/birth-chart.pdf', pdf.bytes);
+			await writeFile('../../test-results/wu124/birth-chart.html', web.html);
+			await writeFile('../../test-results/wu124/birth-chart.svg', svg.svg);
+			await writeFile(
+				'../../test-results/wu124/delivery.json',
+				JSON.stringify(f.editorial, null, 2)
+			);
+		}
+		const encoded = new TextEncoder();
+		const expected = {
+			web: encoded.encode(web.html),
+			pdf: pdf.bytes,
+			svg: encoded.encode(svg.svg)
+		};
+		const ids: string[] = [];
+		for (const format of ['web', 'pdf', 'svg'] as const) {
+			const result = await f.producer.produce(f.job(format));
+			if (result.status !== 'stored') throw new Error('birth_scope_store_failed');
+			ids.push(result.artifact.id);
+			expect(await f.producer.produce(f.job(format))).toEqual(result);
+			const response = await workflowArtifacts(f.event(), f.id, result.artifact.id);
+			expect(response.status).toBe(200);
+			expect(response.headers.get('content-type')).toBe(artifactFormats[format].mime);
+			expect(new Uint8Array(await response.arrayBuffer())).toEqual(expected[format]);
+			expect((await workflowArtifacts(f.event(other), f.id, result.artifact.id)).status).toBe(404);
+		}
+		await f.db.exec('update editorial_promotions set revoked_at=now()');
+		for (const id of ids) expect((await workflowArtifacts(f.event(), f.id, id)).status).toBe(404);
+		expect(parseProductRun(await f.read(owner, f.id))?.editorial).toBeNull();
 	} finally {
 		await f.db.close();
 	}

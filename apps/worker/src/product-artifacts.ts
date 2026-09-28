@@ -1,4 +1,4 @@
-import { artifactFormats, artifactUuid, parseArtifactManifest, type ArtifactFormat, type ArtifactReading } from '@atv/domain';
+import { artifactFormats, artifactRendererSupported, artifactUuid, parseArtifactManifest, type ArtifactFormat, type ArtifactReading } from '@atv/domain';
 
 export type ArtifactRpc = (name: 'persist_product_artifact', args: Record<string, unknown>, signal: AbortSignal) => Promise<unknown>;
 export class ArtifactError extends Error {
@@ -14,7 +14,7 @@ export async function persistRenderedProductArtifact(rpc: ArtifactRpc, input: {
 }, options: { signal?: AbortSignal; timeoutMs?: number } = {}) {
   const timeoutMs=options.timeoutMs??10000;
   if (!Number.isInteger(timeoutMs) || timeoutMs<1 || timeoutMs>10000 || typeof rpc!=='function' || !artifactUuid(input.owner) ||
-    !Object.hasOwn(artifactFormats,input.format) || input.rendererVersion!==artifactFormats[input.format].renderer ||
+    !Object.hasOwn(artifactFormats,input.format) || !artifactRendererSupported(input.format,input.rendererVersion) ||
     !(input.bytes instanceof Uint8Array) || input.bytes.byteLength<1 || input.bytes.byteLength>artifactFormats[input.format].maxBytes)
     throw new ArtifactError('artifact_invalid');
   // Capture before any await so caller mutation cannot change identity or bytes under a computed hash.

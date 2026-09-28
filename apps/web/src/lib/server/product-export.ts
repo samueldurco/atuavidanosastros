@@ -1,7 +1,8 @@
 import { productCatalog } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
+import { productFactLabel } from '../product-fact-label';
 
-export const WEB_EXPORT_VERSION = 'atv-web-export/1.0.0';
+export const WEB_EXPORT_VERSION = 'atv-web-export/1.1.0';
 export const EXPORT_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'";
 const escape = (value: string) =>
@@ -36,8 +37,8 @@ footer{border-top:1px solid #e4e8ef;margin-top:48px;padding-top:24px}h2,h3,dt{br
 <p class="label">Cópia web da revisão ${run.revision}. Registro criado em ${escape(run.createdAt)}.</p>
 <p>Arquivo pessoal para leitura offline. Proteja esta cópia: excluir ou revogar o registro na Biblioteca não apaga arquivos já baixados.</p></header>
 <nav aria-label="Índice do relatório"><ul><li><a href="#leitura">Sua leitura</a></li><li><a href="#origem">Base e limites</a></li><li><a href="#historico">Histórico desta versão</a></li></ul></nav>
-<section id="leitura" aria-labelledby="reading-title"><h2 id="reading-title">Sua leitura</h2>${editorial.sections.map((section) => `<article><h3>${escape(section.title)}</h3><p class="text">${escape(section.text)}</p><p class="label">Base: ${escape(section.evidence.join(' · '))}</p></article>`).join('')}</section>
-<section id="origem" aria-labelledby="source-title"><h2 id="source-title">Base e limites</h2><dl>${calculation.facts.map((fact) => `<dt>${escape(fact.id)}</dt><dd>${escape(fact.display)}<small>${escape(fact.source)}</small></dd>`).join('')}</dl>
+<section id="leitura" aria-labelledby="reading-title"><h2 id="reading-title">Sua leitura</h2>${editorial.sections.map((section) => `<article><h3>${escape(section.title)}</h3><p class="text">${escape(section.text)}</p><p class="label">Base: ${escape(section.evidence.map((id) => productFactLabel(run.productId, id)).join(' · '))}</p></article>`).join('')}</section>
+<section id="origem" aria-labelledby="source-title"><h2 id="source-title">Base e limites</h2><dl>${calculation.facts.map((fact) => `<dt>${escape(productFactLabel(run.productId, fact.id))}</dt><dd>${escape(fact.display)}<small>${escape(fact.source)}</small></dd>`).join('')}</dl>
 <p>Método: ${escape(calculation.version)}. Edição: ${escape(editorial.version)}.</p>
 ${[...calculation.limits, ...editorial.limits].map((limit) => `<p class="text">${escape(limit)}</p>`).join('')}
 <p>Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação profissional.</p></section>

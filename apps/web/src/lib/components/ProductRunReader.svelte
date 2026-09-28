@@ -11,6 +11,7 @@
 	import ReprocessAction from '$lib/components/ReprocessAction.svelte';
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
+	import { productFactLabel } from '$lib/product-fact-label';
 	import { libraryPageHref } from '$lib/library-page';
 	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
 	let { data, libraryBefore = null }: { data: WorkflowReaderData; libraryBefore?: string | null } =
@@ -45,6 +46,7 @@
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
 	function factLabel(id: string): string {
+		if (data.run.productId === 'birth-chart') return productFactLabel(data.run.productId, id);
 		if (data.run.productId === 'career-compass') {
 			if (id === 'angle-midheaven') return `Meio do Céu (${id})`;
 			if (id === 'personal-context') return `Contexto profissional relatado (${id})`;

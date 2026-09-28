@@ -2,11 +2,12 @@ import { PDFDocument, rgb, type PDFFont } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { productCatalog } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
+import { productFactLabel } from '../product-fact-label';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 
-export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.0.0';
+export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.1.0';
 export const PDF_LIMITS = Object.freeze({
 	characters: 120_000,
 	pages: 40,
@@ -161,12 +162,18 @@ export async function renderProductPdf(value: unknown) {
 			ensure(80);
 			paragraph(section.title, display, 19, 24, 10);
 			paragraph(section.text);
-			paragraph(`Base: ${section.evidence.join(' · ')}`, label, 9, 14, 18);
+			paragraph(
+				`Base: ${section.evidence.map((id) => productFactLabel(run.productId, id)).join(' · ')}`,
+				label,
+				9,
+				14,
+				18
+			);
 		}
 		heading('Base e limites');
 		for (const fact of calculation.facts) {
 			ensure(65);
-			paragraph(fact.id, label, 10, 15, 4);
+			paragraph(productFactLabel(run.productId, fact.id), label, 10, 15, 4);
 			paragraph(fact.display, body, 12, 17, 4);
 			paragraph(fact.source, label, 9, 14, 14);
 		}

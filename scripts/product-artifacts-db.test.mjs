@@ -8,6 +8,7 @@ import { persistRenderedProductArtifact } from '../apps/worker/src/product-artif
 test('private binary artifacts: service persistence, owner recovery and emergency gates',async t=>{
   const db=await setupProductDatabase();t.after(()=>db.close());
   await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
+  await db.exec(await file('supabase/migrations/20260928234000_product_artifact_renderer_versions.sql'));
   const reading=await readyArtifactFixture(db);
   const input={owner,reading,format:'web',section:-1,rendererVersion:'atv-web-export/1.0.0',bytes:new TextEncoder().encode('<html>synthetic artifact</html>')};
   const rpc=async(name,args,signal)=>{signal.throwIfAborted();return (await asRole(db,'service_role',null,()=>db.query(
@@ -39,6 +40,25 @@ test('private binary artifacts: service persistence, owner recovery and emergenc
     assert.equal((await db.query('select count(*) from product_artifacts')).rows[0].count,1);
     await assert.rejects(()=>persistRenderedProductArtifact(rpc,{...input,bytes:new TextEncoder().encode('changed')}),/artifact_unavailable/);
     assert.equal((await read(saved.id)).sha256,saved.sha256);
+  });
+  await t.test('renderer expansion preserves old bytes and forward-fix restores writes without erasing newer bytes',async()=>{
+    const next={...input,rendererVersion:'atv-web-export/1.1.0',bytes:new TextEncoder().encode('<html>new synthetic artifact</html>')};
+    const newer=await persistRenderedProductArtifact(rpc,next);
+    assert.equal((await read(saved.id)).rendererVersion,input.rendererVersion);
+    assert.equal(Buffer.from((await read(newer.id)).bodyBase64,'base64').toString(),'<html>new synthetic artifact</html>');
+    const original=await file('supabase/migrations/20260915180000_product_artifacts.sql');
+    const start=original.indexOf('create function public.persist_product_artifact(');
+    const end=original.indexOf('end $$;',start)+7;
+    assert.ok(start>0 && end>start);
+    await db.exec(original.slice(start,end).replace('create function','create or replace function'));
+    await assert.rejects(()=>persistRenderedProductArtifact(rpc,next),/artifact_unavailable/);
+    assert.equal((await read(newer.id)).sha256,newer.sha256);
+    assert.deepEqual(await persistRenderedProductArtifact(rpc,input),saved);
+    await db.exec(await file('supabase/migrations/20260928234000_product_artifact_renderer_versions.sql'));
+    assert.deepEqual(await persistRenderedProductArtifact(rpc,next),newer);
+    for(const version of [null,'atv-web-export/1.2.0','atv-pdf-export/1.1.0'])
+      await assert.rejects(()=>rpc('persist_product_artifact',{p_run_id:reading.id,p_owner:owner,p_revision:4,p_review_digest:reading.reviewDigest,p_format:'web',p_section:-1,p_renderer:version,p_body_base64:Buffer.from(next.bytes).toString('base64'),p_sha256:newer.sha256},new AbortController().signal),/artifact_invalid/);
+    await db.query('delete from product_artifacts where id=$1',[newer.id]);
   });
   await t.test('direct service RPC rejects hash/base64, revision, owner, renderer and format mismatches',async()=>{
     const args=[reading.id,owner,4,reading.reviewDigest,'web',-1,input.rendererVersion,Buffer.from(input.bytes).toString('base64'),saved.sha256];

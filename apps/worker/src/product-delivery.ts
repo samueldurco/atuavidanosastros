@@ -5,7 +5,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.2.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.3.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -43,6 +43,19 @@ const threePillarsFacts = new Map([
   ["position-moon", "Sua Lua"],
   ["angle-ascendant", "Seu Ascendente"],
 ]);
+const birthChartTitles = new Map([
+  ["solar-identity", "Sol: identidade e intenção"],
+  ["lunar-needs", "Lua: necessidades e acolhimento"],
+  ["personal-resources", "Mercúrio, Vênus e Marte: recursos pessoais"],
+  ["social-resources", "Júpiter e Saturno: expansão e estrutura"],
+  ["collective-symbols", "Urano, Netuno e Plutão: símbolos coletivos"],
+  ["ascendant-approach", "Ascendente: abordagem e expressão"],
+  ["midheaven-contribution", "Meio do Céu: direção e contribuição"],
+  ["house-sectors-1-3", "Casas 1 a 3: presença, recursos e trocas"],
+  ["house-sectors-4-6", "Casas 4 a 6: raízes, criação e cotidiano"],
+  ["house-sectors-7-9", "Casas 7 a 9: vínculos, partilhas e horizontes"],
+  ["house-sectors-10-12", "Casas 10 a 12: contribuição, redes e recolhimento"],
+]);
 function claimTitle(
   claim: Reading["claims"][number],
   productId: string,
@@ -60,7 +73,9 @@ function claimTitle(
           (claim.kind === "fact" && claim.evidence.length === 1
             ? (threePillarsFacts.get(claim.evidence[0] ?? "") ?? "")
             : ""))
-        : "";
+        : productId === "birth-chart"
+          ? (birthChartTitles.get(claim.id) ?? "")
+          : "";
   return `${subject ? subject + " — " : ""}${labels[claim.kind]} [${claim.id}]`;
 }
 
@@ -112,7 +127,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : "Síntese"} (${index + 1})${last ? (["career-compass", "three-pillars"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : "Síntese"} (${index + 1})${last ? (["career-compass", "three-pillars", "birth-chart"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });

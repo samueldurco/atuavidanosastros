@@ -8,6 +8,7 @@ import { prepareProductFacts } from "./src/product-editorial.ts";
 import {
   careerEditorialTestFixture,
   threePillarsEditorialTestFixture,
+  birthChartEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
@@ -251,6 +252,98 @@ test("three pillars preserve complete content and bases under product headings, 
     )
     .digest("hex");
   assert.notEqual(legacyDigest, result.deliveryDigest);
+});
+
+test("birth chart delivery keeps eleven roles, twenty-four bases and three questions without granting publication", async () => {
+  const input = draft();
+  input.productId = "birth-chart";
+  input.tier = "intermediate";
+  input.calculation = await createNatalCalculators()[input.productId](
+    {
+      version: "atv-workflow/1.0.0",
+      productId: input.productId,
+      birth: {
+        localDateTime: "2000-01-01T12:00:00",
+        utcInstant: "2000-01-01T12:00:00Z",
+        timezone: "UTC",
+        latitude: 0,
+        longitude: 0,
+        locationSource: "synthetic",
+      },
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    { runId: input.runId, signal: new AbortController().signal },
+  );
+  const facts = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(facts.status, "prepared");
+  input.output = {
+    ...input.output,
+    capability: "natal-synthesis",
+    ...birthChartEditorialTestFixture(facts.facts),
+  };
+  const result = await prepareProductDelivery(input);
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.equal(result.content.sections.length, 13);
+  assert.deepEqual(
+    result.content.sections.slice(0, 11).map((s) => s.title),
+    [
+      "Sol: identidade e intenção — Hipótese [solar-identity]",
+      "Lua: necessidades e acolhimento — Hipótese [lunar-needs]",
+      "Mercúrio, Vênus e Marte: recursos pessoais — Hipótese [personal-resources]",
+      "Júpiter e Saturno: expansão e estrutura — Hipótese [social-resources]",
+      "Urano, Netuno e Plutão: símbolos coletivos — Hipótese [collective-symbols]",
+      "Ascendente: abordagem e expressão — Hipótese [ascendant-approach]",
+      "Meio do Céu: direção e contribuição — Hipótese [midheaven-contribution]",
+      "Casas 1 a 3: presença, recursos e trocas — Hipótese [house-sectors-1-3]",
+      "Casas 4 a 6: raízes, criação e cotidiano — Hipótese [house-sectors-4-6]",
+      "Casas 7 a 9: vínculos, partilhas e horizontes — Hipótese [house-sectors-7-9]",
+      "Casas 10 a 12: contribuição, redes e recolhimento — Hipótese [house-sectors-10-12]",
+    ],
+  );
+  for (const [i, claim] of input.output.claims.entries()) {
+    assert.equal(result.content.sections[i].text, claim.text);
+    assert.deepEqual(result.content.sections[i].evidence, claim.evidence);
+  }
+  const synthesis = result.content.sections.at(-1);
+  assert.equal(
+    synthesis.title,
+    "Síntese do Mapa Astral (1) e três perguntas práticas",
+  );
+  assert.equal(new Set(synthesis.evidence).size, 24);
+  assert.deepEqual(
+    new Set(synthesis.evidence),
+    new Set(input.calculation.facts.map((f) => f.id)),
+  );
+  const all = contentTexts(result.content);
+  for (const question of input.output.reflections)
+    assert.equal(all.split(question).length, 2);
+  for (const part of [...input.output.relations, ...input.output.synthesis])
+    assert.ok(all.includes(part.text));
+  const legacy = { ...result.content, version: "atv-product-delivery/1.2.0" };
+  const legacyDigest = createHash("sha256")
+    .update(
+      JSON.stringify({
+        version: legacy.version,
+        basisDigest: result.basisDigest,
+        outputDigest: result.outputDigest,
+        content: legacy,
+      }),
+    )
+    .digest("hex");
+  assert.notEqual(legacyDigest, result.deliveryDigest);
+  input.output.claims.find((c) => c.id === "house-sectors-10-12").evidence = [
+    "house-10",
+    "house-11",
+  ];
+  assert.equal((await prepareProductDelivery(input)).status, "rejected");
 });
 
 test("projects every Lab passage, semantic type, claim link and fact reference without granting publication", async () => {
