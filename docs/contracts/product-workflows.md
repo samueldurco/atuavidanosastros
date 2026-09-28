@@ -183,3 +183,7 @@ The local HTTP/SQL/web-recovery chain now covers all twelve registered partial c
 ## WU-029 evidence — 2026-09-09
 
 Domain: four tests cover all 25 product input contracts and guarded transitions. PostgreSQL: eight tests (including the parent suite) pass. Full monorepo unit suite: 66 tests pass; type check passes without errors/warnings, lint and build pass. Detailed logs: `test-results/wu029-*.log`. No external model call, hosted migration, feature activation or spend occurred.
+
+## Birth chart persisted coherence — WU-122
+
+The existing natal projection now requires all ten bodies, requested ASC/MC and supported twelve Placidus cusps to match exact fact IDs, display, motion and versioned sources before editorial preparation. Experimental contracts and warnings must remain coherent; no injected factors/aspects or substitute houses are accepted. JSONB key order and body order remain valid. A coherent polar snapshot stays persisted but cannot prepare a full birth-chart reading (`insufficient_facts`). Editorial evidence is1.6.0 and the unchanged105-case corpus is1.8.0:102 prepared, three blocked,306 repetition slots. This is coherence checking, not origin authentication, precision certification or promotion. See `docs/contracts/birth-chart-calculation.md` and `docs/qa/BIRTH_CHART_BASE_2026-09-28.md`.

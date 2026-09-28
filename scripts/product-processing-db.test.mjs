@@ -157,10 +157,26 @@ test('real natal projections persist for four products but do not bypass engine 
     assert.equal(await processNextProductRun(store,calculators),'calculated');
     const saved=(await db.query('select calculation from product_runs where id=$1',[id])).rows[0].calculation;
     assert.equal(saved.status,'experimental');assert.equal(saved.version,'atv-natal-product-calculation/1.0.0');
+    assert.equal(prepareProductFacts(product,saved).status,'prepared');
+    if(product==='birth-chart') {
+      const changed=structuredClone(saved);changed.data.houses.cusps[11]=0;
+      assert.deepEqual(prepareProductFacts(product,changed),{status:'blocked',reason:'calculation_invalid'});
+    }
     assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
     const result=await read(db,id);assert.equal(result.released,false);assert.equal(result.calculation,null);assert.ok(result.libraryItemId);
     assert.equal(await read(db,id,other),null);
   }
+  const polar={version:input.version,productId:'birth-chart',consent:input.consent,context:'Relato sintético: use somente os planetas.',
+    birth:{localDateTime:'2000-01-01T12:00:00',utcInstant:'2000-01-01T12:00:00Z',timezone:'UTC',latitude:66,longitude:0,locationSource:'synthetic'}};
+  const polarId=(await as(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as data',['birth-chart',randomUUID(),polar]))).rows[0].data;
+  assert.equal(await processNextProductRun(store,calculators),'calculated');
+  assert.equal(await processNextProductRun(store,calculators),'awaiting_editorial');
+  const polarSaved=(await db.query('select calculation from product_runs where id=$1',[polarId])).rows[0].calculation;
+  assert.deepEqual(prepareProductFacts('birth-chart',polarSaved),{status:'blocked',reason:'insufficient_facts'});
+  assert.equal(polarSaved.data.positions.length,10);assert.equal(polarSaved.data.angles.ascendant,null);
+  assert.deepEqual(polarSaved.data.houses.cusps,[]);
+  assert.equal((await read(db,polarId)).released,false);assert.equal((await read(db,polarId)).calculation,null);
+  assert.equal(await read(db,polarId,other),null);
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
 });
 

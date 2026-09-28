@@ -58,9 +58,9 @@ test('blank template binds current capture, rubric, exact output and all trusted
   assert.equal(JSON.stringify(template).includes('CANARY'), false);
 });
 
-test('empty capture retains 309 missing samples, two polar blockers and 12 unavailable products', () => {
+test('empty capture retains 306 missing samples, three polar blockers and 12 unavailable products', () => {
   const input = envelope(); const report = evaluateProductReview(input, productReviewTemplate(input, corpus), corpus);
-  assert.equal(report.summary.missingSamples, 309); assert.equal(report.summary.blockedCases, 2);
+  assert.equal(report.summary.missingSamples, 306); assert.equal(report.summary.blockedCases, 3);
   assert.equal(report.unavailableProducts.length, 12); assert.equal(report.products.length, 13);
   assert.equal(report.summary.preparedDiagnosticsComplete, false); assert.deepEqual(report.results, []);
 });
@@ -75,7 +75,7 @@ test('blank and omitted annotations remain distinct from complete declared revie
   const declared = evaluateProductReview(input, filled(input), corpus);
   assert.equal(declared.summary.completeAnnotations, 1);
   assert.equal(declared.summary.declaredMeetsLocalChecks, 1);
-  assert.equal(declared.summary.missingSamples, 308);
+  assert.equal(declared.summary.missingSamples, 305);
   assert.equal(declared.summary.preparedDiagnosticsComplete, false);
   assert.equal(declared.trustedReviews, 0); assert.equal(declared.promotionEligible, false);
 });
@@ -193,15 +193,15 @@ test('unknown cost/latency still prevent complete diagnostics despite declared p
   for (const metric of ['costBrl', 'latencyMs', 'inputTokens']) {
     const modified = structuredClone(input); modified.samples[0][metric] = null;
     const report = evaluateProductReview(modified, filled(modified), corpus);
-    assert.equal(report.summary.declaredMeetsLocalChecks, 309); assert.equal(report.summary.preparedDiagnosticsComplete, false);
+    assert.equal(report.summary.declaredMeetsLocalChecks, 306); assert.equal(report.summary.preparedDiagnosticsComplete, false);
   }
 });
 
-test('309 complete synthetic annotations cannot authenticate, homologate or enable publication', () => {
+test('306 complete synthetic annotations cannot authenticate, homologate or enable publication', () => {
   const input = envelope(prepared.flatMap(item => [1, 2, 3].map(rep => sample(item, rep))));
   const report = evaluateProductReview(input, filled(input), corpus);
-  assert.equal(report.summary.preparedDiagnosticsComplete, true); assert.equal(report.summary.completeAnnotations, 309);
-  assert.equal(report.products.reduce((sum, item) => sum + item.completeAnnotations, 0), 309);
+  assert.equal(report.summary.preparedDiagnosticsComplete, true); assert.equal(report.summary.completeAnnotations, 306);
+  assert.equal(report.products.reduce((sum, item) => sum + item.completeAnnotations, 0), 306);
   assert.equal(report.trustedReviews, 0); assert.equal(report.publication, 'blocked'); assert.equal(report.promotionEligible, false);
 });
 
@@ -214,10 +214,10 @@ test('CLI templates/reviews are read-only with 0/1/2 exit codes and sanitized er
     const input = envelope(prepared.flatMap(item => [1, 2, 3].map(rep => sample(item, rep))));
     await writeFile(capturePath, JSON.stringify(input));
     const templateResult = run(['--review-template', capturePath]); assert.equal(templateResult.status, 0, templateResult.stderr);
-    const template = JSON.parse(templateResult.stdout); assert.equal(template.annotations.length, 309);
+    const template = JSON.parse(templateResult.stdout); assert.equal(template.annotations.length, 306);
     await writeFile(annotationsPath, JSON.stringify(template));
     const incomplete = run(['--review', capturePath, annotationsPath]); assert.equal(incomplete.status, 1, incomplete.stderr);
-    assert.equal(JSON.parse(incomplete.stdout).summary.incompleteAnnotations, 309);
+    assert.equal(JSON.parse(incomplete.stdout).summary.incompleteAnnotations, 306);
     await writeFile(annotationsPath, JSON.stringify(filled(input)));
     const before = await Promise.all([readFile(capturePath, 'utf8'), readFile(annotationsPath, 'utf8')]);
     const complete = run(['--review', capturePath, annotationsPath]); assert.equal(complete.status, 0, complete.stderr);

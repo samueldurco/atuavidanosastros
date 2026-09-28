@@ -192,24 +192,24 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.7.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.8.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    '1a0eca409cdc725000e7d2b44781677eface58b426281213ad64b36683191061');
+    '4b7d081497073d0b62e170e74effc1b54e035e1c3a65fc10e0ccea82ec13dcae');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    '259ae67ff1ad9072a66c1e8340b550c4c0be196983c7673f4f6ba4703783b717');
+    '1aac9a3fb00361e7552bedb48c02edb9c4246c3615ebc005f255877c7c68ebfc');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    'ab3ec54420ad2b7a83feb2ed2affae5eed61d647133027e3f7a2b3fd60897b58');
-  // Version 1.7.0 binds the Three Pillars profile; the existing polar case remains withheld.
+    '8a7ab3e97c639c2f233e5fc50374e6b47cfa95f783266bcc97ddb98cf139c1cc');
+  // Version 1.8.0 withholds the existing incomplete polar birth chart; no new corpus cases.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
-    '1edeb2a3b51bc48a72ee366b28bcfdef4626d15e161d824dae75ebcd1415c943');
+    '167bc7718b11ff3d1e9e8d1e40890b93d6d8318ba1b5a8d27743f74b18a0342e');
 });
 
 test('offline corpus covers 13 partial bases, six capabilities and seven strata without claiming release', () => {
   assert.deepEqual([...corpusProducts].sort(), Object.keys(createProductCalculators()).sort());
   assert.equal(corpus.cases.length, 105);
-  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 103);
+  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 102);
   assert.deepEqual(corpus.cases.filter(item => item.preparation === 'blocked').map(item => [item.id, item.blockReason]),
-    [['three-pillars-boundary', 'insufficient_facts'], ['ascendant-boundary', 'insufficient_facts']]);
+    [['birth-chart-boundary', 'insufficient_facts'], ['three-pillars-boundary', 'insufficient_facts'], ['ascendant-boundary', 'insufficient_facts']]);
   assert.equal(new Set(corpus.cases.map(item => item.id)).size, 105);
   assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 105);
   assert.equal(corpus.unavailableProducts.length, 12);
@@ -249,6 +249,10 @@ test('polar boundaries and incomplete dream reports retain limits, not replaceme
   assert.equal(polar.calculation.data.angles.ascendant, null);
   assert.deepEqual(polar.calculation.data.houses.cusps, []);
   assert.equal(polar.calculation.facts.some(item => item.id.startsWith('house-')), false);
+  assert.equal(polar.preparation, 'blocked');
+  assert.equal(polar.blockReason, 'insufficient_facts');
+  assert.equal('request' in polar, false);
+  assert.equal('factsDigest' in polar, false);
   const ascendant = corpus.cases.find(item => item.id === 'ascendant-boundary');
   assert.equal(ascendant.calculation.data.angles.ascendant, null);
   assert.ok(ascendant.calculation.facts.some(fact => fact.id === 'ascendant-unavailable'));

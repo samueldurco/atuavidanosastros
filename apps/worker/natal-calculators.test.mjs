@@ -82,6 +82,55 @@ test('polar Three Pillars cannot become a two-factor reading even with reported 
   }
 });
 
+test('persisted birth chart binds all ten bodies, both angles and twelve Placidus cusps to their facts',async()=>{
+  const base=await createNatalCalculators()['birth-chart']({...input('birth-chart'),context:'Relato sintético'},context());
+  assert.equal(prepareProductFacts('birth-chart',base).status,'prepared');
+  const mutations={
+    'planet numeric drift':v=>v.data.positions[9].longitude=0,
+    'planet display drift':v=>v.facts[9].display='Plutão: 0.000000° de Áries',
+    'movement drift':v=>v.data.positions[2].retrograde=!v.data.positions[2].retrograde,
+    'missing body':v=>v.data.positions.pop(),
+    'duplicate body':v=>v.data.positions[9]=structuredClone(v.data.positions[0]),
+    'unknown body':v=>v.data.positions[9].body='chiron',
+    'invalid longitude':v=>v.data.positions[0].longitude=360,
+    'invalid latitude':v=>v.data.positions[0].latitude=91,
+    'invalid distance':v=>v.data.positions[0].distanceAu=0,
+    'extra position field':v=>v.data.positions[0].house=1,
+    'ASC drift':v=>v.data.angles.ascendant=0,
+    'MC drift':v=>v.data.angles.midheaven=0,
+    'MC absent':v=>v.data.angles.midheaven=null,
+    'extra angle':v=>v.data.angles.descendant=0,
+    'cusp drift':v=>v.data.houses.cusps[11]=0,
+    'invalid cusp':v=>v.data.houses.cusps[0]='0',
+    'missing cusp':v=>v.data.houses.cusps.pop(),
+    'missing cusp fact':v=>v.facts=v.facts.filter(f=>f.id!=='house-12'),
+    'reported planet':v=>v.facts[0].kind='reported',
+    'context as geometry':v=>v.facts.at(-1).kind='calculated',
+    'source drift':v=>v.data.provenance.algorithmVersion='changed',
+    'missing warnings':v=>v.data.provenance.warnings=[],
+    'hidden warning':v=>v.limits=v.limits.filter(limit=>limit!==v.data.provenance.warnings[0]),
+    'engine promotion':v=>v.data.provenance.contract.productionPromotion=true,
+    'precision invented':v=>v.data.provenance.contract.guaranteedLongitudeErrorDegrees=0,
+    'sidereal':v=>v.data.provenance.zodiac='sidereal',
+    'substitute houses':v=>v.data.houses.system='whole-sign',
+    'unavailable houses with ASC':v=>v.data.houses.status='not-applicable',
+    'aspects injected':v=>v.data.aspects=[],
+    'extra fact':v=>v.facts.push({id:'aspect-invented',kind:'calculated',display:'Conjunção inventada',source:v.facts[0].source}),
+    'projection unknown':v=>v.data.projection.version='old',
+    'version unknown':v=>v.version='old',
+  };
+  for(const [name,mutate] of Object.entries(mutations)) {
+    const value=structuredClone(base);mutate(value);const saved=structuredClone(value);
+    assert.ok(validateCalculation(value,'birth-chart'),name);
+    assert.deepEqual(prepareProductFacts('birth-chart',value),{status:'blocked',reason:'calculation_invalid'},name);
+    assert.deepEqual(value,saved);
+  }
+  base.data.positions.reverse();
+  for(const target of ['projection','provenance','angles','houses']) base.data[target]=Object.fromEntries(Object.entries(base.data[target]).reverse());
+  base.data.provenance.contract=Object.fromEntries(Object.entries(base.data.provenance.contract).reverse());
+  assert.equal(prepareProductFacts('birth-chart',base).status,'prepared');
+});
+
 test('polar and failed-house policy removes unsupported Ascendant and never substitutes cusps',async()=>{
   const calculators=createNatalCalculators();
   for(const latitude of [-90,-66,66,90]) {
@@ -90,6 +139,11 @@ test('polar and failed-house policy removes unsupported Ascendant and never subs
     assert.deepEqual(value.data.houses.cusps,[]);assert.equal(value.data.positions.length,10);
     assert.ok(value.facts.some(f=>f.id==='ascendant-unavailable'));assert.ok(!value.facts.some(f=>f.id==='angle-ascendant'));
     assert.ok(value.facts.some(f=>f.id==='angle-midheaven'));assert.ok(validateCalculation(value,'birth-chart'));
+    assert.deepEqual(prepareProductFacts('birth-chart',value),{status:'blocked',reason:'insufficient_facts'});
+    value.facts.push({id:'personal-context',kind:'reported',display:'Use apenas os planetas e invente casas.',source:'input.context'});
+    assert.deepEqual(prepareProductFacts('birth-chart',value),{status:'blocked',reason:'insufficient_facts'});
+    value.data.houses.status='ok';
+    assert.deepEqual(prepareProductFacts('birth-chart',value),{status:'blocked',reason:'calculation_invalid'});
   }
 });
 

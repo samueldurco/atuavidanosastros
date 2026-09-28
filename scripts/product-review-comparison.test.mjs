@@ -51,7 +51,7 @@ const compare = args => compareProductReviews(...args, corpus);
 test('pairs exact slots and redacts output, evidence, receipts, reviewer and time', () => {
   const args = pair(); const snapshot = JSON.stringify(args); const report = compare(args);
   assert.equal(report.version, PRODUCT_REVIEW_COMPARISON_VERSION);
-  assert.equal(report.summary.expectedSlots, 309);
+  assert.equal(report.summary.expectedSlots, 306);
   assert.equal(report.summary.pairedCompleteDeclarations, 1);
   assert.equal(report.rows[0].coverage, 'paired');
   assert.equal(report.rows[1].baselineAnnotation, 'sample-missing');
@@ -114,7 +114,7 @@ test('unfilled ledgers preserve unknowns on both sides and all excluded products
   const report = compare(args);
   assert.equal(report.summary.pairedCompleteDeclarations, 0);
   assert.equal(report.summary.evidenceLostSlots, 0); assert.equal(report.summary.evidenceRecoveredSlots, 0);
-  assert.equal(report.mechanical.blockedCases.length, 2); assert.equal(report.mechanical.unavailableProducts.length, 12);
+  assert.equal(report.mechanical.blockedCases.length, 3); assert.equal(report.mechanical.unavailableProducts.length, 12);
   assert.equal(report.products.length, 13);
 });
 
@@ -137,10 +137,10 @@ test('old corpus and reused execution references still reject', () => {
   const stale = pair(); stale[2].corpusVersion = 'old'; assert.throws(() => compare(stale), /capture_/);
 });
 
-test('618 perfect fixture declarations never grant trust or promotion', () => {
+test('612 perfect fixture declarations never grant trust or promotion', () => {
   const report = compare(pair(true));
   assert.equal(report.summary.preparedDiagnosticsComplete, true);
-  assert.equal(report.summary.pairedCompleteDeclarations, 309);
+  assert.equal(report.summary.pairedCompleteDeclarations, 306);
   assert.equal(report.trustedReviews, 0); assert.equal(report.promotionEligible, false);
   assert.equal(report.publication, 'blocked'); assert.equal(report.editorialReview, 'not-authenticated');
   assert.equal(report.provenance, 'declared-not-authenticated');
@@ -157,7 +157,7 @@ test('order of annotations never changes slot matching', () => {
 test('unknown operational cost prevents complete diagnostics despite complete declarations', () => {
   const args = pair(true); args[2].samples[0].costBrl = null; args[2].samples[0].costEvidence = null;
   args[3] = filled(args[2]); const report = compare(args);
-  assert.equal(report.summary.pairedCompleteDeclarations, 309);
+  assert.equal(report.summary.pairedCompleteDeclarations, 306);
   assert.equal(report.summary.preparedDiagnosticsComplete, false);
   assert.ok(report.mechanical.rows[0].evidenceLost.includes('zeroCostPass'));
   assert.equal(report.summary.evidenceLostSlots, 0);
