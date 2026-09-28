@@ -17,7 +17,8 @@ beforeAll(async () => {
 	db = await setupProductDatabase();
 	for (const migration of [
 		'20260928130000_product_continuity.sql',
-		'20260928133000_product_continuity_selection.sql'
+		'20260928133000_product_continuity_selection.sql',
+		'20260928140000_product_continuity_profile_guard.sql'
 	])
 		await db.exec(await file(`supabase/migrations/${migration}`));
 }, 20000);
@@ -26,7 +27,7 @@ afterAll(async () => {
 });
 beforeEach(async () => {
 	await db.exec(
-		'delete from product_runs; delete from product_continuity_consents; update product_continuity_policy set enabled=true'
+		'delete from product_runs; delete from product_continuity_consents; update product_continuity_policy set enabled=true; update profiles set deleted_at=null; grant execute on function save_product_continuity_item(uuid,uuid,integer,text,jsonb),read_product_continuity_selection(uuid[]) to authenticated'
 	);
 	run = await readyArtifactFixture(db);
 });
@@ -226,4 +227,117 @@ it('disabled feature still permits management/revoke/delete, no new grants or ed
 		body: { error: 'continuity_disabled' }
 	});
 	expect((await request('delete', { id: item.id })).body).toEqual({ deleted: true });
+});
+
+it('soft-deleted owner cannot grant, create or edit; denied writes leave CAS and notes intact', async () => {
+	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
+	expect(await request('consent', grant())).toEqual({
+		status: 403,
+		body: { error: 'profile_unavailable' }
+	});
+	expect((await request('read')).body).toMatchObject({
+		consent: { revision: 0, state: 'revoked' },
+		items: []
+	});
+	await db.query('update profiles set deleted_at=null where id=$1', [owner]);
+	await request('consent', grant());
+	const item = note();
+	await request('save', item);
+	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
+	for (const [action, command] of [
+		['consent', grant(1)],
+		['save', note()],
+		[
+			'save',
+			{
+				...item,
+				expectedRevision: 1,
+				selection: { ...item.selection, text: 'Rejected replacement' }
+			}
+		]
+	] as const)
+		expect(await request(action, command)).toEqual({
+			status: 403,
+			body: { error: 'profile_unavailable' }
+		});
+	expect((await request('read')).body).toMatchObject({
+		consent: { revision: 1, state: 'granted' },
+		items: [{ id: item.id, revision: 1, selection: item.selection }]
+	});
+	expect(await prepare(item.id)).toEqual({ status: 'blocked', code: 'source_unavailable' });
+	// The other active profile remains unaffected.
+	const foreign = await readyArtifactFixture(db, 'daily-card', other);
+	expect((await request('consent', { ...grant(), runIds: [foreign.id] }, other)).status).toBe(200);
+});
+
+it('soft-deleted owner can revoke and delete even while disabled; no implicit erasure', async () => {
+	await request('consent', grant());
+	const item = note();
+	await request('save', item);
+	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
+	await db.exec('update product_continuity_policy set enabled=false');
+	expect(await request('consent', grant(1, false))).toEqual({ status: 200, body: { revision: 2 } });
+	expect((await request('read')).body).toMatchObject({
+		enabled: false,
+		consent: { state: 'revoked', revision: 2 },
+		items: [{ id: item.id }]
+	});
+	expect(await request('delete', { id: item.id })).toEqual({
+		status: 200,
+		body: { deleted: true }
+	});
+	expect((await request('read')).body).toMatchObject({ items: [] });
+});
+
+it('guard is private and attached to both tables; privileged writes still enforce profile state', async () => {
+	for (const role of ['anon', 'authenticated', 'service_role']) {
+		const result = await db.query<{ allowed: boolean }>(
+			'select has_function_privilege($1,$2,$3) as allowed',
+			[role, 'guard_product_continuity_profile()', 'EXECUTE']
+		);
+		expect(result.rows[0].allowed).toBe(false);
+	}
+	const triggers = await db.query<{ tgname: string }>(
+		"select tgname from pg_trigger where tgname in ('product_continuity_consents_profile_guard','product_continuity_items_profile_guard') and tgenabled='O'"
+	);
+	expect(triggers.rows).toHaveLength(2);
+	await db.query('update profiles set deleted_at=now() where id=$1', [owner]);
+	await expect(
+		db.query(
+			"insert into product_continuity_consents(user_id,state,revision) values ($1,'granted',1)",
+			[owner]
+		)
+	).rejects.toThrow('profile_unavailable');
+	await expect(
+		db.query(
+			"insert into product_continuity_items(id,user_id,run_id,relevance,selection,revision) values ($1,$2,$3,'relevant',$4,1)",
+			[randomUUID(), owner, run.id, { kind: 'result' }]
+		)
+	).rejects.toThrow('profile_unavailable');
+	await expect(
+		db.query(
+			"insert into product_continuity_consents(user_id,state,revision) values ($1,'granted',1)",
+			[randomUUID()]
+		)
+	).rejects.toThrow('profile_unavailable');
+});
+
+it('forward-fix fails closed without dropping guards/data and preserves revoke/delete', async () => {
+	await request('consent', grant());
+	const item = note();
+	await request('save', item);
+	await db.exec(await file('supabase/forward-fixes/disable_product_continuity_profile_guard.sql'));
+	expect((await request('read')).body).toMatchObject({ enabled: false, items: [{ id: item.id }] });
+	expect((await request('save', { ...item, expectedRevision: 1 })).status).toBe(503);
+	expect((await request('consent', grant(1))).body).toEqual({ error: 'continuity_disabled' });
+	expect(await prepare(item.id)).toEqual({
+		status: 'blocked',
+		code: 'continuity_service_unavailable'
+	});
+	expect((await request('consent', grant(1, false))).status).toBe(200);
+	expect((await request('delete', { id: item.id })).body).toEqual({ deleted: true });
+	const triggers = await db.query(
+		"select tgname from pg_trigger where tgname like 'product_continuity_%_profile_guard' and tgenabled='O'"
+	);
+	expect(triggers.rows).toHaveLength(2);
 });
