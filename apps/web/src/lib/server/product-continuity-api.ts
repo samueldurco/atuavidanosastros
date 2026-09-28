@@ -7,6 +7,7 @@ import {
 	type ContinuityItem
 } from '@atv/domain';
 import { readSmallJson } from './request-json';
+import { withRpcDeadline } from './rpc-deadline';
 import { parseContinuityAccess } from '$lib/product-continuity-access';
 
 const headers = {
@@ -190,9 +191,9 @@ export async function productContinuityApi(event: Event, action: Action): Promis
 			name = 'delete_product_continuity_item';
 			args = { p_id: value.id };
 		}
-		const signal = AbortSignal.timeout(10000);
-		const { data, error } = await client.rpc(name, args).abortSignal(signal);
-		signal.throwIfAborted();
+		const { data, error } = await withRpcDeadline((signal) =>
+			client.rpc(name, args).abortSignal(signal)
+		);
 		if (error)
 			return Object.hasOwn(errors, error.message)
 				? fail(error.message, errors[error.message])

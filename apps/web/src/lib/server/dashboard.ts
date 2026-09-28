@@ -3,12 +3,13 @@ import type { DashboardData, NatalSummary } from '$lib/dashboard';
 import { parseOnboardingSnapshot } from '$lib/onboarding';
 import { isUuid } from '$lib/library-result';
 import { parseContinuitySummary, type ContinuitySummary } from '$lib/continuity-summary';
+import { withRpcDeadline } from './rpc-deadline';
 
 async function readContinuity(client: SupabaseClient): Promise<ContinuitySummary> {
 	try {
-		const { data, error } = await client
-			.rpc('read_product_continuity_summary')
-			.abortSignal(AbortSignal.timeout(10000));
+		const { data, error } = await withRpcDeadline((signal) =>
+			client.rpc('read_product_continuity_summary').abortSignal(signal)
+		);
 		const snapshot = error ? null : parseContinuitySummary(data);
 		return snapshot ? { state: 'AVAILABLE', snapshot } : { state: 'UNAVAILABLE' };
 	} catch {
@@ -18,9 +19,9 @@ async function readContinuity(client: SupabaseClient): Promise<ContinuitySummary
 
 async function readNatal(client: SupabaseClient): Promise<NatalSummary> {
 	try {
-		const { data, error } = await client
-			.rpc('read_natal_onboarding')
-			.abortSignal(AbortSignal.timeout(10000));
+		const { data, error } = await withRpcDeadline((signal) =>
+			client.rpc('read_natal_onboarding').abortSignal(signal)
+		);
 		const snapshot = error ? null : parseOnboardingSnapshot(data);
 		if (!snapshot) return { state: 'UNAVAILABLE' };
 		return snapshot.natal
@@ -33,14 +34,16 @@ async function readNatal(client: SupabaseClient): Promise<NatalSummary> {
 
 async function readLibrary(client: SupabaseClient, owner: string) {
 	try {
-		const { data, error } = await client
-			.from('library_items')
-			.select('id,title,created_at')
-			.eq('user_id', owner)
-			.is('archived_at', null)
-			.order('created_at', { ascending: false })
-			.limit(3)
-			.abortSignal(AbortSignal.timeout(10000));
+		const { data, error } = await withRpcDeadline((signal) =>
+			client
+				.from('library_items')
+				.select('id,title,created_at')
+				.eq('user_id', owner)
+				.is('archived_at', null)
+				.order('created_at', { ascending: false })
+				.limit(3)
+				.abortSignal(signal)
+		);
 		if (error || !Array.isArray(data) || data.length > 3) throw new Error('unavailable');
 		const items: DashboardData['items'] = [];
 		for (const item of data) {

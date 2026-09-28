@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { readDashboard } from './dashboard';
 import { load } from '../../routes/dashboard/+page.server';
@@ -84,6 +84,40 @@ function clientFor(
 	};
 }
 
+afterEach(() => vi.useRealTimers());
+it.each(['natal', 'library', 'continuity', 'all'] as const)(
+	'bounds %s stalled reads independently without erasing healthy sections',
+	async (target) => {
+		vi.useFakeTimers();
+		const mock = clientFor(complete(), [item]);
+		const ports = {
+			natal: mock.rpcRead,
+			library: mock.query.abortSignal,
+			continuity: mock.continuityRead
+		};
+		for (const [name, port] of Object.entries(ports)) {
+			if (name === target || target === 'all') port.mockImplementation(() => new Promise(() => {}));
+		}
+		const pending = readDashboard(mock.client, owner);
+		await vi.advanceTimersByTimeAsync(9999);
+		for (const port of Object.values(ports)) expect(port).toHaveBeenCalledTimes(1);
+		await vi.advanceTimersByTimeAsync(1);
+		const result = await pending;
+		expect(result.libraryError).toBe(target === 'library' || target === 'all');
+		expect(result.items).toEqual(result.libraryError ? [] : [item]);
+		expect(result.natal.state).toBe(
+			target === 'natal' || target === 'all' ? 'UNAVAILABLE' : 'COMPLETE'
+		);
+		expect(result.continuity.state).toBe(
+			target === 'continuity' || target === 'all' ? 'UNAVAILABLE' : 'AVAILABLE'
+		);
+		expect(vi.getTimerCount()).toBe(0);
+		for (const [name, port] of Object.entries(ports)) {
+			expect(port).toHaveBeenCalledTimes(1);
+			expect(port.mock.calls[0][0].aborted).toBe(name === target || target === 'all');
+		}
+	}
+);
 describe('dashboard minimal authenticated recovery', () => {
 	it.each(['continuity', 'throw-continuity'] as const)(
 		'isolates %s failures without retry or private error text',

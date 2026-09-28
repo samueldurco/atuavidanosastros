@@ -2,6 +2,7 @@ import { json, type RequestEvent } from '@sveltejs/kit';
 import { workflowFor } from '@atv/domain';
 import { isUuid } from '$lib/library-result';
 import { readSmallJson } from './request-json';
+import { withRpcDeadline } from './rpc-deadline';
 
 const headers = {
 	'cache-control': 'private, no-store',
@@ -32,9 +33,9 @@ export async function recoverWorkflowRequest(
 		const body = await readSmallJson(event.request, 1024);
 		if (!object(body) || Object.keys(body).length !== 1 || !uuid(body.requestKey))
 			return fail('invalid_input', 400);
-		const { data, error } = await client
-			.rpc('recover_product_request', { p_request_key: body.requestKey })
-			.abortSignal(AbortSignal.timeout(10000));
+		const { data, error } = await withRpcDeadline((signal) =>
+			client.rpc('recover_product_request', { p_request_key: body.requestKey }).abortSignal(signal)
+		);
 		if (error) return fail('workflow_unavailable', 503);
 		if (data === null) return json({ request: null }, { headers });
 		if (

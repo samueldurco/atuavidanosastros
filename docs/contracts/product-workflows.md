@@ -32,6 +32,8 @@ The existing owner-scoped request, local SQL processing, pending Library project
 
 ## Recovery and privacy
 
+Intake access and request recovery use the shared `withRpcDeadline` asynchronous wait bound of 10 seconds, including when the transport ignores abort. Authentication and request-body reads are outside that bound. Timeout means unavailable, never eligibility, not-found, rollback or permission to submit again. No automatic retries are added; a late transport may still finish independently.
+
 ### Lost submission acknowledgement — WU-053
 
 `POST /api/workflows/recover` accepts only `{requestKey}` in a bounded, same-origin authenticated body; the key must never be placed in a URL. The read-only owner-scoped `recover_product_request` RPC returns only `runId`, `productId` and a nullable unarchived `libraryItemId`. It never returns input, calculation, editorial content or a release decision. The original authenticated owner may recover identifiers after a release is revoked; opening the result still uses the existing gated reader. Anonymous/service-role execution and raw client reads remain forbidden. Soft-deleted profiles and missing/deleted runs return null; archived Library references are not resurrected.

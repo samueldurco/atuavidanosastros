@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest';
+import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { productContinuityApi } from './product-continuity-api';
 import { prepareStoredContinuity } from './product-continuity';
@@ -56,7 +56,13 @@ const sql: Record<string, { query: string; keys: string[] }> = {
 		keys: ['p_id']
 	}
 };
-async function request(action: Action, body: unknown = {}, user = owner, loseResponse = false) {
+async function request(
+	action: Action,
+	body: unknown = {},
+	user = owner,
+	loseResponse = false,
+	afterCommit?: () => Promise<never>
+) {
 	const url = new URL(`http://localhost/api/continuity/${action}`);
 	const response = await productContinuityApi(
 		{
@@ -87,6 +93,7 @@ async function request(action: Action, body: unknown = {}, user = owner, loseRes
 											)
 										).rows[0].data
 								);
+								if (afterCommit) return await afterCommit();
 								if (loseResponse) throw new Error('LOST_AFTER_COMMIT');
 								return { data, error: null };
 							} catch (error) {
@@ -143,6 +150,40 @@ const prepare = (id: string) =>
 		}
 	});
 
+it('a committed save with a hung response is recovered by read without another write', async () => {
+	await request('consent', grant());
+	const item = note();
+	let committed!: () => void;
+	const saved = new Promise<void>((resolve) => {
+		committed = resolve;
+	});
+	const hung = vi.fn(() => {
+		committed();
+		return new Promise<never>(() => {});
+	});
+	vi.useFakeTimers();
+	try {
+		const pending = request('save', item, owner, false, hung);
+		await saved;
+		await vi.advanceTimersByTimeAsync(10000);
+		expect(await pending).toEqual({
+			status: 503,
+			body: { error: 'continuity_service_unavailable' }
+		});
+		expect(hung).toHaveBeenCalledTimes(1);
+		expect(vi.getTimerCount()).toBe(0);
+	} finally {
+		vi.useRealTimers();
+	}
+	await db.exec('update product_continuity_policy set enabled=false');
+	const recovered = await request('read');
+	expect(recovered.status).toBe(200);
+	expect(recovered.body).toMatchObject({
+		items: [{ id: item.id, revision: 1, selection: item.selection }]
+	});
+	expect(recovered.body).toHaveProperty('items.length', 1);
+	expect((await request('read', {}, other)).body).toHaveProperty('items.length', 0);
+});
 it('HTTP access history is owner-only metadata; clearing after revoke/disable preserves notes and scope', async () => {
 	await request('consent', grant());
 	const item = note();
