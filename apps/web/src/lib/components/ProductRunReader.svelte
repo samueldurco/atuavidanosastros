@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onDestroy, tick } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { productCatalog, workflowFor } from '@atv/domain';
 	import ReadingShell from '$lib/components/shells/ReadingShell.svelte';
@@ -11,6 +12,7 @@
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { libraryPageHref } from '$lib/library-page';
+	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
 	let { data, libraryBefore = null }: { data: WorkflowReaderData; libraryBefore?: string | null } =
 		$props();
 	const backHref = $derived(libraryPageHref(libraryBefore));
@@ -18,6 +20,19 @@
 	let failure = $state('');
 	let downloadFormat = $state<'web' | 'pdf' | 'svg' | 'card'>('web');
 	let cardSection = $state(0);
+	let downloadController: AbortController | undefined;
+	let alive = true;
+	const downloadContext = $derived(
+		`${data.run.id}:${data.run.revision}:${data.run.released}:${data.run.editorial?.reviewDigest}`
+	);
+	$effect(() => {
+		void downloadContext;
+		return () => downloadController?.abort();
+	});
+	onDestroy(() => {
+		alive = false;
+		downloadController?.abort();
+	});
 	$effect(() => {
 		void data.run.id;
 		cardSection = 0;
@@ -58,46 +73,42 @@
 		busy = 'download';
 		downloadFormat = format;
 		failure = '';
+		const controller = new AbortController();
+		downloadController = controller;
+		const context = downloadContext;
+		const { id, revision } = data.run;
+		const section = cardSection;
+		const trigger = document.activeElement;
 		try {
-			const section = cardSection;
-			const response = await fetch(
-				`/api/workflows/${data.run.id}/download?format=${format}${format === 'card' ? `&section=${section}` : ''}`
-			);
-			if (
-				!response.ok ||
-				!response.headers
-					.get('content-type')
-					?.startsWith(
-						format === 'pdf'
-							? 'application/pdf'
-							: format === 'svg' || format === 'card'
-								? 'image/svg+xml'
-								: 'text/html'
-					)
-			) {
-				failure =
-					response.status === 401
-						? 'Entre novamente para baixar seu relatório.'
-						: response.status === 404 || response.status === 409
-							? format === 'card'
-								? 'Este card não está disponível. Atualize o estado do registro ou consulte o relatório completo.'
-								: 'Este relatório não está disponível para download. Atualize o estado do registro.'
-							: 'Não foi possível baixar o relatório. Tente novamente; seu registro permanece salvo.';
-				return;
-			}
-			const objectUrl = URL.createObjectURL(await response.blob());
+			const blob = await downloadProduct(id, format, section, fetch, controller.signal);
+			if (!alive || controller.signal.aborted || context !== downloadContext) return;
+			const objectUrl = URL.createObjectURL(blob);
 			const anchor = document.createElement('a');
 			anchor.href = objectUrl;
-			anchor.download = `atv-${data.run.id}-r${data.run.revision}${format === 'card' ? `-card-${section + 1}.svg` : `.${format === 'web' ? 'html' : format}`}`;
+			anchor.download = `atv-${id}-r${revision}${format === 'card' ? `-card-${section + 1}.svg` : `.${format === 'web' ? 'html' : format}`}`;
 			document.body.appendChild(anchor);
 			anchor.click();
 			anchor.remove();
 			setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
-		} catch {
-			failure =
-				'Não foi possível baixar o relatório. Tente novamente; seu registro permanece salvo.';
+		} catch (error) {
+			if (alive && context === downloadContext)
+				failure =
+					error instanceof ProductDownloadError
+						? error.message
+						: 'Não foi possível baixar o relatório. Tente novamente; seu registro permanece salvo.';
 		} finally {
-			busy = null;
+			if (alive && downloadController === controller) {
+				downloadController = undefined;
+				busy = null;
+				await tick();
+				if (
+					alive &&
+					context === downloadContext &&
+					trigger instanceof HTMLElement &&
+					trigger.isConnected
+				)
+					trigger.focus({ preventScroll: true });
+			}
 		}
 	}
 	async function remove() {
