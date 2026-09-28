@@ -54,6 +54,12 @@ The shared controller validates the exact domain input and the 20,000-byte UTF-8
 
 The session-only limitations above still apply. This is infrastructure for the first-input UI, not a released product or completed intake form. BirthInput precision is unchanged; approximate profile data must not be silently converted into exact birth data. Local HTTP/PostgreSQL tests cover an acknowledged transaction whose response is lost, recovery after release revocation, a real pre-write refusal and a separate intentional root request. Evidence: `docs/qa/PRODUCT_FIRST_REQUEST_RECOVERY_2026-09-25.md`.
 
+### Browser request deadlines — WU-104
+
+Each HTTP exchange in the shared create/recover/reprocess controller has one 15-second asynchronous wait bound covering both headers and JSON body consumption. Rejecting the deadline precedes aborting transport, and the timer is cleared on settlement. The controller stops waiting even if transport ignores abort. A late response cannot erase the correlation UUID, mark a lookup as located, start another exchange or enable a new submission. The UI leaves its busy state and offers explicit read-only recovery of the original request; there is no automatic retry or key rotation.
+
+This is a per-exchange bound, not a total-operation budget: an acknowledged submission may use three exchanges, and a recovery two. It does not preempt synchronous work, suspended browser timers or server transactions. Abort does not prove rollback; the original request can still commit. Session-storage, owner/lineage validation and exact pre-write-refusal rules above remain unchanged. Evidence: `docs/qa/WORKFLOW_REQUEST_DEADLINES_2026-09-28.md`.
+
 ### Calculation to Editorial Director evidence — WU-034
 
 `prepareProductFacts` maps a validated persisted snapshot to the six Lab capabilities without changing facts or carrying raw data/history. Current scope is always partial; facts exceeding the tighter Lab bounds are explicitly blocked. `evaluateProductDraft` reuses schema and mechanical review, binds review to a SHA-256 of run/revision/product/tier/calculation/provenance/facts/reading/version labels, and requires server-owned reviewer/calibration authority. An otherwise passing review is only a reviewed candidate: publication remains blocked pending independently verified promotion and engine gates. It performs no provider call or persistence transition. See `docs/qa/PRODUCT_EDITORIAL_EVIDENCE_2026-09-14.md` for evidence and remaining boundaries.

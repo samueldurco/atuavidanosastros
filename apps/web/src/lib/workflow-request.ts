@@ -96,22 +96,64 @@ export function createWorkflowRequest(options: {
 			return storageBlocked();
 		}
 	}
-	async function post(path: string, body: string) {
-		return options.fetch(path, {
-			method: 'POST',
-			credentials: 'same-origin',
-			cache: 'no-store',
-			signal: AbortSignal.timeout(15000),
-			headers: { 'content-type': 'application/json' },
-			body
+	/** Bound headers and body together; late transport completion cannot mutate request state. */
+	async function exchange(
+		path: string,
+		init: RequestInit,
+		readBody: (response: Response) => boolean
+	): Promise<{ response: Response; payload: unknown }> {
+		const controller = new AbortController();
+		let timer: ReturnType<typeof setTimeout> | undefined;
+		const deadline = new Promise<never>((_, reject) => {
+			timer = setTimeout(() => {
+				// Settle the deadline first even if the transport resolves on abort.
+				reject(new Error('workflow_request_deadline'));
+				controller.abort();
+			}, 15000);
 		});
+		try {
+			return await Promise.race([
+				(async () => {
+					const response = await options.fetch(path, {
+						...init,
+						credentials: 'same-origin',
+						cache: 'no-store',
+						signal: controller.signal
+					});
+					if (controller.signal.aborted) throw new Error('workflow_request_deadline');
+					const payload: unknown = readBody(response) ? await response.json() : undefined;
+					return { response, payload };
+				})(),
+				deadline
+			]);
+		} finally {
+			clearTimeout(timer);
+		}
+	}
+	async function post(
+		path: string,
+		body: string,
+		readBody: (response: Response) => boolean = () => true
+	) {
+		return exchange(
+			path,
+			{
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body
+			},
+			readBody
+		);
 	}
 	async function recover(key: string, acknowledgedId?: string): Promise<WorkflowRequestState> {
-		const response = await post('/api/workflows/recover', JSON.stringify({ requestKey: key }));
+		const { response, payload } = await post(
+			'/api/workflows/recover',
+			JSON.stringify({ requestKey: key }),
+			(response) => response.status === 200
+		);
 		if (response.status === 401)
 			return { mode: 'recover', message: 'Entre novamente para consultar o pedido original.' };
 		if (response.status !== 200) return uncertain();
-		const payload: unknown = await response.json();
 		if (!object(payload) || Object.keys(payload).length !== 1) return uncertain();
 		if (payload.request === null)
 			return {
@@ -135,13 +177,12 @@ export function createWorkflowRequest(options: {
 				message:
 					'O pedido foi localizado, mas não há referência ativa na Biblioteca. Nenhuma nova versão será criada por esta consulta.'
 			};
-		const reader = await options.fetch(`/api/workflows/${request.runId}`, {
-			credentials: 'same-origin',
-			cache: 'no-store',
-			signal: AbortSignal.timeout(15000)
-		});
+		const { response: reader, payload: body } = await exchange(
+			`/api/workflows/${request.runId}`,
+			{},
+			(response) => response.ok
+		);
 		if (!reader.ok) return uncertain();
-		const body: unknown = await reader.json();
 		const run = object(body) ? parseProductRun(body.run) : null;
 		if (
 			!run ||
@@ -199,7 +240,7 @@ export function createWorkflowRequest(options: {
 			} catch {
 				return storageBlocked();
 			}
-			const response = await post(
+			const { response, payload } = await post(
 				operation.kind === 'create-natal'
 					? '/api/workflows/natal'
 					: operation.kind === 'create-date'
@@ -211,7 +252,6 @@ export function createWorkflowRequest(options: {
 								: `/api/workflows/${operation.runId}/reprocess`,
 				body
 			);
-			const payload: unknown = await response.json();
 			if (
 				object(payload) &&
 				Object.keys(payload).length === 1 &&
