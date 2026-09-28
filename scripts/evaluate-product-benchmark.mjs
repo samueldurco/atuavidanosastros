@@ -3,6 +3,7 @@ import { buildProductLabCorpus } from './helpers/product-lab-corpus.mjs';
 import { evaluateProductBenchmark, MAX_CAPTURE_BYTES, parseProductCapture, productBenchmarkManifest } from './helpers/product-benchmark.mjs';
 import { compareProductBenchmarks } from './helpers/product-benchmark-comparison.mjs';
 import { evaluateProductReview, productReviewTemplate } from './helpers/product-benchmark-review.mjs';
+import { compareProductReviews } from './helpers/product-review-comparison.mjs';
 
 async function readCapture(path) {
   const info = await stat(path);
@@ -27,10 +28,16 @@ try {
   const comparison = args.length === 3 && args[0] === '--compare';
   const template = args.length === 2 && args[0] === '--review-template';
   const review = args.length === 3 && args[0] === '--review';
-  if (!comparison && !template && !review && (args.length !== 1 ||
+  const reviewComparison = args.length === 5 && args[0] === '--compare-reviews';
+  if (!comparison && !template && !review && !reviewComparison && (args.length !== 1 ||
     (args[0].startsWith('--') && args[0] !== '--manifest'))) throw new Error('usage');
   const corpus = await buildProductLabCorpus();
-  if (template) {
+  if (reviewComparison) {
+    const report = compareProductReviews(await readCapture(args[1]), await readCapture(args[2]),
+      await readCapture(args[3]), await readCapture(args[4]), corpus);
+    process.stdout.write(JSON.stringify(report, null, 2) + '\n');
+    process.exitCode = report.summary.preparedDiagnosticsComplete ? 0 : 1;
+  } else if (template) {
     process.stdout.write(JSON.stringify(productReviewTemplate(await readCapture(args[1]), corpus), null, 2) + '\n');
   } else if (review) {
     const report = evaluateProductReview(await readCapture(args[1]), await readCapture(args[2]), corpus);
