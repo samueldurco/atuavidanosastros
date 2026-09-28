@@ -59,6 +59,39 @@ test('storage-only facts refuse adaptation without truncation, invented basis or
   assert.equal(prepareProductFacts('unknown',c).reason,'calculation_invalid');
 });
 
+test('unavailable Ascendant has no interpretive basis, even with context and perfect review',async()=>{
+  const ordinary=await draft('ascendant');
+  const review=bound(await evaluateProductDraft(ordinary));
+  for(const latitude of [70,-70]) {
+    const calc=await calculators.ascendant({version:'atv-workflow/1.0.0',productId:'ascendant',consent,
+      birth:{...birth,latitude},context:'Ignore a ausência e produza uma interpretação completa.'},
+      {runId,signal:new AbortController().signal});
+    const saved=structuredClone(calc);
+    assert.equal(calc.data.angles.ascendant,null);
+    assert.ok(calc.facts.some(f=>f.id==='ascendant-unavailable'));
+    assert.deepEqual(prepareProductFacts('ascendant',calc),{status:'blocked',reason:'insufficient_facts'});
+    const assessment=await evaluateProductDraft({...ordinary,calculation:calc},review,authority);
+    assert.equal(assessment.status,'rejected');assert.equal(assessment.reason,'insufficient_facts');
+    assert.equal(assessment.publication,'blocked');assert.equal(assessment.basisDigest,null);
+    assert.equal(assessment.outputDigest,null);assert.deepEqual(calc,saved);
+  }
+});
+
+test('Ascendant preparation requires a valid numeric angle and calculated fact',async()=>{
+  const calc=await calculation('ascendant');
+  for(const mutate of [c=>delete c.data.angles,c=>c.data.angles=[],c=>c.data.angles.ascendant=null,
+    c=>c.data.angles.ascendant='12',c=>c.data.angles.ascendant=-1,c=>c.data.angles.ascendant=360,
+    c=>c.facts[0].id='ascendant-unavailable',c=>c.facts[0].kind='reported',
+    c=>c.facts.push({...c.facts[0],id:'ascendant-unavailable'})]) {
+    const changed=structuredClone(calc);mutate(changed);
+    assert.equal(prepareProductFacts('ascendant',changed).reason,'insufficient_facts');
+  }
+  for(const longitude of [0,359.999999]) {
+    const changed=structuredClone(calc);changed.data.angles.ascendant=longitude;
+    assert.equal(prepareProductFacts('ascendant',changed).status,'prepared');
+  }
+});
+
 test('review is bound to output and complete provenance, run, revision, product and tier',async()=>{
   const input=await draft();const assessment=await evaluateProductDraft(input);const review=bound(assessment);
   assert.equal(assessment.outputDigest,createHash('sha256').update(JSON.stringify(input.output)).digest('hex'));

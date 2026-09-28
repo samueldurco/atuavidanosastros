@@ -4,7 +4,7 @@ import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, t
   type Capability, type FactsEnvelope, type Tier, type ScoredReview, type Finding } from '@atv/ai';
 import { validateCalculation } from './product-processing.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.0.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.1.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -22,6 +22,17 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
     completeness: 'partial', facts: structuredClone(calculation.facts) };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts)) return { status: 'blocked', reason: 'facts_not_representable' };
+  // An unavailability notice is calculated evidence, but cannot support an Ascendant reading.
+  // Require both the persisted numeric angle and its factual projection; never substitute context.
+  if (productId === 'ascendant') {
+    const angles = calculation.data.angles;
+    const ascendant = angles !== null && typeof angles === 'object' && !Array.isArray(angles)
+      ? (angles as Record<string, unknown>).ascendant : undefined;
+    if (typeof ascendant !== 'number' || !Number.isFinite(ascendant) || ascendant < 0 || ascendant >= 360 ||
+        !facts.facts.some(fact => fact.id === 'angle-ascendant' && fact.kind === 'calculated') ||
+        facts.facts.some(fact => fact.id === 'ascendant-unavailable'))
+      return { status: 'blocked', reason: 'insufficient_facts' };
+  }
   if (!hasInterpretiveBasis(facts)) return { status: 'blocked', reason: 'insufficient_facts' };
   return { status: 'prepared', calculation, facts };
 }

@@ -56,6 +56,8 @@ The session-only limitations above still apply. This is infrastructure for the f
 
 `prepareProductFacts` maps a validated persisted snapshot to the six Lab capabilities without changing facts or carrying raw data/history. Current scope is always partial; facts exceeding the tighter Lab bounds are explicitly blocked. `evaluateProductDraft` reuses schema and mechanical review, binds review to a SHA-256 of run/revision/product/tier/calculation/provenance/facts/reading/version labels, and requires server-owned reviewer/calibration authority. An otherwise passing review is only a reviewed candidate: publication remains blocked pending independently verified promotion and engine gates. It performs no provider call or persistence transition. See `docs/qa/PRODUCT_EDITORIAL_EVIDENCE_2026-09-14.md` for evidence and remaining boundaries.
 
+WU-078 versions editorial evidence to 1.1.0: Ascendant-only preparation requires a finite persisted angle in [0,360), its calculated `angle-ascendant` fact and no `ascendant-unavailable` notice. Missing basis is rejected before draft/review assessment; context or scores cannot replace it. The original snapshot and other partial-product facts remain unchanged. The versioned product corpus retains the polar case as an explicit blocked negative.
+
 Reprocessing creates a new run linked to the owned prior version. It copies the original input, never overwrites a result, and reuses a persisted Tarot draw. An interrupted calculation without a persisted snapshot is still QUEUED, not a delivered reading. A new draw is a new request, not reinterpretation.
 
 ## Durable calculation processing — WU-031

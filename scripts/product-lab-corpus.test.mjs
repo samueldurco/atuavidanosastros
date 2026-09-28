@@ -8,14 +8,17 @@ import { releaseCases } from '../packages/ai/src/lab/release-dataset.ts';
 const corpus = await buildProductLabCorpus();
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.0.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.1.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    'c01bd6c886289d83cf5c410721b2dd6394b56c8ead0209ed6c53ac21a6004ad3');
+    '49ff8dedac35ca3a028d7bd610895f316858e3ce5df57ad69df8d24ead520d1f');
 });
 
 test('offline corpus covers 12 partial bases, six capabilities and seven strata without claiming release', () => {
   assert.deepEqual([...corpusProducts].sort(), Object.keys(createProductCalculators()).sort());
   assert.equal(corpus.cases.length, 84);
+  assert.equal(corpus.cases.filter(item => item.preparation === 'prepared').length, 83);
+  assert.deepEqual(corpus.cases.filter(item => item.preparation === 'blocked').map(item => [item.id, item.blockReason]),
+    [['ascendant-boundary', 'insufficient_facts']]);
   assert.equal(new Set(corpus.cases.map(item => item.id)).size, 84);
   assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 84);
   assert.equal(corpus.unavailableProducts.length, 13);
@@ -55,6 +58,11 @@ test('polar boundaries and incomplete dream reports retain limits, not replaceme
   assert.equal(polar.calculation.data.angles.ascendant, null);
   assert.deepEqual(polar.calculation.data.houses.cusps, []);
   assert.equal(polar.calculation.facts.some(item => item.id.startsWith('house-')), false);
+  const ascendant = corpus.cases.find(item => item.id === 'ascendant-boundary');
+  assert.equal(ascendant.calculation.data.angles.ascendant, null);
+  assert.ok(ascendant.calculation.facts.some(fact => fact.id === 'ascendant-unavailable'));
+  assert.equal('request' in ascendant, false);
+  assert.equal('factsDigest' in ascendant, false);
   for (const product of ['dream-reading', 'dream-journal']) {
     const dream = corpus.cases.find(item => item.id === `${product}-incomplete`);
     assert.deepEqual(dream.calculation.data.entry.emotions, []);

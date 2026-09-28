@@ -4,7 +4,7 @@ import { prepareProductFacts } from '../../apps/worker/src/product-editorial.ts'
 import { parseWorkflowInput, workflowFor } from '../../packages/domain/src/workflows.ts';
 import { releaseCases, RELEASE_DATASET_VERSION } from '../../packages/ai/src/lab/release-dataset.ts';
 
-export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.0.0';
+export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.1.0';
 // Explicit frozen scope: newly added calculators must receive a deliberate corpus revision.
 export const corpusProducts = Object.freeze(['birth-chart', 'three-pillars', 'ascendant', 'midheaven',
   'pair-preview', 'date-reading', 'daily-card', 'three-questions', 'tarot-focus', 'tarot-yes-no',
