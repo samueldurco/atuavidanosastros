@@ -6,7 +6,7 @@ WU-115 · RUN_ID `ATV-20260902-170644Z-01A0630F` · 28/09/2026.
 
 `atv-career-compass-editorial/1.0.0` é selecionado pelo servidor ao preparar a projeção persistida de `career-compass`. O envelope continua `atv-facts/1.0.0`, com `editorialProfile` opcional; versões desconhecidas são recusadas. O perfil exige capacidade `purpose-direction`, escopo parcial, `angle-midheaven` calculado e permite apenas `personal-context` relatado como fato adicional. Contexto livre não seleciona instruções nem altera geometria.
 
-O prompt passa a `atv-editorial/1.0.2`, a evidência do produto a `atv-product-editorial-evidence/1.2.0` e o corpus sintético a `atv-product-facts-synthetic/1.5.0`. Fatos, perfil e versões entram nos vínculos existentes de prompt/requisição/revisão; avaliações anteriores não constituem prova deste prompt. Preparações sem perfil preservam o comportamento genérico.
+O prompt passa a `atv-editorial/1.0.2`, a evidência do produto a `atv-product-editorial-evidence/1.3.0` (1.2.0 na introdução do perfil, 1.3.0 após a checagem de coerência persistida) e o corpus sintético a `atv-product-facts-synthetic/1.5.0`. Fatos, perfil e versões entram nos vínculos existentes de prompt/requisição/revisão; avaliações anteriores não constituem prova deste prompt. Preparações sem perfil preservam o comportamento genérico.
 
 ## Conteúdo exigido
 
