@@ -5,7 +5,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.1.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.2.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -34,6 +34,15 @@ const careerTitles = new Map([
   ["work-possibilities", "Ambientes e modos de trabalhar"],
   ["tension-or-excess", "Tensão ou excesso possível"],
 ]);
+const threePillarsTitles = new Map([
+  ["sun-moon-dynamics", "Sol e Lua: intenção e necessidade"],
+  ["ascendant-expression", "Ascendente: abordagem e expressão"],
+]);
+const threePillarsFacts = new Map([
+  ["position-sun", "Seu Sol"],
+  ["position-moon", "Sua Lua"],
+  ["angle-ascendant", "Seu Ascendente"],
+]);
 function claimTitle(
   claim: Reading["claims"][number],
   productId: string,
@@ -46,7 +55,12 @@ function claimTitle(
         claim.evidence[0] === "angle-midheaven"
           ? "Seu Meio do Céu"
           : ""))
-      : "";
+      : productId === "three-pillars"
+        ? (threePillarsTitles.get(claim.id) ??
+          (claim.kind === "fact" && claim.evidence.length === 1
+            ? (threePillarsFacts.get(claim.evidence[0] ?? "") ?? "")
+            : ""))
+        : "";
   return `${subject ? subject + " — " : ""}${labels[claim.kind]} [${claim.id}]`;
 }
 
@@ -98,7 +112,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `Síntese (${index + 1})${last ? (productId === "career-compass" ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : "Síntese"} (${index + 1})${last ? (["career-compass", "three-pillars"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });

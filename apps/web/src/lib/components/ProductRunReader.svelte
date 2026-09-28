@@ -45,9 +45,19 @@
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
 	function factLabel(id: string): string {
-		if (data.run.productId !== 'career-compass') return id;
-		if (id === 'angle-midheaven') return `Meio do Céu (${id})`;
-		if (id === 'personal-context') return `Contexto profissional relatado (${id})`;
+		if (data.run.productId === 'career-compass') {
+			if (id === 'angle-midheaven') return `Meio do Céu (${id})`;
+			if (id === 'personal-context') return `Contexto profissional relatado (${id})`;
+		}
+		if (data.run.productId === 'three-pillars') {
+			const labels: Record<string, string> = {
+				'position-sun': 'Sol',
+				'position-moon': 'Lua',
+				'angle-ascendant': 'Ascendente',
+				'personal-context': 'Contexto pessoal relatado'
+			};
+			if (labels[id]) return `${labels[id]} (${id})`;
+		}
 		return id;
 	}
 	const svgEligible = $derived(

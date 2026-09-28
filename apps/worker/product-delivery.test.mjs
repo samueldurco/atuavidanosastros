@@ -3,8 +3,12 @@ import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { SCHEMA_VERSION } from "@atv/ai";
 import { createPurposeCalculators } from "./src/purpose-calculators.ts";
+import { createNatalCalculators } from "./src/natal-calculators.ts";
 import { prepareProductFacts } from "./src/product-editorial.ts";
-import { careerEditorialTestFixture } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
+import {
+  careerEditorialTestFixture,
+  threePillarsEditorialTestFixture,
+} from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
   PRODUCT_DELIVERY_VERSION,
@@ -153,6 +157,89 @@ test("career compass delivers recognizable headings while preserving every claim
   );
   // The new version requires a new final-delivery review, even when content otherwise matches.
   const legacy = { ...result.content, version: "atv-product-delivery/1.0.0" };
+  const legacyDigest = createHash("sha256")
+    .update(
+      JSON.stringify({
+        version: legacy.version,
+        basisDigest: result.basisDigest,
+        outputDigest: result.outputDigest,
+        content: legacy,
+      }),
+    )
+    .digest("hex");
+  assert.notEqual(legacyDigest, result.deliveryDigest);
+});
+
+test("three pillars preserve complete content and bases under product headings, with a new delivery digest", async () => {
+  const input = draft();
+  input.productId = "three-pillars";
+  input.calculation = await createNatalCalculators()["three-pillars"](
+    {
+      version: "atv-workflow/1.0.0",
+      productId: input.productId,
+      birth: {
+        localDateTime: "2000-01-01T12:00:00",
+        utcInstant: "2000-01-01T12:00:00Z",
+        timezone: "UTC",
+        latitude: 0,
+        longitude: 0,
+        locationSource: "synthetic",
+      },
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    { runId: input.runId, signal: new AbortController().signal },
+  );
+  const facts = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(facts.status, "prepared");
+  input.output = {
+    ...input.output,
+    capability: "natal-synthesis",
+    ...threePillarsEditorialTestFixture(facts.facts),
+  };
+  const captured = structuredClone(input);
+  const pending = prepareProductDelivery(input);
+  input.productId = "daily-card";
+  const result = await pending;
+  assert.deepEqual(result, await prepareProductDelivery(captured));
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.deepEqual(
+    result.content.sections.map((s) => s.title),
+    [
+      "Seu Sol — Fato [pillar-0]",
+      "Sua Lua — Fato [pillar-1]",
+      "Seu Ascendente — Fato [pillar-2]",
+      "Sol e Lua: intenção e necessidade — Hipótese [sun-moon-dynamics]",
+      "Ascendente: abordagem e expressão — Hipótese [ascendant-expression]",
+      "Relações (1)",
+      "Síntese dos Três Pilares (1) e três perguntas práticas",
+    ],
+  );
+  for (const [i, claim] of captured.output.claims.entries()) {
+    assert.equal(result.content.sections[i].text, claim.text);
+    assert.deepEqual(result.content.sections[i].evidence, claim.evidence);
+  }
+  const all = contentTexts(result.content);
+  for (const part of [
+    ...captured.output.relations,
+    ...captured.output.synthesis,
+  ])
+    assert.ok(all.includes(part.text));
+  for (const question of captured.output.reflections)
+    assert.equal(all.split(question).length, 2);
+  for (const section of result.content.sections.slice(5))
+    assert.deepEqual(
+      new Set(section.evidence),
+      new Set(["position-sun", "position-moon", "angle-ascendant"]),
+    );
+  const legacy = { ...result.content, version: "atv-product-delivery/1.1.0" };
   const legacyDigest = createHash("sha256")
     .update(
       JSON.stringify({
