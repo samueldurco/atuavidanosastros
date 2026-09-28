@@ -20,9 +20,17 @@ The forward-fix disables acceptance and revokes only request execution, preservi
 
 ## HTTP boundary
 
-Three fixed POST paths under `/api/product-email/`: `request` accepts `{requestKey,command}`, `recover` accepts `{requestKey}` and `cancel` accepts `{receiptId}`. UUIDs never appear in URL parameters or query strings. Every operation requires same-origin headers, rejects cross-site fetches and queries, validates server session claims, bounds JSON to 3072 actual UTF-8 bytes, and permits no extra fields. SQL derives ownership; no service credential is used. Each RPC has a 10-second abort signal; unknown failures are redacted and never automatically retried.
+Four fixed POST paths under `/api/product-email/`: `request` accepts `{requestKey,command}`, `recover` accepts `{requestKey}`, `cancel` accepts `{receiptId}` and `history` accepts `{runId}`. UUIDs never appear in URL parameters or query strings. Every operation requires same-origin headers, rejects cross-site fetches and queries, validates server session claims, bounds JSON to 3072 actual UTF-8 bytes, and permits no extra fields. SQL derives ownership; no service credential is used. Each RPC has a 10-second abort signal; unknown failures are redacted and never automatically retried.
 
 Success is `{receipt}`: acceptance returns 202, recovery/cancellation return 200 and may return null for an absent or unowned key/ID. Exact receipt fields, version linkage, state and timestamps are validated before return. REQUESTED and CANCELLED never mean sent or delivered. Private/no-store, no-referrer and noindex headers apply to success and error responses. A 503 may represent a committed request whose acknowledgement was lost: recover the original key before any new submission. The HTTP boundary does not enable acceptance or implement browser controls/transport.
+
+## Durable receipt discovery
+
+`list_product_email_requests(p_run_id)` is a read-only, authenticated owner/run lookup independent of browser recovery keys, current run revision, active profile or release gates. It returns the same minimal receipt projection in descending revision order. The unique run/revision constraint and revision range 1–8 bound the result to eight. Missing and unowned runs both return `[]`; anonymous and service roles cannot execute it. It returns no owner ID, address, command, consent, request key or reading content and cannot create, renew or send a request.
+
+The `history` HTTP response is `{receipts}` with status 200. The entire projection must validate: maximum eight, requested run only, distinct receipt IDs and strictly descending revisions; malformed/null/extra-field responses fail with redacted 503, without partial results or retries. A discovered receipt ID may be submitted to the existing owner-scoped cancellation endpoint. Discovery does not grant reading access or delivery permission. The dedicated history forward-fix revokes only discovery execution and retains records and exact-key recovery/cancellation. The acceptance forward-fix also preserves discovery.
+
+Browser history controls are a separate integration step; this backend capability has not been migrated to a hosted environment.
 
 ## Browser request controller
 

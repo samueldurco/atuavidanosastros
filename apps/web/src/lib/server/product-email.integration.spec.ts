@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
-import { parseProductEmailReceipt } from '$lib/product-email';
+import { parseProductEmailReceipt, parseProductEmailHistory } from '$lib/product-email';
 import { createProductEmailRequest } from '$lib/product-email-request';
 import {
 	setupProductDatabase,
@@ -13,10 +13,12 @@ import { asRole, readyArtifactFixture } from '../../../../../scripts/helpers/art
 import { POST as requestRoute } from '../../routes/api/product-email/request/+server';
 import { POST as recoverRoute } from '../../routes/api/product-email/recover/+server';
 import { POST as cancelRoute } from '../../routes/api/product-email/cancel/+server';
+import { POST as historyRoute } from '../../routes/api/product-email/history/+server';
 
 const request = (event: RequestEvent) => requestRoute(event as Parameters<typeof requestRoute>[0]);
 const recover = (event: RequestEvent) => recoverRoute(event as Parameters<typeof recoverRoute>[0]);
 const cancel = (event: RequestEvent) => cancelRoute(event as Parameters<typeof cancelRoute>[0]);
+const history = (event: RequestEvent) => historyRoute(event as Parameters<typeof historyRoute>[0]);
 async function readReceipt(response: Response) {
 	const body = (await response.json()) as { receipt: unknown };
 	const receipt = parseProductEmailReceipt(body.receipt);
@@ -29,6 +31,7 @@ let reading: Awaited<ReturnType<typeof readyArtifactFixture>>;
 beforeAll(async () => {
 	db = await setupProductDatabase();
 	await db.exec(await file('supabase/migrations/20260925220000_product_email_requests.sql'));
+	await db.exec(await file('supabase/migrations/20260928113000_product_email_history.sql'));
 }, 20000);
 afterAll(async () => {
 	await db?.close();
@@ -68,6 +71,8 @@ function event(body: unknown, user: string | null = owner, lostAck = false) {
 						return db.query('select read_product_email_request($1) as data', [args.p_request_key]);
 					if (name === 'cancel_product_email_request')
 						return db.query('select cancel_product_email_request($1) as data', [args.p_id]);
+					if (name === 'list_product_email_requests')
+						return db.query('select list_product_email_requests($1) as data', [args.p_run_id]);
 					throw new Error('unexpected RPC');
 				});
 				if (lostAck) throw new Error('synthetic lost acknowledgement after SQL commit');
@@ -96,6 +101,36 @@ function event(body: unknown, user: string | null = owner, lostAck = false) {
 		})
 	} as unknown as RequestEvent;
 }
+it('lost acknowledgement and browser key recover through owner history after revision and gate changes', async () => {
+	await db.exec('update product_email_policy set enabled=true');
+	expect(
+		(await request(event({ requestKey: randomUUID(), command: command() }, owner, true))).status
+	).toBe(503);
+	await db.exec(
+		'update product_email_policy set enabled=false; update workflow_releases set enabled=false; update profiles set deleted_at=now(); update product_runs set revision=5'
+	);
+	const response = await history(event({ runId: reading.id }));
+	expect(response.status).toBe(200);
+	const payload = (await response.json()) as { receipts: unknown };
+	const receipts = parseProductEmailHistory(payload.receipts, reading.id);
+	if (!receipts) throw new Error('expected valid history');
+	expect(receipts).toHaveLength(1);
+	expect(receipts[0]).toMatchObject({ runId: reading.id, revision: 4, state: 'REQUESTED' });
+	expect(parseProductEmailReceipt(receipts[0])).toEqual(receipts[0]);
+	for (const [runId, user] of [
+		[reading.id, other],
+		[randomUUID(), owner]
+	])
+		expect(await (await history(event({ runId }, user))).json()).toEqual({ receipts: [] });
+	const cancelled = await readReceipt(await cancel(event({ receiptId: receipts[0].id })));
+	expect(cancelled.state).toBe('CANCELLED');
+	expect(await (await history(event({ runId: reading.id }))).json()).toEqual({
+		receipts: [cancelled]
+	});
+	expect(await count()).toBe(1);
+	await db.exec('delete from product_runs');
+	expect(await (await history(event({ runId: reading.id }))).json()).toEqual({ receipts: [] });
+});
 it('real SQL policy blocks acceptance by default, regardless of valid owner and consent', async () => {
 	const response = await request(event({ requestKey: randomUUID(), command: command() }));
 	expect(response.status).toBe(409);

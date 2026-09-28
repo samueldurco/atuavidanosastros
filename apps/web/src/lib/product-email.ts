@@ -35,6 +35,31 @@ export interface ProductEmailReceipt {
 	cancelledAt: string | null;
 }
 
+/** Entire bounded projection is rejected if any entry is malformed or misplaced. */
+export function parseProductEmailHistory(
+	value: unknown,
+	runId: string
+): ProductEmailReceipt[] | null {
+	if (!emailUuid(runId) || !Array.isArray(value) || value.length > 8) return null;
+	const receipts: ProductEmailReceipt[] = [];
+	const ids = new Set<string>();
+	let previousRevision = 9;
+	for (const entry of value) {
+		const receipt = parseProductEmailReceipt(entry);
+		if (
+			!receipt ||
+			receipt.runId.toLowerCase() !== runId.toLowerCase() ||
+			receipt.revision >= previousRevision ||
+			ids.has(receipt.id.toLowerCase())
+		)
+			return null;
+		ids.add(receipt.id.toLowerCase());
+		previousRevision = receipt.revision;
+		receipts.push(receipt);
+	}
+	return receipts;
+}
+
 export function parseProductEmailCommand(value: unknown): ProductEmailCommand | null {
 	if (
 		!object(value) ||

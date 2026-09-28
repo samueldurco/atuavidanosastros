@@ -1,5 +1,10 @@
 import { json, type RequestEvent } from '@sveltejs/kit';
-import { emailUuid, parseProductEmailCommand, parseProductEmailReceipt } from '$lib/product-email';
+import {
+	emailUuid,
+	parseProductEmailCommand,
+	parseProductEmailReceipt,
+	parseProductEmailHistory
+} from '$lib/product-email';
 import { readSmallJson } from './request-json';
 
 const headers = {
@@ -24,7 +29,7 @@ type Event = Pick<RequestEvent, 'request' | 'url' | 'locals'>;
 /** Fixed POST paths keep recovery keys out of URLs. This API has no delivery transport. */
 export async function productEmailApi(
 	event: Event,
-	action: 'request' | 'recover' | 'cancel'
+	action: 'request' | 'recover' | 'cancel' | 'history'
 ): Promise<Response> {
 	try {
 		if (
@@ -46,11 +51,15 @@ export async function productEmailApi(
 				? ['requestKey', 'command']
 				: action === 'recover'
 					? ['requestKey']
-					: ['receiptId'];
+					: action === 'history'
+						? ['runId']
+						: ['receiptId'];
 		if (
 			Object.keys(value).length !== keys.length ||
 			keys.some((key) => !Object.hasOwn(value, key)) ||
-			!emailUuid(value[action === 'cancel' ? 'receiptId' : 'requestKey'])
+			!emailUuid(
+				value[action === 'history' ? 'runId' : action === 'cancel' ? 'receiptId' : 'requestKey']
+			)
 		)
 			return fail('invalid_input', 400);
 		const command = action === 'request' ? parseProductEmailCommand(value.command) : null;
@@ -60,18 +69,26 @@ export async function productEmailApi(
 				? 'request_product_email'
 				: action === 'recover'
 					? 'read_product_email_request'
-					: 'cancel_product_email_request';
+					: action === 'history'
+						? 'list_product_email_requests'
+						: 'cancel_product_email_request';
 		const args =
 			action === 'request'
 				? { p_request_key: value.requestKey, p_command: command }
 				: action === 'recover'
 					? { p_request_key: value.requestKey }
-					: { p_id: value.receiptId };
+					: action === 'history'
+						? { p_run_id: value.runId }
+						: { p_id: value.receiptId };
 		const { data, error } = await client.rpc(name, args).abortSignal(AbortSignal.timeout(10000));
 		if (error)
 			return Object.hasOwn(errors, error.message)
 				? fail(error.message, errors[error.message])
 				: fail('email_service_unavailable', 503);
+		if (action === 'history') {
+			const receipts = parseProductEmailHistory(data, value.runId as string);
+			return receipts ? reply({ receipts }) : fail('email_service_unavailable', 503);
+		}
 		if (data === null && action !== 'request') return reply({ receipt: null });
 		const receipt = parseProductEmailReceipt(data);
 		if (

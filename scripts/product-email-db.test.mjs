@@ -9,6 +9,173 @@ import {
 } from "./helpers/product-database.mjs";
 import { asRole, readyArtifactFixture } from "./helpers/artifact-fixture.mjs";
 
+test("durable email history: owner discovery, bounds and forward-fix", async (t) => {
+  const db = await setupProductDatabase();
+  t.after(() => db.close());
+  await db.exec(
+    await file("supabase/migrations/20260925220000_product_email_requests.sql"),
+  );
+  await db.exec(
+    await file("supabase/migrations/20260928113000_product_email_history.sql"),
+  );
+  const reading = await readyArtifactFixture(db);
+  const call = (sql, args, user = owner, role = "authenticated") =>
+    asRole(db, role, user, () => db.query(sql, args)).then(
+      (r) => r.rows[0].data,
+    );
+  const history = (id = reading.id, user = owner, role = "authenticated") =>
+    call("select list_product_email_requests($1) as data", [id], user, role);
+
+  await t.test(
+    "empty/unowned are identical; identity, permissions and null input fail closed",
+    async () => {
+      assert.deepEqual(await history(), []);
+      assert.deepEqual(await history(randomUUID()), []);
+      assert.deepEqual(await history(reading.id, other), []);
+      await assert.rejects(() => history(reading.id, null), /auth_required/);
+      await assert.rejects(() => history(null), /invalid_input/);
+      for (const role of ["anon", "service_role"])
+        await assert.rejects(
+          () => history(reading.id, owner, role),
+          /permission denied/,
+        );
+      assert.equal(
+        (await db.query("select enabled from product_email_policy")).rows[0]
+          .enabled,
+        false,
+      );
+    },
+  );
+
+  const key = randomUUID();
+  let receipt;
+  await t.test(
+    "actual acceptance is discoverable without its key; reads do not mutate records",
+    async () => {
+      await db.exec("update product_email_policy set enabled=true");
+      receipt = await call("select request_product_email($1,$2) as data", [
+        key,
+        {
+          version: "atv-email-request/1",
+          runId: reading.id,
+          expectedRevision: reading.revision,
+          reviewDigest: reading.reviewDigest,
+          consent: {
+            transactional: true,
+            policyVersion: "atv-email-delivery/1",
+            recipient: "account-owner",
+          },
+        },
+      ]);
+      const before = await db.query("select * from product_email_requests");
+      assert.deepEqual(await history(), [receipt]);
+      assert.deepEqual(await history(reading.id, other), []);
+      assert.deepEqual(
+        await db.query("select * from product_email_requests"),
+        before,
+      );
+      assert.deepEqual(
+        Object.keys(receipt).sort(),
+        [
+          "id",
+          "runId",
+          "revision",
+          "reviewDigest",
+          "state",
+          "createdAt",
+          "cancelledAt",
+        ].sort(),
+      );
+    },
+  );
+
+  await t.test(
+    "revoked gates, disabled policy and inactive profile preserve discovery/cancellation",
+    async () => {
+      await db.exec(
+        "update product_email_policy set enabled=false; update workflow_releases set enabled=false; update profiles set deleted_at=now(); update product_runs set revision=5",
+      );
+      assert.deepEqual(await history(), [receipt]);
+      receipt = await call("select cancel_product_email_request($1) as data", [
+        receipt.id,
+      ]);
+      assert.equal(receipt.state, "CANCELLED");
+      assert.deepEqual(await history(), [receipt]);
+    },
+  );
+
+  await t.test(
+    "synthetic retained revisions are bounded to eight and sorted newest first",
+    async () => {
+      // Direct local seeds exercise storage bounds, not real acceptance of these versions.
+      for (let revision = 1; revision <= 8; revision++) {
+        if (revision === reading.revision) continue;
+        await db.query(
+          "insert into product_email_requests(user_id,run_id,request_key,revision,review_digest,command) values($1,$2,$3,$4,$5,$6)",
+          [owner, reading.id, randomUUID(), revision, reading.reviewDigest, {}],
+        );
+      }
+      const receipts = await history();
+      assert.deepEqual(
+        receipts.map((r) => r.revision),
+        [8, 7, 6, 5, 4, 3, 2, 1],
+      );
+      assert.equal(new Set(receipts.map((r) => r.id)).size, 8);
+      await assert.rejects(
+        () =>
+          db.query(
+            "insert into product_email_requests(user_id,run_id,request_key,revision,review_digest,command) values($1,$2,$3,9,$4,$5)",
+            [owner, reading.id, randomUUID(), reading.reviewDigest, {}],
+          ),
+        /check constraint/,
+      );
+      await assert.rejects(
+        () =>
+          db.query(
+            "insert into product_email_requests(user_id,run_id,request_key,revision,review_digest,command) values($1,$2,$3,8,$4,$5)",
+            [owner, reading.id, randomUUID(), reading.reviewDigest, {}],
+          ),
+        /unique constraint/,
+      );
+    },
+  );
+
+  await t.test(
+    "acceptance forward-fix preserves history; history forward-fix preserves old recovery and cancellation",
+    async () => {
+      await db.exec(
+        await file("supabase/forward-fixes/disable_product_email_requests.sql"),
+      );
+      assert.equal((await history()).length, 8);
+      await db.exec(
+        await file("supabase/forward-fixes/disable_product_email_history.sql"),
+      );
+      await assert.rejects(() => history(), /permission denied/);
+      assert.deepEqual(
+        await call("select read_product_email_request($1) as data", [key]),
+        receipt,
+      );
+      assert.deepEqual(
+        await call("select cancel_product_email_request($1) as data", [
+          receipt.id,
+        ]),
+        receipt,
+      );
+      assert.equal(
+        (await db.query("select count(*) from product_email_requests")).rows[0]
+          .count,
+        8,
+      );
+      await db.exec("delete from product_runs");
+      assert.equal(
+        (await db.query("select count(*) from product_email_requests")).rows[0]
+          .count,
+        0,
+      );
+    },
+  );
+});
+
 test("email acceptance receipts: persistence, isolation, cancellation and fail-closed gates", async (t) => {
   const db = await setupProductDatabase();
   t.after(() => db.close());

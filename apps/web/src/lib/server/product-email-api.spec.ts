@@ -1,7 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { productEmailApi } from './product-email-api';
-import { parseProductEmailCommand, parseProductEmailReceipt } from '$lib/product-email';
+import {
+	parseProductEmailCommand,
+	parseProductEmailReceipt,
+	parseProductEmailHistory
+} from '$lib/product-email';
 
 const id = '00000000-0000-4000-8000-000000000001';
 const another = '00000000-0000-4000-8000-000000000002';
@@ -68,7 +72,70 @@ const body = async (response: Response) => {
 	return response.json();
 };
 describe('email HTTP boundary', () => {
-	it.each(['request', 'recover', 'cancel'] as const)(
+	it('discovers bounded history without a request key and accepts empty history', async () => {
+		for (const receipts of [[], [receipt]]) {
+			const s = setup({ data: receipts });
+			const response = await productEmailApi(s.event({ runId: id }), 'history');
+			expect(response.status).toBe(200);
+			expect(await body(response)).toEqual({ receipts });
+			expect(s.rpc).toHaveBeenCalledExactlyOnceWith('list_product_email_requests', {
+				p_run_id: id
+			});
+		}
+	});
+	it.each([
+		null,
+		[],
+		{},
+		{ runId: 'bad' },
+		{ runId: id, requestKey: another },
+		{ runId: id, userId: another },
+		{ runId: id, email: 'synthetic@example.invalid' }
+	])('rejects history input %# before SQL', async (input) => {
+		const s = setup({ data: [] });
+		expect((await productEmailApi(s.event(input), 'history')).status).toBe(400);
+		expect(s.rpc).not.toHaveBeenCalled();
+	});
+	it.each([
+		null,
+		{},
+		[null],
+		[receipt, receipt],
+		Array(9).fill(receipt),
+		[{ ...receipt, runId: another }],
+		[{ ...receipt, email: 'synthetic@example.invalid' }],
+		[{ ...receipt, state: 'SENT' }],
+		[receipt, { ...receipt, id, revision: 5 }]
+	])('fails closed on malformed history %#', async (data) => {
+		const s = setup({ data });
+		const response = await productEmailApi(s.event({ runId: id }), 'history');
+		expect(response.status).toBe(503);
+		expect(await body(response)).toEqual({ error: 'email_service_unavailable' });
+		expect(s.rpc).toHaveBeenCalledTimes(1);
+	});
+	it('strict parser accepts eight distinct descending revisions, canonical IDs, and rejects identity reuse', () => {
+		const receipts = Array.from({ length: 8 }, (_, i) => ({
+			...receipt,
+			id: `abcdef00-0000-4000-8000-00000000000${i}`,
+			revision: 8 - i
+		}));
+		expect(parseProductEmailHistory(receipts, id)).toEqual(receipts);
+		expect(parseProductEmailHistory([], 'bad')).toBeNull();
+		expect(
+			parseProductEmailHistory(
+				[receipts[0], { ...receipts[1], id: receipts[0].id.toUpperCase() }],
+				id
+			)
+		).toBeNull();
+	});
+	it('redacts discovery outages and never retries', async () => {
+		const s = setup({ throws: true });
+		const response = await productEmailApi(s.event({ runId: id }), 'history');
+		expect(response.status).toBe(503);
+		expect(await body(response)).toEqual({ error: 'email_service_unavailable' });
+		expect(s.rpc).toHaveBeenCalledTimes(1);
+	});
+	it.each(['request', 'recover', 'cancel', 'history'] as const)(
 		'rejects cross-site, method, origin, query and authentication before %s RPC',
 		async (action) => {
 			const s = setup();
