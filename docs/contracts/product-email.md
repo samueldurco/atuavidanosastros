@@ -18,6 +18,12 @@ Same owner/key/identical command returns the original receipt, including cancell
 
 The forward-fix disables acceptance and revokes only request execution, preserving recovery/cancellation and all records. No hosted migration has been applied. Synthetic single-connection PostgreSQL tests are not certification of hosted JWT/PostgREST or concurrent independent connections.
 
+## HTTP boundary
+
+Three fixed POST paths under `/api/product-email/`: `request` accepts `{requestKey,command}`, `recover` accepts `{requestKey}` and `cancel` accepts `{receiptId}`. UUIDs never appear in URL parameters or query strings. Every operation requires same-origin headers, rejects cross-site fetches and queries, validates server session claims, bounds JSON to 3072 actual UTF-8 bytes, and permits no extra fields. SQL derives ownership; no service credential is used. Each RPC has a 10-second abort signal; unknown failures are redacted and never automatically retried.
+
+Success is `{receipt}`: acceptance returns 202, recovery/cancellation return 200 and may return null for an absent or unowned key/ID. Exact receipt fields, version linkage, state and timestamps are validated before return. REQUESTED and CANCELLED never mean sent or delivered. Private/no-store, no-referrer and noindex headers apply to success and error responses. A 503 may represent a committed request whose acknowledgement was lost: recover the original key before any new submission. The HTTP boundary does not enable acceptance or implement browser controls/transport.
+
 ## Remaining delivery requirements
 
-A future email should contain a minimal account Library link, not reading content, public result tokens or attachments by default. Origin/sender must be fixed trusted configuration, not request input. The provider integration needs recipient verification, opt-in UX, secrets rotation, approved spend/rate/latency caps, deduplication and uncertain-ack reconciliation, bounce/complaint handling and privacy-safe observability. Provider acceptance must never be called inbox delivery. UI/API and actual dispatch are separate work; until implemented this receipt is not an advertised delivered email.
+A future email should contain a minimal account Library link, not reading content, public result tokens or attachments by default. Origin/sender must be fixed trusted configuration, not request input. The provider integration needs recipient verification, opt-in UX, secrets rotation, approved spend/rate/latency caps, deduplication and uncertain-ack reconciliation, bounce/complaint handling and privacy-safe observability. Provider acceptance must never be called inbox delivery. UI and actual dispatch are separate work; until implemented this receipt is not an advertised delivered email.
