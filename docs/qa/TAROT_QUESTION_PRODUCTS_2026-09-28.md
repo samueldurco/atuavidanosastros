@@ -23,6 +23,8 @@ Existing symbolic intake composition preserved. Screenshots for both products at
 
 ## Operational limits
 
+Remote follow-up: commit `5273363` passed secrets (`108914677840`) and Pages (`108915021180`), but quality (`108914678041`) failed two database fixtures: the symbolic activation list omitted the two new products, and composed coverage still expected ten. Updated only local-test activation to the calculator registry and pinned the counts to six symbolic/twelve total bases. The complete `pnpm test:db` suite then passed 64/64 (`test-results/wu074-db-followup.log`). No SQL migration or production release default changed.
+
 Twelve partial bases / twenty-five definitions; thirteen calculations remain unavailable. Production releases, engine/editorial gates and promotion registry remain unchanged and blocked. No model or prompt homologation, external inference, paid call, hosted migration, scheduler, email delivery or production JWT claim.
 
 Cloudflare review guidance informed preservation of request-local state, awaited calculations, AbortSignal propagation and bounded default-deny processing. No runtime API, binding or platform configuration changed. References: https://developers.cloudflare.com/workers/best-practices/workers-best-practices/ and https://developers.cloudflare.com/workers/runtime-apis/web-crypto/ .

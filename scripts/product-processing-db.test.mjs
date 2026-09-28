@@ -122,9 +122,10 @@ test('processing forward-fix preserves owner retrieval/deletion without reopenin
   assert.equal((await as(db,'authenticated',owner,()=>db.query('select delete_product_run($1) as data',[id]))).rows[0].data,true);
 });
 
-test('real symbolic calculators persist four product inputs, reach editorial review and preserve Tarot on reprocess',async(t)=>{
+test('real symbolic calculators persist six product inputs, reach editorial review and preserve Tarot on reprocess',async(t)=>{
   const db=await boot(t);const calculators=createSymbolicCalculators();
-  await db.exec("update workflow_releases set enabled=true,access_policy='free' where product_id in ('daily-card','three-questions','dream-reading','dream-journal')");
+  assert.equal(Object.keys(calculators).length,6);
+  await db.query("update workflow_releases set enabled=true,access_policy='free' where product_id=any($1::text[])",[Object.keys(calculators)]);
   for(const product of Object.keys(calculators)) {
     const data=product.startsWith('dream-')?{version:input.version,productId:product,consent:input.consent,
       dream:{date:'2026-09-14',narrative:'Relato sintético com uma janela.',associations:[],emotions:['curiosidade']}}:
@@ -258,7 +259,7 @@ test('composed runtime crosses all six universes through SQL and stops every pro
     assert.equal(await read(db,id,other),null);universes.add(product.universe);
     assert.equal(await runtime.step(),'idle');
   }
-  assert.equal(universes.size,6);assert.equal(coverage.length,10);
+  assert.equal(universes.size,6);assert.equal(coverage.length,12);
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
   assert.ok(metrics.every(e=>Object.keys(e).sort().join(',')==='attempt,durationMs,event,outcome'));
   assert.ok(!JSON.stringify(metrics).includes(owner));assert.ok(!JSON.stringify(metrics).includes('sintético'));
