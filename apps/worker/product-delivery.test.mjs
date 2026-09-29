@@ -13,6 +13,7 @@ import {
   ascendantEditorialTestFixture,
   midheavenEditorialTestFixture,
   dailyCardEditorialTestFixture,
+  tarotFocusEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
@@ -767,4 +768,92 @@ test("caller mutation during hashing and returned-content mutation cannot change
   result.content.sections[0].text = "changed";
   result.content.limits.push("changed");
   assert.deepEqual(await prepareProductDelivery(draft()), baseline);
+});
+
+test("tarot focus delivery preserves the saved card, reported question and all coverage without granting publication", async () => {
+  const input = draft();
+  input.productId = "tarot-focus";
+  input.calculation = await calculateTarot(
+    {
+      version: "atv-workflow/1.0.0",
+      productId: "tarot-focus",
+      questions: ["Que possibilidade posso observar?"],
+      context: "Relato sintético consentido",
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    input.runId,
+    new AbortController().signal,
+  );
+  const saved = structuredClone(input.calculation);
+  const facts = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(facts.status, "prepared");
+  input.output = {
+    ...input.output,
+    ...tarotFocusEditorialTestFixture(facts.facts),
+  };
+  const result = await prepareProductDelivery(input);
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.deepEqual(
+    result.content.sections.map((s) => s.title),
+    [
+      "Carta registrada — Fato [tarot-focus-fact]",
+      "Pergunta relatada — Fato [focus-question-fact]",
+      "Possibilidade, tensão e alternativa — Hipótese [focus-symbol]",
+      "Conexão com sua pergunta — Hipótese [focus-question]",
+      "Um pequeno experimento — Hipótese [focus-practice]",
+      "Síntese do Foco Agora (1) e uma pergunta prática",
+    ],
+  );
+  for (const [index, claim] of input.output.claims.entries()) {
+    assert.equal(result.content.sections[index].text, claim.text);
+    assert.deepEqual(result.content.sections[index].evidence, claim.evidence);
+  }
+  assert.deepEqual(result.content.sections[5].evidence, [
+    "card-1",
+    "question-1",
+    "tarot-context",
+  ]);
+  for (const question of input.output.reflections)
+    assert.equal(contentTexts(result.content).split(question).length, 2);
+  assert.deepEqual(input.calculation, saved);
+  const again = await prepareProductDelivery(input);
+  assert.equal(again.deliveryDigest, result.deliveryDigest);
+  const legacy = { ...result.content, version: "atv-product-delivery/1.6.0" };
+  const oldDigest = createHash("sha256")
+    .update(
+      JSON.stringify({
+        version: legacy.version,
+        basisDigest: result.basisDigest,
+        outputDigest: result.outputDigest,
+        content: legacy,
+      }),
+    )
+    .digest("hex");
+  assert.notEqual(oldDigest, result.deliveryDigest);
+  for (const change of [
+    (d) => {
+      d.calculation.facts.find((f) => f.id === "card-1").display =
+        "Carta incoerente";
+    },
+    (d) => {
+      d.output.claims = d.output.claims.filter(
+        (c) => c.id !== "focus-practice",
+      );
+    },
+    (d) => {
+      d.output.reflections.push("Outra pergunta?");
+    },
+  ]) {
+    const invalid = structuredClone(input);
+    change(invalid);
+    assert.equal((await prepareProductDelivery(invalid)).status, "rejected");
+  }
 });

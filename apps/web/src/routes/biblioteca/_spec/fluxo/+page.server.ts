@@ -9,8 +9,12 @@ import { ascendantReaderFixture } from '../../../../../tests/fixtures/ascendant-
 import { midheavenReaderFixture } from '../../../../../tests/fixtures/midheaven-reader';
 import { dailyCardReaderFixture } from '../../../../../tests/fixtures/daily-card-reader';
 
+import { tarotFocusReaderFixture } from '../../../../../tests/fixtures/tarot-focus-reader';
+
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
+	if (url.searchParams.get('product') === 'tarot-focus')
+		return tarotFocusReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'daily-card')
 		return dailyCardReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'career-compass')

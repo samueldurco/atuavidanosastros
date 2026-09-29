@@ -237,3 +237,7 @@ Delivery1.5.0 nomeia fato, contribuição, possibilidades, tensão e síntese/pe
 ## WU136 — Foco Agora: cobertura editorial
 
 Perfil `atv-tarot-focus-editorial/1.0.0` após projeção coerente, preparação1.15.0/prompt1.0.9/corpus1.17.0: cinco afirmações, carta/pergunta exatas, símbolo com possibilidade/tensão/alternativa, conexão com pergunta e contexto relatado quando recebido, experimento reversível, síntese conjunta e uma pergunta. O Director verifica estrutura; conteúdo/modelo/revisão legítimos seguem bloqueados. Fixture não concede release. Contrato `tarot-focus-editorial.md`; QA `../qa/TAROT_FOCUS_EDITORIAL_2026-09-28.md`. Próxima entrega independente: resultado web e percurso persistido E3–E5.
+
+## WU137 — Foco Agora: leitor e percurso local
+
+Delivery1.7.0 nomeia as cinco afirmações e a síntese/pergunta preservando texto, evidências e sorteio salvo. O leitor diferencia carta, pergunta e contexto relatados; a versão integra a revisão. O percurso SQL local verifica leitura privada, Biblioteca, snapshot web, recuperação idempotente, revogação e versão filha independente com aprovação fictícia explícita. Demonstração local responsiva mantém downloads bloqueados e não oferece PDF/cartografia fora do contrato. QA `../qa/TAROT_FOCUS_READER_2026-09-28.md` registra os limites de E3–E5; conteúdo/revisão legítimos e hospedagem continuam necessários para aceite integral.

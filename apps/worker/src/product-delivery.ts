@@ -5,7 +5,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.6.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.7.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -43,6 +43,11 @@ const midheavenTitles = new Map([
   ["midheaven-contribution", "Direção pública e contribuição"],
   ["midheaven-possibilities", "Ambientes e modos de trabalhar"],
   ["midheaven-tension", "Tensão ou excesso possível"],
+]);
+const tarotFocusTitles = new Map([
+  ["focus-symbol", "Possibilidade, tensão e alternativa"],
+  ["focus-question", "Conexão com sua pergunta"],
+  ["focus-practice", "Um pequeno experimento"],
 ]);
 const dailyCardTitles = new Map([
   ["daily-observation", "Possibilidade e observação do dia"],
@@ -106,8 +111,11 @@ function claimTitle(
               claim.evidence[0] === "angle-midheaven"
                 ? "Seu Meio do Céu"
                 : ""))
-            : productId === "daily-card"
-              ? (dailyCardTitles.get(claim.id) ??
+            : ["daily-card", "tarot-focus"].includes(productId)
+              ? ((productId === "tarot-focus"
+                  ? tarotFocusTitles
+                  : dailyCardTitles
+                ).get(claim.id) ??
                 (claim.kind === "fact" && claim.evidence.length === 1
                   ? (dailyCardFacts.get(claim.evidence[0] ?? "") ?? "")
                   : ""))
@@ -165,7 +173,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : "Síntese"} (${index + 1})${last ? (productId === "daily-card" ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : "Síntese"} (${index + 1})${last ? (["daily-card", "tarot-focus"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });

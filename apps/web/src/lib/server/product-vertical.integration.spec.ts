@@ -475,6 +475,14 @@ for (const productId of products)
 				).toEqual(['card-1']);
 				expect(parent?.cartography).toBeNull();
 			} else if (productId === 'tarot-focus') {
+				expect(parent?.editorial?.sections.map((section) => section.title)).toEqual([
+					'Carta registrada — Fato [tarot-focus-fact]',
+					'Pergunta relatada — Fato [focus-question-fact]',
+					'Possibilidade, tensão e alternativa — Hipótese [focus-symbol]',
+					'Conexão com sua pergunta — Hipótese [focus-question]',
+					'Um pequeno experimento — Hipótese [focus-practice]',
+					'Síntese do Foco Agora (1) e uma pergunta prática'
+				]);
 				expect(html).toContain('Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.');
 				expect(html).toContain('Que observação posso fazer ao testar um pequeno experimento hoje?');
 				expect(parent?.editorial?.sections).toHaveLength(6);

@@ -63,7 +63,7 @@
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
 	function factLabel(id: string): string {
-		if (data.run.productId === 'daily-card') {
+		if (['daily-card', 'tarot-focus'].includes(data.run.productId)) {
 			if (id === 'card-1') return 'Carta registrada (card-1)';
 			if (id === 'question-1') return 'Pergunta relatada (question-1)';
 			if (id === 'tarot-context') return 'Contexto relatado (tarot-context)';
