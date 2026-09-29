@@ -6,7 +6,10 @@ import {
   horoscopeLimits,
 } from "../../packages/ai/src/horoscope.ts";
 
-/** Synthetic structural specimen; no semantic, review or publication authority. */
+/** Synthetic structural specimen; no semantic, review or publication authority.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ * @returns {import('../../packages/ai/src/contracts.ts').Reading}
+ */
 export function horoscopeEditorialTestFixture(facts) {
   if (facts.editorialProfile !== HOROSCOPE_EDITORIAL_VERSION)
     throw new Error("invalid_horoscope_fixture_profile");

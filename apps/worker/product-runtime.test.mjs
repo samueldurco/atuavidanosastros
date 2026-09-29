@@ -208,6 +208,91 @@ test("invalid server configuration fails before any RPC call", () => {
     );
 });
 
+test("Horoscope opt-in is independent of relationship policies and the processing allowlist", async () => {
+  const rpc = async () =>
+    assert.fail("unselected calculator contacted transport");
+  const policy = {
+    ...synastryPolicy(),
+    id: "synthetic-horoscope-runtime-not-approved",
+  };
+  const calculators = createProductCalculators({
+    experimentalHoroscopePolicy: policy,
+  });
+  assert.equal(Object.keys(calculators).length, 14);
+  assert.equal(typeof calculators.horoscope, "function");
+  assert.equal(calculators.synastry, undefined);
+  assert.equal(calculators["couple-dossier"], undefined);
+  assert.equal(createProductCalculators().horoscope, undefined);
+  assert.equal(
+    productCalculationCoverage().find((p) => p.productId === "horoscope")
+      .calculation,
+    "unavailable",
+  );
+  assert.equal(
+    Object.keys(
+      createProductCalculators({
+        experimentalHoroscopePolicy: policy,
+        experimentalSynastryPolicy: synastryPolicy(),
+        experimentalCoupleDossierPolicy: synastryPolicy(),
+      }),
+    ).length,
+    16,
+  );
+  for (const options of [
+    { enabledProducts: ["horoscope"] },
+    {
+      enabledProducts: ["horoscope"],
+      experimentalSynastryPolicy: synastryPolicy(),
+      experimentalCoupleDossierPolicy: synastryPolicy(),
+    },
+    { enabledProducts: ["synastry"], experimentalHoroscopePolicy: policy },
+    {
+      enabledProducts: ["couple-dossier"],
+      experimentalHoroscopePolicy: policy,
+    },
+  ])
+    assert.throws(
+      () => createProductProcessor(rpc, options),
+      /invalid_product_configuration/,
+    );
+  const unselected = createProductProcessor(rpc, {
+    experimentalHoroscopePolicy: policy,
+  });
+  assert.deepEqual(unselected.products, []);
+  assert.equal(await unselected.step(), "idle");
+});
+
+test("Horoscope captures server configuration and rejects malformed policy before transport", async () => {
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    return null;
+  };
+  for (const policy of [null, {}, { ...synastryPolicy(), aspects: [] }])
+    assert.throws(() =>
+      createProductProcessor(rpc, {
+        enabledProducts: ["horoscope"],
+        experimentalHoroscopePolicy: policy,
+      }),
+    );
+  assert.deepEqual(calls, []);
+  const options = {
+    enabledProducts: ["horoscope"],
+    experimentalHoroscopePolicy: synastryPolicy(),
+  };
+  const selected = createProductProcessor(rpc, options);
+  options.enabledProducts.push("synastry", "daily-card");
+  options.experimentalHoroscopePolicy = null;
+  assert.equal(await selected.step(), "idle");
+  assert.deepEqual(selected.products, ["horoscope"]);
+  assert.deepEqual(calls, [
+    {
+      name: "claim_product_run_work",
+      args: { p_products: ["horoscope"], p_lease_seconds: 60 },
+    },
+  ]);
+});
+
 test("runtime captures allowlist and telemetry; one invocation claims at most once", async () => {
   const calls = [],
     events = [],

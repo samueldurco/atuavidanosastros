@@ -18,9 +18,11 @@ import { createContextCalculators } from '../../../../worker/src/context-calcula
 import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
+import { createHoroscopeCalculators } from '../../../../worker/src/horoscope-calculators';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
 import { prepareProductDelivery } from '../../../../worker/src/product-delivery';
 import { coupleDossierEditorialTestFixture } from '../../../../../scripts/helpers/couple-dossier-editorial-test-fixture.mjs';
+import { horoscopeEditorialTestFixture } from '../../../../../scripts/helpers/horoscope-editorial-test-fixture.mjs';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
 import { parsePairRequestInput } from '../pair-request';
@@ -64,6 +66,10 @@ const synastryPolicy: AspectPolicy = {
 const dossierPolicy: AspectPolicy = {
 	...structuredClone(synastryPolicy),
 	id: 'synthetic-dossier-vertical-not-approved'
+};
+const horoscopePolicy: AspectPolicy = {
+	...structuredClone(synastryPolicy),
+	id: 'synthetic-horoscope-vertical-not-approved'
 };
 const targetDate = '2028-02-29';
 const requestPath = (productId: string) =>
@@ -376,6 +382,235 @@ interface StoredRun {
 	revision: number;
 	parent_id: string | null;
 }
+const horoscopeContext = 'Contexto sintético privado: observar amor, trabalho, ritmo e atenção.';
+function horoscopeInput(context?: string): WorkflowInput {
+	return {
+		version: 'atv-workflow/1.0.0',
+		productId: 'horoscope',
+		birth: { ...birth },
+		targetDate,
+		consent: { ...consent, storage: true, policyVersion: 'atv-input-consent/1' },
+		...(context === undefined ? {} : { context })
+	};
+}
+function horoscopeBrowser(lostAcknowledgement = false) {
+	const values = new Map<string, string>();
+	const fetcher = vi.fn<typeof fetch>(async (path, init) => {
+		const e = event(String(path), init?.body ? JSON.parse(String(init.body)) : undefined);
+		if (e.url.pathname === '/api/workflows') {
+			const response = await workflowApi(e, 'create');
+			if (lostAcknowledgement && response.status === 202)
+				throw new TypeError('lost acknowledgement');
+			return response;
+		}
+		if (e.url.pathname === '/api/workflows/recover') return recoverWorkflowRequest(e);
+		return workflowApi(e, 'read', e.url.pathname.split('/').at(-1));
+	});
+	const options = {
+		productId: 'horoscope',
+		operation: { kind: 'create' as const, ownerId: owner },
+		randomUUID,
+		fetch: fetcher,
+		storage: {
+			getItem: (key: string) => values.get(key) ?? null,
+			setItem: (key: string, value: string) => {
+				values.set(key, value);
+			},
+			removeItem: (key: string) => {
+				values.delete(key);
+			}
+		}
+	};
+	return { options, values, fetcher, client: createWorkflowRequest(options) };
+}
+
+it.each([undefined, horoscopeContext])(
+	'horoscope: own persisted snapshot and private pending history, context=%s',
+	async (context) => {
+		await enable('horoscope');
+		const s = horoscopeBrowser(),
+			input = horoscopeInput(context);
+		const result = await s.client.perform(true, input);
+		expect(result.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
+		const queued = await stored();
+		const untouchedRpc = vi.fn(workerRpc);
+		expect(await createProductProcessor(untouchedRpc).step()).toBe('idle');
+		expect(untouchedRpc).not.toHaveBeenCalled();
+		await process('horoscope');
+		const run = await stored(queued.id),
+			snapshot = run.calculation!;
+		expect(run).toMatchObject({ input: queued.input, state: 'AWAITING_EDITORIAL', revision: 3 });
+		expect(snapshot).toMatchObject({
+			version: 'atv-horoscope-calculation/1.0.0',
+			status: 'experimental',
+			data: {
+				productId: 'horoscope',
+				base: {
+					data: {
+						productId: 'date-reading',
+						sampleInstant: `${targetDate}T12:00:00.000Z`,
+						aspects: [],
+						events: []
+					}
+				}
+			}
+		});
+		expect(snapshot.facts).toHaveLength(context === undefined ? 121 : 122);
+		const stability = snapshot.data.crossAspectStability as { pairs: unknown[] };
+		expect(stability.pairs).toHaveLength(100);
+		for (const pair of stability.pairs)
+			expect(pair).toMatchObject({ status: 'unknown-accuracy', separationIntervalDegrees: null });
+		const expected = await createHoroscopeCalculators(horoscopePolicy).horoscope(input, {
+			runId: run.id,
+			signal: new AbortController().signal
+		});
+		expect(deterministicSnapshot(snapshot)).toEqual(deterministicSnapshot(expected));
+		const prepared = prepareProductFacts('horoscope', snapshot);
+		expect(prepared.status).toBe('prepared');
+		if (prepared.status !== 'prepared') throw new Error('missing_horoscope_facts');
+		expect(prepared.facts.editorialProfile).toBe('atv-horoscope-editorial/1.0.0');
+		const specimen = horoscopeEditorialTestFixture(prepared.facts);
+		expect(specimen.claims).toHaveLength(14);
+		expect(specimen.relations).toEqual([]);
+		// The specimen is only inspected in memory; it is never an approval or stored reading.
+		expect(await createProductPublisher(workerRpc, { enabledProducts: ['horoscope'] }).step()).toBe(
+			'idle'
+		);
+		const itemId = result.href!.split('/').at(-1)!;
+		const library = await readLibraryResult(sessionClient(owner), owner, itemId);
+		expect(library.state).toBe('workflow');
+		if (library.state !== 'workflow') throw new Error('missing_library_result');
+		expect(library.run).toMatchObject({
+			id: run.id,
+			libraryItemId: itemId,
+			state: 'AWAITING_EDITORIAL',
+			released: false,
+			calculation: null,
+			editorial: null
+		});
+		expect(library.run.history.map((e) => [e.revision, e.state])).toEqual([
+			[1, 'QUEUED'],
+			[2, 'CALCULATED'],
+			[3, 'AWAITING_EDITORIAL']
+		]);
+		expect(JSON.stringify(library)).not.toMatch(
+			/1990-06-15|privad|latitude|longitude|utcInstant|position-sun/
+		);
+		expect(
+			(await workflowArtifacts(event(`/api/workflows/${run.id}/artifacts`), run.id)).status
+		).toBe(404);
+		expect(await counts()).toEqual({ runs: 1, events: 3, items: 1, receipts: 0 });
+		expect((await db.query('select count(*) n from editorial_promotions')).rows).toEqual([
+			{ n: 0 }
+		]);
+		expect(
+			(
+				await db.query(
+					"select enabled,engine_approved from workflow_releases where product_id='horoscope'"
+				)
+			).rows
+		).toEqual([{ enabled: true, engine_approved: false }]);
+	}
+);
+
+it('horoscope: lost acknowledgement recovers original input without replay after release closes', async () => {
+	await enable('horoscope');
+	const s = horoscopeBrowser(true),
+		input = horoscopeInput(horoscopeContext);
+	expect((await s.client.perform(true, input)).mode).toBe('recover');
+	const queued = await stored();
+	input.birth!.latitude = 10;
+	input.context = 'Outro contexto sintético';
+	await process('horoscope');
+	const original = await stored(queued.id),
+		totals = await counts();
+	expect(original.input).toEqual(queued.input);
+	await db.exec('update workflow_releases set enabled=false');
+	expect((await createWorkflowRequest(s.options).perform(false)).href).toMatch(
+		/^\/biblioteca\/[0-9a-f-]{36}$/
+	);
+	expect(await stored(queued.id)).toEqual(original);
+	expect(await counts()).toEqual(totals);
+	expect(s.fetcher.mock.calls.filter(([path]) => path === '/api/workflows')).toHaveLength(1);
+	expect([...s.values.keys()]).toEqual([`atv-create:${owner}:horoscope`]);
+});
+
+it('horoscope: session ownership fences recovery, RLS, Library and artifacts', async () => {
+	await enable('horoscope');
+	const s = horoscopeBrowser(),
+		result = await s.client.perform(true, horoscopeInput());
+	const run = await stored();
+	await process('horoscope');
+	const recovery = await recoverWorkflowRequest(
+		event('/api/workflows/recover', { requestKey: [...s.values.values()][0] }, other)
+	);
+	expect(await recovery.json()).toEqual({ request: null });
+	expect(
+		(await workflowApi(event(`/api/workflows/${run.id}`, undefined, other), 'read', run.id)).status
+	).toBe(404);
+	const itemId = result.href!.split('/').at(-1)!;
+	expect(await readLibraryResult(sessionClient(other), other, itemId)).toEqual({
+		state: 'not-found'
+	});
+	expect(await readLibraryResult(sessionClient(other), owner, itemId)).toEqual({
+		state: 'not-found'
+	});
+	expect(
+		(await workflowArtifacts(event(`/api/workflows/${run.id}/artifacts`, undefined, other), run.id))
+			.status
+	).toBe(404);
+	await expect(
+		asRole(db, 'authenticated', other, () => db.query('select id from product_runs'))
+	).rejects.toThrow('permission denied for table product_runs');
+	expect((await stored(run.id)).state).toBe('AWAITING_EDITORIAL');
+});
+
+it('horoscope: invalid input, disabled release and entitlement refuse before persistence', async () => {
+	const request = (input: unknown) =>
+		workflowApi(event('/api/workflows', { requestKey: randomUUID(), input }), 'create');
+	expect((await request(horoscopeInput())).status).toBe(409);
+	await enable('horoscope');
+	for (const invalid of [
+		{ ...horoscopeInput(), targetDate: '2028-02-30' },
+		{ ...horoscopeInput(), consent: { ...consent, storage: false } },
+		{ ...horoscopeInput(), context: 'x'.repeat(1201) }
+	])
+		expect((await request(invalid)).status).toBe(400);
+	await db.query(
+		"update workflow_releases set access_policy='entitlement' where product_id='horoscope'"
+	);
+	expect((await request(horoscopeInput())).status).toBe(403);
+	expect(await counts()).toEqual({ runs: 0, events: 0, items: 0, receipts: 0 });
+});
+
+it('horoscope: reprocessing recalculates immutable parent input and keeps both private versions', async () => {
+	await enable('horoscope');
+	const s = horoscopeBrowser();
+	await s.client.perform(true, horoscopeInput(horoscopeContext));
+	const queued = await stored();
+	await process('horoscope');
+	const original = await stored(queued.id);
+	const response = await workflowApi(
+		event(`/api/workflows/${queued.id}/reprocess`, { requestKey: randomUUID() }),
+		'reprocess',
+		queued.id
+	);
+	expect(response.status).toBe(202);
+	const { runId } = (await response.json()) as { runId: string };
+	expect(runId).not.toBe(queued.id);
+	expect(await stored(runId)).toMatchObject({
+		parent_id: queued.id,
+		input: original.input,
+		calculation: null,
+		state: 'QUEUED'
+	});
+	await process('horoscope');
+	expect(deterministicSnapshot((await stored(runId)).calculation)).toEqual(
+		deterministicSnapshot(original.calculation)
+	);
+	expect(await stored(queued.id)).toEqual(original);
+	expect(await counts()).toEqual({ runs: 2, events: 6, items: 2, receipts: 0 });
+});
 function deterministicSnapshot(value: unknown) {
 	expect(value).toMatchObject({
 		status: 'experimental',
@@ -385,7 +620,8 @@ function deterministicSnapshot(value: unknown) {
 	const snapshot = structuredClone(value) as CalculationSnapshot;
 	expect(snapshot.facts.length).toBeGreaterThan(0);
 	const basis =
-		snapshot.version === 'atv-couple-dossier-calculation/1.0.0'
+		snapshot.version === 'atv-couple-dossier-calculation/1.0.0' ||
+		snapshot.version === 'atv-horoscope-calculation/1.0.0'
 			? (snapshot.data.base as CalculationSnapshot)
 			: snapshot;
 	const projections =
@@ -426,6 +662,7 @@ async function process(productId: string) {
 		enabledProducts: [productId],
 		...(productId === 'synastry' ? { experimentalSynastryPolicy: synastryPolicy } : {}),
 		...(productId === 'couple-dossier' ? { experimentalCoupleDossierPolicy: dossierPolicy } : {}),
+		...(productId === 'horoscope' ? { experimentalHoroscopePolicy: horoscopePolicy } : {}),
 		emit: (e) => metrics.push(e)
 	});
 	expect(await processor.step()).toBe('calculated');
