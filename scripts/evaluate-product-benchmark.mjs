@@ -25,13 +25,15 @@ async function readCapture(path) {
 // Read-only local CLI: bounded regular file, no provider/environment secrets/network.
 try {
   const args = process.argv.slice(2);
+  const experimentalSynastry = args[0] === '--experimental-synastry';
+  if (experimentalSynastry) args.shift();
   const comparison = args.length === 3 && args[0] === '--compare';
   const template = args.length === 2 && args[0] === '--review-template';
   const review = args.length === 3 && args[0] === '--review';
   const reviewComparison = args.length === 5 && args[0] === '--compare-reviews';
   if (!comparison && !template && !review && !reviewComparison && (args.length !== 1 ||
     (args[0].startsWith('--') && args[0] !== '--manifest'))) throw new Error('usage');
-  const corpus = await buildProductLabCorpus();
+  const corpus = await buildProductLabCorpus(experimentalSynastry ? { experimentalProduct: 'synastry' } : {});
   if (reviewComparison) {
     const report = compareProductReviews(await readCapture(args[1]), await readCapture(args[2]),
       await readCapture(args[3]), await readCapture(args[4]), corpus);

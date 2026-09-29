@@ -21,3 +21,13 @@ Cada tema referencia posições A/B e pares entre os corpos de seu grupo, além 
 ## Aceite e limites
 
 O Director verifica cardinalidade, papéis, evidências, síntese, perguntas e limites. Isso não avalia utilidade semântica nem concede revisão legítima. Fixtures identificadas como estruturais só comprovam transporte e cobertura. E2 integral continua pendente de conteúdo situado aprovado ou modelo/prompt validado e revisão autorizada; E1 depende de política/motor/entrada reais. E3–E5 e gates de publicação permanecem pendentes.
+
+## Lab do produto — WU159
+
+O corpus padrão permanece em 13 bases e 105 casos. A opção explícita `--experimental-synastry` nos CLIs existentes seleciona somente `atv-synastry-facts-synthetic/1.0.0`: sete cenários common/complex/contradiction/boundary/incomplete/adversarial/safety, todos sintéticos. API correspondente: `buildProductLabCorpus({ experimentalProduct: 'synastry' })`. A seleção não registra o cálculo no runtime: Sinastria continua entre os 12 produtos com cálculo produtivo indisponível.
+
+A composição interna usa a política de fixture `synthetic-synastry-lab-not-approved@qa-fixture-1`, declarada exclusivamente para QA. Um único par sintético é preservado enquanto muda o relato: isso não representa diversidade geométrica. Contexto ausente não é inventado; máximo de 1200 caracteres UTF-16, contradição do relato, autonomia, conflito, instruções hostis e segurança têm critérios específicos. Os 100 pares continuam nominais com precisão não certificada e estabilidade desconhecida; score e compartilhamento permanecem ausentes.
+
+Exportação local: `node scripts/product-lab-corpus.mjs --experimental-synastry`. Manifesto: `node scripts/evaluate-product-benchmark.mjs --experimental-synastry --manifest`. Captura, template/revisão e comparação usam o mesmo prefixo nos modos existentes. Captura do corpus padrão não pode ser avaliada como Sinastria, e vice-versa: versão, fingerprint e digests vinculam o escopo. Os timestamps reais de cálculo permanecem no artefato e seu digest; geometria, fatos editoriais e manifesto não mudam por esse horário de execução.
+
+Três repetições dos sete casos produzem 21 amostras diagnósticas. Fixture estrutural não mede utilidade, tokens, latência ou custo de um provedor e não autentica declaração de execução. Medições desconhecidas continuam desconhecidas; conteúdo exige revisão semântica legítima dos nove temas e das evidências, inclusive ausências nominais. Nenhuma promoção, publicação, chamada externa ou homologação decorre do corpus ou da aprovação mecânica.
