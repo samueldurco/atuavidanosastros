@@ -17,6 +17,7 @@ import { createNatalCalculators } from '../../../../worker/src/natal-calculators
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
 import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
+import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
@@ -35,9 +36,18 @@ import { readLibraryResult } from './library-reader';
 // Local PostgreSQL/RLS and actual handlers/calculators. Synthetic claims, one connection.
 // Never seed editorial approval, promotions or READY output to make a vertical pass.
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
-const profileProducts = [...natalProducts, 'date-reading', 'pair-preview', 'synastry'] as const;
-const isPair = (productId: string) => productId === 'pair-preview' || productId === 'synastry';
+const profileProducts = [
+	...natalProducts,
+	'date-reading',
+	'pair-preview',
+	'synastry',
+	'couple-dossier'
+] as const;
+const isPair = (productId: string) =>
+	productId === 'pair-preview' || productId === 'synastry' || productId === 'couple-dossier';
 const synastryContext = 'Contexto sintético privado: conversar sobre autonomia e reparação.';
+const dossierContext =
+	'Contexto sintético privado: refletir sobre comunicação, segurança e negociação.';
 const synastryPolicy: AspectPolicy = {
 	id: 'synthetic-synastry-vertical-not-approved',
 	version: 'qa-fixture-1',
@@ -48,6 +58,10 @@ const synastryPolicy: AspectPolicy = {
 		{ kind: 'trine', orbDegrees: 5 },
 		{ kind: 'opposition', orbDegrees: 5 }
 	]
+};
+const dossierPolicy: AspectPolicy = {
+	...structuredClone(synastryPolicy),
+	id: 'synthetic-dossier-vertical-not-approved'
 };
 const targetDate = '2028-02-29';
 const requestPath = (productId: string) =>
@@ -110,7 +124,8 @@ beforeAll(async () => {
 		'20260928170000_career_compass_requests.sql',
 		'20260928180000_career_compass_context.sql',
 		'20260928190000_date_reading_context.sql',
-		'20260929090000_synastry_product_requests.sql'
+		'20260929090000_synastry_product_requests.sql',
+		'20260929100000_couple_dossier_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -290,9 +305,11 @@ async function command(productId: string, date = targetDate, pairBirth = partner
 			: parseNatalRequestInput;
 	const input = parse({
 		version: isPair(productId)
-			? productId === 'synastry'
-				? 'atv-pair-request/2'
-				: 'atv-pair-request/1'
+			? productId === 'couple-dossier'
+				? 'atv-pair-request/3'
+				: productId === 'synastry'
+					? 'atv-pair-request/2'
+					: 'atv-pair-request/1'
 			: productId === 'date-reading'
 				? 'atv-date-request/2'
 				: productId === 'career-compass'
@@ -301,6 +318,7 @@ async function command(productId: string, date = targetDate, pairBirth = partner
 		productId,
 		...(productId === 'career-compass' ? { context: careerContext } : {}),
 		...(productId === 'synastry' ? { context: synastryContext } : {}),
+		...(productId === 'couple-dossier' ? { context: dossierContext } : {}),
 		...(productId === 'date-reading' ? { targetDate: date, context: dateContext } : {}),
 		expectedRevision: snapshot!.revision,
 		consent: { ...consent, partner: isPair(productId) },
@@ -364,10 +382,14 @@ function deterministicSnapshot(value: unknown) {
 	});
 	const snapshot = structuredClone(value) as CalculationSnapshot;
 	expect(snapshot.facts.length).toBeGreaterThan(0);
+	const basis =
+		snapshot.version === 'atv-couple-dossier-calculation/1.0.0'
+			? (snapshot.data.base as CalculationSnapshot)
+			: snapshot;
 	const projections =
-		snapshot.kind === 'cycles' || snapshot.kind === 'relationship'
-			? [snapshot.data.first, snapshot.data.second]
-			: [snapshot.data];
+		basis.kind === 'cycles' || basis.kind === 'relationship'
+			? [basis.data.first, basis.data.second]
+			: [basis.data];
 	for (const projection of projections) {
 		const provenance = (projection as { provenance: Record<string, unknown> }).provenance;
 		expect(provenance.calculatedAt).toEqual(expect.any(String));
@@ -401,6 +423,7 @@ async function process(productId: string) {
 	const processor = createProductProcessor(workerRpc, {
 		enabledProducts: [productId],
 		...(productId === 'synastry' ? { experimentalSynastryPolicy: synastryPolicy } : {}),
+		...(productId === 'couple-dossier' ? { experimentalCoupleDossierPolicy: dossierPolicy } : {}),
 		emit: (e) => metrics.push(e)
 	});
 	expect(await processor.step()).toBe('calculated');
@@ -659,6 +682,7 @@ it.each(profileProducts)(
 			birth,
 			...(productId === 'career-compass' ? { context: careerContext } : {}),
 			...(productId === 'synastry' ? { context: synastryContext } : {}),
+			...(productId === 'couple-dossier' ? { context: dossierContext } : {}),
 			consent: { ...consent, partner: isPair(productId) },
 			...(isPair(productId) ? { partner } : {}),
 			...(productId === 'date-reading' ? { targetDate, context: dateContext } : {})
@@ -672,42 +696,67 @@ it.each(profileProducts)(
 		const calculated = await stored(run.id);
 		expect(calculated).toMatchObject({ state: 'AWAITING_EDITORIAL', revision: 3, parent_id: null });
 		const calculators =
-			productId === 'synastry'
-				? createSynastryCalculators(synastryPolicy)
-				: productId === 'date-reading' || productId === 'pair-preview'
-					? createContextCalculators()
-					: productId === 'career-compass'
-						? createPurposeCalculators()
-						: createNatalCalculators();
+			productId === 'couple-dossier'
+				? createCoupleDossierCalculators(dossierPolicy)
+				: productId === 'synastry'
+					? createSynastryCalculators(synastryPolicy)
+					: productId === 'date-reading' || productId === 'pair-preview'
+						? createContextCalculators()
+						: productId === 'career-compass'
+							? createPurposeCalculators()
+							: createNatalCalculators();
 		const expected = await calculators[productId](run.input, {
 			signal: new AbortController().signal,
 			runId: run.id
 		});
 		expect(deterministicSnapshot(calculated.calculation)).toEqual(deterministicSnapshot(expected));
-		if (productId === 'synastry') {
+		if (productId === 'synastry' || productId === 'couple-dossier') {
 			const snapshot = calculated.calculation!;
+			const base =
+				productId === 'couple-dossier' ? (snapshot.data.base as CalculationSnapshot) : snapshot;
+			if (productId === 'couple-dossier') {
+				expect(snapshot.version).toBe('atv-couple-dossier-calculation/1.0.0');
+				expect(Object.keys(snapshot.data).sort()).toEqual(['base', 'productId', 'projection']);
+				expect(snapshot.data).toMatchObject({
+					productId,
+					projection: {
+						completeness: 'partial',
+						interpretation: 'not-produced',
+						continuity: 'not-consulted'
+					}
+				});
+				expect(base.version).toBe('atv-synastry-calculation/1.0.0');
+				expect(base.facts).toEqual(snapshot.facts);
+			}
 			expect(snapshot.facts).toHaveLength(121);
 			expect(
 				snapshot.facts.filter((fact) => fact.id.startsWith('cross-')).map((fact) => fact.id)
 			).toEqual(bodies.flatMap((first) => bodies.map((second) => `cross-${first}-${second}`)));
-			expect(snapshot.data).toMatchObject({
+			expect(base.data).toMatchObject({
 				projection: { completeness: 'partial', policyApproval: 'not-established' },
 				sharing: 'not-authorized',
 				compatibilityScore: null,
 				events: [],
 				crossAspectStability: {
-					calculation: { policy: synastryPolicy, pairsEvaluated: 100 },
+					calculation: {
+						policy: productId === 'couple-dossier' ? dossierPolicy : synastryPolicy,
+						pairsEvaluated: 100
+					},
 					assumedLongitudeErrorDegrees: { first: null, second: null },
 					pairs: expect.any(Array)
 				}
 			});
-			const pairs = (snapshot.data.crossAspectStability as { pairs: { status: string }[] }).pairs;
+			const pairs = (base.data.crossAspectStability as { pairs: { status: string }[] }).pairs;
 			expect(pairs).toHaveLength(100);
 			expect(pairs.every((pair) => pair.status === 'unknown-accuracy')).toBe(true);
 			const prepared = prepareProductFacts(productId, snapshot);
 			expect(prepared.status).toBe('prepared');
 			if (prepared.status !== 'prepared') throw new Error('missing_synastry_facts');
-			expect(prepared.facts.editorialProfile).toBe('atv-synastry-editorial/1.0.0');
+			expect(prepared.facts.editorialProfile).toBe(
+				productId === 'couple-dossier'
+					? 'atv-couple-dossier-editorial/1.0.0'
+					: 'atv-synastry-editorial/1.0.0'
+			);
 			expect(prepared.facts.facts).toEqual(snapshot.facts);
 			expect(
 				(
@@ -737,17 +786,20 @@ it.each(profileProducts)(
 		if (
 			productId === 'career-compass' ||
 			productId === 'date-reading' ||
-			productId === 'synastry'
+			productId === 'synastry' ||
+			productId === 'couple-dossier'
 		) {
 			expect(calculated.calculation?.facts).toContainEqual({
 				id: 'personal-context',
 				kind: 'reported',
 				display:
-					productId === 'career-compass'
-						? careerContext
-						: productId === 'synastry'
-							? synastryContext
-							: dateContext,
+					productId === 'couple-dossier'
+						? dossierContext
+						: productId === 'career-compass'
+							? careerContext
+							: productId === 'synastry'
+								? synastryContext
+								: dateContext,
 				source: 'input.context'
 			});
 			const withoutContext = { ...run.input };
@@ -756,10 +808,18 @@ it.each(profileProducts)(
 				signal: new AbortController().signal,
 				runId: run.id
 			});
-			expect(deterministicSnapshot(expected).data).toEqual(
-				deterministicSnapshot(withoutReport).data
+			const contextual = deterministicSnapshot(expected),
+				absent = deterministicSnapshot(withoutReport);
+			expect(
+				productId === 'couple-dossier'
+					? (contextual.data.base as CalculationSnapshot).data
+					: contextual.data
+			).toEqual(
+				productId === 'couple-dossier'
+					? (absent.data.base as CalculationSnapshot).data
+					: absent.data
 			);
-			if (productId === 'synastry')
+			if (productId === 'synastry' || productId === 'couple-dossier')
 				expect((withoutReport as CalculationSnapshot).facts).toHaveLength(120);
 		}
 		expect(await createProductPublisher(workerRpc, { enabledProducts: [productId] }).step()).toBe(

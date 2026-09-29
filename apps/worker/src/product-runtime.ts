@@ -4,6 +4,7 @@ import { createSymbolicCalculators } from "./symbolic-calculators.ts";
 import { createContextCalculators } from "./context-calculators.ts";
 import { createPurposeCalculators } from "./purpose-calculators.ts";
 import { createSynastryCalculators } from "./synastry-calculators.ts";
+import { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts";
 import type { AspectPolicy } from "@atv/astrology";
 import {
   createWorkflowRepository,
@@ -16,6 +17,8 @@ import {
 export interface ProductCalculationOptions {
   /** Internal experimental composition only; never sourced from a request or inferred as approval. */
   experimentalSynastryPolicy?: AspectPolicy;
+  /** Independent opt-in for the Dossier; a Synastry policy never registers this product. */
+  experimentalCoupleDossierPolicy?: AspectPolicy;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
@@ -28,6 +31,11 @@ export function createProductCalculators(
     ...(options.experimentalSynastryPolicy === undefined
       ? {}
       : createSynastryCalculators(options.experimentalSynastryPolicy)),
+    ...(options.experimentalCoupleDossierPolicy === undefined
+      ? {}
+      : createCoupleDossierCalculators(
+          options.experimentalCoupleDossierPolicy,
+        )),
   });
 }
 

@@ -1,0 +1,11 @@
+# Dossiê do Casal — fluxo privado local (WU169)
+
+RUN_ID `ATV-20260902-170644Z-01A0630F`. `experimentalCoupleDossierPolicy` conecta a base própria ao runtime interno; exige política explícita e allowlist separada. A opção de Sinastria não registra Dossiê, nem a de Dossiê registra Sinastria. Padrão conserva 13 bases parciais, ambos indisponíveis e publicação bloqueada. Nenhuma política nasce do cliente ou equivale a homologação.
+
+Prova local com PostgreSQL/RLS e handlers reais: perfil exato consentido → comando v3 → controlador → API/RPC atômico → QUEUED → CALCULATED → AWAITING_EDITORIAL → Biblioteca/histórico privados sem fatos/editorial expostos. Preserva snapshot completo da base de Sinastria dentro do envelope próprio, 121 fatos com contexto (120 sem), cem pares canônicos com precisão desconhecida e preparação editorial própria `atv-couple-dossier-editorial/1.0.0`. Contexto é relatado e não altera geometria. Engine aprovado permanece falso; publisher explícito continua idle. Fixtures usam um par sintético, política não aprovada e uma conexão; não simulam revisão legítima nem constituem sessão hospedada.
+
+Os seis casos adicionados do Dossiê cobrem fluxo completo até espera editorial, edição/esquecimento sem alterar pedido e recuperação após resposta perdida, sessão/titular/RLS/leitor/downloads, revisão obsoleta/gate/acesso antes de persistir, reprocessamento com entrada original recalculada e precisão insuficiente recusada. Runtime rejeita opções inválidas antes do transporte, captura allowlist contra mutação e fica offline sem seleção.
+
+Validação: runtime/base focal 16/16; vertical PostgreSQL/RLS 68/68; regressão Worker 170/170; tipos Worker PASS e Svelte com zero erros/avisos. Evidências `test-results/wu169-runtime.log`, `wu169-vertical.log`, `wu169-worker.log`, `wu169-worker-check.log`, `wu169-web-check.log`, ESLint/formato/diff/segredos. Nenhuma superfície visual mudou; QA do intake permanece na WU168.
+
+E1/E2 integrais permanecem bloqueados por política/motor/entrada real e conteúdo/revisão legítimos. E3 tem persistência/recuperação/processamento privados localmente validados, ainda bloqueado por autoridade de aprovação e sessão hospedada. E4 web/PDF próprio e E5 integral são requisitos seguintes. Nenhuma promoção, publicação, alteração de gates hospedados ou chamada a modelo; R$ 0.

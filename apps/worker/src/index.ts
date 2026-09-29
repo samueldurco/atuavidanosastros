@@ -9,6 +9,7 @@ export {
   createSynastryCalculators,
   synastryProductContract,
 } from "./synastry-calculators.ts";
+export { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts";
 export {
   createProductCalculators,
   createProductProcessor,

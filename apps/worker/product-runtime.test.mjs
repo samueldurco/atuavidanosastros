@@ -106,6 +106,88 @@ test("experimental synastry captures allowlist and rejects malformed policy befo
   ]);
 });
 
+test("couple dossier and synastry require independent experimental policies and allowlists", async () => {
+  const rpc = async () =>
+    assert.fail("unselected calculator contacted transport");
+  const policy = {
+    ...synastryPolicy(),
+    id: "synthetic-dossier-runtime-not-approved",
+  };
+  const dossier = createProductCalculators({
+    experimentalCoupleDossierPolicy: policy,
+  });
+  const synastry = createProductCalculators({
+    experimentalSynastryPolicy: synastryPolicy(),
+  });
+  assert.equal(Object.keys(dossier).length, 14);
+  assert.equal(typeof dossier["couple-dossier"], "function");
+  assert.equal(dossier.synastry, undefined);
+  assert.equal(synastry["couple-dossier"], undefined);
+  assert.equal(createProductCalculators()["couple-dossier"], undefined);
+  assert.equal(
+    productCalculationCoverage().find((p) => p.productId === "couple-dossier")
+      .calculation,
+    "unavailable",
+  );
+  assert.equal(
+    Object.keys(
+      createProductCalculators({
+        experimentalSynastryPolicy: synastryPolicy(),
+        experimentalCoupleDossierPolicy: policy,
+      }),
+    ).length,
+    15,
+  );
+  for (const options of [
+    { enabledProducts: ["couple-dossier"] },
+    {
+      enabledProducts: ["couple-dossier"],
+      experimentalSynastryPolicy: synastryPolicy(),
+    },
+    { enabledProducts: ["synastry"], experimentalCoupleDossierPolicy: policy },
+  ])
+    assert.throws(
+      () => createProductProcessor(rpc, options),
+      /invalid_product_configuration/,
+    );
+  const unselected = createProductProcessor(rpc, {
+    experimentalCoupleDossierPolicy: policy,
+  });
+  assert.deepEqual(unselected.products, []);
+  assert.equal(await unselected.step(), "idle");
+});
+test("experimental dossier captures configuration and rejects malformed policy before RPC", async () => {
+  const calls = [];
+  const rpc = async (name, args) => {
+    calls.push({ name, args });
+    return null;
+  };
+  for (const policy of [null, {}, { ...synastryPolicy(), aspects: [] }]) {
+    assert.throws(() =>
+      createProductProcessor(rpc, {
+        enabledProducts: ["couple-dossier"],
+        experimentalCoupleDossierPolicy: policy,
+      }),
+    );
+  }
+  assert.deepEqual(calls, []);
+  const options = {
+    enabledProducts: ["couple-dossier"],
+    experimentalCoupleDossierPolicy: synastryPolicy(),
+  };
+  const selected = createProductProcessor(rpc, options);
+  options.enabledProducts.push("synastry", "daily-card");
+  options.experimentalCoupleDossierPolicy = null;
+  assert.equal(await selected.step(), "idle");
+  assert.deepEqual(selected.products, ["couple-dossier"]);
+  assert.deepEqual(calls, [
+    {
+      name: "claim_product_run_work",
+      args: { p_products: ["couple-dossier"], p_lease_seconds: 60 },
+    },
+  ]);
+});
+
 test("invalid server configuration fails before any RPC call", () => {
   const rpc = async () => assert.fail("invalid configuration called transport");
   for (const enabledProducts of [
