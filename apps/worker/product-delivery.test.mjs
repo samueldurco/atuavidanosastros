@@ -14,20 +14,134 @@ import {
   midheavenEditorialTestFixture,
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
-  threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture,
+  threeQuestionsEditorialTestFixture,
+  tarotYesNoEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
   PRODUCT_DELIVERY_VERSION,
 } from "./src/product-delivery.ts";
 
+test("three questions delivery binds each saved pair, readings, relation and synthesis without publication", async () => {
+  const input = draft();
+  input.productId = "three-questions";
+  input.calculation = await calculateTarot(
+    {
+      version: "atv-workflow/1.0.0",
+      productId: input.productId,
+      questions: [
+        "Que possibilidade posso observar?",
+        "Que limite quero reconhecer?",
+        "Que alternativa posso experimentar?",
+      ],
+      context: "Relato sintético consentido",
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    input.runId,
+    new AbortController().signal,
+  );
+  const prepared = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(prepared.status, "prepared");
+  input.output = {
+    ...input.output,
+    capability: "tarot-reflection",
+    ...threeQuestionsEditorialTestFixture(prepared.facts),
+  };
+  const captured = structuredClone(input);
+  const pending = prepareProductDelivery(input);
+  input.calculation.facts[0].display = "Alteração concorrente";
+  input.calculation.data.cards[0].name = "Outra carta";
+  input.output.claims[0].text = "Outro texto";
+  const result = await pending;
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.deepEqual(result, await prepareProductDelivery(captured));
+  assert.equal(result.content.sections.length, 8);
+  for (let i = 0; i < 3; i++) {
+    const card = captured.calculation.facts.find(
+      (f) => f.id === `card-${i + 1}`,
+    );
+    const question = captured.calculation.facts.find(
+      (f) => f.id === `question-${i + 1}`,
+    );
+    assert.deepEqual(result.content.sections[i * 2], {
+      title: `Pergunta ${i + 1} e carta registrada — Fatos registrados`,
+      text: `${question.display}\n\n${card.display}`,
+      evidence: [question.id, card.id],
+    });
+    assert.equal(
+      result.content.sections[i * 2 + 1].text,
+      captured.output.claims[i].text,
+    );
+    assert.deepEqual(
+      result.content.sections[i * 2 + 1].evidence,
+      captured.output.claims[i].evidence,
+    );
+  }
+  assert.equal(
+    result.content.sections[6].title,
+    "Convergências e tensões entre as três perguntas (1)",
+  );
+  assert.equal(
+    result.content.sections[6].text.includes(captured.output.relations[0].text),
+    true,
+  );
+  assert.equal(
+    result.content.sections[7].title,
+    "Síntese das Três Perguntas (1) e três perguntas práticas",
+  );
+  assert.equal(
+    result.content.sections[7].text.includes(captured.output.synthesis[0].text),
+    true,
+  );
+  for (const q of captured.output.reflections)
+    assert.equal(contentTexts(result.content).split(q).length, 2);
+  assert.deepEqual(JSON.parse(JSON.stringify(result.content)), result.content);
+  const reordered = structuredClone(captured);
+  reordered.output.claims.reverse();
+  assert.deepEqual(
+    (await prepareProductDelivery(reordered)).content,
+    result.content,
+  );
+  for (const mutate of [
+    (x) => (x.calculation.facts[0].display = "Carta inventada"),
+    (x) => (x.output.claims[0].evidence = ["card-2", "question-2"]),
+    (x) => x.output.claims.pop(),
+    (x) => x.output.relations[0].claimIds.pop(),
+    (x) => x.output.synthesis[0].claimIds.pop(),
+    (x) => x.output.reflections.pop(),
+  ]) {
+    const invalid = structuredClone(captured);
+    mutate(invalid);
+    assert.equal((await prepareProductDelivery(invalid)).status, "rejected");
+  }
+});
+
 // Generic delivery transport uses a real dream report without a product editorial profile.
 // Three-question coverage is tested separately; this fixture never approves interpretation.
 const genericCalculation = calculateDreamRecord({
-  version:'atv-workflow/1.0.0', productId:'dream-reading',
-  dream:{date:'2026-09-29',narrative:'Relato sintético de uma porta azul.',emotions:['curiosidade'],associations:['possibilidade']},
-  context:'Contexto sintético B',
-  consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},
+  version: "atv-workflow/1.0.0",
+  productId: "dream-reading",
+  dream: {
+    date: "2026-09-29",
+    narrative: "Relato sintético de uma porta azul.",
+    emotions: ["curiosidade"],
+    associations: ["possibilidade"],
+  },
+  context: "Contexto sintético B",
+  consent: {
+    storage: true,
+    policyVersion: "atv-input-consent/1",
+    partner: false,
+    continuity: false,
+  },
 });
 function draft() {
   return {
@@ -879,7 +993,8 @@ test("tarot yes-no delivery preserves the saved card, reported question and all 
   assert.equal(facts.status, "prepared");
   input.output = {
     ...input.output,
-    ...tarotYesNoEditorialTestFixture(facts.facts), ...threeQuestionsEditorialTestFixture(facts.facts),
+    ...tarotYesNoEditorialTestFixture(facts.facts),
+    ...threeQuestionsEditorialTestFixture(facts.facts),
   };
   const result = await prepareProductDelivery(input);
   assert.equal(result.status, "prepared_for_review");

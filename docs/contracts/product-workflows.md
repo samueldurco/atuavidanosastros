@@ -26,6 +26,8 @@ WU141 validates the persisted Três Perguntas projection before editorial work: 
 
 WU142 assigns `atv-three-questions-editorial/1.0.0` only after that validation. Preparation 1.19.0 and prompt 1.0.11 require three pair-specific readings, one joint relation, a synthesis of all three roles and three distinct practical questions, preserving tier limits and the six original facts. Coverage cannot approve meanings or publication. [Editorial contract](three-questions-editorial.md) and [local evidence](../qa/THREE_QUESTIONS_EDITORIAL_2026-09-29.md).
 
+WU143 delivery 1.9.0 projects eight sections in canonical pair order: each trusted question/card display followed by its own reading, then the joint relation and synthesis. Validated facts are captured before asynchronous editorial work; their text and references cannot be replaced by claims or concurrent mutation. The reader labels all six original facts and reported context. Private SQL persistence, reprocessing/revocation and four-width reader QA use explicitly synthetic publication fixtures, not legitimate approval or hosted acceptance. [Local reader evidence](../qa/THREE_QUESTIONS_READER_2026-09-29.md).
+
 Dream snapshots keep reported narrative, emotions, associations and context distinct from interpretations. No universal symbol meaning, inferred emotion, clinical diagnosis or recurrence is generated. Continuity consent is recorded, but historyLoaded and recurrenceAssessed remain false. All four adapters stop before editorial publication and retain the empty promotion registry. See `docs/qa/SYMBOLIC_CALCULATORS_2026-09-14.md` for local verification and limits.
 
 ### Question Tarot products — WU-074

@@ -11,10 +11,13 @@ import { dailyCardReaderFixture } from '../../../../../tests/fixtures/daily-card
 
 import { tarotFocusReaderFixture } from '../../../../../tests/fixtures/tarot-focus-reader';
 
+import { threeQuestionsReaderFixture } from '../../../../../tests/fixtures/three-questions-reader';
 import { tarotYesNoReaderFixture } from '../../../../../tests/fixtures/tarot-yes-no-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
+	if (url.searchParams.get('product') === 'three-questions')
+		return threeQuestionsReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'tarot-yes-no')
 		return tarotYesNoReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'tarot-focus')

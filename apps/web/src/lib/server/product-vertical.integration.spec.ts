@@ -22,6 +22,7 @@ import {
 	midheavenEditorialTestFixture,
 	tarotFocusEditorialTestFixture,
 	tarotYesNoEditorialTestFixture,
+	threeQuestionsEditorialTestFixture,
 	dailyCardEditorialTestFixture,
 	threePillarsEditorialTestFixture
 } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
@@ -236,6 +237,7 @@ async function fixture(productId: string) {
 					...dailyCardEditorialTestFixture(facts.facts),
 					...tarotFocusEditorialTestFixture(facts.facts),
 					...tarotYesNoEditorialTestFixture(facts.facts),
+					...threeQuestionsEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -377,6 +379,23 @@ for (const productId of products)
 			expect(html).toBe(renderProductWebExport(parent)?.html);
 			expect(html).toContain('&lt;script&gt;');
 			expect(html).not.toContain('<script>');
+			if (productId === 'three-questions') {
+				expect(parent?.editorial?.sections).toHaveLength(8);
+				for (let index = 1; index <= 3; index++) {
+					const question = parent?.calculation?.facts.find((f) => f.id === `question-${index}`);
+					const card = parent?.calculation?.facts.find((f) => f.id === `card-${index}`);
+					expect(question).toBeDefined();
+					expect(card).toBeDefined();
+					expect(parent?.editorial?.sections[(index - 1) * 2]).toEqual({
+						title: `Pergunta ${index} e carta registrada — Fatos registrados`,
+						text: `${question!.display}\n\n${card!.display}`,
+						evidence: [question!.id, card!.id]
+					});
+					expect(html).toContain(`question-${index}-reading`);
+				}
+				expect(html).toContain('Convergências e tensões entre as três perguntas');
+				expect(html).toContain('Síntese das Três Perguntas (1) e três perguntas práticas');
+			}
 			if (productId === 'career-compass') {
 				expect(html).toContain('Síntese sintética sem revisão editorial.');
 				for (const role of ['public-direction', 'work-possibilities', 'tension-or-excess'])
@@ -507,6 +526,16 @@ for (const productId of products)
 				expect(
 					parent?.calculation?.facts.filter((fact) => fact.kind === 'drawn').map((fact) => fact.id)
 				).toEqual(['card-1']);
+			} else if (productId === 'three-questions') {
+				expect(html).toContain(
+					'Síntese estrutural de três perguntas e cartas; sem conteúdo aprovado.'
+				);
+				for (const question of [
+					'Que possibilidade posso observar no primeiro par?',
+					'Que limite posso verificar no segundo par?',
+					'Que alternativa posso testar no terceiro par?'
+				])
+					expect(html).toContain(question);
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

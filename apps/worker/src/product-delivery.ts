@@ -1,11 +1,12 @@
-import type { EditorialSnapshot } from "@atv/domain";
+import type { CalculationSnapshot, EditorialSnapshot } from "@atv/domain";
 import { parseReading, tierLimits, type Reading } from "@atv/ai";
 import {
   evaluateProductDraft,
+  prepareProductFacts,
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.8.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.9.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -89,6 +90,10 @@ function claimTitle(
   claim: Reading["claims"][number],
   productId: string,
 ): string {
+  if (productId === "three-questions") {
+    const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
+    return `${index ? `Leitura da pergunta ${index} — ` : ""}${labels[claim.kind]} [${claim.id}]`;
+  }
   const subject =
     productId === "career-compass"
       ? (careerTitles.get(claim.id) ??
@@ -138,18 +143,35 @@ function claimTitle(
 function project(
   reading: Reading,
   productId: string,
+  facts: CalculationSnapshot["facts"] = [],
 ): ProductDeliveryContent | null {
   if (reading.limits.some((limit) => limit.length > 1200)) return null;
   const claims = new Map(reading.claims.map((claim) => [claim.id, claim]));
   const evidence = (ids: string[]) =>
     unique(ids.flatMap((id) => claims.get(id)!.evidence));
-  const sections: EditorialSnapshot["sections"] = reading.claims.map(
-    (claim) => ({
+  const sections: EditorialSnapshot["sections"] = [];
+  const orderedClaims =
+    productId === "three-questions"
+      ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
+      : reading.claims;
+  for (const claim of orderedClaims) {
+    if (productId === "three-questions") {
+      const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
+      const question = facts.find((fact) => fact.id === `question-${index}`);
+      const card = facts.find((fact) => fact.id === `card-${index}`);
+      if (!index || !question || !card) return null;
+      sections.push({
+        title: `Pergunta ${index} e carta registrada — Fatos registrados`,
+        text: `${question.display}\n\n${card.display}`,
+        evidence: [question.id, card.id],
+      });
+    }
+    sections.push({
       title: claimTitle(claim, productId),
       text: claim.text,
       evidence: [...claim.evidence],
-    }),
-  );
+    });
+  }
   // Group adjacent relations within the reader's text/forty-section bounds.
   // A relation is never split, shortened, reordered or given new factual references.
   let relationText = "",
@@ -158,7 +180,7 @@ function project(
   const flush = () => {
     if (relationText)
       sections.push({
-        title: `Relações (${++group})`,
+        title: `${productId === "three-questions" ? "Convergências e tensões entre as três perguntas" : "Relações"} (${++group})`,
         text: relationText,
         evidence: unique(relationEvidence),
       });
@@ -180,7 +202,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : "Síntese"} (${index + 1})${last ? (["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : "Síntese"} (${index + 1})${last ? (["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
@@ -223,15 +245,29 @@ export async function prepareProductDelivery(
   const reading = parseReading(input.output, input.tier);
   if (!reading) return reject("invalid_schema");
   const productId = input.productId;
-  // parseReading owns a JSON copy; evaluateProductDraft captures its other inputs before awaiting.
-  const assessment = await evaluateProductDraft({ ...input, output: reading });
+  const pairPreparation =
+    productId === "three-questions"
+      ? prepareProductFacts(productId, input.calculation)
+      : undefined;
+  if (pairPreparation?.status === "blocked")
+    return reject(pairPreparation.reason);
+  // The trusted pairs and assessment share a captured calculation before the first await.
+  const assessment = await evaluateProductDraft({
+    ...input,
+    calculation: pairPreparation?.calculation ?? input.calculation,
+    output: reading,
+  });
   if (
     assessment.status !== "needs_editorial_review" ||
     !assessment.basisDigest ||
     !assessment.outputDigest
   )
     return reject(assessment.reason);
-  const content = project(reading, productId);
+  const content = project(
+    reading,
+    productId,
+    pairPreparation?.calculation.facts,
+  );
   if (!content) return reject("delivery_not_representable");
   const encoded = JSON.stringify({
     version: PRODUCT_DELIVERY_VERSION,
