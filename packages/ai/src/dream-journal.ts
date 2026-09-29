@@ -37,7 +37,8 @@ export function validDreamJournalFacts(facts: FactsEnvelope): boolean {
       fact.id !== `dream-narrative-${narrative}` ||
       fact.source !== "input.dream.narrative" ||
       !fact.display.startsWith(prefix) ||
-      fact.display.length <= prefix.length
+      fact.display.length <= prefix.length ||
+      fact.display.length > prefix.length + 1800
     )
       return false;
   }

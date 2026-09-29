@@ -11,6 +11,24 @@ import { inspectReading } from "./director.ts";
 import { buildPrompt } from "./prompt.ts";
 import { EditorialGateway, LabBudgetLedger } from "./gateway.ts";
 
+test("journal narrative facts admit the saved 1800-character segment only within its profile", () => {
+  const facts = structuredClone(base);
+  const narrative = facts.facts.find(
+    (fact) => fact.id === "dream-narrative-1",
+  )!;
+  narrative.display = "Relato (trecho 1): " + "a".repeat(1800);
+  assert.equal(validateFacts(facts), true);
+  const generic = structuredClone(facts);
+  delete generic.editorialProfile;
+  assert.equal(validateFacts(generic), false);
+  narrative.display += "a";
+  assert.equal(validateFacts(facts), false);
+  narrative.display = "Relato (trecho 1): curto";
+  facts.facts.find((fact) => fact.id === "dream-emotion-1")!.display =
+    "a".repeat(1201);
+  assert.equal(validateFacts(facts), false);
+});
+
 const base: FactsEnvelope = {
   version: "atv-facts/1.0.0",
   capability: "dream-exploration",

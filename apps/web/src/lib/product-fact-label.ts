@@ -16,6 +16,20 @@ const birthChartLabels: Record<string, string> = {
 
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
+	if (productId === 'dream-journal') {
+		const labels: Record<string, string> = {
+			'dream-date': 'Data registrada',
+			'dream-context': 'Contexto informado'
+		};
+		const part = /^dream-(narrative|emotion|association)-(\d+)$/.exec(id);
+		const kinds: Record<string, string> = {
+			narrative: 'Relato registrado, trecho',
+			emotion: 'Emoção informada',
+			association: 'Associação pessoal'
+		};
+		const label = labels[id] ?? (part ? `${kinds[part[1]]} ${part[2]}` : undefined);
+		return label ? `${label} (${id})` : id;
+	}
 	if (productId !== 'birth-chart') return id;
 	const house = /^house-([1-9]|1[0-2])$/.exec(id);
 	const label = birthChartLabels[id] ?? (house ? `Cúspide da Casa ${house[1]}` : undefined);

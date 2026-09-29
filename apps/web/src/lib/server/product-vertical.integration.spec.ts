@@ -539,6 +539,23 @@ for (const productId of products)
 				])
 					expect(html).toContain(question);
 			} else if (productId === 'dream-journal') {
+				expect(parent?.editorial?.sections).toHaveLength(7);
+				for (const [index, prefix] of [
+					'dream-date',
+					'dream-narrative-',
+					'dream-emotion-',
+					'dream-association-',
+					'dream-context'
+				].entries()) {
+					const facts = parent!.calculation!.facts.filter((fact) => fact.id.startsWith(prefix));
+					expect(parent!.editorial!.sections[index].evidence).toEqual(facts.map((fact) => fact.id));
+					expect(parent!.editorial!.sections[index].text).toBe(
+						facts.map((fact) => fact.display).join('\n\n')
+					);
+				}
+				expect(html).toContain('Relato sintético: uma porta azul.');
+				expect(html).toContain('curiosidade');
+				expect(html).toContain('mudança');
 				expect(html).toContain(
 					'Síntese de fixture limitada ao relato, sem consulta de histórico ou aprovação editorial.'
 				);
@@ -604,6 +621,13 @@ for (const productId of products)
 			expect(await f.publisher.step()).toBe('published');
 			const childArtifact = await f.store(childId);
 			expect(childArtifact.id).not.toBe(artifact.id);
+			if (productId === 'dream-journal') {
+				const reopened = await f.read(runId);
+				const regenerated = await f.read(childId);
+				expect(reopened?.editorial?.sections).toEqual(parent?.editorial?.sections);
+				expect(regenerated?.calculation?.facts).toEqual(parent?.calculation?.facts);
+				expect(regenerated?.editorial?.sections).toEqual(parent?.editorial?.sections);
+			}
 			expect((await workflowArtifacts(f.event(), childId, artifact.id)).status).toBe(404);
 
 			await f.db.query('update product_editorial_receipts set revoked_at=now() where id=$1', [

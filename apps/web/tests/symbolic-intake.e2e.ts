@@ -254,7 +254,7 @@ test('production intake route retains server authentication', async ({ page }) =
 for (const width of [1440, 820, 390, 320]) {
 	test(`composition, keyboard labels and no overflow at ${width}px`, async ({ page }) => {
 		await page.setViewportSize({ width, height: 1000 });
-		for (const product of ['three-questions', 'dream-reading']) {
+		for (const product of ['three-questions', 'dream-reading', 'dream-journal']) {
 			await page.goto(`${path}?product=${product}`);
 			await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeEnabled();
 			expect(

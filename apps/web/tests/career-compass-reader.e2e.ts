@@ -31,7 +31,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(source).toContainText('Contexto profissional relatado (personal-context)');
 		await expect(source).toContainText('input.context');
 		await expect(source).toContainText('atv-career-compass-calculation/1.0.0');
-		await expect(source).toContainText('atv-product-delivery/1.9.0');
+		await expect(source).toContainText('atv-product-delivery/1.10.0');
 		await expect(source).toContainText('Somente signo e grau experimentais do Meio do Céu');
 		await expect(source).toContainText('Fixture de apresentação');
 		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();

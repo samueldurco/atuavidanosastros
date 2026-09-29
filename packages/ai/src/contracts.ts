@@ -214,7 +214,11 @@ export function validateFacts(value: FactsEnvelope): boolean {
       !["calculated", "reported", "drawn"].includes(fact.kind) ||
       typeof fact.display !== "string" ||
       !fact.display.trim() ||
-      fact.display.length > 1200 ||
+      fact.display.length >
+        (value.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION &&
+        /^dream-narrative-[1-4]$/.test(fact.id)
+          ? 1800 + `Relato (trecho ${fact.id.slice(-1)}): `.length
+          : 1200) ||
       typeof fact.source !== "string" ||
       !fact.source.trim() ||
       fact.source.length > 160
