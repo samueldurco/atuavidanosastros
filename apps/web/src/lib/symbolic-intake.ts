@@ -9,7 +9,8 @@ export const symbolicProducts = [
 	'dream-journal'
 ] as const;
 export const symbolicProduct = (id: string) =>
-	symbolicProducts.some((candidate) => candidate === id) || id === 'tarot-journey'
+	symbolicProducts.some((candidate) => candidate === id) ||
+	['tarot-journey', 'dream-dossier'].includes(id)
 		? workflowFor(id)
 		: undefined;
 export type IntakeAccess = 'AVAILABLE' | 'UNRELEASED' | 'ACCESS_REQUIRED' | 'UNAVAILABLE';

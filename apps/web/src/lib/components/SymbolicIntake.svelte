@@ -106,6 +106,11 @@
 				Registre a pergunta inicial e o objetivo que você escolheu. A tiragem e as etapas da jornada
 				ainda dependem de definição e revisão.
 			</p>
+		{:else if productId === 'dream-dossier'}
+			<p>
+				Registre o sonho que você quer explorar. A escolha de registros anteriores e a comparação
+				entre sonhos ainda não estão disponíveis neste formulário.
+			</p>
 		{/if}
 	</header>
 	<div class="workspace">
@@ -279,9 +284,11 @@
 			<p>
 				{productId === 'tarot-journey'
 					? 'A pergunta e o objetivo são dados declarados por você. A tiragem e o percurso ainda não estão definidos; este formulário não sorteia cartas.'
-					: tarot
-					? 'As cartas são sorteadas pelo motor do produto após o pedido. Nenhuma carta ou interpretação é criada por este formulário.'
-					: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
+					: productId === 'dream-dossier'
+						? 'Este formulário registra apenas o sonho principal. O consentimento opcional de continuidade não seleciona nem carrega sonhos anteriores; a comparação do dossiê depende de uma etapa própria.'
+						: tarot
+							? 'As cartas são sorteadas pelo motor do produto após o pedido. Nenhuma carta ou interpretação é criada por este formulário.'
+							: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
 			</p>
 			<ol>
 				<li>Seu pedido é salvo com uma referência recuperável.</li>

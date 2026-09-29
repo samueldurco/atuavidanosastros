@@ -32,6 +32,33 @@ it('keeps the Tarot Journey initial question and declared goal separate', () => 
 	expect(input?.questions).toEqual(['Que possibilidade explorar?']);
 	expect(input?.tarotJourney).toEqual({ goal: 'Explorar como retomar um hábito criativo.' });
 });
+it('accepts only the principal dream for the unreleased Dream Dossier intake', () => {
+	const data = form('dream-dossier');
+	data.set('emotions', 'Curiosidade');
+	data.set('associations', 'Uma casa conhecida');
+	data.set('continuity', 'on');
+	const { input, errors } = parseSymbolicForm('dream-dossier', data);
+	expect(errors).toEqual({});
+	expect(input).toMatchObject({
+		productId: 'dream-dossier',
+		consent: { storage: true, continuity: true },
+		dream: {
+			date: '2024-02-29',
+			narrative: 'Relato sintético.',
+			associations: ['Uma casa conhecida'],
+			emotions: ['Curiosidade']
+		}
+	});
+	expect(symbolicProducts).not.toContain('dream-dossier');
+});
+it.each(['priorRunId', 'priorDreams', 'history', 'recurrence'])(
+	'rejects undeclared Dream Dossier history field %s',
+	(name) => {
+		const data = form('dream-dossier');
+		data.set(name, 'client choice');
+		expect(parseSymbolicForm('dream-dossier', data).input).toBeNull();
+	}
+);
 it.each([
 	['goal', ''],
 	['goal', '  '],
