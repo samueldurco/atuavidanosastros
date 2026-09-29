@@ -1,6 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
 const owner = '00000000-0000-4000-8000-000000000056';
-const key = '00000000-0000-4000-8000-000000000077';
 const runId = '00000000-0000-4000-8000-000000000078';
 const library = '00000000-0000-4000-8000-000000000079';
 const productId = 'synastry';
