@@ -1,5 +1,7 @@
 # Semana — experimental nominal transit-series contract
 
+The independent [nominal temporal search](week-temporal-search.md) adds an experimental hourly search primitive; it does not change this 1.1.0 sampled snapshot, register temporal runtime output or certify complete windows.
+
 `atv-week-reading-calculation/1.1.0` adds deterministic sampled transit/natal comparisons to the Week E1 base. It is a separate internal composition, selected only with an explicit operator-owned `experimentalWeekTransitPolicy`. There is no default orb policy or editorial approval. Configuration with both this policy and `experimentalWeekBase: true` fails rather than choosing a version implicitly. The original thirteen default bases, publication gates and R$0 automatic spend remain unchanged.
 
 The existing version 1.0.0 calculator still validates the input and all dates before provider work, obtains one natal chart and seven consecutive 12:00 UTC sample charts, captures input, checks cancellation and shares no cache across requests. This extension calls that calculator unchanged, then projects all 100 ordered transit/natal body pairs at each sample (700 comparisons, including ten same-body pairs). Natal and transit roles remain distinct. The context, including declared timezone/theme from request v2, does not alter geometry. Dates retain the engine range 1900-01-01–2099-12-25; these are UTC samples rather than local-day coverage.
