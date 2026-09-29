@@ -1,3 +1,14 @@
+import { THREE_QUESTIONS_EDITORIAL_VERSION, threeQuestionsRoles } from '../../packages/ai/src/three-questions.ts';
+/** Synthetic coverage only; never approved interpretation or review. */
+export function threeQuestionsEditorialTestFixture(facts) {
+  if(facts.editorialProfile !== THREE_QUESTIONS_EDITORIAL_VERSION) return {};
+  return {
+    claims:threeQuestionsRoles.map((id,i)=>({id,kind:'hypothesis',text:'Fixture estrutural do par '+(i+1)+'; sem significado homologado.',evidence:['card-'+(i+1),'question-'+(i+1),...(facts.facts.some(f=>f.id==='tarot-context')?['tarot-context']:[])]})),
+    relations:[{kind:'tension',claimIds:[...threeQuestionsRoles],text:'Relação entre três pares em fixture; sem interpretação aprovada.'}],
+    synthesis:[{claimIds:[...threeQuestionsRoles],text:'Síntese estrutural de três perguntas e cartas; sem conteúdo aprovado.'}],
+    reflections:['Que possibilidade posso observar no primeiro par?','Que limite posso verificar no segundo par?','Que alternativa posso testar no terceiro par?'],
+  };
+}
 import { TAROT_YES_NO_EDITORIAL_VERSION, tarotYesNoRoles } from '../../packages/ai/src/tarot-yes-no.ts';
 /** Test-only yes/no coverage; never approved meanings, interpretation or review.
  * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts

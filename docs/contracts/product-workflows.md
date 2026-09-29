@@ -24,6 +24,8 @@ State progression is QUEUED → CALCULATED → AWAITING_EDITORIAL → READY. Pen
 
 WU141 validates the persisted Três Perguntas projection before editorial work: three unique canonical cards, ordered question/card pairs, exact versions and provenance, optional reported context and unchanged candidate limits. Preparation 1.18.0 binds this rule to the review digest. [Product contract](three-questions-calculation.md) and [local evidence](../qa/THREE_QUESTIONS_BASE_2026-09-29.md) preserve the distinction between local coherence, legitimate editorial approval and hosted acceptance.
 
+WU142 assigns `atv-three-questions-editorial/1.0.0` only after that validation. Preparation 1.19.0 and prompt 1.0.11 require three pair-specific readings, one joint relation, a synthesis of all three roles and three distinct practical questions, preserving tier limits and the six original facts. Coverage cannot approve meanings or publication. [Editorial contract](three-questions-editorial.md) and [local evidence](../qa/THREE_QUESTIONS_EDITORIAL_2026-09-29.md).
+
 Dream snapshots keep reported narrative, emotions, associations and context distinct from interpretations. No universal symbol meaning, inferred emotion, clinical diagnosis or recurrence is generated. Continuity consent is recorded, but historyLoaded and recurrenceAssessed remain false. All four adapters stop before editorial publication and retain the empty promotion registry. See `docs/qa/SYMBOLIC_CALCULATORS_2026-09-14.md` for local verification and limits.
 
 ### Question Tarot products — WU-074
@@ -227,6 +229,7 @@ Ascendant E2 selects `atv-ascendant-editorial/1.0.0` after saved projection cohe
 ## Ascendant persisted reading (WU128)
 
 Delivery1.4.0 labels the ASC fact, three interpretation roles and synthesis/questions without changing text or evidence. The reader identifies the sole calculated factor and any reported context. The existing local SQL vertical now uses the complete ASC structural fixture and verifies both web and angle-only SVG storage, idempotent recovery, ownership and receipt revocation. This corrects the obsolete fixture rejected by CI127; it does not legitimize its approval. Card copies retain the existing private web-section policy; PDF remains outside the ASC catalog. Evidence and E1–E5 blockers: `docs/qa/ASCENDANT_READER_2026-09-28.md`. No hosted execution or release is claimed.
+
 ## WU130 — Meio do Céu: cobertura editorial
 
 Perfil `atv-midheaven-editorial/1.0.0` selecionado após coerência MC-only; preparação1.11.0/prompt1.0.7 vinculam fato exato, contribuição pública, possibilidades, tensão, síntese conjunta e três perguntas. Ver `midheaven-editorial.md` e `../qa/MIDHEAVEN_EDITORIAL_2026-09-28.md`. Revisões anteriores não autorizam a preparação atual. Fixture comprova transporte/estrutura; conteúdo, homologação e release continuam bloqueados. Próxima entrega independente: resultado web específico (E3/E4).
@@ -235,7 +238,6 @@ Perfil `atv-midheaven-editorial/1.0.0` selecionado após coerência MC-only; pre
 
 Delivery1.5.0 nomeia fato, contribuição, possibilidades, tensão e síntese/perguntas sem alterar texto/evidências; vincula o digest de novas revisões. O leitor distingue MC calculado e contexto relatado. SQL local prova snapshot web, proprietário, recuperação idempotente, revogação e versão filha independente com aprovação fictícia explícita. Purpose-direction não oferece cartografia nem PDF; card de seção segue WU040. QA `../qa/MIDHEAVEN_READER_2026-09-28.md` comprova o percurso sintético local; conteúdo/revisão legítima, homologação e hospedagem mantêm E1–E5 integrais bloqueados.
 
-
 ## WU136 — Foco Agora: cobertura editorial
 
 Perfil `atv-tarot-focus-editorial/1.0.0` após projeção coerente, preparação1.15.0/prompt1.0.9/corpus1.17.0: cinco afirmações, carta/pergunta exatas, símbolo com possibilidade/tensão/alternativa, conexão com pergunta e contexto relatado quando recebido, experimento reversível, síntese conjunta e uma pergunta. O Director verifica estrutura; conteúdo/modelo/revisão legítimos seguem bloqueados. Fixture não concede release. Contrato `tarot-focus-editorial.md`; QA `../qa/TAROT_FOCUS_EDITORIAL_2026-09-28.md`. Próxima entrega independente: resultado web e percurso persistido E3–E5.
@@ -243,6 +245,7 @@ Perfil `atv-tarot-focus-editorial/1.0.0` após projeção coerente, preparação
 ## WU137 — Foco Agora: leitor e percurso local
 
 Delivery1.7.0 nomeia as cinco afirmações e a síntese/pergunta preservando texto, evidências e sorteio salvo. O leitor diferencia carta, pergunta e contexto relatados; a versão integra a revisão. O percurso SQL local verifica leitura privada, Biblioteca, snapshot web, recuperação idempotente, revogação e versão filha independente com aprovação fictícia explícita. Demonstração local responsiva mantém downloads bloqueados e não oferece PDF/cartografia fora do contrato. QA `../qa/TAROT_FOCUS_READER_2026-09-28.md` registra os limites de E3–E5; conteúdo/revisão legítimos e hospedagem continuam necessários para aceite integral.
+
 ## WU138 — Sim/Não responsável: coerência da base
 
 Preparação 1.16.0 valida projeção salva de `tarot-yes-no`: carta/pergunta/contexto, proveniência, limites e política candidata exatos, sem veredito. Divergências bloqueiam com `calculation_invalid` antes de revisar o draft. O sorteio e os requests válidos do corpus 1.17.0 permanecem iguais. Contrato `tarot-yes-no-calculation.md` e QA `../qa/TAROT_YES_NO_BASE_2026-09-28.md`; E1 integral bloqueado por revisão da política, E2–E5 pendentes de leitura/autoridade legítimas e validação hospedada.

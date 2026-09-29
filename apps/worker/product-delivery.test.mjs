@@ -1,5 +1,5 @@
 import test from "node:test";
-import { calculateTarot } from "@atv/domain";
+import { calculateTarot, calculateDreamRecord } from "@atv/domain";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { SCHEMA_VERSION } from "@atv/ai";
@@ -14,45 +14,31 @@ import {
   midheavenEditorialTestFixture,
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
-  tarotYesNoEditorialTestFixture,
+  threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
   PRODUCT_DELIVERY_VERSION,
 } from "./src/product-delivery.ts";
 
-// Generic Tarot projection tests use Três Perguntas; single-card profiles are tested separately.
-// Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
-const genericCalculation = await calculateTarot(
-  {
-    version: "atv-workflow/1.0.0",
-    productId: "three-questions",
-    questions: [
-      "Que possibilidade posso observar?",
-      "Que tensão posso considerar?",
-      "Que alternativa posso explorar?",
-    ],
-    context: "Contexto sintético B",
-    consent: {
-      storage: true,
-      policyVersion: "atv-input-consent/1",
-      partner: false,
-      continuity: false,
-    },
-  },
-  "00000000-0000-4000-8000-000000000001",
-  new AbortController().signal,
-);
+// Generic delivery transport uses a real dream report without a product editorial profile.
+// Three-question coverage is tested separately; this fixture never approves interpretation.
+const genericCalculation = calculateDreamRecord({
+  version:'atv-workflow/1.0.0', productId:'dream-reading',
+  dream:{date:'2026-09-29',narrative:'Relato sintético de uma porta azul.',emotions:['curiosidade'],associations:['possibilidade']},
+  context:'Contexto sintético B',
+  consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},
+});
 function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 3,
-    productId: "three-questions",
+    productId: "dream-reading",
     tier: "free",
     calculation: structuredClone(genericCalculation),
     output: {
       schemaVersion: SCHEMA_VERSION,
-      capability: "tarot-reflection",
+      capability: "dream-exploration",
       scope: "partial",
       title: "Um recorte sintético",
       claims: [
@@ -60,19 +46,19 @@ function draft() {
           id: "c1",
           kind: "fact",
           text: genericCalculation.facts[1].display,
-          evidence: ["card-1"],
+          evidence: ["dream-narrative-1"],
         },
         {
           id: "c2",
           kind: "interpretation",
           text: "Uma interpretação sintética para observar.",
-          evidence: ["tarot-context"],
+          evidence: ["dream-context"],
         },
         {
           id: "c3",
           kind: "hypothesis",
           text: "Uma hipótese a explorar, sem certeza.",
-          evidence: ["card-1", "tarot-context"],
+          evidence: ["dream-narrative-1", "dream-context"],
         },
       ],
       relations: [
@@ -136,6 +122,7 @@ test("career compass delivers recognizable headings while preserving every claim
   const captured = structuredClone(input);
   const pending = prepareProductDelivery(input);
   input.productId = "daily-card";
+  input.output.capability = "tarot-reflection";
   const result = await pending;
   const expected = await prepareProductDelivery(captured);
   assert.deepEqual(result, expected);
@@ -336,6 +323,7 @@ test("ascendant delivery preserves every claim and question without inventing ot
 test("daily card delivery preserves the saved card, reported question and all coverage without granting publication", async () => {
   const input = draft();
   input.productId = "daily-card";
+  input.output.capability = "tarot-reflection";
   input.calculation = await calculateTarot(
     {
       version: "atv-workflow/1.0.0",
@@ -604,11 +592,11 @@ test("projects every Lab passage, semantic type, claim link and fact reference w
   assert.deepEqual(
     content.sections.map((s) => s.evidence),
     [
-      ["card-1"],
-      ["tarot-context"],
-      ["card-1", "tarot-context"],
-      ["card-1", "tarot-context"],
-      ["card-1", "tarot-context"],
+      ["dream-narrative-1"],
+      ["dream-context"],
+      ["dream-narrative-1", "dream-context"],
+      ["dream-narrative-1", "dream-context"],
+      ["dream-narrative-1", "dream-context"],
     ],
   );
   const all = contentTexts(content);
@@ -686,7 +674,7 @@ function premium() {
     id: `c${i}`,
     kind: "interpretation",
     text: `Recorte ${i}: possibilidade contextual.`,
-    evidence: [i % 2 ? "tarot-context" : "card-1"],
+    evidence: [i % 2 ? "dream-context" : "dream-narrative-1"],
   }));
   input.output.relations = Array.from({ length: 16 }, (_, i) => ({
     kind: i % 2 ? "tension" : "convergence",
@@ -748,7 +736,7 @@ test("digest binds exact delivery and original run, calculation provenance, revi
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
     (d) =>
-      (d.calculation.facts.find((f) => f.id === "tarot-context").display =
+      (d.calculation.facts.find((f) => f.id === "dream-context").display =
         "Outro contexto consentido"),
     (d) => (d.output.claims[1].text += " Outro ponto."),
     (d) => (d.output.relations[0].kind = "convergence"),
@@ -780,6 +768,7 @@ test("caller mutation during hashing and returned-content mutation cannot change
 test("tarot focus delivery preserves the saved card, reported question and all coverage without granting publication", async () => {
   const input = draft();
   input.productId = "tarot-focus";
+  input.output.capability = "tarot-reflection";
   input.calculation = await calculateTarot(
     {
       version: "atv-workflow/1.0.0",
@@ -868,6 +857,7 @@ test("tarot focus delivery preserves the saved card, reported question and all c
 test("tarot yes-no delivery preserves the saved card, reported question and all coverage without granting publication", async () => {
   const input = draft();
   input.productId = "tarot-yes-no";
+  input.output.capability = "tarot-reflection";
   input.calculation = await calculateTarot(
     {
       version: "atv-workflow/1.0.0",
@@ -889,7 +879,7 @@ test("tarot yes-no delivery preserves the saved card, reported question and all 
   assert.equal(facts.status, "prepared");
   input.output = {
     ...input.output,
-    ...tarotYesNoEditorialTestFixture(facts.facts),
+    ...tarotYesNoEditorialTestFixture(facts.facts), ...threeQuestionsEditorialTestFixture(facts.facts),
   };
   const result = await prepareProductDelivery(input);
   assert.equal(result.status, "prepared_for_review");

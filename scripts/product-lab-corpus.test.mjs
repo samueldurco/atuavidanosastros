@@ -192,9 +192,11 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  const legacyCases=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='tarot-yes-no'&&v.request)delete v.request.facts.editorialProfile;return v;});
-  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),'bac58d61a1d47192756ed7763f0775c3e4a2bc318c4dc7b5996b6d4fe7728ea7');
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.18.0');
+  const beforeThreeQuestions=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='three-questions'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  assert.equal(corpusDigest(beforeThreeQuestions.map(({id,request})=>({id,request}))),'bac58d61a1d47192756ed7763f0775c3e4a2bc318c4dc7b5996b6d4fe7728ea7');
+  const legacyCases=beforeThreeQuestions.map(item=>{const v=structuredClone(item);if(v.productId==='tarot-yes-no'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),'9beda44ce95d3d584548778085c667d686e18c2022892c840cc356b332f4dd54');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.19.0');
   assert.equal(corpusDigest(legacyCases.map(({ id, request }) => ({ id, request }))),
     '58d1a7e26bd0398d373733efa0b5de361f48e6099d1dadbe4d7eb28d618e2fc5');
   assert.equal(corpusDigest(legacyCases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),

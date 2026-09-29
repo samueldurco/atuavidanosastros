@@ -1,5 +1,5 @@
 import test from "node:test";
-import { calculateTarot } from "@atv/domain";
+import { calculateDreamRecord } from "@atv/domain";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { SCHEMA_VERSION, RUBRIC_VERSION, dimensions } from "@atv/ai";
@@ -19,38 +19,24 @@ const authority = {
     calibrations: ["fixture-calibration"],
   },
 };
-// Generic Tarot projection tests use Três Perguntas; single-card profiles are tested separately.
-// Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
-const genericCalculation = await calculateTarot(
-  {
-    version: "atv-workflow/1.0.0",
-    productId: "three-questions",
-    questions: [
-      "Que possibilidade posso observar?",
-      "Que tensão posso considerar?",
-      "Que alternativa posso explorar?",
-    ],
-    context: "Contexto sintético B",
-    consent: {
-      storage: true,
-      policyVersion: "atv-input-consent/1",
-      partner: false,
-      continuity: false,
-    },
-  },
-  "00000000-0000-4000-8000-000000000001",
-  new AbortController().signal,
-);
+// Generic delivery transport uses a real dream report without a product editorial profile.
+// Three-question coverage is tested separately; this fixture never approves interpretation.
+const genericCalculation = calculateDreamRecord({
+  version:'atv-workflow/1.0.0', productId:'dream-reading',
+  dream:{date:'2026-09-29',narrative:'Relato sintético de uma porta azul.',emotions:['curiosidade'],associations:['possibilidade']},
+  context:'Contexto sintético B',
+  consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},
+});
 function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 2,
-    productId: "three-questions",
+    productId: "dream-reading",
     tier: "free",
     calculation: structuredClone(genericCalculation),
     output: {
       schemaVersion: SCHEMA_VERSION,
-      capability: "tarot-reflection",
+      capability: "dream-exploration",
       scope: "partial",
       title: "Recorte sintético",
       claims: [
@@ -58,7 +44,7 @@ function draft() {
           id: "c1",
           kind: "fact",
           text: genericCalculation.facts[1].display,
-          evidence: ["card-1"],
+          evidence: ["dream-narrative-1"],
         },
       ],
       relations: [],
@@ -183,11 +169,12 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
     (d) =>
-      (d.calculation.facts.find((f) => f.id === "tarot-context").display =
+      (d.calculation.facts.find((f) => f.id === "dream-context").display =
         "Outro contexto consentido"),
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
+    (d) => d.calculation.limits.push("Outro limite de registro."),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);
@@ -197,10 +184,9 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     assert.equal("content" in result, false);
   }
   for (const mutate of [
-    (d) => d.calculation.limits.push("Outro limite da política candidata."),
     (d) => (d.productId = "tarot-yes-no"),
     (d) => (d.calculation.version = ""),
-    (d) => (d.calculation.kind = "dream"),
+    (d) => (d.calculation.kind = "tarot"),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);

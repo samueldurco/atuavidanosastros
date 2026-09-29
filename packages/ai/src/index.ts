@@ -37,3 +37,4 @@ export * from "./memory.ts";
 export * from "./gemini.ts";
 
 export * from "./tarot-yes-no.ts";
+export * from "./three-questions.ts";

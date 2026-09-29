@@ -1,4 +1,8 @@
 import {
+  THREE_QUESTIONS_EDITORIAL_VERSION,
+  inspectThreeQuestions,
+} from "./three-questions.ts";
+import {
   TAROT_YES_NO_EDITORIAL_VERSION,
   inspectTarotYesNo,
 } from "./tarot-yes-no.ts";
@@ -172,6 +176,8 @@ export function inspectReading(
     findings.push(...inspectTarotFocus(reading, facts));
   if (facts.editorialProfile === TAROT_YES_NO_EDITORIAL_VERSION)
     findings.push(...inspectTarotYesNo(reading, facts));
+  if (facts.editorialProfile === THREE_QUESTIONS_EDITORIAL_VERSION)
+    findings.push(...inspectThreeQuestions(reading, facts));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

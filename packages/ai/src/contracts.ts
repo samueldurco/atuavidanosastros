@@ -2,6 +2,10 @@ import {
   TAROT_YES_NO_EDITORIAL_VERSION,
   validTarotYesNoFacts,
 } from "./tarot-yes-no.ts";
+import {
+  THREE_QUESTIONS_EDITORIAL_VERSION,
+  validThreeQuestionsFacts,
+} from "./three-questions.ts";
 export const SCHEMA_VERSION = "atv-reading/1.0.0";
 import {
   TAROT_FOCUS_EDITORIAL_VERSION,
@@ -35,7 +39,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.10";
+export const PROMPT_VERSION = "atv-editorial/1.0.11";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -67,7 +71,8 @@ export interface FactsEnvelope {
     | typeof MIDHEAVEN_EDITORIAL_VERSION
     | typeof DAILY_CARD_EDITORIAL_VERSION
     | typeof TAROT_FOCUS_EDITORIAL_VERSION
-    | typeof TAROT_YES_NO_EDITORIAL_VERSION;
+    | typeof TAROT_YES_NO_EDITORIAL_VERSION
+    | typeof THREE_QUESTIONS_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -229,7 +234,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === TAROT_FOCUS_EDITORIAL_VERSION &&
       validTarotFocusFacts(value)) ||
     (value.editorialProfile === TAROT_YES_NO_EDITORIAL_VERSION &&
-      validTarotYesNoFacts(value))
+      validTarotYesNoFacts(value)) ||
+    (value.editorialProfile === THREE_QUESTIONS_EDITORIAL_VERSION &&
+      validThreeQuestionsFacts(value))
   );
 }
 

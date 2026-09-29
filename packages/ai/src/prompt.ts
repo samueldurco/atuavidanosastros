@@ -1,4 +1,8 @@
 import {
+  THREE_QUESTIONS_EDITORIAL_VERSION,
+  threeQuestionsInstructions,
+} from "./three-questions.ts";
+import {
   TAROT_YES_NO_EDITORIAL_VERSION,
   tarotYesNoInstructions,
 } from "./tarot-yes-no.ts";
@@ -101,6 +105,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === TAROT_YES_NO_EDITORIAL_VERSION
       ? [tarotYesNoInstructions]
+      : []),
+    ...(request.facts.editorialProfile === THREE_QUESTIONS_EDITORIAL_VERSION
+      ? [threeQuestionsInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

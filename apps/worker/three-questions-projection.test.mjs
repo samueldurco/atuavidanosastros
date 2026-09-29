@@ -36,7 +36,7 @@ test("three-questions preserves all three saved pairs and optional reported cont
     assert.deepEqual(p.calculation, c);
     assert.deepEqual(p.facts.facts, c.facts);
     assert.equal(p.facts.completeness, "partial");
-    assert.equal(p.facts.editorialProfile, undefined);
+    assert.equal(p.facts.editorialProfile, "atv-three-questions-editorial/1.0.0");
     assert.equal(c.facts.length, value.context ? 7 : 6);
     assert.equal(new Set(c.data.cards.map((card) => card.cardId)).size, 3);
     assert.equal(c.data.productPolicy, undefined);
