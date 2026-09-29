@@ -1,4 +1,9 @@
 import {
+  WEEK_READING_EDITORIAL_VERSION,
+  weekReadingInstructions,
+  weekReadingOutputLimits,
+} from "./week-reading.ts";
+import {
   HOROSCOPE_EDITORIAL_VERSION,
   horoscopeInstructions,
   horoscopeOutputLimits,
@@ -86,6 +91,10 @@ export function redact(text: string): string {
 }
 
 export function buildPrompt(request: EditorialRequest) {
+  const outputLimits =
+    request.facts.editorialProfile === WEEK_READING_EDITORIAL_VERSION
+      ? weekReadingOutputLimits
+      : tierLimits[request.tier];
   const specialization = specializations[request.facts.capability];
   const system = [
     `ATV Intelligence Lab. ${CONSTITUTION_VERSION}; ${PROMPT_VERSION}; ${SCHEMA_VERSION}.`,
@@ -97,7 +106,7 @@ export function buildPrompt(request: EditorialRequest) {
     ...(request.facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION
       ? [careerCompassInstructions]
       : []),
-    `Nível: ${request.tier}. Máximo de ${tierLimits[request.tier].maxClaims} afirmações e ${tierLimits[request.tier].maxRelations} relações. Não preencha o máximo sem necessidade.`,
+    `Nível: ${request.tier}. Máximo de ${outputLimits.maxClaims} afirmações e ${outputLimits.maxRelations} relações. Não preencha o máximo sem necessidade.`,
     "Responda somente com JSON válido no schema fornecido. Sem ferramentas nem estado comercial. IDs de evidência apontam para fatos; claimIds apontam para afirmações.",
     "Afirmações kind=fact reproduzem exatamente display de um único fato. Interpretações e hipóteses também precisam de evidência pertinente. Inclua síntese, perguntas e limites.",
     "Se completeness=partial ou houver um só fato, scope=partial. Com um único fato, relations=[]; não invente um segundo fator.",
@@ -147,6 +156,9 @@ export function buildPrompt(request: EditorialRequest) {
     ...(request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
       ? [horoscopeInstructions]
       : []),
+    ...(request.facts.editorialProfile === WEEK_READING_EDITORIAL_VERSION
+      ? [weekReadingInstructions]
+      : []),
     ...(request.facts.editorialProfile === DATE_READING_EDITORIAL_VERSION
       ? [dateReadingInstructions]
       : []),
@@ -184,7 +196,7 @@ export function buildPrompt(request: EditorialRequest) {
     maxOutputTokens:
       request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
         ? horoscopeOutputLimits.maxOutputTokens
-        : tierLimits[request.tier].maxOutputTokens,
+        : outputLimits.maxOutputTokens,
     temperature: 0.3,
   };
 }

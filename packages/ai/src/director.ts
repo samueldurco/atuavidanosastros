@@ -1,3 +1,7 @@
+import {
+  WEEK_READING_EDITORIAL_VERSION,
+  inspectWeekReading,
+} from "./week-reading.ts";
 import { HOROSCOPE_EDITORIAL_VERSION, inspectHoroscope } from "./horoscope.ts";
 import { SYNASTRY_EDITORIAL_VERSION, inspectSynastry } from "./synastry.ts";
 import {
@@ -206,6 +210,8 @@ export function inspectReading(
     findings.push(...inspectDreamReading(reading, facts));
   if (facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION)
     findings.push(...inspectHoroscope(reading, facts));
+  if (facts.editorialProfile === WEEK_READING_EDITORIAL_VERSION)
+    findings.push(...inspectWeekReading(reading, facts));
   if (facts.editorialProfile === DATE_READING_EDITORIAL_VERSION)
     findings.push(...inspectDateReading(reading, facts));
   if (facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION)

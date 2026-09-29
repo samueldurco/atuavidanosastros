@@ -4,6 +4,7 @@ import {
   SYNASTRY_EDITORIAL_VERSION,
   COUPLE_DOSSIER_EDITORIAL_VERSION,
   HOROSCOPE_EDITORIAL_VERSION,
+  WEEK_READING_EDITORIAL_VERSION,
 } from "@atv/ai";
 import {
   workflowFor,
@@ -63,7 +64,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.32.0";
+  "atv-product-editorial-evidence/1.33.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -179,18 +180,20 @@ export function prepareProductFacts(
                   ? { editorialProfile: DREAM_READING_EDITORIAL_VERSION }
                   : productId === "horoscope"
                     ? { editorialProfile: HOROSCOPE_EDITORIAL_VERSION }
-                    : productId === "date-reading"
-                      ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
-                      : productId === "pair-preview"
-                        ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
-                        : productId === "synastry"
-                          ? { editorialProfile: SYNASTRY_EDITORIAL_VERSION }
-                          : productId === "couple-dossier"
-                            ? {
-                                editorialProfile:
-                                  COUPLE_DOSSIER_EDITORIAL_VERSION,
-                              }
-                            : {}),
+                    : productId === "week-reading"
+                      ? { editorialProfile: WEEK_READING_EDITORIAL_VERSION }
+                      : productId === "date-reading"
+                        ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
+                        : productId === "pair-preview"
+                          ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
+                          : productId === "synastry"
+                            ? { editorialProfile: SYNASTRY_EDITORIAL_VERSION }
+                            : productId === "couple-dossier"
+                              ? {
+                                  editorialProfile:
+                                    COUPLE_DOSSIER_EDITORIAL_VERSION,
+                                }
+                              : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))

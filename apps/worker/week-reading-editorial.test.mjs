@@ -10,7 +10,12 @@ import {
   evaluateProductDraft,
   PRODUCT_EDITORIAL_VERSION,
 } from "./src/product-editorial.ts";
-import { validateFacts, tierLimits } from "../../packages/ai/src/index.ts";
+import {
+  validateFacts,
+  tierLimits,
+  WEEK_READING_EDITORIAL_VERSION,
+} from "../../packages/ai/src/index.ts";
+import { weekReadingEditorialTestFixture } from "../../scripts/helpers/week-reading-editorial-test-fixture.mjs";
 
 const provider = new CaelusEphemerisProvider();
 let calls = 0;
@@ -48,20 +53,21 @@ const calculation = await createWeekReadingCalculators({
   },
 );
 
-test("complete coherent Week is refused by the unchanged generic editorial budget without truncation", () => {
+test("coherent Week uses its trusted profile without widening the generic budget or truncating facts", () => {
   const original = structuredClone(calculation);
   assert.equal(
     PRODUCT_EDITORIAL_VERSION,
-    "atv-product-editorial-evidence/1.32.0",
+    "atv-product-editorial-evidence/1.33.0",
   );
   assert.equal(calls, 8);
   assert.equal(calculation.facts.length, 89);
   assert.equal(validWeekReadingProjection(calculation), true);
   assert.ok(validateCalculation(calculation, "week-reading"));
-  assert.deepEqual(prepareProductFacts("week-reading", calculation), {
-    status: "blocked",
-    reason: "facts_not_representable",
-  });
+  const prepared = prepareProductFacts("week-reading", calculation);
+  assert.equal(prepared.status, "prepared");
+  assert.equal(prepared.facts.editorialProfile, WEEK_READING_EDITORIAL_VERSION);
+  assert.deepEqual(prepared.facts.facts, calculation.facts);
+  assert.equal(validateFacts(prepared.facts), true);
   assert.deepEqual(calculation, original);
   assert.equal(calls, 8);
   assert.equal(
@@ -140,7 +146,7 @@ test("Week preparation rejects changed range, child, provenance, source, geometr
   assert.equal(calls, 8);
 });
 
-test("offline Director refuses corrupt or unrepresentable Week before schema/review and provider work", async () => {
+test("offline Director rejects invalid Week output and corrupt originals without provider work", async () => {
   const draft = {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 0,
@@ -150,7 +156,7 @@ test("offline Director refuses corrupt or unrepresentable Week before schema/rev
     output: {},
   };
   const result = await evaluateProductDraft(draft);
-  assert.equal(result.reason, "facts_not_representable");
+  assert.equal(result.reason, "invalid_schema");
   assert.equal(result.status, "rejected");
   assert.equal(result.publication, "blocked");
   assert.equal(result.basisDigest, null);
@@ -160,5 +166,35 @@ test("offline Director refuses corrupt or unrepresentable Week before schema/rev
     (await evaluateProductDraft({ ...draft, calculation: changed })).reason,
     "calculation_invalid",
   );
+  assert.equal(calls, 8);
+});
+
+test("offline Week fixture preserves all facts, profile and basis digest but cannot publish", async () => {
+  const prepared = prepareProductFacts("week-reading", calculation);
+  assert.equal(prepared.status, "prepared");
+  const output = weekReadingEditorialTestFixture(prepared.facts);
+  const result = await evaluateProductDraft({
+    runId: "00000000-0000-4000-8000-000000000001",
+    revision: 0,
+    productId: "week-reading",
+    tier: "free",
+    calculation,
+    output,
+  });
+  assert.equal(result.status, "needs_editorial_review");
+  assert.equal(result.publication, "blocked");
+  assert.match(result.basisDigest, /^[a-f0-9]{64}$/);
+  const changed = structuredClone(output);
+  changed.claims[2].evidence = changed.claims[1].evidence;
+  const rejected = await evaluateProductDraft({
+    runId: "00000000-0000-4000-8000-000000000001",
+    revision: 0,
+    productId: "week-reading",
+    tier: "free",
+    calculation,
+    output: changed,
+  });
+  assert.equal(rejected.status, "rejected");
+  assert.equal(rejected.publication, "blocked");
   assert.equal(calls, 8);
 });

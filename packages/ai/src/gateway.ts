@@ -1,4 +1,8 @@
 import {
+  WEEK_READING_EDITORIAL_VERSION,
+  WEEK_READING_MAX_INPUT_CHARS,
+} from "./week-reading.ts";
+import {
   HOROSCOPE_EDITORIAL_VERSION,
   HOROSCOPE_MAX_INPUT_CHARS,
 } from "./horoscope.ts";
@@ -205,11 +209,14 @@ export class EditorialGateway {
     const maxInputChars =
       request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
         ? HOROSCOPE_MAX_INPUT_CHARS
-        : request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
-          ? SYNASTRY_MAX_INPUT_CHARS
-          : request.facts.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION
-            ? COUPLE_DOSSIER_MAX_INPUT_CHARS
-            : tierLimits[request.tier].maxInputChars;
+        : request.facts.editorialProfile === WEEK_READING_EDITORIAL_VERSION
+          ? WEEK_READING_MAX_INPUT_CHARS
+          : request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
+            ? SYNASTRY_MAX_INPUT_CHARS
+            : request.facts.editorialProfile ===
+                COUPLE_DOSSIER_EDITORIAL_VERSION
+              ? COUPLE_DOSSIER_MAX_INPUT_CHARS
+              : tierLimits[request.tier].maxInputChars;
     if (payload.prompt.length > maxInputChars)
       return unavailable("input_limit");
     const startedAt = performance.now();

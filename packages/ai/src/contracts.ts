@@ -1,3 +1,7 @@
+import {
+  WEEK_READING_EDITORIAL_VERSION,
+  validWeekReadingFacts,
+} from "./week-reading.ts";
 import { SYNASTRY_EDITORIAL_VERSION, validSynastryFacts } from "./synastry.ts";
 import {
   HOROSCOPE_EDITORIAL_VERSION,
@@ -64,7 +68,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.18";
+export const PROMPT_VERSION = "atv-editorial/1.0.19";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -104,7 +108,8 @@ export interface FactsEnvelope {
     | typeof PAIR_PREVIEW_EDITORIAL_VERSION
     | typeof SYNASTRY_EDITORIAL_VERSION
     | typeof COUPLE_DOSSIER_EDITORIAL_VERSION
-    | typeof HOROSCOPE_EDITORIAL_VERSION;
+    | typeof HOROSCOPE_EDITORIAL_VERSION
+    | typeof WEEK_READING_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -228,12 +233,14 @@ export function validateFacts(value: FactsEnvelope): boolean {
     value.facts.length >
       (value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
         ? 122
-        : [
-              SYNASTRY_EDITORIAL_VERSION,
-              COUPLE_DOSSIER_EDITORIAL_VERSION,
-            ].includes(value.editorialProfile ?? "")
-          ? 121
-          : 40)
+        : value.editorialProfile === WEEK_READING_EDITORIAL_VERSION
+          ? 89
+          : [
+                SYNASTRY_EDITORIAL_VERSION,
+                COUPLE_DOSSIER_EDITORIAL_VERSION,
+              ].includes(value.editorialProfile ?? "")
+            ? 121
+            : 40)
   )
     return false;
   const ids = new Set<string>();
@@ -262,6 +269,7 @@ export function validateFacts(value: FactsEnvelope): boolean {
           SYNASTRY_EDITORIAL_VERSION,
           COUPLE_DOSSIER_EDITORIAL_VERSION,
           HOROSCOPE_EDITORIAL_VERSION,
+          WEEK_READING_EDITORIAL_VERSION,
         ].includes(value.editorialProfile ?? "")
           ? 300
           : 160)
@@ -302,7 +310,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION &&
       validCoupleDossierFacts(value)) ||
     (value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION &&
-      validHoroscopeFacts(value))
+      validHoroscopeFacts(value)) ||
+    (value.editorialProfile === WEEK_READING_EDITORIAL_VERSION &&
+      validWeekReadingFacts(value))
   );
 }
 

@@ -1,4 +1,8 @@
 import {
+  WEEK_READING_EDITORIAL_VERSION,
+  weekReadingOutputLimits,
+} from "./week-reading.ts";
+import {
   HOROSCOPE_EDITORIAL_VERSION,
   horoscopeOutputLimits,
 } from "./horoscope.ts";
@@ -90,7 +94,9 @@ export function parseReading(
   const limits =
     profile === HOROSCOPE_EDITORIAL_VERSION
       ? horoscopeOutputLimits
-      : tierLimits[tier];
+      : profile === WEEK_READING_EDITORIAL_VERSION
+        ? weekReadingOutputLimits
+        : tierLimits[tier];
   try {
     const encoded = typeof raw === "string" ? raw : JSON.stringify(raw);
     if (!encoded || encoded.length > limits.maxOutputChars) return null;
