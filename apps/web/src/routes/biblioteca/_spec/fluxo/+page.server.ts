@@ -7,9 +7,12 @@ import { threePillarsReaderFixture } from '../../../../../tests/fixtures/three-p
 import { birthChartReaderFixture } from '../../../../../tests/fixtures/birth-chart-reader';
 import { ascendantReaderFixture } from '../../../../../tests/fixtures/ascendant-reader';
 import { midheavenReaderFixture } from '../../../../../tests/fixtures/midheaven-reader';
+import { dailyCardReaderFixture } from '../../../../../tests/fixtures/daily-card-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
+	if (url.searchParams.get('product') === 'daily-card')
+		return dailyCardReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'career-compass')
 		return careerCompassReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'three-pillars')

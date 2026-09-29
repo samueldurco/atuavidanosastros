@@ -38,6 +38,10 @@ Before editorial preparation, `daily-card` now requires the saved card identity/
 
 After trusted base validation, preparation selects `atv-daily-card-editorial/1.0.0`. Two exact factual displays and three roles cover observation, the reported question and a reversible practice, with a joint synthesis and one practical question. Missing coverage rejects the candidate; complete synthetic coverage still requires legitimate editorial review. Reported question/context cannot select a profile or redraw a card. Prompt 1.0.8, preparation 1.13.0 and corpus 1.15.0 bind reviews to the updated basis. See `daily-card-editorial.md` and `../qa/DAILY_CARD_EDITORIAL_2026-09-28.md`; E2 integral remains blocked.
 
+### Daily-card persisted reader — WU134
+
+Delivery `atv-product-delivery/1.6.0` projects the saved card, declared question, observation, question connection, reversible practice and joint synthesis with one reflection. The reader labels drawn card, reported question and optional reported context separately. Claim text and evidence remain unchanged; the delivery version changes the basis digest for new reviews without rewriting prior snapshots. Local owner-scoped SQL and browser fixtures prove reopening the same draw and withholding pending/revoked/failed content. The legacy processing SQL fixture now satisfies the candidate profile; removing the practice rejects it. Catalog delivery remains web, with the existing private section card; no map or PDF is added. See `../qa/DAILY_CARD_READER_2026-09-28.md`; legitimate content, review, hosted session and release remain blocked.
+
 ## Recovery and privacy
 
 Intake access and request recovery use the shared `withRpcDeadline` asynchronous wait bound of 10 seconds, including when the transport ignores abort. Authentication and request-body reads are outside that bound. Timeout means unavailable, never eligibility, not-found, rollback or permission to submit again. No automatic retries are added; a late transport may still finish independently.

@@ -460,6 +460,18 @@ for (const productId of products)
 				expect(html).toContain('Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.');
 				expect(html).toContain('Que observação posso fazer ao testar um pequeno experimento hoje?');
 				expect(parent?.editorial?.sections).toHaveLength(6);
+				expect(parent?.editorial?.sections.map((section) => section.title)).toEqual([
+					'Carta registrada — Fato [daily-card-fact]',
+					'Pergunta relatada — Fato [daily-question-fact]',
+					'Possibilidade e observação do dia — Hipótese [daily-observation]',
+					'Conexão com sua pergunta — Hipótese [daily-question]',
+					'Um pequeno experimento — Hipótese [daily-practice]',
+					'Síntese da Carta do Dia (1) e uma pergunta prática'
+				]);
+				expect(
+					parent?.calculation?.facts.filter((fact) => fact.kind === 'drawn').map((fact) => fact.id)
+				).toEqual(['card-1']);
+				expect(parent?.cartography).toBeNull();
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');
