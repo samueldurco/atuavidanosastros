@@ -3,7 +3,7 @@ import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { WorkflowInput, CalculationSnapshot } from '@atv/domain';
-import { bodies, CaelusEphemerisProvider } from '@atv/astrology';
+import { bodies, CaelusEphemerisProvider, type AspectPolicy } from '@atv/astrology';
 import {
 	setupProductDatabase,
 	owner,
@@ -16,6 +16,7 @@ import { createProductPublisher } from '../../../../worker/src/product-publicati
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
 import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
+import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
@@ -34,16 +35,29 @@ import { readLibraryResult } from './library-reader';
 // Local PostgreSQL/RLS and actual handlers/calculators. Synthetic claims, one connection.
 // Never seed editorial approval, promotions or READY output to make a vertical pass.
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
-const profileProducts = [...natalProducts, 'date-reading', 'pair-preview'] as const;
+const profileProducts = [...natalProducts, 'date-reading', 'pair-preview', 'synastry'] as const;
+const isPair = (productId: string) => productId === 'pair-preview' || productId === 'synastry';
+const synastryContext = 'Contexto sintético privado: conversar sobre autonomia e reparação.';
+const synastryPolicy: AspectPolicy = {
+	id: 'synthetic-synastry-vertical-not-approved',
+	version: 'qa-fixture-1',
+	aspects: [
+		{ kind: 'conjunction', orbDegrees: 5 },
+		{ kind: 'sextile', orbDegrees: 3 },
+		{ kind: 'square', orbDegrees: 5 },
+		{ kind: 'trine', orbDegrees: 5 },
+		{ kind: 'opposition', orbDegrees: 5 }
+	]
+};
 const targetDate = '2028-02-29';
 const requestPath = (productId: string) =>
-	productId === 'pair-preview'
+	isPair(productId)
 		? '/api/workflows/pair'
 		: productId === 'date-reading'
 			? '/api/workflows/date'
 			: '/api/workflows/natal';
 const requestApi = (productId: string) =>
-	productId === 'pair-preview'
+	isPair(productId)
 		? pairRequestApi
 		: productId === 'date-reading'
 			? dateRequestApi
@@ -95,7 +109,8 @@ beforeAll(async () => {
 		'20260925200000_pair_product_requests.sql',
 		'20260928170000_career_compass_requests.sql',
 		'20260928180000_career_compass_context.sql',
-		'20260928190000_date_reading_context.sql'
+		'20260928190000_date_reading_context.sql',
+		'20260929090000_synastry_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -268,27 +283,28 @@ async function command(productId: string, date = targetDate, pairBirth = partner
 	const payload = (await response.json()) as { onboarding: unknown };
 	const snapshot = parseOnboardingSnapshot(payload.onboarding);
 	expect(snapshot).toMatchObject({ state: 'COMPLETE', natal: { timePrecision: 'EXACT' } });
-	const parse =
-		productId === 'pair-preview'
-			? parsePairRequestInput
-			: productId === 'date-reading'
-				? parseDateRequestInput
-				: parseNatalRequestInput;
+	const parse = isPair(productId)
+		? parsePairRequestInput
+		: productId === 'date-reading'
+			? parseDateRequestInput
+			: parseNatalRequestInput;
 	const input = parse({
-		version:
-			productId === 'pair-preview'
-				? 'atv-pair-request/1'
-				: productId === 'date-reading'
-					? 'atv-date-request/2'
-					: productId === 'career-compass'
-						? 'atv-natal-request/2'
-						: 'atv-natal-request/1',
+		version: isPair(productId)
+			? productId === 'synastry'
+				? 'atv-pair-request/2'
+				: 'atv-pair-request/1'
+			: productId === 'date-reading'
+				? 'atv-date-request/2'
+				: productId === 'career-compass'
+					? 'atv-natal-request/2'
+					: 'atv-natal-request/1',
 		productId,
 		...(productId === 'career-compass' ? { context: careerContext } : {}),
+		...(productId === 'synastry' ? { context: synastryContext } : {}),
 		...(productId === 'date-reading' ? { targetDate: date, context: dateContext } : {}),
 		expectedRevision: snapshot!.revision,
-		consent: { ...consent, partner: productId === 'pair-preview' },
-		...(productId === 'pair-preview'
+		consent: { ...consent, partner: isPair(productId) },
+		...(isPair(productId)
 			? { partner: { ...pairBirth, timePrecision: 'EXACT' }, partnerConsent }
 			: {})
 	});
@@ -311,12 +327,11 @@ function browser(productId: string, lostAcknowledgement = false) {
 	const options = {
 		productId,
 		operation: {
-			kind:
-				productId === 'pair-preview'
-					? ('create-pair' as const)
-					: productId === 'date-reading'
-						? ('create-date' as const)
-						: ('create-natal' as const),
+			kind: isPair(productId)
+				? ('create-pair' as const)
+				: productId === 'date-reading'
+					? ('create-date' as const)
+					: ('create-natal' as const),
 			ownerId: owner
 		},
 		randomUUID,
@@ -385,6 +400,7 @@ async function process(productId: string) {
 	const metrics: unknown[] = [];
 	const processor = createProductProcessor(workerRpc, {
 		enabledProducts: [productId],
+		...(productId === 'synastry' ? { experimentalSynastryPolicy: synastryPolicy } : {}),
 		emit: (e) => metrics.push(e)
 	});
 	expect(await processor.step()).toBe('calculated');
@@ -642,8 +658,9 @@ it.each(profileProducts)(
 			productId,
 			birth,
 			...(productId === 'career-compass' ? { context: careerContext } : {}),
-			consent: { ...consent, partner: productId === 'pair-preview' },
-			...(productId === 'pair-preview' ? { partner } : {}),
+			...(productId === 'synastry' ? { context: synastryContext } : {}),
+			consent: { ...consent, partner: isPair(productId) },
+			...(isPair(productId) ? { partner } : {}),
 			...(productId === 'date-reading' ? { targetDate, context: dateContext } : {})
 		});
 		expect(run.state).toBe('QUEUED');
@@ -655,16 +672,51 @@ it.each(profileProducts)(
 		const calculated = await stored(run.id);
 		expect(calculated).toMatchObject({ state: 'AWAITING_EDITORIAL', revision: 3, parent_id: null });
 		const calculators =
-			productId === 'date-reading' || productId === 'pair-preview'
-				? createContextCalculators()
-				: productId === 'career-compass'
-					? createPurposeCalculators()
-					: createNatalCalculators();
+			productId === 'synastry'
+				? createSynastryCalculators(synastryPolicy)
+				: productId === 'date-reading' || productId === 'pair-preview'
+					? createContextCalculators()
+					: productId === 'career-compass'
+						? createPurposeCalculators()
+						: createNatalCalculators();
 		const expected = await calculators[productId](run.input, {
 			signal: new AbortController().signal,
 			runId: run.id
 		});
 		expect(deterministicSnapshot(calculated.calculation)).toEqual(deterministicSnapshot(expected));
+		if (productId === 'synastry') {
+			const snapshot = calculated.calculation!;
+			expect(snapshot.facts).toHaveLength(121);
+			expect(
+				snapshot.facts.filter((fact) => fact.id.startsWith('cross-')).map((fact) => fact.id)
+			).toEqual(bodies.flatMap((first) => bodies.map((second) => `cross-${first}-${second}`)));
+			expect(snapshot.data).toMatchObject({
+				projection: { completeness: 'partial', policyApproval: 'not-established' },
+				sharing: 'not-authorized',
+				compatibilityScore: null,
+				events: [],
+				crossAspectStability: {
+					calculation: { policy: synastryPolicy, pairsEvaluated: 100 },
+					assumedLongitudeErrorDegrees: { first: null, second: null },
+					pairs: expect.any(Array)
+				}
+			});
+			const pairs = (snapshot.data.crossAspectStability as { pairs: { status: string }[] }).pairs;
+			expect(pairs).toHaveLength(100);
+			expect(pairs.every((pair) => pair.status === 'unknown-accuracy')).toBe(true);
+			const prepared = prepareProductFacts(productId, snapshot);
+			expect(prepared.status).toBe('prepared');
+			if (prepared.status !== 'prepared') throw new Error('missing_synastry_facts');
+			expect(prepared.facts.editorialProfile).toBe('atv-synastry-editorial/1.0.0');
+			expect(prepared.facts.facts).toEqual(snapshot.facts);
+			expect(
+				(
+					await db.query('select engine_approved from workflow_releases where product_id=$1', [
+						productId
+					])
+				).rows
+			).toEqual([{ engine_approved: false }]);
+		}
 		if (productId === 'three-pillars') {
 			const snapshot = calculated.calculation as CalculationSnapshot;
 			const prepared = prepareProductFacts(productId, snapshot);
@@ -682,11 +734,20 @@ it.each(profileProducts)(
 			});
 			expect(await stored(run.id)).toEqual(calculated);
 		}
-		if (productId === 'career-compass' || productId === 'date-reading') {
+		if (
+			productId === 'career-compass' ||
+			productId === 'date-reading' ||
+			productId === 'synastry'
+		) {
 			expect(calculated.calculation?.facts).toContainEqual({
 				id: 'personal-context',
 				kind: 'reported',
-				display: productId === 'career-compass' ? careerContext : dateContext,
+				display:
+					productId === 'career-compass'
+						? careerContext
+						: productId === 'synastry'
+							? synastryContext
+							: dateContext,
 				source: 'input.context'
 			});
 			const withoutContext = { ...run.input };
@@ -698,6 +759,8 @@ it.each(profileProducts)(
 			expect(deterministicSnapshot(expected).data).toEqual(
 				deterministicSnapshot(withoutReport).data
 			);
+			if (productId === 'synastry')
+				expect((withoutReport as CalculationSnapshot).facts).toHaveLength(120);
 		}
 		expect(await createProductPublisher(workerRpc, { enabledProducts: [productId] }).step()).toBe(
 			'idle'
