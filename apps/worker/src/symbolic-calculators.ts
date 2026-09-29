@@ -40,9 +40,16 @@ export function validTarotFocusProjection(
   return validSingleCardProjection(calculation, "tarot-focus");
 }
 
+/** Saved Sim/Não coherence only: no binary decision, recommendation or approval. */
+export function validTarotYesNoProjection(
+  calculation: CalculationSnapshot,
+): boolean {
+  return validSingleCardProjection(calculation, "tarot-yes-no");
+}
+
 function validSingleCardProjection(
   calculation: CalculationSnapshot,
-  productId: "daily-card" | "tarot-focus",
+  productId: "daily-card" | "tarot-focus" | "tarot-yes-no",
 ): boolean {
   const data = calculation.data;
   if (
@@ -59,7 +66,7 @@ function validSingleCardProjection(
       "cards",
       "questions",
       "reviewStatus",
-      ...(productId === "tarot-focus" ? ["productPolicy"] : []),
+      ...(productId !== "daily-card" ? ["productPolicy"] : []),
     ]) ||
     data.deckVersion !== symbolicContract.deckVersion ||
     data.spreadVersion !== symbolicContract.spreadVersion ||
@@ -75,7 +82,7 @@ function validSingleCardProjection(
   )
     return false;
   if (
-    productId === "tarot-focus" &&
+    productId !== "daily-card" &&
     (!exactKeys(data.productPolicy, [
       "version",
       "productId",

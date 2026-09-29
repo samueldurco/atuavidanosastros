@@ -172,14 +172,13 @@ test("each stage requires its own exact digest and authorized reviewer/calibrati
   );
 });
 
-test("run, revision, product, tier, provenance, limits, questions and text changes invalidate prior review", async () => {
+test("valid basis changes invalidate prior review and malformed calculations block first", async () => {
   const { input, review } = await fixture();
   for (const mutate of [
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.productId = "three-questions"),
     (d) => (d.tier = "premium"),
-    (d) => d.calculation.limits.push("Outro limite da política candidata."),
     (d) => (d.calculation.facts[2].display = "Outro contexto consentido"),
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
@@ -193,6 +192,7 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
     assert.equal("content" in result, false);
   }
   for (const mutate of [
+    (d) => d.calculation.limits.push("Outro limite da política candidata."),
     (d) => (d.calculation.version = ""),
     (d) => (d.calculation.kind = "dream"),
   ]) {

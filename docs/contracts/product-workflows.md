@@ -241,3 +241,6 @@ Perfil `atv-tarot-focus-editorial/1.0.0` após projeção coerente, preparação
 ## WU137 — Foco Agora: leitor e percurso local
 
 Delivery1.7.0 nomeia as cinco afirmações e a síntese/pergunta preservando texto, evidências e sorteio salvo. O leitor diferencia carta, pergunta e contexto relatados; a versão integra a revisão. O percurso SQL local verifica leitura privada, Biblioteca, snapshot web, recuperação idempotente, revogação e versão filha independente com aprovação fictícia explícita. Demonstração local responsiva mantém downloads bloqueados e não oferece PDF/cartografia fora do contrato. QA `../qa/TAROT_FOCUS_READER_2026-09-28.md` registra os limites de E3–E5; conteúdo/revisão legítimos e hospedagem continuam necessários para aceite integral.
+## WU138 — Sim/Não responsável: coerência da base
+
+Preparação 1.16.0 valida projeção salva de `tarot-yes-no`: carta/pergunta/contexto, proveniência, limites e política candidata exatos, sem veredito. Divergências bloqueiam com `calculation_invalid` antes de revisar o draft. O sorteio e os requests válidos do corpus 1.17.0 permanecem iguais. Contrato `tarot-yes-no-calculation.md` e QA `../qa/TAROT_YES_NO_BASE_2026-09-28.md`; E1 integral bloqueado por revisão da política, E2–E5 pendentes de leitura/autoridade legítimas e validação hospedada.
