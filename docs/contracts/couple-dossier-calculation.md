@@ -1,0 +1,15 @@
+# Base experimental do Dossiê do Casal
+
+WU165 — E1 parcial. Catálogo: `couple-dossier`, `/dossie-do-casal`, universo Amor & Relações, entrega web/PDF. O plano exige entrada consentida, leitura completa, persistência privada, resultado e aceite real. Esta base é o primeiro requisito independente; não satisfaz a leitura premium ou os marcos integrais.
+
+`createCoupleDossierCalculators(policy, provider?)` requer política de aspectos injetada pelo operador. Não há registro na composição padrão ou política enviada pelo cliente. A entrada continua `atv-workflow/1.0.0`, produto exato, dois registros de nascimento válidos e consentimentos de armazenamento/par. Contexto declarado é opcional; consentimento de continuidade não consulta histórico automaticamente. Ambos os registros são validados antes de trabalho do provedor; entrada e política são capturadas antes das operações assíncronas.
+
+Contrato externo `atv-couple-dossier-calculation/1.0.0`, tipo `relationship`, estado `experimental`. `data` contém somente `productId`, `projection` e `base`. A projeção declara completude parcial, contrato base `atv-synastry-calculation/1.0.0`, interpretação não produzida e continuidade não consultada. `base` conserva o snapshot original completo da Sinastria: dez corpos canônicos por pessoa, os cem pares dirigidos A×B, política, proveniências, consentimentos, fontes e limites originais. Não renomeia fontes como se fossem cálculos novos do Dossiê.
+
+Os fatos externos são uma cópia fiel e independente dos 120 fatos originais, ou 121 com contexto relatado. Os limites externos são os limites originais mais a limitação explícita da composição parcial. `validCoupleDossierProjection` exige as chaves exatas, valida toda a base com `validSynastryProjection` e confere igualdade dos fatos e limites. Não aceita posições, geometria, fontes, consentimentos ou conclusões adulterados, fatos omitidos/reordenados ou metadados extras. A composição também passa pelo envelope limitado de `validateCalculation` (200.000 bytes).
+
+Precisão não certificada; todos os pares conservam estabilidade desconhecida e nenhum orçamento medido é inventado. Política editorial não homologada. Casas/ângulos, aplicação/separação, eventos exatos, mapa composto, score de compatibilidade, leitura de sentimentos e destino não são calculados. A base não autoriza compartilhar o par e não inclui os registros brutos de entrada.
+
+Implementação: `apps/worker/src/couple-dossier-calculators.ts` e `couple-dossier-projection.ts`. Provas: `apps/worker/couple-dossier-calculators.test.mjs`; QA `docs/qa/COUPLE_DOSSIER_CALCULATION_2026-09-29.md`. A preparação editorial/integração é requisito seguinte, com dimensões previstas do universo e síntese própria; não pode reduzir o Dossiê a uma cópia da leitura de Sinastria nem tratar fixture como conteúdo aprovado.
+
+E1 integral permanece bloqueado por política/motor e validação real. E2–E5 dependem de implementação independente restante, interpretação útil e revisão legítimas, percurso privado real e hospedagem. Gates e gasto automático continuam desativados/zero.
