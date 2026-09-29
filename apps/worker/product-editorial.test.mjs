@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { dimensions, RUBRIC_VERSION, SCHEMA_VERSION, EditorialGateway, LabBudgetLedger } from '@atv/ai';
 import { prepareProductFacts, evaluateProductDraft } from './src/product-editorial.ts';
-import { createNatalCalculators } from './src/natal-calculators.ts';
+import { createNatalCalculators, zodiacPosition } from './src/natal-calculators.ts';
 import { createSymbolicCalculators } from './src/symbolic-calculators.ts';
 import { threePillarsEditorialTestFixture , birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
 
@@ -117,17 +117,18 @@ test('unavailable Ascendant has no interpretive basis, even with context and per
   }
 });
 
-test('Ascendant preparation requires a valid numeric angle and calculated fact',async()=>{
+test('Ascendant preparation requires a coherent numeric angle and calculated fact',async()=>{
   const calc=await calculation('ascendant');
   for(const mutate of [c=>delete c.data.angles,c=>c.data.angles=[],c=>c.data.angles.ascendant=null,
     c=>c.data.angles.ascendant='12',c=>c.data.angles.ascendant=-1,c=>c.data.angles.ascendant=360,
     c=>c.facts[0].id='ascendant-unavailable',c=>c.facts[0].kind='reported',
     c=>c.facts.push({...c.facts[0],id:'ascendant-unavailable'})]) {
     const changed=structuredClone(calc);mutate(changed);
-    assert.equal(prepareProductFacts('ascendant',changed).reason,'insufficient_facts');
+    assert.equal(prepareProductFacts('ascendant',changed).reason,'calculation_invalid');
   }
   for(const longitude of [0,359.999999]) {
     const changed=structuredClone(calc);changed.data.angles.ascendant=longitude;
+    changed.facts[0].display=`Ascendente: ${zodiacPosition(longitude).display}`;
     assert.equal(prepareProductFacts('ascendant',changed).status,'prepared');
   }
 });

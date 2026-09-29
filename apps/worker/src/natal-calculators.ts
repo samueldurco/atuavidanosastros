@@ -28,12 +28,13 @@ const sameContract = (v: unknown, expected: Record<string, unknown>): boolean =>
     Array.isArray(wanted) ? JSON.stringify(v[key]) === JSON.stringify(wanted) : v[key] === wanted);
 
 /** Persisted projection coherence only, never origin authentication or precision certification. */
-function inspectNatalProjection(value: CalculationSnapshot, productId: 'three-pillars' | 'birth-chart'): 'available' | 'unavailable' | null {
+function inspectNatalProjection(value: CalculationSnapshot, productId: 'three-pillars' | 'birth-chart' | 'ascendant'): 'available' | 'unavailable' | null {
   const { data } = value, { positions, angles, houses, provenance } = data;
   const full = productId === 'birth-chart';
+  const selectedBodies = full ? bodies : productId === 'three-pillars' ? ['sun', 'moon'] as const : [];
   if (value.version !== natalProductContract.version || value.kind !== 'natal' || value.status !== 'experimental' ||
       data.productId !== productId || Object.keys(data).length !== 6 ||
-      !sameContract(data.projection, natalProductContract) || !Array.isArray(positions) || positions.length !== (full ? bodies.length : 2) ||
+      !sameContract(data.projection, natalProductContract) || !Array.isArray(positions) || positions.length !== selectedBodies.length ||
       !record(angles) || Object.keys(angles).length !== 2 ||
       (full ? typeof angles.midheaven !== 'number' || !angle(angles.midheaven) : angles.midheaven !== null) ||
       !(angles.ascendant === null || (typeof angles.ascendant === 'number' && angle(angles.ascendant))) ||
@@ -51,7 +52,7 @@ function inspectNatalProjection(value: CalculationSnapshot, productId: 'three-pi
       provenance.warnings.some(warning => typeof warning !== 'string' || !warning.trim() || !value.limits.includes(warning))) return null;
   const source = `${provenance.provider}@${provenance.providerVersion};${provenance.algorithmVersion};${natalProductContract.version}`;
   const expected = new Map<string, string>();
-  for (const body of full ? bodies : ['sun', 'moon'] as const) {
+  for (const body of selectedBodies) {
     const p = positions.find(p => record(p) && p.body === body);
     if (!record(p) || Object.keys(p).length !== 5 || typeof p.longitude !== 'number' || !angle(p.longitude) ||
         typeof p.latitude !== 'number' || !Number.isFinite(p.latitude) || Math.abs(p.latitude) > 90 ||
@@ -82,6 +83,11 @@ export function inspectThreePillarsProjection(value: CalculationSnapshot): 'avai
 /** Complete persisted natal geometry, still experimental and without assessed aspects. */
 export function inspectBirthChartProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
   return inspectNatalProjection(value, 'birth-chart');
+}
+
+/** ASC-only persisted projection; no planets, MC or house cusps may be injected. */
+export function inspectAscendantProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
+  return inspectNatalProjection(value, 'ascendant');
 }
 
 function validateChart(chart: NatalChart): void {

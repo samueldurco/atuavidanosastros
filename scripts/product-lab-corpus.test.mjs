@@ -192,14 +192,14 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.9.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.10.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
     '870a360458e37d3e7ef49f201ad557a7fc5810828204541fbc38852828627a68');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
     'dd7763656b3233ba10c27625195e473a6b417a3ab913f0e41f97d45316357736');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
     'a46d39ebcebf9d2d4252292a41f35f48b3ba8bc41935ba40f0d2b87e442991fe');
-  // Version 1.9.0 binds the natal editorial profile; incomplete polar cases remain withheld.
+  // Version 1.10.0 preserves requests while adding ASC persisted-coherence validation.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     '6c59a8014d964d8c3f27cb4c89de916d3c00c43efc78c2260c2330c21eaf2808');
 });
