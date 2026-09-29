@@ -1,15 +1,26 @@
-export { processNextProductRun, createWorkflowRepository } from './product-processing.ts';
-export { createSymbolicCalculators } from './symbolic-calculators.ts';
-export { createNatalCalculators } from './natal-calculators.ts';
-export { createContextCalculators } from './context-calculators.ts';
-export { createProductCalculators, createProductProcessor, productCalculationCoverage } from './product-runtime.ts';
-export { prepareProductFacts, evaluateProductDraft } from './product-editorial.ts';
+export {
+  processNextProductRun,
+  createWorkflowRepository,
+} from "./product-processing.ts";
+export { createSymbolicCalculators } from "./symbolic-calculators.ts";
+export { createNatalCalculators } from "./natal-calculators.ts";
+export { createContextCalculators } from "./context-calculators.ts";
+export {
+  createSynastryCalculators,
+  synastryProductContract,
+} from "./synastry-calculators.ts";
+export {
+  createProductCalculators,
+  createProductProcessor,
+  productCalculationCoverage,
+} from "./product-runtime.ts";
+export {
+  prepareProductFacts,
+  evaluateProductDraft,
+} from "./product-editorial.ts";
 
 export type WorkerJobName =
-  | 'hotmart.reconcile'
-  | 'delivery.render'
-  | 'email.dispatch'
-  | 'account.erase';
+  "hotmart.reconcile" | "delivery.render" | "email.dispatch" | "account.erase";
 
 export interface WorkerJob<T = unknown> {
   id: string;
@@ -20,6 +31,7 @@ export interface WorkerJob<T = unknown> {
 }
 
 export async function handleJob(job: WorkerJob): Promise<void> {
-  if (job.attempt < 0) throw new Error('A tentativa do job não pode ser negativa.');
+  if (job.attempt < 0)
+    throw new Error("A tentativa do job não pode ser negativa.");
   throw new Error(`Handler ainda não registrado para ${job.name}.`);
 }
