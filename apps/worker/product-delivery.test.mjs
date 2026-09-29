@@ -14,6 +14,7 @@ import {
   midheavenEditorialTestFixture,
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
+  tarotYesNoEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
@@ -852,6 +853,95 @@ test("tarot focus delivery preserves the saved card, reported question and all c
     (d) => {
       d.output.claims = d.output.claims.filter(
         (c) => c.id !== "focus-practice",
+      );
+    },
+    (d) => {
+      d.output.reflections.push("Outra pergunta?");
+    },
+  ]) {
+    const invalid = structuredClone(input);
+    change(invalid);
+    assert.equal((await prepareProductDelivery(invalid)).status, "rejected");
+  }
+});
+
+test("tarot yes-no delivery preserves the saved card, reported question and all coverage without granting publication", async () => {
+  const input = draft();
+  input.productId = "tarot-yes-no";
+  input.calculation = await calculateTarot(
+    {
+      version: "atv-workflow/1.0.0",
+      productId: "tarot-yes-no",
+      questions: ["Que possibilidade posso observar?"],
+      context: "Relato sintético consentido",
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    input.runId,
+    new AbortController().signal,
+  );
+  const saved = structuredClone(input.calculation);
+  const facts = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(facts.status, "prepared");
+  input.output = {
+    ...input.output,
+    ...tarotYesNoEditorialTestFixture(facts.facts),
+  };
+  const result = await prepareProductDelivery(input);
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.deepEqual(
+    result.content.sections.map((s) => s.title),
+    [
+      "Carta registrada — Fato [tarot-yes-no-fact]",
+      "Pergunta relatada — Fato [yes-no-question-fact]",
+      "Possibilidades, limites e alternativas — Hipótese [yes-no-conditions]",
+      "Sua pergunta e o que verificar — Hipótese [yes-no-question]",
+      "Sua escolha e um passo reversível — Hipótese [yes-no-autonomy]",
+      "Síntese do Sim/Não responsável (1) e uma pergunta prática",
+    ],
+  );
+  for (const [index, claim] of input.output.claims.entries()) {
+    assert.equal(result.content.sections[index].text, claim.text);
+    assert.deepEqual(result.content.sections[index].evidence, claim.evidence);
+  }
+  assert.deepEqual(result.content.sections[5].evidence, [
+    "card-1",
+    "question-1",
+    "tarot-context",
+  ]);
+  for (const question of input.output.reflections)
+    assert.equal(contentTexts(result.content).split(question).length, 2);
+  assert.deepEqual(input.calculation, saved);
+  assert.equal(input.calculation.data.productPolicy.binaryVerdict, null);
+  const again = await prepareProductDelivery(input);
+  assert.equal(again.deliveryDigest, result.deliveryDigest);
+  const legacy = { ...result.content, version: "atv-product-delivery/1.7.0" };
+  const oldDigest = createHash("sha256")
+    .update(
+      JSON.stringify({
+        version: legacy.version,
+        basisDigest: result.basisDigest,
+        outputDigest: result.outputDigest,
+        content: legacy,
+      }),
+    )
+    .digest("hex");
+  assert.notEqual(oldDigest, result.deliveryDigest);
+  for (const change of [
+    (d) => {
+      d.calculation.facts.find((f) => f.id === "card-1").display =
+        "Carta incoerente";
+    },
+    (d) => {
+      d.output.claims = d.output.claims.filter(
+        (c) => c.id !== "yes-no-autonomy",
       );
     },
     (d) => {

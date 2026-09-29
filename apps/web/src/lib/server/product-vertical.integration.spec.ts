@@ -493,6 +493,14 @@ for (const productId of products)
 				).toEqual(['card-1']);
 				expect(parent?.cartography).toBeNull();
 			} else if (productId === 'tarot-yes-no') {
+				expect(parent?.editorial?.sections.map((section) => section.title)).toEqual([
+					'Carta registrada — Fato [tarot-yes-no-fact]',
+					'Pergunta relatada — Fato [yes-no-question-fact]',
+					'Possibilidades, limites e alternativas — Hipótese [yes-no-conditions]',
+					'Sua pergunta e o que verificar — Hipótese [yes-no-question]',
+					'Sua escolha e um passo reversível — Hipótese [yes-no-autonomy]',
+					'Síntese do Sim/Não responsável (1) e uma pergunta prática'
+				]);
 				expect(html).toContain('Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.');
 				expect(html).toContain('Que observação posso fazer ao testar um pequeno experimento hoje?');
 				expect(parent?.editorial?.sections).toHaveLength(6);

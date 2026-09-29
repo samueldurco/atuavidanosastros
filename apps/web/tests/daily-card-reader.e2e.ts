@@ -33,7 +33,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Carta registrada (card-1)',
 			'Pergunta relatada (question-1)',
 			'Contexto relatado (tarot-context)',
-			'atv-product-delivery/1.7.0',
+			'atv-product-delivery/1.8.0',
 			'Fixture de apresentação',
 			'parcial',
 			'input.questions[0]',

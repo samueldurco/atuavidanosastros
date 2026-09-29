@@ -1,19 +1,19 @@
 import { expect, test } from '@playwright/test';
 
 const headings = [
-	'Carta registrada — Fato [tarot-focus-fact]',
-	'Pergunta relatada — Fato [focus-question-fact]',
-	'Possibilidade, tensão e alternativa — Hipótese [focus-symbol]',
-	'Conexão com sua pergunta — Hipótese [focus-question]',
-	'Um pequeno experimento — Hipótese [focus-practice]',
-	'Síntese do Foco Agora (1) e uma pergunta prática'
+	'Carta registrada — Fato [tarot-yes-no-fact]',
+	'Pergunta relatada — Fato [yes-no-question-fact]',
+	'Possibilidades, limites e alternativas — Hipótese [yes-no-conditions]',
+	'Sua pergunta e o que verificar — Hipótese [yes-no-question]',
+	'Sua escolha e um passo reversível — Hipótese [yes-no-autonomy]',
+	'Síntese do Sim/Não responsável (1) e uma pergunta prática'
 ];
 for (const width of [1440, 820, 390, 320]) {
-	test(`tarot focus preserves its saved draw and reported question at ${width}`, async ({
+	test(`tarot yes-no preserves its saved draw and reported question at ${width}`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
-		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=tarot-focus');
+		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=tarot-yes-no');
 		const consent = page.getByRole('button', { name: 'Recusar analytics' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
@@ -24,7 +24,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(6);
 		await expect(reading).toContainText('Base: Carta registrada (card-1)');
 		await expect(reading).toContainText('Base: Pergunta relatada (question-1)');
-		await expect(reading).toContainText('Que alternativa posso observar no meu foco agora?');
+		await expect(reading).toContainText('Que condição devo observar antes de escolher?');
 		await expect(reading).toContainText(
 			'Que observação posso fazer ao testar um pequeno experimento hoje?'
 		);
@@ -46,11 +46,9 @@ for (const width of [1440, 820, 390, 320]) {
 			.filter({ hasText: 'Carta registrada (card-1)' })
 			.locator('..')
 			.locator('dd');
-		await expect(cardValue).toContainText('Cavaleiro de Copas');
+		await expect(cardValue).toContainText('Rainha de Copas');
 		await expect(reading).toContainText('Contexto relatado (tarot-context)');
-		await expect(source).toContainText(
-			'Relato sintético consentido: estou considerando uma pequena pausa.'
-		);
+		await expect(source).toContainText('Relato sintético consentido.');
 		const savedCard = await cardValue.textContent();
 		await expect(
 			page.getByText('O reprocessamento preserva as cartas já registradas. Não é um novo sorteio.')
@@ -64,7 +62,7 @@ for (const width of [1440, 820, 390, 320]) {
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
 		).toBeLessThanOrEqual(1);
 		await page.screenshot({
-			path: testInfo.outputPath(`tarot-focus-reader-${width}.png`),
+			path: testInfo.outputPath(`tarot-yes-no-reader-${width}.png`),
 			fullPage: true
 		});
 		const history = page.getByRole('link', { name: 'Histórico desta versão', exact: true });
@@ -79,7 +77,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(cardValue).toHaveText(savedCard!);
 	});
 }
-test('tarot focus pending, revocation and failure withhold reading and formats', async ({
+test('tarot yes-no pending, revocation and failure withhold reading and formats', async ({
 	page
 }) => {
 	for (const [state, name] of [
@@ -87,7 +85,7 @@ test('tarot focus pending, revocation and failure withhold reading and formats',
 		['revoked', 'Leitura temporariamente indisponível'],
 		['failed', 'Processamento interrompido']
 	]) {
-		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=tarot-focus`);
+		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=tarot-yes-no`);
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);

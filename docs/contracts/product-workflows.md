@@ -248,3 +248,7 @@ Preparação 1.16.0 valida projeção salva de `tarot-yes-no`: carta/pergunta/co
 ## WU139 — Sim/Não responsável: cobertura editorial
 
 Perfil `atv-tarot-yes-no-editorial/1.0.0`, prompt 1.0.10, preparação 1.17.0 e corpus 1.18.0 exigem fatos exatos da carta/pergunta e três hipóteses ligadas: condições, pergunta/contexto e autonomia. Síntese conjunta e uma pergunta prática preservam escolhas condicionais e o veredito nulo do cálculo. Faltas estruturais impedem revisão/publicação; scores e fixtures não homologam significado. Contrato `tarot-yes-no-editorial.md`, QA `../qa/TAROT_YES_NO_EDITORIAL_2026-09-29.md`. E2 local validado, integral bloqueado; próximo requisito independente é apresentação web das seis seções e salvamento/reabertura.
+
+## WU140 — Sim/Não responsável: resultado web
+
+Delivery1.8.0 nomeia as cinco afirmações e a síntese/pergunta: carta, pergunta, condições, informações a verificar e autonomia. Preserva textos, evidências, sorteio salvo e veredito nulo; nova versão integra a revisão. O leitor identifica carta/pergunta/contexto relatados. Percurso SQL local comprova Biblioteca, leitura privada, snapshot web e recuperação/reprocessamento com autoridade fictícia explícita. QA `../qa/TAROT_YES_NO_READER_2026-09-29.md` diferencia provas locais de E3–E5 e aceite integral dependente de conteúdo/revisão legítimos e hospedagem.
