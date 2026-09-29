@@ -13,10 +13,13 @@ import { tarotFocusReaderFixture } from '../../../../../tests/fixtures/tarot-foc
 
 import { threeQuestionsReaderFixture } from '../../../../../tests/fixtures/three-questions-reader';
 import { tarotYesNoReaderFixture } from '../../../../../tests/fixtures/tarot-yes-no-reader';
+import { dreamReadingReaderFixture } from '../../../../../tests/fixtures/dream-reading-reader';
 import { dreamJournalReaderFixture } from '../../../../../tests/fixtures/dream-journal-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
+	if (url.searchParams.get('product') === 'dream-reading')
+		return dreamReadingReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'dream-journal')
 		return dreamJournalReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'three-questions')

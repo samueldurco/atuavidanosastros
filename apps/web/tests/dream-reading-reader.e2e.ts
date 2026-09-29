@@ -6,15 +6,16 @@ const headings = [
 	'Emoções informadas — Fatos registrados',
 	'Associações pessoais — Fatos registrados',
 	'Contexto informado — Fatos registrados',
-	'Observação breve — Hipótese [dream-observation]',
-	'Síntese do Registro de Sonho (1) e uma pergunta exploratória'
+	'Elementos do relato: possibilidade simbólica — Hipótese [dream-elements]',
+	'Emoções e associações: sentido pessoal — Hipótese [dream-personal-meaning]',
+	'Síntese da Leitura Essencial de Sonhos (1) e duas perguntas exploratórias'
 ];
 for (const width of [1440, 820, 390, 320]) {
-	test(`dream journal preserves reported fields separately at ${width}`, async ({
+	test(`dream reading preserves reported fields separately at ${width}`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
-		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=dream-journal');
+		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=dream-reading');
 		const consent = page.getByRole('button', { name: 'Recusar analytics' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
@@ -22,7 +23,7 @@ for (const width of [1440, 820, 390, 320]) {
 		for (const name of headings)
 			await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		const reading = page.locator('#leitura');
-		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(7);
+		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(8);
 		const source = page.locator('#origem');
 		await expect(source.locator('dt')).toHaveCount(8);
 		const saved = await source.locator('dd').allTextContents();
@@ -62,7 +63,10 @@ for (const width of [1440, 820, 390, 320]) {
 		])
 			await expect(source).toContainText(label);
 		await expect(reading).toContainText(
-			'Que associação pessoal você gostaria de explorar a partir deste relato?'
+			'Que associação pessoal você gostaria de explorar com um elemento do relato?'
+		);
+		await expect(reading).toContainText(
+			'O que você gostaria de observar na sua experiência atual?'
 		);
 		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
@@ -72,7 +76,7 @@ for (const width of [1440, 820, 390, 320]) {
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
 		).toBeLessThanOrEqual(1);
 		await page.screenshot({
-			path: testInfo.outputPath(`dream-journal-reader-${width}.png`),
+			path: testInfo.outputPath(`dream-reading-reader-${width}.png`),
 			fullPage: true
 		});
 		const history = page.getByRole('link', { name: 'Histórico desta versão', exact: true });
@@ -83,11 +87,11 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page).toHaveURL(/#historico$/);
 		await expect(page.getByRole('heading', { name: 'Histórico desta versão' })).toBeInViewport();
 		await page.reload();
-		await expect(page.getByRole('heading', { name: headings[6], exact: true })).toBeVisible();
+		await expect(page.getByRole('heading', { name: headings[7], exact: true })).toBeVisible();
 		expect(await source.locator('dd').allTextContents()).toEqual(saved);
 	});
 }
-test('dream journal pending, revocation and failure withhold reading and formats', async ({
+test('dream reading pending, revocation and failure withhold reading and formats', async ({
 	page
 }) => {
 	for (const [state, name] of [
@@ -95,7 +99,7 @@ test('dream journal pending, revocation and failure withhold reading and formats
 		['revoked', 'Leitura temporariamente indisponível'],
 		['failed', 'Processamento interrompido']
 	]) {
-		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=dream-journal`);
+		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=dream-reading`);
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);

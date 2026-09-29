@@ -566,7 +566,11 @@ for (const productId of products)
 				);
 				expect(html).toContain('dream-observation');
 			} else if (productId === 'dream-reading') {
-				expect(parent?.editorial?.sections).toHaveLength(3);
+				expect(parent?.editorial?.sections).toHaveLength(8);
+				expect(html).toContain('Relato registrado — Fatos registrados');
+				expect(html).toContain(
+					'Síntese da Leitura Essencial de Sonhos (1) e duas perguntas exploratórias'
+				);
 				expect(html).toContain('dream-elements');
 				expect(html).toContain('dream-personal-meaning');
 				expect(html).toContain(

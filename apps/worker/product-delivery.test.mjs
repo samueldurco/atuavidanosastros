@@ -129,7 +129,7 @@ test("three questions delivery binds each saved pair, readings, relation and syn
   }
 });
 
-// Generic delivery transport uses a real dream report without a product editorial profile.
+// Delivery transport uses the Essential profile on a synthetic saved dream report.
 // Three-question coverage is tested separately; this fixture never approves interpretation.
 const genericCalculation = calculateDreamRecord({
   version: "atv-workflow/1.0.0",
@@ -702,17 +702,20 @@ test("projects every Lab passage, semantic type, claim link and fact reference w
   const { content } = result;
   assert.equal(content.version, PRODUCT_DELIVERY_VERSION);
   assert.equal(content.title, input.output.title);
-  assert.equal(content.sections.length, 3);
+  assert.equal(content.sections.length, 8);
   assert.deepEqual(
-    content.sections.slice(0, 2).map((s) => s.title),
-    ["Hipótese [dream-elements]", "Hipótese [dream-personal-meaning]"],
+    content.sections.slice(5, 7).map((s) => s.title),
+    [
+      "Elementos do relato: possibilidade simbólica — Hipótese [dream-elements]",
+      "Emoções e associações: sentido pessoal — Hipótese [dream-personal-meaning]",
+    ],
   );
   assert.deepEqual(
-    content.sections.slice(0, 2).map((s) => s.text),
+    content.sections.slice(5, 7).map((s) => s.text),
     input.output.claims.map((c) => c.text),
   );
   assert.deepEqual(
-    content.sections.map((s) => s.evidence),
+    content.sections.slice(5).map((s) => s.evidence),
     [
       input.output.claims[0].evidence,
       input.output.claims[1].evidence,

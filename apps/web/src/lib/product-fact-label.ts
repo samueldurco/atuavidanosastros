@@ -16,7 +16,7 @@ const birthChartLabels: Record<string, string> = {
 
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
-	if (productId === 'dream-journal') {
+	if (productId === 'dream-journal' || productId === 'dream-reading') {
 		const labels: Record<string, string> = {
 			'dream-date': 'Data registrada',
 			'dream-context': 'Contexto informado'

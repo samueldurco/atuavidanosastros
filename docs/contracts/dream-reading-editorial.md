@@ -1,5 +1,7 @@
 # Leitura Essencial de Sonhos — cobertura editorial 1.0.0
 
+O leitor web usa `atv-product-delivery/1.11.0`. Exibe, nesta ordem, os grupos disponíveis de data, relato completo, emoções, associações e contexto como fatos registrados; depois, “Elementos do relato: possibilidade simbólica” e “Emoções e associações: sentido pessoal” como hipóteses, e a síntese com duas perguntas exploratórias. Grupos opcionais ausentes não ganham texto inventado e são identificados nos limites. Evidências e fontes permanecem recuperáveis; o preparo captura a base confiável antes de aguardar avaliação, sem autoridade de publicação. QA local em `../qa/DREAM_READING_READER_2026-09-29.md`.
+
 Implementação local de E2; não constitui leitura homologada nem liberação. O relato salvo continua sujeito a `dream-reading-calculation.md`, com fatos declarados, base parcial, histórico não consultado e recorrência não avaliada. Consentimento de continuidade não equivale a uma consulta de histórico.
 
 `atv-dream-reading-editorial/1.0.0` é selecionado pela preparação confiável de `dream-reading`, nunca por instrução no relato/contexto. Prompt `atv-editorial/1.0.13`, preparação `atv-product-editorial-evidence/1.23.0` e corpus `atv-product-facts-synthetic/1.23.0` versionam o vínculo. O registro e a Leitura Essencial compartilham a base declarada, mas possuem coberturas editoriais diferentes.

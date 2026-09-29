@@ -1,5 +1,7 @@
 # Product workflows — atv-workflow/1.0.0
 
+WU149 projects the Essential Dream reader with delivery 1.11.0: five available reported groups precede two named hypotheses and a synthesis with two exploratory questions. Missing optional groups remain absent with explicit limits. The trusted reported calculation is captured before awaiting assessment; versions, recovery and every reference remain bound to the delivery digest. See `dream-reading-editorial.md` and `../qa/DREAM_READING_READER_2026-09-29.md` for local flow and visual evidence; this grants no publishing authority.
+
 WU148 adds `atv-dream-reading-editorial/1.0.0`: two distinct hypotheses covering the reported scene and declared personal associations, one synthesis, two exploratory questions and no invented history/recurrence. Prompt 1.0.13 and preparation/corpus 1.23.0 bind this coverage; structural checks never certify semantic approval. See `dream-reading-editorial.md` and `../qa/DREAM_READING_EDITORIAL_2026-09-29.md`.
 
 WU147 validates the complete saved reported base for `dream-reading` through `validDreamReadingProjection`, before generic fact normalization. Preparation/corpus 1.22.0 reject drift in the input projection, exact fact identity/order/text/provenance and limits, keeping history/recurrence absent and interpretation separate. See `dream-reading-calculation.md` and `../qa/DREAM_READING_BASE_2026-09-29.md`. No change to release, consent authority or editorial approval.

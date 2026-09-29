@@ -6,7 +6,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.10.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.11.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -92,6 +92,8 @@ function claimTitle(
 ): string {
   if (productId === "dream-journal")
     return `Observação breve — ${labels[claim.kind]} [${claim.id}]`;
+  if (productId === "dream-reading")
+    return `${claim.id === "dream-elements" ? "Elementos do relato: possibilidade simbólica" : "Emoções e associações: sentido pessoal"} — ${labels[claim.kind]} [${claim.id}]`;
   if (productId === "three-questions") {
     const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
     return `${index ? `Leitura da pergunta ${index} — ` : ""}${labels[claim.kind]} [${claim.id}]`;
@@ -153,7 +155,7 @@ function project(
     unique(ids.flatMap((id) => claims.get(id)!.evidence));
   const sections: EditorialSnapshot["sections"] = [];
   const missingDreamFields: string[] = [];
-  if (productId === "dream-journal") {
+  if (["dream-journal", "dream-reading"].includes(productId)) {
     const groups = [
       ["Data registrada", /^dream-date$/],
       ["Relato registrado", /^dream-narrative-\d+$/],
@@ -184,7 +186,9 @@ function project(
   const orderedClaims =
     productId === "three-questions"
       ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-      : reading.claims;
+      : productId === "dream-reading"
+        ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
+        : reading.claims;
   for (const claim of orderedClaims) {
     if (productId === "three-questions") {
       const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
@@ -233,7 +237,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
@@ -277,9 +281,11 @@ export async function prepareProductDelivery(
   const reading = parseReading(input.output, input.tier);
   if (!reading) return reject("invalid_schema");
   const productId = input.productId;
-  const recordedPreparation = ["three-questions", "dream-journal"].includes(
-    productId,
-  )
+  const recordedPreparation = [
+    "three-questions",
+    "dream-journal",
+    "dream-reading",
+  ].includes(productId)
     ? prepareProductFacts(productId, input.calculation)
     : undefined;
   if (recordedPreparation?.status === "blocked")
