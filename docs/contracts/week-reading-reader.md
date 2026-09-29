@@ -35,3 +35,9 @@ WU185 adds three keyboard-operable area links to the original preserved summarie
 Full temporal scope, engine homologation, legitimate editorial approval and hosted acceptance remain pending. No E2/E5 or hosted release is concluded from synthetic content. Evidence: [WEEK_READING_READER_2026-09-29.md](../qa/WEEK_READING_READER_2026-09-29.md), [WEEK_READING_PDF_2026-09-29.md](../qa/WEEK_READING_PDF_2026-09-29.md).
 
 WU185 evidence: [WEEK_READING_AREAS_2026-09-29.md](../qa/WEEK_READING_AREAS_2026-09-29.md).
+
+## Experimental temporal projection (WU190)
+
+The private reader and existing PDF renderer can display the persisted `atv-week-reading-calculation/1.2.0` projection after the ordinary released/editorial gate. This is a version-specific factual presentation, not a new release path. It requires the exact eleven calculated facts: one summary and ten bodies in canonical order, with one shared source ending in the calculation version. The web result displays the recorded summary and per-body nominal counts, with an explicit warning that the hourly grid does not certify continuous coverage, engine precision or favorable periods. PDF adds the versioned summary and warning; its existing base section presents each body count, source, fact and limit once. The 1.0.0 seven-sample timeline remains unchanged and is never inferred from 1.2.0 data.
+
+The current private transport exposes the eleven facts but not the detailed rows, event endpoints or candidate windows held in `calculation.data`. A full temporal timeline and complete interpretation therefore remain open E4/E2 work. The existing editorial profile rejects 1.2.0, so this branch cannot be reached as a legitimately released result until a separately validated editorial profile and approval exist. Synthetic fixtures exercise rendering only; they do not confer approval. Evidence: [WEEK_TEMPORAL_READER_2026-09-29.md](../qa/WEEK_TEMPORAL_READER_2026-09-29.md).

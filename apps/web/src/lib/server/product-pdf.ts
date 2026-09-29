@@ -3,6 +3,7 @@ import fontkit from '@pdf-lib/fontkit';
 import { productCatalog } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
+import { weekTemporalFacts } from '../week-temporal-facts';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
@@ -176,6 +177,15 @@ export async function renderProductPdf(value: unknown) {
 			17,
 			20
 		);
+		const temporalFacts = weekTemporalFacts(run);
+		if (temporalFacts) {
+			heading('Busca temporal experimental');
+			paragraph(`Método: ${run.calculation.version}.`, label, 9, 14, 6);
+			paragraph(temporalFacts.summary);
+			paragraph(
+				'Contagens nominais por corpo. A grade horária não certifica cobertura contínua, precisão do motor ou períodos favoráveis.'
+			);
+		}
 		heading('Sua leitura');
 		for (const section of editorial.sections) {
 			ensure(80);

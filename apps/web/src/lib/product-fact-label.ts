@@ -17,6 +17,10 @@ const birthChartLabels: Record<string, string> = {
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
 	if (productId === 'week-reading') {
+		if (id === 'week-temporal-summary') return `Resumo da busca temporal experimental (${id})`;
+		const temporal =
+			/^week-temporal-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)$/.exec(id);
+		if (temporal) return `Busca temporal · ${birthChartLabels[`position-${temporal[1]}`]} (${id})`;
 		const natal = /^natal-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)$/.exec(
 			id
 		);

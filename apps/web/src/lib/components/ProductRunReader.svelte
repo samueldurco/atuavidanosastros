@@ -14,6 +14,7 @@
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
 	import { weekReadingTimeline, weekReadingAreaLinks } from '$lib/week-reading-timeline';
+	import { weekTemporalFacts } from '$lib/week-temporal-facts';
 	import { parseProductCartography } from '$lib/product-cartography';
 	import { libraryPageHref } from '$lib/library-page';
 	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
@@ -21,6 +22,7 @@
 		$props();
 	const backHref = $derived(libraryPageHref(libraryBefore));
 	const weekTimeline = $derived(weekReadingTimeline(data.run));
+	const temporalFacts = $derived(weekTemporalFacts(data.run));
 	const weekAreas = $derived(weekReadingAreaLinks(data.run));
 	const birthAtlas = $derived(
 		data.run.productId === 'birth-chart' &&
@@ -231,6 +233,7 @@
 				? [
 						...(birthGeometry ? [{ id: 'cartografia', label: 'Cartografia natal' }] : []),
 						...(weekTimeline ? [{ id: 'semana', label: 'Sete amostras da semana' }] : []),
+						...(temporalFacts ? [{ id: 'semana', label: 'Busca temporal experimental' }] : []),
 						...(weekAreas ? [{ id: 'areas', label: 'Resumo por áreas' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
 						...(birthAtlas && data.run.editorial
@@ -359,8 +362,12 @@
 		{#if data.run.released && data.run.editorial && data.run.calculation}
 			{#if data.run.productId === 'week-reading'}
 				<section id="semana" aria-labelledby="week-title">
-					<p class="eyebrow">Sua semana em sete amostras</p>
-					<h2 id="week-title">Sete datas para observar</h2>
+					<p class="eyebrow">
+						{temporalFacts ? 'Base temporal experimental' : 'Sua semana em sete amostras'}
+					</p>
+					<h2 id="week-title">
+						{temporalFacts ? 'Busca temporal da semana' : 'Sete datas para observar'}
+					</h2>
 					{#if weekTimeline}
 						<p>
 							Uma amostra às 12h UTC em cada data. Estes recortes não representam dias locais
@@ -379,10 +386,25 @@
 								</li>
 							{/each}
 						</ol>
+					{:else if temporalFacts}
+						<p class="eyebrow">Método atv-week-reading-calculation/1.2.0</p>
+						<p>{temporalFacts.summary}</p>
+						<p>
+							Contagens nominais por corpo. A grade horária não certifica cobertura contínua,
+							precisão do motor ou períodos favoráveis.
+						</p>
+						<ul class="week-areas" aria-label="Contagens da busca temporal">
+							{#each temporalFacts.bodies as fact (fact.id)}
+								<li>
+									<strong>{factLabel(fact.id)}</strong>
+									<p>{fact.display}</p>
+								</li>
+							{/each}
+						</ul>
 					{:else}
 						<p>
-							Não foi possível apresentar as sete datas com suas referências. A leitura preservada e
-							a base estão disponíveis abaixo.
+							Não foi possível apresentar a projeção semanal desta versão. A leitura preservada e a
+							base estão disponíveis abaixo.
 						</p>
 					{/if}
 				</section>

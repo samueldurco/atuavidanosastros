@@ -3,9 +3,25 @@ import { PDFDocument } from 'pdf-lib';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { productCatalog } from '@atv/domain';
 import { pdfFixture } from '../../../tests/fixtures/product-export';
+import { weekTemporalReaderFixture } from '../../../tests/fixtures/week-temporal-reader';
 import { renderProductPdf, PDF_LIMITS, PDF_EXPORT_VERSION } from './product-pdf';
 
 describe('private PDF renderer', () => {
+	it('renders the released Week 1.2 facts as a bounded experimental PDF', async () => {
+		const run = weekTemporalReaderFixture();
+		const artifact = await renderProductPdf(run);
+		expect(artifact).not.toBeNull();
+		const document = await PDFDocument.load(artifact!.bytes);
+		expect(document.getPageCount()).toBeGreaterThan(0);
+		expect(document.getPageCount()).toBeLessThanOrEqual(PDF_LIMITS.pages);
+		expect(artifact!.bytes).toEqual((await renderProductPdf(run))!.bytes);
+		if (process.env.ATV_PDF_QA === '1') {
+			await mkdir('../../test-results/pdf', { recursive: true });
+			await writeFile('../../test-results/pdf/atv-week-temporal-synthetic.pdf', artifact!.bytes);
+		}
+		expect(await renderProductPdf({ ...run, released: false })).toBeNull();
+		expect(await renderProductPdf({ ...run, editorial: null })).toBeNull();
+	});
 	it('embeds brand fonts in a real, deterministic PDF with revision metadata', async () => {
 		const run = pdfFixture();
 		const first = await renderProductPdf(run);
