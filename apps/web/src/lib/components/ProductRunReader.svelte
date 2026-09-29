@@ -13,12 +13,14 @@
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
+	import { weekReadingTimeline } from '$lib/week-reading-timeline';
 	import { parseProductCartography } from '$lib/product-cartography';
 	import { libraryPageHref } from '$lib/library-page';
 	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
 	let { data, libraryBefore = null }: { data: WorkflowReaderData; libraryBefore?: string | null } =
 		$props();
 	const backHref = $derived(libraryPageHref(libraryBefore));
+	const weekTimeline = $derived(weekReadingTimeline(data.run));
 	const birthAtlas = $derived(
 		data.run.productId === 'birth-chart' &&
 			data.run.released &&
@@ -71,7 +73,8 @@
 				'pair-preview',
 				'synastry',
 				'couple-dossier',
-				'horoscope'
+				'horoscope',
+				'week-reading'
 			].includes(data.run.productId)
 		)
 			return productFactLabel(data.run.productId, id);
@@ -226,6 +229,7 @@
 			...(data.run.released
 				? [
 						...(birthGeometry ? [{ id: 'cartografia', label: 'Cartografia natal' }] : []),
+						...(weekTimeline ? [{ id: 'semana', label: 'Sete amostras da semana' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
 						...(birthAtlas && data.run.editorial
 							? data.run.editorial.sections.map((section, index) => ({
@@ -351,6 +355,36 @@
 		{/snippet}
 		{#if failure}<StatePanel kind="error" title="Ação não confirmada" description={failure} />{/if}
 		{#if data.run.released && data.run.editorial && data.run.calculation}
+			{#if data.run.productId === 'week-reading'}
+				<section id="semana" aria-labelledby="week-title">
+					<p class="eyebrow">Sua semana em sete amostras</p>
+					<h2 id="week-title">Sete datas para observar</h2>
+					{#if weekTimeline}
+						<p>
+							Uma amostra às 12h UTC em cada data. Estes recortes não representam dias locais
+							inteiros, previsões ou janelas favoráveis. As hipóteses abaixo preservam suas
+							referências.
+						</p>
+						<ol class="week-timeline" aria-label="Sete amostras da semana">
+							{#each weekTimeline as sample, index (sample.date)}
+								<li>
+									<p class="eyebrow">Amostra {index + 1}</p>
+									<time datetime={sample.instant}>{sample.label}</time>
+									<p>12h UTC · recorte único</p>
+									<a href={sample.href} aria-label={`Ler hipótese da amostra ${index + 1}`}
+										>Ler hipótese</a
+									>
+								</li>
+							{/each}
+						</ol>
+					{:else}
+						<p>
+							Não foi possível apresentar as sete datas com suas referências. A leitura preservada e
+							a base estão disponíveis abaixo.
+						</p>
+					{/if}
+				</section>
+			{/if}
 			{#if birthGeometry}
 				<NatalCartography geometry={birthGeometry} facts={data.run.calculation.facts} />
 			{/if}
@@ -358,7 +392,7 @@
 				<p class="eyebrow">Leitura preservada</p>
 				<h2 id="reading-title">{data.run.editorial.title}</h2>
 				{#each data.run.editorial.sections as section, index (index)}<article
-						id={birthAtlas ? `capitulo-${index + 1}` : undefined}
+						id={birthAtlas || weekTimeline ? `capitulo-${index + 1}` : undefined}
 					>
 						<h3>{section.title}</h3>
 						<p class="editorial">{section.text}</p>
@@ -435,6 +469,20 @@
 </div>
 
 <style>
+	.week-timeline {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+		gap: 1rem;
+		padding-left: 1.25rem;
+	}
+	.week-timeline li {
+		border: 1px solid var(--atv-border);
+		border-radius: 0.5rem;
+		padding: 1rem;
+	}
+	.week-timeline time {
+		font-weight: 600;
+	}
 	nav {
 		font-size: 0.85rem;
 		margin-bottom: 1.5rem;

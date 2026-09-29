@@ -133,7 +133,9 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 				!text(fact.display, 2000) ||
 				!text(
 					fact.source,
-					['synastry', 'couple-dossier', 'horoscope'].includes(v.productId) ? 300 : 200
+					['synastry', 'couple-dossier', 'horoscope', 'week-reading'].includes(v.productId)
+						? 300
+						: 200
 				) ||
 				facts.some((f) => f.id === fact.id)
 			)

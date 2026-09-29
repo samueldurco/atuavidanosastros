@@ -21,9 +21,15 @@ import { synastryReaderFixture } from '../../../../../tests/fixtures/synastry-re
 import { dreamJournalReaderFixture } from '../../../../../tests/fixtures/dream-journal-reader';
 
 import { horoscopeReaderFixture } from '../../../../../tests/fixtures/horoscope-reader';
+import { weekReadingReaderFixture } from '../../../../../tests/fixtures/week-reading-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
+	if (url.searchParams.get('product') === 'week-reading')
+		return weekReadingReaderFixture(
+			url.searchParams.get('state'),
+			url.searchParams.get('context') !== 'absent'
+		);
 	if (url.searchParams.get('product') === 'horoscope')
 		return horoscopeReaderFixture(
 			url.searchParams.get('state'),
