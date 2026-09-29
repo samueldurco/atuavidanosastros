@@ -1,4 +1,34 @@
 import { DREAM_JOURNAL_EDITORIAL_VERSION } from "../../packages/ai/src/dream-journal.ts";
+import {
+  DREAM_READING_EDITORIAL_VERSION,
+  dreamReadingEvidence,
+  dreamReadingRoles,
+} from "../../packages/ai/src/dream-reading.ts";
+/** Synthetic coverage only; never interpretation, semantic approval or publication.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function dreamReadingEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== DREAM_READING_EDITORIAL_VERSION) return {};
+  return {
+    claims: dreamReadingRoles.map((id) => ({
+      id,
+      kind: "hypothesis",
+      text: `Fixture estrutural da Leitura Essencial: ${id}; sem conteúdo homologado.`,
+      evidence: dreamReadingEvidence(facts, id),
+    })),
+    relations: [],
+    synthesis: [
+      {
+        claimIds: [...dreamReadingRoles],
+        text: "Síntese sintética para testar referências; histórico não consultado e recorrência não avaliada.",
+      },
+    ],
+    reflections: [
+      "Que associação pessoal você gostaria de explorar com um elemento do relato?",
+      "O que você gostaria de observar na sua experiência atual?",
+    ],
+  };
+}
 /** Synthetic contract coverage; never approved interpretation.
  * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
  */

@@ -1,5 +1,7 @@
 # Product workflows — atv-workflow/1.0.0
 
+WU148 adds `atv-dream-reading-editorial/1.0.0`: two distinct hypotheses covering the reported scene and declared personal associations, one synthesis, two exploratory questions and no invented history/recurrence. Prompt 1.0.13 and preparation/corpus 1.23.0 bind this coverage; structural checks never certify semantic approval. See `dream-reading-editorial.md` and `../qa/DREAM_READING_EDITORIAL_2026-09-29.md`.
+
 WU147 validates the complete saved reported base for `dream-reading` through `validDreamReadingProjection`, before generic fact normalization. Preparation/corpus 1.22.0 reject drift in the input projection, exact fact identity/order/text/provenance and limits, keeping history/recurrence absent and interpretation separate. See `dream-reading-calculation.md` and `../qa/DREAM_READING_BASE_2026-09-29.md`. No change to release, consent authority or editorial approval.
 
 Status: implementation contract, **not a production release**. All 25 product definitions across the six universes are disabled; the editorial promotion registry remains empty. This work does not deliver 25 finished readings.

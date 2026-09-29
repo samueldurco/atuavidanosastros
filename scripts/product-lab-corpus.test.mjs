@@ -192,13 +192,15 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  const beforeDreamJournal=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='dream-journal'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  const beforeDreamReading=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='dream-reading'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  assert.equal(corpusDigest(beforeDreamReading.map(({id,request})=>({id,request}))),"d3c7505d94d55c2b9f42554a58525dd8185e20b3528c036ec6ac9d4785235b5b");
+  const beforeDreamJournal=beforeDreamReading.map(item=>{const v=structuredClone(item);if(v.productId==='dream-journal'&&v.request)delete v.request.facts.editorialProfile;return v;});
   assert.equal(corpusDigest(beforeDreamJournal.map(({id,request})=>({id,request}))),'9beda44ce95d3d584548778085c667d686e18c2022892c840cc356b332f4dd54');
   const beforeThreeQuestions=beforeDreamJournal.map(item=>{const v=structuredClone(item);if(v.productId==='three-questions'&&v.request)delete v.request.facts.editorialProfile;return v;});
   assert.equal(corpusDigest(beforeThreeQuestions.map(({id,request})=>({id,request}))),'bac58d61a1d47192756ed7763f0775c3e4a2bc318c4dc7b5996b6d4fe7728ea7');
   const legacyCases=beforeThreeQuestions.map(item=>{const v=structuredClone(item);if(v.productId==='tarot-yes-no'&&v.request)delete v.request.facts.editorialProfile;return v;});
-  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),"d3c7505d94d55c2b9f42554a58525dd8185e20b3528c036ec6ac9d4785235b5b");
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.22.0');
+  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),"326feb034d473d7ca8f0fc1f6db59195904d1c7468cf511488e39ef39b0c8660");
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.23.0');
   assert.equal(corpusDigest(legacyCases.map(({ id, request }) => ({ id, request }))),
     '58d1a7e26bd0398d373733efa0b5de361f48e6099d1dadbe4d7eb28d618e2fc5');
   assert.equal(corpusDigest(legacyCases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),

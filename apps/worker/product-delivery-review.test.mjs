@@ -1,3 +1,5 @@
+import { dreamReadingEditorialTestFixture } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
+import { prepareProductFacts } from "./src/product-editorial.ts";
 import test from "node:test";
 import { calculateDreamRecord } from "@atv/domain";
 import assert from "node:assert/strict";
@@ -64,6 +66,9 @@ function draft() {
       ],
       reflections: ["O que chama sua atenção?"],
       limits: ["Fixture sem avaliação de qualidade real."],
+      ...dreamReadingEditorialTestFixture(
+        prepareProductFacts("dream-reading", genericCalculation).facts,
+      ),
     },
   };
 }
@@ -185,7 +190,7 @@ test("valid basis changes invalidate prior review and malformed calculations blo
         d.calculation.data.context;
     },
     (d) => (d.output.title = "Outro título"),
-    (d) => d.output.reflections.push("Que outra alternativa aparece?"),
+    (d) => (d.output.reflections[1] = "Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
   ]) {
     const changed = structuredClone(input);
@@ -305,7 +310,7 @@ test("both stages apply all Director thresholds including premium and hard safet
 test("mechanical/schema/representability failures cannot be overridden by perfect scores", async () => {
   const { input, review } = await fixture();
   for (const mutate of [
-    (d) => (d.output.claims[0].text = "Fato inventado"),
+    (d) => (d.output.claims[0].kind = "fact"),
     (d) => (d.output.reflections[0] = "Seu futuro está garantido"),
     (d) => (d.output.scope = "integrated"),
     (d) => (d.output.limits = ["x".repeat(1201)]),

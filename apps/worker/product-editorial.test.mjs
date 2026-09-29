@@ -5,7 +5,7 @@ import { dimensions, RUBRIC_VERSION, SCHEMA_VERSION, EditorialGateway, LabBudget
 import { prepareProductFacts, evaluateProductDraft } from './src/product-editorial.ts';
 import { createNatalCalculators, zodiacPosition } from './src/natal-calculators.ts';
 import { createSymbolicCalculators } from './src/symbolic-calculators.ts';
-import { tarotFocusEditorialTestFixture, dreamJournalEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
+import { tarotFocusEditorialTestFixture, dreamJournalEditorialTestFixture, dreamReadingEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
 
 const runId='00000000-0000-4000-8000-000000000001';
 const consent={storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false};
@@ -23,7 +23,8 @@ function reading(facts) {
   return {schemaVersion:SCHEMA_VERSION,capability:facts.capability,scope:'partial',title:'Um recorte para observar',
     claims:[{id:'c1',kind:'fact',text:facts.facts[0].display,evidence:[facts.facts[0].id]}],relations:[],
     synthesis:[{claimIds:['c1'],text:'Este recorte preserva a informação recebida e não encerra uma leitura.'}],
-    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts), ...birthChartEditorialTestFixture(facts), ...midheavenEditorialTestFixture(facts), ...ascendantEditorialTestFixture(facts), ...dailyCardEditorialTestFixture(facts), ...tarotFocusEditorialTestFixture(facts), ...tarotYesNoEditorialTestFixture(facts), ...threeQuestionsEditorialTestFixture(facts), ...dreamJournalEditorialTestFixture(facts)};
+    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts), ...birthChartEditorialTestFixture(facts), ...midheavenEditorialTestFixture(facts), ...ascendantEditorialTestFixture(facts), ...dailyCardEditorialTestFixture(facts), ...tarotFocusEditorialTestFixture(facts), ...tarotYesNoEditorialTestFixture(facts), ...threeQuestionsEditorialTestFixture(facts), ...dreamJournalEditorialTestFixture(facts),
+    ...dreamReadingEditorialTestFixture(facts),};
 }
 async function draft(productId='daily-card', context) {
   const calc=await calculation(productId, context); const prepared=prepareProductFacts(productId,calc);

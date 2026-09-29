@@ -3,6 +3,10 @@ import {
   dreamJournalInstructions,
 } from "./dream-journal.ts";
 import {
+  DREAM_READING_EDITORIAL_VERSION,
+  dreamReadingInstructions,
+} from "./dream-reading.ts";
+import {
   THREE_QUESTIONS_EDITORIAL_VERSION,
   threeQuestionsInstructions,
 } from "./three-questions.ts";
@@ -115,6 +119,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION
       ? [dreamJournalInstructions]
+      : []),
+    ...(request.facts.editorialProfile === DREAM_READING_EDITORIAL_VERSION
+      ? [dreamReadingInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

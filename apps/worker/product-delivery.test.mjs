@@ -1,3 +1,4 @@
+import { createContextCalculators } from "./src/context-calculators.ts";
 import test from "node:test";
 import { calculateTarot, calculateDreamRecord } from "@atv/domain";
 import assert from "node:assert/strict";
@@ -15,6 +16,7 @@ import {
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
   dreamJournalEditorialTestFixture,
+  dreamReadingEditorialTestFixture,
   threeQuestionsEditorialTestFixture,
   tarotYesNoEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
@@ -53,6 +55,7 @@ test("three questions delivery binds each saved pair, readings, relation and syn
     capability: "tarot-reflection",
     ...threeQuestionsEditorialTestFixture(prepared.facts),
     ...dreamJournalEditorialTestFixture(prepared.facts),
+    ...dreamReadingEditorialTestFixture(prepared.facts),
   };
   const captured = structuredClone(input);
   const pending = prepareProductDelivery(input);
@@ -195,6 +198,9 @@ function draft() {
         "Qual pequeno experimento você escolheria?",
       ],
       limits: ["Fixture de projeção, não leitura aprovada."],
+      ...dreamReadingEditorialTestFixture(
+        prepareProductFacts("dream-reading", genericCalculation).facts,
+      ),
     },
   };
 }
@@ -696,23 +702,21 @@ test("projects every Lab passage, semantic type, claim link and fact reference w
   const { content } = result;
   assert.equal(content.version, PRODUCT_DELIVERY_VERSION);
   assert.equal(content.title, input.output.title);
-  assert.equal(content.sections.length, 5);
+  assert.equal(content.sections.length, 3);
   assert.deepEqual(
-    content.sections.slice(0, 3).map((s) => s.title),
-    ["Fato [c1]", "Interpretação [c2]", "Hipótese [c3]"],
+    content.sections.slice(0, 2).map((s) => s.title),
+    ["Hipótese [dream-elements]", "Hipótese [dream-personal-meaning]"],
   );
   assert.deepEqual(
-    content.sections.slice(0, 3).map((s) => s.text),
+    content.sections.slice(0, 2).map((s) => s.text),
     input.output.claims.map((c) => c.text),
   );
   assert.deepEqual(
     content.sections.map((s) => s.evidence),
     [
-      ["dream-narrative-1"],
-      ["dream-context"],
-      ["dream-narrative-1", "dream-context"],
-      ["dream-narrative-1", "dream-context"],
-      ["dream-narrative-1", "dream-context"],
+      input.output.claims[0].evidence,
+      input.output.claims[1].evidence,
+      [...new Set(input.output.claims.flatMap((c) => c.evidence))],
     ],
   );
   const all = contentTexts(content);
@@ -723,8 +727,10 @@ test("projects every Lab passage, semantic type, claim link and fact reference w
     ...input.output.reflections,
   ])
     assert.equal(all.split(text).length, 2);
-  assert.match(all, /Tensão entre afirmações: c1, c2/);
-  assert.match(all, /Afirmações de base: c1, c3/);
+  assert.match(
+    all,
+    /Afirmações de base: dream-elements, dream-personal-meaning/,
+  );
   assert.match(all, /referências desta seção correspondem somente à síntese/);
   assert.deepEqual(content.limits, [
     "Escopo declarado: parcial.",
@@ -750,11 +756,16 @@ test("projects every Lab passage, semantic type, claim link and fact reference w
 test("invalid schemas, unsafe passages and false references never produce delivery content", async () => {
   for (const mutate of [
     (d) => (d.output.extra = true),
-    (d) => (d.output.claims[0].text = "Fato alterado"),
+    (d) => (d.output.claims[0].kind = "fact"),
     (d) => (d.output.claims[1].evidence = ["unknown"]),
-    (d) => (d.output.relations[0].claimIds = ["c1", "unknown"]),
+    (d) =>
+      d.output.relations.push({
+        kind: "tension",
+        claimIds: ["dream-elements", "unknown"],
+        text: "Relação inválida.",
+      }),
     (d) => (d.output.synthesis[0].claimIds = ["unknown"]),
-    (d) => (d.output.claims[1].id = "c1"),
+    (d) => (d.output.claims[1].id = "dream-elements"),
     (d) => (d.output.scope = "integrated"),
     (d) => (d.output.reflections[0] = "<script>ação</script>"),
     (d) => (d.output.limits[0] = "Seu futuro está garantido"),
@@ -783,14 +794,49 @@ test("a Lab-valid limit that cannot fit the reader is rejected, never truncated 
   assert.deepEqual(input, before);
 });
 
+const premiumPairCalculation = await createContextCalculators()["pair-preview"](
+  {
+    version: "atv-workflow/1.0.0",
+    productId: "pair-preview",
+    birth: {
+      localDateTime: "2000-01-01T12:00:00",
+      utcInstant: "2000-01-01T12:00:00Z",
+      timezone: "UTC",
+      latitude: 0,
+      longitude: 0,
+      locationSource: "synthetic",
+    },
+    partner: {
+      localDateTime: "2001-02-03T10:00:00",
+      utcInstant: "2001-02-03T10:00:00Z",
+      timezone: "UTC",
+      latitude: 0,
+      longitude: 0,
+      locationSource: "synthetic",
+    },
+    consent: {
+      storage: true,
+      policyVersion: "atv-input-consent/1",
+      partner: true,
+      continuity: false,
+    },
+  },
+  {
+    runId: "00000000-0000-4000-8000-000000000001",
+    signal: new AbortController().signal,
+  },
+);
 function premium() {
   const input = draft();
   input.tier = "premium";
+  input.productId = "pair-preview";
+  input.calculation = structuredClone(premiumPairCalculation);
+  input.output.capability = "relationship-dynamics";
   input.output.claims = Array.from({ length: 24 }, (_, i) => ({
     id: `c${i}`,
     kind: "interpretation",
     text: `Recorte ${i}: possibilidade contextual.`,
-    evidence: [i % 2 ? "dream-context" : "dream-narrative-1"],
+    evidence: [i % 2 ? "person-a-venus" : "person-a-moon"],
   }));
   input.output.relations = Array.from({ length: 16 }, (_, i) => ({
     kind: i % 2 ? "tension" : "convergence",
@@ -857,7 +903,7 @@ test("digest binds exact delivery and original run, calculation provenance, revi
         d.calculation.data.context;
     },
     (d) => (d.output.claims[1].text += " Outro ponto."),
-    (d) => (d.output.relations[0].kind = "convergence"),
+    (d) => d.output.claims[0].evidence.reverse(),
     (d) => d.output.reflections.reverse(),
     (d) => d.output.limits.push("Outro limite editorial."),
   ]) {
@@ -1000,6 +1046,7 @@ test("tarot yes-no delivery preserves the saved card, reported question and all 
     ...tarotYesNoEditorialTestFixture(facts.facts),
     ...threeQuestionsEditorialTestFixture(facts.facts),
     ...dreamJournalEditorialTestFixture(facts.facts),
+    ...dreamReadingEditorialTestFixture(facts.facts),
   };
   const result = await prepareProductDelivery(input);
   assert.equal(result.status, "prepared_for_review");

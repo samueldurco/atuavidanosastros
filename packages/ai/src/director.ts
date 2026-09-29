@@ -3,6 +3,10 @@ import {
   inspectDreamJournal,
 } from "./dream-journal.ts";
 import {
+  DREAM_READING_EDITORIAL_VERSION,
+  inspectDreamReading,
+} from "./dream-reading.ts";
+import {
   THREE_QUESTIONS_EDITORIAL_VERSION,
   inspectThreeQuestions,
 } from "./three-questions.ts";
@@ -184,6 +188,8 @@ export function inspectReading(
     findings.push(...inspectThreeQuestions(reading, facts));
   if (facts.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION)
     findings.push(...inspectDreamJournal(reading, facts));
+  if (facts.editorialProfile === DREAM_READING_EDITORIAL_VERSION)
+    findings.push(...inspectDreamReading(reading, facts));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

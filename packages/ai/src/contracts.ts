@@ -12,6 +12,10 @@ import {
 } from "./dream-journal.ts";
 export const SCHEMA_VERSION = "atv-reading/1.0.0";
 import {
+  DREAM_READING_EDITORIAL_VERSION,
+  validDreamReadingFacts,
+} from "./dream-reading.ts";
+import {
   TAROT_FOCUS_EDITORIAL_VERSION,
   validTarotFocusFacts,
 } from "./tarot-focus.ts";
@@ -43,7 +47,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.12";
+export const PROMPT_VERSION = "atv-editorial/1.0.13";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -77,7 +81,8 @@ export interface FactsEnvelope {
     | typeof TAROT_FOCUS_EDITORIAL_VERSION
     | typeof TAROT_YES_NO_EDITORIAL_VERSION
     | typeof THREE_QUESTIONS_EDITORIAL_VERSION
-    | typeof DREAM_JOURNAL_EDITORIAL_VERSION;
+    | typeof DREAM_JOURNAL_EDITORIAL_VERSION
+    | typeof DREAM_READING_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -215,7 +220,8 @@ export function validateFacts(value: FactsEnvelope): boolean {
       typeof fact.display !== "string" ||
       !fact.display.trim() ||
       fact.display.length >
-        (value.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION &&
+        ((value.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION ||
+          value.editorialProfile === DREAM_READING_EDITORIAL_VERSION) &&
         /^dream-narrative-[1-4]$/.test(fact.id)
           ? 1800 + `Relato (trecho ${fact.id.slice(-1)}): `.length
           : 1200) ||
@@ -247,7 +253,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === THREE_QUESTIONS_EDITORIAL_VERSION &&
       validThreeQuestionsFacts(value)) ||
     (value.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION &&
-      validDreamJournalFacts(value))
+      validDreamJournalFacts(value)) ||
+    (value.editorialProfile === DREAM_READING_EDITORIAL_VERSION &&
+      validDreamReadingFacts(value))
   );
 }
 

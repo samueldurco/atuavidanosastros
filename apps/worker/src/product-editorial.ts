@@ -6,6 +6,7 @@ import {
   type WorkflowKind,
 } from "@atv/domain";
 import {
+  DREAM_READING_EDITORIAL_VERSION,
   CONSTITUTION_VERSION,
   PROMPT_VERSION,
   SCHEMA_VERSION,
@@ -49,7 +50,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.22.0";
+  "atv-product-editorial-evidence/1.23.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -134,7 +135,9 @@ export function prepareProductFacts(
               ? { editorialProfile: MIDHEAVEN_EDITORIAL_VERSION }
               : productId === "dream-journal"
                 ? { editorialProfile: DREAM_JOURNAL_EDITORIAL_VERSION }
-                : {}),
+                : productId === "dream-reading"
+                  ? { editorialProfile: DREAM_READING_EDITORIAL_VERSION }
+                  : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))

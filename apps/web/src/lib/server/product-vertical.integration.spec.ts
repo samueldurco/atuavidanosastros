@@ -23,6 +23,7 @@ import {
 	tarotFocusEditorialTestFixture,
 	tarotYesNoEditorialTestFixture,
 	dreamJournalEditorialTestFixture,
+	dreamReadingEditorialTestFixture,
 	threeQuestionsEditorialTestFixture,
 	dailyCardEditorialTestFixture,
 	threePillarsEditorialTestFixture
@@ -240,6 +241,7 @@ async function fixture(productId: string) {
 					...tarotYesNoEditorialTestFixture(facts.facts),
 					...threeQuestionsEditorialTestFixture(facts.facts),
 					...dreamJournalEditorialTestFixture(facts.facts),
+					...dreamReadingEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -563,6 +565,17 @@ for (const productId of products)
 					'Que associação pessoal você gostaria de explorar a partir deste relato?'
 				);
 				expect(html).toContain('dream-observation');
+			} else if (productId === 'dream-reading') {
+				expect(parent?.editorial?.sections).toHaveLength(3);
+				expect(html).toContain('dream-elements');
+				expect(html).toContain('dream-personal-meaning');
+				expect(html).toContain(
+					'Síntese sintética para testar referências; histórico não consultado e recorrência não avaliada.'
+				);
+				expect(html).toContain(
+					'Que associação pessoal você gostaria de explorar com um elemento do relato?'
+				);
+				expect(html).toContain('O que você gostaria de observar na sua experiência atual?');
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');
@@ -621,7 +634,7 @@ for (const productId of products)
 			expect(await f.publisher.step()).toBe('published');
 			const childArtifact = await f.store(childId);
 			expect(childArtifact.id).not.toBe(artifact.id);
-			if (productId === 'dream-journal') {
+			if (productId === 'dream-journal' || productId === 'dream-reading') {
 				const reopened = await f.read(runId);
 				const regenerated = await f.read(childId);
 				expect(reopened?.editorial?.sections).toEqual(parent?.editorial?.sections);
