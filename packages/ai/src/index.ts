@@ -31,6 +31,7 @@ export * from "./birth-chart.ts";
 export * from "./ascendant.ts";
 export * from "./midheaven.ts";
 export * from "./daily-card.ts";
+export * from "./tarot-focus.ts";
 export * from "./gateway.ts";
 export * from "./memory.ts";
 export * from "./gemini.ts";

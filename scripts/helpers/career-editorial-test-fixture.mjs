@@ -1,9 +1,28 @@
+import { TAROT_FOCUS_EDITORIAL_VERSION, tarotFocusRoles } from '../../packages/ai/src/tarot-focus.ts';
 import { MIDHEAVEN_EDITORIAL_VERSION, midheavenRoles } from '../../packages/ai/src/midheaven.ts';
 import { DAILY_CARD_EDITORIAL_VERSION, dailyCardRoles } from '../../packages/ai/src/daily-card.ts';
 import { CAREER_COMPASS_EDITORIAL_VERSION, careerCompassRoles } from '../../packages/ai/src/career-compass.ts';
 import { THREE_PILLARS_EDITORIAL_VERSION, threePillarsFactIds, threePillarsRoles } from '../../packages/ai/src/three-pillars.ts';
 import { BIRTH_CHART_EDITORIAL_VERSION, birthChartRoles } from '../../packages/ai/src/birth-chart.ts';
 import { ASCENDANT_EDITORIAL_VERSION, ascendantRoles } from '../../packages/ai/src/ascendant.ts';
+
+/** Test-only focus coverage; never approved meanings, interpretation or review.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function tarotFocusEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== TAROT_FOCUS_EDITORIAL_VERSION) return {};
+  const card=facts.facts.find(fact=>fact.id==='card-1');
+  const question=facts.facts.find(fact=>fact.id==='question-1');
+  if(!card || !question) throw new Error('fixture_tarot_focus_missing');
+  return {
+    claims:[{id:'tarot-focus-fact',kind:'fact',text:card.display,evidence:['card-1']},
+      {id:'focus-question-fact',kind:'fact',text:question.display,evidence:['question-1']},
+      ...tarotFocusRoles.map(id=>({id,kind:'hypothesis',text:`Fixture estrutural de ${id}; sem significado homologado.`,evidence:id==='focus-symbol'?['card-1']:['card-1','question-1',...(id==='focus-question' && facts.facts.some(fact=>fact.id==='tarot-context')?['tarot-context']:[])]}))],
+    relations:[],
+    synthesis:[{claimIds:[...tarotFocusRoles],text:'Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.'}],
+    reflections:['Que observação posso fazer ao testar um pequeno experimento hoje?'],
+  };
+}
 
 /** Test-only daily coverage; never approved meanings, interpretation or review.
  * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts

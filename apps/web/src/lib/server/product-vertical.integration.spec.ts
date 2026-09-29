@@ -20,6 +20,7 @@ import {
 	careerEditorialTestFixture,
 	ascendantEditorialTestFixture,
 	midheavenEditorialTestFixture,
+	tarotFocusEditorialTestFixture,
 	dailyCardEditorialTestFixture,
 	threePillarsEditorialTestFixture
 } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
@@ -232,6 +233,7 @@ async function fixture(productId: string) {
 					...ascendantEditorialTestFixture(facts.facts),
 					...midheavenEditorialTestFixture(facts.facts),
 					...dailyCardEditorialTestFixture(facts.facts),
+					...tarotFocusEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -468,6 +470,14 @@ for (const productId of products)
 					'Um pequeno experimento — Hipótese [daily-practice]',
 					'Síntese da Carta do Dia (1) e uma pergunta prática'
 				]);
+				expect(
+					parent?.calculation?.facts.filter((fact) => fact.kind === 'drawn').map((fact) => fact.id)
+				).toEqual(['card-1']);
+				expect(parent?.cartography).toBeNull();
+			} else if (productId === 'tarot-focus') {
+				expect(html).toContain('Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.');
+				expect(html).toContain('Que observação posso fazer ao testar um pequeno experimento hoje?');
+				expect(parent?.editorial?.sections).toHaveLength(6);
 				expect(
 					parent?.calculation?.facts.filter((fact) => fact.kind === 'drawn').map((fact) => fact.id)
 				).toEqual(['card-1']);

@@ -19,12 +19,12 @@ import {
   PRODUCT_DELIVERY_VERSION,
 } from "./src/product-delivery.ts";
 
-// Generic Tarot projection tests use Foco Agora; daily-card profile is tested separately.
+// Generic Tarot projection tests use Sim/Não responsável; daily-card profile is tested separately.
 // Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
 const genericCalculation = await calculateTarot(
   {
     version: "atv-workflow/1.0.0",
-    productId: "tarot-focus",
+    productId: "tarot-yes-no",
     questions: ["Que possibilidade posso observar?"],
     context: "Contexto sintético B",
     consent: {
@@ -41,7 +41,7 @@ function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 3,
-    productId: "tarot-focus",
+    productId: "tarot-yes-no",
     tier: "free",
     calculation: structuredClone(genericCalculation),
     output: {

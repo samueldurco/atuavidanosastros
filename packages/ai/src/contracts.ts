@@ -1,5 +1,9 @@
 export const SCHEMA_VERSION = "atv-reading/1.0.0";
 import {
+  TAROT_FOCUS_EDITORIAL_VERSION,
+  validTarotFocusFacts,
+} from "./tarot-focus.ts";
+import {
   CAREER_COMPASS_EDITORIAL_VERSION,
   validCareerCompassFacts,
 } from "./career-compass.ts";
@@ -27,7 +31,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.8";
+export const PROMPT_VERSION = "atv-editorial/1.0.9";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -57,7 +61,8 @@ export interface FactsEnvelope {
     | typeof BIRTH_CHART_EDITORIAL_VERSION
     | typeof ASCENDANT_EDITORIAL_VERSION
     | typeof MIDHEAVEN_EDITORIAL_VERSION
-    | typeof DAILY_CARD_EDITORIAL_VERSION;
+    | typeof DAILY_CARD_EDITORIAL_VERSION
+    | typeof TAROT_FOCUS_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -215,7 +220,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === MIDHEAVEN_EDITORIAL_VERSION &&
       validMidheavenFacts(value)) ||
     (value.editorialProfile === DAILY_CARD_EDITORIAL_VERSION &&
-      validDailyCardFacts(value))
+      validDailyCardFacts(value)) ||
+    (value.editorialProfile === TAROT_FOCUS_EDITORIAL_VERSION &&
+      validTarotFocusFacts(value))
   );
 }
 

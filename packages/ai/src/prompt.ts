@@ -1,4 +1,8 @@
 import {
+  TAROT_FOCUS_EDITORIAL_VERSION,
+  tarotFocusInstructions,
+} from "./tarot-focus.ts";
+import {
   DAILY_CARD_EDITORIAL_VERSION,
   dailyCardInstructions,
 } from "./daily-card.ts";
@@ -87,6 +91,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === DAILY_CARD_EDITORIAL_VERSION
       ? [dailyCardInstructions]
+      : []),
+    ...(request.facts.editorialProfile === TAROT_FOCUS_EDITORIAL_VERSION
+      ? [tarotFocusInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

@@ -232,3 +232,8 @@ Perfil `atv-midheaven-editorial/1.0.0` selecionado após coerência MC-only; pre
 ## WU131 — Meio do Céu: leitura persistida
 
 Delivery1.5.0 nomeia fato, contribuição, possibilidades, tensão e síntese/perguntas sem alterar texto/evidências; vincula o digest de novas revisões. O leitor distingue MC calculado e contexto relatado. SQL local prova snapshot web, proprietário, recuperação idempotente, revogação e versão filha independente com aprovação fictícia explícita. Purpose-direction não oferece cartografia nem PDF; card de seção segue WU040. QA `../qa/MIDHEAVEN_READER_2026-09-28.md` comprova o percurso sintético local; conteúdo/revisão legítima, homologação e hospedagem mantêm E1–E5 integrais bloqueados.
+
+
+## WU136 — Foco Agora: cobertura editorial
+
+Perfil `atv-tarot-focus-editorial/1.0.0` após projeção coerente, preparação1.15.0/prompt1.0.9/corpus1.17.0: cinco afirmações, carta/pergunta exatas, símbolo com possibilidade/tensão/alternativa, conexão com pergunta e contexto relatado quando recebido, experimento reversível, síntese conjunta e uma pergunta. O Director verifica estrutura; conteúdo/modelo/revisão legítimos seguem bloqueados. Fixture não concede release. Contrato `tarot-focus-editorial.md`; QA `../qa/TAROT_FOCUS_EDITORIAL_2026-09-28.md`. Próxima entrega independente: resultado web e percurso persistido E3–E5.

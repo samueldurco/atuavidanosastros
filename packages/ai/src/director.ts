@@ -1,4 +1,8 @@
 import type { FactsEnvelope, Reading, Tier } from "./contracts.ts";
+import {
+  TAROT_FOCUS_EDITORIAL_VERSION,
+  inspectTarotFocus,
+} from "./tarot-focus.ts";
 import { ASCENDANT_EDITORIAL_VERSION, inspectAscendant } from "./ascendant.ts";
 import { MIDHEAVEN_EDITORIAL_VERSION, inspectMidheaven } from "./midheaven.ts";
 import {
@@ -160,6 +164,8 @@ export function inspectReading(
     findings.push(...inspectMidheaven(reading));
   if (facts.editorialProfile === DAILY_CARD_EDITORIAL_VERSION)
     findings.push(...inspectDailyCard(reading));
+  if (facts.editorialProfile === TAROT_FOCUS_EDITORIAL_VERSION)
+    findings.push(...inspectTarotFocus(reading, facts));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

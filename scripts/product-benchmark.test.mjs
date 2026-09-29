@@ -1,4 +1,4 @@
-import { dailyCardEditorialTestFixture, careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { tarotFocusEditorialTestFixture, dailyCardEditorialTestFixture, careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -27,13 +27,13 @@ function sample(item = first, repetition = 1) {
       title: 'Fixture de encanamento, não leitura editorial',
       claims: [{ id: 'fixture', kind: 'interpretation', text: 'Conteúdo sintético para exercitar uma referência de evidência.', evidence: [request.facts.facts[0].id] }],
       relations: [], synthesis: [{ claimIds: ['fixture'], text: 'Síntese genérica sem qualquer nota de qualidade.' }],
-      reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts), ...birthChartEditorialTestFixture(request.facts), ...midheavenEditorialTestFixture(request.facts), ...ascendantEditorialTestFixture(request.facts), ...dailyCardEditorialTestFixture(request.facts) },
+      reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts), ...birthChartEditorialTestFixture(request.facts), ...midheavenEditorialTestFixture(request.facts), ...ascendantEditorialTestFixture(request.facts), ...dailyCardEditorialTestFixture(request.facts), ...tarotFocusEditorialTestFixture(request.facts) },
     latencyMs: 100, inputTokens: 2000, outputTokens: 800, costBrl: 0,
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'synthetic-test-not-a-receipt' } };
 }
 
 test('manifest preserves corpus identity, 102 prepared cases, three blocked polar cases and 12 unavailable products', async () => {
-  assert.equal(manifest.corpusFingerprint, '6e31af227a9271a9cc07eaaa1b5f95549048e137ab902bdb0dc77bb0e91ab7e7');
+  assert.equal(manifest.corpusFingerprint, '58d1a7e26bd0398d373733efa0b5de361f48e6099d1dadbe4d7eb28d618e2fc5');
   assert.equal(manifest.cases.length, 105);
   assert.equal(prepared.length, 102);
   assert.equal(manifest.unavailableProducts.length, 12);
