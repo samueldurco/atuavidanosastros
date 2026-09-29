@@ -1,5 +1,9 @@
 import { SYNASTRY_EDITORIAL_VERSION, validSynastryFacts } from "./synastry.ts";
 import {
+  HOROSCOPE_EDITORIAL_VERSION,
+  validHoroscopeFacts,
+} from "./horoscope.ts";
+import {
   COUPLE_DOSSIER_EDITORIAL_VERSION,
   validCoupleDossierFacts,
 } from "./couple-dossier.ts";
@@ -60,7 +64,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.17";
+export const PROMPT_VERSION = "atv-editorial/1.0.18";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -99,7 +103,8 @@ export interface FactsEnvelope {
     | typeof DATE_READING_EDITORIAL_VERSION
     | typeof PAIR_PREVIEW_EDITORIAL_VERSION
     | typeof SYNASTRY_EDITORIAL_VERSION
-    | typeof COUPLE_DOSSIER_EDITORIAL_VERSION;
+    | typeof COUPLE_DOSSIER_EDITORIAL_VERSION
+    | typeof HOROSCOPE_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -221,11 +226,14 @@ export function validateFacts(value: FactsEnvelope): boolean {
     !Array.isArray(value.facts) ||
     value.facts.length < 1 ||
     value.facts.length >
-      ([SYNASTRY_EDITORIAL_VERSION, COUPLE_DOSSIER_EDITORIAL_VERSION].includes(
-        value.editorialProfile ?? "",
-      )
-        ? 121
-        : 40)
+      (value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
+        ? 122
+        : [
+              SYNASTRY_EDITORIAL_VERSION,
+              COUPLE_DOSSIER_EDITORIAL_VERSION,
+            ].includes(value.editorialProfile ?? "")
+          ? 121
+          : 40)
   )
     return false;
   const ids = new Set<string>();
@@ -253,6 +261,7 @@ export function validateFacts(value: FactsEnvelope): boolean {
         ([
           SYNASTRY_EDITORIAL_VERSION,
           COUPLE_DOSSIER_EDITORIAL_VERSION,
+          HOROSCOPE_EDITORIAL_VERSION,
         ].includes(value.editorialProfile ?? "")
           ? 300
           : 160)
@@ -291,7 +300,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === SYNASTRY_EDITORIAL_VERSION &&
       validSynastryFacts(value)) ||
     (value.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION &&
-      validCoupleDossierFacts(value))
+      validCoupleDossierFacts(value)) ||
+    (value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION &&
+      validHoroscopeFacts(value))
   );
 }
 

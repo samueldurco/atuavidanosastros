@@ -1,4 +1,9 @@
 import {
+  HOROSCOPE_EDITORIAL_VERSION,
+  horoscopeInstructions,
+  horoscopeOutputLimits,
+} from "./horoscope.ts";
+import {
   SYNASTRY_EDITORIAL_VERSION,
   synastryInstructions,
 } from "./synastry.ts";
@@ -139,6 +144,9 @@ export function buildPrompt(request: EditorialRequest) {
     ...(request.facts.editorialProfile === DREAM_READING_EDITORIAL_VERSION
       ? [dreamReadingInstructions]
       : []),
+    ...(request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
+      ? [horoscopeInstructions]
+      : []),
     ...(request.facts.editorialProfile === DATE_READING_EDITORIAL_VERSION
       ? [dateReadingInstructions]
       : []),
@@ -173,7 +181,10 @@ export function buildPrompt(request: EditorialRequest) {
     system,
     prompt,
     schema: readingJsonSchema,
-    maxOutputTokens: tierLimits[request.tier].maxOutputTokens,
+    maxOutputTokens:
+      request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
+        ? horoscopeOutputLimits.maxOutputTokens
+        : tierLimits[request.tier].maxOutputTokens,
     temperature: 0.3,
   };
 }

@@ -1,4 +1,8 @@
 import {
+  HOROSCOPE_EDITORIAL_VERSION,
+  HOROSCOPE_MAX_INPUT_CHARS,
+} from "./horoscope.ts";
+import {
   PROMPT_VERSION,
   SCHEMA_VERSION,
   tierLimits,
@@ -199,11 +203,13 @@ export class EditorialGateway {
     }
     const payload = deepFreeze(buildPrompt(request));
     const maxInputChars =
-      request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
-        ? SYNASTRY_MAX_INPUT_CHARS
-        : request.facts.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION
-          ? COUPLE_DOSSIER_MAX_INPUT_CHARS
-          : tierLimits[request.tier].maxInputChars;
+      request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
+        ? HOROSCOPE_MAX_INPUT_CHARS
+        : request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
+          ? SYNASTRY_MAX_INPUT_CHARS
+          : request.facts.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION
+            ? COUPLE_DOSSIER_MAX_INPUT_CHARS
+            : tierLimits[request.tier].maxInputChars;
     if (payload.prompt.length > maxInputChars)
       return unavailable("input_limit");
     const startedAt = performance.now();
@@ -307,7 +313,11 @@ export class EditorialGateway {
           eventStatus = "output_limit";
           return unavailable(eventStatus);
         }
-        const reading = parseReading(response.output, request.tier);
+        const reading = parseReading(
+          response.output,
+          request.tier,
+          request.facts.editorialProfile,
+        );
         if (!reading) {
           eventStatus = "invalid_schema";
           return unavailable(eventStatus);

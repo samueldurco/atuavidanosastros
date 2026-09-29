@@ -1,3 +1,4 @@
+import { HOROSCOPE_EDITORIAL_VERSION, inspectHoroscope } from "./horoscope.ts";
 import { SYNASTRY_EDITORIAL_VERSION, inspectSynastry } from "./synastry.ts";
 import {
   COUPLE_DOSSIER_EDITORIAL_VERSION,
@@ -203,6 +204,8 @@ export function inspectReading(
     findings.push(...inspectDreamJournal(reading, facts));
   if (facts.editorialProfile === DREAM_READING_EDITORIAL_VERSION)
     findings.push(...inspectDreamReading(reading, facts));
+  if (facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION)
+    findings.push(...inspectHoroscope(reading, facts));
   if (facts.editorialProfile === DATE_READING_EDITORIAL_VERSION)
     findings.push(...inspectDateReading(reading, facts));
   if (facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION)

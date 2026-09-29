@@ -1,9 +1,14 @@
 import {
+  HOROSCOPE_EDITORIAL_VERSION,
+  horoscopeOutputLimits,
+} from "./horoscope.ts";
+import {
   capabilities,
   SCHEMA_VERSION,
   tierLimits,
   type Reading,
   type Tier,
+  type FactsEnvelope,
 } from "./contracts.ts";
 
 const text = { type: "string", minLength: 1, maxLength: 1800 };
@@ -76,9 +81,16 @@ const array = (v: unknown, min: number, max: number): v is unknown[] =>
 const references = (v: unknown, min = 1): boolean =>
   array(v, min, 40) && v.every(id) && new Set(v).size === v.length;
 
-export function parseReading(raw: unknown, tier: Tier): Reading | null {
+export function parseReading(
+  raw: unknown,
+  tier: Tier,
+  profile?: FactsEnvelope["editorialProfile"],
+): Reading | null {
   let value: unknown = raw;
-  const limits = tierLimits[tier];
+  const limits =
+    profile === HOROSCOPE_EDITORIAL_VERSION
+      ? horoscopeOutputLimits
+      : tierLimits[tier];
   try {
     const encoded = typeof raw === "string" ? raw : JSON.stringify(raw);
     if (!encoded || encoded.length > limits.maxOutputChars) return null;

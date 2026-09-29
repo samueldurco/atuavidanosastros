@@ -121,10 +121,27 @@ function canonical(v: unknown): unknown {
 const same = (a: unknown, b: unknown) =>
   JSON.stringify(canonical(a)) === JSON.stringify(canonical(b));
 
+// JSON comparison must not silently erase undefined keys or non-JSON metadata.
+function jsonCompatible(value: unknown, depth = 0): boolean {
+  if (depth > 32) return false;
+  if (value === null || typeof value === "string" || typeof value === "boolean")
+    return true;
+  if (typeof value === "number") return Number.isFinite(value);
+  if (Array.isArray(value))
+    return Array.from(value).every((item) => jsonCompatible(item, depth + 1));
+  if (
+    !record(value) ||
+    ![Object.prototype, null].includes(Object.getPrototypeOf(value))
+  )
+    return false;
+  return Object.values(value).every((item) => jsonCompatible(item, depth + 1));
+}
+
 /** Original persisted keys, roles and full geometry; coherence is not source authentication. */
 export function validHoroscopeProjection(value: CalculationSnapshot): boolean {
   try {
     if (
+      !jsonCompatible(value) ||
       !record(value) ||
       !exact(value, ["version", "kind", "status", "facts", "data", "limits"]) ||
       !record(value.data) ||

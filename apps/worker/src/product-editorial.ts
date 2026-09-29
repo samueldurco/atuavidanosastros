@@ -3,6 +3,7 @@ import { TAROT_YES_NO_EDITORIAL_VERSION } from "../../../packages/ai/src/tarot-y
 import {
   SYNASTRY_EDITORIAL_VERSION,
   COUPLE_DOSSIER_EDITORIAL_VERSION,
+  HOROSCOPE_EDITORIAL_VERSION,
 } from "@atv/ai";
 import {
   workflowFor,
@@ -44,6 +45,7 @@ import { validDateReadingProjection } from "./date-reading-projection.ts";
 import { validPairPreviewProjection } from "./pair-preview-projection.ts";
 import { validSynastryProjection } from "./synastry-projection.ts";
 import { validCoupleDossierProjection } from "./couple-dossier-projection.ts";
+import { validHoroscopeProjection } from "./horoscope-projection.ts";
 import {
   validDailyCardProjection,
   validTarotFocusProjection,
@@ -60,7 +62,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.30.0";
+  "atv-product-editorial-evidence/1.31.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -94,6 +96,11 @@ export function prepareProductFacts(
   if (!calculation || !kind)
     return { status: "blocked", reason: "calculation_invalid" };
   // Inspect the original facts before generic validation can omit extra metadata.
+  if (
+    productId === "horoscope" &&
+    !validHoroscopeProjection(value as CalculationSnapshot)
+  )
+    return { status: "blocked", reason: "calculation_invalid" };
   if (
     productId === "couple-dossier" &&
     !validCoupleDossierProjection(value as CalculationSnapshot)
@@ -167,18 +174,20 @@ export function prepareProductFacts(
                 ? { editorialProfile: DREAM_JOURNAL_EDITORIAL_VERSION }
                 : productId === "dream-reading"
                   ? { editorialProfile: DREAM_READING_EDITORIAL_VERSION }
-                  : productId === "date-reading"
-                    ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
-                    : productId === "pair-preview"
-                      ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
-                      : productId === "synastry"
-                        ? { editorialProfile: SYNASTRY_EDITORIAL_VERSION }
-                        : productId === "couple-dossier"
-                          ? {
-                              editorialProfile:
-                                COUPLE_DOSSIER_EDITORIAL_VERSION,
-                            }
-                          : {}),
+                  : productId === "horoscope"
+                    ? { editorialProfile: HOROSCOPE_EDITORIAL_VERSION }
+                    : productId === "date-reading"
+                      ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
+                      : productId === "pair-preview"
+                        ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
+                        : productId === "synastry"
+                          ? { editorialProfile: SYNASTRY_EDITORIAL_VERSION }
+                          : productId === "couple-dossier"
+                            ? {
+                                editorialProfile:
+                                  COUPLE_DOSSIER_EDITORIAL_VERSION,
+                              }
+                            : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))
@@ -290,7 +299,11 @@ export async function evaluateProductDraft(
   const prepared = prepareProductFacts(input.productId, input.calculation);
   if (prepared.status === "blocked")
     return { ...result, reason: prepared.reason };
-  const reading = parseReading(input.output, input.tier);
+  const reading = parseReading(
+    input.output,
+    input.tier,
+    prepared.facts.editorialProfile,
+  );
   if (!reading)
     return {
       ...result,
