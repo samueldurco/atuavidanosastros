@@ -5,6 +5,7 @@ import {
   COUPLE_DOSSIER_EDITORIAL_VERSION,
   HOROSCOPE_EDITORIAL_VERSION,
   WEEK_READING_EDITORIAL_VERSION,
+  WEEK_TEMPORAL_EDITORIAL_VERSION,
 } from "@atv/ai";
 import {
   workflowFor,
@@ -48,6 +49,10 @@ import { validSynastryProjection } from "./synastry-projection.ts";
 import { validCoupleDossierProjection } from "./couple-dossier-projection.ts";
 import { validHoroscopeProjection } from "./horoscope-projection.ts";
 import { validWeekReadingProjection } from "./week-reading-projection.ts";
+import {
+  validWeekTemporalProjection,
+  weekTemporalProductContract,
+} from "./week-temporal-projection.ts";
 import {
   validDailyCardProjection,
   validTarotFocusProjection,
@@ -98,7 +103,15 @@ export function prepareProductFacts(
   if (!calculation || !kind)
     return { status: "blocked", reason: "calculation_invalid" };
   // Inspect the original facts before generic validation can omit extra metadata.
-  if (productId === "week-reading" && !validWeekReadingProjection(value))
+  const temporalWeek =
+    productId === "week-reading" &&
+    calculation.version === weekTemporalProductContract.version;
+  if (
+    productId === "week-reading" &&
+    !(temporalWeek
+      ? validWeekTemporalProjection(value)
+      : validWeekReadingProjection(value))
+  )
     return { status: "blocked", reason: "calculation_invalid" };
   if (
     productId === "horoscope" &&
@@ -163,7 +176,19 @@ export function prepareProductFacts(
     version: "atv-facts/1.0.0",
     capability: capability[kind],
     completeness: "partial",
-    facts: structuredClone(calculation.facts),
+    facts: [
+      ...structuredClone(calculation.facts),
+      ...(temporalWeek && typeof calculation.data.declaredContext === "string"
+        ? [
+            {
+              id: "personal-context",
+              kind: "reported" as const,
+              display: calculation.data.declaredContext,
+              source: "input.context",
+            },
+          ]
+        : []),
+    ],
     ...(productId === "career-compass"
       ? { editorialProfile: CAREER_COMPASS_EDITORIAL_VERSION }
       : productId === "three-pillars"
@@ -181,7 +206,11 @@ export function prepareProductFacts(
                   : productId === "horoscope"
                     ? { editorialProfile: HOROSCOPE_EDITORIAL_VERSION }
                     : productId === "week-reading"
-                      ? { editorialProfile: WEEK_READING_EDITORIAL_VERSION }
+                      ? {
+                          editorialProfile: temporalWeek
+                            ? WEEK_TEMPORAL_EDITORIAL_VERSION
+                            : WEEK_READING_EDITORIAL_VERSION,
+                        }
                       : productId === "date-reading"
                         ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
                         : productId === "pair-preview"

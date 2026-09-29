@@ -4,6 +4,11 @@ import {
   weekReadingOutputLimits,
 } from "./week-reading.ts";
 import {
+  WEEK_TEMPORAL_EDITORIAL_VERSION,
+  weekTemporalInstructions,
+  weekTemporalOutputLimits,
+} from "./week-temporal-reading.ts";
+import {
   HOROSCOPE_EDITORIAL_VERSION,
   horoscopeInstructions,
   horoscopeOutputLimits,
@@ -94,7 +99,9 @@ export function buildPrompt(request: EditorialRequest) {
   const outputLimits =
     request.facts.editorialProfile === WEEK_READING_EDITORIAL_VERSION
       ? weekReadingOutputLimits
-      : tierLimits[request.tier];
+      : request.facts.editorialProfile === WEEK_TEMPORAL_EDITORIAL_VERSION
+        ? weekTemporalOutputLimits
+        : tierLimits[request.tier];
   const specialization = specializations[request.facts.capability];
   const system = [
     `ATV Intelligence Lab. ${CONSTITUTION_VERSION}; ${PROMPT_VERSION}; ${SCHEMA_VERSION}.`,
@@ -158,6 +165,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === WEEK_READING_EDITORIAL_VERSION
       ? [weekReadingInstructions]
+      : []),
+    ...(request.facts.editorialProfile === WEEK_TEMPORAL_EDITORIAL_VERSION
+      ? [weekTemporalInstructions]
       : []),
     ...(request.facts.editorialProfile === DATE_READING_EDITORIAL_VERSION
       ? [dateReadingInstructions]

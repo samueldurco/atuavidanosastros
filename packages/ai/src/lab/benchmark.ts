@@ -10,6 +10,10 @@ import {
   WEEK_READING_EDITORIAL_VERSION,
   weekReadingOutputLimits,
 } from "../week-reading.ts";
+import {
+  WEEK_TEMPORAL_EDITORIAL_VERSION,
+  weekTemporalOutputLimits,
+} from "../week-temporal-reading.ts";
 import { DATASET_VERSION, labCases } from "./dataset.ts";
 import type { LabCase } from "./dataset.ts";
 
@@ -50,7 +54,10 @@ export function evaluateSample(
           : item.request.facts.editorialProfile ===
               WEEK_READING_EDITORIAL_VERSION
             ? weekReadingOutputLimits
-            : {}),
+            : item.request.facts.editorialProfile ===
+                WEEK_TEMPORAL_EDITORIAL_VERSION
+              ? weekTemporalOutputLimits
+              : {}),
       }
     : null;
   // Freeze the JSON representation once so validation and review digests cannot observe different outputs.

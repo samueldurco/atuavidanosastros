@@ -15,6 +15,15 @@ import {
 } from "./src/product-runtime.ts";
 import { validateCalculation } from "./src/product-processing.ts";
 import { prepareProductFacts } from "./src/product-editorial.ts";
+import { prepareProductDelivery } from "./src/product-delivery.ts";
+import {
+  SCHEMA_VERSION,
+  WEEK_TEMPORAL_EDITORIAL_VERSION,
+  validateFacts,
+  weekTemporalEditorialLimits,
+  weekTemporalEvidence,
+  weekTemporalRoles,
+} from "@atv/ai";
 
 const policy = () => ({
   id: "synthetic-five-rules-no-approval",
@@ -109,10 +118,79 @@ test("internal temporal opt-in preserves bounded real-engine evidence without ap
       "Tema consentido, sem alterar geometria.",
     ),
   );
-  assert.deepEqual(prepareProductFacts("week-reading", snapshot), {
-    status: "blocked",
-    reason: "calculation_invalid",
-  });
+  const prepared = prepareProductFacts("week-reading", snapshot);
+  assert.equal(prepared.status, "prepared");
+  assert.equal(
+    prepared.facts.editorialProfile,
+    WEEK_TEMPORAL_EDITORIAL_VERSION,
+  );
+  assert.equal(prepared.facts.facts.length, 12);
+  assert.equal(prepared.facts.facts[11].display, snapshot.data.declaredContext);
+  assert.equal(validateFacts(prepared.facts), true);
+});
+
+test("temporal editorial draft projects counts, context and limits for independent review", async () => {
+  const prepared = prepareProductFacts("week-reading", snapshot);
+  assert.equal(prepared.status, "prepared");
+  const facts = prepared.facts;
+  const output = {
+    schemaVersion: SCHEMA_VERSION,
+    capability: "cycle-context",
+    scope: "partial",
+    title: "Fixture estrutural de contagens da Semana, sem aprovação",
+    claims: weekTemporalRoles.map((id) => ({
+      id,
+      kind: "hypothesis",
+      evidence: weekTemporalEvidence(facts, id),
+      text: `Possibilidade de observar ${id} sem prever acontecimentos.`,
+    })),
+    relations: [],
+    synthesis: [
+      {
+        claimIds: [...weekTemporalRoles],
+        text: "Panorama dos registros: observar as contagens sem atribuir prioridade.",
+      },
+      {
+        claimIds: [...weekTemporalRoles],
+        text: "Escolha reversível: revisar a hipótese após a observação.",
+      },
+    ],
+    reflections: [
+      "O que você observou durante o intervalo UTC?",
+      "Como seu contexto declarado orienta uma pergunta?",
+      "Qual escolha reversível você pode revisar depois?",
+    ],
+    limits: [...weekTemporalEditorialLimits],
+  };
+  const draft = {
+    runId: "00000000-0000-4000-8000-000000000001",
+    revision: 1,
+    productId: "week-reading",
+    tier: "free",
+    calculation: snapshot,
+    output,
+  };
+  const result = await prepareProductDelivery(draft);
+  assert.equal(result.status, "prepared_for_review", result.reason);
+  assert.equal(result.publication, "blocked");
+  assert.equal(result.content.sections.length, 8);
+  const registered = result.content.sections.filter((part) =>
+    part.title.endsWith("— Fatos registrados"),
+  );
+  assert.deepEqual(
+    registered.flatMap((part) => part.evidence),
+    facts.facts.map((fact) => fact.id),
+  );
+  assert.match(result.content.sections[0].title, /Panorama da busca/);
+  assert.match(
+    result.content.sections[3].title,
+    /Panorama dos registros temporais/,
+  );
+  assert.match(result.content.sections[6].title, /Panorama dos registros/);
+  assert.ok(result.content.limits.includes(weekTemporalEditorialLimits[2]));
+  const changed = structuredClone(draft);
+  changed.output.claims[1].evidence.pop();
+  assert.equal((await prepareProductDelivery(changed)).status, "rejected");
 });
 
 test("guard rejects changed or omitted geometry, events, provenance and hidden fields", () => {

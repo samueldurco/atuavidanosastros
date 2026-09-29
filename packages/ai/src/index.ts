@@ -48,3 +48,4 @@ export * from "./couple-dossier.ts";
 export * from "./horoscope.ts";
 
 export * from "./week-reading.ts";
+export * from "./week-temporal-reading.ts";

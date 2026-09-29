@@ -2,6 +2,10 @@ import {
   WEEK_READING_EDITORIAL_VERSION,
   validWeekReadingFacts,
 } from "./week-reading.ts";
+import {
+  WEEK_TEMPORAL_EDITORIAL_VERSION,
+  validWeekTemporalFacts,
+} from "./week-temporal-reading.ts";
 import { SYNASTRY_EDITORIAL_VERSION, validSynastryFacts } from "./synastry.ts";
 import {
   HOROSCOPE_EDITORIAL_VERSION,
@@ -109,7 +113,8 @@ export interface FactsEnvelope {
     | typeof SYNASTRY_EDITORIAL_VERSION
     | typeof COUPLE_DOSSIER_EDITORIAL_VERSION
     | typeof HOROSCOPE_EDITORIAL_VERSION
-    | typeof WEEK_READING_EDITORIAL_VERSION;
+    | typeof WEEK_READING_EDITORIAL_VERSION
+    | typeof WEEK_TEMPORAL_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -312,7 +317,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION &&
       validHoroscopeFacts(value)) ||
     (value.editorialProfile === WEEK_READING_EDITORIAL_VERSION &&
-      validWeekReadingFacts(value))
+      validWeekReadingFacts(value)) ||
+    (value.editorialProfile === WEEK_TEMPORAL_EDITORIAL_VERSION &&
+      validWeekTemporalFacts(value))
   );
 }
 
