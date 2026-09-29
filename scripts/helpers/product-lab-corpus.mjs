@@ -6,6 +6,7 @@ import { releaseCases, RELEASE_DATASET_VERSION } from '../../packages/ai/src/lab
 import { careerContextCases, CAREER_CONTEXT_VERSION } from './career-context-cases.mjs';
 import { dateContextCases, DATE_CONTEXT_VERSION } from './date-context-cases.mjs';
 import { buildSynastryLabCorpus } from './synastry-lab-cases.mjs';
+import { buildCoupleDossierLabCorpus } from './couple-dossier-lab-cases.mjs';
 
 export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.25.0';
 // Explicit frozen scope: newly added calculators must receive a deliberate corpus revision.
@@ -50,10 +51,11 @@ export function productCorpusInput(productId, category) {
 }
 
 /** Offline only. No provider, database, network, release, interpretation, review or promotion.
- * @param {{experimentalProduct?: 'synastry'}} [options]
+ * @param {{experimentalProduct?: 'synastry' | 'couple-dossier'}} [options]
  */
 export async function buildProductLabCorpus(options = {}) {
   if (options.experimentalProduct !== undefined) {
+    if (options.experimentalProduct === 'couple-dossier') return buildCoupleDossierLabCorpus();
     if (options.experimentalProduct !== 'synastry') throw new Error('unknown_experimental_product');
     return buildSynastryLabCorpus();
   }

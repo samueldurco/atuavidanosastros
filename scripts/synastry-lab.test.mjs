@@ -271,7 +271,7 @@ test("existing local CLIs select synastry explicitly and reject wrong scope or m
 
 test("invalid experimental product is rejected and fresh builds do not retain prior fixture mutation", async () => {
   await assert.rejects(
-    buildProductLabCorpus({ experimentalProduct: "couple-dossier" }),
+    buildProductLabCorpus({ experimentalProduct: "unknown-product" }),
     /unknown_experimental_product/,
   );
   const first = await buildProductLabCorpus({

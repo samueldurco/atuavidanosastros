@@ -13,7 +13,7 @@
     "check": "pnpm -r check",
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
-    "test:unit": "pnpm -r test:unit && node --test scripts/product-lab-corpus.test.mjs scripts/product-benchmark.test.mjs scripts/product-benchmark-comparison.test.mjs scripts/product-benchmark-review.test.mjs scripts/product-review-comparison.test.mjs",
+    "test:unit": "pnpm -r test:unit && node --test scripts/product-lab-corpus.test.mjs scripts/product-benchmark.test.mjs scripts/product-benchmark-comparison.test.mjs scripts/product-benchmark-review.test.mjs scripts/product-review-comparison.test.mjs scripts/synastry-lab.test.mjs scripts/couple-dossier-lab.test.mjs",
     "test:db": "node --test scripts/product-runs-db.test.mjs scripts/product-processing-db.test.mjs scripts/product-cartography-db.test.mjs scripts/product-artifacts-db.test.mjs scripts/product-pdf-renderer-db.test.mjs scripts/product-editorial-db.test.mjs scripts/product-email-db.test.mjs scripts/product-continuity-db.test.mjs scripts/product-continuity-summary-db.test.mjs scripts/product-continuity-access-db.test.mjs",
     "test:e2e": "pnpm --filter @atv/web test:e2e",
     "format": "pnpm --filter @atv/web format",
