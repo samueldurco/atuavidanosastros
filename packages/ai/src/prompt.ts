@@ -1,4 +1,8 @@
 import {
+  DREAM_JOURNAL_EDITORIAL_VERSION,
+  dreamJournalInstructions,
+} from "./dream-journal.ts";
+import {
   THREE_QUESTIONS_EDITORIAL_VERSION,
   threeQuestionsInstructions,
 } from "./three-questions.ts";
@@ -108,6 +112,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === THREE_QUESTIONS_EDITORIAL_VERSION
       ? [threeQuestionsInstructions]
+      : []),
+    ...(request.facts.editorialProfile === DREAM_JOURNAL_EDITORIAL_VERSION
+      ? [dreamJournalInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

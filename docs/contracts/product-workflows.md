@@ -20,6 +20,8 @@ State progression is QUEUED → CALCULATED → AWAITING_EDITORIAL → READY. Pen
 
 ## Symbolic calculations — WU-032
 
+WU145 binds `dream-journal` to `atv-dream-journal-editorial/1.0.0`: one brief hypothesis covering the whole reported entry, one synthesis and one exploratory question; no artificial relations or loaded history. Preparation/corpus 1.21.0 and prompt 1.0.12 bind coverage to existing review/publication authority. Coverage and synthetic fixtures never approve semantics. See `dream-journal-editorial.md` and `../qa/DREAM_JOURNAL_EDITORIAL_2026-09-29.md`; the separate Essential reading scope is preserved.
+
 `createSymbolicCalculators()` registers daily-card, three-questions, dream-reading and dream-journal with the portable processor. This is not hosted runtime wiring or a release flag. Tarot snapshots identify the candidate deck, algorithm and spread versions. A server-created UUID seeds SHA-256 counter words; rejection sampling and partial Fisher–Yates draw unique cards, independent of question text. One upright card per question is a candidate policy requiring editorial review. Only new requests draw; reprocessing preserves the saved snapshot.
 
 WU141 validates the persisted Três Perguntas projection before editorial work: three unique canonical cards, ordered question/card pairs, exact versions and provenance, optional reported context and unchanged candidate limits. Preparation 1.18.0 binds this rule to the review digest. [Product contract](three-questions-calculation.md) and [local evidence](../qa/THREE_QUESTIONS_BASE_2026-09-29.md) preserve the distinction between local coherence, legitimate editorial approval and hosted acceptance.

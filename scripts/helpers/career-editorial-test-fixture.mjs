@@ -1,3 +1,30 @@
+import { DREAM_JOURNAL_EDITORIAL_VERSION } from "../../packages/ai/src/dream-journal.ts";
+/** Synthetic contract coverage; never approved interpretation.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function dreamJournalEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== DREAM_JOURNAL_EDITORIAL_VERSION) return {};
+  return {
+    claims: [
+      {
+        id: "dream-observation",
+        kind: "hypothesis",
+        text: "Possibilidade sintética para verificar o registro; sem interpretação homologada.",
+        evidence: facts.facts.map((f) => f.id),
+      },
+    ],
+    relations: [],
+    synthesis: [
+      {
+        claimIds: ["dream-observation"],
+        text: "Síntese de fixture limitada ao relato, sem consulta de histórico ou aprovação editorial.",
+      },
+    ],
+    reflections: [
+      "Que associação pessoal você gostaria de explorar a partir deste relato?",
+    ],
+  };
+}
 import {
   THREE_QUESTIONS_EDITORIAL_VERSION,
   threeQuestionsRoles,

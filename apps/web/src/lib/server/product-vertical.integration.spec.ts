@@ -22,6 +22,7 @@ import {
 	midheavenEditorialTestFixture,
 	tarotFocusEditorialTestFixture,
 	tarotYesNoEditorialTestFixture,
+	dreamJournalEditorialTestFixture,
 	threeQuestionsEditorialTestFixture,
 	dailyCardEditorialTestFixture,
 	threePillarsEditorialTestFixture
@@ -238,6 +239,7 @@ async function fixture(productId: string) {
 					...tarotFocusEditorialTestFixture(facts.facts),
 					...tarotYesNoEditorialTestFixture(facts.facts),
 					...threeQuestionsEditorialTestFixture(facts.facts),
+					...dreamJournalEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -536,6 +538,14 @@ for (const productId of products)
 					'Que alternativa posso testar no terceiro par?'
 				])
 					expect(html).toContain(question);
+			} else if (productId === 'dream-journal') {
+				expect(html).toContain(
+					'Síntese de fixture limitada ao relato, sem consulta de histórico ou aprovação editorial.'
+				);
+				expect(html).toContain(
+					'Que associação pessoal você gostaria de explorar a partir deste relato?'
+				);
+				expect(html).toContain('dream-observation');
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

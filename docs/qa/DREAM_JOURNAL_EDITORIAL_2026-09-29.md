@@ -1,0 +1,14 @@
+# Registro de sonho — cobertura editorial local
+
+RUN_ID `ATV-20260902-170644Z-01A0630F`. WU145, 29/09/2026. Dados e textos de teste sintéticos; sem aprovação editorial, chamadas pagas ou release.
+
+O diagnóstico `test-results/wu145-baseline.json` comprovou que a regra genérica aceitava mecanicamente uma hipótese ligada só ao primeiro trecho, sem considerar data/emoções/associações e sem pergunta. O perfil específico agora exige uma hipótese breve vinculada a todo o registro, uma síntese e uma pergunta exploratória; não acrescenta relações, histórico nem escopo de leitura premium. Relato, emoções e associações ficam separados da hipótese. Contrato: [dream-journal-editorial.md](../contracts/dream-journal-editorial.md).
+
+Provas locais, registradas em `test-results/wu145-*.log`: IA 90/90 e focal final 5/5; Worker 116/116; scripts de avaliação 63/63; SQL de processamento 15/15. Web completo encontrou somente uma expectativa antiga da fixture do registro (1246 PASS/1 FAIL); corrigida e arquivo vertical reexecutado com 15/15 PASS. Checks IA/Worker/web, formatação, diff dos 21 arquivos e segredos PASS.
+
+- IA: proveniência/ordem/tipos e campos opcionais; remoção de cada referência, hipóteses extras, relações artificiais, síntese/pergunta ausentes ou excedentes. Prompt contém limites e separação da base. Gateway sintético recusa cobertura incompleta e base inválida antes do provedor; cobertura completa permanece candidata. Uma frase sem qualidade semântica exige revisão, demonstrando o limite do diretor.
+- Worker: perfil atribuído após validação da base; cada fato obrigatório; alteração editorial invalida digest/revisão; revisão sintética não concede promoção/publicação. História carregada indevidamente continua `calculation_invalid`.
+- Corpus/benchmark: 105 casos, 102 preparados e três bloqueios polares; mesmos fatos e casos. Remover apenas o perfil do Registro reproduz o digest anterior `9beda44ce95d3d584548778085c667d686e18c2022892c840cc356b332f4dd54`. Novo digest `d3c7505d94d55c2b9f42554a58525dd8185e20b3528c036ec6ac9d4785235b5b`, sete solicitações alteradas. Fixtures de transporte adaptadas ao contrato, sem servir de aprovação.
+- Checks de IA/Worker/web, suíte web com SQL local, formatação, diff e varredura de segredos são exigidos antes do fechamento. Sem alteração visual nesta WU; E3/E4 tratarão a apresentação/reabertura do registro no leitor.
+
+E2 integral BLOQUEADO: conteúdo aprovado ou modelo/prompt validado e revisão legítima dependem de responsáveis editorial/operacional. Supabase pausado mantém sessão/percurso hospedados bloqueados, com ação `Resume project` do proprietário. Nenhuma fixture encerra E2–E5. Gates e autoridade de publicação preservados; seguir imediatamente a implementação independente E3/E4, sem chamar provedores para preencher bloqueios.

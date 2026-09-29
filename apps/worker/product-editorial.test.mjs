@@ -5,7 +5,7 @@ import { dimensions, RUBRIC_VERSION, SCHEMA_VERSION, EditorialGateway, LabBudget
 import { prepareProductFacts, evaluateProductDraft } from './src/product-editorial.ts';
 import { createNatalCalculators, zodiacPosition } from './src/natal-calculators.ts';
 import { createSymbolicCalculators } from './src/symbolic-calculators.ts';
-import { tarotFocusEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
+import { tarotFocusEditorialTestFixture, dreamJournalEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
 
 const runId='00000000-0000-4000-8000-000000000001';
 const consent={storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false};
@@ -23,7 +23,7 @@ function reading(facts) {
   return {schemaVersion:SCHEMA_VERSION,capability:facts.capability,scope:'partial',title:'Um recorte para observar',
     claims:[{id:'c1',kind:'fact',text:facts.facts[0].display,evidence:[facts.facts[0].id]}],relations:[],
     synthesis:[{claimIds:['c1'],text:'Este recorte preserva a informação recebida e não encerra uma leitura.'}],
-    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts), ...birthChartEditorialTestFixture(facts), ...midheavenEditorialTestFixture(facts), ...ascendantEditorialTestFixture(facts), ...dailyCardEditorialTestFixture(facts), ...tarotFocusEditorialTestFixture(facts), ...tarotYesNoEditorialTestFixture(facts), ...threeQuestionsEditorialTestFixture(facts)};
+    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts), ...birthChartEditorialTestFixture(facts), ...midheavenEditorialTestFixture(facts), ...ascendantEditorialTestFixture(facts), ...dailyCardEditorialTestFixture(facts), ...tarotFocusEditorialTestFixture(facts), ...tarotYesNoEditorialTestFixture(facts), ...threeQuestionsEditorialTestFixture(facts), ...dreamJournalEditorialTestFixture(facts)};
 }
 async function draft(productId='daily-card', context) {
   const calc=await calculation(productId, context); const prepared=prepareProductFacts(productId,calc);
@@ -36,6 +36,20 @@ function bound(assessment) {
     reviewer:'synthetic-reviewer',source:'human',calibrationId:null,
     scores:Object.fromEntries(dimensions.map(d=>[d,10])),evidence:Object.fromEntries(dimensions.map(d=>[d,'Fixture de regra; não calibra qualidade.']))}};
 }
+
+test('dream-journal covers the saved report and refuses missing evidence or stale review without granting approval',async()=>{
+  const input=await draft('dream-journal','Relato sintético consentido.');
+  const prepared=prepareProductFacts('dream-journal',input.calculation);
+  assert.equal(prepared.facts.editorialProfile,'atv-dream-journal-editorial/1.0.0');
+  const assessed=await evaluateProductDraft(input),fixtureReview=bound(assessed);
+  assert.equal(assessed.status,'needs_editorial_review');assert.equal(assessed.publication,'blocked');
+  assert.equal((await evaluateProductDraft(input,fixtureReview,authority)).reason,'promotion_required');
+  for(const fact of prepared.facts.facts){const changed=structuredClone(input);changed.output.claims[0].evidence=changed.output.claims[0].evidence.filter(id=>id!==fact.id);const result=await evaluateProductDraft(changed,fixtureReview,authority);assert.equal(result.reason,'mechanical_rejected',fact.id);assert.equal(result.publication,'blocked');assert.notEqual(result.basisDigest,assessed.basisDigest);}
+  const changed=structuredClone(input);changed.output.claims[0].text+=' Revisão da hipótese.';
+  assert.equal((await evaluateProductDraft(changed,fixtureReview,authority)).reason,'review_basis_mismatch');
+  const invalid=structuredClone(input);invalid.calculation.data.continuity.historyLoaded=true;
+  assert.equal((await evaluateProductDraft(invalid)).reason,'calculation_invalid');
+});
 
 test('all natal and symbolic calculators project exact, isolated, partial facts into the Lab',async()=>{
   for(const productId of Object.keys(calculators)) {

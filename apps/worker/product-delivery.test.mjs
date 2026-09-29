@@ -14,7 +14,7 @@ import {
   midheavenEditorialTestFixture,
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
-  threeQuestionsEditorialTestFixture,
+  dreamJournalEditorialTestFixture, threeQuestionsEditorialTestFixture,
   tarotYesNoEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
@@ -50,7 +50,7 @@ test("three questions delivery binds each saved pair, readings, relation and syn
   input.output = {
     ...input.output,
     capability: "tarot-reflection",
-    ...threeQuestionsEditorialTestFixture(prepared.facts),
+    ...threeQuestionsEditorialTestFixture(prepared.facts), ...dreamJournalEditorialTestFixture(prepared.facts),
   };
   const captured = structuredClone(input);
   const pending = prepareProductDelivery(input);
@@ -994,7 +994,7 @@ test("tarot yes-no delivery preserves the saved card, reported question and all 
   input.output = {
     ...input.output,
     ...tarotYesNoEditorialTestFixture(facts.facts),
-    ...threeQuestionsEditorialTestFixture(facts.facts),
+    ...threeQuestionsEditorialTestFixture(facts.facts), ...dreamJournalEditorialTestFixture(facts.facts),
   };
   const result = await prepareProductDelivery(input);
   assert.equal(result.status, "prepared_for_review");

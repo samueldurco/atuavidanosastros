@@ -24,6 +24,7 @@ import {
   MIDHEAVEN_EDITORIAL_VERSION,
   DAILY_CARD_EDITORIAL_VERSION,
   TAROT_FOCUS_EDITORIAL_VERSION,
+  DREAM_JOURNAL_EDITORIAL_VERSION,
   type Capability,
   type FactsEnvelope,
   type Tier,
@@ -47,7 +48,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.20.0";
+  "atv-product-editorial-evidence/1.21.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -125,7 +126,9 @@ export function prepareProductFacts(
             ? { editorialProfile: ASCENDANT_EDITORIAL_VERSION }
             : productId === "midheaven"
               ? { editorialProfile: MIDHEAVEN_EDITORIAL_VERSION }
-              : {}),
+              : productId === "dream-journal"
+                ? { editorialProfile: DREAM_JOURNAL_EDITORIAL_VERSION }
+                : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))

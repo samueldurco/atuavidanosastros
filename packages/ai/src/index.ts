@@ -38,3 +38,4 @@ export * from "./gemini.ts";
 
 export * from "./tarot-yes-no.ts";
 export * from "./three-questions.ts";
+export * from "./dream-journal.ts";
