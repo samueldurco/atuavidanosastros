@@ -19,7 +19,7 @@ const read = (db, id, user = owner) => asRole(db, 'authenticated', user, () => d
 for (const withContext of [true, false]) test(`Week SQL preserves seven samples, references and owner recovery (context=${withContext})`, async t => {
   const db = await setupProductDatabase({ processing: true });
   t.after(() => db.close());
-  for (const migration of ['20260915180000_product_artifacts.sql', '20260923110000_product_editorial_publication.sql']) {
+  for (const migration of ['20260915180000_product_artifacts.sql', '20260923110000_product_editorial_publication.sql', '20260929150000_week_temporal_reader_detail.sql']) {
     await db.exec(await file(`supabase/migrations/${migration}`));
   }
   await db.exec("update workflow_releases set enabled=true,engine_approved=true,access_policy='free' where product_id='week-reading'");
@@ -75,6 +75,85 @@ for (const withContext of [true, false]) test(`Week SQL preserves seven samples,
   assert.equal(result.input, undefined);
   assert.equal(result.user_id, undefined);
   assert.equal((await db.query('select count(*)::int as n from library_items where source_id=$1 and user_id=$2', [id, owner])).rows[0].n, 1);
+  if (withContext) {
+    // Synthetic projection probe: graft versioned search data onto a valid local receipt.
+    // It tests SQL visibility and bounds, never 1.2 editorial approval.
+    const sampleEvent = {
+      id: "event-1",
+      transitBody: "sun",
+      natalBody: "moon",
+      aspect: "trine",
+      threshold: "exact",
+      mode: "bracketed-crossing",
+      from: "2026-09-29T12:00:00.000Z",
+      to: "2026-09-29T12:01:00.000Z",
+      phaseDirection: "increasing",
+      privateNote: "must stay private",
+    };
+    const sampleWindow = {
+      transitBody: "sun",
+      natalBody: "moon",
+      aspect: "trine",
+      from: "2026-09-29T12:00:00.000Z",
+      to: "2026-09-29T13:00:00.000Z",
+      startClipped: false,
+      endClipped: false,
+      privateNote: "must stay private",
+    };
+    const temporalCalc = {
+      ...row.calculation,
+      version: "atv-week-reading-calculation/1.2.0",
+      data: {
+        events: Array.from({ length: 25 }, (_, i) => ({
+          ...sampleEvent,
+          id: `event-${i + 1}`,
+        })),
+        windows: Array.from({ length: 13 }, () => sampleWindow),
+        natalSnapshot: { secret: "must stay private" },
+      },
+    };
+    await db.query("update product_runs set calculation=$1 where id=$2", [
+      temporalCalc,
+      id,
+    ]);
+    await db.query(
+      "update product_editorial_receipts set calculation=$1 where id=$2",
+      [temporalCalc, receipt],
+    );
+    const temporal = await read(db, id);
+    assert.equal(temporal.released, true);
+    assert.equal(temporal.calculation.temporal.eventCount, 25);
+    assert.equal(temporal.calculation.temporal.events.length, 24);
+    assert.equal(temporal.calculation.temporal.windowCount, 13);
+    assert.equal(temporal.calculation.temporal.windows.length, 12);
+    assert.deepEqual(
+      Object.keys(temporal.calculation.temporal.events[0]).sort(),
+      [
+        "id",
+        "transitBody",
+        "natalBody",
+        "aspect",
+        "threshold",
+        "mode",
+        "from",
+        "to",
+        "phaseDirection",
+      ].sort(),
+    );
+    assert.equal(
+      JSON.stringify(temporal).includes("must stay private"),
+      false,
+    );
+    assert.equal(await read(db, id, other), null);
+    await db.exec(
+      await file(
+        "supabase/forward-fixes/20260929150000_restore_week_reader_without_detail.sql",
+      ),
+    );
+    assert.equal((await read(db, id)).calculation.temporal, undefined);
+  } else {
+    assert.equal(result.calculation.temporal, null);
+  }
   await db.query('update product_editorial_receipts set revoked_at=now() where id=$1', [receipt]);
   const revoked = await read(db, id);
   assert.equal(revoked.released, false);

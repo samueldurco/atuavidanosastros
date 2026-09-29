@@ -1,6 +1,7 @@
 import { workflowFor } from '@atv/domain';
 import { isUuid, type LibraryItemSummary } from './library-result';
 import { parseProductCartography, type ProductCartography } from './product-cartography';
+import { parseWeekTemporalDetail, type WeekTemporalDetail } from './week-temporal-detail';
 
 export const runStates = [
 	'QUEUED',
@@ -28,6 +29,7 @@ export interface ProductRunView {
 		version: string;
 		facts: { id: string; kind: string; display: string; source: string }[];
 		limits: string[];
+		temporal?: WeekTemporalDetail | null;
 	} | null;
 	editorial: {
 		version: string;
@@ -164,6 +166,9 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 			sections.push({ title: section.title, text: section.text, evidence: [...section.evidence] });
 		}
 		calculation = { version: c.version, facts, limits: [...c.limits] };
+		if (v.productId === 'week-reading' && c.version === 'atv-week-reading-calculation/1.2.0') {
+			calculation.temporal = parseWeekTemporalDetail(c.temporal);
+		}
 		editorial = {
 			version: e.version,
 			promotionId: e.promotionId,

@@ -15,6 +15,12 @@
 	import { productFactLabel } from '$lib/product-fact-label';
 	import { weekReadingTimeline, weekReadingAreaLinks } from '$lib/week-reading-timeline';
 	import { weekTemporalFacts } from '$lib/week-temporal-facts';
+	import {
+		weekBodyLabel,
+		weekAspectLabel,
+		weekModeLabel,
+		weekPhaseLabel
+	} from '$lib/week-temporal-detail';
 	import { parseProductCartography } from '$lib/product-cartography';
 	import { libraryPageHref } from '$lib/library-page';
 	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
@@ -132,6 +138,16 @@
 			dateStyle: 'medium',
 			timeStyle: 'short',
 			timeZone: 'America/Sao_Paulo'
+		}).format(new Date(value));
+	const utcDate = (value: string) =>
+		new Intl.DateTimeFormat('pt-BR', {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+			timeZone: 'UTC',
+			timeZoneName: 'short'
 		}).format(new Date(value));
 	const explanation = $derived(
 		data.run.state === 'FAILED'
@@ -401,6 +417,55 @@
 								</li>
 							{/each}
 						</ul>
+						{#if temporalFacts.detail}
+							<div class="week-temporal-detail">
+								<h3>Registros observados da busca</h3>
+								<p>
+									Mostrando {temporalFacts.detail.events.length} de {temporalFacts.detail
+										.eventCount}
+									contatos/cruzamentos nominais e {temporalFacts.detail.windows.length} de
+									{temporalFacts.detail.windowCount} janelas candidatas. Horários em UTC. Os extremos
+									registrados não provam o instante exato nem continuidade.
+								</p>
+								<p>
+									Fonte: cálculo persistido {temporalFacts.detail.version}. A direção da fase
+									descreve apenas a geometria observada; não indica movimento, intensidade ou
+									favorabilidade.
+								</p>
+								<details>
+									<summary>Contatos e cruzamentos registrados</summary>
+									<ol>
+										{#each temporalFacts.detail.events as event (event.id)}
+											<li>
+												{weekBodyLabel[event.transitBody]} em trânsito · {weekAspectLabel[
+													event.aspect
+												]}
+												· {weekBodyLabel[event.natalBody]} natal · {event.threshold === 'exact'
+													? 'limiar exato nominal'
+													: 'limite de orbe'} ·
+												{weekModeLabel[event.mode]} · {weekPhaseLabel[event.phaseDirection]} ·
+												<time datetime={event.from}>{utcDate(event.from)}</time> a
+												<time datetime={event.to}>{utcDate(event.to)}</time>
+											</li>
+										{/each}
+									</ol>
+								</details>
+								<details>
+									<summary>Janelas candidatas registradas</summary>
+									<ol>
+										{#each temporalFacts.detail.windows as window, index (index)}
+											<li>
+												{weekBodyLabel[window.transitBody]} em trânsito ·
+												{weekAspectLabel[window.aspect]} · {weekBodyLabel[window.natalBody]} natal ·
+												<time datetime={window.from}>{utcDate(window.from)}</time> a
+												<time datetime={window.to}>{utcDate(window.to)}</time>
+												{#if window.startClipped || window.endClipped}· recorte no limite da semana{/if}
+											</li>
+										{/each}
+									</ol>
+								</details>
+							</div>
+						{/if}
 					{:else}
 						<p>
 							Não foi possível apresentar a projeção semanal desta versão. A leitura preservada e a

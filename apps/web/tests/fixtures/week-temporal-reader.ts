@@ -6,6 +6,35 @@ export function weekTemporalReaderFixture() {
 	run.productId = 'week-reading';
 	run.calculation = {
 		version: 'atv-week-reading-calculation/1.2.0',
+		temporal: {
+			version: 'atv-week-reading-calculation/1.2.0' as const,
+			eventCount: 1,
+			windowCount: 1,
+			events: [
+				{
+					id: 'event-1',
+					transitBody: 'sun',
+					natalBody: 'moon',
+					aspect: 'trine',
+					threshold: 'exact',
+					mode: 'bracketed-crossing',
+					from: '2026-09-29T12:00:00.000Z',
+					to: '2026-09-29T12:01:00.000Z',
+					phaseDirection: 'increasing'
+				}
+			],
+			windows: [
+				{
+					transitBody: 'sun',
+					natalBody: 'moon',
+					aspect: 'trine',
+					from: '2026-09-29T12:00:00.000Z',
+					to: '2026-09-29T13:00:00.000Z',
+					startClipped: false,
+					endClipped: false
+				}
+			]
+		},
 		facts: [
 			'summary',
 			'sun',

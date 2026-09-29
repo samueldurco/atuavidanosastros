@@ -22,14 +22,22 @@ import { dreamJournalReaderFixture } from '../../../../../tests/fixtures/dream-j
 
 import { horoscopeReaderFixture } from '../../../../../tests/fixtures/horoscope-reader';
 import { weekReadingReaderFixture } from '../../../../../tests/fixtures/week-reading-reader';
+import { weekTemporalReaderFixture } from '../../../../../tests/fixtures/week-temporal-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
-	if (url.searchParams.get('product') === 'week-reading')
-		return weekReadingReaderFixture(
+	if (url.searchParams.get('product') === 'week-reading') {
+		const data = await weekReadingReaderFixture(
 			url.searchParams.get('state'),
 			url.searchParams.get('context') !== 'absent'
 		);
+		if (url.searchParams.get('calculation') === 'temporal' && data.run.released) {
+			const specimen = weekTemporalReaderFixture();
+			data.run.calculation = specimen.calculation;
+			data.run.editorial = specimen.editorial;
+		}
+		return data;
+	}
 	if (url.searchParams.get('product') === 'horoscope')
 		return horoscopeReaderFixture(
 			url.searchParams.get('state'),

@@ -32,5 +32,9 @@ export function weekTemporalFacts(run: ProductRunView) {
 		new Set(facts.map((fact) => fact.source)).size !== 1
 	)
 		return null;
-	return { summary: facts[0].display, bodies: facts.slice(1) };
+	return {
+		summary: facts[0].display,
+		bodies: facts.slice(1),
+		detail: run.calculation.temporal ?? null
+	};
 }

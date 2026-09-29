@@ -95,6 +95,38 @@ test('Week missing context remains absent', async ({ page }) => {
 		'Nenhum contexto adicional foi informado para esta semana.'
 	);
 });
+for (const width of [390, 320])
+	test(`Week temporal detail is bounded and keyboard-readable at ${width}`, async ({
+		page
+	}, testInfo) => {
+		await page.setViewportSize({ width, height: 900 });
+		await page.goto(
+			'/biblioteca/_spec/fluxo?state=ready&product=week-reading&calculation=temporal'
+		);
+		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		if (await consent.isVisible()) await consent.click();
+		const detail = page.locator('.week-temporal-detail');
+		await expect(detail).toContainText('Mostrando 1 de 1 contatos/cruzamentos');
+		await expect(detail).toContainText('1 de 1 janelas candidatas');
+		await expect(detail).toContainText('Horários em UTC');
+		const summaries = detail.locator('summary');
+		await summaries.first().focus();
+		await page.keyboard.press('Enter');
+		await expect(detail.locator('details').first()).toHaveAttribute('open', '');
+		await expect(detail.locator('details').first().locator('time')).toHaveCount(2);
+		await expect(detail.locator('details').first()).toContainText('Sol em trânsito');
+		await summaries.last().focus();
+		await page.keyboard.press('Enter');
+		await expect(detail.locator('details').last()).toHaveAttribute('open', '');
+		await expect(detail.locator('details').last().locator('time')).toHaveCount(2);
+		await detail.scrollIntoViewIfNeeded();
+		await page.screenshot({ path: testInfo.outputPath(`week-temporal-detail-${width}.png`) });
+		expect(
+			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
+		).toBeLessThanOrEqual(1);
+		await page.reload();
+		await expect(detail).toContainText('Mostrando 1 de 1 contatos/cruzamentos');
+	});
 test('Week unavailable states withhold private reading, timeline and downloads', async ({
 	page
 }) => {
