@@ -1,4 +1,7 @@
-import { dreamReadingEditorialTestFixture } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
+import {
+  dateReadingEditorialTestFixture,
+  dreamReadingEditorialTestFixture,
+} from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import { prepareProductFacts } from "./src/product-editorial.ts";
 import test from "node:test";
 import { calculateDreamRecord } from "@atv/domain";
@@ -67,6 +70,9 @@ function draft() {
       reflections: ["O que chama sua atenção?"],
       limits: ["Fixture sem avaliação de qualidade real."],
       ...dreamReadingEditorialTestFixture(
+        prepareProductFacts("dream-reading", genericCalculation).facts,
+      ),
+      ...dateReadingEditorialTestFixture(
         prepareProductFacts("dream-reading", genericCalculation).facts,
       ),
     },

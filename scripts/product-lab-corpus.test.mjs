@@ -1,3 +1,4 @@
+import { dateReadingEditorialTestFixture } from "./helpers/career-editorial-test-fixture.mjs";
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildProductLabCorpus, corpusCategories, corpusDigest, corpusProducts, productCorpusInput } from './helpers/product-lab-corpus.mjs';
@@ -145,7 +146,7 @@ function dateDraft(item) {
   draft.output.capability = 'cycle-context';
   draft.output.claims = [{ id: 'c1', kind: 'fact', text: fact.display, evidence: [fact.id] }];
   draft.output.synthesis = [{ claimIds: ['c1'], text: 'Esta amostra não cobre o dia local nem decide acontecimentos.' }];
-  draft.output.reflections = ['Que informações concretas ajudariam a preparar essa conversa?'];
+  Object.assign(draft.output, dateReadingEditorialTestFixture(item.request.facts));
   return draft;
 }
 
@@ -173,7 +174,7 @@ test('date drafts and unchecked semantic expansion stay blocked pending authoriz
 test('date draft gates reject changed UTC, invented events, expanded scope, commands and prescriptions', async () => {
   const item = dateCases.find(item => item.category === 'adversarial');
   const mutations = [
-    ['altered_fact', output => { output.claims[0].text = 'Amostra à meia-noite local em 2099-12-31.'; }],
+    ['altered_fact', output => { output.claims[0] = {id: 'date-natal-basis', kind: 'fact', text: 'Amostra à meia-noite local em 2099-12-31.', evidence: ['sample-instant']}; }],
     ['unknown_fact', output => { output.claims[0].evidence = ['exact-transit-event']; }],
     ['overstated_scope', output => { output.scope = 'integrated'; }],
     ['invalid_schema', output => { output.tool_calls = [{ name: 'send-pdf' }]; }],
@@ -192,15 +193,17 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  const beforeDreamReading=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='dream-reading'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  const beforeDateReading=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='date-reading'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  assert.equal(corpusDigest(beforeDateReading.map(({id,request})=>({id,request}))), '326feb034d473d7ca8f0fc1f6db59195904d1c7468cf511488e39ef39b0c8660');
+  const beforeDreamReading=beforeDateReading.map(item=>{const v=structuredClone(item);if(v.productId==='dream-reading'&&v.request)delete v.request.facts.editorialProfile;return v;});
   assert.equal(corpusDigest(beforeDreamReading.map(({id,request})=>({id,request}))),"d3c7505d94d55c2b9f42554a58525dd8185e20b3528c036ec6ac9d4785235b5b");
   const beforeDreamJournal=beforeDreamReading.map(item=>{const v=structuredClone(item);if(v.productId==='dream-journal'&&v.request)delete v.request.facts.editorialProfile;return v;});
   assert.equal(corpusDigest(beforeDreamJournal.map(({id,request})=>({id,request}))),'9beda44ce95d3d584548778085c667d686e18c2022892c840cc356b332f4dd54');
   const beforeThreeQuestions=beforeDreamJournal.map(item=>{const v=structuredClone(item);if(v.productId==='three-questions'&&v.request)delete v.request.facts.editorialProfile;return v;});
   assert.equal(corpusDigest(beforeThreeQuestions.map(({id,request})=>({id,request}))),'bac58d61a1d47192756ed7763f0775c3e4a2bc318c4dc7b5996b6d4fe7728ea7');
   const legacyCases=beforeThreeQuestions.map(item=>{const v=structuredClone(item);if(v.productId==='tarot-yes-no'&&v.request)delete v.request.facts.editorialProfile;return v;});
-  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),"326feb034d473d7ca8f0fc1f6db59195904d1c7468cf511488e39ef39b0c8660");
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.23.0');
+  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),"c08f421e1dc3dace8ffe4addf2d251f1f094cb567d4e37e18de8b95382c1018e");
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.24.0');
   assert.equal(corpusDigest(legacyCases.map(({ id, request }) => ({ id, request }))),
     '58d1a7e26bd0398d373733efa0b5de361f48e6099d1dadbe4d7eb28d618e2fc5');
   assert.equal(corpusDigest(legacyCases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),

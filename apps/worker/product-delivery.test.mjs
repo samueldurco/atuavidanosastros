@@ -16,6 +16,7 @@ import {
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
   dreamJournalEditorialTestFixture,
+  dateReadingEditorialTestFixture,
   dreamReadingEditorialTestFixture,
   threeQuestionsEditorialTestFixture,
   tarotYesNoEditorialTestFixture,
@@ -56,6 +57,7 @@ test("three questions delivery binds each saved pair, readings, relation and syn
     ...threeQuestionsEditorialTestFixture(prepared.facts),
     ...dreamJournalEditorialTestFixture(prepared.facts),
     ...dreamReadingEditorialTestFixture(prepared.facts),
+    ...dateReadingEditorialTestFixture(prepared.facts),
   };
   const captured = structuredClone(input);
   const pending = prepareProductDelivery(input);
@@ -199,6 +201,9 @@ function draft() {
       ],
       limits: ["Fixture de projeção, não leitura aprovada."],
       ...dreamReadingEditorialTestFixture(
+        prepareProductFacts("dream-reading", genericCalculation).facts,
+      ),
+      ...dateReadingEditorialTestFixture(
         prepareProductFacts("dream-reading", genericCalculation).facts,
       ),
     },
@@ -1050,6 +1055,7 @@ test("tarot yes-no delivery preserves the saved card, reported question and all 
     ...threeQuestionsEditorialTestFixture(facts.facts),
     ...dreamJournalEditorialTestFixture(facts.facts),
     ...dreamReadingEditorialTestFixture(facts.facts),
+    ...dateReadingEditorialTestFixture(facts.facts),
   };
   const result = await prepareProductDelivery(input);
   assert.equal(result.status, "prepared_for_review");

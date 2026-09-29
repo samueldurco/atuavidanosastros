@@ -1,3 +1,40 @@
+import {
+  DATE_READING_EDITORIAL_VERSION,
+  dateReadingRoles,
+  dateReadingEvidence,
+  dateReadingLimit,
+} from "../../packages/ai/src/date-reading.ts";
+/** Synthetic coverage only; never content approval or publication.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ * @returns {Partial<Pick<import('../../packages/ai/src/contracts.ts').Reading, 'claims'|'relations'|'synthesis'|'reflections'|'limits'>>}
+ */
+export function dateReadingEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== DATE_READING_EDITORIAL_VERSION) return {};
+  return {
+    claims: dateReadingRoles.map((id) => ({
+      id,
+      kind: "hypothesis",
+      text: `Possibilidade sintética de cobertura: ${id}; sem interpretação homologada.`,
+      evidence: dateReadingEvidence(facts, id),
+    })),
+    relations: [],
+    synthesis: [
+      {
+        claimIds: [...dateReadingRoles],
+        text: "Contraste simbólico sintético; não calcula aspectos ou eventos e não autoriza publicação.",
+      },
+    ],
+    reflections: [
+      "Que possibilidade da base natal você gostaria de explorar?",
+      "O que gostaria de observar na data escolhida?",
+      "Que escolha reversível gostaria de experimentar no seu contexto?",
+    ],
+    limits: [
+      dateReadingLimit,
+      "Base experimental sem garantia global de precisão; fixture sem aprovação editorial.",
+    ],
+  };
+}
 import { DREAM_JOURNAL_EDITORIAL_VERSION } from "../../packages/ai/src/dream-journal.ts";
 import {
   DREAM_READING_EDITORIAL_VERSION,

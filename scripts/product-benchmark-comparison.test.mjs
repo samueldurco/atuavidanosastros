@@ -1,4 +1,4 @@
-import { dreamJournalEditorialTestFixture, dreamReadingEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotFocusEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { dreamJournalEditorialTestFixture, dateReadingEditorialTestFixture, dreamReadingEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotFocusEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -27,7 +27,8 @@ function sample(prefix, item = prepared[0], repetition = 1) {
       claims: [{ id: 'fixture', kind: 'interpretation', text: 'CANARY-SYNTHETIC-OUTPUT: referência para teste.', evidence: [request.facts.facts[0].id] }],
       relations: [], synthesis: [{ claimIds: ['fixture'], text: 'Síntese genérica sem qualquer nota de qualidade.' }],
       reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts), ...birthChartEditorialTestFixture(request.facts), ...midheavenEditorialTestFixture(request.facts), ...ascendantEditorialTestFixture(request.facts), ...dailyCardEditorialTestFixture(request.facts), ...tarotFocusEditorialTestFixture(request.facts), ...tarotYesNoEditorialTestFixture(request.facts), ...threeQuestionsEditorialTestFixture(request.facts), ...dreamJournalEditorialTestFixture(request.facts),
-    ...dreamReadingEditorialTestFixture(request.facts), },
+    ...dreamReadingEditorialTestFixture(request.facts),
+    ...dateReadingEditorialTestFixture(request.facts), },
     latencyMs: 100, inputTokens: 2000, outputTokens: 800, costBrl: 0,
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'CANARY-SYNTHETIC-RECEIPT' } };
 }

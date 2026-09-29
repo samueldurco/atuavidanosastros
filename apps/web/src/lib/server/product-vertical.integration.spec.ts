@@ -23,6 +23,7 @@ import {
 	tarotFocusEditorialTestFixture,
 	tarotYesNoEditorialTestFixture,
 	dreamJournalEditorialTestFixture,
+	dateReadingEditorialTestFixture,
 	dreamReadingEditorialTestFixture,
 	threeQuestionsEditorialTestFixture,
 	dailyCardEditorialTestFixture,
@@ -244,7 +245,8 @@ async function fixture(productId: string) {
 					...dreamReadingEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
-					]
+					],
+					...dateReadingEditorialTestFixture(facts.facts)
 				}
 			};
 			const candidate = await prepareProductDelivery(draft);
@@ -580,6 +582,13 @@ for (const productId of products)
 					'Que associação pessoal você gostaria de explorar com um elemento do relato?'
 				);
 				expect(html).toContain('O que você gostaria de observar na sua experiência atual?');
+			} else if (productId === 'date-reading') {
+				expect(html).toContain('date-natal-basis');
+				expect(html).toContain('date-sample');
+				expect(html).toContain('date-contrast');
+				expect(html).toContain('Contraste simbólico sintético; não calcula aspectos ou eventos');
+				expect(html).toContain('O que gostaria de observar na data escolhida?');
+				expect(html).toContain('Base parcial: amostra única das 12h UTC; sem aspectos');
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

@@ -1,4 +1,8 @@
 import {
+  DATE_READING_EDITORIAL_VERSION,
+  inspectDateReading,
+} from "./date-reading.ts";
+import {
   DREAM_JOURNAL_EDITORIAL_VERSION,
   inspectDreamJournal,
 } from "./dream-journal.ts";
@@ -190,6 +194,8 @@ export function inspectReading(
     findings.push(...inspectDreamJournal(reading, facts));
   if (facts.editorialProfile === DREAM_READING_EDITORIAL_VERSION)
     findings.push(...inspectDreamReading(reading, facts));
+  if (facts.editorialProfile === DATE_READING_EDITORIAL_VERSION)
+    findings.push(...inspectDateReading(reading, facts));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

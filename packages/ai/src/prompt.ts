@@ -1,4 +1,8 @@
 import {
+  DATE_READING_EDITORIAL_VERSION,
+  dateReadingInstructions,
+} from "./date-reading.ts";
+import {
   DREAM_JOURNAL_EDITORIAL_VERSION,
   dreamJournalInstructions,
 } from "./dream-journal.ts";
@@ -122,6 +126,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === DREAM_READING_EDITORIAL_VERSION
       ? [dreamReadingInstructions]
+      : []),
+    ...(request.facts.editorialProfile === DATE_READING_EDITORIAL_VERSION
+      ? [dateReadingInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({
