@@ -6,7 +6,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.12.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.13.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -94,6 +94,14 @@ function claimTitle(
     return `Observação breve — ${labels[claim.kind]} [${claim.id}]`;
   if (productId === "dream-reading")
     return `${claim.id === "dream-elements" ? "Elementos do relato: possibilidade simbólica" : "Emoções e associações: sentido pessoal"} — ${labels[claim.kind]} [${claim.id}]`;
+  if (productId === "pair-preview") {
+    const titles: Record<string, string> = {
+      "pair-person-a": "Pessoa A: possibilidades individuais",
+      "pair-person-b": "Pessoa B: possibilidades individuais",
+      "pair-negotiation": "Possibilidades de conversa e negociação",
+    };
+    return `${titles[claim.id] ?? claim.id} — ${labels[claim.kind]} [${claim.id}]`;
+  }
   if (productId === "date-reading") {
     const titles: Record<string, string> = {
       "date-natal-basis": "Base natal: possibilidade simbólica",
@@ -164,6 +172,26 @@ function project(
   const sections: EditorialSnapshot["sections"] = [];
   const missingDreamFields: string[] = [];
   const missingDateFields: string[] = [];
+  const missingPairFields: string[] = [];
+  if (productId === "pair-preview") {
+    for (const [title, pattern] of [
+      ["Pessoa A", /^person-a-/],
+      ["Pessoa B", /^person-b-/],
+      ["Contexto informado", /^personal-context$/],
+    ] as const) {
+      const recorded = facts.filter((fact) => pattern.test(fact.id));
+      if (recorded.length)
+        sections.push({
+          title: `${title} — Fatos registrados`,
+          text: recorded.map((fact) => fact.display).join("\n\n"),
+          evidence: recorded.map((fact) => fact.id),
+        });
+    }
+    if (!facts.some((fact) => fact.id === "personal-context"))
+      missingPairFields.push(
+        "Nenhum contexto adicional foi informado para este par.",
+      );
+  }
   if (productId === "date-reading") {
     for (const [title, pattern] of [
       ["Base natal", /^natal-/],
@@ -214,13 +242,17 @@ function project(
   const orderedClaims =
     productId === "three-questions"
       ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-      : productId === "date-reading"
-        ? ["date-natal-basis", "date-sample", "date-contrast"].map((id) =>
+      : productId === "pair-preview"
+        ? ["pair-person-a", "pair-person-b", "pair-negotiation"].map((id) =>
             claims.get(id)!,
           )
-        : productId === "dream-reading"
-          ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-          : reading.claims;
+        : productId === "date-reading"
+          ? ["date-natal-basis", "date-sample", "date-contrast"].map((id) =>
+              claims.get(id)!,
+            )
+          : productId === "dream-reading"
+            ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
+            : reading.claims;
   for (const claim of orderedClaims) {
     if (productId === "three-questions") {
       const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
@@ -269,7 +301,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
@@ -294,6 +326,7 @@ function project(
       ...reading.limits,
       ...missingDreamFields,
       ...missingDateFields,
+      ...missingPairFields,
     ],
   };
 }
@@ -319,6 +352,7 @@ export async function prepareProductDelivery(
     "dream-journal",
     "dream-reading",
     "date-reading",
+    "pair-preview",
   ].includes(productId)
     ? prepareProductFacts(productId, input.calculation)
     : undefined;

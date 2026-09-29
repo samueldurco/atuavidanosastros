@@ -127,7 +127,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Meio do Céu (angle-midheaven)',
 			'Contexto pessoal relatado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.12.0',
+			'atv-product-delivery/1.13.0',
 			'Fixture de apresentação',
 			'parcial',
 			'Posições e signos são fatos experimentais'

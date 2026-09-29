@@ -31,7 +31,7 @@ for (const width of [1440, 820, 390, 320]) {
 		const source = page.locator('#origem');
 		for (const label of [
 			'Meio do Céu (angle-midheaven)',
-			'atv-product-delivery/1.12.0',
+			'atv-product-delivery/1.13.0',
 			'Fixture de apresentação',
 			'parcial'
 		])

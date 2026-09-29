@@ -596,6 +596,11 @@ for (const productId of products)
 				expect(html).toContain('O que gostaria de observar na data escolhida?');
 				expect(html).toContain('Base parcial: amostra única das 12h UTC; sem aspectos');
 			} else if (productId === 'pair-preview') {
+				expect(parent?.editorial?.sections).toHaveLength(7);
+				expect(html).toContain('Pessoa A — Fatos registrados');
+				expect(html).toContain('Pessoa B — Fatos registrados');
+				expect(html).toContain('Contexto informado — Fatos registrados');
+				expect(html).toContain('Síntese do Preview do Par (1) e três perguntas práticas');
 				expect(html).toContain('pair-person-a');
 				expect(html).toContain('pair-person-b');
 				expect(html).toContain('pair-negotiation');

@@ -63,7 +63,11 @@
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
 	function factLabel(id: string): string {
-		if (['dream-journal', 'dream-reading', 'date-reading'].includes(data.run.productId))
+		if (
+			['dream-journal', 'dream-reading', 'date-reading', 'pair-preview'].includes(
+				data.run.productId
+			)
+		)
 			return productFactLabel(data.run.productId, id);
 		if (data.run.productId === 'three-questions') {
 			const pair = /^(card|question)-([1-3])$/.exec(id);

@@ -16,6 +16,16 @@ const birthChartLabels: Record<string, string> = {
 
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
+	if (productId === 'pair-preview') {
+		const part = /^person-([ab])-(moon|venus|mars)$/.exec(id);
+		const label =
+			id === 'personal-context'
+				? 'Contexto informado'
+				: part
+					? `Pessoa ${part[1].toUpperCase()} · ${birthChartLabels[`position-${part[2]}`]}`
+					: undefined;
+		return label ? `${label} (${id})` : id;
+	}
 	if (productId === 'date-reading') {
 		const part =
 			/^(natal|sample)-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)$/.exec(id);
