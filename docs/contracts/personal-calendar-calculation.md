@@ -23,3 +23,5 @@ O cliente confirma a continuidade dos dias, o limite do mês, os fatos de cada d
 ## Próximo aceite
 
 E1 permanece parcial até haver fonte, método e autorização de conteúdo temporal por data. E2 exige evidência identificável por período, proveniência, regra de atualização e revisão editorial; E3–E5 exigem seus gates próprios. Dados sintéticos, marcos relatados e grade civil não aprovam motor nem liberação hospedada.
+
+A matriz de cobertura, proveniência e recusa diária está em [personal-calendar-daily-evidence.md](personal-calendar-daily-evidence.md). O preparo editorial atual já recusa este snapshot com `insufficient_facts`.
