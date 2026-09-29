@@ -1,6 +1,9 @@
 import { THREE_QUESTIONS_EDITORIAL_VERSION } from "../../../packages/ai/src/three-questions.ts";
 import { TAROT_YES_NO_EDITORIAL_VERSION } from "../../../packages/ai/src/tarot-yes-no.ts";
-import { SYNASTRY_EDITORIAL_VERSION } from "@atv/ai";
+import {
+  SYNASTRY_EDITORIAL_VERSION,
+  COUPLE_DOSSIER_EDITORIAL_VERSION,
+} from "@atv/ai";
 import {
   workflowFor,
   type CalculationSnapshot,
@@ -40,6 +43,7 @@ import { validCareerCompassProjection } from "./purpose-calculators.ts";
 import { validDateReadingProjection } from "./date-reading-projection.ts";
 import { validPairPreviewProjection } from "./pair-preview-projection.ts";
 import { validSynastryProjection } from "./synastry-projection.ts";
+import { validCoupleDossierProjection } from "./couple-dossier-projection.ts";
 import {
   validDailyCardProjection,
   validTarotFocusProjection,
@@ -56,7 +60,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.29.0";
+  "atv-product-editorial-evidence/1.30.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -90,6 +94,11 @@ export function prepareProductFacts(
   if (!calculation || !kind)
     return { status: "blocked", reason: "calculation_invalid" };
   // Inspect the original facts before generic validation can omit extra metadata.
+  if (
+    productId === "couple-dossier" &&
+    !validCoupleDossierProjection(value as CalculationSnapshot)
+  )
+    return { status: "blocked", reason: "calculation_invalid" };
   if (
     productId === "synastry" &&
     !validSynastryProjection(value as CalculationSnapshot)
@@ -164,7 +173,12 @@ export function prepareProductFacts(
                       ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
                       : productId === "synastry"
                         ? { editorialProfile: SYNASTRY_EDITORIAL_VERSION }
-                        : {}),
+                        : productId === "couple-dossier"
+                          ? {
+                              editorialProfile:
+                                COUPLE_DOSSIER_EDITORIAL_VERSION,
+                            }
+                          : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))

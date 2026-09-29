@@ -3,6 +3,10 @@ import {
   synastryInstructions,
 } from "./synastry.ts";
 import {
+  COUPLE_DOSSIER_EDITORIAL_VERSION,
+  coupleDossierInstructions,
+} from "./couple-dossier.ts";
+import {
   PAIR_PREVIEW_EDITORIAL_VERSION,
   pairPreviewInstructions,
 } from "./pair-preview.ts";
@@ -140,6 +144,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
       ? [synastryInstructions]
+      : []),
+    ...(request.facts.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION
+      ? [coupleDossierInstructions]
       : []),
     ...(request.facts.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION
       ? [pairPreviewInstructions]

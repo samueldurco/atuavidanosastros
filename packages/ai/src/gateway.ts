@@ -13,6 +13,10 @@ import {
   SYNASTRY_EDITORIAL_VERSION,
   SYNASTRY_MAX_INPUT_CHARS,
 } from "./synastry.ts";
+import {
+  COUPLE_DOSSIER_EDITORIAL_VERSION,
+  COUPLE_DOSSIER_MAX_INPUT_CHARS,
+} from "./couple-dossier.ts";
 import { parseReading } from "./schema.ts";
 import { inspectReading, type MechanicalReview } from "./director.ts";
 
@@ -151,7 +155,9 @@ export class EditorialGateway {
     if (
       (input.facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
         input.tier === "free") ||
-      (input.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION &&
+      ([SYNASTRY_EDITORIAL_VERSION, COUPLE_DOSSIER_EDITORIAL_VERSION].includes(
+        input.facts.editorialProfile ?? "",
+      ) &&
         input.tier !== "premium")
     )
       return unavailable("insufficient_tier");
@@ -195,7 +201,9 @@ export class EditorialGateway {
     const maxInputChars =
       request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
         ? SYNASTRY_MAX_INPUT_CHARS
-        : tierLimits[request.tier].maxInputChars;
+        : request.facts.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION
+          ? COUPLE_DOSSIER_MAX_INPUT_CHARS
+          : tierLimits[request.tier].maxInputChars;
     if (payload.prompt.length > maxInputChars)
       return unavailable("input_limit");
     const startedAt = performance.now();

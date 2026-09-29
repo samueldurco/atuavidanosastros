@@ -1,5 +1,9 @@
 import { SYNASTRY_EDITORIAL_VERSION, inspectSynastry } from "./synastry.ts";
 import {
+  COUPLE_DOSSIER_EDITORIAL_VERSION,
+  inspectCoupleDossier,
+} from "./couple-dossier.ts";
+import {
   PAIR_PREVIEW_EDITORIAL_VERSION,
   inspectPairPreview,
 } from "./pair-preview.ts";
@@ -203,6 +207,8 @@ export function inspectReading(
     findings.push(...inspectDateReading(reading, facts));
   if (facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION)
     findings.push(...inspectSynastry(reading, facts));
+  if (facts.editorialProfile === COUPLE_DOSSIER_EDITORIAL_VERSION)
+    findings.push(...inspectCoupleDossier(reading, facts));
   if (facts.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION)
     findings.push(...inspectPairPreview(reading, facts));
   return {

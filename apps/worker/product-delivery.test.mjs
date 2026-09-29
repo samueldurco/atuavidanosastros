@@ -802,10 +802,10 @@ test("a Lab-valid limit that cannot fit the reader is rejected, never truncated 
   assert.deepEqual(input, before);
 });
 
-// Generic offline envelope for transport bounds, not a computed or approved relationship product.
-const premiumRelationshipCalculation = {
-  version: "fixture-relationship-budget/1.0.0",
-  kind: "relationship",
+// Generic offline purpose envelope for transport bounds, without a product editorial profile.
+const premiumTransportCalculation = {
+  version: "fixture-purpose-budget/1.0.0",
+  kind: "purpose",
   status: "experimental",
   data: { fixture: true },
   limits: [
@@ -821,9 +821,9 @@ const premiumRelationshipCalculation = {
 function premium() {
   const input = draft();
   input.tier = "premium";
-  input.productId = "couple-dossier";
-  input.calculation = structuredClone(premiumRelationshipCalculation);
-  input.output.capability = "relationship-dynamics";
+  input.productId = "purpose-career";
+  input.calculation = structuredClone(premiumTransportCalculation);
+  input.output.capability = "purpose-direction";
   input.output.claims = Array.from({ length: 24 }, (_, i) => ({
     id: `c${i}`,
     kind: "interpretation",

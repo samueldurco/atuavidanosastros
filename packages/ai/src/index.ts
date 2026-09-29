@@ -44,3 +44,4 @@ export * from "./dream-reading.ts";
 export * from "./date-reading.ts";
 export * from "./pair-preview.ts";
 export * from "./synastry.ts";
+export * from "./couple-dossier.ts";
