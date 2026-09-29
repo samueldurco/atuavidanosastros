@@ -19,6 +19,8 @@ import { createPurposeCalculators } from '../../../../worker/src/purpose-calcula
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
+import { prepareProductDelivery } from '../../../../worker/src/product-delivery';
+import { coupleDossierEditorialTestFixture } from '../../../../../scripts/helpers/couple-dossier-editorial-test-fixture.mjs';
 import { natalProducts, parseNatalRequestInput } from '../natal-request';
 import { parseDateRequestInput } from '../date-request';
 import { parsePairRequestInput } from '../pair-request';
@@ -758,6 +760,42 @@ it.each(profileProducts)(
 					: 'atv-synastry-editorial/1.0.0'
 			);
 			expect(prepared.facts.facts).toEqual(snapshot.facts);
+			if (productId === 'couple-dossier') {
+				// E5 local: derive a structural candidate from the actual persisted basis.
+				// It is never persisted as approval or exposed through the pending Library.
+				const before = structuredClone(calculated);
+				const output = coupleDossierEditorialTestFixture(prepared.facts);
+				const request = {
+					runId: run.id,
+					revision: calculated.revision,
+					productId,
+					tier: 'premium' as const,
+					calculation: snapshot,
+					output
+				};
+				const candidate = await prepareProductDelivery(request);
+				expect(candidate.status).toBe('prepared_for_review');
+				if (candidate.status !== 'prepared_for_review')
+					throw new Error('missing_dossier_candidate');
+				expect(candidate.publication).toBe('blocked');
+				expect(candidate.content.version).toBe('atv-product-delivery/1.15.0');
+				expect(candidate.content.sections).toHaveLength(35);
+				expect(candidate.content.sections.at(-2)!.evidence).toEqual([
+					...new Set(output.claims.flatMap((claim) => claim.evidence))
+				]);
+				expect([...candidate.content.sections.at(-2)!.evidence].sort()).toEqual(
+					snapshot.facts.map((fact) => fact.id).sort()
+				);
+				expect(candidate.content.sections.at(-1)!.evidence).toHaveLength(41);
+				expect(candidate.content).not.toHaveProperty('promotionId');
+				expect(candidate.content).not.toHaveProperty('reviewDigest');
+				expect(calculated).toEqual(before);
+				const reopened = await stored(run.id);
+				expect(reopened).toEqual(before);
+				expect(
+					await prepareProductDelivery({ ...request, calculation: reopened.calculation! })
+				).toEqual(candidate);
+			}
 			expect(
 				(
 					await db.query('select engine_approved from workflow_releases where product_id=$1', [
