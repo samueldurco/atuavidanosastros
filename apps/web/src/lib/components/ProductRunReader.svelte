@@ -63,6 +63,10 @@
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
 	function factLabel(id: string): string {
+		if (data.run.productId === 'ascendant') {
+			if (id === 'angle-ascendant') return 'Ascendente (angle-ascendant)';
+			if (id === 'personal-context') return 'Contexto pessoal relatado (personal-context)';
+		}
 		if (data.run.productId === 'birth-chart') return productFactLabel(data.run.productId, id);
 		if (data.run.productId === 'career-compass') {
 			if (id === 'angle-midheaven') return `Meio do Céu (${id})`;

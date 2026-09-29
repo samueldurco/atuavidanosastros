@@ -18,6 +18,7 @@ import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import {
 	birthChartEditorialTestFixture,
 	careerEditorialTestFixture,
+	ascendantEditorialTestFixture,
 	threePillarsEditorialTestFixture
 } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
 import {
@@ -226,6 +227,7 @@ async function fixture(productId: string) {
 					...careerEditorialTestFixture(facts.facts),
 					...threePillarsEditorialTestFixture(facts.facts),
 					...birthChartEditorialTestFixture(facts.facts),
+					...ascendantEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -305,7 +307,7 @@ async function fixture(productId: string) {
 			},
 			{ enabled: true }
 		);
-		const store = async (id: string) => {
+		const store = async (id: string, format: 'web' | 'svg' = 'web') => {
 			const run = await read(id);
 			if (!run?.editorial) throw new Error('fixture_unreleased');
 			const result = await producer.produce({
@@ -313,7 +315,7 @@ async function fixture(productId: string) {
 				runId: id,
 				revision: run.revision,
 				reviewDigest: run.editorial.reviewDigest,
-				format: 'web',
+				format,
 				section: -1
 			});
 			if (result.status !== 'stored') throw new Error('fixture_not_stored');
@@ -400,16 +402,52 @@ for (const productId of products)
 				}
 				for (const question of fixture.reflections ?? []) expect(html).toContain(question);
 				expect(html).toContain('Síntese de fixture cobrindo referências; sem revisão legítima.');
+			} else if (productId === 'ascendant') {
+				expect(parent?.editorial?.sections).toHaveLength(5);
+				for (const role of ['ascendant-approach', 'ascendant-possibilities', 'ascendant-tension'])
+					expect(html).toContain(role);
+				for (const question of [
+					'Como quero iniciar um primeiro contato?',
+					'Que alternativa de iniciativa posso observar?',
+					'Qual experimento reversível ajuda a ajustar minha abordagem?'
+				])
+					expect(html).toContain(question);
+				expect(
+					parent?.editorial?.sections.every(
+						(section) => section.evidence.join() === 'angle-ascendant'
+					)
+				).toBe(true);
+				expect(
+					parent?.calculation?.facts
+						.filter((fact) => fact.kind === 'calculated')
+						.map((fact) => fact.id)
+				).toEqual(['angle-ascendant']);
+				expect(
+					parent?.calculation?.facts.find((fact) => fact.id === 'personal-context')?.kind
+				).toBe('reported');
+				expect(parent?.cartography?.angles.midheaven).toBeNull();
+				expect(parent?.cartography?.positions).toEqual([]);
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');
 			}
 			expect(html).toContain('Escopo declarado: parcial.');
 			expect((await workflowArtifacts(f.event(other), runId, artifact.id)).status).toBe(404);
+			const svg = productId === 'ascendant' ? await f.store(runId, 'svg') : null;
+			if (svg) {
+				expect(await f.store(runId, 'svg')).toEqual(svg);
+				const response = await workflowArtifacts(f.event(), runId, svg.id);
+				expect(response.status).toBe(200);
+				expect(response.headers.get('content-type')).toContain('image/svg+xml');
+				const image = await response.text();
+				expect(image).toContain('Ascendente');
+				expect(image).not.toContain('data-body=');
+				expect((await workflowArtifacts(f.event(other), runId, svg.id)).status).toBe(404);
+			}
 			const listed = (await (await workflowArtifacts(f.event(), runId)).json()) as {
 				artifacts: unknown[];
 			};
-			expect(listed.artifacts).toHaveLength(1);
+			expect(listed.artifacts).toHaveLength(svg ? 2 : 1);
 
 			const requestKey = randomUUID();
 			expect((await workflowApi(f.event(other, { requestKey }), 'reprocess', runId)).status).toBe(
@@ -454,6 +492,7 @@ for (const productId of products)
 			]);
 			expect((await f.read(runId))?.released).toBe(false);
 			expect((await workflowArtifacts(f.event(), runId, artifact.id)).status).toBe(404);
+			if (svg) expect((await workflowArtifacts(f.event(), runId, svg.id)).status).toBe(404);
 			expect((await f.read(childId))?.released).toBe(true);
 			expect((await workflowArtifacts(f.event(), childId, childArtifact.id)).status).toBe(200);
 			expect((await workflowApi(f.event(owner, {}), 'delete', runId)).status).toBe(200);
