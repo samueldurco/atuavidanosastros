@@ -8,6 +8,7 @@ export function inputFor(p) {
   const value = {version:WORKFLOW_VERSION, productId:p.id, consent:{...consent}};
   if (['natal','cycles','relationship','purpose'].includes(p.kind) && p.id!=='direction-journey') value.birth = {...birth};
   if (p.id==='direction-journey') value.journey={goal:'Explorar uma direção profissional concreta',startDate:'2026-09-09'};
+  if (p.id==='tarot-journey') value.tarotJourney={goal:'Acompanhar uma decisão de trabalho com autonomia'};
   if (p.id==='life-atlas') value.atlas={priorities:['Relações','Trabalho','Rotina','Aprendizado']};
   if (p.kind==='relationship') { value.partner={...birth}; value.consent.partner=true; }
   if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
@@ -56,6 +57,16 @@ test('direction journey requires its own declared goal and complete 30-day civil
     assert.equal(parseWorkflowInput({...value,journey}),null);
   assert.equal(parseWorkflowInput({...value,birth}),null);
   assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='purpose-career')),journey:value.journey}),null);
+});
+test('tarot journey requires a separate, bounded declared goal without accepting forged stages',()=>{
+  const value=inputFor(workflows.find(p=>p.id==='tarot-journey'));
+  assert.deepEqual(parseWorkflowInput(value)?.tarotJourney,value.tarotJourney);
+  for (const tarotJourney of [undefined,{goal:''},{goal:'x'.repeat(401)},
+    {goal:'Uma decisão\u007f'},{goal:'Questão',stage:21}])
+    assert.equal(parseWorkflowInput({...value,tarotJourney}),null);
+  assert.equal(parseWorkflowInput({...value,questions:[]}),null);
+  assert.equal(parseWorkflowInput({...value,questions:['Uma','Duas']}),null);
+  assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='tarot-focus')),tarotJourney:value.tarotJourney}),null);
 });
 test('life atlas requires four distinct priorities declared by the person',()=>{
   const value=inputFor(workflows.find(p=>p.id==='life-atlas'));

@@ -40,6 +40,7 @@ export interface WorkflowInput {
   importantDates?: ImportantDatesInput;
   calendarMarks?: CalendarMarksInput;
   journey?: { goal: string; startDate: string };
+  tarotJourney?: { goal: string };
   atlas?: { priorities: [string, string, string, string] };
   context?: string;
   questions?: string[];
@@ -112,6 +113,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   const fields = ['version', 'productId', 'consent', 'context'];
   if (['natal', 'cycles', 'relationship', 'purpose'].includes(product.kind) && product.id !== 'direction-journey') fields.push('birth');
   if (product.id === 'direction-journey') fields.push('journey');
+  if (product.id === 'tarot-journey') fields.push('tarotJourney');
   if (product.id === 'life-atlas') fields.push('atlas');
   if (product.kind === 'relationship') fields.push('partner');
   if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
@@ -123,6 +125,9 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
       !keysOnly(v.journey, ['goal', 'startDate']) || Object.keys(v.journey).length !== 2 ||
       !text(v.journey.goal, 400) || !validDate(v.journey.startDate) ||
       v.journey.startDate > '2099-12-02')) return null;
+  if (product.id === 'tarot-journey' && (!object(v.tarotJourney) ||
+      !keysOnly(v.tarotJourney, ['goal']) || Object.keys(v.tarotJourney).length !== 1 ||
+      !text(v.tarotJourney.goal, 400) || /[\u007f-\u009f]/.test(v.tarotJourney.goal))) return null;
   if (product.id === 'life-atlas' &&
       (!object(v.atlas) || !keysOnly(v.atlas, ['priorities']) ||
        !validAtlasPriorities(v.atlas.priorities))) return null;

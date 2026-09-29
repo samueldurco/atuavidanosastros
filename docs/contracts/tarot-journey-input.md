@@ -1,0 +1,7 @@
+# Jornada de Tarot — entrada inicial candidata
+
+RUN_ID `ATV-20260902-170644Z-01A0630F`. WU214. `tarot-journey` é web no catálogo e permanece `PREPARING`, com release bloqueado. O `atv-workflow/1.0.0` passa a exigir uma pergunta inicial e um `tarotJourney.goal` separado, declarado pela pessoa (1–400 caracteres, sem controles ou campos extras), além do consentimento de armazenamento já exigido. O objetivo não é inferido da pergunta, de cartas ou de histórico. Contexto opcional conserva o limite geral de 1200 caracteres. O novo campo é exclusivo do produto; os outros fluxos o recusam.
+
+Essa estrutura dá nome à questão e ao objetivo sem afirmar que exista uma sessão, uma tiragem profunda ou módulos de retorno. A arquitetura propõe 21 dias, leituras de recalibração, diário e síntese; a matriz de linguagem exige que quantidade de leituras, duração e forma de retorno sejam fechadas antes do convite de início. Nenhum sorteio é produzido por esta alteração. É preciso aprovar o método de tiragem/etapas e o contrato de persistência de check-ins, respostas e conclusão, com critérios de limites e revisão editorial. A duração proposta não deve virar regra de produto só por constar do inventário.
+
+E1 segue **EM_EXECUCAO**: validação estrutural local está disponível, mas falta entrada privada integrada, processamento determinístico e facts contract. E2–E5 seguem **PENDENTE**. Não há oferta ativa, preço, entitlement, modelo aprovado, migração hospedada ou publicação. Gate B/Lab e gates de release permanecem aplicáveis.
