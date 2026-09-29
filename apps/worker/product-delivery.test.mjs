@@ -802,43 +802,27 @@ test("a Lab-valid limit that cannot fit the reader is rejected, never truncated 
   assert.deepEqual(input, before);
 });
 
-const premiumPairCalculation = await createContextCalculators()["pair-preview"](
-  {
-    version: "atv-workflow/1.0.0",
-    productId: "pair-preview",
-    birth: {
-      localDateTime: "2000-01-01T12:00:00",
-      utcInstant: "2000-01-01T12:00:00Z",
-      timezone: "UTC",
-      latitude: 0,
-      longitude: 0,
-      locationSource: "synthetic",
-    },
-    partner: {
-      localDateTime: "2001-02-03T10:00:00",
-      utcInstant: "2001-02-03T10:00:00Z",
-      timezone: "UTC",
-      latitude: 0,
-      longitude: 0,
-      locationSource: "synthetic",
-    },
-    consent: {
-      storage: true,
-      policyVersion: "atv-input-consent/1",
-      partner: true,
-      continuity: false,
-    },
-  },
-  {
-    runId: "00000000-0000-4000-8000-000000000001",
-    signal: new AbortController().signal,
-  },
-);
+// Generic offline envelope for transport bounds, not a computed or approved Sinastria.
+const premiumRelationshipCalculation = {
+  version: "fixture-relationship-budget/1.0.0",
+  kind: "relationship",
+  status: "experimental",
+  data: { fixture: true },
+  limits: [
+    "Envelope sintético para limites de transporte; sem produto aprovado.",
+  ],
+  facts: ["person-a-moon", "person-a-venus"].map((id) => ({
+    id,
+    kind: "calculated",
+    display: "Fato sintético de transporte",
+    source: "fixture-budget-v1",
+  })),
+};
 function premium() {
   const input = draft();
   input.tier = "premium";
-  input.productId = "pair-preview";
-  input.calculation = structuredClone(premiumPairCalculation);
+  input.productId = "synastry";
+  input.calculation = structuredClone(premiumRelationshipCalculation);
   input.output.capability = "relationship-dynamics";
   input.output.claims = Array.from({ length: 24 }, (_, i) => ({
     id: `c${i}`,

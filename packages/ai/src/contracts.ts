@@ -1,4 +1,8 @@
 import {
+  PAIR_PREVIEW_EDITORIAL_VERSION,
+  validPairPreviewFacts,
+} from "./pair-preview.ts";
+import {
   DATE_READING_EDITORIAL_VERSION,
   validDateReadingFacts,
 } from "./date-reading.ts";
@@ -51,7 +55,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.14";
+export const PROMPT_VERSION = "atv-editorial/1.0.15";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -87,7 +91,8 @@ export interface FactsEnvelope {
     | typeof THREE_QUESTIONS_EDITORIAL_VERSION
     | typeof DREAM_JOURNAL_EDITORIAL_VERSION
     | typeof DREAM_READING_EDITORIAL_VERSION
-    | typeof DATE_READING_EDITORIAL_VERSION;
+    | typeof DATE_READING_EDITORIAL_VERSION
+    | typeof PAIR_PREVIEW_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -262,7 +267,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === DREAM_READING_EDITORIAL_VERSION &&
       validDreamReadingFacts(value)) ||
     (value.editorialProfile === DATE_READING_EDITORIAL_VERSION &&
-      validDateReadingFacts(value))
+      validDateReadingFacts(value)) ||
+    (value.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION &&
+      validPairPreviewFacts(value))
   );
 }
 

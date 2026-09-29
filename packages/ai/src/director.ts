@@ -1,4 +1,8 @@
 import {
+  PAIR_PREVIEW_EDITORIAL_VERSION,
+  inspectPairPreview,
+} from "./pair-preview.ts";
+import {
   DATE_READING_EDITORIAL_VERSION,
   inspectDateReading,
 } from "./date-reading.ts";
@@ -196,6 +200,8 @@ export function inspectReading(
     findings.push(...inspectDreamReading(reading, facts));
   if (facts.editorialProfile === DATE_READING_EDITORIAL_VERSION)
     findings.push(...inspectDateReading(reading, facts));
+  if (facts.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION)
+    findings.push(...inspectPairPreview(reading, facts));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

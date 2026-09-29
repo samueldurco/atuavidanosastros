@@ -1,4 +1,45 @@
 import {
+  PAIR_PREVIEW_EDITORIAL_VERSION,
+  pairPreviewRoles,
+  pairPreviewEvidence,
+  pairPreviewLimit,
+  pairPreviewConsentLimit,
+} from "../../packages/ai/src/pair-preview.ts";
+
+/** Synthetic structural coverage only; never editorial approval.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ * @returns {Partial<Pick<import('../../packages/ai/src/contracts.ts').Reading, 'claims'|'relations'|'synthesis'|'reflections'|'limits'>>}
+ */
+export function pairPreviewEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== PAIR_PREVIEW_EDITORIAL_VERSION) return {};
+  return {
+    claims: pairPreviewRoles.map((id) => ({
+      id,
+      kind: "hypothesis",
+      text: `Possibilidade sintética de cobertura: ${id}; sem interpretação homologada.`,
+      evidence: pairPreviewEvidence(facts, id),
+    })),
+    relations: [],
+    synthesis: [
+      {
+        claimIds: [...pairPreviewRoles],
+        text: "Possibilidades sintéticas para conversa; sem aspectos, sentimentos ou compatibilidade calculados.",
+      },
+    ],
+    reflections: [
+      "Que possibilidade de A gostaria de explorar?",
+      "Que possibilidade de B gostaria de explorar?",
+      "Que conversa consentida gostaria de propor?",
+    ],
+    limits: [
+      pairPreviewLimit,
+      pairPreviewConsentLimit,
+      "Base experimental para teste; fixture sem aprovação editorial.",
+    ],
+  };
+}
+
+import {
   DATE_READING_EDITORIAL_VERSION,
   dateReadingRoles,
   dateReadingEvidence,

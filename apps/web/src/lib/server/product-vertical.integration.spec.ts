@@ -24,6 +24,7 @@ import {
 	tarotYesNoEditorialTestFixture,
 	dreamJournalEditorialTestFixture,
 	dateReadingEditorialTestFixture,
+	pairPreviewEditorialTestFixture,
 	dreamReadingEditorialTestFixture,
 	threeQuestionsEditorialTestFixture,
 	dailyCardEditorialTestFixture,
@@ -246,7 +247,8 @@ async function fixture(productId: string) {
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					],
-					...dateReadingEditorialTestFixture(facts.facts)
+					...dateReadingEditorialTestFixture(facts.facts),
+					...pairPreviewEditorialTestFixture(facts.facts)
 				}
 			};
 			const candidate = await prepareProductDelivery(draft);
@@ -593,6 +595,13 @@ for (const productId of products)
 				expect(html).toContain('Contraste simbólico sintético; não calcula aspectos ou eventos');
 				expect(html).toContain('O que gostaria de observar na data escolhida?');
 				expect(html).toContain('Base parcial: amostra única das 12h UTC; sem aspectos');
+			} else if (productId === 'pair-preview') {
+				expect(html).toContain('pair-person-a');
+				expect(html).toContain('pair-person-b');
+				expect(html).toContain('pair-negotiation');
+				expect(html).toContain('Possibilidades sintéticas para conversa');
+				expect(html).toContain('Que conversa consentida gostaria de propor?');
+				expect(html).toContain('identidade e autorização bilateral não foram verificadas');
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

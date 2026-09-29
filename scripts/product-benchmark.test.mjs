@@ -1,4 +1,4 @@
-import { tarotFocusEditorialTestFixture, dreamJournalEditorialTestFixture, dateReadingEditorialTestFixture, dreamReadingEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { tarotFocusEditorialTestFixture, dreamJournalEditorialTestFixture, dateReadingEditorialTestFixture, pairPreviewEditorialTestFixture, dreamReadingEditorialTestFixture, threeQuestionsEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture, careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -29,13 +29,14 @@ function sample(item = first, repetition = 1) {
       relations: [], synthesis: [{ claimIds: ['fixture'], text: 'Síntese genérica sem qualquer nota de qualidade.' }],
       reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts), ...birthChartEditorialTestFixture(request.facts), ...midheavenEditorialTestFixture(request.facts), ...ascendantEditorialTestFixture(request.facts), ...dailyCardEditorialTestFixture(request.facts), ...tarotFocusEditorialTestFixture(request.facts), ...tarotYesNoEditorialTestFixture(request.facts), ...threeQuestionsEditorialTestFixture(request.facts), ...dreamJournalEditorialTestFixture(request.facts),
     ...dreamReadingEditorialTestFixture(request.facts),
-    ...dateReadingEditorialTestFixture(request.facts), },
+    ...dateReadingEditorialTestFixture(request.facts),
+    ...pairPreviewEditorialTestFixture(request.facts), },
     latencyMs: 100, inputTokens: 2000, outputTokens: 800, costBrl: 0,
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'synthetic-test-not-a-receipt' } };
 }
 
 test('manifest preserves corpus identity, 102 prepared cases, three blocked polar cases and 12 unavailable products', async () => {
-  assert.equal(manifest.corpusFingerprint, 'c08f421e1dc3dace8ffe4addf2d251f1f094cb567d4e37e18de8b95382c1018e');
+  assert.equal(manifest.corpusFingerprint, '9f1683af58ad8d0eff61d48ebc8624e473f89ce9f7fd653eb5565140e7ab5a77');
   assert.equal(manifest.cases.length, 105);
   assert.equal(prepared.length, 102);
   assert.equal(manifest.unavailableProducts.length, 12);

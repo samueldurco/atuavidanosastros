@@ -1,4 +1,8 @@
 import {
+  PAIR_PREVIEW_EDITORIAL_VERSION,
+  pairPreviewInstructions,
+} from "./pair-preview.ts";
+import {
   DATE_READING_EDITORIAL_VERSION,
   dateReadingInstructions,
 } from "./date-reading.ts";
@@ -129,6 +133,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === DATE_READING_EDITORIAL_VERSION
       ? [dateReadingInstructions]
+      : []),
+    ...(request.facts.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION
+      ? [pairPreviewInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

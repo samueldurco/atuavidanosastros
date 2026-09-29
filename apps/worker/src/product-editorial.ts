@@ -8,6 +8,7 @@ import {
 import {
   DREAM_READING_EDITORIAL_VERSION,
   DATE_READING_EDITORIAL_VERSION,
+  PAIR_PREVIEW_EDITORIAL_VERSION,
   CONSTITUTION_VERSION,
   PROMPT_VERSION,
   SCHEMA_VERSION,
@@ -53,7 +54,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.26.0";
+  "atv-product-editorial-evidence/1.27.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -152,7 +153,9 @@ export function prepareProductFacts(
                   ? { editorialProfile: DREAM_READING_EDITORIAL_VERSION }
                   : productId === "date-reading"
                     ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
-                    : {}),
+                    : productId === "pair-preview"
+                      ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
+                      : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))
