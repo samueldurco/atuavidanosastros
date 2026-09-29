@@ -11,6 +11,8 @@ import {
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
+import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
+import { coupleDossierEditorialTestFixture } from '../../../../../scripts/helpers/couple-dossier-editorial-test-fixture.mjs';
 import { validateCalculation } from '../../../../worker/src/product-processing';
 import { SCHEMA_VERSION } from '../../../../../packages/ai/src/contracts';
 import { prepareProductFacts } from '../../../../worker/src/product-editorial';
@@ -68,6 +70,15 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 				continuity: false
 			}
 		};
+		if (product === 'couple-dossier') {
+			input.partner = {
+				...input.birth!,
+				localDateTime: '2001-07-03T12:00:00',
+				utcInstant: '2001-07-03T12:00:00Z'
+			};
+			input.consent.partner = true;
+			input.context = 'Contexto sintético consentido: conversar sobre autonomia e reparação.';
+		}
 		await db.query(
 			"update workflow_releases set enabled=true,engine_approved=true,access_policy='free' where product_id=$1",
 			[product]
@@ -77,8 +88,19 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 			p_request_key: randomUUID(),
 			p_input: input
 		})) as string;
+		const calculators =
+			product === 'couple-dossier'
+				? createCoupleDossierCalculators({
+						id: 'synthetic-dossier-artifact-not-approved',
+						version: 'qa-fixture-1',
+						aspects: [
+							{ kind: 'conjunction', orbDegrees: 5 },
+							{ kind: 'square', orbDegrees: 5 }
+						]
+					})
+				: createNatalCalculators();
 		const calculation = validateCalculation(
-			await createNatalCalculators()[product](input, {
+			await calculators[product](input, {
 				runId: id,
 				signal: new AbortController().signal
 			}),
@@ -106,23 +128,26 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 			],
 			limits: ['Somente QA local; nenhum modelo homologado.']
 		};
-		if (completeBirthScope) {
+		if (completeBirthScope || product === 'couple-dossier') {
 			const prepared = prepareProductFacts(product, calculation);
 			if (prepared.status !== 'prepared') throw new Error('fixture_facts_failed');
 			const delivery = await prepareProductDelivery({
 				runId: id,
 				revision: 3,
 				productId: product,
-				tier: 'intermediate',
+				tier: product === 'couple-dossier' ? 'premium' : 'intermediate',
 				calculation,
-				output: {
-					schemaVersion: SCHEMA_VERSION,
-					capability: 'natal-synthesis',
-					scope: 'partial',
-					title: 'Mapa Astral - prova sintética dos formatos',
-					limits: ['Somente QA local; leitura e motor não homologados.'],
-					...birthChartEditorialTestFixture(prepared.facts)
-				}
+				output:
+					product === 'couple-dossier'
+						? coupleDossierEditorialTestFixture(prepared.facts)
+						: {
+								schemaVersion: SCHEMA_VERSION,
+								capability: 'natal-synthesis',
+								scope: 'partial',
+								title: 'Mapa Astral - prova sintética dos formatos',
+								limits: ['Somente QA local; leitura e motor não homologados.'],
+								...birthChartEditorialTestFixture(prepared.facts)
+							}
 			});
 			if (delivery.status !== 'prepared_for_review') throw new Error('fixture_delivery_failed');
 			Object.assign(editorial, delivery.content);
@@ -301,6 +326,48 @@ it('recovers the full birth editorial projection and exact web, PDF and SVG arti
 			const response = await workflowArtifacts(f.event(), f.id, result.artifact.id);
 			expect(response.status).toBe(200);
 			expect(response.headers.get('content-type')).toBe(artifactFormats[format].mime);
+			expect(new Uint8Array(await response.arrayBuffer())).toEqual(expected[format]);
+			expect((await workflowArtifacts(f.event(other), f.id, result.artifact.id)).status).toBe(404);
+		}
+		await f.db.exec('update editorial_promotions set revoked_at=now()');
+		for (const id of ids) expect((await workflowArtifacts(f.event(), f.id, id)).status).toBe(404);
+		expect(parseProductRun(await f.read(owner, f.id))?.editorial).toBeNull();
+	} finally {
+		await f.db.close();
+	}
+}, 30000);
+
+it('recovers the complete synthetic Dossier web/PDF bytes privately and withholds them after revocation', async () => {
+	const f = await fixture('couple-dossier');
+	try {
+		const raw = await f.read(owner, f.id),
+			run = parseProductRun(raw);
+		expect(run?.calculation?.facts).toHaveLength(121);
+		expect(run?.editorial?.sections).toHaveLength(35);
+		expect(run?.editorial?.sections).toEqual(f.editorial.sections);
+		const web = renderProductWebExport(raw),
+			pdf = await renderProductPdf(raw);
+		if (!web || !pdf) throw new Error('dossier_scope_render_failed');
+		for (const section of f.editorial.sections) {
+			expect(web.html).toContain(section.title);
+			expect(web.html).toContain(section.text);
+		}
+		for (const fact of f.calculation.facts) {
+			expect(web.html).toContain(fact.id);
+			expect(web.html).toContain(fact.display);
+			expect(web.html).toContain(fact.source);
+		}
+		const expected = { web: new TextEncoder().encode(web.html), pdf: pdf.bytes };
+		const ids: string[] = [];
+		for (const format of ['web', 'pdf'] as const) {
+			const result = await f.producer.produce(f.job(format));
+			if (result.status !== 'stored') throw new Error('dossier_scope_store_failed');
+			ids.push(result.artifact.id);
+			expect(await f.producer.produce(f.job(format))).toEqual(result);
+			const response = await workflowArtifacts(f.event(), f.id, result.artifact.id);
+			expect(response.status).toBe(200);
+			expect(response.headers.get('cache-control')).toBe('private, no-store');
+			expect(response.headers.get('x-atv-artifact-sha256')).toBe(result.artifact.sha256);
 			expect(new Uint8Array(await response.arrayBuffer())).toEqual(expected[format]);
 			expect((await workflowArtifacts(f.event(other), f.id, result.artifact.id)).status).toBe(404);
 		}

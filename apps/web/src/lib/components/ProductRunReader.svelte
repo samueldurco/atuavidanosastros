@@ -64,9 +64,14 @@
 	const product = $derived(workflowFor(data.run.productId));
 	function factLabel(id: string): string {
 		if (
-			['dream-journal', 'dream-reading', 'date-reading', 'pair-preview', 'synastry'].includes(
-				data.run.productId
-			)
+			[
+				'dream-journal',
+				'dream-reading',
+				'date-reading',
+				'pair-preview',
+				'synastry',
+				'couple-dossier'
+			].includes(data.run.productId)
 		)
 			return productFactLabel(data.run.productId, id);
 		if (data.run.productId === 'three-questions') {

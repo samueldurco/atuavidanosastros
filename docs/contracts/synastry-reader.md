@@ -6,7 +6,7 @@ A projeção captura e valida os fatos originais antes da avaliação assíncron
 
 As dezenove hipóteses seguem os papéis canônicos do perfil, com título e ID próprios. As nove dimensões são comunicação, vínculo, desejo, segurança, autonomia, conflito, reparação, negociação e crescimento. A síntese conserva o texto, as hipóteses citadas e exatamente três perguntas exploratórias. Contexto consentido tem grupo relatado próprio; ausência de contexto permanece literal e não cria um fato.
 
-Com contexto há 121 fatos e 33 seções; sem contexto há 120 fatos e 32 seções. Somente Sinastria admite até 121 referências por seção e 300 fontes no parser web. Os limites dos demais produtos permanecem iguais. Os limites comuns da entrega continuam com 40 seções, 20.000 caracteres por seção e 90.000 bytes de conteúdo.
+Com contexto há 121 fatos e 33 seções; sem contexto há 120 fatos e 32 seções. Na WU163, somente Sinastria admitia até 121 referências por seção e fontes de até 300 caracteres no parser web. A WU170 estende essa exceção ao Dossiê do Casal e versiona a entrega em 1.15, preservando a projeção da Sinastria; ver `couple-dossier-reader.md`. Os limites dos demais produtos permanecem iguais. Os limites comuns da entrega continuam com 40 seções, 20.000 caracteres por seção e 90.000 bytes de conteúdo.
 
 O leitor e o PDF preservam a leitura integral, origem, limites, histórico e versões. Estados pendente, revogado ou falho ocultam conteúdo e formatos. Compartilhamento, email, downloads e reprocessamento continuam subordinados às autoridades existentes. Consentimento para os dados do par não autoriza compartilhar a leitura nem comprova identidade ou autorização bilateral.
 

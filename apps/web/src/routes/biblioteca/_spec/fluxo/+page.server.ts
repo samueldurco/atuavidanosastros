@@ -16,11 +16,17 @@ import { tarotYesNoReaderFixture } from '../../../../../tests/fixtures/tarot-yes
 import { dreamReadingReaderFixture } from '../../../../../tests/fixtures/dream-reading-reader';
 import { dateReadingReaderFixture } from '../../../../../tests/fixtures/date-reading-reader';
 import { pairPreviewReaderFixture } from '../../../../../tests/fixtures/pair-preview-reader';
+import { coupleDossierReaderFixture } from '../../../../../tests/fixtures/couple-dossier-reader';
 import { synastryReaderFixture } from '../../../../../tests/fixtures/synastry-reader';
 import { dreamJournalReaderFixture } from '../../../../../tests/fixtures/dream-journal-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
+	if (url.searchParams.get('product') === 'couple-dossier')
+		return coupleDossierReaderFixture(
+			url.searchParams.get('state'),
+			url.searchParams.get('context') !== 'absent'
+		);
 	if (url.searchParams.get('product') === 'synastry')
 		return synastryReaderFixture(
 			url.searchParams.get('state'),

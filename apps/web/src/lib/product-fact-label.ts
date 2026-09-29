@@ -16,7 +16,7 @@ const birthChartLabels: Record<string, string> = {
 
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
-	if (productId === 'synastry') {
+	if (['synastry', 'couple-dossier'].includes(productId)) {
 		const body = '(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)';
 		const position = new RegExp(`^person-([ab])-${body}$`).exec(id);
 		const pair = new RegExp(`^cross-${body}-${body}$`).exec(id);
