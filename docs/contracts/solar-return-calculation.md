@@ -43,4 +43,6 @@ O parser do leitor confere versão, doze fronteiras exatas, teto de três datas,
 
 ## Limites e próximo aceite
 
+O critério de evidência e recusa para os doze capítulos está em [solar-return-monthly-evidence.md](solar-return-monthly-evidence.md). A grade 1.1 falha deliberadamente o requisito de interpretação mensal: seus intervalos são civis e a carta é de um único instante.
+
 O motor ainda depende de gauntlet independente, licença e homologação. A base não produz interpretação, previsões, mandala editorial, linha interpretativa de doze meses, áudios, check-ins, web/PDF final, renovação ou alertas. E1 permanece parcial até validar entrada real autorizada e o motor; E2–E5 mantêm gates próprios.
