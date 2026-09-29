@@ -821,7 +821,7 @@ const premiumTransportCalculation = {
 function premium() {
   const input = draft();
   input.tier = "premium";
-  input.productId = "purpose-career";
+  input.productId = "direction-journey";
   input.calculation = structuredClone(premiumTransportCalculation);
   input.output.capability = "purpose-direction";
   input.output.claims = Array.from({ length: 24 }, (_, i) => ({

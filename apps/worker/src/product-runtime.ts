@@ -3,6 +3,7 @@ import { createNatalCalculators } from "./natal-calculators.ts";
 import { createSymbolicCalculators } from "./symbolic-calculators.ts";
 import { createContextCalculators } from "./context-calculators.ts";
 import { createPurposeCalculators } from "./purpose-calculators.ts";
+import { createPurposeCareerCalculators } from "./purpose-career-calculators.ts";
 import { createSynastryCalculators } from "./synastry-calculators.ts";
 import { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts";
 import { createHoroscopeCalculators } from "./horoscope-calculators.ts";
@@ -37,6 +38,8 @@ export interface ProductCalculationOptions {
   experimentalSolarReturnBase?: true;
   /** Independent civil-month scaffold with natal reference; no temporal or editorial approval. */
   experimentalPersonalCalendarBase?: true;
+  /** Independent MC and 2/6/10 cusp projection; no paid release or editorial approval. */
+  experimentalPurposeCareerBase?: true;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
@@ -54,6 +57,11 @@ export function createProductCalculators(
   if (
     options.experimentalPersonalCalendarBase !== undefined &&
     options.experimentalPersonalCalendarBase !== true
+  )
+    throw new Error("invalid_product_configuration");
+  if (
+    options.experimentalPurposeCareerBase !== undefined &&
+    options.experimentalPurposeCareerBase !== true
   )
     throw new Error("invalid_product_configuration");
   if (
@@ -93,6 +101,9 @@ export function createProductCalculators(
       : {}),
     ...(options.experimentalPersonalCalendarBase === true
       ? createPersonalCalendarCalculators()
+      : {}),
+    ...(options.experimentalPurposeCareerBase === true
+      ? createPurposeCareerCalculators()
       : {}),
   });
 }

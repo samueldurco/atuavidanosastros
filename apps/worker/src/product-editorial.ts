@@ -43,6 +43,7 @@ import {
 } from "@atv/ai";
 import { validateCalculation } from "./product-processing.ts";
 import { validCareerCompassProjection } from "./purpose-calculators.ts";
+import { inspectPurposeCareerProjection } from "./purpose-career-calculators.ts";
 import { validDateReadingProjection } from "./date-reading-projection.ts";
 import { validPairPreviewProjection } from "./pair-preview-projection.ts";
 import { validSynastryProjection } from "./synastry-projection.ts";
@@ -102,6 +103,13 @@ export function prepareProductFacts(
   const kind = workflowFor(productId)?.kind;
   if (!calculation || !kind)
     return { status: "blocked", reason: "calculation_invalid" };
+  if (productId === "purpose-career")
+    return {
+      status: "blocked",
+      reason: inspectPurposeCareerProjection(calculation)
+        ? "insufficient_facts"
+        : "calculation_invalid",
+    };
   // These experimental calendar bases lack reviewed temporal evidence for editorial delivery.
   if (productId === "solar-return" || productId === "personal-calendar")
     return { status: "blocked", reason: "insufficient_facts" };
