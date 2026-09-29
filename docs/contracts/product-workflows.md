@@ -211,3 +211,6 @@ Ascendant E2 selects `atv-ascendant-editorial/1.0.0` after saved projection cohe
 ## Ascendant persisted reading (WU128)
 
 Delivery1.4.0 labels the ASC fact, three interpretation roles and synthesis/questions without changing text or evidence. The reader identifies the sole calculated factor and any reported context. The existing local SQL vertical now uses the complete ASC structural fixture and verifies both web and angle-only SVG storage, idempotent recovery, ownership and receipt revocation. This corrects the obsolete fixture rejected by CI127; it does not legitimize its approval. Card copies retain the existing private web-section policy; PDF remains outside the ASC catalog. Evidence and E1–E5 blockers: `docs/qa/ASCENDANT_READER_2026-09-28.md`. No hosted execution or release is claimed.
+## WU130 — Meio do Céu: cobertura editorial
+
+Perfil `atv-midheaven-editorial/1.0.0` selecionado após coerência MC-only; preparação1.11.0/prompt1.0.7 vinculam fato exato, contribuição pública, possibilidades, tensão, síntese conjunta e três perguntas. Ver `midheaven-editorial.md` e `../qa/MIDHEAVEN_EDITORIAL_2026-09-28.md`. Revisões anteriores não autorizam a preparação atual. Fixture comprova transporte/estrutura; conteúdo, homologação e release continuam bloqueados. Próxima entrega independente: resultado web específico (E3/E4).

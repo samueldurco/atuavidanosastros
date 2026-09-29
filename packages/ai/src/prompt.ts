@@ -1,5 +1,9 @@
 import { CONSTITUTION_VERSION, constitutions } from "./constitutions.ts";
 import {
+  MIDHEAVEN_EDITORIAL_VERSION,
+  midheavenInstructions,
+} from "./midheaven.ts";
+import {
   ASCENDANT_EDITORIAL_VERSION,
   ascendantInstructions,
 } from "./ascendant.ts";
@@ -73,6 +77,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === ASCENDANT_EDITORIAL_VERSION
       ? [ascendantInstructions]
+      : []),
+    ...(request.facts.editorialProfile === MIDHEAVEN_EDITORIAL_VERSION
+      ? [midheavenInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

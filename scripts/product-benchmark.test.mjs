@@ -1,4 +1,4 @@
-import { careerEditorialTestFixture, threePillarsEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { careerEditorialTestFixture, threePillarsEditorialTestFixture, midheavenEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
@@ -27,13 +27,13 @@ function sample(item = first, repetition = 1) {
       title: 'Fixture de encanamento, não leitura editorial',
       claims: [{ id: 'fixture', kind: 'interpretation', text: 'Conteúdo sintético para exercitar uma referência de evidência.', evidence: [request.facts.facts[0].id] }],
       relations: [], synthesis: [{ claimIds: ['fixture'], text: 'Síntese genérica sem qualquer nota de qualidade.' }],
-      reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts), ...birthChartEditorialTestFixture(request.facts), ...ascendantEditorialTestFixture(request.facts) },
+      reflections: ['Qual informação falta nesta fixture?'], limits: ['Teste local sem homologação editorial.'], ...careerEditorialTestFixture(request.facts), ...threePillarsEditorialTestFixture(request.facts), ...birthChartEditorialTestFixture(request.facts), ...midheavenEditorialTestFixture(request.facts), ...ascendantEditorialTestFixture(request.facts) },
     latencyMs: 100, inputTokens: 2000, outputTokens: 800, costBrl: 0,
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'synthetic-test-not-a-receipt' } };
 }
 
 test('manifest preserves corpus identity, 102 prepared cases, three blocked polar cases and 12 unavailable products', async () => {
-  assert.equal(manifest.corpusFingerprint, 'c7d419b297da780a5b09f4ffbde88456b13d08ad0c7feba4380df978dc45edce');
+  assert.equal(manifest.corpusFingerprint, '022b697884ebabe85a1bf2f6b8a9be9fee0402dbe1e015bacb1350c54311b041');
   assert.equal(manifest.cases.length, 105);
   assert.equal(prepared.length, 102);
   assert.equal(manifest.unavailableProducts.length, 12);

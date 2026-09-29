@@ -29,6 +29,7 @@ export * from "./career-compass.ts";
 export * from "./three-pillars.ts";
 export * from "./birth-chart.ts";
 export * from "./ascendant.ts";
+export * from "./midheaven.ts";
 export * from "./gateway.ts";
 export * from "./memory.ts";
 export * from "./gemini.ts";

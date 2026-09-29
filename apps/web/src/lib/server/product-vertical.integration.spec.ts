@@ -19,6 +19,7 @@ import {
 	birthChartEditorialTestFixture,
 	careerEditorialTestFixture,
 	ascendantEditorialTestFixture,
+	midheavenEditorialTestFixture,
 	threePillarsEditorialTestFixture
 } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
 import {
@@ -228,6 +229,7 @@ async function fixture(productId: string) {
 					...threePillarsEditorialTestFixture(facts.facts),
 					...birthChartEditorialTestFixture(facts.facts),
 					...ascendantEditorialTestFixture(facts.facts),
+					...midheavenEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -427,6 +429,31 @@ for (const productId of products)
 				).toBe('reported');
 				expect(parent?.cartography?.angles.midheaven).toBeNull();
 				expect(parent?.cartography?.positions).toEqual([]);
+			} else if (productId === 'midheaven') {
+				expect(parent?.editorial?.sections).toHaveLength(5);
+				for (const role of [
+					'midheaven-contribution',
+					'midheaven-possibilities',
+					'midheaven-tension'
+				])
+					expect(html).toContain(role);
+				for (const question of [
+					'Que contribuição pública quero observar?',
+					'Em que ambiente posso testar essa contribuição?',
+					'Qual experimento reversível cabe na minha rotina?'
+				])
+					expect(html).toContain(question);
+				expect(
+					parent?.editorial?.sections.every(
+						(section) => section.evidence.join() === 'angle-midheaven'
+					)
+				).toBe(true);
+				expect(
+					parent?.calculation?.facts
+						.filter((fact) => fact.kind === 'calculated')
+						.map((fact) => fact.id)
+				).toEqual(['angle-midheaven']);
+				expect(parent?.cartography).toBeNull();
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

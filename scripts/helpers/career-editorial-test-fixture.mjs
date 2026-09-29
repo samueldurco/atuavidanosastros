@@ -1,3 +1,4 @@
+import { MIDHEAVEN_EDITORIAL_VERSION, midheavenRoles } from '../../packages/ai/src/midheaven.ts';
 import { CAREER_COMPASS_EDITORIAL_VERSION, careerCompassRoles } from '../../packages/ai/src/career-compass.ts';
 import { THREE_PILLARS_EDITORIAL_VERSION, threePillarsFactIds, threePillarsRoles } from '../../packages/ai/src/three-pillars.ts';
 import { BIRTH_CHART_EDITORIAL_VERSION, birthChartRoles } from '../../packages/ai/src/birth-chart.ts';
@@ -64,5 +65,21 @@ export function birthChartEditorialTestFixture(facts) {
     relations: [{kind: 'convergence', claimIds: ids, text: 'Relação de teste entre planetas, ângulos e cúspides; não representa aspecto.'}],
     synthesis: [{claimIds: ids, text: 'Síntese de fixture cobrindo referências; sem revisão legítima.'}],
     reflections: ['Que intenção e necessidade quero observar?', 'Quais recursos posso considerar no cotidiano?', 'Qual experimento reversível cabe nesta semana?'],
+  };
+}
+
+/** Test-only structural coverage, never interpretation or approval.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function midheavenEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== MIDHEAVEN_EDITORIAL_VERSION) return {};
+  const fact=facts.facts.find(fact=>fact.id==='angle-midheaven');
+  if(!fact) throw new Error('fixture_midheaven_missing');
+  return {
+    claims:[{id:'mc-fact',kind:'fact',text:fact.display,evidence:['angle-midheaven']},
+      ...midheavenRoles.map(id=>({id,kind:'hypothesis',text:`Fixture estrutural de ${id}; não é leitura homologada.`,evidence:['angle-midheaven']}))],
+    relations:[],
+    synthesis:[{claimIds:[...midheavenRoles],text:'Síntese de teste dos três papéis; conteúdo sem aprovação legítima.'}],
+    reflections:['Que contribuição pública quero observar?', 'Em que ambiente posso testar essa contribuição?', 'Qual experimento reversível cabe na minha rotina?'],
   };
 }

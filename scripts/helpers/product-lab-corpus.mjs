@@ -6,7 +6,7 @@ import { releaseCases, RELEASE_DATASET_VERSION } from '../../packages/ai/src/lab
 import { careerContextCases, CAREER_CONTEXT_VERSION } from './career-context-cases.mjs';
 import { dateContextCases, DATE_CONTEXT_VERSION } from './date-context-cases.mjs';
 
-export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.12.0';
+export const PRODUCT_CORPUS_VERSION = 'atv-product-facts-synthetic/1.13.0';
 // Explicit frozen scope: newly added calculators must receive a deliberate corpus revision.
 export const corpusProducts = Object.freeze(['birth-chart', 'three-pillars', 'ascendant', 'midheaven',
   'pair-preview', 'date-reading', 'daily-card', 'three-questions', 'tarot-focus', 'tarot-yes-no',

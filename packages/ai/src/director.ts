@@ -1,5 +1,6 @@
 import type { FactsEnvelope, Reading, Tier } from "./contracts.ts";
 import { ASCENDANT_EDITORIAL_VERSION, inspectAscendant } from "./ascendant.ts";
+import { MIDHEAVEN_EDITORIAL_VERSION, inspectMidheaven } from "./midheaven.ts";
 import {
   BIRTH_CHART_EDITORIAL_VERSION,
   inspectBirthChart,
@@ -151,6 +152,8 @@ export function inspectReading(
     findings.push(...inspectBirthChart(reading));
   if (facts.editorialProfile === ASCENDANT_EDITORIAL_VERSION)
     findings.push(...inspectAscendant(reading));
+  if (facts.editorialProfile === MIDHEAVEN_EDITORIAL_VERSION)
+    findings.push(...inspectMidheaven(reading));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,
