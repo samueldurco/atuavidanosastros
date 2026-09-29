@@ -6,6 +6,10 @@ import {
 } from "./src/solar-return-calculators.ts";
 import { createProductCalculators } from "./src/product-runtime.ts";
 import { ProcessingError } from "./src/product-processing.ts";
+import {
+  evaluateProductDraft,
+  prepareProductFacts,
+} from "./src/product-editorial.ts";
 import { buildSolarReturnCalendar } from "./src/solar-return-calendar.ts";
 
 const birth = {
@@ -78,6 +82,37 @@ test("solar return finds the natal Sun longitude at the declared birthday city",
     "reported",
   );
   assert.ok(result.limits.some((limit) => limit.includes("não homologados")));
+  assert.deepEqual(prepareProductFacts("solar-return", result), {
+    status: "blocked",
+    reason: "insufficient_facts",
+  });
+  const forged = {
+    ...result,
+    version: "atv-solar-return-calculation/9.9.9",
+    facts: [
+      ...result.facts,
+      {
+        id: "month-01-theme",
+        kind: "calculated",
+        display: "Tema sintético",
+        source: "unsupported",
+      },
+    ],
+  };
+  assert.equal(
+    prepareProductFacts("solar-return", forged).reason,
+    "insufficient_facts",
+  );
+  const assessed = await evaluateProductDraft({
+    runId: "00000000-0000-4000-8000-000000000001",
+    revision: 1,
+    productId: "solar-return",
+    tier: "premium",
+    calculation: result,
+    output: {},
+  });
+  assert.equal(assessed.status, "rejected");
+  assert.equal(assessed.reason, "insufficient_facts");
 });
 
 test("solar return rejects an incoherent anchor or unresolvable birthday timezone before ephemeris", async () => {
