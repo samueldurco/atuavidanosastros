@@ -14,7 +14,8 @@ import {
   midheavenEditorialTestFixture,
   dailyCardEditorialTestFixture,
   tarotFocusEditorialTestFixture,
-  dreamJournalEditorialTestFixture, threeQuestionsEditorialTestFixture,
+  dreamJournalEditorialTestFixture,
+  threeQuestionsEditorialTestFixture,
   tarotYesNoEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
@@ -50,7 +51,8 @@ test("three questions delivery binds each saved pair, readings, relation and syn
   input.output = {
     ...input.output,
     capability: "tarot-reflection",
-    ...threeQuestionsEditorialTestFixture(prepared.facts), ...dreamJournalEditorialTestFixture(prepared.facts),
+    ...threeQuestionsEditorialTestFixture(prepared.facts),
+    ...dreamJournalEditorialTestFixture(prepared.facts),
   };
   const captured = structuredClone(input);
   const pending = prepareProductDelivery(input);
@@ -849,9 +851,11 @@ test("digest binds exact delivery and original run, calculation provenance, revi
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
-    (d) =>
-      (d.calculation.facts.find((f) => f.id === "dream-context").display =
-        "Outro contexto consentido"),
+    (d) => {
+      d.calculation.data.context = "Outro contexto consentido";
+      d.calculation.facts.find((f) => f.id === "dream-context").display =
+        d.calculation.data.context;
+    },
     (d) => (d.output.claims[1].text += " Outro ponto."),
     (d) => (d.output.relations[0].kind = "convergence"),
     (d) => d.output.reflections.reverse(),
@@ -994,7 +998,8 @@ test("tarot yes-no delivery preserves the saved card, reported question and all 
   input.output = {
     ...input.output,
     ...tarotYesNoEditorialTestFixture(facts.facts),
-    ...threeQuestionsEditorialTestFixture(facts.facts), ...dreamJournalEditorialTestFixture(facts.facts),
+    ...threeQuestionsEditorialTestFixture(facts.facts),
+    ...dreamJournalEditorialTestFixture(facts.facts),
   };
   const result = await prepareProductDelivery(input);
   assert.equal(result.status, "prepared_for_review");

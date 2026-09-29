@@ -29,6 +29,20 @@ function exactKeys(
 export function validDreamJournalProjection(
   calculation: CalculationSnapshot,
 ): boolean {
+  return validDreamRecordProjection(calculation, "dream-journal");
+}
+
+/** Saved reported base for the Essential reading; editorial hypotheses remain separate. */
+export function validDreamReadingProjection(
+  calculation: CalculationSnapshot,
+): boolean {
+  return validDreamRecordProjection(calculation, "dream-reading");
+}
+
+function validDreamRecordProjection(
+  calculation: CalculationSnapshot,
+  productId: "dream-journal" | "dream-reading",
+): boolean {
   const data = calculation.data;
   if (
     calculation.version !== symbolicContract.version ||
@@ -60,7 +74,7 @@ export function validDreamJournalProjection(
   try {
     expected = calculateDreamRecord({
       version: "atv-workflow/1.0.0",
-      productId: "dream-journal",
+      productId,
       consent: {
         storage: true,
         policyVersion: "atv-input-consent/1",

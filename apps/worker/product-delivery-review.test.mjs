@@ -22,10 +22,21 @@ const authority = {
 // Generic delivery transport uses a real dream report without a product editorial profile.
 // Three-question coverage is tested separately; this fixture never approves interpretation.
 const genericCalculation = calculateDreamRecord({
-  version:'atv-workflow/1.0.0', productId:'dream-reading',
-  dream:{date:'2026-09-29',narrative:'Relato sintético de uma porta azul.',emotions:['curiosidade'],associations:['possibilidade']},
-  context:'Contexto sintético B',
-  consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},
+  version: "atv-workflow/1.0.0",
+  productId: "dream-reading",
+  dream: {
+    date: "2026-09-29",
+    narrative: "Relato sintético de uma porta azul.",
+    emotions: ["curiosidade"],
+    associations: ["possibilidade"],
+  },
+  context: "Contexto sintético B",
+  consent: {
+    storage: true,
+    policyVersion: "atv-input-consent/1",
+    partner: false,
+    continuity: false,
+  },
 });
 function draft() {
   return {
@@ -168,13 +179,14 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
-    (d) =>
-      (d.calculation.facts.find((f) => f.id === "dream-context").display =
-        "Outro contexto consentido"),
+    (d) => {
+      d.calculation.data.context = "Outro contexto consentido";
+      d.calculation.facts.find((f) => f.id === "dream-context").display =
+        d.calculation.data.context;
+    },
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
-    (d) => d.calculation.limits.push("Outro limite de registro."),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);
@@ -187,6 +199,10 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     (d) => (d.productId = "tarot-yes-no"),
     (d) => (d.calculation.version = ""),
     (d) => (d.calculation.kind = "tarot"),
+    (d) => d.calculation.limits.push("Outro limite de registro."),
+    (d) =>
+      (d.calculation.facts.find((f) => f.id === "dream-context").display =
+        "Contexto sem correspondência na entrada"),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);
