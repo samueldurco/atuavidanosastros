@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import { PDFDocument } from 'pdf-lib';
-import { writeFile } from 'node:fs/promises';
 import { synastryReaderFixture } from '../../../tests/fixtures/synastry-reader';
 import { parseProductRun } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
@@ -41,8 +40,6 @@ describe('synthetic Sinastry web/PDF contract without approval', () => {
 		expect(doc.getPageCount()).toBeLessThanOrEqual(PDF_LIMITS.pages);
 		expect(result!.filename).toContain('atv-synastry-');
 		expect(result!.bytes).toEqual((await renderProductPdf(fixture.run))!.bytes);
-		await writeFile('../../test-results/wu163-synastry-reader.pdf', result!.bytes);
-		await writeFile('../../test-results/wu163-synastry-reader.json', JSON.stringify(fixture.run));
 	}, 15000);
 	it('hides content and PDF for pending, revoked and failed states, keeping missing context explicit', async () => {
 		for (const state of [null, 'revoked', 'failed']) {
