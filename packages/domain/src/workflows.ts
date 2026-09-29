@@ -20,6 +20,10 @@ export interface BirthInput {
 export interface ReturnLocationInput {
   city: string; timezone: string; latitude: number; longitude: number; locationSource: string;
 }
+export interface ImportantDatesInput {
+  authorization: 'atv-solar-important-dates/1';
+  entries: { date: string; label: string }[];
+}
 export interface WorkflowInput {
   version: typeof WORKFLOW_VERSION;
   productId: string;
@@ -29,6 +33,7 @@ export interface WorkflowInput {
   targetDate?: string;
   returnYear?: number;
   returnLocation?: ReturnLocationInput;
+  importantDates?: ImportantDatesInput;
   context?: string;
   questions?: string[];
   dream?: { date: string; narrative: string; associations: string[]; emotions: string[] };
@@ -55,6 +60,20 @@ function returnLocation(v: unknown): v is ReturnLocationInput {
 }
 const strings = (v: unknown, maxItems: number, maxChars: number): v is string[] =>
   Array.isArray(v) && v.length <= maxItems && v.every((item) => text(item, maxChars));
+function importantDates(v: unknown, targetDate: unknown): v is ImportantDatesInput {
+  if (!object(v) || !keysOnly(v, ['authorization', 'entries']) || Object.keys(v).length !== 2 ||
+      v.authorization !== 'atv-solar-important-dates/1' || !Array.isArray(v.entries) ||
+      v.entries.length < 1 || v.entries.length > 3 || !validDate(targetDate)) return false;
+  const end = `${Number(targetDate.slice(0, 4)) + 1}-${targetDate.slice(5)}`;
+  const seen = new Set<string>();
+  return v.entries.every((entry) => {
+    if (!object(entry) || !keysOnly(entry, ['date', 'label']) || Object.keys(entry).length !== 2 ||
+        !validDate(entry.date) || entry.date < targetDate || entry.date > end ||
+        !text(entry.label, 80) || /[\u007f-\u009f]/.test(entry.label) || seen.has(entry.date)) return false;
+    seen.add(entry.date);
+    return true;
+  });
+}
 
 /** Structural contract. Engine adapters MUST additionally validate calendar/timezone correspondence. */
 export function parseWorkflowInput(v: unknown): WorkflowInput | null {
@@ -66,7 +85,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   const fields = ['version', 'productId', 'consent', 'context'];
   if (['natal', 'cycles', 'relationship', 'purpose'].includes(product.kind)) fields.push('birth');
   if (product.kind === 'relationship') fields.push('partner');
-  if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation'] : []));
+  if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []));
   if (product.kind === 'tarot') fields.push('questions');
   if (product.kind === 'dream') fields.push('dream');
   if (!keysOnly(v, fields) || (v.context !== undefined && !text(v.context, 1200))) return null;
@@ -76,6 +95,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
       (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2099 ||
         !returnLocation(v.returnLocation) || String(v.targetDate).slice(0, 4) !== String(v.returnYear))))) return null;
+  if (product.id === 'solar-return' && v.importantDates !== undefined && !importantDates(v.importantDates, v.targetDate)) return null;
   if (product.kind === 'tarot' && (!strings(v.questions, 3, 400) ||
       v.questions.length !== (product.id === 'three-questions' ? 3 : 1))) return null;
   if (product.kind === 'dream' && (!object(v.dream) || !keysOnly(v.dream, ['date', 'narrative', 'associations', 'emotions']) ||

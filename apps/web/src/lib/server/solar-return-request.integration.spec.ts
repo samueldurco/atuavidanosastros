@@ -122,7 +122,8 @@ beforeAll(async () => {
 		'20260923180000_natal_onboarding.sql',
 		'20260924170000_product_request_recovery.sql',
 		'20260925140000_product_request_access.sql',
-		'20260929160000_solar_return_product_requests.sql'
+		'20260929160000_solar_return_product_requests.sql',
+		'20260929170000_solar_return_important_dates.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -139,7 +140,14 @@ it('derives a leap birthday, preserves declared city separately and enforces the
 	expect(solarTargetDate(natal.localDateTime, 2027)).toBe('2027-02-28');
 	expect(solarTargetDate(natal.localDateTime, 2028)).toBe('2028-02-29');
 	await save();
-	const body = request({ context: 'Prioridades deste ciclo.' });
+	const importantDates = {
+		authorization: 'atv-solar-important-dates/1',
+		entries: [
+			{ date: '2027-04-10', label: 'Mudança planejada' },
+			{ date: '2028-02-28', label: 'Revisão do ciclo' }
+		]
+	};
+	const body = request({ context: 'Prioridades deste ciclo.', importantDates });
 	expect(parseSolarReturnRequestInput(body.input)).toEqual(body.input);
 	expect((await solarReturnRequestApi(event(body))).status).toBe(409);
 	expect(await counts()).toEqual({ runs: 0, receipts: 0 });
@@ -165,7 +173,8 @@ it('derives a leap birthday, preserves declared city separately and enforces the
 			longitude: natal.longitude,
 			locationSource: natal.locationSource
 		},
-		context: 'Prioridades deste ciclo.'
+		context: 'Prioridades deste ciclo.',
+		importantDates
 	});
 	expect(
 		(await db.query('select command,natal_version from solar_return_product_requests')).rows[0]
@@ -184,6 +193,31 @@ it('rejects forged anchors and coordinates in both client and SQL, with no write
 		{ returnLocation: 'São Paulo' },
 		{ returnLocation: { ...input().returnLocation, latitude: 91 } },
 		{ returnLocation: { ...input().returnLocation, timezone: 'Not/A_Zone' } },
+		{ importantDates: '2027-04-10' },
+		{ importantDates: { entries: [{ date: '2027-04-10', label: 'Mudança' }] } },
+		{ importantDates: { authorization: 'atv-solar-important-dates/1', entries: [] } },
+		{ importantDates: { authorization: 'atv-solar-important-dates/1', entries: ['2027-04-10'] } },
+		{
+			importantDates: {
+				authorization: 'atv-solar-important-dates/1',
+				entries: Array.from({ length: 4 }, (_, i) => ({ date: `2027-04-${10 + i}`, label: 'Data' }))
+			}
+		},
+		{
+			importantDates: {
+				authorization: 'atv-solar-important-dates/1',
+				entries: [{ date: '2027-02-27', label: 'Antes do ciclo' }]
+			}
+		},
+		{
+			importantDates: {
+				authorization: 'atv-solar-important-dates/1',
+				entries: [
+					{ date: '2027-04-10', label: 'Mudança' },
+					{ date: '2027-04-10', label: 'Duplicada' }
+				]
+			}
+		},
 		{ birth: natal },
 		{ consent: { ...input().consent, continuity: true } }
 	]) {

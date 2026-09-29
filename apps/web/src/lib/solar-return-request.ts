@@ -3,6 +3,53 @@ import { validReportedContext } from './reported-context';
 import { validWeekTimezone } from './week-request';
 
 export const SOLAR_RETURN_REQUEST_VERSION = 'atv-solar-return-request/1';
+export const SOLAR_IMPORTANT_DATES_AUTHORIZATION = 'atv-solar-important-dates/1';
+export const SOLAR_IMPORTANT_DATES_LIMIT = 3;
+
+export interface SolarImportantDate {
+	date: string;
+	label: string;
+}
+
+export function validSolarImportantDates(
+	v: unknown,
+	targetDate: string
+): v is SolarImportantDate[] {
+	if (
+		!Array.isArray(v) ||
+		v.length < 1 ||
+		v.length > SOLAR_IMPORTANT_DATES_LIMIT ||
+		!validDate(targetDate)
+	)
+		return false;
+	const nextYear = Number(targetDate.slice(0, 4)) + 1;
+	const nextAnchor = `${nextYear}-${targetDate.slice(5)}`;
+	const seen = new Set<string>();
+	return v.every((entry) => {
+		if (
+			!object(entry) ||
+			Object.keys(entry).length !== 2 ||
+			!keysOnly(entry, ['date', 'label']) ||
+			!validDate(entry.date) ||
+			entry.date < targetDate ||
+			entry.date > nextAnchor ||
+			!validSolarDateLabel(entry.label) ||
+			seen.has(entry.date)
+		)
+			return false;
+		seen.add(entry.date);
+		return true;
+	});
+}
+
+export const validSolarDateLabel = (v: unknown): v is string =>
+	typeof v === 'string' &&
+	v.trim().length > 0 &&
+	v.length <= 80 &&
+	![...v].some((c) => {
+		const code = c.codePointAt(0)!;
+		return code < 32 || (code >= 127 && code <= 159) || (code >= 0xd800 && code <= 0xdfff);
+	});
 
 export interface SolarReturnRequestInput {
 	version: typeof SOLAR_RETURN_REQUEST_VERSION;
@@ -17,6 +64,10 @@ export interface SolarReturnRequestInput {
 		longitude: number;
 	};
 	context?: string;
+	importantDates?: {
+		authorization: typeof SOLAR_IMPORTANT_DATES_AUTHORIZATION;
+		entries: SolarImportantDate[];
+	};
 	consent: {
 		storage: true;
 		policyVersion: 'atv-input-consent/1';
@@ -64,13 +115,15 @@ export function parseSolarReturnRequestInput(v: unknown): SolarReturnRequestInpu
 			'targetDate',
 			'returnLocation',
 			'context',
+			'importantDates',
 			'consent'
 		])
 	)
 		return null;
 	const hasContext = Object.hasOwn(v, 'context');
+	const hasDates = Object.hasOwn(v, 'importantDates');
 	if (
-		Object.keys(v).length !== (hasContext ? 8 : 7) ||
+		Object.keys(v).length !== 7 + Number(hasContext) + Number(hasDates) ||
 		v.version !== SOLAR_RETURN_REQUEST_VERSION ||
 		v.productId !== 'solar-return' ||
 		!Number.isInteger(v.expectedRevision) ||
@@ -89,6 +142,12 @@ export function parseSolarReturnRequestInput(v: unknown): SolarReturnRequestInpu
 		!coordinate(v.returnLocation.latitude, 90) ||
 		!coordinate(v.returnLocation.longitude, 180) ||
 		(hasContext && !validReportedContext(v.context)) ||
+		(hasDates &&
+			(!object(v.importantDates) ||
+				Object.keys(v.importantDates).length !== 2 ||
+				!keysOnly(v.importantDates, ['authorization', 'entries']) ||
+				v.importantDates.authorization !== SOLAR_IMPORTANT_DATES_AUTHORIZATION ||
+				!validSolarImportantDates(v.importantDates.entries, v.targetDate))) ||
 		!object(v.consent) ||
 		Object.keys(v.consent).length !== 4 ||
 		v.consent.storage !== true ||

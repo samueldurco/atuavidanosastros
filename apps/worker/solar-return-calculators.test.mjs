@@ -148,3 +148,29 @@ test("birthday city changes the local chart without shifting the geocentric retu
   assert.notEqual(recife.data.houses.midheaven, london.data.houses.midheaven);
   assert.notEqual(recife.data.localDateTime, london.data.localDateTime);
 });
+
+test("authorized important dates stay reported and do not change return geometry", async () => {
+  const calculate = createSolarReturnCalculators()["solar-return"];
+  const plain = await calculate(input, scope());
+  const withDates = await calculate(
+    {
+      ...input,
+      importantDates: {
+        authorization: "atv-solar-important-dates/1",
+        entries: [{ date: "2027-01-10", label: "Mudança planejada" }],
+      },
+    },
+    scope(),
+  );
+  assert.equal(withDates.data.returnInstant, plain.data.returnInstant);
+  assert.deepEqual(withDates.data.positions, plain.data.positions);
+  assert.deepEqual(
+    withDates.facts.find((fact) => fact.id === "important-date-1"),
+    {
+      id: "important-date-1",
+      kind: "reported",
+      display: "2027-01-10: Mudança planejada",
+      source: "input.importantDates.entries[0]",
+    },
+  );
+});

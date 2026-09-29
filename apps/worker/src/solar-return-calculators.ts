@@ -252,6 +252,12 @@ export function createSolarReturnCalculators(
             },
           ]
         : []),
+      ...(input.importantDates?.entries.map((entry, index) => ({
+        id: `important-date-${index + 1}`,
+        kind: "reported" as const,
+        display: `${entry.date}: ${entry.label}`,
+        source: `input.importantDates.entries[${index}]`,
+      })) ?? []),
     ];
     const snapshot: CalculationSnapshot = {
       version: solarReturnProductContract.version,
@@ -276,7 +282,7 @@ export function createSolarReturnCalculators(
       limits: [
         ...chart.provenance.warnings,
         "Cálculo experimental do instante e da carta do retorno; motor e precisão não homologados independentemente.",
-        "A cidade e as prioridades são declaradas pela pessoa. Prioridades não alteram a geometria; nenhuma previsão, interpretação, mandala editorial ou linha de 12 meses foi produzida.",
+        "A cidade, as prioridades e as datas importantes são declaradas pela pessoa. Esses relatos não alteram a geometria; nenhuma previsão, interpretação, mandala editorial ou linha de 12 meses foi produzida.",
         "O retorno é uma igualdade de longitude solar geocêntrica aparente tropical; não é o horário civil de aniversário nem uma previsão de eventos.",
         ...(chart.houses.status === "not-applicable"
           ? [chart.houses.warning]

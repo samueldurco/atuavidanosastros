@@ -15,9 +15,11 @@
 	} from '$lib/week-request';
 	import {
 		SOLAR_RETURN_REQUEST_VERSION,
+		SOLAR_IMPORTANT_DATES_AUTHORIZATION,
 		solarTargetDate,
 		validSolarCity,
-		validSolarCoordinateText
+		validSolarCoordinateText,
+		validSolarImportantDates
 	} from '$lib/solar-return-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import {
@@ -48,6 +50,12 @@
 	let solarTimezone = $state('');
 	let solarLatitude = $state('');
 	let solarLongitude = $state('');
+	let solarImportantDates = $state([
+		{ date: '', label: '' },
+		{ date: '', label: '' },
+		{ date: '', label: '' }
+	]);
+	let solarDatesAuthorized = $state(false);
 	let reportedContext = $state('');
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
@@ -99,6 +107,9 @@
 			? solarTargetDate(snapshot.natal.localDateTime, Number(solarYear))
 			: null
 	);
+	const solarDateEntries = $derived(
+		solarImportantDates.filter((entry) => entry.date || entry.label)
+	);
 	const solarValid = $derived(
 		!isSolar ||
 			(solarDate !== null &&
@@ -107,7 +118,9 @@
 				validSolarCity(solarCity) &&
 				validWeekTimezone(solarTimezone) &&
 				validSolarCoordinateText(solarLatitude, 90) &&
-				validSolarCoordinateText(solarLongitude, 180))
+				validSolarCoordinateText(solarLongitude, 180) &&
+				(solarDateEntries.length === 0 ||
+					(solarDatesAuthorized && validSolarImportantDates(solarDateEntries, solarDate))))
 	);
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
@@ -240,7 +253,15 @@
 							timezone: solarTimezone,
 							latitude: Number(solarLatitude),
 							longitude: Number(solarLongitude)
-						}
+						},
+						...(solarDateEntries.length > 0
+							? {
+									importantDates: {
+										authorization: SOLAR_IMPORTANT_DATES_AUTHORIZATION,
+										entries: solarDateEntries
+									}
+								}
+							: {})
 					}
 				: {}),
 			...(isWeek ? { timezone: weekTimezone, theme: weekTheme } : {}),
@@ -539,6 +560,55 @@
 								/>
 							{/snippet}
 						</Field>
+						<fieldset class="solar-dates">
+							<legend>Datas importantes deste ciclo (opcional)</legend>
+							<p class="privacy">
+								Informe até três datas e uma descrição curta para cada uma. São relatos seus, não
+								eventos previstos. Use datas entre a referência do aniversário e o mesmo dia do ano
+								seguinte; datas repetidas não são aceitas.
+							</p>
+							{#each solarImportantDates as entry, index (index)}
+								<Field id={`solar-important-date-${index}`} label={`Data importante ${index + 1}`}>
+									{#snippet children(describedBy)}
+										<input
+											id={`solar-important-date-${index}`}
+											type="date"
+											min={solarDate ?? undefined}
+											max={solarDate
+												? `${Number(solarDate.slice(0, 4)) + 1}-${solarDate.slice(5)}`
+												: undefined}
+											bind:value={entry.date}
+											oninput={resetConsents}
+											aria-describedby={describedBy}
+										/>
+									{/snippet}
+								</Field>
+								<Field
+									id={`solar-important-label-${index}`}
+									label={`Descrição da data ${index + 1}`}
+								>
+									{#snippet children(describedBy)}
+										<input
+											id={`solar-important-label-${index}`}
+											type="text"
+											maxlength="80"
+											autocomplete="off"
+											bind:value={entry.label}
+											oninput={resetConsents}
+											aria-describedby={describedBy}
+										/>
+									{/snippet}
+								</Field>
+							{/each}
+							<label class="consent">
+								<input
+									type="checkbox"
+									bind:checked={solarDatesAuthorized}
+									onchange={resetConsents}
+								/>
+								Autorizo usar e guardar as datas e descrições que informei somente neste pedido.
+							</label>
+						</fieldset>
 						<p class="privacy">
 							A base local de cálculo é experimental. Cidade, fuso e coordenadas devem corresponder
 							ao mesmo local. Nenhuma leitura ou PDF está liberado.
@@ -632,7 +702,7 @@
 								: isWeek
 									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do fuso atual e tema que declarei, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 									: isSolar
-										? 'Autorizo guardar uma cópia dos dados natais conferidos, do ano, da cidade, do fuso e das coordenadas que declarei para o aniversário, do contexto opcional e dos resultados deste pedido na minha conta.'
+										? 'Autorizo guardar uma cópia dos dados natais conferidos, do ano, da cidade, do fuso e das coordenadas que declarei para o aniversário, das datas importantes autorizadas, do contexto opcional e dos resultados deste pedido na minha conta.'
 										: isTemporal
 											? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 											: isCareer
@@ -720,8 +790,8 @@
 			{#if isSolar}<p>
 					A Revolução Solar está em preparação. O cálculo local busca o retorno do Sol natal, mas a
 					precisão do motor, a carta da cidade declarada e a interpretação ainda exigem homologação.
-					O ano e a cidade escolhidos não autorizam acompanhamento anual, alertas nem continuidade
-					automática ATV+.
+					As datas importantes são relatos opcionais deste pedido. Não autorizam acompanhamento
+					anual, alertas nem continuidade automática ATV+.
 				</p>{/if}
 			{#if isHoroscope}<p>
 					O Horóscopo personalizado está em preparação. Os temas de amor, trabalho, ritmo e atenção
