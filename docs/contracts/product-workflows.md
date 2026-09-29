@@ -30,6 +30,10 @@ Dream snapshots keep reported narrative, emotions, associations and context dist
 
 The existing owner-scoped request, local SQL processing, pending Library projection, lost-acknowledgement recovery and frozen-draw reprocessing now cover these products. Intake remains server-gated; local enabled fixtures do not activate releases. Runtime coverage is twelve partial bases and thirteen unavailable calculations, not twelve completed products. No model or prompt is promoted. Evidence: `docs/qa/TAROT_QUESTION_PRODUCTS_2026-09-28.md`.
 
+### Daily-card coherence — WU132
+
+Before editorial preparation, `daily-card` now requires the saved card identity/name, question slot, reported question/context, drawn fact provenance and candidate policy to agree exactly. The pure inspection never redraws or changes persisted snapshots. Valid Lab requests are unchanged; inconsistent projections are blocked and existing reviews remain bound to the versioned preparation basis. See `daily-card-calculation.md` and `../qa/DAILY_CARD_BASE_2026-09-28.md`. This is local base validation, not editorial approval or hosted release.
+
 ## Recovery and privacy
 
 Intake access and request recovery use the shared `withRpcDeadline` asynchronous wait bound of 10 seconds, including when the transport ignores abort. Authentication and request-body reads are outside that bound. Timeout means unavailable, never eligibility, not-found, rollback or permission to submit again. No automatic retries are added; a late transport may still finish independently.

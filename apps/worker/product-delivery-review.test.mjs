@@ -1,4 +1,5 @@
 import test from "node:test";
+import { calculateTarot } from "@atv/domain";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { SCHEMA_VERSION, RUBRIC_VERSION, dimensions } from "@atv/ai";
@@ -18,34 +19,42 @@ const authority = {
     calibrations: ["fixture-calibration"],
   },
 };
+// Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
+const dailyCalculation = await calculateTarot(
+  {
+    version: "atv-workflow/1.0.0",
+    productId: "daily-card",
+    questions: ["Que possibilidade posso observar?"],
+    context: "Contexto sintético B",
+    consent: {
+      storage: true,
+      policyVersion: "atv-input-consent/1",
+      partner: false,
+      continuity: false,
+    },
+  },
+  "00000000-0000-4000-8000-000000000001",
+  new AbortController().signal,
+);
 function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 2,
     productId: "daily-card",
     tier: "free",
-    calculation: {
-      version: "synthetic/1",
-      kind: "tarot",
-      status: "recorded",
-      data: { provenance: "fixture" },
-      facts: [
-        {
-          id: "card",
-          kind: "drawn",
-          display: "Carta sintética",
-          source: "fixture",
-        },
-      ],
-      limits: ["Base não homologada."],
-    },
+    calculation: structuredClone(dailyCalculation),
     output: {
       schemaVersion: SCHEMA_VERSION,
       capability: "tarot-reflection",
       scope: "partial",
       title: "Recorte sintético",
       claims: [
-        { id: "c1", kind: "fact", text: "Carta sintética", evidence: ["card"] },
+        {
+          id: "c1",
+          kind: "fact",
+          text: dailyCalculation.facts[1].display,
+          evidence: ["card-1"],
+        },
       ],
       relations: [],
       synthesis: [
@@ -169,8 +178,7 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
     (d) => d.revision++,
     (d) => (d.productId = "tarot-focus"),
     (d) => (d.tier = "premium"),
-    (d) => (d.calculation.data.provenance = "changed"),
-    (d) => d.calculation.limits.push("Outro limite."),
+    (d) => (d.calculation.facts[2].display = "Outro contexto consentido"),
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
@@ -179,6 +187,17 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
     mutate(changed);
     const result = await evaluateProductDelivery(changed, review, authority);
     assert.equal(result.reason, "review_basis_mismatch");
+    assert.equal(result.reviewDigest, null);
+    assert.equal("content" in result, false);
+  }
+  for (const mutate of [
+    (d) => (d.calculation.data.provenance = "changed"),
+    (d) => d.calculation.limits.push("Outro limite."),
+  ]) {
+    const changed = structuredClone(input);
+    mutate(changed);
+    const result = await evaluateProductDelivery(changed, review, authority);
+    assert.equal(result.reason, "calculation_invalid");
     assert.equal(result.reviewDigest, null);
     assert.equal("content" in result, false);
   }

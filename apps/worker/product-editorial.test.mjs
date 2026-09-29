@@ -165,28 +165,66 @@ test('Ascendant preparation requires a coherent numeric angle and calculated fac
   }
 });
 
-test('review is bound to output and complete provenance, run, revision, product and tier',async()=>{
-  const input=await draft();const assessment=await evaluateProductDraft(input);const review=bound(assessment);
-  assert.equal(assessment.outputDigest,createHash('sha256').update(JSON.stringify(input.output)).digest('hex'));
-  assert.equal((await evaluateProductDraft(input,review,authority)).status,'reviewed_candidate');
-  for(const mutate of [d=>d.runId='00000000-0000-4000-8000-000000000002',d=>d.revision++,d=>d.tier='premium',
-    d=>d.productId='tarot-focus',d=>d.calculation.version+='-changed',d=>d.calculation.data.newProvenance='changed',
-    d=>d.calculation.limits.push('Outro limite.'),d=>d.calculation.facts[0].source+='-changed',
-    d=>d.output.title='Outro recorte']) {
-    const changed=structuredClone(input);mutate(changed);
-    const result=await evaluateProductDraft(changed,review,authority);
-    assert.equal(result.reason,'review_basis_mismatch');assert.notEqual(result.basisDigest,assessment.basisDigest);
-    assert.equal(result.publication,'blocked');
+test("review is bound to output and complete provenance, run, revision, product and tier", async () => {
+  const input = await draft();
+  const assessment = await evaluateProductDraft(input);
+  const review = bound(assessment);
+  assert.equal(
+    assessment.outputDigest,
+    createHash("sha256").update(JSON.stringify(input.output)).digest("hex"),
+  );
+  assert.equal(
+    (await evaluateProductDraft(input, review, authority)).status,
+    "reviewed_candidate",
+  );
+  for (const mutate of [
+    (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
+    (d) => d.revision++,
+    (d) => (d.tier = "premium"),
+    (d) => (d.productId = "tarot-focus"),
+    (d) => (d.output.title = "Outro recorte"),
+  ]) {
+    const changed = structuredClone(input);
+    mutate(changed);
+    const result = await evaluateProductDraft(changed, review, authority);
+    assert.equal(result.reason, "review_basis_mismatch");
+    assert.notEqual(result.basisDigest, assessment.basisDigest);
+    assert.equal(result.publication, "blocked");
+  }
+  for (const mutate of [
+    (d) => (d.calculation.version += "-changed"),
+    (d) => (d.calculation.data.newProvenance = "changed"),
+    (d) => d.calculation.limits.push("Outro limite."),
+    (d) => (d.calculation.facts[0].source += "-changed"),
+  ]) {
+    const changed = structuredClone(input);
+    mutate(changed);
+    const result = await evaluateProductDraft(changed, review, authority);
+    assert.equal(result.reason, "calculation_invalid");
+    assert.equal(result.basisDigest, null);
+    assert.equal(result.publication, "blocked");
   }
 });
 
-test('equivalent object key order has stable basis; caller mutation cannot race hashing',async()=>{
-  const input=await draft();input.calculation.data={b:2,a:{d:4,c:3}};
-  const first=await evaluateProductDraft(input);
-  input.calculation.data={a:{c:3,d:4},b:2};
-  assert.equal((await evaluateProductDraft(input)).basisDigest,first.basisDigest);
-  const pending=evaluateProductDraft(input);input.revision++;input.calculation.data.a.c=900;
-  assert.equal((await pending).basisDigest,first.basisDigest);
+test("equivalent object key order has stable basis; caller mutation cannot race hashing", async () => {
+  const input = await draft();
+  const first = await evaluateProductDraft(input);
+  assert.equal(first.status, "needs_editorial_review");
+  assert.ok(first.basisDigest);
+  input.calculation.data = Object.fromEntries(
+    Object.entries(input.calculation.data).reverse(),
+  );
+  input.calculation.data.cards[0] = Object.fromEntries(
+    Object.entries(input.calculation.data.cards[0]).reverse(),
+  );
+  assert.equal(
+    (await evaluateProductDraft(input)).basisDigest,
+    first.basisDigest,
+  );
+  const pending = evaluateProductDraft(input);
+  input.revision++;
+  input.calculation.data.cards[0].name = "changed";
+  assert.equal((await pending).basisDigest, first.basisDigest);
 });
 
 test('untrusted, stale, uncalibrated and below-threshold reviews never approve',async()=>{

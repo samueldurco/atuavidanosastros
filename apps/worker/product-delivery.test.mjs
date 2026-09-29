@@ -1,4 +1,5 @@
 import test from "node:test";
+import { calculateTarot } from "@atv/domain";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { SCHEMA_VERSION } from "@atv/ai";
@@ -17,33 +18,30 @@ import {
   PRODUCT_DELIVERY_VERSION,
 } from "./src/product-delivery.ts";
 
+// Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
+const dailyCalculation = await calculateTarot(
+  {
+    version: "atv-workflow/1.0.0",
+    productId: "daily-card",
+    questions: ["Que possibilidade posso observar?"],
+    context: "Contexto sintético B",
+    consent: {
+      storage: true,
+      policyVersion: "atv-input-consent/1",
+      partner: false,
+      continuity: false,
+    },
+  },
+  "00000000-0000-4000-8000-000000000001",
+  new AbortController().signal,
+);
 function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 3,
     productId: "daily-card",
     tier: "free",
-    calculation: {
-      version: "synthetic/1",
-      kind: "tarot",
-      status: "recorded",
-      data: { provenance: "fixture" },
-      limits: ["Base sintética, não homologada."],
-      facts: [
-        {
-          id: "card-a",
-          kind: "drawn",
-          display: "Carta sintética A",
-          source: "fixture",
-        },
-        {
-          id: "context",
-          kind: "reported",
-          display: "Contexto sintético B",
-          source: "fixture",
-        },
-      ],
-    },
+    calculation: structuredClone(dailyCalculation),
     output: {
       schemaVersion: SCHEMA_VERSION,
       capability: "tarot-reflection",
@@ -53,20 +51,20 @@ function draft() {
         {
           id: "c1",
           kind: "fact",
-          text: "Carta sintética A",
-          evidence: ["card-a"],
+          text: dailyCalculation.facts[1].display,
+          evidence: ["card-1"],
         },
         {
           id: "c2",
           kind: "interpretation",
           text: "Uma interpretação sintética para observar.",
-          evidence: ["context"],
+          evidence: ["tarot-context"],
         },
         {
           id: "c3",
           kind: "hypothesis",
           text: "Uma hipótese a explorar, sem certeza.",
-          evidence: ["card-a", "context"],
+          evidence: ["card-1", "tarot-context"],
         },
       ],
       relations: [
@@ -511,11 +509,11 @@ test("projects every Lab passage, semantic type, claim link and fact reference w
   assert.deepEqual(
     content.sections.map((s) => s.evidence),
     [
-      ["card-a"],
-      ["context"],
-      ["card-a", "context"],
-      ["card-a", "context"],
-      ["card-a", "context"],
+      ["card-1"],
+      ["tarot-context"],
+      ["card-1", "tarot-context"],
+      ["card-1", "tarot-context"],
+      ["card-1", "tarot-context"],
     ],
   );
   const all = contentTexts(content);
@@ -593,7 +591,7 @@ function premium() {
     id: `c${i}`,
     kind: "interpretation",
     text: `Recorte ${i}: possibilidade contextual.`,
-    evidence: [i % 2 ? "context" : "card-a"],
+    evidence: [i % 2 ? "tarot-context" : "card-1"],
   }));
   input.output.relations = Array.from({ length: 16 }, (_, i) => ({
     kind: i % 2 ? "tension" : "convergence",
@@ -654,8 +652,7 @@ test("digest binds exact delivery and original run, calculation provenance, revi
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
-    (d) => (d.calculation.data.provenance = "changed"),
-    (d) => d.calculation.limits.push("Outro limite do cálculo."),
+    (d) => (d.calculation.facts[2].display = "Outro contexto consentido"),
     (d) => (d.output.claims[1].text += " Outro ponto."),
     (d) => (d.output.relations[0].kind = "convergence"),
     (d) => d.output.reflections.reverse(),

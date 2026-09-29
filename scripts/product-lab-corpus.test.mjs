@@ -192,14 +192,14 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.13.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.14.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
     '022b697884ebabe85a1bf2f6b8a9be9fee0402dbe1e015bacb1350c54311b041');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
     'a0253f1f001c43f4b7247caaee230eb2ab51bb7232b7306700ee9c36b69c7ace');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
     '09fa2648db28942994868da1b5d221f5b2fa3977da9eff5baf64c943c4f19612');
-  // Version 1.13.0 adds only the trusted MC editorial profile to existing requests.
+  // Version 1.14.0 checks daily-card coherence without changing any valid request.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     'd53629951340a60f4ef7383fed6c29661572c4ab9dc352897f9715fba8fb565d');
   const beforeMC = corpus.cases.map(item => {
