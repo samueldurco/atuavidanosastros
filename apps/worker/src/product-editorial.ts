@@ -36,6 +36,7 @@ import {
 import { validateCalculation } from "./product-processing.ts";
 import { validCareerCompassProjection } from "./purpose-calculators.ts";
 import { validDateReadingProjection } from "./date-reading-projection.ts";
+import { validPairPreviewProjection } from "./pair-preview-projection.ts";
 import {
   validDailyCardProjection,
   validTarotFocusProjection,
@@ -52,7 +53,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.25.0";
+  "atv-product-editorial-evidence/1.26.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -86,6 +87,11 @@ export function prepareProductFacts(
   if (!calculation || !kind)
     return { status: "blocked", reason: "calculation_invalid" };
   // Inspect the original facts before generic validation can omit extra metadata.
+  if (
+    productId === "pair-preview" &&
+    !validPairPreviewProjection(value as CalculationSnapshot)
+  )
+    return { status: "blocked", reason: "calculation_invalid" };
   if (
     productId === "date-reading" &&
     !validDateReadingProjection(value as CalculationSnapshot)
