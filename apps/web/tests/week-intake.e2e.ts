@@ -37,6 +37,14 @@ async function ready(page: Page, value: unknown = snapshot()) {
 	await page.goto(path);
 	await page.getByRole('button', { name: 'Consultar perfil salvo', exact: true }).click();
 }
+async function preferences(page: Page) {
+	const timezone = page.getByLabel('Fuso atual da consulta', { exact: true });
+	const theme = page.getByLabel('Tema da semana', { exact: true });
+	await expect(timezone).toHaveValue('');
+	await expect(theme).toHaveValue('');
+	await timezone.fill('America/Fortaleza');
+	await theme.selectOption('priorities');
+}
 async function recovery(page: Page) {
 	await page.route('**/api/workflows/recover', (route) =>
 		route.fulfill({ json: { request: { runId, productId, libraryItemId: library } } })
@@ -73,10 +81,12 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 		writes++;
 		const body = route.request().postDataJSON();
 		expect(body.input).toEqual({
-			version: 'atv-week-reading-request/1',
+			version: 'atv-week-reading-request/2',
 			productId,
 			expectedRevision: 2,
 			targetDate: '2028-02-29',
+			timezone: 'America/Fortaleza',
+			theme: 'priorities',
 			context: report,
 			consent: {
 				storage: true,
@@ -89,6 +99,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 		return route.fulfill({ status: 202, json: { runId } });
 	});
 	await ready(page);
+	await preferences(page);
 	const date = page.getByLabel('Data inicial da semana', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
 	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
@@ -113,6 +124,8 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	expect(Object.keys(stored)).toEqual([slot]);
 	expect(stored[slot]).toMatch(/^[a-f0-9-]{36}$/);
 	await expect(date).toHaveValue('');
+	await expect(page.getByLabel('Fuso atual da consulta', { exact: true })).toHaveValue('');
+	await expect(page.getByLabel('Tema da semana', { exact: true })).toHaveValue('');
 	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
 	expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).not.toContain(report);
 	await page.getByRole('button', { name: 'Preparar outro pedido' }).click();
@@ -128,6 +141,7 @@ test('out-of-range date and profile revision conflict cannot silently reuse cons
 		return route.fulfill({ status: 409, json: { error: 'revision_conflict' } });
 	});
 	await ready(page);
+	await preferences(page);
 	const date = page.getByLabel('Data inicial da semana', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
 	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
@@ -145,6 +159,43 @@ test('out-of-range date and profile revision conflict cannot silently reuse cons
 	expect(await page.evaluate((name) => sessionStorage.getItem(name), slot)).toBeNull();
 	expect(writes).toBe(1);
 });
+
+test('timezone and theme require explicit choices; changes invalidate consent and malformed timezone blocks', async ({
+	page
+}) => {
+	await ready(page);
+	const timezone = page.getByLabel('Fuso atual da consulta', { exact: true });
+	const theme = page.getByLabel('Tema da semana', { exact: true });
+	const consent = page.getByLabel(privacy, { exact: false });
+	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
+	await expect(timezone).toHaveValue('');
+	await expect(theme).toHaveValue('');
+	await page.getByLabel('Data inicial da semana', { exact: true }).fill('2028-02-29');
+	await consent.check();
+	await expect(submit).toBeDisabled();
+	await timezone.fill('America/Fortaleza');
+	await expect(consent).not.toBeChecked();
+	await consent.check();
+	await expect(submit).toBeDisabled();
+	await theme.selectOption('care');
+	await expect(consent).not.toBeChecked();
+	await consent.check();
+	await expect(submit).toBeEnabled();
+	await timezone.fill('UTC+03:00');
+	await expect(consent).not.toBeChecked();
+	await expect(timezone).toHaveAttribute('aria-invalid', 'true');
+	await consent.check();
+	await expect(submit).toBeDisabled();
+	await timezone.fill('UTC');
+	await expect(consent).not.toBeChecked();
+	await consent.check();
+	await expect(submit).toBeEnabled();
+	await theme.selectOption('');
+	await expect(consent).not.toBeChecked();
+	await consent.check();
+	await expect(submit).toBeDisabled();
+	await expect(page.getByText('O fuso natal permanece separado.', { exact: false })).toBeVisible();
+});
 test('lost acknowledgement reload uses UUID recovery without profile/date or replay', async ({
 	page
 }) => {
@@ -154,6 +205,7 @@ test('lost acknowledgement reload uses UUID recovery without profile/date or rep
 		return route.abort();
 	});
 	await ready(page);
+	await preferences(page);
 	await page.getByLabel('Data inicial da semana', { exact: true }).fill('2028-02-29');
 	await page.getByLabel(contextLabel, { exact: true }).fill(report);
 	await page.getByLabel(privacy, { exact: false }).check();
@@ -218,6 +270,7 @@ for (const width of [1440, 820, 390, 320]) {
 		});
 		await page.emulateMedia({ reducedMotion: 'reduce' });
 		await ready(page);
+		await preferences(page);
 		await page.getByLabel('Data inicial da semana', { exact: true }).fill('2028-02-29');
 		await page.getByLabel(contextLabel, { exact: true }).fill(report);
 		const consent = page.getByLabel(privacy, { exact: false });
@@ -248,24 +301,25 @@ test('blank report is optional; whitespace is invalid and max length is enforced
 	await page.route('**/api/workflows/week', (route) => {
 		writes++;
 		const body = route.request().postDataJSON();
-		expect(body.input.version).toBe('atv-week-reading-request/1');
+		expect(body.input.version).toBe('atv-week-reading-request/2');
 		expect(body.input).not.toHaveProperty('context');
 		return route.fulfill({ status: 202, json: { runId } });
 	});
 	await ready(page);
+	await preferences(page);
 	await page.getByLabel('Data inicial da semana', { exact: true }).fill('2028-02-29');
 	const context = page.getByLabel(contextLabel, { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
 	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
-	await expect(context).toHaveAttribute('maxlength', '1200');
+	await expect(context).toHaveAttribute('maxlength', '900');
 	await context.fill('   ');
 	await expect(context).toHaveAttribute('aria-invalid', 'true');
 	await consent.check();
 	await expect(submit).toBeDisabled();
-	await context.fill('a'.repeat(1200));
+	await context.fill('a'.repeat(900));
 	await context.press('End');
 	await context.pressSequentially('b');
-	await expect(context).toHaveValue('a'.repeat(1200));
+	await expect(context).toHaveValue('a'.repeat(900));
 	await expect(context).toHaveAttribute('aria-invalid', 'false');
 	await context.fill('');
 	await expect(consent).not.toBeChecked();

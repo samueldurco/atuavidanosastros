@@ -1,6 +1,6 @@
 import { expect, it, vi } from 'vitest';
 import { createWorkflowRequest } from './workflow-request';
-import { WEEK_REQUEST_VERSION } from './week-request';
+import { WEEK_REQUEST_VERSION, WEEK_PREFERENCES_REQUEST_VERSION } from './week-request';
 const owner = '30000000-0000-4000-8000-000000000001';
 const key = '30000000-0000-4000-8000-000000000002';
 const id = '30000000-0000-4000-8000-000000000003';
@@ -180,3 +180,44 @@ it.each(['', '  ', 'a'.repeat(1201), 'x\u0008', null])(
 		expect(s.options.randomUUID).not.toHaveBeenCalled();
 	}
 );
+
+const preferences = () => ({
+	...command(),
+	version: WEEK_PREFERENCES_REQUEST_VERSION,
+	timezone: 'America/Fortaleza',
+	theme: 'care',
+	context: '  Relato sintético  '
+});
+it('v2 sends declared preferences once, stores only UUID and recovers without replay', async () => {
+	const s = setup();
+	const input = preferences();
+	s.fetcher.mockImplementationOnce(async (url, init) => {
+		expect(url).toBe('/api/workflows/week');
+		expect(JSON.parse(init?.body as string)).toEqual({ requestKey: key, input });
+		expect([...s.values]).toEqual([[s.slot, key]]);
+		throw Error('lost');
+	});
+	expect((await s.client.perform(true, input)).mode).toBe('recover');
+	const reloaded = createWorkflowRequest(s.options);
+	s.found();
+	expect((await reloaded.perform(false)).href).toBe('/biblioteca/' + library);
+	expect(s.fetcher.mock.calls.filter(([url]) => url === '/api/workflows/week')).toHaveLength(1);
+	expect([...s.values]).toEqual([[s.slot, key]]);
+});
+it.each([
+	{ timezone: undefined },
+	{ timezone: 'UTC-3' },
+	{ timezone: 'America/Fake' },
+	{ theme: undefined },
+	{ theme: 'health' },
+	{ theme: 'constructor' },
+	{ context: 'a'.repeat(901) },
+	{ birth: {} },
+	{ version: WEEK_REQUEST_VERSION }
+])('v2 invalid preference %# never allocates or submits', async (change) => {
+	const s = setup();
+	expect((await s.client.perform(true, { ...preferences(), ...change })).mode).toBe('new');
+	expect(s.fetcher).not.toHaveBeenCalled();
+	expect(s.options.randomUUID).not.toHaveBeenCalled();
+	expect(s.values.size).toBe(0);
+});

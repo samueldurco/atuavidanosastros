@@ -6,7 +6,13 @@
 	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
 	import { HOROSCOPE_REQUEST_VERSION } from '$lib/horoscope-request';
-	import { WEEK_REQUEST_VERSION } from '$lib/week-request';
+	import {
+		WEEK_PREFERENCES_REQUEST_VERSION,
+		WEEK_CONTEXT_LIMIT,
+		WEEK_THEMES,
+		validWeekTimezone,
+		validWeekTheme
+	} from '$lib/week-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import {
 		PAIR_REQUEST_VERSION,
@@ -29,6 +35,8 @@
 	let busy = $state(false);
 	let consent = $state(false);
 	let targetDate = $state('');
+	let weekTimezone = $state('');
+	let weekTheme = $state('');
 	let reportedContext = $state('');
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
@@ -62,7 +70,14 @@
 					: 'career-context'
 	);
 	const contextValid = $derived(
-		!acceptsContext || reportedContext === '' || validReportedContext(reportedContext)
+		!acceptsContext ||
+			reportedContext === '' ||
+			(validReportedContext(reportedContext) &&
+				(!isWeek || reportedContext.length <= WEEK_CONTEXT_LIMIT))
+	);
+	const contextLimit = $derived(isWeek ? WEEK_CONTEXT_LIMIT : REPORTED_CONTEXT_LIMIT);
+	const weekPreferencesValid = $derived(
+		!isWeek || (validWeekTimezone(weekTimezone) && validWeekTheme(weekTheme))
 	);
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
@@ -156,6 +171,7 @@
 			!snapshot ||
 			!dateValid ||
 			!pairValid ||
+			!weekPreferencesValid ||
 			!contextValid
 		)
 			return;
@@ -169,7 +185,7 @@
 						: PAIR_REQUEST_VERSION
 				: isTemporal
 					? isWeek
-						? WEEK_REQUEST_VERSION
+						? WEEK_PREFERENCES_REQUEST_VERSION
 						: isHoroscope
 							? HOROSCOPE_REQUEST_VERSION
 							: DATE_CONTEXT_REQUEST_VERSION
@@ -180,6 +196,7 @@
 			expectedRevision: snapshot.revision,
 			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),
 			...(isTemporal ? { targetDate } : {}),
+			...(isWeek ? { timezone: weekTimezone, theme: weekTheme } : {}),
 			...(isPair
 				? {
 						partner: partnerValue.partner,
@@ -201,6 +218,8 @@
 		outcome = await controller.perform(true, input);
 		reportedContext = '';
 		targetDate = '';
+		weekTimezone = '';
+		weekTheme = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
 		snapshot = null;
@@ -221,6 +240,8 @@
 		outcome = controller.startAnother();
 		reportedContext = '';
 		targetDate = '';
+		weekTimezone = '';
+		weekTheme = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
 		snapshot = null;
@@ -361,6 +382,51 @@
 							{/snippet}
 						</Field>
 					{/if}
+					{#if isWeek}
+						<Field
+							id="week-timezone"
+							label="Fuso atual da consulta"
+							help="Informe um fuso IANA, como America/Sao_Paulo, ou UTC. Esta escolha será guardada como contexto declarado; a base atual continua às 12h UTC e não calcula dias locais completos. O fuso natal permanece separado."
+							error={weekTimezone && !validWeekTimezone(weekTimezone)
+								? 'Informe um fuso IANA válido ou UTC.'
+								: undefined}
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="week-timezone"
+									type="text"
+									required
+									maxlength="64"
+									autocomplete="off"
+									spellcheck="false"
+									bind:value={weekTimezone}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+									aria-invalid={!!weekTimezone && !validWeekTimezone(weekTimezone)}
+								/>
+							{/snippet}
+						</Field>
+						<Field
+							id="week-theme"
+							label="Tema da semana"
+							help="Escolha o foco da reflexão. O tema será declarado neste pedido e não altera os cálculos nem determina acontecimentos."
+						>
+							{#snippet children(describedBy)}
+								<select
+									id="week-theme"
+									required
+									bind:value={weekTheme}
+									onchange={resetConsents}
+									aria-describedby={describedBy}
+								>
+									<option value="">Escolha um tema</option>
+									{#each Object.entries(WEEK_THEMES) as [value, label] (value)}
+										<option {value}>{label}</option>
+									{/each}
+								</select>
+							{/snippet}
+						</Field>
+					{/if}
 					{#if acceptsContext}
 						<Field
 							id={contextId}
@@ -371,14 +437,14 @@
 									: 'Contexto profissional (opcional)'}
 							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
 							error={!contextValid
-								? 'Escreva até 1.200 caracteres válidos ou deixe o campo vazio.'
+								? `Escreva até ${contextLimit.toLocaleString('pt-BR')} caracteres válidos ou deixe o campo vazio.`
 								: undefined}
 						>
 							{#snippet children(describedBy)}
 								<textarea
 									id={contextId}
 									rows="5"
-									maxlength={REPORTED_CONTEXT_LIMIT}
+									maxlength={contextLimit}
 									autocomplete="off"
 									bind:value={reportedContext}
 									oninput={resetConsents}
@@ -387,8 +453,8 @@
 							{/snippet}
 						</Field>
 						<p id={contextId + '-count'} class="privacy">
-							{reportedContext.length} / 1.200 caracteres. O relato será guardado somente neste pedido;
-							não atualiza o perfil natal nem autoriza memória ATV+.
+							{reportedContext.length} / {contextLimit.toLocaleString('pt-BR')} caracteres. O relato será
+							guardado somente neste pedido; não atualiza o perfil natal nem autoriza memória ATV+.
 						</p>
 					{/if}
 					<label class="consent"
@@ -401,11 +467,13 @@
 							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas, o contexto que escolhi informar e os resultados deste pedido na minha conta.'
 							: isPair
 								? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
-								: isTemporal
-									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
-									: isCareer
-										? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
-										: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+								: isWeek
+									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do fuso atual e tema que declarei, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
+									: isTemporal
+										? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
+										: isCareer
+											? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
+											: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
@@ -415,8 +483,12 @@
 					<Button
 						type="submit"
 						pending={busy}
-						disabled={!canEnter || !consent || !dateValid || !pairValid || !contextValid}
-						>Criar pedido</Button
+						disabled={!canEnter ||
+							!consent ||
+							!dateValid ||
+							!pairValid ||
+							!contextValid ||
+							!weekPreferencesValid}>Criar pedido</Button
 					>
 				</fieldset>
 			</form>
@@ -473,8 +545,9 @@
 				</p>{/if}
 			{#if isWeek}<p>
 					A Semana está em preparação. Esta base parcial reúne o perfil natal e sete amostras
-					consecutivas; a leitura depende da homologação do motor e da revisão editorial. Não
-					consulta seu fuso ou local atuais, datas importantes, calendário ou lembretes. Não
+					consecutivas; a leitura depende da homologação do motor e da revisão editorial. O fuso
+					atual e o tema que você informar serão usados como contexto declarado. Esta base não
+					calcula dias locais completos nem recebe datas importantes, calendário ou lembretes. Não
 					autoriza alertas nem continuidade automática ATV+.
 				</p>{/if}
 			{#if isHoroscope}<p>
@@ -579,7 +652,9 @@
 		line-height: 1.6;
 		margin-top: 1rem;
 	}
-	input[type='date'] {
+	input[type='date'],
+	#week-timezone,
+	#week-theme {
 		box-sizing: border-box;
 		width: 100%;
 		min-width: 0;

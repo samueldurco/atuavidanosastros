@@ -9,7 +9,11 @@ import {
 	file
 } from '../../../../../scripts/helpers/product-database.mjs';
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
-import { parseWeekRequestInput } from '../week-request';
+import {
+	parseWeekRequestInput,
+	WEEK_THEMES,
+	WEEK_PREFERENCES_REQUEST_VERSION
+} from '../week-request';
 import { weekRequestApi } from './week-request-api';
 
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
@@ -132,7 +136,8 @@ beforeAll(async () => {
 		'20260924170000_product_request_recovery.sql',
 		'20260925140000_product_request_access.sql',
 		'20260925160000_natal_product_requests.sql',
-		'20260929120000_week_reading_product_requests.sql'
+		'20260929120000_week_reading_product_requests.sql',
+		'20260929140000_week_reading_preferences.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -561,6 +566,7 @@ it('cascades receipt deletion; forward-fix preserves snapshots and read-only rec
 		await db.exec(
 			await file('supabase/migrations/20260929120000_week_reading_product_requests.sql')
 		);
+		await db.exec(await file('supabase/migrations/20260929140000_week_reading_preferences.sql'));
 	}
 
 	expect(await submit(body)).toBe(runId);
@@ -569,4 +575,169 @@ it('cascades receipt deletion; forward-fix preserves snapshots and read-only rec
 	);
 	await submit(request());
 	expect((await counts()).receipts).toBe(2);
+});
+
+const preferences = (changes = {}) => ({
+	version: WEEK_PREFERENCES_REQUEST_VERSION,
+	timezone: 'America/Fortaleza',
+	theme: 'priorities',
+	...changes
+});
+it.each(Object.entries(WEEK_THEMES))(
+	'v2 theme %s remains declared, exact and private',
+	async (theme, label) => {
+		await save();
+		await enable();
+		const context = '  Relato sintético\nsem inferência.  ';
+		const body = request(preferences({ theme, context }));
+		expect(parseWeekRequestInput(body.input)).toEqual(body.input);
+		const response = await weekRequestApi(event(body));
+		expect(response.status).toBe(202);
+		expect(response.headers.get('cache-control')).toContain('no-store');
+		const { runId } = (await response.json()) as { runId: string };
+		const run = (
+			await db.query<{ input: { context: string; birth: { timezone: string } } }>(
+				'select input from product_runs where id=$1',
+				[runId]
+			)
+		).rows[0];
+		expect(run.input.context).toBe(
+			`Fuso atual declarado: America/Fortaleza (não usado para calcular dias locais).\nTema escolhido: ${label}.\n\nContexto declarado: ${context}`
+		);
+		expect(run.input.birth.timezone).toBe(natal.timezone);
+		expect(parseWorkflowInput(run.input)).toEqual(run.input);
+		expect(run.input).not.toHaveProperty('theme');
+		expect(run.input).not.toHaveProperty('timezone');
+		const v1 = await submit(request());
+		const legacy = (
+			await db.query<{ input: unknown }>('select input from product_runs where id=$1', [v1])
+		).rows[0].input;
+		const { context: declared, ...geometryInput } = run.input;
+		expect(declared).toContain(label);
+		expect(geometryInput).toEqual(legacy);
+		expect(
+			(
+				await db.query<{ command: unknown }>(
+					'select command from week_reading_product_requests where run_id=$1',
+					[runId]
+				)
+			).rows[0].command
+		).toEqual(body.input);
+		await expect(
+			asRole(db, 'authenticated', owner, () =>
+				db.query('select command from week_reading_product_requests')
+			)
+		).rejects.toThrow('permission denied');
+		const recovered = await asRole(db, 'authenticated', owner, () =>
+			db.query('select recover_product_request($1) value', [body.requestKey])
+		);
+		expect(JSON.stringify(recovered.rows)).not.toContain('Fortaleza');
+		expect(JSON.stringify(recovered.rows)).not.toContain(context);
+		await expect(
+			submit(
+				request(
+					preferences({ theme: theme === 'care' ? 'general' : 'care', context }),
+					body.requestKey
+				)
+			)
+		).rejects.toThrow('idempotency_conflict');
+	}
+);
+
+it('v2 omission, UTF-16 boundary and UTC are valid; preferences are immutable after profile/gate changes', async () => {
+	await save();
+	await enable();
+	for (const context of [undefined, '界'.repeat(900), '🪐'.repeat(450)]) {
+		const body = request(
+			preferences({ timezone: 'UTC', ...(context === undefined ? {} : { context }) })
+		);
+		expect(parseWeekRequestInput(body.input)).toEqual(body.input);
+		const id = await submit(body);
+		const persisted = (
+			await db.query<{ input: { context: string } }>('select input from product_runs where id=$1', [
+				id
+			])
+		).rows[0].input;
+		expect(persisted.context.length).toBeLessThanOrEqual(1200);
+		expect(parseWorkflowInput(persisted)).toEqual(persisted);
+		if (context !== undefined) expect(persisted.context.endsWith(context)).toBe(true);
+		else expect(persisted.context).not.toContain('Contexto declarado:');
+	}
+	const body = request(preferences());
+	const id = await submit(body);
+	const before = (await db.query('select input from product_runs where id=$1', [id])).rows[0];
+	await save(1, { timezone: 'UTC', localDateTime: '1990-06-15T15:30:00.123' });
+	await forget(2);
+	await db.exec("update workflow_releases set enabled=false where product_id='week-reading'");
+	expect(await submit(body)).toBe(id);
+	expect((await db.query('select input from product_runs where id=$1', [id])).rows[0]).toEqual(
+		before
+	);
+	await expect(submit(request(preferences({ timezone: 'UTC' }), body.requestKey))).rejects.toThrow(
+		'idempotency_conflict'
+	);
+});
+
+it('v2 rejects missing/unknown preferences and shortened-report violations in HTTP and SQL without allocation', async () => {
+	await save();
+	await enable();
+	const before = await counts();
+	const changes = [
+		...[
+			undefined,
+			null,
+			'',
+			'UTC+03:00',
+			'-03:00',
+			'Brazil',
+			'america/sao_paulo',
+			'America/Fake',
+			' UTC',
+			'UTC\n',
+			true,
+			12,
+			{},
+			'America/' + 'a'.repeat(60)
+		].map((timezone) => ({ timezone })),
+		...[undefined, null, '', 'money', 'constructor', 'toString', true, 2, {}].map((theme) => ({
+			theme
+		})),
+		...['a'.repeat(901), '🪐'.repeat(451), '   ', '\u0001', 'a\u007f'].map((context) => ({
+			context
+		})),
+		{ currentTimezone: 'UTC' },
+		{ importantDates: [] },
+		{ calendar: true },
+		{ version: 'atv-week-reading-request/3' },
+		{ consent: { ...input().consent, continuity: true } }
+	];
+	for (const change of changes) {
+		const body = request(preferences(change));
+		expect(parseWeekRequestInput(body.input), JSON.stringify(change)).toBeNull();
+		expect((await weekRequestApi(event(body))).status).toBe(400);
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+	}
+	expect(await counts()).toEqual(before);
+});
+
+it('v2 forward-fix denies creation while preserving receipts/recovery; reapply restores exact replay', async () => {
+	await save();
+	await enable();
+	const body = request(preferences());
+	const id = await submit(body);
+	await db.exec(await file('supabase/forward-fixes/disable_week_reading_product_requests.sql'));
+	try {
+		await expect(submit(body)).rejects.toThrow('permission denied');
+		await expect(submit(request(preferences()))).rejects.toThrow('permission denied');
+		const recovered = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+				body.requestKey
+			])
+		);
+		expect(recovered.rows[0].value.runId).toBe(id);
+	} finally {
+		await db.exec(await file('supabase/migrations/20260929140000_week_reading_preferences.sql'));
+	}
+	expect(await submit(body)).toBe(id);
+	expect((await counts()).receipts).toBe(1);
 });
