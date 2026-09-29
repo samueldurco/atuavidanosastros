@@ -6,6 +6,7 @@ import {
 } from "./src/solar-return-calculators.ts";
 import { createProductCalculators } from "./src/product-runtime.ts";
 import { ProcessingError } from "./src/product-processing.ts";
+import { buildSolarReturnCalendar } from "./src/solar-return-calendar.ts";
 
 const birth = {
   localDateTime: "2000-09-09T12:00:00",
@@ -65,6 +66,9 @@ test("solar return finds the natal Sun longitude at the declared birthday city",
     result.data.returnInstant,
   );
   assert.equal(result.data.positions.length, 10);
+  assert.equal(result.data.calendarScaffold.months.length, 12);
+  assert.equal(result.data.calendarScaffold.startDate, input.targetDate);
+  assert.equal(result.data.calendarScaffold.endDateExclusive, "2027-09-09");
   assert.equal(
     result.facts.find((fact) => fact.id === "birthday-city")?.kind,
     "reported",
@@ -164,6 +168,9 @@ test("authorized important dates stay reported and do not change return geometry
   );
   assert.equal(withDates.data.returnInstant, plain.data.returnInstant);
   assert.deepEqual(withDates.data.positions, plain.data.positions);
+  assert.deepEqual(withDates.data.calendarScaffold.months[4].importantDateIds, [
+    "important-date-1",
+  ]);
   assert.deepEqual(
     withDates.facts.find((fact) => fact.id === "important-date-1"),
     {
@@ -172,5 +179,33 @@ test("authorized important dates stay reported and do not change return geometry
       display: "2027-01-10: Mudança planejada",
       source: "input.importantDates.entries[0]",
     },
+  );
+});
+
+test("civil month windows cover the cycle exactly and retain terminal dates outside month 12", () => {
+  const calendar = buildSolarReturnCalendar("2026-01-31", [
+    { date: "2026-02-28", label: "Marco no limite" },
+    { date: "2026-03-31", label: "Marco no terceiro mês" },
+    { date: "2027-01-31", label: "Marco no fim do ciclo" },
+  ]);
+  assert.equal(calendar.months[0].endDateExclusive, "2026-02-28");
+  assert.equal(calendar.months[1].endDateExclusive, "2026-03-31");
+  assert.deepEqual(calendar.months[1].importantDateIds, ["important-date-1"]);
+  assert.deepEqual(calendar.months[2].importantDateIds, ["important-date-2"]);
+  assert.deepEqual(calendar.boundaryImportantDateIds, ["important-date-3"]);
+  assert.equal(calendar.months[11].endDateExclusive, "2027-01-31");
+  for (let index = 1; index < 12; index++)
+    assert.equal(
+      calendar.months[index].startDate,
+      calendar.months[index - 1].endDateExclusive,
+    );
+  const leap = buildSolarReturnCalendar("2028-02-29");
+  assert.equal(leap.endDateExclusive, "2029-02-28");
+  assert.equal(leap.months[1].startDate, "2028-03-29");
+  assert.throws(() => buildSolarReturnCalendar("2026-02-30"));
+  assert.throws(() =>
+    buildSolarReturnCalendar("2026-01-31", [
+      { date: "2026-02-31", label: "Data impossível" },
+    ]),
   );
 });

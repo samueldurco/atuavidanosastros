@@ -11,6 +11,7 @@ import {
   type ReturnLocationInput,
 } from "@atv/domain";
 import { bodyLabels, zodiacPosition } from "./natal-calculators.ts";
+import { buildSolarReturnCalendar } from "./solar-return-calendar.ts";
 import {
   ProcessingError,
   validateCalculation,
@@ -18,7 +19,7 @@ import {
 } from "./product-processing.ts";
 
 export const solarReturnProductContract = Object.freeze({
-  version: "atv-solar-return-calculation/1.0.0",
+  version: "atv-solar-return-calculation/1.1.0",
   productId: "solar-return",
   status: "experimental",
   longitude: "geocentric-apparent-tropical-sun",
@@ -26,7 +27,7 @@ export const solarReturnProductContract = Object.freeze({
   location: "declared-birthday-city/timezone/coordinates",
   houses: "placidus-or-explicit-unavailable",
   interpretation: "not-produced",
-  monthlyTimeline: "not-produced",
+  monthlyTimeline: "civil-calendar-scaffold-only",
 });
 
 const dayMs = 86400000;
@@ -277,12 +278,16 @@ export function createSolarReturnCalculators(
         houses: structuredClone(chart.houses),
         natalProvenance: structuredClone(natal.provenance),
         returnProvenance: structuredClone(chart.provenance),
+        calendarScaffold: buildSolarReturnCalendar(
+          input.targetDate,
+          input.importantDates?.entries,
+        ),
         projection: solarReturnProductContract,
       },
       limits: [
         ...chart.provenance.warnings,
         "Cálculo experimental do instante e da carta do retorno; motor e precisão não homologados independentemente.",
-        "A cidade, as prioridades e as datas importantes são declaradas pela pessoa. Esses relatos não alteram a geometria; nenhuma previsão, interpretação, mandala editorial ou linha de 12 meses foi produzida.",
+        "A cidade, as prioridades e as datas importantes são declaradas pela pessoa. Esses relatos não alteram a geometria; a grade de 12 meses é apenas civil, sem previsão, interpretação ou mandala editorial.",
         "O retorno é uma igualdade de longitude solar geocêntrica aparente tropical; não é o horário civil de aniversário nem uma previsão de eventos.",
         ...(chart.houses.status === "not-applicable"
           ? [chart.houses.warning]

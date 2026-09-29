@@ -1,4 +1,4 @@
-# Revolução Solar — base de cálculo experimental 1.0
+# Revolução Solar — base de cálculo experimental 1.1
 
 `solar-return` conserva a entrega de catálogo web e PDF e o release bloqueado. Este contrato entrega somente a base local de E1; não aprova o motor, a interpretação nem a liberação.
 
@@ -11,7 +11,7 @@
 
 ## Processamento e fatos
 
-`atv-solar-return-calculation/1.0.0` usa o Sol natal tropical, geocêntrico e aparente da candidata Caelus. Busca uma mudança de sinal da diferença angular em até quatro dias de cada lado do aniversário civil em UTC e faz bissecção até um intervalo de um milissegundo. Recalcula a carta no instante encontrado com as coordenadas e o fuso declarados para o aniversário; o resíduo da longitude solar deve ser de no máximo `0.00002°`.
+`atv-solar-return-calculation/1.1.0` usa o Sol natal tropical, geocêntrico e aparente da candidata Caelus. Busca uma mudança de sinal da diferença angular em até quatro dias de cada lado do aniversário civil em UTC e faz bissecção até um intervalo de um milissegundo. Recalcula a carta no instante encontrado com as coordenadas e o fuso declarados para o aniversário; o resíduo da longitude solar deve ser de no máximo `0.00002°`. A versão 1.1 acrescenta somente a grade civil descrita abaixo; o algoritmo astronômico permanece o mesmo da versão 1.0.
 
 O snapshot experimental contém instante UTC e local, longitudes dos dez corpos, ângulos, casas Placidus quando disponíveis, proveniência natal e do retorno, resíduo, fatos calculados e contexto/cidade relatados. Em condições de Placidus indisponível, não publica Ascendente nem cúspides substitutos. A igualdade solar independe da cidade; a carta local e suas casas dependem dela. O processamento exige opt-in interno `experimentalSolarReturnBase: true` e nunca liga release, entitlement ou aprovação editorial.
 
@@ -27,6 +27,14 @@ O intake apresenta campos opcionais de data e rótulo e uma autorização separa
 
 O snapshot registra cada data como fato `reported` com fonte `input.importantDates.entries[n]`; não a apresenta como cálculo astronômico nem a usa para mudar a geometria do retorno. As datas não disparam mensagens ou alertas. A migração `20260929170000_solar_return_important_dates.sql` é aditiva e substitui apenas a função de pedido. Sua validação foi feita no banco local de teste; o ambiente hospedado ainda exige aplicação e verificação próprias.
 
+## Grade civil dos 12 meses (WU196)
+
+O snapshot experimental 1.1 inclui `data.calendarScaffold`, versão `atv-solar-return-calendar/1.0.0`. A grade parte de `targetDate`, o aniversário civil declarado, e cria 12 intervalos contíguos `[startDate, endDateExclusive)`. Cada fronteira usa o mesmo dia do mês de origem, limitado ao último dia do mês de destino; assim 31/01 passa por 28/02 (ou 29/02) e volta a 31/03. Para âncora em 29/02, o ciclo termina em 28/02 no ano seguinte. A grade não parte do instante astronômico do retorno nem atribui regência, evento ou previsão a qualquer mês.
+
+Cada data autorizada é vinculada pelo ID do seu fato `reported` a exatamente um intervalo. A data exatamente igual à fronteira final, admitida pela coleta inclusiva, fica em `boundaryImportantDateIds` e não é lançada artificialmente no mês 12. Sem datas declaradas, os 12 intervalos continuam presentes e suas listas de IDs ficam vazias. Rótulos permanecem nos fatos originais, sem duplicação na grade.
+
+Esta estrutura prepara a conferência de cobertura de E2, mas **não** é uma linha interpretativa mensal. A interpretação de cada mês ainda exige método editorial aprovado, evidência pertinente ao período, distinção entre geometria e relatos, revisão de utilidade e validação do modelo/prompt. Não há alegação de que a carta estática ou uma data informada prove um tema ou evento mensal.
+
 ## Limites e próximo aceite
 
-O motor ainda depende de gauntlet independente, licença e homologação. A base não produz interpretação, previsões, mandala editorial, linha de doze meses, áudios, check-ins, web/PDF final, renovação ou alertas. E1 permanece parcial até validar entrada real autorizada e o motor; E2–E5 mantêm gates próprios.
+O motor ainda depende de gauntlet independente, licença e homologação. A base não produz interpretação, previsões, mandala editorial, linha interpretativa de doze meses, áudios, check-ins, web/PDF final, renovação ou alertas. E1 permanece parcial até validar entrada real autorizada e o motor; E2–E5 mantêm gates próprios.
