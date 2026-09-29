@@ -48,7 +48,9 @@ try {
         ? "couple-dossier"
         : args[0] === "--experimental-horoscope"
           ? "horoscope"
-          : undefined;
+          : args[0] === "--experimental-week-reading"
+            ? "week-reading"
+            : undefined;
   if (experimentalProduct) args.shift();
   const comparison = args.length === 3 && args[0] === "--compare";
   const template = args.length === 2 && args[0] === "--review-template";

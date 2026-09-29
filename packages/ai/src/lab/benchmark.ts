@@ -6,10 +6,14 @@ import {
   HOROSCOPE_EDITORIAL_VERSION,
   horoscopeOutputLimits,
 } from "../horoscope.ts";
+import {
+  WEEK_READING_EDITORIAL_VERSION,
+  weekReadingOutputLimits,
+} from "../week-reading.ts";
 import { DATASET_VERSION, labCases } from "./dataset.ts";
 import type { LabCase } from "./dataset.ts";
 
-export const BENCHMARK_POLICY_VERSION = "atv-benchmark/1.3.0";
+export const BENCHMARK_POLICY_VERSION = "atv-benchmark/1.4.0";
 export interface CostEvidence {
   basis: "owner-confirmed-free-tier" | "provider-receipt";
   /** Opaque repository evidence ID, verified by the release operator; no raw receipts or secrets. */
@@ -43,7 +47,10 @@ export function evaluateSample(
         ...tierLimits[tier],
         ...(item.request.facts.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
           ? horoscopeOutputLimits
-          : {}),
+          : item.request.facts.editorialProfile ===
+              WEEK_READING_EDITORIAL_VERSION
+            ? weekReadingOutputLimits
+            : {}),
       }
     : null;
   // Freeze the JSON representation once so validation and review digests cannot observe different outputs.

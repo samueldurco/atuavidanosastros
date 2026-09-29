@@ -9,10 +9,12 @@ const product =
       ? "couple-dossier"
       : args[0] === "--experimental-horoscope"
         ? "horoscope"
-        : undefined;
+        : args[0] === "--experimental-week-reading"
+          ? "week-reading"
+          : undefined;
 if (args.length > 1 || (args.length === 1 && !product)) {
   process.stderr.write(
-    "usage: product-lab-corpus.mjs [--experimental-synastry | --experimental-couple-dossier | --experimental-horoscope]\n",
+    "usage: product-lab-corpus.mjs [--experimental-synastry | --experimental-couple-dossier | --experimental-horoscope | --experimental-week-reading]\n",
   );
   process.exitCode = 2;
 } else {

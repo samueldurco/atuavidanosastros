@@ -23,6 +23,7 @@ import {
 import { buildSynastryLabCorpus } from "./synastry-lab-cases.mjs";
 import { buildCoupleDossierLabCorpus } from "./couple-dossier-lab-cases.mjs";
 import { buildHoroscopeLabCorpus } from "./horoscope-lab-cases.mjs";
+import { buildWeekReadingLabCorpus } from "./week-reading-lab-cases.mjs";
 
 export const PRODUCT_CORPUS_VERSION = "atv-product-facts-synthetic/1.25.0";
 // Explicit frozen scope: newly added calculators must receive a deliberate corpus revision.
@@ -123,10 +124,12 @@ export function productCorpusInput(productId, category) {
 }
 
 /** Offline only. No provider, database, network, release, interpretation, review or promotion.
- * @param {{experimentalProduct?: 'synastry' | 'couple-dossier' | 'horoscope'}} [options]
+ * @param {{experimentalProduct?: 'synastry' | 'couple-dossier' | 'horoscope' | 'week-reading'}} [options]
  */
 export async function buildProductLabCorpus(options = {}) {
   if (options.experimentalProduct !== undefined) {
+    if (options.experimentalProduct === "week-reading")
+      return buildWeekReadingLabCorpus();
     if (options.experimentalProduct === "horoscope")
       return buildHoroscopeLabCorpus();
     if (options.experimentalProduct === "couple-dossier")
