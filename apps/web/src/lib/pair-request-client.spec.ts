@@ -32,7 +32,7 @@ const command = () => ({
 		sharing: false
 	}
 });
-function setup() {
+function setup(productId = 'pair-preview') {
 	const slot = `atv-create:${owner}:${productId}`;
 	const values = new Map<string, string>();
 	const storage = {
@@ -139,4 +139,53 @@ it('keeps UUID on unknown backend failure and refuses mismatched operation produ
 	expect(createWorkflowRequest({ ...s.options, productId: 'date-reading' }).inspect().mode).toBe(
 		'blocked'
 	);
+});
+
+it('sends Sinastria v2 context once and recovers only its UUID after lost acknowledgement', async () => {
+	const s = setup('synastry');
+	const input = {
+		...command(),
+		version: 'atv-pair-request/2',
+		productId: 'synastry',
+		context: '🌌'.repeat(600)
+	};
+	s.fetcher.mockImplementationOnce(async (url, init) => {
+		expect(url).toBe('/api/workflows/pair');
+		expect(JSON.parse(init?.body as string)).toEqual({ requestKey: key, input });
+		expect([...s.values]).toEqual([[s.slot, key]]);
+		throw new Error('lost acknowledgement');
+	});
+	expect((await s.client.perform(true, input)).mode).toBe('recover');
+	s.found();
+	expect((await createWorkflowRequest(s.options).perform(false)).href).toBe(
+		`/biblioteca/${library}`
+	);
+	expect(s.fetcher.mock.calls.map(([url]) => url)).toEqual([
+		'/api/workflows/pair',
+		'/api/workflows/recover',
+		`/api/workflows/${id}`
+	]);
+	expect(JSON.parse(s.fetcher.mock.calls[1][1]?.body as string)).toEqual({ requestKey: key });
+});
+it.each([
+	{ version: PAIR_REQUEST_VERSION },
+	{ context: 'x'.repeat(1201) },
+	{ context: '\ud800' },
+	{ context: '' },
+	{ partnerConsent: { ...command().partnerConsent, sharing: true } }
+])('refuses malformed Sinastria before generating recovery key %#', async (changes) => {
+	const s = setup('synastry');
+	expect(
+		(
+			await s.client.perform(true, {
+				...command(),
+				version: 'atv-pair-request/2',
+				productId: 'synastry',
+				...changes
+			})
+		).mode
+	).toBe('new');
+	expect(s.fetcher).not.toHaveBeenCalled();
+	expect(s.options.randomUUID).not.toHaveBeenCalled();
+	expect(s.values.size).toBe(0);
 });

@@ -1,9 +1,12 @@
 import type { BirthInput } from '@atv/domain';
+import { validReportedContext } from './reported-context';
 
 export const PAIR_REQUEST_VERSION = 'atv-pair-request/1';
+export const SYNASTRY_REQUEST_VERSION = 'atv-pair-request/2';
 export interface PairRequestInput {
-	version: typeof PAIR_REQUEST_VERSION;
-	productId: 'pair-preview';
+	version: typeof PAIR_REQUEST_VERSION | typeof SYNASTRY_REQUEST_VERSION;
+	productId: 'pair-preview' | 'synastry';
+	context?: string;
 	expectedRevision: number;
 	partner: BirthInput & { timePrecision: 'EXACT' };
 	consent: {
@@ -32,6 +35,8 @@ const text = (v: unknown, max: number): v is string =>
 const local = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?$/;
 const utc = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,3})?Z$/;
 export function parsePairRequestInput(v: unknown): PairRequestInput | null {
+	const synastry =
+		object(v) && v.version === SYNASTRY_REQUEST_VERSION && v.productId === 'synastry';
 	if (
 		!object(v) ||
 		!keys(v, [
@@ -40,10 +45,11 @@ export function parsePairRequestInput(v: unknown): PairRequestInput | null {
 			'expectedRevision',
 			'partner',
 			'consent',
-			'partnerConsent'
+			'partnerConsent',
+			...(synastry && Object.hasOwn(v, 'context') ? ['context'] : [])
 		]) ||
-		v.version !== PAIR_REQUEST_VERSION ||
-		v.productId !== 'pair-preview' ||
+		(!synastry && (v.version !== PAIR_REQUEST_VERSION || v.productId !== 'pair-preview')) ||
+		(Object.hasOwn(v, 'context') && (!synastry || !validReportedContext(v.context))) ||
 		typeof v.expectedRevision !== 'number' ||
 		!Number.isInteger(v.expectedRevision) ||
 		v.expectedRevision < 1 ||

@@ -84,7 +84,7 @@ export function createWorkflowRequest(options: {
 				!isUuid(operation.kind === 'reprocess' ? operation.runId : operation.ownerId) ||
 				(operation.kind === 'create-natal' && !natalProducts.includes(productId as NatalProduct)) ||
 				(operation.kind === 'create-date' && productId !== 'date-reading') ||
-				(operation.kind === 'create-pair' && productId !== 'pair-preview')
+				(operation.kind === 'create-pair' && !['pair-preview', 'synastry'].includes(productId))
 			)
 				return storageBlocked();
 			const key = storage.getItem(name);

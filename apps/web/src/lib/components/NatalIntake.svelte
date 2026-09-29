@@ -6,7 +6,7 @@
 	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
-	import { PAIR_REQUEST_VERSION } from '$lib/pair-request';
+	import { PAIR_REQUEST_VERSION, SYNASTRY_REQUEST_VERSION } from '$lib/pair-request';
 	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
 	import PartnerBirthFields from './PartnerBirthFields.svelte';
 	import type { OnboardingSnapshot } from '$lib/onboarding';
@@ -33,10 +33,13 @@
 	});
 	const product = $derived(workflowFor(productId));
 	const isDate = $derived(productId === 'date-reading');
-	const isPair = $derived(productId === 'pair-preview');
+	const isSynastry = $derived(productId === 'synastry');
+	const isPair = $derived(productId === 'pair-preview' || isSynastry);
 	const isCareer = $derived(productId === 'career-compass');
-	const acceptsContext = $derived(isCareer || isDate);
-	const contextId = $derived(isDate ? 'date-context' : 'career-context');
+	const acceptsContext = $derived(isCareer || isDate || isSynastry);
+	const contextId = $derived(
+		isSynastry ? 'synastry-context' : isDate ? 'date-context' : 'career-context'
+	);
 	const contextValid = $derived(
 		!acceptsContext || reportedContext === '' || validReportedContext(reportedContext)
 	);
@@ -128,7 +131,9 @@
 		busy = true;
 		const input = {
 			version: isPair
-				? PAIR_REQUEST_VERSION
+				? isSynastry
+					? SYNASTRY_REQUEST_VERSION
+					: PAIR_REQUEST_VERSION
 				: isDate
 					? DATE_CONTEXT_REQUEST_VERSION
 					: isCareer
@@ -316,9 +321,11 @@
 					{#if acceptsContext}
 						<Field
 							id={contextId}
-							label={isDate
-								? 'Contexto da consulta (opcional)'
-								: 'Contexto profissional (opcional)'}
+							label={isSynastry
+								? 'Contexto do vínculo (opcional)'
+								: isDate
+									? 'Contexto da consulta (opcional)'
+									: 'Contexto profissional (opcional)'}
 							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
 							error={!contextValid
 								? 'Escreva até 1.200 caracteres válidos ou deixe o campo vazio.'
@@ -347,13 +354,15 @@
 							required
 							bind:checked={consent}
 							aria-describedby="natal-retention"
-						/>{isPair
-							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
-							: isDate
-								? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
-								: isCareer
-									? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
-									: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+						/>{isSynastry
+							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas, o contexto que escolhi informar e os resultados deste pedido na minha conta.'
+							: isPair
+								? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
+								: isDate
+									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
+									: isCareer
+										? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
+										: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
@@ -405,7 +414,11 @@
 				<li>O motor valida e calcula os dados separadamente.</li>
 				<li>A interpretação depende de avaliação e liberação editorial.</li>
 			</ol>
-			{#if isPair}<p>
+			{#if isSynastry}<p>
+					A Sinastria ainda está em preparação. Sua leitura depende da validação do cálculo, da
+					política de aspectos e da revisão editorial. Não oferece pontuação de compatibilidade nem
+					afirma sentimentos, intenções ou destino de outra pessoa.
+				</p>{:else if isPair}<p>
 					A base do par é parcial e experimental: posições separadas de Lua, Vênus e Marte. Não
 					calcula aspectos entre mapas, casas ou pontuação de compatibilidade; não revela
 					sentimentos, gênero ou destino de ninguém.

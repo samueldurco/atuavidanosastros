@@ -150,7 +150,8 @@ beforeAll(async () => {
 		'20260924170000_product_request_recovery.sql',
 		'20260925160000_natal_product_requests.sql',
 		'20260925190000_date_product_requests.sql',
-		'20260925200000_pair_product_requests.sql'
+		'20260925200000_pair_product_requests.sql',
+		'20260929090000_synastry_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -472,6 +473,154 @@ it('deleting a run cascades private declarations', async () => {
 	expect((await counts()).receipts).toBe(0);
 });
 
+const synastry = (changes = {}) =>
+	request({ version: 'atv-pair-request/2', productId: 'synastry', ...changes });
+const enableSynastry = () =>
+	db.exec("update workflow_releases set enabled=true where product_id='synastry'");
+it('stores Sinastria with exact optional multibyte context and separate private consent lineage', async () => {
+	await save();
+	await enableSynastry();
+	const context = '界'.repeat(1200);
+	const body = synastry({ context });
+	expect(parsePairRequestInput(body.input)).toEqual(body.input);
+	const response = await pairRequestApi(event(body));
+	expect(response.status).toBe(202);
+	const { runId } = (await response.json()) as { runId: string };
+	const row = (
+		await db.query<{ input: unknown; state: string }>(
+			'select input,state from product_runs where id=$1',
+			[runId]
+		)
+	).rows[0];
+	const parsed = parseWorkflowInput(row.input);
+	expect(parsed).toMatchObject({
+		productId: 'synastry',
+		context,
+		birth,
+		consent: { partner: true, continuity: false }
+	});
+	expect(parsed?.partner).toEqual(
+		Object.fromEntries(Object.entries(partner).filter(([k]) => k !== 'timePrecision'))
+	);
+	expect(row.state).toBe('QUEUED');
+	expect(
+		(
+			await db.query<{ command: unknown; natal_version: number }>(
+				'select command,natal_version from pair_product_requests where run_id=$1',
+				[runId]
+			)
+		).rows[0]
+	).toEqual({ command: body.input, natal_version: 1 });
+	expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+	const absentId = await submit(synastry());
+	const absent = (
+		await db.query<{ input: Record<string, unknown> }>(
+			'select input from product_runs where id=$1',
+			[absentId]
+		)
+	).rows[0].input;
+	expect(Object.hasOwn(absent, 'context')).toBe(false);
+});
+it('rejects Sinastria version, extra fields, context and consent mismatches before atomic persistence', async () => {
+	await save();
+	await enableSynastry();
+	for (const changes of [
+		{ version: 'atv-pair-request/1' },
+		{ productId: 'pair-preview' },
+		{ productId: 'couple-dossier' },
+		{ context: null },
+		{ context: '' },
+		{ context: ' \t\n' },
+		{ context: 'x'.repeat(1201) },
+		{ context: '🌌'.repeat(601) },
+		{ context: 'bad\u0000' },
+		{ context: 'bad\u0085' },
+		{ context: '\ud800' },
+		{ ownerId: other },
+		{ birth },
+		{ sharing: true },
+		{ partnerConsent: { ...input().partnerConsent, sharing: true } },
+		{ consent: { ...input().consent, continuity: true } },
+		{ partner: { ...partner, timePrecision: 'UNKNOWN' } }
+	]) {
+		const body = synastry(changes);
+		expect(parsePairRequestInput(body.input)).toBeNull();
+		expect((await pairRequestApi(event(body))).status).toBe(400);
+		await expect(submit(body)).rejects.toThrow();
+	}
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+it('preserves Sinastria immutable context on retry after forgetting and conflicts on changed context or product', async () => {
+	await save();
+	await enableSynastry();
+	await enable();
+	const body = synastry({ context: 'Um relato meu, sem inferir sentimentos.' });
+	const id = await submit(body);
+	await forget(1);
+	await db.exec("update workflow_releases set enabled=false where product_id='synastry'");
+	expect(await submit(body)).toBe(id);
+	await expect(
+		submit({
+			...body,
+			input: input({
+				version: 'atv-pair-request/2',
+				productId: 'synastry',
+				context: 'Relato alterado'
+			})
+		})
+	).rejects.toThrow('idempotency_conflict');
+	await expect(submit({ ...request(), requestKey: body.requestKey })).rejects.toThrow(
+		'idempotency_conflict'
+	);
+	expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+});
+it('keeps Sinastria disabled and owner-associated receipts inaccessible to callers', async () => {
+	await save();
+	expect((await pairRequestApi(event(synastry()))).status).toBe(409);
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+	await enableSynastry();
+	const id = await submit(synastry({ context: 'Não autoriza compartilhamento.' }));
+	for (const user of [owner, other])
+		await expect(
+			asRole(db, 'authenticated', user, () =>
+				db.query('select command from pair_product_requests where run_id=$1', [id])
+			)
+		).rejects.toThrow('permission denied');
+	for (const role of ['anon', 'service_role'])
+		await expect(submit(synastry(), owner, role)).rejects.toThrow('permission denied');
+	const gates = (
+		await db.query<{ engine_approved: boolean }>(
+			'select engine_approved from workflow_releases where product_id=$1',
+			['synastry']
+		)
+	).rows[0];
+	expect(gates.engine_approved).toBe(false);
+});
+it('forward-fix disables Sinastria writes, preserves read recovery and restores Preview do Par writes', async () => {
+	await save();
+	await enableSynastry();
+	await enable();
+	const body = synastry({ context: 'Relato preservado.' });
+	const id = await submit(body);
+	await db.exec(await file('supabase/forward-fixes/disable_synastry_product_requests.sql'));
+	await expect(submit(synastry())).rejects.toThrow('invalid_input');
+	// Existing Sinastria receipts remain readable through the shared read-only recovery API.
+	const recovered = await asRole(db, 'authenticated', owner, () =>
+		db.query<{ value: unknown }>('select recover_product_request($1) value', [body.requestKey])
+	);
+	expect(recovered.rows[0].value).toMatchObject({ runId: id, productId: 'synastry' });
+	expect(await submit(request())).toBeTypeOf('string');
+	expect(
+		(
+			await db.query<{ n: number }>(
+				'select count(*)::int n from pair_product_requests where run_id=$1',
+				[id]
+			)
+		).rows[0].n
+	).toBe(1);
+	await db.exec(await file('supabase/migrations/20260929090000_synastry_product_requests.sql'));
+	expect(await submit(body)).toBe(id);
+});
 it('forward-fix revokes new bridge calls while preserving run/receipt and read recovery', async () => {
 	await save();
 	await enable();
