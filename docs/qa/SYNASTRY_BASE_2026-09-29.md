@@ -1,0 +1,13 @@
+# Sinastria — coerência da base persistida — WU157
+
+RUN_ID: `ATV-20260902-170644Z-01A0630F`. Data: 29/09/2026. Produto `synastry`, dependência direta do marco E2. Contrato: [synastry-calculation.md](../contracts/synastry-calculation.md).
+
+`validSynastryProjection` inspeciona a projeção original antes que a validação genérica remova metadados de fatos. Valida vinte posições canônicas, proveniência independente de A/B, consentimento, limitações e 120/121 fatos completos. Recompõe geometria e incerteza dos cem pares a partir da política e das coordenadas retidas. Campos extras, omissões ou alterações de evidência falham; uma política malformada retorna bloqueio sem exceção exposta. Preparação versionada `atv-product-editorial-evidence/1.28.0`.
+
+Quatro testes focais passaram (`test-results/wu157-worker-focal.log`), cobrindo contexto ausente/presente/máximo, cem ausências nominais desconhecidas, mutações de todos os grupos de evidência, ambas as proveniências, políticas inválidas e irrelevância da ordem das chaves JSON. Um caso demonstra que a normalização genérica removeria um campo extra `approved`, enquanto a preparação o rejeita na base original. A checagem de tipos do Worker passou (`test-results/wu157-worker-check.log`).
+
+A primeira suíte completa identificou dois testes genéricos de limite de transporte que usavam uma fixture de dois fatos com o ID `synastry`. O novo guard rejeitou corretamente essa falsa projeção. A fixture passou a usar `couple-dossier`, ainda sem cálculo configurado e explicitamente sintética; os mesmos limites máximos de claims/relações/sínteses/bytes continuam sendo testados. A suíte final passou com 146 testes, e os testes de corpus/benchmark passaram com 63 testes, registrados separadamente em `test-results/wu157-worker-test-final.log` e `test-results/wu157-root-test.log`.
+
+Formatação, stage exato, diff e segredos são verificados antes do commit em `test-results/wu157-format-check.log`, `test-results/wu157-stage.json` e `test-results/wu157-secrets.log`. Sem alteração de UI ou registro produtivo. Trabalho paralelo preservado.
+
+Uma base coerente continua bloqueada com `facts_not_representable`: o contrato genérico da IA admite até 40 fatos/source160, insuficiente para os 120/121 fatos/source300 do cálculo. Próxima alteração: perfil específico e orçamento finito de prompt para Sinastria, sem omitir pares. Aprovação da política, precisão/motor, interpretação/revisão legítimas e fluxo web/PDF/hospedado permanecem requisitos abertos. Os testes não autenticam a origem nem homologam conteúdo. Gates off, compartilhamento não autorizado e custo automático R$0.
