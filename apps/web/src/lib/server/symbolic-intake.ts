@@ -14,6 +14,7 @@ export async function readIntakeAccess(
 			!natalProducts.includes(productId as NatalProduct) &&
 			productId !== 'date-reading' &&
 			productId !== 'week-reading' &&
+			productId !== 'solar-return' &&
 			productId !== 'pair-preview' &&
 			productId !== 'synastry' &&
 			productId !== 'couple-dossier')

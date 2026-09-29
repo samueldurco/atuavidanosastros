@@ -85,7 +85,8 @@ it.each([
 	'date-reading',
 	'pair-preview',
 	'synastry',
-	'couple-dossier'
+	'couple-dossier',
+	'solar-return'
 ])('loads only minimal access for profile product %s', async (productId) => {
 	const e = event({ id: owner }, productId);
 	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
@@ -93,16 +94,20 @@ it.each([
 		p_product_id: productId
 	});
 });
-it.each(['week-reading', 'date-reading', 'pair-preview', 'synastry', 'couple-dossier'])(
-	'requires authentication before loading %s access',
-	async (productId) => {
-		const e = event(null, productId);
-		await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
-		expect(e.m.rpc).not.toHaveBeenCalled();
-	}
-);
+it.each([
+	'week-reading',
+	'date-reading',
+	'pair-preview',
+	'synastry',
+	'couple-dossier',
+	'solar-return'
+])('requires authentication before loading %s access', async (productId) => {
+	const e = event(null, productId);
+	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
+	expect(e.m.rpc).not.toHaveBeenCalled();
+});
 it('does not imply availability of broader cycle products', async () => {
-	for (const product of ['week-ahead', 'solar-return']) {
+	for (const product of ['week-ahead']) {
 		const e = event({ id: owner }, product);
 		await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 		expect(e.m.rpc).not.toHaveBeenCalled();

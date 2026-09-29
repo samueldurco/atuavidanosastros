@@ -16,6 +16,7 @@ export const load: PageServerLoad = async ({ parent, params, locals, setHeaders 
 		!natalProducts.includes(params.productId as NatalProduct) &&
 		params.productId !== 'date-reading' &&
 		params.productId !== 'week-reading' &&
+		params.productId !== 'solar-return' &&
 		params.productId !== 'horoscope' &&
 		params.productId !== 'pair-preview' &&
 		params.productId !== 'synastry' &&

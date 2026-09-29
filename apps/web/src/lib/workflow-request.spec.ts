@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { WORKFLOW_VERSION } from '@atv/domain';
 import { createWorkflowRequest } from './workflow-request';
+import { SOLAR_RETURN_REQUEST_VERSION } from './solar-return-request';
 
 const owner = '20000000-0000-4000-8000-000000000001';
 const id = '20000000-0000-4000-8000-000000000002';
@@ -64,6 +65,52 @@ function setup(previous?: string) {
 function found(s: ReturnType<typeof setup>, root = run) {
 	s.fetcher.mockResolvedValueOnce(json({ request })).mockResolvedValueOnce(json({ run: root }));
 }
+
+it('routes the private Solar Return command and forgets a verified release refusal', async () => {
+	const values = new Map<string, string>();
+	const storage = {
+		getItem: (name: string) => values.get(name) ?? null,
+		setItem: (name: string, value: string) => {
+			values.set(name, value);
+		},
+		removeItem: (name: string) => {
+			values.delete(name);
+		}
+	};
+	const fetcher = vi
+		.fn<typeof fetch>()
+		.mockResolvedValue(json({ error: 'workflow_unreleased' }, 409));
+	const client = createWorkflowRequest({
+		operation: { kind: 'create-solar-return', ownerId: owner },
+		productId: 'solar-return',
+		storage,
+		fetch: fetcher,
+		randomUUID: () => key
+	});
+	const solarInput = {
+		version: SOLAR_RETURN_REQUEST_VERSION,
+		productId: 'solar-return',
+		expectedRevision: 1,
+		returnYear: 2027,
+		targetDate: '2027-02-28',
+		returnLocation: {
+			city: 'Rio de Janeiro',
+			timezone: 'America/Sao_Paulo',
+			latitude: -22.9,
+			longitude: -43.2
+		},
+		consent
+	};
+	expect((await client.perform(true, solarInput)).message).toBe(
+		'Este produto ainda não está liberado.'
+	);
+	expect(fetcher.mock.calls[0][0]).toBe('/api/workflows/solar-return');
+	expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({
+		requestKey: key,
+		input: solarInput
+	});
+	expect(values.size).toBe(0);
+});
 
 describe('first submission recovery without replay or personal browser persistence', () => {
 	it('saves only a UUID before the bounded POST and requires a root reader before linking', async () => {

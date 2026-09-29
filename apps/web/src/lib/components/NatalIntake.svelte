@@ -13,6 +13,12 @@
 		validWeekTimezone,
 		validWeekTheme
 	} from '$lib/week-request';
+	import {
+		SOLAR_RETURN_REQUEST_VERSION,
+		solarTargetDate,
+		validSolarCity,
+		validSolarCoordinateText
+	} from '$lib/solar-return-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import {
 		PAIR_REQUEST_VERSION,
@@ -37,6 +43,11 @@
 	let targetDate = $state('');
 	let weekTimezone = $state('');
 	let weekTheme = $state('');
+	let solarYear = $state('');
+	let solarCity = $state('');
+	let solarTimezone = $state('');
+	let solarLatitude = $state('');
+	let solarLongitude = $state('');
 	let reportedContext = $state('');
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
@@ -49,24 +60,28 @@
 	const isDate = $derived(productId === 'date-reading');
 	const isHoroscope = $derived(productId === 'horoscope');
 	const isWeek = $derived(productId === 'week-reading');
+	const isSolar = $derived(productId === 'solar-return');
 	const isTemporal = $derived(isDate || isHoroscope || isWeek);
+	const isCycle = $derived(isTemporal || isSolar);
 	const isSynastry = $derived(productId === 'synastry');
 	const isDossier = $derived(productId === 'couple-dossier');
 	const isContextualPair = $derived(isSynastry || isDossier);
 	const isPair = $derived(productId === 'pair-preview' || isContextualPair);
 	const isCareer = $derived(productId === 'career-compass');
-	const acceptsContext = $derived(isCareer || isTemporal || isContextualPair);
+	const acceptsContext = $derived(isCareer || isCycle || isContextualPair);
 	const contextId = $derived(
 		isDossier
 			? 'couple-dossier-context'
 			: isSynastry
 				? 'synastry-context'
-				: isTemporal
-					? isWeek
-						? 'week-context'
-						: isHoroscope
-							? 'horoscope-context'
-							: 'date-context'
+				: isCycle
+					? isSolar
+						? 'solar-context'
+						: isWeek
+							? 'week-context'
+							: isHoroscope
+								? 'horoscope-context'
+								: 'date-context'
 					: 'career-context'
 	);
 	const contextValid = $derived(
@@ -78,6 +93,21 @@
 	const contextLimit = $derived(isWeek ? WEEK_CONTEXT_LIMIT : REPORTED_CONTEXT_LIMIT);
 	const weekPreferencesValid = $derived(
 		!isWeek || (validWeekTimezone(weekTimezone) && validWeekTheme(weekTheme))
+	);
+	const solarDate = $derived(
+		/^\d{4}$/.test(solarYear) && snapshot?.natal
+			? solarTargetDate(snapshot.natal.localDateTime, Number(solarYear))
+			: null
+	);
+	const solarValid = $derived(
+		!isSolar ||
+			(solarDate !== null &&
+				Number(solarYear) >= Math.max(1901, Number(snapshot?.natal?.localDateTime.slice(0, 4))) &&
+				Number(solarYear) <= 2099 &&
+				validSolarCity(solarCity) &&
+				validWeekTimezone(solarTimezone) &&
+				validSolarCoordinateText(solarLatitude, 90) &&
+				validSolarCoordinateText(solarLongitude, 180))
 	);
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
@@ -111,13 +141,15 @@
 				operation: {
 					kind: isPair
 						? 'create-pair'
-						: isWeek
-							? 'create-week'
-							: isHoroscope
-								? 'create-horoscope'
-								: isTemporal
-									? 'create-date'
-									: 'create-natal',
+						: isSolar
+							? 'create-solar-return'
+							: isWeek
+								? 'create-week'
+								: isHoroscope
+									? 'create-horoscope'
+									: isTemporal
+										? 'create-date'
+										: 'create-natal',
 					ownerId
 				},
 				productId,
@@ -172,30 +204,45 @@
 			!dateValid ||
 			!pairValid ||
 			!weekPreferencesValid ||
+			!solarValid ||
 			!contextValid
 		)
 			return;
 		busy = true;
 		const input = {
-			version: isPair
-				? isDossier
-					? COUPLE_DOSSIER_REQUEST_VERSION
-					: isSynastry
-						? SYNASTRY_REQUEST_VERSION
-						: PAIR_REQUEST_VERSION
-				: isTemporal
-					? isWeek
-						? WEEK_PREFERENCES_REQUEST_VERSION
-						: isHoroscope
-							? HOROSCOPE_REQUEST_VERSION
-							: DATE_CONTEXT_REQUEST_VERSION
-					: isCareer
-						? CAREER_REQUEST_VERSION
-						: NATAL_REQUEST_VERSION,
+			version: isSolar
+				? SOLAR_RETURN_REQUEST_VERSION
+				: isPair
+					? isDossier
+						? COUPLE_DOSSIER_REQUEST_VERSION
+						: isSynastry
+							? SYNASTRY_REQUEST_VERSION
+							: PAIR_REQUEST_VERSION
+					: isTemporal
+						? isWeek
+							? WEEK_PREFERENCES_REQUEST_VERSION
+							: isHoroscope
+								? HOROSCOPE_REQUEST_VERSION
+								: DATE_CONTEXT_REQUEST_VERSION
+						: isCareer
+							? CAREER_REQUEST_VERSION
+							: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
 			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),
 			...(isTemporal ? { targetDate } : {}),
+			...(isSolar
+				? {
+						returnYear: Number(solarYear),
+						targetDate: solarDate,
+						returnLocation: {
+							city: solarCity,
+							timezone: solarTimezone,
+							latitude: Number(solarLatitude),
+							longitude: Number(solarLongitude)
+						}
+					}
+				: {}),
 			...(isWeek ? { timezone: weekTimezone, theme: weekTheme } : {}),
 			...(isPair
 				? {
@@ -220,6 +267,11 @@
 		targetDate = '';
 		weekTimezone = '';
 		weekTheme = '';
+		solarYear = '';
+		solarCity = '';
+		solarTimezone = '';
+		solarLatitude = '';
+		solarLongitude = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
 		snapshot = null;
@@ -242,6 +294,11 @@
 		targetDate = '';
 		weekTimezone = '';
 		weekTheme = '';
+		solarYear = '';
+		solarCity = '';
+		solarTimezone = '';
+		solarLatitude = '';
+		solarLongitude = '';
 		partnerForm = emptyPartnerForm();
 		resetConsents();
 		snapshot = null;
@@ -250,14 +307,14 @@
 
 <section
 	class="intake"
-	data-stitch={isTemporal || isPair ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
+	data-stitch={isCycle || isPair ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
 	aria-labelledby="natal-product-title"
 >
 	<header>
 		<p class="eyebrow">
 			{isPair
 				? 'Amor & Relações'
-				: isTemporal
+				: isCycle
 					? 'Ciclos & Tempo'
 					: isCareer
 						? 'Propósito & Prosperidade'
@@ -267,10 +324,12 @@
 		<p class="lead">
 			{isPair
 				? 'Duas origens, dados separados e limites claros.'
-				: isTemporal
-					? isWeek
-						? 'Sete datas consecutivas a partir do dia que você escolher.'
-						: 'Uma data escolhida por você, com o método à vista.'
+				: isCycle
+					? isSolar
+						? 'Um ano escolhido por você, com cidade e localização do aniversário declaradas.'
+						: isWeek
+							? 'Sete datas consecutivas a partir do dia que você escolher.'
+							: 'Uma data escolhida por você, com o método à vista.'
 					: isCareer
 						? 'Uma base natal para reflexão sobre carreira, sem prescrição de profissão.'
 						: 'Seu céu começa nos dados que você escolheu guardar.'}
@@ -324,8 +383,10 @@
 					<legend
 						>{isPair
 							? '2. Dados da outra pessoa e autorizações'
-							: isTemporal
-								? '2. Escolha a data e autorize'
+							: isCycle
+								? isSolar
+									? '2. Ano, cidade do aniversário e autorização'
+									: '2. Escolha a data e autorize'
 								: isCareer
 									? '2. Seu contexto e sua autorização'
 									: '2. Autorize este pedido'}</legend
@@ -382,6 +443,107 @@
 							{/snippet}
 						</Field>
 					{/if}
+					{#if isSolar}
+						<Field
+							id="solar-year"
+							label="Ano da revolução solar"
+							help="De 1901 a 2099, sem anteceder seu nascimento. A data de referência será derivada do aniversário civil do perfil conferido; em ano não bissexto, 29/02 usa 28/02."
+							error={solarYear && !solarValid ? 'Revise o ano e os dados da cidade.' : undefined}
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="solar-year"
+									type="text"
+									inputmode="numeric"
+									pattern="[0-9]{4}"
+									required
+									maxlength="4"
+									autocomplete="off"
+									bind:value={solarYear}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+								/>
+							{/snippet}
+						</Field>
+						{#if solarDate}<p class="privacy">Data de referência derivada: {solarDate}.</p>{/if}
+						<Field
+							id="solar-city"
+							label="Cidade do aniversário"
+							help="Informe a cidade em que estará no aniversário deste ano. Não usamos a cidade do nascimento como localização atual."
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="solar-city"
+									type="text"
+									required
+									maxlength="120"
+									autocomplete="off"
+									bind:value={solarCity}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+								/>
+							{/snippet}
+						</Field>
+						<Field
+							id="solar-timezone"
+							label="Fuso da cidade do aniversário"
+							help="Informe o fuso IANA da cidade, por exemplo America/Sao_Paulo, ou UTC. Ele pertence a este pedido e não altera o perfil natal."
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="solar-timezone"
+									type="text"
+									required
+									maxlength="64"
+									autocomplete="off"
+									spellcheck="false"
+									bind:value={solarTimezone}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+								/>
+							{/snippet}
+						</Field>
+						<Field
+							id="solar-latitude"
+							label="Latitude da cidade"
+							help="Coordenada decimal declarada, de -90 a 90. Confira a localização antes de autorizar o pedido."
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="solar-latitude"
+									type="text"
+									inputmode="decimal"
+									required
+									autocomplete="off"
+									bind:value={solarLatitude}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+								/>
+							{/snippet}
+						</Field>
+						<Field
+							id="solar-longitude"
+							label="Longitude da cidade"
+							help="Coordenada decimal declarada, de -180 a 180. A fonte do pedido será registrada como declaração manual."
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="solar-longitude"
+									type="text"
+									inputmode="decimal"
+									required
+									autocomplete="off"
+									bind:value={solarLongitude}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+								/>
+							{/snippet}
+						</Field>
+						<p class="privacy">
+							A base local de cálculo é experimental. Cidade, fuso e coordenadas devem corresponder
+							ao mesmo local. Nenhuma leitura ou PDF está liberado.
+						</p>
+					{/if}
 					{#if isWeek}
 						<Field
 							id="week-timezone"
@@ -432,7 +594,7 @@
 							id={contextId}
 							label={isContextualPair
 								? 'Contexto do vínculo (opcional)'
-								: isTemporal
+								: isCycle
 									? 'Contexto da consulta (opcional)'
 									: 'Contexto profissional (opcional)'}
 							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
@@ -469,11 +631,13 @@
 								? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
 								: isWeek
 									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do fuso atual e tema que declarei, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
-									: isTemporal
-										? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
-										: isCareer
-											? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
-											: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+									: isSolar
+										? 'Autorizo guardar uma cópia dos dados natais conferidos, do ano, da cidade, do fuso e das coordenadas que declarei para o aniversário, do contexto opcional e dos resultados deste pedido na minha conta.'
+										: isTemporal
+											? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
+											: isCareer
+												? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
+												: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
@@ -488,6 +652,7 @@
 							!dateValid ||
 							!pairValid ||
 							!contextValid ||
+							!solarValid ||
 							!weekPreferencesValid}>Criar pedido</Button
 					>
 				</fieldset>
@@ -522,8 +687,10 @@
 				<li>
 					O pedido guarda uma cópia imutável do perfil conferido{isPair
 						? ' e dos dados da outra pessoa'
-						: isTemporal
-							? ' e da data escolhida'
+						: isCycle
+							? isSolar
+								? ' e da cidade do aniversário declarada'
+								: ' e da data escolhida'
 							: ''}.
 				</li>
 				<li>O motor valida e calcula os dados separadamente.</li>
@@ -549,6 +716,12 @@
 					atual e o tema que você informar serão usados como contexto declarado. Esta base não
 					calcula dias locais completos nem recebe datas importantes, calendário ou lembretes. Não
 					autoriza alertas nem continuidade automática ATV+.
+				</p>{/if}
+			{#if isSolar}<p>
+					A Revolução Solar está em preparação. O cálculo local busca o retorno do Sol natal, mas a
+					precisão do motor, a carta da cidade declarada e a interpretação ainda exigem homologação.
+					O ano e a cidade escolhidos não autorizam acompanhamento anual, alertas nem continuidade
+					automática ATV+.
 				</p>{/if}
 			{#if isHoroscope}<p>
 					O Horóscopo personalizado está em preparação. Os temas de amor, trabalho, ritmo e atenção
@@ -654,7 +827,12 @@
 	}
 	input[type='date'],
 	#week-timezone,
-	#week-theme {
+	#week-theme,
+	#solar-year,
+	#solar-city,
+	#solar-timezone,
+	#solar-latitude,
+	#solar-longitude {
 		box-sizing: border-box;
 		width: 100%;
 		min-width: 0;
