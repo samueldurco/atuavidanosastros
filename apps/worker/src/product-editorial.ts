@@ -6,10 +6,10 @@ import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, t
   type Capability, type FactsEnvelope, type Tier, type ScoredReview, type Finding } from '@atv/ai';
 import { validateCalculation } from './product-processing.ts';
 import { validCareerCompassProjection } from './purpose-calculators.ts';
-import { validDailyCardProjection, validTarotFocusProjection, validTarotYesNoProjection } from './symbolic-calculators.ts';
+import { validDailyCardProjection, validTarotFocusProjection, validTarotYesNoProjection, validThreeQuestionsProjection } from './symbolic-calculators.ts';
 import { inspectAscendantProjection, inspectBirthChartProjection, inspectMidheavenProjection, inspectThreePillarsProjection } from './natal-calculators.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.17.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.18.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -43,6 +43,8 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts)) return { status: 'blocked', reason: 'facts_not_representable' };
   if (!hasInterpretiveBasis(facts)) return { status: 'blocked', reason: 'insufficient_facts' };
+  if (productId === 'three-questions' && !validThreeQuestionsProjection(calculation))
+    return { status: 'blocked', reason: 'calculation_invalid' };
   if (productId === 'tarot-yes-no') {
     if (!validTarotYesNoProjection(calculation)) return { status: 'blocked', reason: 'calculation_invalid' };
     facts.editorialProfile = TAROT_YES_NO_EDITORIAL_VERSION;

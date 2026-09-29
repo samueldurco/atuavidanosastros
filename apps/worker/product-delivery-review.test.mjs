@@ -182,7 +182,6 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
-    (d) => d.calculation.limits.push("Outro limite da política candidata."),
     (d) =>
       (d.calculation.facts.find((f) => f.id === "tarot-context").display =
         "Outro contexto consentido"),
@@ -198,6 +197,7 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     assert.equal("content" in result, false);
   }
   for (const mutate of [
+    (d) => d.calculation.limits.push("Outro limite da política candidata."),
     (d) => (d.productId = "tarot-yes-no"),
     (d) => (d.calculation.version = ""),
     (d) => (d.calculation.kind = "dream"),

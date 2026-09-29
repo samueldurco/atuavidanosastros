@@ -22,6 +22,8 @@ State progression is QUEUED → CALCULATED → AWAITING_EDITORIAL → READY. Pen
 
 `createSymbolicCalculators()` registers daily-card, three-questions, dream-reading and dream-journal with the portable processor. This is not hosted runtime wiring or a release flag. Tarot snapshots identify the candidate deck, algorithm and spread versions. A server-created UUID seeds SHA-256 counter words; rejection sampling and partial Fisher–Yates draw unique cards, independent of question text. One upright card per question is a candidate policy requiring editorial review. Only new requests draw; reprocessing preserves the saved snapshot.
 
+WU141 validates the persisted Três Perguntas projection before editorial work: three unique canonical cards, ordered question/card pairs, exact versions and provenance, optional reported context and unchanged candidate limits. Preparation 1.18.0 binds this rule to the review digest. [Product contract](three-questions-calculation.md) and [local evidence](../qa/THREE_QUESTIONS_BASE_2026-09-29.md) preserve the distinction between local coherence, legitimate editorial approval and hosted acceptance.
+
 Dream snapshots keep reported narrative, emotions, associations and context distinct from interpretations. No universal symbol meaning, inferred emotion, clinical diagnosis or recurrence is generated. Continuity consent is recorded, but historyLoaded and recurrenceAssessed remain false. All four adapters stop before editorial publication and retain the empty promotion registry. See `docs/qa/SYMBOLIC_CALCULATORS_2026-09-14.md` for local verification and limits.
 
 ### Question Tarot products — WU-074
