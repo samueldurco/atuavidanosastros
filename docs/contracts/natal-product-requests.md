@@ -1,6 +1,6 @@
-# Natal profile to product — atv-natal-request/1 and career-only /2
+# Natal profile to product — atv-natal-request/1, /2 and /3
 
-Local implementation only. Five profile-backed partial bases: birth-chart, three-pillars, ascendant, midheaven and career-compass. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
+Local implementation only. Six profile-backed partial bases: birth-chart, three-pillars, ascendant, midheaven, career-compass and purpose-career. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
 
 ## Command and atomic snapshot
 
@@ -45,3 +45,11 @@ The career intake sends v2, omits an empty field, resets consent when the draft 
 The calculator emits context only as `kind: reported`, source `input.context`; it cannot alter MC geometry or become an astrological finding. Pending Library/recovery responses and metrics do not expose the report. Reprocessing uses the original snapshot, not new profile data or a new report. No model, prompt promotion, provider call or artifact release is added.
 
 `supabase/forward-fixes/disable_career_compass_context.sql` restores the five-product v1 command. It refuses all v2 writes, including idempotent command retries, but preserves runs, receipts and read-only recovery. Reapplying migration 100 restores exact v2 idempotency even after release closure; new keys still fail closed. This is local synthetic evidence, not a hosted migration or concurrency certification.
+
+## Mapa de Propósito & Carreira intake (WU205)
+
+Migration `20260929210000_purpose_career_context.sql` preserves v1 for the five prior products and v2 exclusively for `career-compass`. It adds `atv-natal-request/3` exclusively for `purpose-career`, with the same four required fields and an optional professional `context` under the v2 size, Unicode and control-character boundaries. Purpose cannot use v1 or v2. No caller-supplied birth, owner, profile version or precision is accepted. The private RPC still takes the current exact, consented profile under its lock and delegates release, entitlement and quota to `request_product_run`.
+
+`/biblioteca/nova/purpose-career` uses the existing authenticated natal intake. It shows the saved profile, collects separate product consent and an optional first-person professional report, then sends v3. The report is retained exactly in the immutable run input and private command receipt; it is not added to the natal profile or ATV+ memory. The displayed calculation remains a partial experimental base, not a reading or career prescription. A local synthetic test may temporarily set a free access policy to prove the transport; the paid entitlement gate is separately tested and no live release is enabled.
+
+`supabase/forward-fixes/disable_purpose_career_context.sql` restores the v2 function, refusing v3 writes and same-key mutation retries while leaving old runs, receipts and read-only recovery intact. Reapplying the v3 migration restores exact idempotent retries, including after release closure; new keys still fail closed. Local PGlite and web vertical tests cover this behavior. Hosted migration, identity, concurrency, retention review and release remain pending.

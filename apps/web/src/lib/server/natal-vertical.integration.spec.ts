@@ -17,6 +17,7 @@ import { createProductPublisher } from '../../../../worker/src/product-publicati
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
 import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
+import { createPurposeCareerCalculators } from '../../../../worker/src/purpose-career-calculators';
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
 import { createHoroscopeCalculators } from '../../../../worker/src/horoscope-calculators';
@@ -136,7 +137,8 @@ beforeAll(async () => {
 		'20260928190000_date_reading_context.sql',
 		'20260929090000_synastry_product_requests.sql',
 		'20260929100000_couple_dossier_product_requests.sql',
-		'20260929110000_horoscope_product_requests.sql'
+		'20260929110000_horoscope_product_requests.sql',
+		'20260929210000_purpose_career_context.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -329,9 +331,13 @@ async function command(productId: string, date = targetDate, pairBirth = partner
 				? 'atv-date-request/2'
 				: productId === 'career-compass'
 					? 'atv-natal-request/2'
-					: 'atv-natal-request/1',
+					: productId === 'purpose-career'
+						? 'atv-natal-request/3'
+						: 'atv-natal-request/1',
 		productId,
-		...(productId === 'career-compass' ? { context: careerContext } : {}),
+		...(productId === 'career-compass' || productId === 'purpose-career'
+			? { context: careerContext }
+			: {}),
 		...(productId === 'synastry' ? { context: synastryContext } : {}),
 		...(productId === 'couple-dossier' ? { context: dossierContext } : {}),
 		...(productId === 'date-reading' ? { targetDate: date, context: dateContext } : {}),
@@ -700,6 +706,7 @@ async function process(productId: string) {
 	const metrics: unknown[] = [];
 	const processor = createProductProcessor(workerRpc, {
 		enabledProducts: [productId],
+		...(productId === 'purpose-career' ? { experimentalPurposeCareerBase: true as const } : {}),
 		...(productId === 'synastry' ? { experimentalSynastryPolicy: synastryPolicy } : {}),
 		...(productId === 'couple-dossier' ? { experimentalCoupleDossierPolicy: dossierPolicy } : {}),
 		...(productId === 'horoscope' ? { experimentalHoroscopePolicy: horoscopePolicy } : {}),
@@ -959,7 +966,9 @@ it.each(profileProducts)(
 			version: 'atv-workflow/1.0.0',
 			productId,
 			birth,
-			...(productId === 'career-compass' ? { context: careerContext } : {}),
+			...(productId === 'career-compass' || productId === 'purpose-career'
+				? { context: careerContext }
+				: {}),
 			...(productId === 'synastry' ? { context: synastryContext } : {}),
 			...(productId === 'couple-dossier' ? { context: dossierContext } : {}),
 			consent: { ...consent, partner: isPair(productId) },
@@ -983,7 +992,9 @@ it.each(profileProducts)(
 						? createContextCalculators()
 						: productId === 'career-compass'
 							? createPurposeCalculators()
-							: createNatalCalculators();
+							: productId === 'purpose-career'
+								? createPurposeCareerCalculators()
+								: createNatalCalculators();
 		const expected = await calculators[productId](run.input, {
 			signal: new AbortController().signal,
 			runId: run.id
@@ -1100,6 +1111,7 @@ it.each(profileProducts)(
 		}
 		if (
 			productId === 'career-compass' ||
+			productId === 'purpose-career' ||
 			productId === 'date-reading' ||
 			productId === 'synastry' ||
 			productId === 'couple-dossier'
@@ -1110,7 +1122,7 @@ it.each(profileProducts)(
 				display:
 					productId === 'couple-dossier'
 						? dossierContext
-						: productId === 'career-compass'
+						: productId === 'career-compass' || productId === 'purpose-career'
 							? careerContext
 							: productId === 'synastry'
 								? synastryContext

@@ -1,0 +1,9 @@
+# WU205 — Mapa de Propósito & Carreira: entrada privada
+
+- Escopo E1 do plano mestre §0.2 e §7.3: a rota autenticada `/biblioteca/nova/purpose-career` usa o perfil natal exato conferido, consentimento específico do produto e relato profissional opcional. O cliente envia `atv-natal-request/3` apenas para `purpose-career`.
+- A migração local `20260929210000_purpose_career_context.sql` conserva v1/v2 e exige a combinação v3/produto correta. O RPC copia os seis campos natais do perfil ativo, guarda o relato exatamente no input e no recibo privado, e passa por release, entitlement, quota e idempotência já existentes. Não altera o perfil ou a memória ATV+.
+- Testes sintéticos de PGlite/handlers recusam release desligado e entitlement ausente, campos falsificados, versões cruzadas e contexto inválido. Confirmam snapshot imutável, recibo/consentimento, recuperação privada e mesmas chaves após edição/esquecimento do perfil. O teste de transporte com sucesso usa política `free` **somente na fixture local**, depois de testar a recusa de entitlement.
+- O forward-fix `disable_purpose_career_context.sql` substitui a função pela v2: novas escritas v3 e retries de mutação são recusados, enquanto runs e recibos permanecem e a recuperação de leitura funciona. Reaplicar a migração v3 restaura a idempotência exata sem abrir a release.
+- Validação: 57/57 testes de solicitação natal, 105/105 de cliente/fluxo vertical focal, suíte web 1.491/1.491, `pnpm --filter @atv/web check` com zero erros/avisos; Prettier e diff sem erros. Dados, identidade e política simulados em uma instância local; sem aplicação hospedada, teste de JWT/PostgREST real, corrida entre conexões, homologação de engine, leitura aprovada ou entrega web/PDF/áudio.
+
+Aceite local: intake E1 implementado e validado. E1 permanece parcial por regras de regência/aspectos/casas, precisão/licença da engine e validação hospedada; E2–E5 pendentes. Gates/default13 off; gasto automático R$0.

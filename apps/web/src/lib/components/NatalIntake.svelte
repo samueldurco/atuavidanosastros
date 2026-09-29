@@ -3,7 +3,11 @@
 	import { validDate, workflowFor } from '@atv/domain';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
-	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
+	import {
+		NATAL_REQUEST_VERSION,
+		CAREER_REQUEST_VERSION,
+		PURPOSE_CAREER_REQUEST_VERSION
+	} from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
 	import { HOROSCOPE_REQUEST_VERSION } from '$lib/horoscope-request';
 	import {
@@ -84,7 +88,8 @@
 	const isDossier = $derived(productId === 'couple-dossier');
 	const isContextualPair = $derived(isSynastry || isDossier);
 	const isPair = $derived(productId === 'pair-preview' || isContextualPair);
-	const isCareer = $derived(productId === 'career-compass');
+	const isPurposeCareer = $derived(productId === 'purpose-career');
+	const isCareer = $derived(productId === 'career-compass' || isPurposeCareer);
 	const acceptsContext = $derived(isCareer || isCycle || isContextualPair);
 	const contextId = $derived(
 		isDossier
@@ -265,9 +270,11 @@
 								: isHoroscope
 									? HOROSCOPE_REQUEST_VERSION
 									: DATE_CONTEXT_REQUEST_VERSION
-							: isCareer
-								? CAREER_REQUEST_VERSION
-								: NATAL_REQUEST_VERSION,
+							: isPurposeCareer
+								? PURPOSE_CAREER_REQUEST_VERSION
+								: isCareer
+									? CAREER_REQUEST_VERSION
+									: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
 			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),

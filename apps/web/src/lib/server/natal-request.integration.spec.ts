@@ -129,7 +129,8 @@ beforeAll(async () => {
 		'20260924170000_product_request_recovery.sql',
 		'20260925160000_natal_product_requests.sql',
 		'20260928170000_career_compass_requests.sql',
-		'20260928180000_career_compass_context.sql'
+		'20260928180000_career_compass_context.sql',
+		'20260929210000_purpose_career_context.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -147,7 +148,11 @@ it.each(natalProducts)(
 	async (productId) => {
 		await save();
 		await db.query('update workflow_releases set enabled=true where product_id=$1', [productId]);
-		const response = await natalRequestApi(event(request({ productId })));
+		const command = input({
+			productId,
+			...(productId === 'purpose-career' ? { version: 'atv-natal-request/3' } : {})
+		});
+		const response = await natalRequestApi(event({ requestKey: randomUUID(), input: command }));
 		expect(response.status).toBe(202);
 		expect(response.headers.get('cache-control')).toBe('private, no-store');
 		expect(response.headers.get('referrer-policy')).toBe('no-referrer');
@@ -175,7 +180,7 @@ it.each(natalProducts)(
 				'select command,natal_version from natal_product_requests'
 			)
 		).rows[0];
-		expect(receipt).toEqual({ command: input({ productId }), natal_version: 1 });
+		expect(receipt).toEqual({ command, natal_version: 1 });
 		expect(JSON.stringify(receipt)).not.toMatch(/1990|latitude|locationLabel/);
 		expect((await db.query('select * from editorial_promotions')).rows).toHaveLength(0);
 	}
@@ -353,6 +358,7 @@ it('career forward-fix preserves prior products, snapshots and read-only recover
 		await db.exec('update workflow_releases set enabled=false');
 		await db.exec(await file('supabase/migrations/20260928170000_career_compass_requests.sql'));
 		await db.exec(await file('supabase/migrations/20260928180000_career_compass_context.sql'));
+		await db.exec(await file('supabase/migrations/20260929210000_purpose_career_context.sql'));
 	}
 	expect(await submit(body)).toBe(runId);
 	await expect(submit(request({ productId: 'career-compass' }))).rejects.toThrow(
@@ -494,9 +500,104 @@ it('context forward-fix preserves old and new receipts and recovery; reapply res
 	} finally {
 		await db.exec('update workflow_releases set enabled=false');
 		await db.exec(await file('supabase/migrations/20260928180000_career_compass_context.sql'));
+		await db.exec(await file('supabase/migrations/20260929210000_purpose_career_context.sql'));
 	}
 	expect(await submit(body)).toBe(runId);
 	expect(await submit(old)).toBe(oldId);
+	await expect(submit(request({ ...body.input }))).rejects.toThrow('workflow_unreleased');
+});
+
+it.each(['Relato profissional privado', '  transição\ncom pausas  ', '🌌'.repeat(600), undefined])(
+	'v3 preserves optional purpose context, consent and exact profile snapshot %#',
+	async (context) => {
+		await save();
+		const body = request({
+			version: 'atv-natal-request/3',
+			productId: 'purpose-career',
+			...(context === undefined ? {} : { context })
+		});
+		await expect(submit(body)).rejects.toThrow('workflow_unreleased');
+		await db.exec(
+			"update workflow_releases set enabled=true,access_policy='entitlement' where product_id='purpose-career'"
+		);
+		await expect(submit(body)).rejects.toThrow('entitlement_required');
+		expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+		await db.exec(
+			"update workflow_releases set access_policy='free' where product_id='purpose-career'"
+		);
+		const profileBefore = (await db.query('select * from natal_profiles')).rows;
+		const response = await natalRequestApi(event(body));
+		expect(response.status).toBe(202);
+		const { runId } = (await response.json()) as { runId: string };
+		const run = (
+			await db.query<{ input: unknown }>('select input from product_runs where id=$1', [runId])
+		).rows[0];
+		const parsed = parseWorkflowInput(run.input);
+		expect(parsed?.productId).toBe('purpose-career');
+		expect(parsed?.context).toBe(context);
+		expect(parsed?.birth?.utcInstant).toBe(natal.utcInstant);
+		expect((await db.query('select * from natal_profiles')).rows).toEqual(profileBefore);
+		expect(
+			(await db.query<{ command: unknown }>('select command from natal_product_requests')).rows[0]
+				.command
+		).toEqual(body.input);
+		expect(await submit(body)).toBe(runId);
+		await forget(1);
+		await db.exec('update workflow_releases set enabled=false');
+		expect(await submit(body)).toBe(runId);
+		await expect(
+			submit({ ...body, input: input({ ...body.input, context: 'Outro relato' }) })
+		).rejects.toThrow('idempotency_conflict');
+		expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+	}
+);
+
+it.each([
+	{ version: 'atv-natal-request/1', productId: 'purpose-career' },
+	{ version: 'atv-natal-request/2', productId: 'purpose-career', context: 'Relato' },
+	{ version: 'atv-natal-request/3', productId: 'career-compass', context: 'Relato' },
+	{ version: 'atv-natal-request/3', productId: 'purpose-career', birth: natal },
+	{ version: 'atv-natal-request/3', productId: 'purpose-career', context: '' },
+	{ version: 'atv-natal-request/3', productId: 'purpose-career', context: 'a'.repeat(1201) },
+	{ version: 'atv-natal-request/3', productId: 'purpose-career', context: 'a\u0008' },
+	...['birth-chart', 'three-pillars', 'ascendant', 'midheaven'].map((productId) => ({
+		version: 'atv-natal-request/3',
+		productId
+	}))
+])('v3 rejects mismatched products, forged fields and invalid context %#', async (changes) => {
+	const body = request(changes);
+	expect(parseNatalRequestInput(body.input)).toBeNull();
+	expect((await natalRequestApi(event(body))).status).toBe(400);
+	await expect(submit(body)).rejects.toThrow('invalid_input');
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+
+it('purpose forward-fix blocks v3 writes while preserving old runs and read-only recovery', async () => {
+	await save();
+	await db.exec("update workflow_releases set enabled=true where product_id='purpose-career'");
+	const body = request({
+		version: 'atv-natal-request/3',
+		productId: 'purpose-career',
+		context: 'Relato privado sintético'
+	});
+	const runId = await submit(body);
+	const before = (await db.query('select * from product_runs')).rows;
+	await db.exec(await file('supabase/forward-fixes/disable_purpose_career_context.sql'));
+	try {
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+		await expect(submit(request({ ...body.input }))).rejects.toThrow('invalid_input');
+		const found = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+				body.requestKey
+			])
+		);
+		expect(found.rows[0].value.runId).toBe(runId);
+		expect((await db.query('select * from product_runs')).rows).toEqual(before);
+	} finally {
+		await db.exec('update workflow_releases set enabled=false');
+		await db.exec(await file('supabase/migrations/20260929210000_purpose_career_context.sql'));
+	}
+	expect(await submit(body)).toBe(runId);
 	await expect(submit(request({ ...body.input }))).rejects.toThrow('workflow_unreleased');
 });
 

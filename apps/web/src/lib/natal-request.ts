@@ -2,6 +2,7 @@ import { REPORTED_CONTEXT_LIMIT, validReportedContext } from './reported-context
 
 export const NATAL_REQUEST_VERSION = 'atv-natal-request/1';
 export const CAREER_REQUEST_VERSION = 'atv-natal-request/2';
+export const PURPOSE_CAREER_REQUEST_VERSION = 'atv-natal-request/3';
 export const CAREER_CONTEXT_LIMIT = REPORTED_CONTEXT_LIMIT;
 export const validCareerContext = validReportedContext;
 export const natalProducts = [
@@ -9,11 +10,15 @@ export const natalProducts = [
 	'three-pillars',
 	'ascendant',
 	'midheaven',
-	'career-compass'
+	'career-compass',
+	'purpose-career'
 ] as const;
 export type NatalProduct = (typeof natalProducts)[number];
 export interface NatalRequestInput {
-	version: typeof NATAL_REQUEST_VERSION | typeof CAREER_REQUEST_VERSION;
+	version:
+		| typeof NATAL_REQUEST_VERSION
+		| typeof CAREER_REQUEST_VERSION
+		| typeof PURPOSE_CAREER_REQUEST_VERSION;
 	productId: NatalProduct;
 	context?: string;
 	expectedRevision: number;
@@ -28,7 +33,9 @@ const object = (v: unknown): v is Record<string, unknown> =>
 	!!v && typeof v === 'object' && !Array.isArray(v);
 export function parseNatalRequestInput(v: unknown): NatalRequestInput | null {
 	if (!object(v)) return null;
-	const career = v.version === CAREER_REQUEST_VERSION && v.productId === 'career-compass';
+	const career =
+		(v.version === CAREER_REQUEST_VERSION && v.productId === 'career-compass') ||
+		(v.version === PURPOSE_CAREER_REQUEST_VERSION && v.productId === 'purpose-career');
 	const hasContext = Object.hasOwn(v, 'context');
 	if (
 		Object.keys(v).length !== (career && hasContext ? 5 : 4) ||
@@ -43,6 +50,7 @@ export function parseNatalRequestInput(v: unknown): NatalRequestInput | null {
 				].includes(key)
 		) ||
 		(v.version !== NATAL_REQUEST_VERSION && !career) ||
+		(v.version === NATAL_REQUEST_VERSION && v.productId === 'purpose-career') ||
 		(hasContext && (!career || !validCareerContext(v.context))) ||
 		!natalProducts.includes(v.productId as NatalProduct) ||
 		typeof v.expectedRevision !== 'number' ||
