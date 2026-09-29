@@ -14,12 +14,13 @@ import {
 } from "./product-processing.ts";
 
 export const personalCalendarProductContract = Object.freeze({
-  version: "atv-personal-calendar-calculation/1.0.0",
+  version: "atv-personal-calendar-calculation/1.1.0",
   productId: "personal-calendar",
   status: "experimental",
   period: "one-complete-utc-civil-month",
   natalReference: "validated-natal-sun-only",
   dailyEvents: "not-produced",
+  personalMarks: "reported-only-with-specific-authorization",
   interpretation: "not-produced",
 });
 
@@ -85,6 +86,12 @@ export function createPersonalCalendarCalculators(
             },
           ]
         : []),
+      ...(input.calendarMarks?.entries.map((entry, index) => ({
+        id: `reported-mark-${index + 1}`,
+        kind: "reported" as const,
+        display: `${entry.date}: ${entry.label}`,
+        source: `input.calendarMarks.entries[${index}]`,
+      })) ?? []),
     ];
     const snapshot: CalculationSnapshot = {
       version: personalCalendarProductContract.version,
@@ -99,10 +106,15 @@ export function createPersonalCalendarCalculators(
         natalSunLongitude: natalSun,
         natalSource: source,
         dailyEvents: "not-produced",
+        reportedMarks: input.calendarMarks?.entries.map((entry) => ({
+          date: entry.date,
+          label: entry.label,
+        })) ?? [],
       },
       limits: [
         "A grade contém apenas dias civis UTC e uma referência natal estática.",
         "Nenhum trânsito diário, evento, previsão ou dia favorável foi calculado.",
+        "Marcos pessoais, quando presentes, são relatos autorizados para este pedido e não eventos inferidos.",
         "Base experimental sem aprovação de método temporal, leitura editorial ou liberação.",
       ],
     };

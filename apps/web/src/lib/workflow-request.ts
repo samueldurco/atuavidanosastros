@@ -6,6 +6,7 @@ import { parseDateRequestInput } from './date-request';
 import { parseHoroscopeRequestInput } from './horoscope-request';
 import { parseWeekRequestInput } from './week-request';
 import { parseSolarReturnRequestInput } from './solar-return-request';
+import { parsePersonalCalendarRequestInput } from './personal-calendar-request';
 import { parsePairRequestInput } from './pair-request';
 
 export type WorkflowRequestState = {
@@ -63,6 +64,7 @@ type Operation =
 	| { kind: 'create-horoscope'; ownerId: string }
 	| { kind: 'create-week'; ownerId: string }
 	| { kind: 'create-solar-return'; ownerId: string }
+	| { kind: 'create-personal-calendar'; ownerId: string }
 	| { kind: 'create-pair'; ownerId: string }
 	| { kind: 'reprocess'; runId: string };
 
@@ -93,6 +95,7 @@ export function createWorkflowRequest(options: {
 				(operation.kind === 'create-horoscope' && productId !== 'horoscope') ||
 				(operation.kind === 'create-week' && productId !== 'week-reading') ||
 				(operation.kind === 'create-solar-return' && productId !== 'solar-return') ||
+				(operation.kind === 'create-personal-calendar' && productId !== 'personal-calendar') ||
 				(operation.kind === 'create-pair' &&
 					!['pair-preview', 'synastry', 'couple-dossier'].includes(productId))
 			)
@@ -230,13 +233,15 @@ export function createWorkflowRequest(options: {
 							? parseWeekRequestInput(rawInput)
 							: operation.kind === 'create-solar-return'
 								? parseSolarReturnRequestInput(rawInput)
-								: operation.kind === 'create-horoscope'
-									? parseHoroscopeRequestInput(rawInput)
-									: operation.kind === 'create-pair'
-										? parsePairRequestInput(rawInput)
-										: operation.kind === 'create'
-											? parseWorkflowInput(rawInput)
-											: null;
+								: operation.kind === 'create-personal-calendar'
+									? parsePersonalCalendarRequestInput(rawInput)
+									: operation.kind === 'create-horoscope'
+										? parseHoroscopeRequestInput(rawInput)
+										: operation.kind === 'create-pair'
+											? parsePairRequestInput(rawInput)
+											: operation.kind === 'create'
+												? parseWorkflowInput(rawInput)
+												: null;
 			if (operation.kind !== 'reprocess' && (!input || input.productId !== productId))
 				return { mode: 'new', message: 'Revise os dados e o consentimento antes de enviar.' };
 			const key = options.randomUUID();
@@ -265,13 +270,15 @@ export function createWorkflowRequest(options: {
 							? '/api/workflows/week'
 							: operation.kind === 'create-solar-return'
 								? '/api/workflows/solar-return'
-								: operation.kind === 'create-horoscope'
-									? '/api/workflows/horoscope'
-									: operation.kind === 'create-pair'
-										? '/api/workflows/pair'
-										: operation.kind === 'create'
-											? '/api/workflows'
-											: `/api/workflows/${operation.runId}/reprocess`,
+								: operation.kind === 'create-personal-calendar'
+									? '/api/workflows/personal-calendar'
+									: operation.kind === 'create-horoscope'
+										? '/api/workflows/horoscope'
+										: operation.kind === 'create-pair'
+											? '/api/workflows/pair'
+											: operation.kind === 'create'
+												? '/api/workflows'
+												: `/api/workflows/${operation.runId}/reprocess`,
 				body
 			);
 			if (
@@ -286,6 +293,7 @@ export function createWorkflowRequest(options: {
 								operation.kind === 'create-horoscope' ||
 								operation.kind === 'create-week' ||
 								operation.kind === 'create-solar-return' ||
+								operation.kind === 'create-personal-calendar' ||
 								operation.kind === 'create-pair') &&
 						  Object.hasOwn(natalRefused, payload.error)
 						? natalRefused[payload.error]

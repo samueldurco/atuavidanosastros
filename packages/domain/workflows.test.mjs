@@ -43,6 +43,22 @@ test('personal calendar names one complete civil month',()=>{
   for (const targetDate of ['2026-09-02','2026-09-00','2026-02-29'])
     assert.equal(parseWorkflowInput({...value,targetDate}),null);
 });
+test('personal calendar preserves specifically authorized marks only within its month',()=>{
+  const value=inputFor(workflows.find(p=>p.id==='personal-calendar'));
+  const calendarMarks={authorization:'atv-personal-calendar-marks/1',entries:[
+    {date:'2026-09-01',label:'Início declarado'},
+    {date:'2026-09-30',label:'Fechamento declarado'}
+  ]};
+  assert.deepEqual(parseWorkflowInput({...value,calendarMarks})?.calendarMarks,calendarMarks);
+  for (const bad of [
+    {...calendarMarks,authorization:'missing'},
+    {...calendarMarks,entries:[]},
+    {...calendarMarks,entries:[{date:'2026-10-01',label:'Fora'}]},
+    {...calendarMarks,entries:[calendarMarks.entries[0],calendarMarks.entries[0]]},
+    {...calendarMarks,entries:[{date:'2026-09-01',label:'Controle\u0001'}]}
+  ]) assert.equal(parseWorkflowInput({...value,calendarMarks:bad}),null);
+  assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='horoscope')),calendarMarks}),null);
+});
 test('contracts reject invalid scopes, dates, excess input and third-party data without consent',()=>{
   assert.equal(validDate('2025-02-29'),false); assert.equal(validDate('2024-02-29'),true);
   assert.equal(validDate('2100-01-01'),false);

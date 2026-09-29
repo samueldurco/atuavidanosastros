@@ -112,6 +112,35 @@ test("calendar includes February's leap day and never reaches into the following
   assert.equal(long.data.monthEndExclusive, "2027-01-01");
 });
 
+test("calendar keeps authorized personal marks as reported facts without inferred events", async () => {
+  const result = await createPersonalCalendarCalculators()["personal-calendar"](
+    {
+      ...input,
+      calendarMarks: {
+        authorization: "atv-personal-calendar-marks/1",
+        entries: [
+          { date: "2026-09-01", label: "Plano pessoal" },
+          { date: "2026-09-30", label: "Revisão pessoal" },
+        ],
+      },
+    },
+    scope(),
+  );
+  assert.deepEqual(result.data.reportedMarks, [
+    { date: "2026-09-01", label: "Plano pessoal" },
+    { date: "2026-09-30", label: "Revisão pessoal" },
+  ]);
+  assert.deepEqual(
+    result.facts.filter((fact) => fact.id.startsWith("reported-mark-")),
+    [
+      { id: "reported-mark-1", kind: "reported", display: "2026-09-01: Plano pessoal", source: "input.calendarMarks.entries[0]" },
+      { id: "reported-mark-2", kind: "reported", display: "2026-09-30: Revisão pessoal", source: "input.calendarMarks.entries[1]" },
+    ],
+  );
+  assert.equal(result.data.dailyEvents, "not-produced");
+  assert.equal(prepareProductFacts("personal-calendar", result).status, "blocked");
+});
+
 test("calendar rejects an ambiguous period before contacting the ephemeris", async () => {
   let calls = 0;
   const calculate = createPersonalCalendarCalculators({

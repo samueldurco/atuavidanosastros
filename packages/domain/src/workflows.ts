@@ -24,6 +24,10 @@ export interface ImportantDatesInput {
   authorization: 'atv-solar-important-dates/1';
   entries: { date: string; label: string }[];
 }
+export interface CalendarMarksInput {
+  authorization: 'atv-personal-calendar-marks/1';
+  entries: { date: string; label: string }[];
+}
 export interface WorkflowInput {
   version: typeof WORKFLOW_VERSION;
   productId: string;
@@ -34,6 +38,7 @@ export interface WorkflowInput {
   returnYear?: number;
   returnLocation?: ReturnLocationInput;
   importantDates?: ImportantDatesInput;
+  calendarMarks?: CalendarMarksInput;
   context?: string;
   questions?: string[];
   dream?: { date: string; narrative: string; associations: string[]; emotions: string[] };
@@ -74,6 +79,21 @@ function importantDates(v: unknown, targetDate: unknown): v is ImportantDatesInp
     return true;
   });
 }
+function calendarMarks(v: unknown, targetDate: unknown): v is CalendarMarksInput {
+  if (!object(v) || !keysOnly(v, ['authorization', 'entries']) || Object.keys(v).length !== 2 ||
+      v.authorization !== 'atv-personal-calendar-marks/1' || !Array.isArray(v.entries) ||
+      v.entries.length < 1 || v.entries.length > 5 || !validDate(targetDate) || targetDate.slice(8) !== '01') return false;
+  const nextMonth = new Date(Date.UTC(Number(targetDate.slice(0, 4)), Number(targetDate.slice(5, 7)), 1))
+    .toISOString().slice(0, 10);
+  const seen = new Set<string>();
+  return v.entries.every((entry) => {
+    if (!object(entry) || !keysOnly(entry, ['date', 'label']) || Object.keys(entry).length !== 2 ||
+        !validDate(entry.date) || entry.date < targetDate || entry.date >= nextMonth ||
+        !text(entry.label, 80) || /[\u007f-\u009f]/.test(entry.label) || seen.has(entry.date)) return false;
+    seen.add(entry.date);
+    return true;
+  });
+}
 
 /** Structural contract. Engine adapters MUST additionally validate calendar/timezone correspondence. */
 export function parseWorkflowInput(v: unknown): WorkflowInput | null {
@@ -85,7 +105,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   const fields = ['version', 'productId', 'consent', 'context'];
   if (['natal', 'cycles', 'relationship', 'purpose'].includes(product.kind)) fields.push('birth');
   if (product.kind === 'relationship') fields.push('partner');
-  if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []));
+  if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
   if (product.kind === 'tarot') fields.push('questions');
   if (product.kind === 'dream') fields.push('dream');
   if (!keysOnly(v, fields) || (v.context !== undefined && !text(v.context, 1200))) return null;
@@ -98,6 +118,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   // A calendar request names one complete civil month, never an implicit rolling interval.
   if (product.id === 'personal-calendar' && String(v.targetDate).slice(8) !== '01') return null;
   if (product.id === 'solar-return' && v.importantDates !== undefined && !importantDates(v.importantDates, v.targetDate)) return null;
+  if (product.id === 'personal-calendar' && v.calendarMarks !== undefined && !calendarMarks(v.calendarMarks, v.targetDate)) return null;
   if (product.kind === 'tarot' && (!strings(v.questions, 3, 400) ||
       v.questions.length !== (product.id === 'three-questions' ? 3 : 1))) return null;
   if (product.kind === 'dream' && (!object(v.dream) || !keysOnly(v.dream, ['date', 'narrative', 'associations', 'emotions']) ||

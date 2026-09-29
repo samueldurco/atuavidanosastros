@@ -21,6 +21,11 @@
 		validSolarCoordinateText,
 		validSolarImportantDates
 	} from '$lib/solar-return-request';
+	import {
+		PERSONAL_CALENDAR_REQUEST_VERSION,
+		PERSONAL_CALENDAR_MARKS_AUTHORIZATION,
+		validCalendarMarks
+	} from '$lib/personal-calendar-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import {
 		PAIR_REQUEST_VERSION,
@@ -56,6 +61,9 @@
 		{ date: '', label: '' }
 	]);
 	let solarDatesAuthorized = $state(false);
+	let calendarMonth = $state('');
+	let calendarMarks = $state(Array.from({ length: 5 }, () => ({ date: '', label: '' })));
+	let calendarMarksAuthorized = $state(false);
 	let reportedContext = $state('');
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
@@ -69,8 +77,9 @@
 	const isHoroscope = $derived(productId === 'horoscope');
 	const isWeek = $derived(productId === 'week-reading');
 	const isSolar = $derived(productId === 'solar-return');
+	const isCalendar = $derived(productId === 'personal-calendar');
 	const isTemporal = $derived(isDate || isHoroscope || isWeek);
-	const isCycle = $derived(isTemporal || isSolar);
+	const isCycle = $derived(isTemporal || isSolar || isCalendar);
 	const isSynastry = $derived(productId === 'synastry');
 	const isDossier = $derived(productId === 'couple-dossier');
 	const isContextualPair = $derived(isSynastry || isDossier);
@@ -83,13 +92,15 @@
 			: isSynastry
 				? 'synastry-context'
 				: isCycle
-					? isSolar
-						? 'solar-context'
-						: isWeek
-							? 'week-context'
-							: isHoroscope
-								? 'horoscope-context'
-								: 'date-context'
+					? isCalendar
+						? 'calendar-context'
+						: isSolar
+							? 'solar-context'
+							: isWeek
+								? 'week-context'
+								: isHoroscope
+									? 'horoscope-context'
+									: 'date-context'
 					: 'career-context'
 	);
 	const contextValid = $derived(
@@ -122,11 +133,23 @@
 				(solarDateEntries.length === 0 ||
 					(solarDatesAuthorized && validSolarImportantDates(solarDateEntries, solarDate))))
 	);
+	const calendarDate = $derived(
+		/^\d{4}-(?:0[1-9]|1[0-2])$/.test(calendarMonth) ? `${calendarMonth}-01` : null
+	);
+	const calendarMarkEntries = $derived(calendarMarks.filter((entry) => entry.date || entry.label));
+	const calendarValid = $derived(
+		!isCalendar ||
+			(calendarDate !== null &&
+				validDate(calendarDate) &&
+				(calendarMarkEntries.length === 0 ||
+					(calendarMarksAuthorized && validCalendarMarks(calendarMarkEntries, calendarDate))))
+	);
 	const partnerValue = $derived(partnerFormValue(partnerForm));
 	const pairValid = $derived(!isPair || (!!partnerValue.partner && partnerConsent));
 	function resetConsents() {
 		consent = false;
 		partnerConsent = false;
+		calendarMarksAuthorized = false;
 	}
 	const dateValid = $derived(
 		!isTemporal || (validDate(targetDate) && (!isWeek || targetDate <= '2099-12-25'))
@@ -156,13 +179,15 @@
 						? 'create-pair'
 						: isSolar
 							? 'create-solar-return'
-							: isWeek
-								? 'create-week'
-								: isHoroscope
-									? 'create-horoscope'
-									: isTemporal
-										? 'create-date'
-										: 'create-natal',
+							: isCalendar
+								? 'create-personal-calendar'
+								: isWeek
+									? 'create-week'
+									: isHoroscope
+										? 'create-horoscope'
+										: isTemporal
+											? 'create-date'
+											: 'create-natal',
 					ownerId
 				},
 				productId,
@@ -218,32 +243,48 @@
 			!pairValid ||
 			!weekPreferencesValid ||
 			!solarValid ||
+			!calendarValid ||
 			!contextValid
 		)
 			return;
 		busy = true;
 		const input = {
-			version: isSolar
-				? SOLAR_RETURN_REQUEST_VERSION
-				: isPair
-					? isDossier
-						? COUPLE_DOSSIER_REQUEST_VERSION
-						: isSynastry
-							? SYNASTRY_REQUEST_VERSION
-							: PAIR_REQUEST_VERSION
-					: isTemporal
-						? isWeek
-							? WEEK_PREFERENCES_REQUEST_VERSION
-							: isHoroscope
-								? HOROSCOPE_REQUEST_VERSION
-								: DATE_CONTEXT_REQUEST_VERSION
-						: isCareer
-							? CAREER_REQUEST_VERSION
-							: NATAL_REQUEST_VERSION,
+			version: isCalendar
+				? PERSONAL_CALENDAR_REQUEST_VERSION
+				: isSolar
+					? SOLAR_RETURN_REQUEST_VERSION
+					: isPair
+						? isDossier
+							? COUPLE_DOSSIER_REQUEST_VERSION
+							: isSynastry
+								? SYNASTRY_REQUEST_VERSION
+								: PAIR_REQUEST_VERSION
+						: isTemporal
+							? isWeek
+								? WEEK_PREFERENCES_REQUEST_VERSION
+								: isHoroscope
+									? HOROSCOPE_REQUEST_VERSION
+									: DATE_CONTEXT_REQUEST_VERSION
+							: isCareer
+								? CAREER_REQUEST_VERSION
+								: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
 			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),
 			...(isTemporal ? { targetDate } : {}),
+			...(isCalendar
+				? {
+						targetDate: calendarDate,
+						...(calendarMarkEntries.length > 0
+							? {
+									calendarMarks: {
+										authorization: PERSONAL_CALENDAR_MARKS_AUTHORIZATION,
+										entries: calendarMarkEntries
+									}
+								}
+							: {})
+					}
+				: {}),
 			...(isSolar
 				? {
 						returnYear: Number(solarYear),
@@ -286,6 +327,9 @@
 		outcome = await controller.perform(true, input);
 		reportedContext = '';
 		targetDate = '';
+		calendarMonth = '';
+		calendarMarks = Array.from({ length: 5 }, () => ({ date: '', label: '' }));
+		calendarMarksAuthorized = false;
 		weekTimezone = '';
 		weekTheme = '';
 		solarYear = '';
@@ -313,6 +357,9 @@
 		outcome = controller.startAnother();
 		reportedContext = '';
 		targetDate = '';
+		calendarMonth = '';
+		calendarMarks = Array.from({ length: 5 }, () => ({ date: '', label: '' }));
+		calendarMarksAuthorized = false;
 		weekTimezone = '';
 		weekTheme = '';
 		solarYear = '';
@@ -407,7 +454,9 @@
 							: isCycle
 								? isSolar
 									? '2. Ano, cidade do aniversário e autorização'
-									: '2. Escolha a data e autorize'
+									: isCalendar
+										? '2. Mês, marcos pessoais e autorização'
+										: '2. Escolha a data e autorize'
 								: isCareer
 									? '2. Seu contexto e sua autorização'
 									: '2. Autorize este pedido'}</legend
@@ -463,6 +512,88 @@
 								/>
 							{/snippet}
 						</Field>
+					{/if}
+					{#if isCalendar}
+						<Field
+							id="calendar-month"
+							label="Mês do calendário"
+							help="Escolha um mês entre janeiro de 1900 e dezembro de 2099. A grade usa dias civis UTC; não calcula eventos, trânsitos diários nem horários favoráveis."
+							error={calendarMonth && !calendarValid
+								? 'Revise o mês e os marcos informados.'
+								: undefined}
+						>
+							{#snippet children(describedBy)}
+								<input
+									id="calendar-month"
+									type="month"
+									required
+									min="1900-01"
+									max="2099-12"
+									autocomplete="off"
+									bind:value={calendarMonth}
+									oninput={resetConsents}
+									aria-describedby={describedBy}
+									aria-invalid={!!calendarMonth && !calendarValid}
+								/>
+							{/snippet}
+						</Field>
+						<fieldset class="solar-dates">
+							<legend>Marcos pessoais deste mês (opcional)</legend>
+							<p class="privacy">
+								Informe até cinco datas distintas do mês, com uma descrição curta para cada uma.
+								Estes são relatos seus, não eventos previstos. Evite dados de terceiros.
+							</p>
+							{#each calendarMarks as entry, index (index)}
+								<Field id={`calendar-mark-date-${index}`} label={`Data do marco ${index + 1}`}>
+									{#snippet children(describedBy)}
+										<input
+											id={`calendar-mark-date-${index}`}
+											type="date"
+											min={calendarDate ?? undefined}
+											max={calendarDate
+												? new Date(
+														Date.UTC(
+															Number(calendarDate.slice(0, 4)),
+															Number(calendarDate.slice(5, 7)),
+															0
+														)
+													)
+														.toISOString()
+														.slice(0, 10)
+												: undefined}
+											bind:value={entry.date}
+											oninput={resetConsents}
+											aria-describedby={describedBy}
+										/>
+									{/snippet}
+								</Field>
+								<Field
+									id={`calendar-mark-label-${index}`}
+									label={`Descrição do marco ${index + 1}`}
+								>
+									{#snippet children(describedBy)}
+										<input
+											id={`calendar-mark-label-${index}`}
+											type="text"
+											maxlength="80"
+											autocomplete="off"
+											bind:value={entry.label}
+											oninput={resetConsents}
+											aria-describedby={describedBy}
+										/>
+									{/snippet}
+								</Field>
+							{/each}
+							<label class="consent"
+								><input
+									type="checkbox"
+									bind:checked={calendarMarksAuthorized}
+									onchange={() => {
+										consent = false;
+									}}
+								/>Autorizo usar e guardar os marcos que informei somente neste pedido.</label
+							>
+						</fieldset>
 					{/if}
 					{#if isSolar}
 						<Field
@@ -705,9 +836,11 @@
 										? 'Autorizo guardar uma cópia dos dados natais conferidos, do ano, da cidade, do fuso e das coordenadas que declarei para o aniversário, das datas importantes autorizadas, do contexto opcional e dos resultados deste pedido na minha conta.'
 										: isTemporal
 											? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
-											: isCareer
-												? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
-												: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+											: isCalendar
+												? 'Autorizo guardar uma cópia dos dados natais conferidos, do mês escolhido, dos marcos pessoais autorizados, do contexto opcional e dos resultados deste pedido na minha conta.'
+												: isCareer
+													? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
+													: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
@@ -723,6 +856,7 @@
 							!pairValid ||
 							!contextValid ||
 							!solarValid ||
+							!calendarValid ||
 							!weekPreferencesValid}>Criar pedido</Button
 					>
 				</fieldset>

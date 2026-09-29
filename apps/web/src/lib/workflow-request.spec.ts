@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { WORKFLOW_VERSION } from '@atv/domain';
 import { createWorkflowRequest } from './workflow-request';
 import { SOLAR_RETURN_REQUEST_VERSION } from './solar-return-request';
+import { PERSONAL_CALENDAR_REQUEST_VERSION } from './personal-calendar-request';
 
 const owner = '20000000-0000-4000-8000-000000000001';
 const id = '20000000-0000-4000-8000-000000000002';
@@ -108,6 +109,48 @@ it('routes the private Solar Return command and forgets a verified release refus
 	expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({
 		requestKey: key,
 		input: solarInput
+	});
+	expect(values.size).toBe(0);
+});
+
+it('routes a calendar month with authorized reports through the private request bridge', async () => {
+	const values = new Map<string, string>();
+	const fetcher = vi
+		.fn<typeof fetch>()
+		.mockResolvedValue(json({ error: 'workflow_unreleased' }, 409));
+	const client = createWorkflowRequest({
+		operation: { kind: 'create-personal-calendar', ownerId: owner },
+		productId: 'personal-calendar',
+		storage: {
+			getItem: (name) => values.get(name) ?? null,
+			setItem: (name, value) => {
+				values.set(name, value);
+			},
+			removeItem: (name) => {
+				values.delete(name);
+			}
+		},
+		fetch: fetcher,
+		randomUUID: () => key
+	});
+	const calendarInput = {
+		version: PERSONAL_CALENDAR_REQUEST_VERSION,
+		productId: 'personal-calendar',
+		expectedRevision: 1,
+		targetDate: '2028-02-01',
+		calendarMarks: {
+			authorization: 'atv-personal-calendar-marks/1',
+			entries: [{ date: '2028-02-29', label: 'Revisão pessoal' }]
+		},
+		consent
+	};
+	expect((await client.perform(true, calendarInput)).message).toBe(
+		'Este produto ainda não está liberado.'
+	);
+	expect(fetcher.mock.calls[0][0]).toBe('/api/workflows/personal-calendar');
+	expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({
+		requestKey: key,
+		input: calendarInput
 	});
 	expect(values.size).toBe(0);
 });
