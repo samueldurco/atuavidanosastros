@@ -1,3 +1,7 @@
+import {
+  DAILY_CARD_EDITORIAL_VERSION,
+  dailyCardInstructions,
+} from "./daily-card.ts";
 import { CONSTITUTION_VERSION, constitutions } from "./constitutions.ts";
 import {
   MIDHEAVEN_EDITORIAL_VERSION,
@@ -80,6 +84,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === MIDHEAVEN_EDITORIAL_VERSION
       ? [midheavenInstructions]
+      : []),
+    ...(request.facts.editorialProfile === DAILY_CARD_EDITORIAL_VERSION
+      ? [dailyCardInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

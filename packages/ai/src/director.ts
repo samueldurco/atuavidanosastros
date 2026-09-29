@@ -2,6 +2,10 @@ import type { FactsEnvelope, Reading, Tier } from "./contracts.ts";
 import { ASCENDANT_EDITORIAL_VERSION, inspectAscendant } from "./ascendant.ts";
 import { MIDHEAVEN_EDITORIAL_VERSION, inspectMidheaven } from "./midheaven.ts";
 import {
+  DAILY_CARD_EDITORIAL_VERSION,
+  inspectDailyCard,
+} from "./daily-card.ts";
+import {
   BIRTH_CHART_EDITORIAL_VERSION,
   inspectBirthChart,
 } from "./birth-chart.ts";
@@ -154,6 +158,8 @@ export function inspectReading(
     findings.push(...inspectAscendant(reading));
   if (facts.editorialProfile === MIDHEAVEN_EDITORIAL_VERSION)
     findings.push(...inspectMidheaven(reading));
+  if (facts.editorialProfile === DAILY_CARD_EDITORIAL_VERSION)
+    findings.push(...inspectDailyCard(reading));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,

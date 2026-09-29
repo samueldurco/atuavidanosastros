@@ -192,25 +192,31 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.14.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.15.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    '022b697884ebabe85a1bf2f6b8a9be9fee0402dbe1e015bacb1350c54311b041');
+    '6e31af227a9271a9cc07eaaa1b5f95549048e137ab902bdb0dc77bb0e91ab7e7');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    'a0253f1f001c43f4b7247caaee230eb2ab51bb7232b7306700ee9c36b69c7ace');
+    'c72738d7ccdf6f045b06c68f8aed23c370a4faea61ef40ee67638adc7ce8123c');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    '09fa2648db28942994868da1b5d221f5b2fa3977da9eff5baf64c943c4f19612');
-  // Version 1.14.0 checks daily-card coherence without changing any valid request.
+    'f7edf4731995cfe07bf02b2af0986b16928cd93e8ebd9047d06e3a07c2fdaf78');
+  // Version 1.15.0 adds only the trusted daily-card editorial profile.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
-    'd53629951340a60f4ef7383fed6c29661572c4ab9dc352897f9715fba8fb565d');
+    '4ab88738036f97570690fd7d9f31bf98dfa967b4deba1b332ec7b5774edbf42a');
+  const beforeDaily = corpus.cases.map(item => {
+    const value = structuredClone({id:item.id, request:item.request});
+    if (item.productId === 'daily-card' && value.request) delete value.request.facts.editorialProfile;
+    return value;
+  });
+  assert.equal(corpusDigest(beforeDaily), '022b697884ebabe85a1bf2f6b8a9be9fee0402dbe1e015bacb1350c54311b041');
   const beforeMC = corpus.cases.map(item => {
     const value = structuredClone({id:item.id, request:item.request});
-    if (item.productId === 'midheaven' && value.request) delete value.request.facts.editorialProfile;
+    if (['midheaven','daily-card'].includes(item.productId) && value.request) delete value.request.facts.editorialProfile;
     return value;
   });
   assert.equal(corpusDigest(beforeMC), 'c7d419b297da780a5b09f4ffbde88456b13d08ad0c7feba4380df978dc45edce');
   const restored = corpus.cases.map(item => {
     const value = structuredClone({ id: item.id, request: item.request });
-    if (['ascendant','midheaven'].includes(item.productId) && value.request) delete value.request.facts.editorialProfile;
+    if (['ascendant','midheaven','daily-card'].includes(item.productId) && value.request) delete value.request.facts.editorialProfile;
     return value;
   });
   assert.equal(corpusDigest(restored), '870a360458e37d3e7ef49f201ad557a7fc5810828204541fbc38852828627a68');

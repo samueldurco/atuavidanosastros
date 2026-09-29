@@ -1,14 +1,14 @@
 import { workflowFor, type CalculationSnapshot, type WorkflowKind } from '@atv/domain';
 import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, tierLimits,
   validateFacts, hasInterpretiveBasis, parseReading, inspectReading, editorialDecision, revisionStrategy,
-  CAREER_COMPASS_EDITORIAL_VERSION, THREE_PILLARS_EDITORIAL_VERSION, BIRTH_CHART_EDITORIAL_VERSION, ASCENDANT_EDITORIAL_VERSION, MIDHEAVEN_EDITORIAL_VERSION,
+  CAREER_COMPASS_EDITORIAL_VERSION, THREE_PILLARS_EDITORIAL_VERSION, BIRTH_CHART_EDITORIAL_VERSION, ASCENDANT_EDITORIAL_VERSION, MIDHEAVEN_EDITORIAL_VERSION, DAILY_CARD_EDITORIAL_VERSION,
   type Capability, type FactsEnvelope, type Tier, type ScoredReview, type Finding } from '@atv/ai';
 import { validateCalculation } from './product-processing.ts';
 import { validCareerCompassProjection } from './purpose-calculators.ts';
 import { validDailyCardProjection } from './symbolic-calculators.ts';
 import { inspectAscendantProjection, inspectBirthChartProjection, inspectMidheavenProjection, inspectThreePillarsProjection } from './natal-calculators.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.12.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.13.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -42,8 +42,11 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts)) return { status: 'blocked', reason: 'facts_not_representable' };
   if (!hasInterpretiveBasis(facts)) return { status: 'blocked', reason: 'insufficient_facts' };
-  if (productId === 'daily-card' && !validDailyCardProjection(calculation))
-    return { status: 'blocked', reason: 'calculation_invalid' };
+  if (productId === 'daily-card') {
+    if (!validDailyCardProjection(calculation))
+      return { status: 'blocked', reason: 'calculation_invalid' };
+    facts.editorialProfile = DAILY_CARD_EDITORIAL_VERSION;
+  }
   return { status: 'prepared', calculation, facts };
 }
 

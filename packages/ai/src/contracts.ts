@@ -22,7 +22,12 @@ import {
   validMidheavenFacts,
 } from "./midheaven.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.7";
+import {
+  DAILY_CARD_EDITORIAL_VERSION,
+  validDailyCardFacts,
+} from "./daily-card.ts";
+
+export const PROMPT_VERSION = "atv-editorial/1.0.8";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -51,7 +56,8 @@ export interface FactsEnvelope {
     | typeof THREE_PILLARS_EDITORIAL_VERSION
     | typeof BIRTH_CHART_EDITORIAL_VERSION
     | typeof ASCENDANT_EDITORIAL_VERSION
-    | typeof MIDHEAVEN_EDITORIAL_VERSION;
+    | typeof MIDHEAVEN_EDITORIAL_VERSION
+    | typeof DAILY_CARD_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -207,7 +213,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === ASCENDANT_EDITORIAL_VERSION &&
       validAscendantFacts(value)) ||
     (value.editorialProfile === MIDHEAVEN_EDITORIAL_VERSION &&
-      validMidheavenFacts(value))
+      validMidheavenFacts(value)) ||
+    (value.editorialProfile === DAILY_CARD_EDITORIAL_VERSION &&
+      validDailyCardFacts(value))
   );
 }
 

@@ -19,11 +19,12 @@ const authority = {
     calibrations: ["fixture-calibration"],
   },
 };
+// Generic Tarot projection tests use Foco Agora; daily-card profile is tested separately.
 // Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
-const dailyCalculation = await calculateTarot(
+const genericCalculation = await calculateTarot(
   {
     version: "atv-workflow/1.0.0",
-    productId: "daily-card",
+    productId: "tarot-focus",
     questions: ["Que possibilidade posso observar?"],
     context: "Contexto sintético B",
     consent: {
@@ -40,9 +41,9 @@ function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 2,
-    productId: "daily-card",
+    productId: "tarot-focus",
     tier: "free",
-    calculation: structuredClone(dailyCalculation),
+    calculation: structuredClone(genericCalculation),
     output: {
       schemaVersion: SCHEMA_VERSION,
       capability: "tarot-reflection",
@@ -52,7 +53,7 @@ function draft() {
         {
           id: "c1",
           kind: "fact",
-          text: dailyCalculation.facts[1].display,
+          text: genericCalculation.facts[1].display,
           evidence: ["card-1"],
         },
       ],
@@ -176,12 +177,13 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
   for (const mutate of [
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
-    (d) => (d.productId = "tarot-focus"),
+    (d) => (d.productId = "tarot-yes-no"),
     (d) => (d.tier = "premium"),
     (d) => (d.calculation.facts[2].display = "Outro contexto consentido"),
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
+    (d) => d.calculation.limits.push("Outro limite da base genérica."),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);
@@ -191,8 +193,8 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
     assert.equal("content" in result, false);
   }
   for (const mutate of [
-    (d) => (d.calculation.data.provenance = "changed"),
-    (d) => d.calculation.limits.push("Outro limite."),
+    (d) => (d.calculation.version = ""),
+    (d) => (d.calculation.kind = "dream"),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);

@@ -34,6 +34,10 @@ The existing owner-scoped request, local SQL processing, pending Library project
 
 Before editorial preparation, `daily-card` now requires the saved card identity/name, question slot, reported question/context, drawn fact provenance and candidate policy to agree exactly. The pure inspection never redraws or changes persisted snapshots. Valid Lab requests are unchanged; inconsistent projections are blocked and existing reviews remain bound to the versioned preparation basis. See `daily-card-calculation.md` and `../qa/DAILY_CARD_BASE_2026-09-28.md`. This is local base validation, not editorial approval or hosted release.
 
+### Daily-card editorial coverage — WU133
+
+After trusted base validation, preparation selects `atv-daily-card-editorial/1.0.0`. Two exact factual displays and three roles cover observation, the reported question and a reversible practice, with a joint synthesis and one practical question. Missing coverage rejects the candidate; complete synthetic coverage still requires legitimate editorial review. Reported question/context cannot select a profile or redraw a card. Prompt 1.0.8, preparation 1.13.0 and corpus 1.15.0 bind reviews to the updated basis. See `daily-card-editorial.md` and `../qa/DAILY_CARD_EDITORIAL_2026-09-28.md`; E2 integral remains blocked.
+
 ## Recovery and privacy
 
 Intake access and request recovery use the shared `withRpcDeadline` asynchronous wait bound of 10 seconds, including when the transport ignores abort. Authentication and request-body reads are outside that bound. Timeout means unavailable, never eligibility, not-found, rollback or permission to submit again. No automatic retries are added; a late transport may still finish independently.
