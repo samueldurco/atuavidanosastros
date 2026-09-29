@@ -9,7 +9,9 @@ export const symbolicProducts = [
 	'dream-journal'
 ] as const;
 export const symbolicProduct = (id: string) =>
-	symbolicProducts.some((candidate) => candidate === id) ? workflowFor(id) : undefined;
+	symbolicProducts.some((candidate) => candidate === id) || id === 'tarot-journey'
+		? workflowFor(id)
+		: undefined;
 export type IntakeAccess = 'AVAILABLE' | 'UNRELEASED' | 'ACCESS_REQUIRED' | 'UNAVAILABLE';
 
 /** Form values remain in memory only. The domain parser remains the wire-contract authority. */
@@ -64,7 +66,13 @@ export function parseSymbolicForm(productId: string, form: FormData) {
 			allowed.push(name);
 			return text(name, 400, true);
 		});
-		candidate = { ...base, questions };
+		if (productId === 'tarot-journey') {
+			allowed.push('goal');
+			const goal = text('goal', 400, true);
+			if (/[\u007f-\u009f]/.test(goal))
+				errors.goal = 'Use até 400 caracteres, sem caracteres de controle.';
+			candidate = { ...base, questions, tarotJourney: { goal } };
+		} else candidate = { ...base, questions };
 	} else if (product?.kind === 'dream') {
 		allowed.push('continuity', 'date', 'narrative', 'associations', 'emotions');
 		const date = value('date');

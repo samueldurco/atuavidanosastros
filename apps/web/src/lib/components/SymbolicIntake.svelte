@@ -101,6 +101,11 @@
 				Traga uma questão do momento. O registro de uma carta é o ponto de partida, não uma previsão
 				nem uma instrução sobre o que fazer.
 			</p>
+		{:else if productId === 'tarot-journey'}
+			<p>
+				Registre a pergunta inicial e o objetivo que você escolheu. A tiragem e as etapas da jornada
+				ainda dependem de definição e revisão.
+			</p>
 		{/if}
 	</header>
 	<div class="workspace">
@@ -128,6 +133,23 @@
 										aria-describedby={describedBy}></textarea>{/snippet}
 							</Field>
 						{/each}
+						{#if productId === 'tarot-journey'}
+							<Field
+								id="goal"
+								label="Seu objetivo para a jornada (obrigatório)"
+								help="Até 400 caracteres. Descreva o que você deseja explorar, sem antecipar um resultado."
+								error={errors.goal}
+							>
+								{#snippet children(describedBy)}<textarea
+										id="goal"
+										name="goal"
+										rows="3"
+										maxlength="400"
+										required
+										aria-invalid={!!errors.goal}
+										aria-describedby={describedBy}></textarea>{/snippet}
+							</Field>
+						{/if}
 					{:else}
 						<Field id="date" label="Data do sonho (obrigatória)" error={errors.date}>
 							{#snippet children(describedBy)}<input
@@ -255,7 +277,9 @@
 			<p class="eyebrow">O que acontece depois</p>
 			<h2>{tarot ? 'Símbolos, não sentenças.' : 'Sentidos que partem de você.'}</h2>
 			<p>
-				{tarot
+				{productId === 'tarot-journey'
+					? 'A pergunta e o objetivo são dados declarados por você. A tiragem e o percurso ainda não estão definidos; este formulário não sorteia cartas.'
+					: tarot
 					? 'As cartas são sorteadas pelo motor do produto após o pedido. Nenhuma carta ou interpretação é criada por este formulário.'
 					: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
 			</p>

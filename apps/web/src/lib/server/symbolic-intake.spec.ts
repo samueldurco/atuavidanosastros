@@ -88,7 +88,8 @@ it.each([
 	'couple-dossier',
 	'solar-return',
 	'personal-calendar',
-	'direction-journey'
+	'direction-journey',
+	'tarot-journey'
 ])('loads only minimal access for supported intake %s', async (productId) => {
 	const e = event({ id: owner }, productId);
 	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
@@ -104,7 +105,8 @@ it.each([
 	'couple-dossier',
 	'solar-return',
 	'personal-calendar',
-	'direction-journey'
+	'direction-journey',
+	'tarot-journey'
 ])('requires authentication before loading %s access', async (productId) => {
 	const e = event(null, productId);
 	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });

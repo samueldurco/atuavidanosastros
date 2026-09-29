@@ -24,6 +24,36 @@ it.each(symbolicProducts)('parses explicit consent and inputs for %s', (id) => {
 		consent: { storage: true, continuity: false, partner: false }
 	});
 });
+it('keeps the Tarot Journey initial question and declared goal separate', () => {
+	const data = form('tarot-journey');
+	data.set('goal', 'Explorar como retomar um hábito criativo.');
+	const { input, errors } = parseSymbolicForm('tarot-journey', data);
+	expect(errors).toEqual({});
+	expect(input?.questions).toEqual(['Que possibilidade explorar?']);
+	expect(input?.tarotJourney).toEqual({ goal: 'Explorar como retomar um hábito criativo.' });
+});
+it.each([
+	['goal', ''],
+	['goal', '  '],
+	['goal', 'a'.repeat(401)],
+	['goal', 'bad\u0001'],
+	['goal', 'bad\u007f'],
+	['question2', 'Outra pergunta'],
+	['cards', 'client choice']
+])('rejects invalid or undeclared Tarot Journey field %s', (name, value) => {
+	const data = form('tarot-journey');
+	data.set('goal', 'Explorar um hábito.');
+	data.set(name, value);
+	expect(parseSymbolicForm('tarot-journey', data).input).toBeNull();
+});
+it('rejects duplicate or file goal for Tarot Journey', () => {
+	const data = form('tarot-journey');
+	data.set('goal', 'Explorar um hábito.');
+	data.append('goal', 'duplicate');
+	expect(parseSymbolicForm('tarot-journey', data).input).toBeNull();
+	data.set('goal', new Blob(['file']));
+	expect(parseSymbolicForm('tarot-journey', data).input).toBeNull();
+});
 it.each(['tarot-focus', 'tarot-yes-no'])(
 	'rejects client-chosen card and extra question for %s',
 	(id) => {
