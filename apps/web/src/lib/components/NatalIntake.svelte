@@ -5,6 +5,7 @@
 	import Field from '$lib/components/ui/Field.svelte';
 	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
+	import { HOROSCOPE_REQUEST_VERSION } from '$lib/horoscope-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import {
 		PAIR_REQUEST_VERSION,
@@ -37,19 +38,23 @@
 	});
 	const product = $derived(workflowFor(productId));
 	const isDate = $derived(productId === 'date-reading');
+	const isHoroscope = $derived(productId === 'horoscope');
+	const isTemporal = $derived(isDate || isHoroscope);
 	const isSynastry = $derived(productId === 'synastry');
 	const isDossier = $derived(productId === 'couple-dossier');
 	const isContextualPair = $derived(isSynastry || isDossier);
 	const isPair = $derived(productId === 'pair-preview' || isContextualPair);
 	const isCareer = $derived(productId === 'career-compass');
-	const acceptsContext = $derived(isCareer || isDate || isContextualPair);
+	const acceptsContext = $derived(isCareer || isTemporal || isContextualPair);
 	const contextId = $derived(
 		isDossier
 			? 'couple-dossier-context'
 			: isSynastry
 				? 'synastry-context'
-				: isDate
-					? 'date-context'
+				: isTemporal
+					? isHoroscope
+						? 'horoscope-context'
+						: 'date-context'
 					: 'career-context'
 	);
 	const contextValid = $derived(
@@ -61,7 +66,7 @@
 		consent = false;
 		partnerConsent = false;
 	}
-	const dateValid = $derived(!isDate || validDate(targetDate));
+	const dateValid = $derived(!isTemporal || validDate(targetDate));
 	const canEnter = $derived(
 		access === 'AVAILABLE' &&
 			outcome.mode === 'new' &&
@@ -83,7 +88,13 @@
 		try {
 			controller = createWorkflowRequest({
 				operation: {
-					kind: isPair ? 'create-pair' : isDate ? 'create-date' : 'create-natal',
+					kind: isPair
+						? 'create-pair'
+						: isHoroscope
+							? 'create-horoscope'
+							: isTemporal
+								? 'create-date'
+								: 'create-natal',
 					ownerId
 				},
 				productId,
@@ -148,15 +159,17 @@
 					: isSynastry
 						? SYNASTRY_REQUEST_VERSION
 						: PAIR_REQUEST_VERSION
-				: isDate
-					? DATE_CONTEXT_REQUEST_VERSION
+				: isTemporal
+					? isHoroscope
+						? HOROSCOPE_REQUEST_VERSION
+						: DATE_CONTEXT_REQUEST_VERSION
 					: isCareer
 						? CAREER_REQUEST_VERSION
 						: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
 			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),
-			...(isDate ? { targetDate } : {}),
+			...(isTemporal ? { targetDate } : {}),
 			...(isPair
 				? {
 						partner: partnerValue.partner,
@@ -206,14 +219,14 @@
 
 <section
 	class="intake"
-	data-stitch={isDate || isPair ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
+	data-stitch={isTemporal || isPair ? 'ID-02 CMP-02 SH-02' : 'ID-02 SH-02'}
 	aria-labelledby="natal-product-title"
 >
 	<header>
 		<p class="eyebrow">
 			{isPair
 				? 'Amor & Relações'
-				: isDate
+				: isTemporal
 					? 'Ciclos & Tempo'
 					: isCareer
 						? 'Propósito & Prosperidade'
@@ -223,7 +236,7 @@
 		<p class="lead">
 			{isPair
 				? 'Duas origens, dados separados e limites claros.'
-				: isDate
+				: isTemporal
 					? 'Uma data escolhida por você, com o método à vista.'
 					: isCareer
 						? 'Uma base natal para reflexão sobre carreira, sem prescrição de profissão.'
@@ -278,7 +291,7 @@
 					<legend
 						>{isPair
 							? '2. Dados da outra pessoa e autorizações'
-							: isDate
+							: isTemporal
 								? '2. Escolha a data e autorize'
 								: isCareer
 									? '2. Seu contexto e sua autorização'
@@ -305,11 +318,13 @@
 							dados, confirme novamente as duas autorizações.
 						</p>
 					{/if}
-					{#if isDate}
+					{#if isTemporal}
 						<Field
 							id="target-date"
 							label="Data da leitura"
-							help="De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Não calcula aspectos, eventos nem horários favoráveis."
+							help={isHoroscope
+								? 'De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Os pares com a base natal são nominais: precisão não certificada e estabilidade desconhecida. Não indica acontecimentos ou horários favoráveis.'
+								: 'De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Não calcula aspectos, eventos nem horários favoráveis.'}
 							error={targetDate && !dateValid
 								? 'Escolha uma data válida dentro do intervalo informado.'
 								: undefined}
@@ -337,7 +352,7 @@
 							id={contextId}
 							label={isContextualPair
 								? 'Contexto do vínculo (opcional)'
-								: isDate
+								: isTemporal
 									? 'Contexto da consulta (opcional)'
 									: 'Contexto profissional (opcional)'}
 							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
@@ -372,7 +387,7 @@
 							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas, o contexto que escolhi informar e os resultados deste pedido na minha conta.'
 							: isPair
 								? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
-								: isDate
+								: isTemporal
 									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 									: isCareer
 										? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
@@ -421,7 +436,7 @@
 				<li>
 					O pedido guarda uma cópia imutável do perfil conferido{isPair
 						? ' e dos dados da outra pessoa'
-						: isDate
+						: isTemporal
 							? ' e da data escolhida'
 							: ''}.
 				</li>
@@ -442,7 +457,12 @@
 					calcula aspectos entre mapas, casas ou pontuação de compatibilidade; não revela
 					sentimentos, gênero ou destino de ninguém.
 				</p>{/if}
-			{#if isDate}<p>
+			{#if isHoroscope}<p>
+					O Horóscopo personalizado está em preparação. Os temas de amor, trabalho, ritmo e atenção
+					dependem da validação do cálculo e da revisão editorial. Esta amostra não cobre previsões
+					diárias, semanais ou mensais, nem autoriza alertas ou renovação automática.
+				</p>{/if}
+			{#if isTemporal}<p>
 					A base temporal é experimental. Seu fuso de nascimento não define sua localização atual.
 					Esta amostra não cobre uma semana, um calendário ou uma revolução solar.
 				</p>{/if}

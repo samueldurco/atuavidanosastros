@@ -14,6 +14,8 @@ export default defineConfig({
 		})
 	],
 	test: {
+		// Bound simultaneous PGlite/PDF work so real rendering deadlines remain meaningful.
+		maxWorkers: 2,
 		expect: { requireAssertions: true },
 		projects: [
 			{

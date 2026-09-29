@@ -3,6 +3,7 @@ import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { WorkflowInput, CalculationSnapshot } from '@atv/domain';
+import { parseWorkflowInput } from '@atv/domain';
 import { bodies, CaelusEphemerisProvider, type AspectPolicy } from '@atv/astrology';
 import {
 	setupProductDatabase,
@@ -30,6 +31,7 @@ import { parseOnboardingSnapshot } from '../onboarding';
 import { createWorkflowRequest } from '../workflow-request';
 import { natalRequestApi } from './natal-request-api';
 import { dateRequestApi } from './date-request-api';
+import { horoscopeRequestApi } from './horoscope-request-api';
 import { pairRequestApi } from './pair-request-api';
 import { onboardingApi } from './onboarding-api';
 import { workflowApi } from './workflow-api';
@@ -133,7 +135,8 @@ beforeAll(async () => {
 		'20260928180000_career_compass_context.sql',
 		'20260928190000_date_reading_context.sql',
 		'20260929090000_synastry_product_requests.sql',
-		'20260929100000_couple_dossier_product_requests.sql'
+		'20260929100000_couple_dossier_product_requests.sql',
+		'20260929110000_horoscope_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + migration));
 }, 20000);
@@ -158,6 +161,10 @@ const statements = {
 	],
 	request_date_product_run: [
 		'select request_date_product_run($1,$2) as value',
+		['p_request_key', 'p_command']
+	],
+	request_horoscope_product_run: [
+		'select request_horoscope_product_run($1,$2) as value',
 		['p_request_key', 'p_command']
 	],
 	request_product_run: [
@@ -393,12 +400,15 @@ function horoscopeInput(context?: string): WorkflowInput {
 		...(context === undefined ? {} : { context })
 	};
 }
-function horoscopeBrowser(lostAcknowledgement = false) {
+function horoscopeBrowser(lostAcknowledgement = false, profileCommand = false) {
 	const values = new Map<string, string>();
 	const fetcher = vi.fn<typeof fetch>(async (path, init) => {
 		const e = event(String(path), init?.body ? JSON.parse(String(init.body)) : undefined);
-		if (e.url.pathname === '/api/workflows') {
-			const response = await workflowApi(e, 'create');
+		if (e.url.pathname === '/api/workflows' || e.url.pathname === '/api/workflows/horoscope') {
+			const response =
+				e.url.pathname === '/api/workflows/horoscope'
+					? await horoscopeRequestApi(e)
+					: await workflowApi(e, 'create');
 			if (lostAcknowledgement && response.status === 202)
 				throw new TypeError('lost acknowledgement');
 			return response;
@@ -408,7 +418,10 @@ function horoscopeBrowser(lostAcknowledgement = false) {
 	});
 	const options = {
 		productId: 'horoscope',
-		operation: { kind: 'create' as const, ownerId: owner },
+		operation: {
+			kind: profileCommand ? ('create-horoscope' as const) : ('create' as const),
+			ownerId: owner
+		},
 		randomUUID,
 		fetch: fetcher,
 		storage: {
@@ -424,12 +437,27 @@ function horoscopeBrowser(lostAcknowledgement = false) {
 	return { options, values, fetcher, client: createWorkflowRequest(options) };
 }
 
-it.each([undefined, horoscopeContext])(
-	'horoscope: own persisted snapshot and private pending history, context=%s',
-	async (context) => {
+it.each([
+	[undefined, false],
+	[horoscopeContext, false],
+	[undefined, true],
+	[horoscopeContext, true]
+] as const)(
+	'horoscope: own persisted snapshot and private pending history, context=%s, profile=%s',
+	async (context, profileCommand) => {
 		await enable('horoscope');
-		const s = horoscopeBrowser(),
-			input = horoscopeInput(context);
+		if (profileCommand) await save();
+		const s = horoscopeBrowser(false, profileCommand),
+			input = profileCommand
+				? {
+						version: 'atv-horoscope-request/1',
+						productId: 'horoscope',
+						expectedRevision: 1,
+						targetDate,
+						consent: { ...consent },
+						...(context === undefined ? {} : { context })
+					}
+				: horoscopeInput(context);
 		const result = await s.client.perform(true, input);
 		expect(result.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
 		const queued = await stored();
@@ -460,10 +488,13 @@ it.each([undefined, horoscopeContext])(
 		expect(stability.pairs).toHaveLength(100);
 		for (const pair of stability.pairs)
 			expect(pair).toMatchObject({ status: 'unknown-accuracy', separationIntervalDegrees: null });
-		const expected = await createHoroscopeCalculators(horoscopePolicy).horoscope(input, {
-			runId: run.id,
-			signal: new AbortController().signal
-		});
+		const expected = await createHoroscopeCalculators(horoscopePolicy).horoscope(
+			parseWorkflowInput(queued.input)!,
+			{
+				runId: run.id,
+				signal: new AbortController().signal
+			}
+		);
 		expect(deterministicSnapshot(snapshot)).toEqual(deterministicSnapshot(expected));
 		const prepared = prepareProductFacts('horoscope', snapshot);
 		expect(prepared.status).toBe('prepared');
@@ -499,7 +530,16 @@ it.each([undefined, horoscopeContext])(
 		expect(
 			(await workflowArtifacts(event(`/api/workflows/${run.id}/artifacts`), run.id)).status
 		).toBe(404);
-		expect(await counts()).toEqual({ runs: 1, events: 3, items: 1, receipts: 0 });
+		expect(await counts()).toEqual({
+			runs: 1,
+			events: 3,
+			items: 1,
+			receipts: profileCommand ? 1 : 0
+		});
+		if (profileCommand)
+			expect(
+				(await db.query('select command,natal_version from horoscope_product_requests')).rows
+			).toEqual([{ command: input, natal_version: 1 }]);
 		expect((await db.query('select count(*) n from editorial_promotions')).rows).toEqual([
 			{ n: 0 }
 		]);
@@ -648,7 +688,7 @@ async function stored(id?: string) {
 async function counts() {
 	return (
 		await db.query(
-			'select (select count(*) from product_runs) runs,(select count(*) from product_run_events) events,(select count(*) from library_items) items,((select count(*) from natal_product_requests)+(select count(*) from date_product_requests)+(select count(*) from pair_product_requests)) receipts'
+			'select (select count(*) from product_runs) runs,(select count(*) from product_run_events) events,(select count(*) from library_items) items,((select count(*) from natal_product_requests)+(select count(*) from date_product_requests)+(select count(*) from pair_product_requests)+(select count(*) from horoscope_product_requests)) receipts'
 		)
 	).rows[0];
 }

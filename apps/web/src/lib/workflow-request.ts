@@ -3,6 +3,7 @@ import { isUuid } from './library-result';
 import { parseProductRun } from './product-run';
 import { natalProducts, parseNatalRequestInput, type NatalProduct } from './natal-request';
 import { parseDateRequestInput } from './date-request';
+import { parseHoroscopeRequestInput } from './horoscope-request';
 import { parsePairRequestInput } from './pair-request';
 
 export type WorkflowRequestState = {
@@ -57,6 +58,7 @@ type Operation =
 	| { kind: 'create'; ownerId: string }
 	| { kind: 'create-natal'; ownerId: string }
 	| { kind: 'create-date'; ownerId: string }
+	| { kind: 'create-horoscope'; ownerId: string }
 	| { kind: 'create-pair'; ownerId: string }
 	| { kind: 'reprocess'; runId: string };
 
@@ -84,6 +86,7 @@ export function createWorkflowRequest(options: {
 				!isUuid(operation.kind === 'reprocess' ? operation.runId : operation.ownerId) ||
 				(operation.kind === 'create-natal' && !natalProducts.includes(productId as NatalProduct)) ||
 				(operation.kind === 'create-date' && productId !== 'date-reading') ||
+				(operation.kind === 'create-horoscope' && productId !== 'horoscope') ||
 				(operation.kind === 'create-pair' &&
 					!['pair-preview', 'synastry', 'couple-dossier'].includes(productId))
 			)
@@ -217,11 +220,13 @@ export function createWorkflowRequest(options: {
 					? parseNatalRequestInput(rawInput)
 					: operation.kind === 'create-date'
 						? parseDateRequestInput(rawInput)
-						: operation.kind === 'create-pair'
-							? parsePairRequestInput(rawInput)
-							: operation.kind === 'create'
-								? parseWorkflowInput(rawInput)
-								: null;
+						: operation.kind === 'create-horoscope'
+							? parseHoroscopeRequestInput(rawInput)
+							: operation.kind === 'create-pair'
+								? parsePairRequestInput(rawInput)
+								: operation.kind === 'create'
+									? parseWorkflowInput(rawInput)
+									: null;
 			if (operation.kind !== 'reprocess' && (!input || input.productId !== productId))
 				return { mode: 'new', message: 'Revise os dados e o consentimento antes de enviar.' };
 			const key = options.randomUUID();
@@ -246,11 +251,13 @@ export function createWorkflowRequest(options: {
 					? '/api/workflows/natal'
 					: operation.kind === 'create-date'
 						? '/api/workflows/date'
-						: operation.kind === 'create-pair'
-							? '/api/workflows/pair'
-							: operation.kind === 'create'
-								? '/api/workflows'
-								: `/api/workflows/${operation.runId}/reprocess`,
+						: operation.kind === 'create-horoscope'
+							? '/api/workflows/horoscope'
+							: operation.kind === 'create-pair'
+								? '/api/workflows/pair'
+								: operation.kind === 'create'
+									? '/api/workflows'
+									: `/api/workflows/${operation.runId}/reprocess`,
 				body
 			);
 			if (
@@ -262,6 +269,7 @@ export function createWorkflowRequest(options: {
 					? refused[payload.error]
 					: (operation.kind === 'create-natal' ||
 								operation.kind === 'create-date' ||
+								operation.kind === 'create-horoscope' ||
 								operation.kind === 'create-pair') &&
 						  Object.hasOwn(natalRefused, payload.error)
 						? natalRefused[payload.error]
