@@ -12,7 +12,12 @@ import {
   validBirthChartFacts,
 } from "./birth-chart.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.5";
+import {
+  ASCENDANT_EDITORIAL_VERSION,
+  validAscendantFacts,
+} from "./ascendant.ts";
+
+export const PROMPT_VERSION = "atv-editorial/1.0.6";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -39,7 +44,8 @@ export interface FactsEnvelope {
   editorialProfile?:
     | typeof CAREER_COMPASS_EDITORIAL_VERSION
     | typeof THREE_PILLARS_EDITORIAL_VERSION
-    | typeof BIRTH_CHART_EDITORIAL_VERSION;
+    | typeof BIRTH_CHART_EDITORIAL_VERSION
+    | typeof ASCENDANT_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -191,7 +197,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION &&
       validThreePillarsFacts(value)) ||
     (value.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
-      validBirthChartFacts(value))
+      validBirthChartFacts(value)) ||
+    (value.editorialProfile === ASCENDANT_EDITORIAL_VERSION &&
+      validAscendantFacts(value))
   );
 }
 

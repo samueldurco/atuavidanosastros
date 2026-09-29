@@ -1,5 +1,9 @@
 import { CONSTITUTION_VERSION, constitutions } from "./constitutions.ts";
 import {
+  ASCENDANT_EDITORIAL_VERSION,
+  ascendantInstructions,
+} from "./ascendant.ts";
+import {
   BIRTH_CHART_EDITORIAL_VERSION,
   birthChartInstructions,
 } from "./birth-chart.ts";
@@ -66,6 +70,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION
       ? [birthChartInstructions]
+      : []),
+    ...(request.facts.editorialProfile === ASCENDANT_EDITORIAL_VERSION
+      ? [ascendantInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

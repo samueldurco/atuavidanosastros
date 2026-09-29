@@ -192,16 +192,22 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.10.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.11.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
-    '870a360458e37d3e7ef49f201ad557a7fc5810828204541fbc38852828627a68');
+    'c7d419b297da780a5b09f4ffbde88456b13d08ad0c7feba4380df978dc45edce');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
-    'dd7763656b3233ba10c27625195e473a6b417a3ab913f0e41f97d45316357736');
+    '4ee78d1b17e44beb38ae8de643124319f02a1cc67b36ee88a2b4767f6faf1ddd');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
-    'a46d39ebcebf9d2d4252292a41f35f48b3ba8bc41935ba40f0d2b87e442991fe');
-  // Version 1.10.0 preserves requests while adding ASC persisted-coherence validation.
+    '9c4f4667e11e35d699f045ff83cd747ac28c1b98ac68ef3b431105270411b8ec');
+  // Version 1.11.0 adds only the trusted ASC profile to existing requests.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
-    '6c59a8014d964d8c3f27cb4c89de916d3c00c43efc78c2260c2330c21eaf2808');
+    '7a8ae296f4a37e1afd2623f52ba96f3b7201b6a9523264498770808c88a9a4eb');
+  const restored = corpus.cases.map(item => {
+    const value = structuredClone({ id: item.id, request: item.request });
+    if (item.productId === 'ascendant' && value.request) delete value.request.facts.editorialProfile;
+    return value;
+  });
+  assert.equal(corpusDigest(restored), '870a360458e37d3e7ef49f201ad557a7fc5810828204541fbc38852828627a68');
 });
 
 test('offline corpus covers 13 partial bases, six capabilities and seven strata without claiming release', () => {

@@ -1,6 +1,23 @@
 import { CAREER_COMPASS_EDITORIAL_VERSION, careerCompassRoles } from '../../packages/ai/src/career-compass.ts';
 import { THREE_PILLARS_EDITORIAL_VERSION, threePillarsFactIds, threePillarsRoles } from '../../packages/ai/src/three-pillars.ts';
 import { BIRTH_CHART_EDITORIAL_VERSION, birthChartRoles } from '../../packages/ai/src/birth-chart.ts';
+import { ASCENDANT_EDITORIAL_VERSION, ascendantRoles } from '../../packages/ai/src/ascendant.ts';
+
+/** Test-only ASC coverage; no interpretation, model validation or approval.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function ascendantEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== ASCENDANT_EDITORIAL_VERSION) return {};
+  const fact=facts.facts.find(fact=>fact.id==='angle-ascendant');
+  if(!fact) throw new Error('fixture_ascendant_missing');
+  return {
+    claims:[{id:'asc-fact',kind:'fact',text:fact.display,evidence:['angle-ascendant']},
+      ...ascendantRoles.map(id=>({id,kind:'hypothesis',text:`Fixture estrutural de ${id}; não é leitura homologada.`,evidence:['angle-ascendant']}))],
+    relations:[],
+    synthesis:[{claimIds:[...ascendantRoles],text:'Síntese de teste dos três papéis; conteúdo sem aprovação legítima.'}],
+    reflections:['Como quero iniciar um primeiro contato?', 'Que alternativa de iniciativa posso observar?', 'Qual experimento reversível ajuda a ajustar minha abordagem?'],
+  };
+}
 
 // Test-only structural overrides. No interpretation, review or release authority.
 /** @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts */

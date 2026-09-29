@@ -201,3 +201,7 @@ Delivery1.3.0 labels the eleven natal roles and synthesis while preserving every
 ## Birth-chart reader composition (WU125)
 
 Only the released birth-chart reader displays its validated saved cartography alongside the real chapter index. Ten bodies keep their exact longitude; ASC/MC and supported Placidus cusps are drawn from the snapshot. Shared longitude geometry keeps Aries zero on the left and increases counterclockwise. Radial marker tracks are layout positions, not distances or aspects. Full fact labels/values and keyboard links remain available; optional enlargement uses a focusable scroll area. Missing geometry retains the saved reading without inventing a chart. Polar absence is explicit. This finite local composition does not approve content, authenticate origin, alter artifact versions or satisfy hosted release/Gate B in full.
+
+## Ascendant editorial coverage (WU127)
+
+Ascendant E2 selects `atv-ascendant-editorial/1.0.0` after saved projection coherence, requiring the exact angle fact, approach/possibilities/tension roles, joint synthesis and three practical questions. One factor permits no relations. Prompt1.0.6/editorial1.9.0/corpus1.11.0 bind existing requests and reviews to this coverage; removing only the ASC profile restores prior request fingerprints. Structural fixtures remain unapproved, publication blocked and E2 acceptance dependent on legitimate content/model/review. Contract: `docs/contracts/ascendant-editorial.md`; evidence: `docs/qa/ASCENDANT_EDITORIAL_2026-09-28.md`.

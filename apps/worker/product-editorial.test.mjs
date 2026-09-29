@@ -5,7 +5,7 @@ import { dimensions, RUBRIC_VERSION, SCHEMA_VERSION, EditorialGateway, LabBudget
 import { prepareProductFacts, evaluateProductDraft } from './src/product-editorial.ts';
 import { createNatalCalculators, zodiacPosition } from './src/natal-calculators.ts';
 import { createSymbolicCalculators } from './src/symbolic-calculators.ts';
-import { threePillarsEditorialTestFixture , birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
+import { threePillarsEditorialTestFixture, ascendantEditorialTestFixture, birthChartEditorialTestFixture } from '../../scripts/helpers/career-editorial-test-fixture.mjs';
 
 const runId='00000000-0000-4000-8000-000000000001';
 const consent={storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false};
@@ -22,7 +22,7 @@ function reading(facts) {
   return {schemaVersion:SCHEMA_VERSION,capability:facts.capability,scope:'partial',title:'Um recorte para observar',
     claims:[{id:'c1',kind:'fact',text:facts.facts[0].display,evidence:[facts.facts[0].id]}],relations:[],
     synthesis:[{claimIds:['c1'],text:'Este recorte preserva a informação recebida e não encerra uma leitura.'}],
-    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts), ...birthChartEditorialTestFixture(facts)};
+    reflections:['Que associação pessoal aparece ao considerar esse elemento?'],limits:['Rascunho sintético para testar contratos; não é interpretação homologada.'], ...threePillarsEditorialTestFixture(facts), ...birthChartEditorialTestFixture(facts), ...ascendantEditorialTestFixture(facts)};
 }
 async function draft(productId='daily-card') {
   const calc=await calculation(productId); const prepared=prepareProductFacts(productId,calc);
@@ -84,6 +84,22 @@ test('birth-chart persisted profile binds all factors and integration without gr
     assert.equal(result.reason, 'mechanical_rejected');
     assert.equal(result.publication, 'blocked');
     assert.notEqual(result.basisDigest, assessed.basisDigest);
+  }
+});
+
+test('ASC persisted profile binds complete structural coverage and refuses stale review after edits',async()=>{
+  const input=await draft('ascendant'), prepared=prepareProductFacts('ascendant',input.calculation);
+  assert.equal(prepared.facts.editorialProfile,'atv-ascendant-editorial/1.0.0');
+  const assessed=await evaluateProductDraft(input), fixtureReview=bound(assessed);
+  assert.equal(assessed.status,'needs_editorial_review');
+  assert.equal((await evaluateProductDraft(input,fixtureReview,authority)).reason,'promotion_required');
+  for(const mutate of [d=>d.output.claims.pop(),d=>d.output.claims[0].text+=' alterado',
+    d=>d.output.synthesis[0].claimIds.pop(),d=>d.output.reflections.pop(),
+    d=>d.output.claims[1].evidence=['personal-context']]) {
+    const changed=structuredClone(input);mutate(changed);
+    const result=await evaluateProductDraft(changed,fixtureReview,authority);
+    assert.equal(result.reason,'mechanical_rejected');assert.equal(result.publication,'blocked');
+    assert.notEqual(result.basisDigest,assessed.basisDigest);
   }
 });
 
