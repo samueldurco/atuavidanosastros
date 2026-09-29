@@ -6,6 +6,7 @@
 	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
 	import { HOROSCOPE_REQUEST_VERSION } from '$lib/horoscope-request';
+	import { WEEK_REQUEST_VERSION } from '$lib/week-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
 	import {
 		PAIR_REQUEST_VERSION,
@@ -39,7 +40,8 @@
 	const product = $derived(workflowFor(productId));
 	const isDate = $derived(productId === 'date-reading');
 	const isHoroscope = $derived(productId === 'horoscope');
-	const isTemporal = $derived(isDate || isHoroscope);
+	const isWeek = $derived(productId === 'week-reading');
+	const isTemporal = $derived(isDate || isHoroscope || isWeek);
 	const isSynastry = $derived(productId === 'synastry');
 	const isDossier = $derived(productId === 'couple-dossier');
 	const isContextualPair = $derived(isSynastry || isDossier);
@@ -52,9 +54,11 @@
 			: isSynastry
 				? 'synastry-context'
 				: isTemporal
-					? isHoroscope
-						? 'horoscope-context'
-						: 'date-context'
+					? isWeek
+						? 'week-context'
+						: isHoroscope
+							? 'horoscope-context'
+							: 'date-context'
 					: 'career-context'
 	);
 	const contextValid = $derived(
@@ -66,7 +70,9 @@
 		consent = false;
 		partnerConsent = false;
 	}
-	const dateValid = $derived(!isTemporal || validDate(targetDate));
+	const dateValid = $derived(
+		!isTemporal || (validDate(targetDate) && (!isWeek || targetDate <= '2099-12-25'))
+	);
 	const canEnter = $derived(
 		access === 'AVAILABLE' &&
 			outcome.mode === 'new' &&
@@ -90,11 +96,13 @@
 				operation: {
 					kind: isPair
 						? 'create-pair'
-						: isHoroscope
-							? 'create-horoscope'
-							: isTemporal
-								? 'create-date'
-								: 'create-natal',
+						: isWeek
+							? 'create-week'
+							: isHoroscope
+								? 'create-horoscope'
+								: isTemporal
+									? 'create-date'
+									: 'create-natal',
 					ownerId
 				},
 				productId,
@@ -160,9 +168,11 @@
 						? SYNASTRY_REQUEST_VERSION
 						: PAIR_REQUEST_VERSION
 				: isTemporal
-					? isHoroscope
-						? HOROSCOPE_REQUEST_VERSION
-						: DATE_CONTEXT_REQUEST_VERSION
+					? isWeek
+						? WEEK_REQUEST_VERSION
+						: isHoroscope
+							? HOROSCOPE_REQUEST_VERSION
+							: DATE_CONTEXT_REQUEST_VERSION
 					: isCareer
 						? CAREER_REQUEST_VERSION
 						: NATAL_REQUEST_VERSION,
@@ -237,7 +247,9 @@
 			{isPair
 				? 'Duas origens, dados separados e limites claros.'
 				: isTemporal
-					? 'Uma data escolhida por você, com o método à vista.'
+					? isWeek
+						? 'Sete datas consecutivas a partir do dia que você escolher.'
+						: 'Uma data escolhida por você, com o método à vista.'
 					: isCareer
 						? 'Uma base natal para reflexão sobre carreira, sem prescrição de profissão.'
 						: 'Seu céu começa nos dados que você escolheu guardar.'}
@@ -321,10 +333,12 @@
 					{#if isTemporal}
 						<Field
 							id="target-date"
-							label="Data da leitura"
-							help={isHoroscope
-								? 'De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Os pares com a base natal são nominais: precisão não certificada e estabilidade desconhecida. Não indica acontecimentos ou horários favoráveis.'
-								: 'De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Não calcula aspectos, eventos nem horários favoráveis.'}
+							label={isWeek ? 'Data inicial da semana' : 'Data da leitura'}
+							help={isWeek
+								? 'De 01/01/1900 a 25/12/2099. A base atual usa sete amostras geocêntricas consecutivas às 12h UTC. Elas não representam sete dias inteiros no seu fuso e não identificam eventos ou horários favoráveis.'
+								: isHoroscope
+									? 'De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Os pares com a base natal são nominais: precisão não certificada e estabilidade desconhecida. Não indica acontecimentos ou horários favoráveis.'
+									: 'De 01/01/1900 a 31/12/2099. O cálculo atual usa uma única amostra geocêntrica às 12h UTC nessa data, não o dia inteiro no seu fuso. Não calcula aspectos, eventos nem horários favoráveis.'}
 							error={targetDate && !dateValid
 								? 'Escolha uma data válida dentro do intervalo informado.'
 								: undefined}
@@ -335,7 +349,7 @@
 									type="date"
 									required
 									min="1900-01-01"
-									max="2099-12-31"
+									max={isWeek ? '2099-12-25' : '2099-12-31'}
 									autocomplete="off"
 									bind:value={targetDate}
 									oninput={() => {
@@ -457,12 +471,18 @@
 					calcula aspectos entre mapas, casas ou pontuação de compatibilidade; não revela
 					sentimentos, gênero ou destino de ninguém.
 				</p>{/if}
+			{#if isWeek}<p>
+					A Semana está em preparação. Esta base parcial reúne o perfil natal e sete amostras
+					consecutivas; a leitura depende da homologação do motor e da revisão editorial. Não
+					consulta seu fuso ou local atuais, datas importantes, calendário ou lembretes. Não
+					autoriza alertas nem continuidade automática ATV+.
+				</p>{/if}
 			{#if isHoroscope}<p>
 					O Horóscopo personalizado está em preparação. Os temas de amor, trabalho, ritmo e atenção
 					dependem da validação do cálculo e da revisão editorial. Esta amostra não cobre previsões
 					diárias, semanais ou mensais, nem autoriza alertas ou renovação automática.
 				</p>{/if}
-			{#if isTemporal}<p>
+			{#if isTemporal && !isWeek}<p>
 					A base temporal é experimental. Seu fuso de nascimento não define sua localização atual.
 					Esta amostra não cobre uma semana, um calendário ou uma revolução solar.
 				</p>{/if}

@@ -79,17 +79,21 @@ it('rejects a product without an implemented form before querying', async () => 
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
-it.each([...natalProducts, 'date-reading', 'pair-preview', 'synastry', 'couple-dossier'])(
-	'loads only minimal access for profile product %s',
-	async (productId) => {
-		const e = event({ id: owner }, productId);
-		expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
-		expect(e.m.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
-			p_product_id: productId
-		});
-	}
-);
-it.each(['date-reading', 'pair-preview', 'synastry', 'couple-dossier'])(
+it.each([
+	...natalProducts,
+	'week-reading',
+	'date-reading',
+	'pair-preview',
+	'synastry',
+	'couple-dossier'
+])('loads only minimal access for profile product %s', async (productId) => {
+	const e = event({ id: owner }, productId);
+	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
+	expect(e.m.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
+		p_product_id: productId
+	});
+});
+it.each(['week-reading', 'date-reading', 'pair-preview', 'synastry', 'couple-dossier'])(
 	'requires authentication before loading %s access',
 	async (productId) => {
 		const e = event(null, productId);
