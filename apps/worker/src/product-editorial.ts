@@ -1,5 +1,6 @@
 import { THREE_QUESTIONS_EDITORIAL_VERSION } from "../../../packages/ai/src/three-questions.ts";
 import { TAROT_YES_NO_EDITORIAL_VERSION } from "../../../packages/ai/src/tarot-yes-no.ts";
+import { SYNASTRY_EDITORIAL_VERSION } from "@atv/ai";
 import {
   workflowFor,
   type CalculationSnapshot,
@@ -55,7 +56,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.28.0";
+  "atv-product-editorial-evidence/1.29.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -161,7 +162,9 @@ export function prepareProductFacts(
                     ? { editorialProfile: DATE_READING_EDITORIAL_VERSION }
                     : productId === "pair-preview"
                       ? { editorialProfile: PAIR_PREVIEW_EDITORIAL_VERSION }
-                      : {}),
+                      : productId === "synastry"
+                        ? { editorialProfile: SYNASTRY_EDITORIAL_VERSION }
+                        : {}),
   };
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts))

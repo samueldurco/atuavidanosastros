@@ -9,6 +9,10 @@ import {
 } from "./contracts.ts";
 import { buildPrompt } from "./prompt.ts";
 import { BIRTH_CHART_EDITORIAL_VERSION } from "./birth-chart.ts";
+import {
+  SYNASTRY_EDITORIAL_VERSION,
+  SYNASTRY_MAX_INPUT_CHARS,
+} from "./synastry.ts";
 import { parseReading } from "./schema.ts";
 import { inspectReading, type MechanicalReview } from "./director.ts";
 
@@ -145,8 +149,10 @@ export class EditorialGateway {
     if (!hasInterpretiveBasis(input.facts))
       return unavailable("insufficient_facts");
     if (
-      input.facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
-      input.tier === "free"
+      (input.facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
+        input.tier === "free") ||
+      (input.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION &&
+        input.tier !== "premium")
     )
       return unavailable("insufficient_tier");
     if (
@@ -186,7 +192,11 @@ export class EditorialGateway {
       return unavailable("invalid_input");
     }
     const payload = deepFreeze(buildPrompt(request));
-    if (payload.prompt.length > tierLimits[request.tier].maxInputChars)
+    const maxInputChars =
+      request.facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION
+        ? SYNASTRY_MAX_INPUT_CHARS
+        : tierLimits[request.tier].maxInputChars;
+    if (payload.prompt.length > maxInputChars)
       return unavailable("input_limit");
     const startedAt = performance.now();
     const timeoutMs =

@@ -1,3 +1,4 @@
+import { SYNASTRY_EDITORIAL_VERSION, validSynastryFacts } from "./synastry.ts";
 import {
   PAIR_PREVIEW_EDITORIAL_VERSION,
   validPairPreviewFacts,
@@ -55,7 +56,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.15";
+export const PROMPT_VERSION = "atv-editorial/1.0.16";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",
@@ -92,7 +93,8 @@ export interface FactsEnvelope {
     | typeof DREAM_JOURNAL_EDITORIAL_VERSION
     | typeof DREAM_READING_EDITORIAL_VERSION
     | typeof DATE_READING_EDITORIAL_VERSION
-    | typeof PAIR_PREVIEW_EDITORIAL_VERSION;
+    | typeof PAIR_PREVIEW_EDITORIAL_VERSION
+    | typeof SYNASTRY_EDITORIAL_VERSION;
 }
 export interface EditorialRequest {
   correlationId: string;
@@ -213,7 +215,8 @@ export function validateFacts(value: FactsEnvelope): boolean {
   if (
     !Array.isArray(value.facts) ||
     value.facts.length < 1 ||
-    value.facts.length > 40
+    value.facts.length >
+      (value.editorialProfile === SYNASTRY_EDITORIAL_VERSION ? 121 : 40)
   )
     return false;
   const ids = new Set<string>();
@@ -237,7 +240,8 @@ export function validateFacts(value: FactsEnvelope): boolean {
           : 1200) ||
       typeof fact.source !== "string" ||
       !fact.source.trim() ||
-      fact.source.length > 160
+      fact.source.length >
+        (value.editorialProfile === SYNASTRY_EDITORIAL_VERSION ? 300 : 160)
     )
       return false;
     ids.add(fact.id);
@@ -269,7 +273,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     (value.editorialProfile === DATE_READING_EDITORIAL_VERSION &&
       validDateReadingFacts(value)) ||
     (value.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION &&
-      validPairPreviewFacts(value))
+      validPairPreviewFacts(value)) ||
+    (value.editorialProfile === SYNASTRY_EDITORIAL_VERSION &&
+      validSynastryFacts(value))
   );
 }
 

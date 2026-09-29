@@ -50,7 +50,7 @@ const snapshot = (context) =>
   });
 const blocked = { status: "blocked", reason: "calculation_invalid" };
 
-test("all 120/121 persisted facts are coherent without admission through the generic 40-fact budget", async () => {
+test("all 120/121 persisted facts are coherent and admitted through the specific synastry profile", async () => {
   for (const context of [
     undefined,
     "Contexto consentido para explorar comunicação.",
@@ -59,10 +59,13 @@ test("all 120/121 persisted facts are coherent without admission through the gen
     const value = await snapshot(context);
     assert.equal(validSynastryProjection(value), true);
     assert.equal(value.facts.length, context === undefined ? 120 : 121);
-    assert.deepEqual(prepareProductFacts("synastry", value), {
-      status: "blocked",
-      reason: "facts_not_representable",
-    });
+    const prepared = prepareProductFacts("synastry", value);
+    assert.equal(prepared.status, "prepared");
+    assert.deepEqual(prepared.facts.facts, value.facts);
+    assert.equal(
+      prepared.facts.editorialProfile,
+      "atv-synastry-editorial/1.0.0",
+    );
   }
 });
 

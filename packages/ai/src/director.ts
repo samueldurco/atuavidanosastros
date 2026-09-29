@@ -1,3 +1,4 @@
+import { SYNASTRY_EDITORIAL_VERSION, inspectSynastry } from "./synastry.ts";
 import {
   PAIR_PREVIEW_EDITORIAL_VERSION,
   inspectPairPreview,
@@ -200,6 +201,8 @@ export function inspectReading(
     findings.push(...inspectDreamReading(reading, facts));
   if (facts.editorialProfile === DATE_READING_EDITORIAL_VERSION)
     findings.push(...inspectDateReading(reading, facts));
+  if (facts.editorialProfile === SYNASTRY_EDITORIAL_VERSION)
+    findings.push(...inspectSynastry(reading, facts));
   if (facts.editorialProfile === PAIR_PREVIEW_EDITORIAL_VERSION)
     findings.push(...inspectPairPreview(reading, facts));
   return {
