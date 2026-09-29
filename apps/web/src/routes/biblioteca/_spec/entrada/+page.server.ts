@@ -17,7 +17,8 @@ export const load: PageServerLoad = ({ url, setHeaders }) => {
 			!natalProducts.includes(productId as NatalProduct) &&
 			productId !== 'date-reading' &&
 			productId !== 'pair-preview' &&
-			productId !== 'synastry') ||
+			productId !== 'synastry' &&
+			productId !== 'couple-dossier') ||
 		!['AVAILABLE', 'UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE'].includes(access)
 	)
 		error(404);

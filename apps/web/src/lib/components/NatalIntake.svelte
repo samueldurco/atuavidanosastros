@@ -6,7 +6,11 @@
 	import { NATAL_REQUEST_VERSION, CAREER_REQUEST_VERSION } from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
 	import { REPORTED_CONTEXT_LIMIT, validReportedContext } from '$lib/reported-context';
-	import { PAIR_REQUEST_VERSION, SYNASTRY_REQUEST_VERSION } from '$lib/pair-request';
+	import {
+		PAIR_REQUEST_VERSION,
+		SYNASTRY_REQUEST_VERSION,
+		COUPLE_DOSSIER_REQUEST_VERSION
+	} from '$lib/pair-request';
 	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
 	import PartnerBirthFields from './PartnerBirthFields.svelte';
 	import type { OnboardingSnapshot } from '$lib/onboarding';
@@ -34,11 +38,19 @@
 	const product = $derived(workflowFor(productId));
 	const isDate = $derived(productId === 'date-reading');
 	const isSynastry = $derived(productId === 'synastry');
-	const isPair = $derived(productId === 'pair-preview' || isSynastry);
+	const isDossier = $derived(productId === 'couple-dossier');
+	const isContextualPair = $derived(isSynastry || isDossier);
+	const isPair = $derived(productId === 'pair-preview' || isContextualPair);
 	const isCareer = $derived(productId === 'career-compass');
-	const acceptsContext = $derived(isCareer || isDate || isSynastry);
+	const acceptsContext = $derived(isCareer || isDate || isContextualPair);
 	const contextId = $derived(
-		isSynastry ? 'synastry-context' : isDate ? 'date-context' : 'career-context'
+		isDossier
+			? 'couple-dossier-context'
+			: isSynastry
+				? 'synastry-context'
+				: isDate
+					? 'date-context'
+					: 'career-context'
 	);
 	const contextValid = $derived(
 		!acceptsContext || reportedContext === '' || validReportedContext(reportedContext)
@@ -131,9 +143,11 @@
 		busy = true;
 		const input = {
 			version: isPair
-				? isSynastry
-					? SYNASTRY_REQUEST_VERSION
-					: PAIR_REQUEST_VERSION
+				? isDossier
+					? COUPLE_DOSSIER_REQUEST_VERSION
+					: isSynastry
+						? SYNASTRY_REQUEST_VERSION
+						: PAIR_REQUEST_VERSION
 				: isDate
 					? DATE_CONTEXT_REQUEST_VERSION
 					: isCareer
@@ -321,7 +335,7 @@
 					{#if acceptsContext}
 						<Field
 							id={contextId}
-							label={isSynastry
+							label={isContextualPair
 								? 'Contexto do vínculo (opcional)'
 								: isDate
 									? 'Contexto da consulta (opcional)'
@@ -354,7 +368,7 @@
 							required
 							bind:checked={consent}
 							aria-describedby="natal-retention"
-						/>{isSynastry
+						/>{isContextualPair
 							? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas, o contexto que escolhi informar e os resultados deste pedido na minha conta.'
 							: isPair
 								? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
@@ -414,7 +428,12 @@
 				<li>O motor valida e calcula os dados separadamente.</li>
 				<li>A interpretação depende de avaliação e liberação editorial.</li>
 			</ol>
-			{#if isSynastry}<p>
+			{#if isDossier}<p>
+					O Dossiê do Casal ainda está em preparação. Sua leitura sobre comunicação, vínculo,
+					desejo, segurança, autonomia, conflito, reparação, negociação e crescimento depende da
+					validação do cálculo e da revisão editorial. Não oferece pontuação de compatibilidade, não
+					presume acordos nem afirma sentimentos ou destino de outra pessoa.
+				</p>{:else if isSynastry}<p>
 					A Sinastria ainda está em preparação. Sua leitura depende da validação do cálculo, da
 					política de aspectos e da revisão editorial. Não oferece pontuação de compatibilidade nem
 					afirma sentimentos, intenções ou destino de outra pessoa.

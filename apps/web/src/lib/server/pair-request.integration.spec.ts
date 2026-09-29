@@ -151,7 +151,8 @@ beforeAll(async () => {
 		'20260925160000_natal_product_requests.sql',
 		'20260925190000_date_product_requests.sql',
 		'20260925200000_pair_product_requests.sql',
-		'20260929090000_synastry_product_requests.sql'
+		'20260929090000_synastry_product_requests.sql',
+		'20260929100000_couple_dossier_product_requests.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -477,6 +478,155 @@ const synastry = (changes = {}) =>
 	request({ version: 'atv-pair-request/2', productId: 'synastry', ...changes });
 const enableSynastry = () =>
 	db.exec("update workflow_releases set enabled=true where product_id='synastry'");
+const dossier = (changes = {}) =>
+	request({ version: 'atv-pair-request/3', productId: 'couple-dossier', ...changes });
+const enableDossier = () =>
+	db.exec("update workflow_releases set enabled=true where product_id='couple-dossier'");
+it('stores Dossier v3 exact context and immutable private consent lineage without approving its engine', async () => {
+	await save();
+	expect((await pairRequestApi(event(dossier()))).status).toBe(409);
+	await enableDossier();
+	const context = 'par🌌'.repeat(240);
+	const body = dossier({ context });
+	expect(parsePairRequestInput(body.input)).toEqual(body.input);
+	const response = await pairRequestApi(event(body));
+	expect(response.status).toBe(202);
+	expect(response.headers.get('cache-control')).toBe('private, no-store');
+	const { runId } = (await response.json()) as { runId: string };
+	const row = (
+		await db.query<{ input: unknown; state: string; revision: number }>(
+			'select input,state,revision from product_runs where id=$1',
+			[runId]
+		)
+	).rows[0];
+	expect(parseWorkflowInput(row.input)).toMatchObject({
+		productId: 'couple-dossier',
+		birth,
+		context,
+		consent: { partner: true, continuity: false }
+	});
+	expect(row).toMatchObject({ state: 'QUEUED', revision: 1 });
+	expect(
+		(
+			await db.query('select command,natal_version from pair_product_requests where run_id=$1', [
+				runId
+			])
+		).rows[0]
+	).toEqual({ command: body.input, natal_version: 1 });
+	const absent = await submit(dossier());
+	expect(
+		Object.hasOwn(
+			(await db.query<{ input: object }>('select input from product_runs where id=$1', [absent]))
+				.rows[0].input,
+			'context'
+		)
+	).toBe(false);
+	expect(
+		(
+			await db.query('select engine_approved from workflow_releases where product_id=$1', [
+				'couple-dossier'
+			])
+		).rows[0]
+	).toEqual({ engine_approved: false });
+	expect(await counts()).toEqual({ runs: 2, receipts: 2, events: 2, items: 2 });
+});
+it('rejects Dossier version/product crossover, context, identity, consent and civil-time inconsistencies atomically', async () => {
+	await save();
+	await enableDossier();
+	for (const changes of [
+		{ version: 'atv-pair-request/1' },
+		{ version: 'atv-pair-request/2' },
+		{ productId: 'synastry' },
+		{ productId: 'pair-preview' },
+		{ productId: 'relationship-guide' },
+		{ context: null },
+		{ context: '' },
+		{ context: ' \t\n' },
+		{ context: '🌌'.repeat(601) },
+		{ context: 'x'.repeat(1201) },
+		{ context: 'bad\u0085' },
+		{ context: 'bad\u0000' },
+		{ context: '\ud800' },
+		{ ownerId: other },
+		{ birth },
+		{ agreement: 'verified' },
+		{ score: 100 },
+		{ consent: { ...input().consent, continuity: true } },
+		{ partnerConsent: { ...input().partnerConsent, sharing: true } },
+		{ partner: { ...partner, timePrecision: 'UNKNOWN' } }
+	]) {
+		const body = dossier(changes);
+		expect(parsePairRequestInput(body.input)).toBeNull();
+		expect((await pairRequestApi(event(body))).status).toBe(400);
+		await expect(submit(body)).rejects.toThrow();
+	}
+	for (const changes of [
+		{ localDateTime: '2000-02-30T10:00:00.125' },
+		{ utcInstant: '2000-02-29T11:00:00.125Z' },
+		{ timezone: 'Imaginary/Zone' }
+	])
+		await expect(submit(dossier({ partner: { ...partner, ...changes } }))).rejects.toThrow(
+			'invalid_input'
+		);
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+it('recovers Dossier after forgetting and release revocation without mutating or crossing owners', async () => {
+	await save();
+	await enableDossier();
+	const body = dossier({ context: 'Um relato meu, sem acordo verificado.' });
+	const id = await submit(body);
+	await forget(1);
+	await db.exec("update workflow_releases set enabled=false where product_id='couple-dossier'");
+	expect(await submit(body)).toBe(id);
+	await expect(
+		submit({ ...dossier({ context: 'Alterado' }), requestKey: body.requestKey })
+	).rejects.toThrow('idempotency_conflict');
+	await expect(submit({ ...synastry(), requestKey: body.requestKey })).rejects.toThrow(
+		'idempotency_conflict'
+	);
+	const recovered = await asRole(db, 'authenticated', owner, () =>
+		db.query<{ value: unknown }>('select recover_product_request($1) value', [body.requestKey])
+	);
+	expect(recovered.rows[0].value).toMatchObject({ runId: id, productId: 'couple-dossier' });
+	const hidden = await asRole(db, 'authenticated', other, () =>
+		db.query<{ value: unknown }>('select recover_product_request($1) value', [body.requestKey])
+	);
+	expect(hidden.rows[0].value).toBeNull();
+	for (const user of [owner, other])
+		await expect(
+			asRole(db, 'authenticated', user, () =>
+				db.query('select command from pair_product_requests where run_id=$1', [id])
+			)
+		).rejects.toThrow('permission denied');
+	for (const role of ['anon', 'service_role'])
+		await expect(submit(body, owner, role)).rejects.toThrow('permission denied');
+	expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+});
+it('Dossier forward-fix preserves recovery and v1/v2 writes; reapplication restores idempotent v3', async () => {
+	await save();
+	await enableDossier();
+	await enableSynastry();
+	await enable();
+	const body = dossier({ context: 'Relato preservado.' });
+	const id = await submit(body);
+	try {
+		await db.exec(await file('supabase/forward-fixes/disable_couple_dossier_product_requests.sql'));
+		await expect(submit(dossier())).rejects.toThrow('invalid_input');
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+		const recovered = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: unknown }>('select recover_product_request($1) value', [body.requestKey])
+		);
+		expect(recovered.rows[0].value).toMatchObject({ runId: id, productId: 'couple-dossier' });
+		expect(await submit(request())).toBeTypeOf('string');
+		expect(await submit(synastry({ context: 'V2 preservado' }))).toBeTypeOf('string');
+		expect(await counts()).toEqual({ runs: 3, receipts: 3, events: 3, items: 3 });
+	} finally {
+		await db.exec(
+			await file('supabase/migrations/20260929100000_couple_dossier_product_requests.sql')
+		);
+	}
+	expect(await submit(body)).toBe(id);
+});
 it('stores Sinastria with exact optional multibyte context and separate private consent lineage', async () => {
 	await save();
 	await enableSynastry();
@@ -618,7 +768,9 @@ it('forward-fix disables Sinastria writes, preserves read recovery and restores 
 			)
 		).rows[0].n
 	).toBe(1);
-	await db.exec(await file('supabase/migrations/20260929090000_synastry_product_requests.sql'));
+	await db.exec(
+		await file('supabase/migrations/20260929100000_couple_dossier_product_requests.sql')
+	);
 	expect(await submit(body)).toBe(id);
 });
 it('forward-fix revokes new bridge calls while preserving run/receipt and read recovery', async () => {

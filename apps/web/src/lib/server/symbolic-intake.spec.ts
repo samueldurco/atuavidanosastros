@@ -79,7 +79,7 @@ it('rejects a product without an implemented form before querying', async () => 
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
-it.each([...natalProducts, 'date-reading', 'pair-preview'])(
+it.each([...natalProducts, 'date-reading', 'pair-preview', 'synastry', 'couple-dossier'])(
 	'loads only minimal access for profile product %s',
 	async (productId) => {
 		const e = event({ id: owner }, productId);
@@ -89,7 +89,7 @@ it.each([...natalProducts, 'date-reading', 'pair-preview'])(
 		});
 	}
 );
-it.each(['date-reading', 'pair-preview'])(
+it.each(['date-reading', 'pair-preview', 'synastry', 'couple-dossier'])(
 	'requires authentication before loading %s access',
 	async (productId) => {
 		const e = event(null, productId);

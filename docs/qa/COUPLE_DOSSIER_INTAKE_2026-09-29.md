@@ -1,0 +1,13 @@
+# Dossiê do Casal — intake privado local (WU168)
+
+RUN_ID `ATV-20260902-170644Z-01A0630F`. O comando `atv-pair-request/3` associa exclusivamente `couple-dossier` aos dois registros natais e ao contexto opcional relatado. Reutiliza endpoint, RPC, recibo privado, revisão do perfil, idempotência, Biblioteca e recuperação por UUID. Não registra processador, aprova conteúdo, calcula acordos, autoriza contato/compartilhamento ou consulta continuidade ATV+.
+
+O formulário começa com campos vazios e declarações separadas desmarcadas. Mudanças de contexto/parceiro e reconsulta renovam ambas; cada tentativa descarta os rascunhos pessoais. Somente UUID persiste na aba. Recuperação depois de resposta perdida consulta o pedido original, sem reenviar dados ou depender de perfil/novo consentimento. Contexto limita-se a 1200 unidades UTF-16, sem normalização nem efeito na geometria.
+
+SQL local testa persistência atômica de comando/recibo/pedido/evento/Biblioteca, limites multibyte, contexto ausente, versões cruzadas, identidade/escore/acordo extra, consentimento ampliado, calendário/fuso/civil-UTC inválidos, gate de release, engine desligado, imutabilidade após esquecer/revogar, isolamento entre titulares e acesso direto negado. A reversão restaura v1/v2 e preserva recuperação v3; reaplicar a migração recupera idempotência do pedido original.
+
+Validação: 91/91 testes de pedido/acesso/SQL; 29/29 testes de navegador entre Dossiê, Sinastria e Preview do Par; Svelte com zero erros/avisos, ESLint focal e formato de 12 arquivos PASS. A revisão visual nas larguras 1440, 820, 390 e 320 encontrou texto herdado do Preview do Par; corrigido para os nove temas e limites próprios do Dossiê, com nova rodada de 7/7 testes e inspeção das quatro capturas. Sem sobreposição/overflow e com foco visível. O acesso server-side também passou a reconhecer explicitamente Sinastria e Dossiê antes do RPC, preservando autenticação e indisponibilidade por gate.
+
+Evidências: `test-results/wu168-tests.log`, `wu168-check.log`, `wu168-e2e.log`, `wu168-copy-e2e.log`, capturas `wu168-couple-dossier-intake-{1440,820,390,320}.png`, diff/formato/segredos e CI167 `36555238454` SUCCESS. Fixtures locais de disponibilidade não alteram gates hospedados.
+
+E1/E2 integrais continuam bloqueados; E3 tem somente o intake privado local nesta WU. Processador explícito, fluxo até revisão editorial e resultado próprio web/PDF são próximos requisitos. Não há interpretação aprovada, homologação, migração hospedada ou demonstração de sessão real. Revisão legal/retenção e aprovação de política/motor/editorial/liberação continuam pendentes. R$ 0 e chamadas externas ausentes.

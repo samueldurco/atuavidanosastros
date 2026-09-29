@@ -13,7 +13,9 @@ export async function readIntakeAccess(
 		(!symbolicProduct(productId) &&
 			!natalProducts.includes(productId as NatalProduct) &&
 			productId !== 'date-reading' &&
-			productId !== 'pair-preview')
+			productId !== 'pair-preview' &&
+			productId !== 'synastry' &&
+			productId !== 'couple-dossier')
 	)
 		return 'UNAVAILABLE';
 	try {
