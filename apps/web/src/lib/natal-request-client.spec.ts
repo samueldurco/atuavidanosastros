@@ -3,7 +3,8 @@ import { createWorkflowRequest } from './workflow-request';
 import {
 	natalProducts,
 	NATAL_REQUEST_VERSION,
-	PURPOSE_CAREER_REQUEST_VERSION
+	PURPOSE_CAREER_REQUEST_VERSION,
+	LIFE_ATLAS_REQUEST_VERSION
 } from './natal-request';
 const owner = '20000000-0000-4000-8000-000000000001';
 const key = '20000000-0000-4000-8000-000000000002';
@@ -11,8 +12,16 @@ const id = '20000000-0000-4000-8000-000000000003';
 const library = '20000000-0000-4000-8000-000000000004';
 const at = '2026-09-25T12:00:00Z';
 const command = (productId = 'birth-chart') => ({
-	version: productId === 'purpose-career' ? PURPOSE_CAREER_REQUEST_VERSION : NATAL_REQUEST_VERSION,
+	version:
+		productId === 'life-atlas'
+			? LIFE_ATLAS_REQUEST_VERSION
+			: productId === 'purpose-career'
+				? PURPOSE_CAREER_REQUEST_VERSION
+				: NATAL_REQUEST_VERSION,
 	productId,
+	...(productId === 'life-atlas'
+		? { atlas: { priorities: ['Relações', 'Trabalho', 'Rotina', 'Aprendizado'] } }
+		: {}),
 	expectedRevision: 2,
 	consent: {
 		storage: true,

@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
-	import { validDate, workflowFor } from '@atv/domain';
+	import { validAtlasPriorities, validDate, workflowFor } from '@atv/domain';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
 	import {
 		NATAL_REQUEST_VERSION,
 		CAREER_REQUEST_VERSION,
-		PURPOSE_CAREER_REQUEST_VERSION
+		PURPOSE_CAREER_REQUEST_VERSION,
+		LIFE_ATLAS_REQUEST_VERSION
 	} from '$lib/natal-request';
 	import { DATE_CONTEXT_REQUEST_VERSION } from '$lib/date-request';
 	import { HOROSCOPE_REQUEST_VERSION } from '$lib/horoscope-request';
@@ -69,6 +70,7 @@
 	let calendarMarks = $state(Array.from({ length: 5 }, () => ({ date: '', label: '' })));
 	let calendarMarksAuthorized = $state(false);
 	let reportedContext = $state('');
+	let atlasPriorities = $state(['', '', '', '']);
 	let partnerForm = $state(emptyPartnerForm());
 	let partnerConsent = $state(false);
 	let feedback: HTMLParagraphElement | undefined = $state();
@@ -90,7 +92,8 @@
 	const isPair = $derived(productId === 'pair-preview' || isContextualPair);
 	const isPurposeCareer = $derived(productId === 'purpose-career');
 	const isCareer = $derived(productId === 'career-compass' || isPurposeCareer);
-	const acceptsContext = $derived(isCareer || isCycle || isContextualPair);
+	const isLifeAtlas = $derived(productId === 'life-atlas');
+	const acceptsContext = $derived(isCareer || isCycle || isContextualPair || isLifeAtlas);
 	const contextId = $derived(
 		isDossier
 			? 'couple-dossier-context'
@@ -106,8 +109,11 @@
 								: isHoroscope
 									? 'horoscope-context'
 									: 'date-context'
-					: 'career-context'
+					: isLifeAtlas
+						? 'atlas-context'
+						: 'career-context'
 	);
+	const atlasValid = $derived(!isLifeAtlas || validAtlasPriorities(atlasPriorities));
 	const contextValid = $derived(
 		!acceptsContext ||
 			reportedContext === '' ||
@@ -249,6 +255,7 @@
 			!weekPreferencesValid ||
 			!solarValid ||
 			!calendarValid ||
+			!atlasValid ||
 			!contextValid
 		)
 			return;
@@ -270,14 +277,17 @@
 								: isHoroscope
 									? HOROSCOPE_REQUEST_VERSION
 									: DATE_CONTEXT_REQUEST_VERSION
-							: isPurposeCareer
-								? PURPOSE_CAREER_REQUEST_VERSION
-								: isCareer
-									? CAREER_REQUEST_VERSION
-									: NATAL_REQUEST_VERSION,
+							: isLifeAtlas
+								? LIFE_ATLAS_REQUEST_VERSION
+								: isPurposeCareer
+									? PURPOSE_CAREER_REQUEST_VERSION
+									: isCareer
+										? CAREER_REQUEST_VERSION
+										: NATAL_REQUEST_VERSION,
 			productId,
 			expectedRevision: snapshot.revision,
 			...(acceptsContext && reportedContext !== '' ? { context: reportedContext } : {}),
+			...(isLifeAtlas ? { atlas: { priorities: atlasPriorities } } : {}),
 			...(isTemporal ? { targetDate } : {}),
 			...(isCalendar
 				? {
@@ -333,6 +343,7 @@
 		};
 		outcome = await controller.perform(true, input);
 		reportedContext = '';
+		atlasPriorities = ['', '', '', ''];
 		targetDate = '';
 		calendarMonth = '';
 		calendarMarks = Array.from({ length: 5 }, () => ({ date: '', label: '' }));
@@ -391,9 +402,11 @@
 				? 'Amor & Relações'
 				: isCycle
 					? 'Ciclos & Tempo'
-					: isCareer
-						? 'Propósito & Prosperidade'
-						: 'Meu Céu'} · novo pedido
+					: isLifeAtlas
+						? 'Quatro prioridades escolhidas por você para organizar a reflexão sobre o próximo mês.'
+						: isCareer
+							? 'Propósito & Prosperidade'
+							: 'Meu Céu'} · novo pedido
 		</p>
 		<h1 id="natal-product-title">{product?.name}</h1>
 		<p class="lead">
@@ -797,6 +810,38 @@
 							{/snippet}
 						</Field>
 					{/if}
+					{#if isLifeAtlas}
+						<fieldset class="extra-fields">
+							<legend>Quatro prioridades para este pedido</legend>
+							<p class="privacy">
+								Escolha quatro áreas distintas da sua vida. Estes nomes são suas escolhas, não
+								conclusões do mapa. Cada campo aceita até 120 caracteres.
+							</p>
+							{#each atlasPriorities as _, index (index)}
+								<Field
+									id={'atlas-priority-' + index}
+									label={'Prioridade ' + (index + 1)}
+									error={atlasPriorities[index] && !atlasValid
+										? 'Informe quatro prioridades distintas e válidas.'
+										: undefined}
+								>
+									{#snippet children(describedBy)}
+										<input
+											id={'atlas-priority-' + index}
+											type="text"
+											required
+											maxlength="120"
+											autocomplete="off"
+											bind:value={atlasPriorities[index]}
+											oninput={resetConsents}
+											aria-describedby={describedBy}
+											aria-invalid={!atlasValid && atlasPriorities[index] !== ''}
+										/>
+									{/snippet}
+								</Field>
+							{/each}
+						</fieldset>
+					{/if}
 					{#if acceptsContext}
 						<Field
 							id={contextId}
@@ -804,7 +849,9 @@
 								? 'Contexto do vínculo (opcional)'
 								: isCycle
 									? 'Contexto da consulta (opcional)'
-									: 'Contexto profissional (opcional)'}
+									: isLifeAtlas
+										? 'Contexto das prioridades (opcional)'
+										: 'Contexto profissional (opcional)'}
 							help="Conte o que deseja explorar neste momento, sem nomes de terceiros, contatos ou dados sensíveis. Este é um relato seu, não uma conclusão astrológica. Pode deixar vazio."
 							error={!contextValid
 								? `Escreva até ${contextLimit.toLocaleString('pt-BR')} caracteres válidos ou deixe o campo vazio.`
@@ -845,9 +892,11 @@
 											? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 											: isCalendar
 												? 'Autorizo guardar uma cópia dos dados natais conferidos, do mês escolhido, dos marcos pessoais autorizados, do contexto opcional e dos resultados deste pedido na minha conta.'
-												: isCareer
-													? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
-													: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
+												: isLifeAtlas
+													? 'Autorizo guardar uma cópia dos dados natais conferidos, as quatro prioridades e o contexto opcional que declarei, e os resultados deste pedido na minha conta.'
+													: isCareer
+														? 'Autorizo guardar uma cópia dos dados natais conferidos, do contexto profissional que escolhi informar e dos resultados deste pedido na minha conta.'
+														: 'Autorizo guardar uma cópia dos dados natais conferidos e os resultados deste pedido na minha conta.'}</label
 					>
 					<p id="natal-retention" class="privacy">
 						Apagar o perfil natal não apaga a cópia já vinculada a um pedido. O pedido e seu
@@ -864,6 +913,7 @@
 							!contextValid ||
 							!solarValid ||
 							!calendarValid ||
+							!atlasValid ||
 							!weekPreferencesValid}>Criar pedido</Button
 					>
 				</fieldset>

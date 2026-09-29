@@ -44,7 +44,7 @@ import { readLibraryResult } from './library-reader';
 // Never seed editorial approval, promotions or READY output to make a vertical pass.
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
 const profileProducts = [
-	...natalProducts,
+	...natalProducts.filter((productId) => productId !== 'life-atlas'),
 	'date-reading',
 	'pair-preview',
 	'synastry',

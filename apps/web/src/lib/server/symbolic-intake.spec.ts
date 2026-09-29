@@ -75,7 +75,7 @@ it('returns private minimal data without form input or entitlement rows', async 
 	});
 });
 it('rejects a product without an implemented form before querying', async () => {
-	const e = event({ id: owner }, 'life-atlas');
+	const e = event({ id: owner }, 'dream-atlas');
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });

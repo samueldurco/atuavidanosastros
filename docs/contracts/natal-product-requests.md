@@ -1,10 +1,10 @@
-# Natal profile to product — atv-natal-request/1, /2 and /3
+# Natal profile to product — atv-natal-request/1–/4
 
-Local implementation only. Six profile-backed partial bases: birth-chart, three-pillars, ascendant, midheaven, career-compass and purpose-career. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
+Local implementation only. Seven profile-backed partial bases: birth-chart, three-pillars, ascendant, midheaven, career-compass, purpose-career and life-atlas. All existing release, engine, editorial and artifact gates remain disabled. This does not homologate a product or model.
 
 ## Command and atomic snapshot
 
-`POST /api/workflows/natal` accepts exactly `{requestKey,input}`. `input` has `version: atv-natal-request/1`, one supported `productId`, positive integer `expectedRevision` below 2147483647 and explicit product consent `{storage:true,policyVersion:atv-input-consent/1,partner:false,continuity:false}`. No owner, birth coordinates, time precision, context or profile version can be injected by the caller. Consent to save the profile does not substitute for this product consent.
+`POST /api/workflows/natal` accepts exactly `{requestKey,input}`. `input` has a supported version, one product ID allowed by that version, positive integer `expectedRevision` below 2147483647 and explicit product consent `{storage:true,policyVersion:atv-input-consent/1,partner:false,continuity:false}`. No owner, birth coordinates, time precision or profile version can be injected by the caller. Optional context is accepted only by versions 2–4 under their explicit bounds. Consent to save the profile does not substitute for this product consent.
 
 Claims, same origin, JSON size (8192 bytes, including escaped Unicode) and structural validation precede the RPC. Responses are private/no-store/no-referrer/noindex. A 202 contains only `runId`, not a delivered result. Errors expose only fixed codes, never raw SQL, birth data or professional context.
 
@@ -22,7 +22,7 @@ Migration `20260925160000_natal_product_requests.sql` and forward-fix were teste
 
 ## Authenticated intake and read-only recovery
 
-`/biblioteca/nova/{birth-chart,three-pillars,ascendant,midheaven,career-compass}` authenticates before reading the minimal release/access projection. It does not preload natal data into page data. The user explicitly reads `/api/onboarding`, reviews the saved exact profile and separately consents to the product snapshot. A reported exact time is not engine certification. Missing, approximate, malformed or unavailable profiles cannot enable creation. No geocoder, time correction or inference of unknown birth time is added.
+`/biblioteca/nova/{birth-chart,three-pillars,ascendant,midheaven,career-compass,purpose-career,life-atlas}` authenticates before reading the minimal release/access projection. It does not preload natal data into page data. The user explicitly reads `/api/onboarding`, reviews the saved exact profile and separately consents to the product snapshot. A reported exact time is not engine certification. Missing, approximate, malformed or unavailable profiles cannot enable creation. No geocoder, time correction or inference of unknown birth time is added.
 
 The browser sends only the strict command above. It stores only a correlation UUID in `sessionStorage` under the same owner/product slot used by generic creation. Natal data, consent and commands are not stored there. Controls remain disabled until recovery initialization. A pending UUID permits read-only recovery, never automatic resubmission; recovery remains available after profile removal or release/access revocation. A 202 must be verified through the existing recovery and root-run reader before a Library link appears.
 
@@ -53,3 +53,11 @@ Migration `20260929210000_purpose_career_context.sql` preserves v1 for the five 
 `/biblioteca/nova/purpose-career` uses the existing authenticated natal intake. It shows the saved profile, collects separate product consent and an optional first-person professional report, then sends v3. The report is retained exactly in the immutable run input and private command receipt; it is not added to the natal profile or ATV+ memory. The displayed calculation remains a partial experimental base, not a reading or career prescription. A local synthetic test may temporarily set a free access policy to prove the transport; the paid entitlement gate is separately tested and no live release is enabled.
 
 `supabase/forward-fixes/disable_purpose_career_context.sql` restores the v2 function, refusing v3 writes and same-key mutation retries while leaving old runs, receipts and read-only recovery intact. Reapplying the v3 migration restores exact idempotent retries, including after release closure; new keys still fail closed. Local PGlite and web vertical tests cover this behavior. Hosted migration, identity, concurrency, retention review and release remain pending.
+
+## Atlas da Vida 360 priorities (WU211)
+
+Migration `20260929220000_life_atlas_priorities.sql` preserves v1–v3 and adds `atv-natal-request/4` exclusively for `life-atlas`. The command requires `atlas.priorities`: four ordered, nonempty, distinct first-person labels of at most 120 UTF-16 code units. Unicode NFKC, external whitespace and case are used only to detect duplicates; the original text is retained. C0/C1 controls and extra fields are rejected. An optional `context` follows the v2/v3 report boundaries. The client and RPC validate independently; the RPC copies these fields and the current exact natal snapshot into one private immutable run and receipt.
+
+`/biblioteca/nova/life-atlas` asks for the four priorities, optional context and separate consent to retain them with the snapshot. Drafts are cleared after submission; the session stores only the correlation UUID. The values are declared priorities, not inferred astrological facts. No method for connecting the four areas to chart chapters or generating a 30-day path has been approved, so E1 remains partial and downstream reading/delivery gates remain closed.
+
+`supabase/forward-fixes/disable_life_atlas_priorities.sql` disables Atlas release and restores the v3 command function. It refuses v4 writes while retaining old runs, receipts and read-only recovery. Reapplying v4 restores same-key idempotency; new keys remain closed. These paths were tested against synthetic local PostgreSQL. Hosted migration, real identity, independent concurrency, retention review and release remain pending.

@@ -24,6 +24,12 @@ const natal = {
 	locationLabel: 'Local sintético',
 	countryCode: 'BR'
 };
+const atlasPriorities: [string, string, string, string] = [
+	'Relações',
+	'Trabalho',
+	'Rotina',
+	'Aprendizado'
+];
 const input = (changes = {}) => ({
 	version: 'atv-natal-request/1',
 	productId: 'birth-chart',
@@ -130,7 +136,8 @@ beforeAll(async () => {
 		'20260925160000_natal_product_requests.sql',
 		'20260928170000_career_compass_requests.sql',
 		'20260928180000_career_compass_context.sql',
-		'20260929210000_purpose_career_context.sql'
+		'20260929210000_purpose_career_context.sql',
+		'20260929220000_life_atlas_priorities.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -150,7 +157,10 @@ it.each(natalProducts)(
 		await db.query('update workflow_releases set enabled=true where product_id=$1', [productId]);
 		const command = input({
 			productId,
-			...(productId === 'purpose-career' ? { version: 'atv-natal-request/3' } : {})
+			...(productId === 'purpose-career' ? { version: 'atv-natal-request/3' } : {}),
+			...(productId === 'life-atlas'
+				? { version: 'atv-natal-request/4', atlas: { priorities: atlasPriorities } }
+				: {})
 		});
 		const response = await natalRequestApi(event({ requestKey: randomUUID(), input: command }));
 		expect(response.status).toBe(202);
@@ -173,6 +183,7 @@ it.each(natalProducts)(
 			locationSource: natal.locationSource
 		});
 		expect(parsed?.productId).toBe(productId);
+		if (productId === 'life-atlas') expect(parsed?.atlas).toEqual({ priorities: atlasPriorities });
 		expect(run.state).toBe('QUEUED');
 		expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
 		const receipt = (
@@ -359,6 +370,7 @@ it('career forward-fix preserves prior products, snapshots and read-only recover
 		await db.exec(await file('supabase/migrations/20260928170000_career_compass_requests.sql'));
 		await db.exec(await file('supabase/migrations/20260928180000_career_compass_context.sql'));
 		await db.exec(await file('supabase/migrations/20260929210000_purpose_career_context.sql'));
+		await db.exec(await file('supabase/migrations/20260929220000_life_atlas_priorities.sql'));
 	}
 	expect(await submit(body)).toBe(runId);
 	await expect(submit(request({ productId: 'career-compass' }))).rejects.toThrow(
@@ -501,6 +513,7 @@ it('context forward-fix preserves old and new receipts and recovery; reapply res
 		await db.exec('update workflow_releases set enabled=false');
 		await db.exec(await file('supabase/migrations/20260928180000_career_compass_context.sql'));
 		await db.exec(await file('supabase/migrations/20260929210000_purpose_career_context.sql'));
+		await db.exec(await file('supabase/migrations/20260929220000_life_atlas_priorities.sql'));
 	}
 	expect(await submit(body)).toBe(runId);
 	expect(await submit(old)).toBe(oldId);
@@ -572,6 +585,110 @@ it.each([
 	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
 });
 
+it.each([
+	{
+		version: 'atv-natal-request/1',
+		productId: 'life-atlas',
+		atlas: { priorities: atlasPriorities }
+	},
+	{
+		version: 'atv-natal-request/4',
+		productId: 'career-compass',
+		atlas: { priorities: atlasPriorities }
+	},
+	{ version: 'atv-natal-request/4', productId: 'life-atlas' },
+	{ version: 'atv-natal-request/4', productId: 'life-atlas', atlas: null },
+	{ version: 'atv-natal-request/4', productId: 'life-atlas', atlas: { priorities: 'A' } },
+	{ version: 'atv-natal-request/4', productId: 'life-atlas', atlas: { priorities: [1, 'B', 'C', 'D'] } },
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: ['A', 'B', 'C'] }
+	},
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: ['A', 'B', 'C', 'a'] }
+	},
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: ['Area', 'Ａrea', 'C', 'D'] }
+	},
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: ['A', 'B', 'C', 'D\u0008'] }
+	},
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: ['A', 'B', 'C', 'D'.repeat(121)] }
+	},
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: atlasPriorities },
+		birth: natal
+	}
+])('v4 refuses invalid priorities and forged fields %#', async (changes) => {
+	const body = request(changes);
+	expect(parseNatalRequestInput(body.input)).toBeNull();
+	expect((await natalRequestApi(event(body))).status).toBe(400);
+	await expect(submit(body)).rejects.toThrow('invalid_input');
+	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
+});
+
+it('v4 stores the optional private context with the declared priorities only after release', async () => {
+	await save();
+	const body = request({
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: atlasPriorities },
+		context: 'Prioridades relatadas para esta fase da vida.'
+	});
+	expect(parseNatalRequestInput(body.input)).toEqual(body.input);
+	await expect(submit(body)).rejects.toThrow('workflow_unreleased');
+	await db.exec("update workflow_releases set enabled=true where product_id='life-atlas'");
+	const runId = await submit(body);
+	const run = (
+		await db.query<{ input: unknown }>('select input from product_runs where id=$1', [runId])
+	).rows[0];
+	expect(parseWorkflowInput(run.input)?.atlas).toEqual({ priorities: atlasPriorities });
+	expect(parseWorkflowInput(run.input)?.context).toBe(
+		'Prioridades relatadas para esta fase da vida.'
+	);
+	expect(await submit(body)).toBe(runId);
+	expect(await counts()).toEqual({ runs: 1, receipts: 1, events: 1, items: 1 });
+});
+
+it('Atlas forward-fix blocks v4 writes while retaining its receipt and recovery', async () => {
+	await save();
+	await db.exec("update workflow_releases set enabled=true where product_id='life-atlas'");
+	const body = request({
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: atlasPriorities }
+	});
+	const runId = await submit(body);
+	const before = (await db.query('select * from product_runs')).rows;
+	await db.exec(await file('supabase/forward-fixes/disable_life_atlas_priorities.sql'));
+	try {
+		await expect(submit(body)).rejects.toThrow('invalid_input');
+		const found = await asRole(db, 'authenticated', owner, () =>
+			db.query<{ value: { runId: string } }>('select recover_product_request($1) value', [
+				body.requestKey
+			])
+		);
+		expect(found.rows[0].value.runId).toBe(runId);
+		expect((await db.query('select * from product_runs')).rows).toEqual(before);
+	} finally {
+		await db.exec(await file('supabase/migrations/20260929220000_life_atlas_priorities.sql'));
+	}
+	expect(await submit(body)).toBe(runId);
+	await expect(submit(request(body.input))).rejects.toThrow('workflow_unreleased');
+});
+
 it('purpose forward-fix blocks v3 writes while preserving old runs and read-only recovery', async () => {
 	await save();
 	await db.exec("update workflow_releases set enabled=true where product_id='purpose-career'");
@@ -596,6 +713,7 @@ it('purpose forward-fix blocks v3 writes while preserving old runs and read-only
 	} finally {
 		await db.exec('update workflow_releases set enabled=false');
 		await db.exec(await file('supabase/migrations/20260929210000_purpose_career_context.sql'));
+		await db.exec(await file('supabase/migrations/20260929220000_life_atlas_priorities.sql'));
 	}
 	expect(await submit(body)).toBe(runId);
 	await expect(submit(request({ ...body.input }))).rejects.toThrow('workflow_unreleased');

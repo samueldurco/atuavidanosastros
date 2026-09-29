@@ -48,6 +48,11 @@ export interface WorkflowInput {
 const object = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeof v === 'object' && !Array.isArray(v);
 const keysOnly = (v: Record<string, unknown>, keys: readonly string[]) => Object.keys(v).every((k) => keys.includes(k));
 const text = (v: unknown, max: number): v is string => typeof v === 'string' && v.trim().length > 0 && v.length <= max && !/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(v);
+export function validAtlasPriorities(v: unknown): v is [string, string, string, string] {
+  if (!Array.isArray(v) || v.length !== 4 ||
+      !v.every((item) => text(item, 120) && !/[\u0000-\u001f\u007f-\u009f]/.test(item))) return false;
+  return new Set(v.map((item: string) => item.trim().normalize('NFKC').toLocaleLowerCase('pt-BR'))).size === 4;
+}
 export function validDate(v: unknown): v is string {
   if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
   const d = new Date(v + 'T00:00:00Z');
@@ -118,13 +123,9 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
       !keysOnly(v.journey, ['goal', 'startDate']) || Object.keys(v.journey).length !== 2 ||
       !text(v.journey.goal, 400) || !validDate(v.journey.startDate) ||
       v.journey.startDate > '2099-12-02')) return null;
-  if (product.id === 'life-atlas') {
-    if (!object(v.atlas) || !keysOnly(v.atlas, ['priorities']) ||
-        !Array.isArray(v.atlas.priorities) || v.atlas.priorities.length !== 4 ||
-        !v.atlas.priorities.every((item) => text(item, 120) && !/[\u0000-\u001f\u007f-\u009f]/.test(item))) return null;
-    const unique = new Set(v.atlas.priorities.map((item: string) => item.trim().normalize('NFKC').toLocaleLowerCase('pt-BR')));
-    if (unique.size !== 4) return null;
-  }
+  if (product.id === 'life-atlas' &&
+      (!object(v.atlas) || !keysOnly(v.atlas, ['priorities']) ||
+       !validAtlasPriorities(v.atlas.priorities))) return null;
   if (product.kind === 'relationship' && (!birth(v.partner) || !v.consent.partner)) return null;
   if (product.kind !== 'relationship' && v.consent.partner) return null;
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
