@@ -37,6 +37,7 @@ import {
   validTarotFocusProjection,
   validTarotYesNoProjection,
   validThreeQuestionsProjection,
+  validDreamJournalProjection,
 } from "./symbolic-calculators.ts";
 import {
   inspectAscendantProjection,
@@ -46,7 +47,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.19.0";
+  "atv-product-editorial-evidence/1.20.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -78,6 +79,12 @@ export function prepareProductFacts(
   const calculation = validateCalculation(value, productId);
   const kind = workflowFor(productId)?.kind;
   if (!calculation || !kind)
+    return { status: "blocked", reason: "calculation_invalid" };
+  // Inspect the original facts before generic validation can omit extra metadata.
+  if (
+    productId === "dream-journal" &&
+    !validDreamJournalProjection(value as CalculationSnapshot)
+  )
     return { status: "blocked", reason: "calculation_invalid" };
   if (
     productId === "career-compass" &&

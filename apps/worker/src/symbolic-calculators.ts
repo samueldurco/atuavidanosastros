@@ -25,6 +25,69 @@ function exactKeys(
   );
 }
 
+/** Fidelity of a saved dream report, not consent authentication, history or interpretation. */
+export function validDreamJournalProjection(
+  calculation: CalculationSnapshot,
+): boolean {
+  const data = calculation.data;
+  if (
+    calculation.version !== symbolicContract.version ||
+    calculation.kind !== "dream" ||
+    calculation.status !== "recorded" ||
+    !exactKeys(data, [
+      "entry",
+      "context",
+      "continuity",
+      "symbolicHypotheses",
+    ]) ||
+    !exactKeys(data.entry, ["date", "narrative", "associations", "emotions"]) ||
+    !exactKeys(data.continuity, [
+      "consent",
+      "historyLoaded",
+      "recurrenceAssessed",
+    ]) ||
+    typeof data.continuity.consent !== "boolean" ||
+    data.continuity.historyLoaded !== false ||
+    data.continuity.recurrenceAssessed !== false ||
+    !Array.isArray(data.symbolicHypotheses) ||
+    data.symbolicHypotheses.length !== 0 ||
+    (data.context !== null && typeof data.context !== "string") ||
+    !Array.isArray(calculation.facts) ||
+    !Array.isArray(calculation.limits)
+  )
+    return false;
+  let expected: CalculationSnapshot;
+  try {
+    expected = calculateDreamRecord({
+      version: "atv-workflow/1.0.0",
+      productId: "dream-journal",
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: data.continuity.consent,
+      },
+      dream: data.entry,
+      ...(data.context === null ? {} : { context: data.context }),
+    });
+  } catch {
+    return false;
+  }
+  return (
+    calculation.facts.length === expected.facts.length &&
+    calculation.facts.every(
+      (fact, index) =>
+        exactKeys(fact, ["id", "kind", "display", "source"]) &&
+        fact.id === expected.facts[index]!.id &&
+        fact.kind === expected.facts[index]!.kind &&
+        fact.display === expected.facts[index]!.display &&
+        fact.source === expected.facts[index]!.source,
+    ) &&
+    calculation.limits.length === expected.limits.length &&
+    calculation.limits.every((limit, index) => limit === expected.limits[index])
+  );
+}
+
 /** Coherence of a persisted daily draw, not seed authentication or editorial approval.
  * Pure inspection: never changes cards, draws again or calls a provider. */
 export function validDailyCardProjection(
