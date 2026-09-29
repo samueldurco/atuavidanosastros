@@ -8,6 +8,7 @@ import { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts"
 import { createHoroscopeCalculators } from "./horoscope-calculators.ts";
 import { createWeekReadingCalculators } from "./week-reading-calculators.ts";
 import { createWeekTransitCalculators } from "./week-transit-calculators.ts";
+import { createWeekTemporalCalculators } from "./week-temporal-calculators.ts";
 import type { AspectPolicy } from "@atv/astrology";
 import {
   createWorkflowRepository,
@@ -28,6 +29,8 @@ export interface ProductCalculationOptions {
   experimentalWeekBase?: true;
   /** Independent nominal transit-series opt-in with an explicit unapproved policy. */
   experimentalWeekTransitPolicy?: AspectPolicy;
+  /** Independent bounded temporal-search opt-in; policy and engine remain unapproved. */
+  experimentalWeekTemporalPolicy?: AspectPolicy;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
@@ -38,8 +41,10 @@ export function createProductCalculators(
   )
     throw new Error("invalid_product_configuration");
   if (
-    options.experimentalWeekBase === true &&
-    options.experimentalWeekTransitPolicy !== undefined
+    Number(options.experimentalWeekBase === true) +
+      Number(options.experimentalWeekTransitPolicy !== undefined) +
+      Number(options.experimentalWeekTemporalPolicy !== undefined) >
+    1
   )
     throw new Error("invalid_product_configuration");
   return Object.freeze({
@@ -64,6 +69,9 @@ export function createProductCalculators(
     ...(options.experimentalWeekTransitPolicy === undefined
       ? {}
       : createWeekTransitCalculators(options.experimentalWeekTransitPolicy)),
+    ...(options.experimentalWeekTemporalPolicy === undefined
+      ? {}
+      : createWeekTemporalCalculators(options.experimentalWeekTemporalPolicy)),
   });
 }
 

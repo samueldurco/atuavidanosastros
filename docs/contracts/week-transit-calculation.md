@@ -1,6 +1,6 @@
 # Semana — experimental nominal transit-series contract
 
-The independent [nominal temporal search](week-temporal-search.md) adds an experimental hourly search primitive; it does not change this 1.1.0 sampled snapshot, register temporal runtime output or certify complete windows.
+The independent [nominal temporal search](week-temporal-search.md) and [bounded 1.2.0 snapshot](week-temporal-calculation.md) do not change this 1.1.0 sampled snapshot or certify complete windows.
 
 `atv-week-reading-calculation/1.1.0` adds deterministic sampled transit/natal comparisons to the Week E1 base. It is a separate internal composition, selected only with an explicit operator-owned `experimentalWeekTransitPolicy`. There is no default orb policy or editorial approval. Configuration with both this policy and `experimentalWeekBase: true` fails rather than choosing a version implicitly. The original thirteen default bases, publication gates and R$0 automatic spend remain unchanged.
 
