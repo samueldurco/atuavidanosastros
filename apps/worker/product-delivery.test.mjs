@@ -804,16 +804,16 @@ test("a Lab-valid limit that cannot fit the reader is rejected, never truncated 
 
 // Generic offline purpose envelope for transport bounds, without a product editorial profile.
 const premiumTransportCalculation = {
-  version: "fixture-purpose-budget/1.0.0",
-  kind: "purpose",
+  version: "fixture-dream-budget/1.0.0",
+  kind: "dream",
   status: "experimental",
   data: { fixture: true },
   limits: [
     "Envelope sintético para limites de transporte; sem produto aprovado.",
   ],
-  facts: ["person-a-moon", "person-a-venus"].map((id) => ({
+  facts: ["dream-narrative", "dream-context"].map((id) => ({
     id,
-    kind: "calculated",
+    kind: "reported",
     display: "Fato sintético de transporte",
     source: "fixture-budget-v1",
   })),
@@ -821,14 +821,14 @@ const premiumTransportCalculation = {
 function premium() {
   const input = draft();
   input.tier = "premium";
-  input.productId = "direction-journey";
+  input.productId = "dream-dossier";
   input.calculation = structuredClone(premiumTransportCalculation);
-  input.output.capability = "purpose-direction";
+  input.output.capability = "dream-exploration";
   input.output.claims = Array.from({ length: 24 }, (_, i) => ({
     id: `c${i}`,
     kind: "interpretation",
     text: `Recorte ${i}: possibilidade contextual.`,
-    evidence: [i % 2 ? "person-a-venus" : "person-a-moon"],
+    evidence: [i % 2 ? "dream-context" : "dream-narrative"],
   }));
   input.output.relations = Array.from({ length: 16 }, (_, i) => ({
     kind: i % 2 ? "tension" : "convergence",

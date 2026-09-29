@@ -4,6 +4,7 @@ import { createSymbolicCalculators } from "./symbolic-calculators.ts";
 import { createContextCalculators } from "./context-calculators.ts";
 import { createPurposeCalculators } from "./purpose-calculators.ts";
 import { createPurposeCareerCalculators } from "./purpose-career-calculators.ts";
+import { createDirectionJourneyCalculators } from "./direction-journey-calculators.ts";
 import { createSynastryCalculators } from "./synastry-calculators.ts";
 import { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts";
 import { createHoroscopeCalculators } from "./horoscope-calculators.ts";
@@ -40,6 +41,8 @@ export interface ProductCalculationOptions {
   experimentalPersonalCalendarBase?: true;
   /** Independent MC and 2/6/10 cusp projection; no paid release or editorial approval. */
   experimentalPurposeCareerBase?: true;
+  /** Independent goal and civil-check-in scaffold; no interpretation or release approval. */
+  experimentalDirectionJourneyBase?: true;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
@@ -62,6 +65,11 @@ export function createProductCalculators(
   if (
     options.experimentalPurposeCareerBase !== undefined &&
     options.experimentalPurposeCareerBase !== true
+  )
+    throw new Error("invalid_product_configuration");
+  if (
+    options.experimentalDirectionJourneyBase !== undefined &&
+    options.experimentalDirectionJourneyBase !== true
   )
     throw new Error("invalid_product_configuration");
   if (
@@ -104,6 +112,9 @@ export function createProductCalculators(
       : {}),
     ...(options.experimentalPurposeCareerBase === true
       ? createPurposeCareerCalculators()
+      : {}),
+    ...(options.experimentalDirectionJourneyBase === true
+      ? createDirectionJourneyCalculators()
       : {}),
   });
 }

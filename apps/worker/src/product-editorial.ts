@@ -44,6 +44,7 @@ import {
 import { validateCalculation } from "./product-processing.ts";
 import { validCareerCompassProjection } from "./purpose-calculators.ts";
 import { inspectPurposeCareerProjection } from "./purpose-career-calculators.ts";
+import { validDirectionJourneyProjection } from "./direction-journey-calculators.ts";
 import { validDateReadingProjection } from "./date-reading-projection.ts";
 import { validPairPreviewProjection } from "./pair-preview-projection.ts";
 import { validSynastryProjection } from "./synastry-projection.ts";
@@ -107,6 +108,13 @@ export function prepareProductFacts(
     return {
       status: "blocked",
       reason: inspectPurposeCareerProjection(calculation)
+        ? "insufficient_facts"
+        : "calculation_invalid",
+    };
+  if (productId === "direction-journey")
+    return {
+      status: "blocked",
+      reason: validDirectionJourneyProjection(value)
         ? "insufficient_facts"
         : "calculation_invalid",
     };

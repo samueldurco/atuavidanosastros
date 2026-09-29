@@ -6,7 +6,8 @@ const birth = { localDateTime:'2000-01-01T12:00:00', utcInstant:'2000-01-01T15:0
 const consent = { storage:true, policyVersion:'atv-input-consent/1', partner:false, continuity:false };
 export function inputFor(p) {
   const value = {version:WORKFLOW_VERSION, productId:p.id, consent:{...consent}};
-  if (['natal','cycles','relationship','purpose'].includes(p.kind)) value.birth = {...birth};
+  if (['natal','cycles','relationship','purpose'].includes(p.kind) && p.id!=='direction-journey') value.birth = {...birth};
+  if (p.id==='direction-journey') value.journey={goal:'Explorar uma direção profissional concreta',startDate:'2026-09-09'};
   if (p.kind==='relationship') { value.partner={...birth}; value.consent.partner=true; }
   if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
   if (p.id==='solar-return') { value.returnYear=2026; value.returnLocation={city:'São Paulo', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic'}; }
@@ -42,6 +43,18 @@ test('personal calendar names one complete civil month',()=>{
   assert.equal(parseWorkflowInput(value)?.targetDate,'2026-09-01');
   for (const targetDate of ['2026-09-02','2026-09-00','2026-02-29'])
     assert.equal(parseWorkflowInput({...value,targetDate}),null);
+});
+test('direction journey requires its own declared goal and complete 30-day civil window',()=>{
+  const value=inputFor(workflows.find(p=>p.id==='direction-journey'));
+  assert.deepEqual(parseWorkflowInput(value)?.journey,value.journey);
+  for (const journey of [undefined, {goal:'',startDate:'2026-09-09'},
+    {goal:'x'.repeat(401),startDate:'2026-09-09'},
+    {goal:'Direção',startDate:'2026-02-30'},
+    {goal:'Direção',startDate:'2099-12-03'},
+    {...value.journey,extra:'forbidden'}])
+    assert.equal(parseWorkflowInput({...value,journey}),null);
+  assert.equal(parseWorkflowInput({...value,birth}),null);
+  assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='purpose-career')),journey:value.journey}),null);
 });
 test('personal calendar preserves specifically authorized marks only within its month',()=>{
   const value=inputFor(workflows.find(p=>p.id==='personal-calendar'));

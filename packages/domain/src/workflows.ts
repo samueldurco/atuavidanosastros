@@ -39,6 +39,7 @@ export interface WorkflowInput {
   returnLocation?: ReturnLocationInput;
   importantDates?: ImportantDatesInput;
   calendarMarks?: CalendarMarksInput;
+  journey?: { goal: string; startDate: string };
   context?: string;
   questions?: string[];
   dream?: { date: string; narrative: string; associations: string[]; emotions: string[] };
@@ -103,13 +104,18 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
       v.consent.storage !== true || v.consent.policyVersion !== 'atv-input-consent/1' ||
       typeof v.consent.partner !== 'boolean' || typeof v.consent.continuity !== 'boolean') return null;
   const fields = ['version', 'productId', 'consent', 'context'];
-  if (['natal', 'cycles', 'relationship', 'purpose'].includes(product.kind)) fields.push('birth');
+  if (['natal', 'cycles', 'relationship', 'purpose'].includes(product.kind) && product.id !== 'direction-journey') fields.push('birth');
+  if (product.id === 'direction-journey') fields.push('journey');
   if (product.kind === 'relationship') fields.push('partner');
   if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
   if (product.kind === 'tarot') fields.push('questions');
   if (product.kind === 'dream') fields.push('dream');
   if (!keysOnly(v, fields) || (v.context !== undefined && !text(v.context, 1200))) return null;
   if (fields.includes('birth') && !birth(v.birth)) return null;
+  if (product.id === 'direction-journey' && (!object(v.journey) ||
+      !keysOnly(v.journey, ['goal', 'startDate']) || Object.keys(v.journey).length !== 2 ||
+      !text(v.journey.goal, 400) || !validDate(v.journey.startDate) ||
+      v.journey.startDate > '2099-12-02')) return null;
   if (product.kind === 'relationship' && (!birth(v.partner) || !v.consent.partner)) return null;
   if (product.kind !== 'relationship' && v.consent.partner) return null;
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
