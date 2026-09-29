@@ -16,6 +16,7 @@ export async function readIntakeAccess(
 			productId !== 'week-reading' &&
 			productId !== 'solar-return' &&
 			productId !== 'personal-calendar' &&
+			productId !== 'direction-journey' &&
 			productId !== 'pair-preview' &&
 			productId !== 'synastry' &&
 			productId !== 'couple-dossier')

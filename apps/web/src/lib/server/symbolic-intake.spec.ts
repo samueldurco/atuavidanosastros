@@ -87,8 +87,9 @@ it.each([
 	'synastry',
 	'couple-dossier',
 	'solar-return',
-	'personal-calendar'
-])('loads only minimal access for profile product %s', async (productId) => {
+	'personal-calendar',
+	'direction-journey'
+])('loads only minimal access for supported intake %s', async (productId) => {
 	const e = event({ id: owner }, productId);
 	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
 	expect(e.m.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
@@ -102,7 +103,8 @@ it.each([
 	'synastry',
 	'couple-dossier',
 	'solar-return',
-	'personal-calendar'
+	'personal-calendar',
+	'direction-journey'
 ])('requires authentication before loading %s access', async (productId) => {
 	const e = event(null, productId);
 	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });

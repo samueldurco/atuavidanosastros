@@ -55,6 +55,9 @@ it('starts with all 25 products closed and reads do not create runs, library or 
 		).rows[0].n
 	).toBe(0);
 	expect(await access()).toEqual({ state: 'UNRELEASED' });
+	expect(await access(owner, 'authenticated', 'direction-journey')).toEqual({
+		state: 'UNRELEASED'
+	});
 	expect(await access(owner, 'authenticated', 'unknown')).toEqual({ state: 'UNRELEASED' });
 	for (const table of ['product_runs', 'library_items', 'entitlements'])
 		expect(

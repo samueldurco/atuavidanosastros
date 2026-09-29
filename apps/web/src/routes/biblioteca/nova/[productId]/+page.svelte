@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SymbolicIntake from '$lib/components/SymbolicIntake.svelte';
 	import NatalIntake from '$lib/components/NatalIntake.svelte';
+	import DirectionJourneyIntake from '$lib/components/DirectionJourneyIntake.svelte';
 	import { workflowFor } from '@atv/domain';
 	import { symbolicProduct } from '$lib/symbolic-intake';
 	let { data } = $props();
@@ -15,6 +16,9 @@
 {#key `${data.ownerId}:${data.productId}`}{#if symbolicProduct(data.productId)}<SymbolicIntake
 			ownerId={data.ownerId}
 			productId={data.productId}
+			access={data.access}
+		/>{:else if data.productId === 'direction-journey'}<DirectionJourneyIntake
+			ownerId={data.ownerId}
 			access={data.access}
 		/>{:else}<NatalIntake
 			ownerId={data.ownerId}
