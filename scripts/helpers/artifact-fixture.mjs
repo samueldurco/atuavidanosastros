@@ -15,12 +15,12 @@ export async function asRole(db,role,user,fn) {
 }
 // Isolated local fixture only. Never imported by application code or migration seeds.
 /** @param {import('@electric-sql/pglite').PGlite} db */
-export async function readyArtifactFixture(db,product='daily-card',user=owner) {
+export async function readyArtifactFixture(db,product='daily-card',user=owner,input={version:'atv-workflow/1.0.0',productId:product,consent:{storage:true,policyVersion:'atv-input-consent/1'}}) {
   await db.query('update workflow_releases set enabled=true,engine_approved=true,access_policy=\'free\' where product_id=$1',[product]);
   const created=await asRole(db,'authenticated',user,()=>db.query('select request_product_run($1,$2,$3) as id',
-    [product,randomUUID(),{version:'atv-workflow/1.0.0',productId:product,consent:{storage:true,policyVersion:'atv-input-consent/1'}}]));
+    [product,randomUUID(),input]));
   const id=/** @type {{id:string}} */ (created.rows[0]).id;
-  const calculation={version:'fixture/1',kind:product==='daily-card'?'tarot':'natal',status:'recorded',data:{synthetic:true},
+  const calculation={version:'fixture/1',kind:product==='daily-card'?'tarot':['synastry','pair-preview'].includes(product)?'relationship':'natal',status:'recorded',data:{synthetic:true},
     facts:[{id:'fact-1',kind:'calculated',display:'Base sintética',source:'fixture/1'}],limits:['Não é leitura real.']};
   const promotion='fixture-'+randomUUID();
   await db.query('insert into editorial_promotions values ($1,$2,$3,$4,null)',[promotion,product,'atv-workflow/1.0.0','b'.repeat(64)]);

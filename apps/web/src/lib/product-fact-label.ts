@@ -16,6 +16,20 @@ const birthChartLabels: Record<string, string> = {
 
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
+	if (productId === 'synastry') {
+		const body = '(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)';
+		const position = new RegExp(`^person-([ab])-${body}$`).exec(id);
+		const pair = new RegExp(`^cross-${body}-${body}$`).exec(id);
+		const label =
+			id === 'personal-context'
+				? 'Contexto informado'
+				: position
+					? `Pessoa ${position[1].toUpperCase()} · ${birthChartLabels[`position-${position[2]}`]}`
+					: pair
+						? `${birthChartLabels[`position-${pair[1]}`]} de A × ${birthChartLabels[`position-${pair[2]}`]} de B`
+						: undefined;
+		return label ? `${label} (${id})` : id;
+	}
 	if (productId === 'pair-preview') {
 		const part = /^person-([ab])-(moon|venus|mars)$/.exec(id);
 		const label =

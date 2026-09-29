@@ -131,7 +131,7 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 				!text(fact.kind, 30) ||
 				!['calculated', 'reported', 'drawn'].includes(fact.kind) ||
 				!text(fact.display, 2000) ||
-				!text(fact.source, 200) ||
+				!text(fact.source, v.productId === 'synastry' ? 300 : 200) ||
 				facts.some((f) => f.id === fact.id)
 			)
 				return null;
@@ -143,7 +143,7 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 				!record(section) ||
 				!text(section.title, 240) ||
 				!text(section.text, 20000) ||
-				!strings(section.evidence, 100, 160) ||
+				!strings(section.evidence, v.productId === 'synastry' ? 121 : 100, 160) ||
 				section.evidence.length === 0 ||
 				section.evidence.some((id) => !facts.some((f) => f.id === id))
 			)

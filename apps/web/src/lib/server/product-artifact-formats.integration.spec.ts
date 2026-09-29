@@ -33,6 +33,7 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 		await db.exec(
 			await file('supabase/migrations/20260928234000_product_artifact_renderer_versions.sql')
 		);
+		await db.exec(await file('supabase/migrations/20260929020000_product_pdf_renderer_1_2.sql'));
 		const query = async (
 			role: string,
 			user: string | null,

@@ -43,7 +43,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Pessoa B · Marte (person-b-mars)',
 			'Contexto informado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.13.0',
+			'atv-product-delivery/1.14.0',
 			'Base parcial: Lua, Vênus e Marte de A e B em posições separadas;',
 			'sem aspectos entre mapas, score de compatibilidade, sentimentos ou destino da relação calculados.',
 			'não autoriza compartilhar a leitura; identidade e autorização bilateral não foram verificadas.'

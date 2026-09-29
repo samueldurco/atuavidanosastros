@@ -2,7 +2,7 @@ import { productCatalog } from './catalog.ts';
 
 export const artifactFormats = {
   web: { renderer: 'atv-web-export/1.1.0', mime: 'text/html; charset=utf-8', extension: 'html', maxBytes: 8388608 },
-  pdf: { renderer: 'atv-pdf-export/1.1.0', mime: 'application/pdf', extension: 'pdf', maxBytes: 8388608 },
+  pdf: { renderer: 'atv-pdf-export/1.2.0', mime: 'application/pdf', extension: 'pdf', maxBytes: 8388608 },
   svg: { renderer: 'atv-svg-export/1.0.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 },
   card: { renderer: 'atv-reading-card/1.0.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 }
 } as const;
@@ -11,7 +11,7 @@ export type ArtifactFormat = keyof typeof artifactFormats;
 export function artifactRendererSupported(format: ArtifactFormat, version: unknown): version is string {
   return version === artifactFormats[format].renderer ||
     (format === 'web' && version === 'atv-web-export/1.0.0') ||
-    (format === 'pdf' && version === 'atv-pdf-export/1.0.0');
+    (format === 'pdf' && (version === 'atv-pdf-export/1.0.0' || version === 'atv-pdf-export/1.1.0'));
 }
 export interface ArtifactManifest {
   id: string; runId: string; revision: number; reviewDigest: string; format: ArtifactFormat;

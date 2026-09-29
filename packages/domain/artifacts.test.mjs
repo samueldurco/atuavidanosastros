@@ -13,11 +13,11 @@ test('manifest is a minimal frozen projection and never exposes storage data',()
 test('web and PDF retain the exact historical renderer while rejecting unrecognized versions',()=>{
  const birth={...reading,productId:'birth-chart'};
  for(const [format,prefix] of [['web','atv-web-export'],['pdf','atv-pdf-export']]) {
-  for(const version of ['1.0.0','1.1.0']) {
+  for(const version of format === 'pdf' ? ['1.0.0','1.1.0','1.2.0'] : ['1.0.0','1.1.0']) {
    const input={...manifest,format,section:-1,rendererVersion:`${prefix}/${version}`};
    assert.deepEqual(parseArtifactManifest(input,birth),input);
   }
-  assert.equal(parseArtifactManifest({...manifest,format,section:-1,rendererVersion:`${prefix}/1.2.0`},birth),null);
+  assert.equal(parseArtifactManifest({...manifest,format,section:-1,rendererVersion:`${prefix}/${format === 'pdf' ? '1.3.0' : '1.2.0'}`},birth),null);
  }
 });
 test('manifest binds exact run, revision, review and section and supported renderer',()=>{

@@ -7,7 +7,7 @@ import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 
-export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.1.0';
+export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.2.0';
 export const PDF_LIMITS = Object.freeze({
 	characters: 120_000,
 	pages: 40,
@@ -49,6 +49,9 @@ export async function renderProductPdf(value: unknown) {
 			margin = 54,
 			contentWidth = width - margin * 2;
 		const fonts = new Map<PDFFont, Set<number>>();
+		// Repeated recorded facts and reference labels share exact font/size/text measurements.
+		// Keep the same metrics and wrapping while bounding work for complete relational reports.
+		const widths = new Map<PDFFont, Map<number, Map<string, number>>>();
 		for (const font of [display, body, label]) fonts.set(font, new Set(font.getCharacterSet()));
 		const validate = (text: string, font: PDFFont) => {
 			for (const character of text) {
@@ -100,12 +103,24 @@ export async function renderProductPdf(value: unknown) {
 							.filter(Boolean)
 							.map((text) => ({ text, font: text === 'Δ' ? display : font }));
 			const measure = (value: string) =>
-				runs(value).reduce((sum, run) => sum + run.font.widthOfTextAtSize(run.text, size), 0);
+				runs(value).reduce((sum, run) => {
+					let sizes = widths.get(run.font);
+					if (!sizes) widths.set(run.font, (sizes = new Map()));
+					let texts = sizes.get(size);
+					if (!texts) sizes.set(size, (texts = new Map()));
+					let width = texts.get(run.text);
+					if (width === undefined) {
+						width = run.font.widthOfTextAtSize(run.text, size);
+						texts.set(run.text, width);
+					}
+					return sum + width;
+				}, 0);
 			const line = (value: string) => {
 				ensure(leading);
 				if (measure(value) > contentWidth + 0.01) throw new PdfUnavailable();
 				let x = margin;
-				for (const run of runs(value)) {
+				const pieces = runs(value);
+				for (const [index, run] of pieces.entries()) {
 					page.drawText(run.text, {
 						x,
 						y,
@@ -113,7 +128,7 @@ export async function renderProductPdf(value: unknown) {
 						font: run.font,
 						color: font === label ? muted : ink
 					});
-					x += run.font.widthOfTextAtSize(run.text, size);
+					if (index < pieces.length - 1) x += run.font.widthOfTextAtSize(run.text, size);
 				}
 				y -= leading;
 			};
@@ -128,6 +143,10 @@ export async function renderProductPdf(value: unknown) {
 					if (pending) {
 						line(pending);
 						pending = '';
+					}
+					if (measure(word) <= contentWidth) {
+						pending = word;
+						continue;
 					}
 					// Break long identifiers without dropping or inserting characters.
 					for (const character of word) {

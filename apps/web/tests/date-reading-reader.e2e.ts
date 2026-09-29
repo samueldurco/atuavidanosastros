@@ -44,7 +44,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Instante da amostra (12h UTC) (sample-instant)',
 			'Contexto informado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.13.0',
+			'atv-product-delivery/1.14.0',
 			'Base parcial: amostra única das 12h UTC;',
 			'sem aspectos, eventos, duração, intensidade ou janelas temporais calculados',
 			'não representa o dia local inteiro.'
