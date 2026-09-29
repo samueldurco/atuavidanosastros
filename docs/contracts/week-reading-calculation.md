@@ -1,6 +1,6 @@
 # Semana — experimental seven-sample contract
 
-`week-reading` uses `atv-week-reading-calculation/1.0.0`. This partial, experimental E1 base contains seven consecutive Gregorian dates, each sampled at exactly **12:00 UTC**, and one unchanged natal basis. The first date must be within 1900-01-01–2099-12-25 so all seven dates remain in the existing engine range. It does not establish seven local days, local noon or complete temporal coverage.
+The original `week-reading` base uses `atv-week-reading-calculation/1.0.0`. This partial, experimental E1 base contains seven consecutive Gregorian dates, each sampled at exactly **12:00 UTC**, and one unchanged natal basis. The first date must be within 1900-01-01–2099-12-25 so all seven dates remain in the existing engine range. It does not establish seven local days, local noon or complete temporal coverage. An independent operator-policy opt-in adds version 1.1.0 nominal transit series under [week-transit-calculation.md](week-transit-calculation.md); it does not replace this base or enter its editorial profile.
 
 The calculator captures validated input before awaiting a provider. All seven dates and the civil/UTC natal correspondence are checked before any provider call. A request-local cache obtains one natal chart and seven sample charts (eight calls), with defensive copies and cancellation checks around each awaited operation. Concurrent executions share no natal cache. The synthetic sample coordinates are an internal geocentric reference, not an inferred current location.
 

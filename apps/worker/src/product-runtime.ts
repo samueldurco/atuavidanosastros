@@ -7,6 +7,7 @@ import { createSynastryCalculators } from "./synastry-calculators.ts";
 import { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts";
 import { createHoroscopeCalculators } from "./horoscope-calculators.ts";
 import { createWeekReadingCalculators } from "./week-reading-calculators.ts";
+import { createWeekTransitCalculators } from "./week-transit-calculators.ts";
 import type { AspectPolicy } from "@atv/astrology";
 import {
   createWorkflowRepository,
@@ -25,6 +26,8 @@ export interface ProductCalculationOptions {
   experimentalHoroscopePolicy?: AspectPolicy;
   /** Independent seven-sample base only; does not authorize aspects or release. */
   experimentalWeekBase?: true;
+  /** Independent nominal transit-series opt-in with an explicit unapproved policy. */
+  experimentalWeekTransitPolicy?: AspectPolicy;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
@@ -32,6 +35,11 @@ export function createProductCalculators(
   if (
     options.experimentalWeekBase !== undefined &&
     options.experimentalWeekBase !== true
+  )
+    throw new Error("invalid_product_configuration");
+  if (
+    options.experimentalWeekBase === true &&
+    options.experimentalWeekTransitPolicy !== undefined
   )
     throw new Error("invalid_product_configuration");
   return Object.freeze({
@@ -53,6 +61,9 @@ export function createProductCalculators(
     ...(options.experimentalWeekBase === true
       ? createWeekReadingCalculators()
       : {}),
+    ...(options.experimentalWeekTransitPolicy === undefined
+      ? {}
+      : createWeekTransitCalculators(options.experimentalWeekTransitPolicy)),
   });
 }
 
