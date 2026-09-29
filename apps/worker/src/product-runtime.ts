@@ -9,6 +9,7 @@ import { createHoroscopeCalculators } from "./horoscope-calculators.ts";
 import { createWeekReadingCalculators } from "./week-reading-calculators.ts";
 import { createWeekTransitCalculators } from "./week-transit-calculators.ts";
 import { createWeekTemporalCalculators } from "./week-temporal-calculators.ts";
+import { createSolarReturnCalculators } from "./solar-return-calculators.ts";
 import type { AspectPolicy } from "@atv/astrology";
 import {
   createWorkflowRepository,
@@ -31,6 +32,8 @@ export interface ProductCalculationOptions {
   experimentalWeekTransitPolicy?: AspectPolicy;
   /** Independent bounded temporal-search opt-in; policy and engine remain unapproved. */
   experimentalWeekTemporalPolicy?: AspectPolicy;
+  /** Independent experimental solar return base; no editorial, engine or release approval. */
+  experimentalSolarReturnBase?: true;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
@@ -38,6 +41,11 @@ export function createProductCalculators(
   if (
     options.experimentalWeekBase !== undefined &&
     options.experimentalWeekBase !== true
+  )
+    throw new Error("invalid_product_configuration");
+  if (
+    options.experimentalSolarReturnBase !== undefined &&
+    options.experimentalSolarReturnBase !== true
   )
     throw new Error("invalid_product_configuration");
   if (
@@ -72,6 +80,9 @@ export function createProductCalculators(
     ...(options.experimentalWeekTemporalPolicy === undefined
       ? {}
       : createWeekTemporalCalculators(options.experimentalWeekTemporalPolicy)),
+    ...(options.experimentalSolarReturnBase === true
+      ? createSolarReturnCalculators()
+      : {}),
   });
 }
 
