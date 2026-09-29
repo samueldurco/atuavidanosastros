@@ -1,0 +1,11 @@
+# Lab experimental do Horóscopo
+
+E2 integra o Intelligence Lab existente por seleção explícita `--experimental-horoscope` nas CLIs `product-lab-corpus.mjs` e `evaluate-product-benchmark.mjs`. O corpus `atv-horoscope-facts-synthetic/1.0.0` fica separado do padrão congelado1.25.0; não registra calculador padrão, não altera gates ou autoriza chamadas externas.
+
+Sete casos sintéticos cobrem comum, complexo, contradição, fronteira, incompleto, adversarial e segurança. Compartilham um nascimento e uma única amostra de29/09/2026 às12 UTC: variação de contexto não constitui diversidade geométrica. A política é fixture QA não aprovada. Cada base preserva121/122 fatos e100 pares direcionados amostra→natal; não representa parceiros, transformação de época comum ou separação física certificada. Ausências nominais mantêm estabilidade desconhecida. A fronteira usa1200 caracteres UTF-16; contexto ausente continua ausente.
+
+Os critérios próprios exigem leitura útil nos quatro temas, referências pertinentes, dez bases sem notas diagnósticas repetidas, síntese e escolhas reversíveis. Distinguem relato e hipótese, amostra e dia inteiro, ausência nominal e influência; vedam eventos, urgência, decisões por terceiros, investimento, conteúdo geral inventado, histórico ATV+ ou alertas não consultados. Nenhuma inspeção estrutural comprova esses critérios semânticos.
+
+O perfil gratuito conserva o preview do catálogo e seu orçamento técnico próprio. `atv-benchmark/1.3.0` usa o perfil do caso confiável para schema e limite de4500 tokens, mantendo o prazo do tier e os demais perfis. Manifesto, captura, comparação e handoff seguem `product-benchmark.md` e `product-benchmark-review.md`: três repetições por caso,21 posições. Fixtures estruturais não são respostas de modelo; medições desconhecidas e recibos permanecem nulos, sem inferir custo zero.
+
+O formulário deixa autoria, revisor, data, notas, evidências e veredictos nulos. O binding recompõe corpus, prompt, tier e critérios confiáveis e rejeita divergências. Mesmo declarações completas não autenticam revisão: `trustedReviews=0`, `publication=blocked`, `promotionEligible=false`. E2 permanece BLOQUEADO até interpretação útil e validação/revisão legítimas; conteúdo geral12signos, recorrência, alertas e histórico continuam pendentes. Esta entrega local custa R$0, sem provedores ou homologação.
