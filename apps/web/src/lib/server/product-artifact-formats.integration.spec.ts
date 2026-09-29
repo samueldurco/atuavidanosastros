@@ -1,8 +1,14 @@
 import { randomUUID } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { expect, it } from 'vitest';
+import { PDFDocument } from 'pdf-lib';
 import type { RequestEvent } from '@sveltejs/kit';
-import { artifactFormats, type ArtifactFormat, type WorkflowInput } from '@atv/domain';
+import {
+	artifactEligible,
+	artifactFormats,
+	type ArtifactFormat,
+	type WorkflowInput
+} from '@atv/domain';
 import {
 	setupProductDatabase,
 	owner,
@@ -12,6 +18,8 @@ import {
 import { asRole } from '../../../../../scripts/helpers/artifact-fixture.mjs';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
+import { createWeekReadingCalculators } from '../../../../worker/src/week-reading-calculators';
+import { weekReadingEditorialTestFixture } from '../../../../../scripts/helpers/week-reading-editorial-test-fixture.mjs';
 import { coupleDossierEditorialTestFixture } from '../../../../../scripts/helpers/couple-dossier-editorial-test-fixture.mjs';
 import { validateCalculation } from '../../../../worker/src/product-processing';
 import { SCHEMA_VERSION } from '../../../../../packages/ai/src/contracts';
@@ -28,7 +36,12 @@ import { workflowArtifacts } from './workflow-artifacts';
 
 // Local PGlite only: synthetic identity/editorial approval, real natal calculator and renderers.
 // This does not certify a model, hosted JWT/PostgREST, transport or a production release.
-async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope = false) {
+async function fixture(
+	product = 'birth-chart',
+	latitude = 0,
+	completeBirthScope = false,
+	withContext = true
+) {
 	const db = await setupProductDatabase();
 	try {
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
@@ -36,6 +49,7 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 			await file('supabase/migrations/20260928234000_product_artifact_renderer_versions.sql')
 		);
 		await db.exec(await file('supabase/migrations/20260929020000_product_pdf_renderer_1_2.sql'));
+		await db.exec(await file('supabase/migrations/20260929130000_week_reading_pdf_artifacts.sql'));
 		const query = async (
 			role: string,
 			user: string | null,
@@ -79,6 +93,11 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 			input.consent.partner = true;
 			input.context = 'Contexto sintético consentido: conversar sobre autonomia e reparação.';
 		}
+		if (product === 'week-reading') {
+			input.targetDate = '2026-09-29';
+			if (withContext)
+				input.context = 'Contexto sintético consentido: observar trabalho, vínculo e ritmo.';
+		}
 		await db.query(
 			"update workflow_releases set enabled=true,engine_approved=true,access_policy='free' where product_id=$1",
 			[product]
@@ -98,7 +117,9 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 							{ kind: 'square', orbDegrees: 5 }
 						]
 					})
-				: createNatalCalculators();
+				: product === 'week-reading'
+					? createWeekReadingCalculators()
+					: createNatalCalculators();
 		const calculation = validateCalculation(
 			await calculators[product](input, {
 				runId: id,
@@ -128,7 +149,7 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 			],
 			limits: ['Somente QA local; nenhum modelo homologado.']
 		};
-		if (completeBirthScope || product === 'couple-dossier') {
+		if (completeBirthScope || product === 'couple-dossier' || product === 'week-reading') {
 			const prepared = prepareProductFacts(product, calculation);
 			if (prepared.status !== 'prepared') throw new Error('fixture_facts_failed');
 			const delivery = await prepareProductDelivery({
@@ -138,16 +159,18 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 				tier: product === 'couple-dossier' ? 'premium' : 'intermediate',
 				calculation,
 				output:
-					product === 'couple-dossier'
-						? coupleDossierEditorialTestFixture(prepared.facts)
-						: {
-								schemaVersion: SCHEMA_VERSION,
-								capability: 'natal-synthesis',
-								scope: 'partial',
-								title: 'Mapa Astral - prova sintética dos formatos',
-								limits: ['Somente QA local; leitura e motor não homologados.'],
-								...birthChartEditorialTestFixture(prepared.facts)
-							}
+					product === 'week-reading'
+						? weekReadingEditorialTestFixture(prepared.facts)
+						: product === 'couple-dossier'
+							? coupleDossierEditorialTestFixture(prepared.facts)
+							: {
+									schemaVersion: SCHEMA_VERSION,
+									capability: 'natal-synthesis',
+									scope: 'partial',
+									title: 'Mapa Astral - prova sintética dos formatos',
+									limits: ['Somente QA local; leitura e motor não homologados.'],
+									...birthChartEditorialTestFixture(prepared.facts)
+								}
 			});
 			if (delivery.status !== 'prepared_for_review') throw new Error('fixture_delivery_failed');
 			Object.assign(editorial, delivery.content);
@@ -204,6 +227,92 @@ async function fixture(product = 'birth-chart', latitude = 0, completeBirthScope
 		await db.close();
 		throw error;
 	}
+}
+
+for (const withContext of [true, false]) {
+	it(`recovers complete Week PDF bytes privately with context ${withContext}`, async () => {
+		const f = await fixture('week-reading', 0, false, withContext);
+		try {
+			const raw = await f.read(owner, f.id),
+				run = parseProductRun(raw);
+			expect(artifactEligible('week-reading', 'pdf')).toBe(true);
+			expect(artifactEligible('week-reading', 'svg')).toBe(false);
+			expect(run?.calculation?.facts).toHaveLength(withContext ? 89 : 88);
+			expect(run?.editorial?.sections).toHaveLength(withContext ? 19 : 18);
+			expect(run?.editorial?.sections).toEqual(f.editorial.sections);
+			const pdf = await renderProductPdf(raw);
+			if (!pdf || !run?.editorial || !run.calculation) throw new Error('week_pdf_render_failed');
+			const document = await PDFDocument.load(pdf.bytes, { updateMetadata: false });
+			expect(document.getPageCount()).toBeGreaterThan(1);
+			expect(document.getPageCount()).toBeLessThanOrEqual(40);
+			expect(document.getTitle()).toBe(run.editorial.title);
+			expect(pdf.filename).toMatch(/^atv-week-reading-[a-f0-9-]+-r4\.pdf$/);
+			expect(pdf.bytes).toEqual((await renderProductPdf(raw))?.bytes);
+			if (process.env.ATV_WEEK_PDF_QA === '1') {
+				const suffix = withContext ? 'context' : 'no-context';
+				await mkdir('../../test-results/wu184', { recursive: true });
+				await writeFile(`../../test-results/wu184/week-${suffix}.pdf`, pdf.bytes);
+				await writeFile(
+					`../../test-results/wu184/week-${suffix}-expected.json`,
+					JSON.stringify(
+						{ calculation: run.calculation, editorial: run.editorial, history: run.history },
+						null,
+						2
+					)
+				);
+			}
+			await f.db.exec('update product_artifact_policy set enabled=false');
+			await expect(f.producer.produce(f.job('pdf'))).rejects.toThrow();
+			expect(
+				(
+					await f.db.query<{ count: number }>(
+						'select count(*)::int as count from product_artifacts'
+					)
+				).rows[0].count
+			).toBe(0);
+			await f.db.exec('update product_artifact_policy set enabled=true');
+			const stored = await f.producer.produce(f.job('pdf'));
+			if (stored.status !== 'stored') throw new Error('week_pdf_store_failed');
+			expect(await f.producer.produce(f.job('pdf'))).toEqual(stored);
+			const download = await workflowArtifacts(f.event(), f.id, stored.artifact.id);
+			expect(download.status).toBe(200);
+			expect(download.headers.get('content-type')).toBe('application/pdf');
+			expect(download.headers.get('cache-control')).toBe('private, no-store');
+			expect(download.headers.get('content-disposition')).toMatch(/^attachment;/);
+			expect(download.headers.get('x-atv-artifact-sha256')).toBe(stored.artifact.sha256);
+			expect(new Uint8Array(await download.arrayBuffer())).toEqual(pdf.bytes);
+			expect((await workflowArtifacts(f.event(other), f.id, stored.artifact.id)).status).toBe(404);
+			await expect(f.producer.produce({ ...f.job('pdf'), revision: 3 })).rejects.toThrow();
+			await expect(
+				f.producer.produce({ ...f.job('pdf'), reviewDigest: 'c'.repeat(64) })
+			).rejects.toThrow();
+			await expect(f.producer.produce({ ...f.job('pdf'), owner: other })).rejects.toThrow();
+			const listed = (await (await workflowArtifacts(f.event(), f.id)).json()) as {
+				artifacts: { id: string }[];
+			};
+			expect(listed.artifacts).toHaveLength(1);
+			expect(listed.artifacts[0].id).toBe(stored.artifact.id);
+			await f.db.exec(await file('supabase/forward-fixes/disable_week_reading_pdf_artifacts.sql'));
+			await expect(f.producer.produce(f.job('pdf'))).rejects.toThrow();
+			const savedAfterFix = await workflowArtifacts(f.event(), f.id, stored.artifact.id);
+			expect(savedAfterFix.status).toBe(200);
+			expect(new Uint8Array(await savedAfterFix.arrayBuffer())).toEqual(pdf.bytes);
+			await f.db.exec(
+				await file('supabase/migrations/20260929130000_week_reading_pdf_artifacts.sql')
+			);
+			expect(await f.producer.produce(f.job('pdf'))).toEqual(stored);
+			await f.db.exec("update workflow_releases set enabled=false where product_id='week-reading'");
+			expect((await workflowArtifacts(f.event(), f.id, stored.artifact.id)).status).toBe(404);
+			await expect(f.producer.produce(f.job('pdf'))).rejects.toThrow();
+			await f.db.exec("update workflow_releases set enabled=true where product_id='week-reading'");
+			await f.db.exec('update editorial_promotions set revoked_at=now()');
+			expect((await workflowArtifacts(f.event(), f.id, stored.artifact.id)).status).toBe(404);
+			await expect(f.producer.produce(f.job('pdf'))).rejects.toThrow();
+			expect(parseProductRun(await f.read(owner, f.id))?.editorial).toBeNull();
+		} finally {
+			await f.db.close();
+		}
+	}, 30000);
 }
 
 it('persists and privately recovers exact PDF, SVG and card bytes from a real natal calculation', async () => {

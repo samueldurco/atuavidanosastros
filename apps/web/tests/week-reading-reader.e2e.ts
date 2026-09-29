@@ -46,7 +46,7 @@ for (const width of [1440, 820, 390, 320])
 		await expect(reading).toContainText('Síntese da Semana (1) e três perguntas práticas');
 		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
-		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toBeDisabled();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
 		).toBeLessThanOrEqual(1);
@@ -90,6 +90,7 @@ test('Week unavailable states withhold private reading, timeline and downloads',
 		await expect(
 			page.getByRole('button', { name: 'Baixar relatório web', exact: true })
 		).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 	}
 	await page.goto('/biblioteca/00000000-0000-4000-8000-000000000183');
 	await expect(page).toHaveURL(/\/entrar/);

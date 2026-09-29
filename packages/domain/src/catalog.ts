@@ -37,7 +37,7 @@ export const productCatalog: readonly ProductDefinition[] = [
   { id: 'life-atlas', slug: 'atlas-da-vida-360', name: 'Atlas da Vida 360', universe: 'meu-ceu', state: 'PREPARING', delivery: ['web', 'pdf', 'svg'], personalized: true },
   { id: 'horoscope', slug: 'horoscopo', name: 'Horóscopo', universe: 'ciclos-tempo', state: 'PREPARING', delivery: ['web'], personalized: true },
   { id: 'date-reading', slug: 'leitura-da-data', name: 'Leitura da Data', universe: 'ciclos-tempo', state: 'PREPARING', delivery: ['web'], personalized: true },
-  { id: 'week-reading', slug: 'semana', name: 'Semana', universe: 'ciclos-tempo', state: 'PREPARING', delivery: ['web'], personalized: true },
+  { id: 'week-reading', slug: 'semana', name: 'Semana', universe: 'ciclos-tempo', state: 'PREPARING', delivery: ['web', 'pdf'], personalized: true },
   { id: 'personal-calendar', slug: 'calendario-pessoal', name: 'Calendário pessoal', universe: 'ciclos-tempo', state: 'PREPARING', delivery: ['web', 'pdf'], personalized: true },
   { id: 'solar-return', slug: 'revolucao-solar', name: 'Revolução Solar', universe: 'ciclos-tempo', state: 'PREPARING', delivery: ['web', 'pdf'], personalized: true },
   { id: 'synastry', slug: 'sinastria', name: 'Sinastria', universe: 'amor-relacoes', state: 'PREPARING', delivery: ['web', 'pdf'], personalized: true },
