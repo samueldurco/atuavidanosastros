@@ -8,6 +8,7 @@ export function inputFor(p) {
   const value = {version:WORKFLOW_VERSION, productId:p.id, consent:{...consent}};
   if (['natal','cycles','relationship','purpose'].includes(p.kind) && p.id!=='direction-journey') value.birth = {...birth};
   if (p.id==='direction-journey') value.journey={goal:'Explorar uma direção profissional concreta',startDate:'2026-09-09'};
+  if (p.id==='life-atlas') value.atlas={priorities:['Relações','Trabalho','Rotina','Aprendizado']};
   if (p.kind==='relationship') { value.partner={...birth}; value.consent.partner=true; }
   if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
   if (p.id==='solar-return') { value.returnYear=2026; value.returnLocation={city:'São Paulo', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic'}; }
@@ -55,6 +56,19 @@ test('direction journey requires its own declared goal and complete 30-day civil
     assert.equal(parseWorkflowInput({...value,journey}),null);
   assert.equal(parseWorkflowInput({...value,birth}),null);
   assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='purpose-career')),journey:value.journey}),null);
+});
+test('life atlas requires four distinct priorities declared by the person',()=>{
+  const value=inputFor(workflows.find(p=>p.id==='life-atlas'));
+  assert.deepEqual(parseWorkflowInput(value)?.atlas,value.atlas);
+  for (const atlas of [undefined,{priorities:[]},{priorities:['Um','Dois','Três']},
+    {priorities:['Um','Dois','Três','Quatro','Cinco']},
+    {priorities:['Um','Dois','Três',' um ']},
+    {priorities:['Um','Dois','Três','\u0001Quatro']},
+    {priorities:['Um','Dois','Três','x'.repeat(121)]},
+    {...value.atlas,extra:'forbidden'}])
+    assert.equal(parseWorkflowInput({...value,atlas}),null);
+  assert.equal(parseWorkflowInput({...value,birth:undefined}),null);
+  assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='birth-chart')),atlas:value.atlas}),null);
 });
 test('personal calendar preserves specifically authorized marks only within its month',()=>{
   const value=inputFor(workflows.find(p=>p.id==='personal-calendar'));
