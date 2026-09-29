@@ -64,7 +64,7 @@ import {
 } from "./natal-calculators.ts";
 
 export const PRODUCT_EDITORIAL_VERSION =
-  "atv-product-editorial-evidence/1.33.0";
+  "atv-product-editorial-evidence/1.34.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",

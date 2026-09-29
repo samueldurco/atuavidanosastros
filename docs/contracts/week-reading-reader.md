@@ -1,6 +1,6 @@
 # Semana — private reader and seven-sample timeline
 
-WU183 implements a partial E3/E4 reader for `week-reading`, using the existing private `ProductRunReader`, SQL publication, history and Library. Delivery version is `atv-product-delivery/1.17.0`; the experimental calculation remains `atv-week-reading-calculation/1.0.0`. No migration, release flag, runtime registration or approval authority is added.
+WU183 implements a partial E3/E4 reader for `week-reading`, using the existing private `ProductRunReader`, SQL publication, history and Library. WU185 extends this reader with an area summary. Current delivery version is `atv-product-delivery/1.18.0`; the experimental calculation remains `atv-week-reading-calculation/1.0.0`. No migration, release flag, runtime registration or approval authority is added.
 
 ## Preserved content
 
@@ -8,9 +8,9 @@ The original snapshot must pass Week preparation before its trusted editorial pr
 
 - An interval fact group, ten shared natal facts, seven groups of eleven sample facts and optional reported context, in original order.
 - One natal hypothesis and seven dated sample hypotheses, with the original text and references.
-- One synthesis and three practical questions, plus every literal calculation/editorial limit. Missing context is explicit.
+- Three editorial area syntheses and one general synthesis with three practical questions, plus every literal calculation/editorial limit. All four preserve the eight ordered hypothesis references; missing context is explicit.
 
-There are 88 facts/18 sections without context and 89 facts/19 sections with context. Only Week joins the existing specific source-length allowlist at 300 characters; the generic source budget and the 100-reference section bound remain unchanged. Labels explain shared natal positions, sample number, noon UTC, interval and reported context while retaining the persisted fact identifier.
+Current deliveries contain 88 facts/21 sections without context and 89 facts/22 sections with context. Legacy deliveries keep their original 18/19 sections. Only Week joins the existing specific source-length allowlist at 300 characters; the generic source budget and the 100-reference section bound remain unchanged. Labels explain shared natal positions, sample number, noon UTC, interval and reported context while retaining the persisted fact identifier.
 
 ## Timeline projection
 
@@ -30,4 +30,8 @@ The original product requires a web timeline, area summary and PDF. WU183 covers
 
 The additive migration `20260929130000_week_reading_pdf_artifacts.sql` allows Week PDF persistence under the existing owner, revision, review-digest, receipt, policy, release, byte/hash and quota controls. Its forward-fix `disable_week_reading_pdf_artifacts.sql` restores the preceding write allowlist. Existing immutable PDF reads remain authorized independently; new persistence is denied after the forward-fix, and reapplication restores idempotent writes. Both paths are tested in local PGlite with synthetic authority.
 
-Area summary, full temporal scope, engine homologation, legitimate editorial approval and hosted acceptance remain pending. No E2/E5 or hosted release is concluded from synthetic content. Evidence: [WEEK_READING_READER_2026-09-29.md](../qa/WEEK_READING_READER_2026-09-29.md), [WEEK_READING_PDF_2026-09-29.md](../qa/WEEK_READING_PDF_2026-09-29.md).
+WU185 adds three keyboard-operable area links to the original preserved summaries, without duplicating or reconstructing editorial content. Exact labels, ordered claim prefix, nonempty text and unique references to all 88/89 persisted facts are required. Missing or ambiguous areas suppress only this navigation; the reading and valid timeline remain available. Legacy deliveries are never rewritten.
+
+Full temporal scope, engine homologation, legitimate editorial approval and hosted acceptance remain pending. No E2/E5 or hosted release is concluded from synthetic content. Evidence: [WEEK_READING_READER_2026-09-29.md](../qa/WEEK_READING_READER_2026-09-29.md), [WEEK_READING_PDF_2026-09-29.md](../qa/WEEK_READING_PDF_2026-09-29.md).
+
+WU185 evidence: [WEEK_READING_AREAS_2026-09-29.md](../qa/WEEK_READING_AREAS_2026-09-29.md).

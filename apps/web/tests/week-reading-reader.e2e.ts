@@ -12,9 +12,26 @@ for (const width of [1440, 820, 390, 320])
 			source = page.locator('#origem');
 		await expect(page.getByRole('main')).toHaveCount(1);
 		await expect(timeline.getByRole('listitem')).toHaveCount(7);
-		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(19);
+		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(22);
 		await expect(source.locator('dt')).toHaveCount(89);
 		await expect(timeline).toContainText('não representam dias locais inteiros');
+		const areas = page.locator('#areas');
+		await expect(areas.getByRole('listitem')).toHaveCount(3);
+		for (const label of [
+			'Conversas e vínculos',
+			'Organização e prioridades',
+			'Ritmo e cuidado cotidiano'
+		]) {
+			const link = areas.getByRole('link', { name: `Ler resumo de ${label}`, exact: true });
+			await link.focus();
+			await expect(link).toBeFocused();
+			await page.keyboard.press('Enter');
+			const href = await link.getAttribute('href');
+			await expect(page.locator(href!)).toContainText(
+				`Resumo por área: ${label} — Possibilidade simbólica`
+			);
+			await expect(page.locator(href!)).toContainText('Amostra 7 · Plutão');
+		}
 		const dates = [
 			'2026-09-29',
 			'2026-09-30',
@@ -43,7 +60,7 @@ for (const width of [1440, 820, 390, 320])
 		await expect(source).toContainText('Amostra 7 · Plutão (day-7-sample-pluto)');
 		await expect(source).toContainText('Contexto informado (personal-context)');
 		await expect(source).toContainText('não foram calculados');
-		await expect(reading).toContainText('Síntese da Semana (1) e três perguntas práticas');
+		await expect(reading).toContainText('Síntese da Semana (4) e três perguntas práticas');
 		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toBeDisabled();
@@ -52,6 +69,8 @@ for (const width of [1440, 820, 390, 320])
 		).toBeLessThanOrEqual(1);
 		for (const [name, target] of [
 			['timeline', timeline],
+			['areas', areas],
+			['resumo', reading.locator('article').nth(18)],
 			['hipotese', reading.locator('article').nth(11)],
 			['origem', source],
 			['historico', page.locator('#historico')]
@@ -69,7 +88,8 @@ for (const width of [1440, 820, 390, 320])
 test('Week missing context remains absent', async ({ page }) => {
 	await page.goto('/biblioteca/_spec/fluxo?state=ready&product=week-reading&context=absent');
 	await expect(page.locator('#semana').getByRole('listitem')).toHaveCount(7);
-	await expect(page.locator('#leitura').getByRole('heading', { level: 3 })).toHaveCount(18);
+	await expect(page.locator('#areas').getByRole('listitem')).toHaveCount(3);
+	await expect(page.locator('#leitura').getByRole('heading', { level: 3 })).toHaveCount(21);
 	await expect(page.locator('#origem').locator('dt')).toHaveCount(88);
 	await expect(page.locator('#origem')).toContainText(
 		'Nenhum contexto adicional foi informado para esta semana.'
@@ -85,7 +105,7 @@ test('Week unavailable states withhold private reading, timeline and downloads',
 	]) {
 		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=week-reading`);
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
-		for (const id of ['semana', 'leitura', 'origem'])
+		for (const id of ['semana', 'areas', 'leitura', 'origem'])
 			await expect(page.locator(`#${id}`)).toHaveCount(0);
 		await expect(
 			page.getByRole('button', { name: 'Baixar relatório web', exact: true })

@@ -57,7 +57,7 @@ test("coherent Week uses its trusted profile without widening the generic budget
   const original = structuredClone(calculation);
   assert.equal(
     PRODUCT_EDITORIAL_VERSION,
-    "atv-product-editorial-evidence/1.33.0",
+    "atv-product-editorial-evidence/1.34.0",
   );
   assert.equal(calls, 8);
   assert.equal(calculation.facts.length, 89);

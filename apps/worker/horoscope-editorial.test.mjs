@@ -330,7 +330,7 @@ test("Horoscope instructions isolate hostile reported data and require epoch and
       await calculation(hostile),
     ).facts,
     prompt = buildPrompt(request(facts));
-  assert.equal(PROMPT_VERSION, "atv-editorial/1.0.19");
+  assert.equal(PROMPT_VERSION, "atv-editorial/1.0.20");
   assert.ok(prompt.system.includes(HOROSCOPE_EDITORIAL_VERSION));
   assert.equal(prompt.system.includes(hostile), false);
   assert.equal(JSON.parse(prompt.prompt).facts.facts.at(-1).display, hostile);

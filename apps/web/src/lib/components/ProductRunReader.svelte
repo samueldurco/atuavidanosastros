@@ -13,7 +13,7 @@
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
-	import { weekReadingTimeline } from '$lib/week-reading-timeline';
+	import { weekReadingTimeline, weekReadingAreaLinks } from '$lib/week-reading-timeline';
 	import { parseProductCartography } from '$lib/product-cartography';
 	import { libraryPageHref } from '$lib/library-page';
 	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
@@ -21,6 +21,7 @@
 		$props();
 	const backHref = $derived(libraryPageHref(libraryBefore));
 	const weekTimeline = $derived(weekReadingTimeline(data.run));
+	const weekAreas = $derived(weekReadingAreaLinks(data.run));
 	const birthAtlas = $derived(
 		data.run.productId === 'birth-chart' &&
 			data.run.released &&
@@ -230,6 +231,7 @@
 				? [
 						...(birthGeometry ? [{ id: 'cartografia', label: 'Cartografia natal' }] : []),
 						...(weekTimeline ? [{ id: 'semana', label: 'Sete amostras da semana' }] : []),
+						...(weekAreas ? [{ id: 'areas', label: 'Resumo por áreas' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
 						...(birthAtlas && data.run.editorial
 							? data.run.editorial.sections.map((section, index) => ({
@@ -385,6 +387,23 @@
 					{/if}
 				</section>
 			{/if}
+			{#if weekAreas}
+				<section id="areas" aria-labelledby="week-areas-title">
+					<p class="eyebrow">Possibilidades para refletir</p>
+					<h2 id="week-areas-title">Resumo por áreas</h2>
+					<p>
+						Três olhares sobre as hipóteses da semana, com referências às sete amostras. São
+						convites à reflexão, sem indicar acontecimentos ou períodos favoráveis.
+					</p>
+					<ul class="week-areas" aria-label="Três áreas de reflexão">
+						{#each weekAreas as area (area.label)}
+							<li>
+								<a href={area.href} aria-label={`Ler resumo de ${area.label}`}>{area.label}</a>
+							</li>
+						{/each}
+					</ul>
+				</section>
+			{/if}
 			{#if birthGeometry}
 				<NatalCartography geometry={birthGeometry} facts={data.run.calculation.facts} />
 			{/if}
@@ -469,13 +488,15 @@
 </div>
 
 <style>
-	.week-timeline {
+	.week-timeline,
+	.week-areas {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
 		gap: 1rem;
 		padding-left: 1.25rem;
 	}
-	.week-timeline li {
+	.week-timeline li,
+	.week-areas li {
 		border: 1px solid var(--atv-border);
 		border-radius: 0.5rem;
 		padding: 1rem;

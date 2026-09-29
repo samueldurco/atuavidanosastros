@@ -6,6 +6,7 @@ import {
   coupleDossierRoles,
   horoscopeRoles,
   weekReadingRoles,
+  weekReadingAreas,
   type Reading,
 } from "@atv/ai";
 import {
@@ -14,7 +15,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.17.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.18.0";
 const synastryBodies: Record<string, string> = {
   sun: "Sol",
   moon: "Lua",
@@ -250,7 +251,9 @@ function project(
         });
     }
     if (!facts.some((fact) => fact.id === "personal-context"))
-      missingWeekFields.push("Nenhum contexto adicional foi informado para esta semana.");
+      missingWeekFields.push(
+        "Nenhum contexto adicional foi informado para esta semana.",
+      );
   }
   if (["pair-preview", "synastry", "couple-dossier"].includes(productId)) {
     for (const [title, pattern] of [
@@ -346,24 +349,26 @@ function project(
     productId === "week-reading"
       ? weekReadingRoles.map((id) => claims.get(id)!)
       : productId === "three-questions"
-      ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-      : productId === "horoscope"
-        ? horoscopeRoles.map((id) => claims.get(id)!)
-        : productId === "couple-dossier"
-          ? coupleDossierRoles.map((id) => claims.get(id)!)
-          : productId === "synastry"
-            ? synastryRoles.map((id) => claims.get(id)!)
-            : productId === "pair-preview"
-              ? ["pair-person-a", "pair-person-b", "pair-negotiation"].map(
-                  (id) => claims.get(id)!,
-                )
-              : productId === "date-reading"
-                ? ["date-natal-basis", "date-sample", "date-contrast"].map(
+        ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
+        : productId === "horoscope"
+          ? horoscopeRoles.map((id) => claims.get(id)!)
+          : productId === "couple-dossier"
+            ? coupleDossierRoles.map((id) => claims.get(id)!)
+            : productId === "synastry"
+              ? synastryRoles.map((id) => claims.get(id)!)
+              : productId === "pair-preview"
+                ? ["pair-person-a", "pair-person-b", "pair-negotiation"].map(
                     (id) => claims.get(id)!,
                   )
-                : productId === "dream-reading"
-                  ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-                  : reading.claims;
+                : productId === "date-reading"
+                  ? ["date-natal-basis", "date-sample", "date-contrast"].map(
+                      (id) => claims.get(id)!,
+                    )
+                  : productId === "dream-reading"
+                    ? [...reading.claims].sort((a, b) =>
+                        a.id.localeCompare(b.id),
+                      )
+                    : reading.claims;
   for (const claim of orderedClaims) {
     if (productId === "three-questions") {
       const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
@@ -412,7 +417,10 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : productId === "synastry" ? "Síntese da Sinastria" : productId === "couple-dossier" ? "Síntese do Dossiê do Casal" : productId === "horoscope" ? "Síntese do Horóscopo" : productId === "week-reading" ? "Síntese da Semana" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview", "synastry", "couple-dossier", "horoscope", "week-reading"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title:
+        productId === "week-reading" && index < weekReadingAreas.length
+          ? `Resumo por área: ${weekReadingAreas[index]} — Possibilidade simbólica`
+          : `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : productId === "synastry" ? "Síntese da Sinastria" : productId === "couple-dossier" ? "Síntese do Dossiê do Casal" : productId === "horoscope" ? "Síntese do Horóscopo" : productId === "week-reading" ? "Síntese da Semana" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview", "synastry", "couple-dossier", "horoscope", "week-reading"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
@@ -463,10 +471,11 @@ export async function prepareProductDelivery(
     return reject("invalid_input");
   // These products have a trusted transport profile, derived from the
   // validated snapshot. A caller-supplied tier/profile cannot broaden it.
-  const profiledPreparation =
-    ["horoscope", "week-reading"].includes(input.productId)
-      ? prepareProductFacts(input.productId, input.calculation)
-      : undefined;
+  const profiledPreparation = ["horoscope", "week-reading"].includes(
+    input.productId,
+  )
+    ? prepareProductFacts(input.productId, input.calculation)
+    : undefined;
   if (profiledPreparation?.status === "blocked")
     return reject(profiledPreparation.reason);
   const reading = parseReading(

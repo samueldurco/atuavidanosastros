@@ -238,7 +238,7 @@ for (const withContext of [true, false]) {
 			expect(artifactEligible('week-reading', 'pdf')).toBe(true);
 			expect(artifactEligible('week-reading', 'svg')).toBe(false);
 			expect(run?.calculation?.facts).toHaveLength(withContext ? 89 : 88);
-			expect(run?.editorial?.sections).toHaveLength(withContext ? 19 : 18);
+			expect(run?.editorial?.sections).toHaveLength(withContext ? 22 : 21);
 			expect(run?.editorial?.sections).toEqual(f.editorial.sections);
 			const pdf = await renderProductPdf(raw);
 			if (!pdf || !run?.editorial || !run.calculation) throw new Error('week_pdf_render_failed');
@@ -250,10 +250,11 @@ for (const withContext of [true, false]) {
 			expect(pdf.bytes).toEqual((await renderProductPdf(raw))?.bytes);
 			if (process.env.ATV_WEEK_PDF_QA === '1') {
 				const suffix = withContext ? 'context' : 'no-context';
-				await mkdir('../../test-results/wu184', { recursive: true });
-				await writeFile(`../../test-results/wu184/week-${suffix}.pdf`, pdf.bytes);
+				const directory = process.env.ATV_WEEK_PDF_QA_DIR === 'wu185' ? 'wu185' : 'wu184';
+				await mkdir(`../../test-results/${directory}`, { recursive: true });
+				await writeFile(`../../test-results/${directory}/week-${suffix}.pdf`, pdf.bytes);
 				await writeFile(
-					`../../test-results/wu184/week-${suffix}-expected.json`,
+					`../../test-results/${directory}/week-${suffix}-expected.json`,
 					JSON.stringify(
 						{ calculation: run.calculation, editorial: run.editorial, history: run.history },
 						null,

@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { weekReadingReaderFixture } from '../../../tests/fixtures/week-reading-reader';
 import { parseProductRun } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
-import { weekReadingTimeline } from '../week-reading-timeline';
+import { weekReadingTimeline, weekReadingAreaLinks } from '../week-reading-timeline';
+import { weekReadingAreas } from '../../../../../packages/ai/src/week-reading';
 
 describe('private Week specimen without editorial approval', () => {
 	for (const withContext of [true, false])
@@ -13,7 +14,7 @@ describe('private Week specimen without editorial approval', () => {
 			expect(run.calculation!.facts).toEqual(fixture.run.calculation!.facts);
 			expect(run.calculation!.facts).toHaveLength(withContext ? 89 : 88);
 			expect(run.editorial!.sections).toEqual(fixture.run.editorial!.sections);
-			expect(run.editorial!.sections).toHaveLength(withContext ? 19 : 18);
+			expect(run.editorial!.sections).toHaveLength(withContext ? 22 : 21);
 			const timeline = weekReadingTimeline(run)!;
 			expect(timeline.map((s) => s.date)).toEqual([
 				'2026-09-29',
@@ -28,6 +29,13 @@ describe('private Week specimen without editorial approval', () => {
 				expect(sample.instant).toBe(`${sample.date}T12:00:00.000Z`);
 				const sectionIndex = Number(sample.href.slice('#capitulo-'.length)) - 1;
 				expect(run.editorial!.sections[sectionIndex].title).toContain(`[week-day-${index + 1}]`);
+			}
+			const areas = weekReadingAreaLinks(run)!;
+			expect(areas.map((area) => area.label)).toEqual(weekReadingAreas);
+			for (const area of areas) {
+				const section = run.editorial!.sections[Number(area.href.slice('#capitulo-'.length)) - 1];
+				expect(section.title).toBe(`Resumo por área: ${area.label} — Possibilidade simbólica`);
+				expect(new Set(section.evidence)).toEqual(new Set(run.calculation!.facts.map((f) => f.id)));
 			}
 			expect(productFactLabel('week-reading', 'week-range')).toBe(
 				'Intervalo das sete amostras (week-range)'
@@ -106,6 +114,48 @@ describe('private Week specimen without editorial approval', () => {
 			expect(weekReadingTimeline(changed)).toBeNull();
 		}
 	});
+	it('withholds incomplete areas while preserving the reading and legacy timeline', async () => {
+		const run = parseProductRun((await weekReadingReaderFixture('ready')).run)!;
+		const areaIndex = run.editorial!.sections.findIndex((s) =>
+			s.title.startsWith('Resumo por área:')
+		);
+		for (const mutate of [
+			(v: typeof run) => {
+				v.editorial!.sections.splice(areaIndex, 1);
+			},
+			(v: typeof run) => {
+				v.editorial!.sections[areaIndex].evidence.pop();
+			},
+			(v: typeof run) => {
+				v.editorial!.sections[areaIndex].evidence[0] = v.editorial!.sections[areaIndex].evidence[1];
+			},
+			(v: typeof run) => {
+				v.editorial!.sections[areaIndex].title = v.editorial!.sections[areaIndex + 1].title;
+			},
+			(v: typeof run) => {
+				v.editorial!.sections[areaIndex].text = 'Afirmações sem referência';
+			},
+			(v: typeof run) => {
+				v.editorial!.sections[areaIndex].text =
+					v.editorial!.sections[areaIndex].text.split(`${weekReadingAreas[0]}: `)[0] +
+					`${weekReadingAreas[0]}: `;
+			}
+		]) {
+			const changed = structuredClone(run);
+			mutate(changed);
+			expect(weekReadingAreaLinks(changed)).toBeNull();
+			expect(weekReadingTimeline(changed)).toHaveLength(7);
+			expect(parseProductRun(changed)).not.toBeNull();
+		}
+		const legacy = structuredClone(run);
+		legacy.editorial!.sections = legacy.editorial!.sections.filter(
+			(s) => !s.title.startsWith('Resumo por área:')
+		);
+		expect(legacy.editorial!.sections).toHaveLength(19);
+		expect(weekReadingAreaLinks(legacy)).toBeNull();
+		expect(weekReadingTimeline(legacy)).toHaveLength(7);
+		expect(run.editorial!.sections).toHaveLength(22);
+	});
 	it('redacts even injected ready content when release is absent', async () => {
 		const ready = (await weekReadingReaderFixture('ready')).run;
 		for (const state of ['pending', 'revoked', 'failed']) {
@@ -116,6 +166,7 @@ describe('private Week specimen without editorial approval', () => {
 			expect(parsed.calculation).toBeNull();
 			expect(parsed.editorial).toBeNull();
 			expect(weekReadingTimeline(parsed)).toBeNull();
+			expect(weekReadingAreaLinks(parsed)).toBeNull();
 		}
 	});
 });

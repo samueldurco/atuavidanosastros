@@ -2,6 +2,7 @@ import { SCHEMA_VERSION } from "../../packages/ai/src/contracts.ts";
 import {
   WEEK_READING_EDITORIAL_VERSION,
   weekReadingRoles,
+  weekReadingAreas,
   weekReadingEvidence,
   weekReadingEditorialLimits,
 } from "../../packages/ai/src/week-reading.ts";
@@ -29,6 +30,10 @@ export function weekReadingEditorialTestFixture(facts) {
     })),
     relations: [],
     synthesis: [
+      ...weekReadingAreas.map((area) => ({
+        claimIds: [...weekReadingRoles],
+        text: `${area}: fixture de reflexão e escolha reversível sobre as hipóteses das sete amostras; sem previsão ou aprovação editorial.`,
+      })),
       {
         claimIds: [...weekReadingRoles],
         text: "Fixture de organização das sete amostras: possibilidades para observação e escolhas reversíveis; sem aprovação editorial.",

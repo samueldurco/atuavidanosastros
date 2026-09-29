@@ -1,4 +1,13 @@
 import type { ProductRunView } from './product-run';
+const weekReadingAreas = [
+	'Conversas e vínculos',
+	'Organização e prioridades',
+	'Ritmo e cuidado cotidiano'
+] as const;
+const weekReadingRoles = [
+	'week-natal-basis',
+	...Array.from({ length: 7 }, (_, i) => `week-day-${i + 1}`)
+];
 
 const bodies = [
 	'sun',
@@ -117,4 +126,32 @@ export function weekReadingTimeline(run: ProductRunView): WeekSample[] | null {
 	)
 		return null;
 	return samples;
+}
+
+/** Links to preserved editorial summaries; legacy readings are never reconstructed. */
+export function weekReadingAreaLinks(
+	run: ProductRunView
+): { label: string; href: string }[] | null {
+	if (!weekReadingTimeline(run) || !run.editorial || !run.calculation) return null;
+	const expected = new Set(run.calculation.facts.map((fact) => fact.id));
+	const links: { label: string; href: string }[] = [];
+	for (const label of weekReadingAreas) {
+		const title = `Resumo por área: ${label} — Possibilidade simbólica`;
+		const matches = run.editorial.sections
+			.map((section, index) => ({ section, index }))
+			.filter(({ section }) => section.title === title);
+		if (matches.length !== 1) return null;
+		const { section, index } = matches[0];
+		const prefix = `Afirmações de base: ${weekReadingRoles.join(', ')}\n\n${label}: `;
+		if (
+			!section.text.startsWith(prefix) ||
+			!section.text.slice(prefix.length).trim() ||
+			section.evidence.length !== expected.size ||
+			new Set(section.evidence).size !== expected.size ||
+			section.evidence.some((id) => !expected.has(id))
+		)
+			return null;
+		links.push({ label, href: `#capitulo-${index + 1}` });
+	}
+	return links;
 }

@@ -4,6 +4,7 @@ import {
   WEEK_READING_EDITORIAL_VERSION,
   WEEK_READING_MAX_INPUT_CHARS,
   weekReadingRoles,
+  weekReadingAreas,
   weekReadingEvidence,
   weekReadingEditorialLimits,
   weekReadingOutputLimits,
@@ -96,6 +97,10 @@ function reading(facts = base): Reading {
     })),
     relations: [],
     synthesis: [
+      ...weekReadingAreas.map((area) => ({
+        claimIds: [...weekReadingRoles],
+        text: `${area}: possibilidade estrutural sintética de observação e escolha reversível, sem aprovação.`,
+      })),
       {
         claimIds: [...weekReadingRoles],
         text: "Observação estrutural da organização das amostras, sem certificação.",
@@ -225,6 +230,18 @@ test("Week Director rejects every omitted required fact and crossed days", () =>
     }
   }
   const mutations: ((output: Reading) => void)[] = [
+    (r) => {
+      r.synthesis.splice(1, 1);
+    },
+    (r) => {
+      [r.synthesis[0], r.synthesis[1]] = [r.synthesis[1]!, r.synthesis[0]!];
+    },
+    (r) => {
+      r.synthesis[2]!.text = `${weekReadingAreas[2]}: `;
+    },
+    (r) => {
+      r.synthesis[3]!.claimIds.reverse();
+    },
     (r) => {
       r.claims.pop();
     },

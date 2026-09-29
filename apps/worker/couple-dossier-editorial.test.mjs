@@ -281,7 +281,7 @@ test("Dossier instructions preserve consent, uncertainty and separation from hos
       await calculation(hostile),
     ).facts;
   const prompt = buildPrompt(request(facts));
-  assert.equal(PROMPT_VERSION, "atv-editorial/1.0.19");
+  assert.equal(PROMPT_VERSION, "atv-editorial/1.0.20");
   assert.equal(JSON.parse(prompt.prompt).facts.facts.at(-1).display, hostile);
   assert.equal(prompt.system.includes(hostile), false);
   assert.ok(prompt.system.includes(COUPLE_DOSSIER_EDITORIAL_VERSION));
