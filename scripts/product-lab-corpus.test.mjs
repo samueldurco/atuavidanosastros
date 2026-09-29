@@ -192,14 +192,15 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.15.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.16.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
     '6e31af227a9271a9cc07eaaa1b5f95549048e137ab902bdb0dc77bb0e91ab7e7');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
     'c72738d7ccdf6f045b06c68f8aed23c370a4faea61ef40ee67638adc7ce8123c');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
     'f7edf4731995cfe07bf02b2af0986b16928cd93e8ebd9047d06e3a07c2fdaf78');
-  // Version 1.15.0 adds only the trusted daily-card editorial profile.
+  // 1.16.0 strengthens Foco Agora validation without changing valid requests.
+  // Version 1.15.0 added only the trusted daily-card editorial profile.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     '4ab88738036f97570690fd7d9f31bf98dfa967b4deba1b332ec7b5774edbf42a');
   const beforeDaily = corpus.cases.map(item => {

@@ -28,6 +28,8 @@ Dream snapshots keep reported narrative, emotions, associations and context dist
 
 `tarot-focus` and `tarot-yes-no` extend the same registry and authenticated intake with exactly one explicit question. Both draw one card using the unchanged deck, seed and spread algorithm. Existing snapshots and golden draws are unchanged. The additive `atv-tarot-question-products/1.0.0` policy records `interpretationStatus: not-evaluated` and `binaryVerdict: null`; no yes/no verdict, recommendation or interpretation is calculated. The candidate one-card policy still requires editorial evaluation and does not fulfill the catalog's finished reading promise.
 
+WU135: Foco Agora now validates its saved card/question/context, exact provenance and unevaluated/null-verdict policy before editorial preparation. Preparation 1.14.0 / corpus 1.16.0 preserve valid requests and the draw algorithm. See `tarot-focus-calculation.md` and `../qa/TAROT_FOCUS_BASE_2026-09-28.md`; policy and interpretation remain unapproved.
+
 The existing owner-scoped request, local SQL processing, pending Library projection, lost-acknowledgement recovery and frozen-draw reprocessing now cover these products. Intake remains server-gated; local enabled fixtures do not activate releases. Runtime coverage is twelve partial bases and thirteen unavailable calculations, not twelve completed products. No model or prompt is promoted. Evidence: `docs/qa/TAROT_QUESTION_PRODUCTS_2026-09-28.md`.
 
 ### Daily-card coherence — WU132

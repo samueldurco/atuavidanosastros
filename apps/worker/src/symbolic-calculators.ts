@@ -30,6 +30,20 @@ function exactKeys(
 export function validDailyCardProjection(
   calculation: CalculationSnapshot,
 ): boolean {
+  return validSingleCardProjection(calculation, "daily-card");
+}
+
+/** Saved Foco Agora coherence only; never returns a verdict or approval. */
+export function validTarotFocusProjection(
+  calculation: CalculationSnapshot,
+): boolean {
+  return validSingleCardProjection(calculation, "tarot-focus");
+}
+
+function validSingleCardProjection(
+  calculation: CalculationSnapshot,
+  productId: "daily-card" | "tarot-focus",
+): boolean {
   const data = calculation.data;
   if (
     calculation.version !== symbolicContract.version ||
@@ -45,6 +59,7 @@ export function validDailyCardProjection(
       "cards",
       "questions",
       "reviewStatus",
+      ...(productId === "tarot-focus" ? ["productPolicy"] : []),
     ]) ||
     data.deckVersion !== symbolicContract.deckVersion ||
     data.spreadVersion !== symbolicContract.spreadVersion ||
@@ -57,6 +72,20 @@ export function validDailyCardProjection(
     data.cards.length !== 1 ||
     !Array.isArray(data.questions) ||
     data.questions.length !== 1
+  )
+    return false;
+  if (
+    productId === "tarot-focus" &&
+    (!exactKeys(data.productPolicy, [
+      "version",
+      "productId",
+      "interpretationStatus",
+      "binaryVerdict",
+    ]) ||
+      data.productPolicy.version !== "atv-tarot-question-products/1.0.0" ||
+      data.productPolicy.productId !== productId ||
+      data.productPolicy.interpretationStatus !== "not-evaluated" ||
+      data.productPolicy.binaryVerdict !== null)
   )
     return false;
   const card: unknown = data.cards[0],
@@ -101,9 +130,16 @@ export function validDailyCardProjection(
         context.display.length > 1200))
   )
     return false;
+  const limits =
+    productId === "daily-card"
+      ? dailyLimits
+      : [
+          ...dailyLimits,
+          "Nenhuma resposta sim/não, recomendação de decisão ou interpretação foi calculada. A carta não decide por você.",
+        ];
   return (
-    calculation.limits.length === dailyLimits.length &&
-    dailyLimits.every((limit, index) => calculation.limits[index] === limit)
+    calculation.limits.length === limits.length &&
+    limits.every((limit, index) => calculation.limits[index] === limit)
   );
 }
 

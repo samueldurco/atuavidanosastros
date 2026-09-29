@@ -200,7 +200,6 @@ test("review is bound to output and complete provenance, run, revision, product 
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
-    (d) => (d.productId = "tarot-focus"),
     (d) => (d.output.title = "Outro recorte"),
   ]) {
     const changed = structuredClone(input);
@@ -211,6 +210,7 @@ test("review is bound to output and complete provenance, run, revision, product 
     assert.equal(result.publication, "blocked");
   }
   for (const mutate of [
+    (d) => (d.productId = "tarot-focus"),
     (d) => (d.calculation.version += "-changed"),
     (d) => (d.calculation.data.newProvenance = "changed"),
     (d) => d.calculation.limits.push("Outro limite."),

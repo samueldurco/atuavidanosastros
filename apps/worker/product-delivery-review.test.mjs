@@ -183,7 +183,6 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
-    (d) => d.calculation.limits.push("Outro limite da base genérica."),
   ]) {
     const changed = structuredClone(input);
     mutate(changed);
@@ -193,6 +192,7 @@ test("run, revision, product, tier, provenance, limits, questions and text chang
     assert.equal("content" in result, false);
   }
   for (const mutate of [
+    (d) => d.calculation.limits.push("Outro limite da política candidata."),
     (d) => (d.calculation.version = ""),
     (d) => (d.calculation.kind = "dream"),
   ]) {
