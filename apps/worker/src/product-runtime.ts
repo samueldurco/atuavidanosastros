@@ -5,6 +5,7 @@ import { createContextCalculators } from "./context-calculators.ts";
 import { createPurposeCalculators } from "./purpose-calculators.ts";
 import { createPurposeCareerCalculators } from "./purpose-career-calculators.ts";
 import { createDirectionJourneyCalculators } from "./direction-journey-calculators.ts";
+import { createLifeAtlasCalculators } from "./life-atlas-calculators.ts";
 import { createSynastryCalculators } from "./synastry-calculators.ts";
 import { createCoupleDossierCalculators } from "./couple-dossier-calculators.ts";
 import { createHoroscopeCalculators } from "./horoscope-calculators.ts";
@@ -14,6 +15,7 @@ import { createWeekTemporalCalculators } from "./week-temporal-calculators.ts";
 import { createSolarReturnCalculators } from "./solar-return-calculators.ts";
 import { createPersonalCalendarCalculators } from "./personal-calendar-calculators.ts";
 import type { AspectPolicy } from "@atv/astrology";
+import type { ProductCalculator } from "./product-processing.ts";
 import {
   createWorkflowRepository,
   processNextProductRun,
@@ -43,10 +45,12 @@ export interface ProductCalculationOptions {
   experimentalPurposeCareerBase?: true;
   /** Independent goal and civil-check-in scaffold; no interpretation or release approval. */
   experimentalDirectionJourneyBase?: true;
+  /** Independent natal facts and reported priorities; no priority mapping, path or release approval. */
+  experimentalLifeAtlasBase?: true;
 }
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
-) {
+): Readonly<Record<string, ProductCalculator>> {
   if (
     options.experimentalWeekBase !== undefined &&
     options.experimentalWeekBase !== true
@@ -70,6 +74,11 @@ export function createProductCalculators(
   if (
     options.experimentalDirectionJourneyBase !== undefined &&
     options.experimentalDirectionJourneyBase !== true
+  )
+    throw new Error("invalid_product_configuration");
+  if (
+    options.experimentalLifeAtlasBase !== undefined &&
+    options.experimentalLifeAtlasBase !== true
   )
     throw new Error("invalid_product_configuration");
   if (
@@ -115,6 +124,9 @@ export function createProductCalculators(
       : {}),
     ...(options.experimentalDirectionJourneyBase === true
       ? createDirectionJourneyCalculators()
+      : {}),
+    ...(options.experimentalLifeAtlasBase === true
+      ? createLifeAtlasCalculators()
       : {}),
   });
 }
