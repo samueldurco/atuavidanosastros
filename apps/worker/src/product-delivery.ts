@@ -5,7 +5,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.4.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.5.0";
 /** Deliberately lacks promotionId/reviewDigest: this cannot be published as a receipt. */
 export type ProductDeliveryContent = Omit<
   EditorialSnapshot,
@@ -38,6 +38,11 @@ const ascendantTitles = new Map([
   ["ascendant-approach", "Abordagem e primeiro contato"],
   ["ascendant-possibilities", "Possibilidades de expressão"],
   ["ascendant-tension", "Tensão ou excesso possível"],
+]);
+const midheavenTitles = new Map([
+  ["midheaven-contribution", "Direção pública e contribuição"],
+  ["midheaven-possibilities", "Ambientes e modos de trabalhar"],
+  ["midheaven-tension", "Tensão ou excesso possível"],
 ]);
 const threePillarsTitles = new Map([
   ["sun-moon-dynamics", "Sol e Lua: intenção e necessidade"],
@@ -85,9 +90,16 @@ function claimTitle(
             claim.evidence[0] === "angle-ascendant"
               ? "Seu Ascendente"
               : ""))
-          : productId === "birth-chart"
-            ? (birthChartTitles.get(claim.id) ?? "")
-            : "";
+          : productId === "midheaven"
+            ? (midheavenTitles.get(claim.id) ??
+              (claim.kind === "fact" &&
+              claim.evidence.length === 1 &&
+              claim.evidence[0] === "angle-midheaven"
+                ? "Seu Meio do Céu"
+                : ""))
+            : productId === "birth-chart"
+              ? (birthChartTitles.get(claim.id) ?? "")
+              : "";
   return `${subject ? subject + " — " : ""}${labels[claim.kind]} [${claim.id}]`;
 }
 
@@ -139,7 +151,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : "Síntese"} (${index + 1})${last ? (["career-compass", "three-pillars", "birth-chart", "ascendant"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : "Síntese"} (${index + 1})${last ? (["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });

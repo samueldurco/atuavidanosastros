@@ -6,6 +6,7 @@ import { careerCompassReaderFixture } from '../../../../../tests/fixtures/career
 import { threePillarsReaderFixture } from '../../../../../tests/fixtures/three-pillars-reader';
 import { birthChartReaderFixture } from '../../../../../tests/fixtures/birth-chart-reader';
 import { ascendantReaderFixture } from '../../../../../tests/fixtures/ascendant-reader';
+import { midheavenReaderFixture } from '../../../../../tests/fixtures/midheaven-reader';
 
 export const load: PageServerLoad = async ({ url }) => {
 	if (!['localhost', '127.0.0.1', '[::1]'].includes(url.hostname)) error(404);
@@ -15,6 +16,8 @@ export const load: PageServerLoad = async ({ url }) => {
 		return threePillarsReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'ascendant')
 		return ascendantReaderFixture(url.searchParams.get('state'));
+	if (url.searchParams.get('product') === 'midheaven')
+		return midheavenReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'birth-chart') {
 		const fixture = await birthChartReaderFixture(url.searchParams.get('state'));
 		if (url.searchParams.get('geometry') === 'missing') fixture.run.cartography = null;

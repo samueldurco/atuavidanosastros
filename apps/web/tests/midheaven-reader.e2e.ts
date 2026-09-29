@@ -1,18 +1,18 @@
 import { expect, test } from '@playwright/test';
 
 const headings = [
-	'Seu Ascendente — Fato [asc-fact]',
-	'Abordagem e primeiro contato — Hipótese [ascendant-approach]',
-	'Possibilidades de expressão — Hipótese [ascendant-possibilities]',
-	'Tensão ou excesso possível — Hipótese [ascendant-tension]',
-	'Síntese do Ascendente (1) e três perguntas práticas'
+	'Seu Meio do Céu — Fato [mc-fact]',
+	'Direção pública e contribuição — Hipótese [midheaven-contribution]',
+	'Ambientes e modos de trabalhar — Hipótese [midheaven-possibilities]',
+	'Tensão ou excesso possível — Hipótese [midheaven-tension]',
+	'Síntese do Meio do Céu (1) e três perguntas práticas'
 ];
 for (const width of [1440, 820, 390, 320]) {
-	test(`ascendant preserves its saved angle and full reading at ${width}`, async ({
+	test(`midheaven preserves its saved angle and full reading at ${width}`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
-		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=ascendant');
+		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=midheaven');
 		const consent = page.getByRole('button', { name: 'Recusar analytics' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
@@ -21,16 +21,16 @@ for (const width of [1440, 820, 390, 320]) {
 			await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		const reading = page.locator('#leitura');
 		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(5);
-		await expect(reading).toContainText('Base: Ascendente (angle-ascendant)');
+		await expect(reading).toContainText('Base: Meio do Céu (angle-midheaven)');
 		for (const question of [
-			'Como quero iniciar um primeiro contato?',
-			'Que alternativa de iniciativa posso observar?',
-			'Qual experimento reversível ajuda a ajustar minha abordagem?'
+			'Que contribuição pública quero observar?',
+			'Em que ambiente posso testar essa contribuição?',
+			'Qual experimento reversível cabe na minha rotina?'
 		])
 			await expect(reading).toContainText(question);
 		const source = page.locator('#origem');
 		for (const label of [
-			'Ascendente (angle-ascendant)',
+			'Meio do Céu (angle-midheaven)',
 			'atv-product-delivery/1.5.0',
 			'Fixture de apresentação',
 			'parcial'
@@ -40,7 +40,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
 		await expect(
 			page.getByRole('button', { name: 'Baixar cartografia SVG', exact: true })
-		).toBeDisabled();
+		).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Baixar card SVG', exact: true })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
@@ -48,7 +48,7 @@ for (const width of [1440, 820, 390, 320]) {
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
 		).toBeLessThanOrEqual(1);
 		await page.screenshot({
-			path: testInfo.outputPath(`ascendant-reader-${width}.png`),
+			path: testInfo.outputPath(`midheaven-reader-${width}.png`),
 			fullPage: true
 		});
 		const historyLink = page.getByRole('link', { name: 'Histórico desta versão', exact: true });
@@ -62,13 +62,13 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.getByRole('heading', { name: headings[4], exact: true })).toBeVisible();
 	});
 }
-test('ascendant review, revocation and failure withhold reading and formats', async ({ page }) => {
+test('midheaven review, revocation and failure withhold reading and formats', async ({ page }) => {
 	for (const [state, name] of [
 		['pending', 'Aguardando revisão editorial'],
 		['revoked', 'Leitura temporariamente indisponível'],
 		['failed', 'Processamento interrompido']
 	]) {
-		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=ascendant`);
+		await page.goto(`/biblioteca/_spec/fluxo?state=${state}&product=midheaven`);
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);

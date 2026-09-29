@@ -214,3 +214,7 @@ Delivery1.4.0 labels the ASC fact, three interpretation roles and synthesis/ques
 ## WU130 — Meio do Céu: cobertura editorial
 
 Perfil `atv-midheaven-editorial/1.0.0` selecionado após coerência MC-only; preparação1.11.0/prompt1.0.7 vinculam fato exato, contribuição pública, possibilidades, tensão, síntese conjunta e três perguntas. Ver `midheaven-editorial.md` e `../qa/MIDHEAVEN_EDITORIAL_2026-09-28.md`. Revisões anteriores não autorizam a preparação atual. Fixture comprova transporte/estrutura; conteúdo, homologação e release continuam bloqueados. Próxima entrega independente: resultado web específico (E3/E4).
+
+## WU131 — Meio do Céu: leitura persistida
+
+Delivery1.5.0 nomeia fato, contribuição, possibilidades, tensão e síntese/perguntas sem alterar texto/evidências; vincula o digest de novas revisões. O leitor distingue MC calculado e contexto relatado. SQL local prova snapshot web, proprietário, recuperação idempotente, revogação e versão filha independente com aprovação fictícia explícita. Purpose-direction não oferece cartografia nem PDF; card de seção segue WU040. QA `../qa/MIDHEAVEN_READER_2026-09-28.md` comprova o percurso sintético local; conteúdo/revisão legítima, homologação e hospedagem mantêm E1–E5 integrais bloqueados.

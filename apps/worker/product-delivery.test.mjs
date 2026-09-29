@@ -10,6 +10,7 @@ import {
   threePillarsEditorialTestFixture,
   birthChartEditorialTestFixture,
   ascendantEditorialTestFixture,
+  midheavenEditorialTestFixture,
 } from "../../scripts/helpers/career-editorial-test-fixture.mjs";
 import {
   prepareProductDelivery,
@@ -313,6 +314,77 @@ test("ascendant delivery preserves every claim and question without inventing ot
     ),
   );
   const legacy = { ...result.content, version: "atv-product-delivery/1.3.0" };
+  const oldDigest = createHash("sha256")
+    .update(
+      JSON.stringify({
+        version: legacy.version,
+        basisDigest: result.basisDigest,
+        outputDigest: result.outputDigest,
+        content: legacy,
+      }),
+    )
+    .digest("hex");
+  assert.notEqual(oldDigest, result.deliveryDigest);
+});
+
+test("midheaven delivery preserves every claim and question without inventing other factors or approval", async () => {
+  const input = draft();
+  input.productId = "midheaven";
+  input.calculation = await createNatalCalculators().midheaven(
+    {
+      version: "atv-workflow/1.0.0",
+      productId: "midheaven",
+      birth: {
+        localDateTime: "2000-01-01T12:00:00",
+        utcInstant: "2000-01-01T12:00:00Z",
+        timezone: "UTC",
+        latitude: 0,
+        longitude: 0,
+        locationSource: "synthetic",
+      },
+      consent: {
+        storage: true,
+        policyVersion: "atv-input-consent/1",
+        partner: false,
+        continuity: false,
+      },
+    },
+    { runId: input.runId, signal: new AbortController().signal },
+  );
+  const facts = prepareProductFacts(input.productId, input.calculation);
+  assert.equal(facts.status, "prepared");
+  input.output = {
+    ...input.output,
+    capability: "purpose-direction",
+    ...midheavenEditorialTestFixture(facts.facts),
+  };
+  const result = await prepareProductDelivery(input);
+  assert.equal(result.status, "prepared_for_review");
+  assert.equal(result.publication, "blocked");
+  assert.equal("promotionId" in result.content, false);
+  assert.equal("reviewDigest" in result.content, false);
+  assert.deepEqual(
+    result.content.sections.map((s) => s.title),
+    [
+      "Seu Meio do Céu — Fato [mc-fact]",
+      "Direção pública e contribuição — Hipótese [midheaven-contribution]",
+      "Ambientes e modos de trabalhar — Hipótese [midheaven-possibilities]",
+      "Tensão ou excesso possível — Hipótese [midheaven-tension]",
+      "Síntese do Meio do Céu (1) e três perguntas práticas",
+    ],
+  );
+  for (const [index, claim] of input.output.claims.entries()) {
+    assert.equal(result.content.sections[index].text, claim.text);
+    assert.deepEqual(result.content.sections[index].evidence, claim.evidence);
+  }
+  for (const question of input.output.reflections)
+    assert.equal(contentTexts(result.content).split(question).length, 2);
+  assert.ok(
+    result.content.sections.every(
+      (s) => s.evidence.join() === "angle-midheaven",
+    ),
+  );
+  const legacy = { ...result.content, version: "atv-product-delivery/1.4.0" };
   const oldDigest = createHash("sha256")
     .update(
       JSON.stringify({
