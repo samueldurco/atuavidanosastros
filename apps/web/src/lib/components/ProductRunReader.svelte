@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { productCatalog, workflowFor } from '@atv/domain';
 	import ReadingShell from '$lib/components/shells/ReadingShell.svelte';
+	import NatalCartography from '$lib/components/NatalCartography.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -12,11 +13,27 @@
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
+	import { parseProductCartography } from '$lib/product-cartography';
 	import { libraryPageHref } from '$lib/library-page';
 	import { downloadProduct, ProductDownloadError } from '$lib/product-download-client';
 	let { data, libraryBefore = null }: { data: WorkflowReaderData; libraryBefore?: string | null } =
 		$props();
 	const backHref = $derived(libraryPageHref(libraryBefore));
+	const birthAtlas = $derived(
+		data.run.productId === 'birth-chart' &&
+			data.run.released &&
+			!!data.run.editorial &&
+			!!data.run.calculation
+	);
+	const birthGeometry = $derived(
+		birthAtlas && data.run.calculation
+			? parseProductCartography(
+					data.run.cartography,
+					data.run.productId,
+					data.run.calculation.version
+				)
+			: null
+	);
 	let busy = $state<'reprocess' | 'delete' | 'download' | 'email' | null>(null);
 	let failure = $state('');
 	let downloadFormat = $state<'web' | 'pdf' | 'svg' | 'card'>('web');
@@ -173,10 +190,18 @@
 
 <div data-stitch="MEM-03 SH-03">
 	<ReadingShell
+		layout={birthAtlas ? 'atlas' : 'reading'}
 		contents={[
 			...(data.run.released
 				? [
+						...(birthGeometry ? [{ id: 'cartografia', label: 'Cartografia natal' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
+						...(birthAtlas && data.run.editorial
+							? data.run.editorial.sections.map((section, index) => ({
+									id: `capitulo-${index + 1}`,
+									label: section.title
+								}))
+							: []),
 						{ id: 'origem', label: 'Base e limites' },
 						{ id: 'arquivos', label: 'Arquivos guardados' }
 					]
@@ -295,10 +320,15 @@
 		{/snippet}
 		{#if failure}<StatePanel kind="error" title="Ação não confirmada" description={failure} />{/if}
 		{#if data.run.released && data.run.editorial && data.run.calculation}
+			{#if birthGeometry}
+				<NatalCartography geometry={birthGeometry} facts={data.run.calculation.facts} />
+			{/if}
 			<section id="leitura" aria-labelledby="reading-title">
 				<p class="eyebrow">Leitura preservada</p>
 				<h2 id="reading-title">{data.run.editorial.title}</h2>
-				{#each data.run.editorial.sections as section, index (index)}<article>
+				{#each data.run.editorial.sections as section, index (index)}<article
+						id={birthAtlas ? `capitulo-${index + 1}` : undefined}
+					>
 						<h3>{section.title}</h3>
 						<p class="editorial">{section.text}</p>
 						<p class="evidence">Base: {section.evidence.map(factLabel).join(' · ')}</p>
@@ -313,7 +343,9 @@
 			<section id="origem" aria-labelledby="source-title">
 				<h2 id="source-title">Base e limites</h2>
 				<dl>
-					{#each data.run.calculation.facts as fact (fact.id)}<div>
+					{#each data.run.calculation.facts as fact (fact.id)}<div
+							id={birthAtlas ? `fact-${fact.id}` : undefined}
+						>
 							<dt>{factLabel(fact.id)}</dt>
 							<dd>{fact.display}<small>{fact.source}</small></dd>
 						</div>{/each}
@@ -422,6 +454,31 @@
 	}
 	article {
 		margin-block: 2rem;
+		scroll-margin-top: 2rem;
+	}
+	:global(.atlas) .actions-panel {
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+		align-items: start;
+	}
+	:global(.atlas) .actions-panel > p {
+		grid-column: 1 / -1;
+		margin: 0;
+	}
+	:global(.atlas) #leitura {
+		max-width: var(--atv-container-reading);
+	}
+	:global(.atlas) #origem dl {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0 1.5rem;
+	}
+	dl > div {
+		scroll-margin-top: 2rem;
+	}
+	@media (max-width: 767px) {
+		:global(.atlas) #origem dl {
+			grid-template-columns: 1fr;
+		}
 	}
 	dl > div {
 		padding-block: 1rem;

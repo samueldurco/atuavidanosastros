@@ -1,6 +1,8 @@
 import { productCatalog } from '@atv/domain';
 import { parseProductRun } from '../product-run';
 import type { CartographyBody } from '../product-cartography';
+import { longitudePoint } from '../product-cartography';
+export { longitudePoint } from '../product-cartography';
 import displayData from '../../../static/brand/fonts/bodoni-moda-variable.woff2?inline';
 import bodyData from '../../../static/brand/fonts/newsreader-variable.woff2?inline';
 import labelData from '../../../static/brand/fonts/onest-variable.woff2?inline';
@@ -41,11 +43,6 @@ const signs = [
 ];
 const pos = (longitude: number) =>
 	`${(Math.floor((longitude % 30) * 1e6) / 1e6).toFixed(6)}° ${signs[Math.floor(longitude / 30)]}`;
-/** Zero Aries at left, increasing longitudes counterclockwise. Radius is a layout track, not distance. */
-export function longitudePoint(longitude: number, radius: number) {
-	const radians = (longitude * Math.PI) / 180;
-	return { x: 500 - radius * Math.cos(radians), y: 430 + radius * Math.sin(radians) };
-}
 const line = (longitude: number, r1: number, r2: number, css = '') => {
 	const a = longitudePoint(longitude, r1),
 		b = longitudePoint(longitude, r2);

@@ -13,6 +13,12 @@ export const cartographyBodies = [
 	'pluto'
 ] as const;
 export type CartographyBody = (typeof cartographyBodies)[number];
+
+/** Zero Aries at left; longitudes increase counterclockwise. Radius is a layout track. */
+export function longitudePoint(longitude: number, radius: number, x = 500, y = 430) {
+	const radians = (longitude * Math.PI) / 180;
+	return { x: x - radius * Math.cos(radians), y: y + radius * Math.sin(radians) };
+}
 export interface ProductCartography {
 	version: typeof CARTOGRAPHY_VERSION;
 	sourceVersion: typeof NATAL_SOURCE_VERSION;

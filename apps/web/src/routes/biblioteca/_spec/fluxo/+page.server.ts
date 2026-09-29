@@ -12,8 +12,11 @@ export const load: PageServerLoad = async ({ url }) => {
 		return careerCompassReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'three-pillars')
 		return threePillarsReaderFixture(url.searchParams.get('state'));
-	if (url.searchParams.get('product') === 'birth-chart')
-		return birthChartReaderFixture(url.searchParams.get('state'));
+	if (url.searchParams.get('product') === 'birth-chart') {
+		const fixture = await birthChartReaderFixture(url.searchParams.get('state'));
+		if (url.searchParams.get('geometry') === 'missing') fixture.run.cartography = null;
+		return fixture;
+	}
 	const ready = url.searchParams.get('state') === 'ready';
 	if (ready && ['svg', 'card'].includes(url.searchParams.get('format') ?? '')) {
 		const card = url.searchParams.get('format') === 'card';

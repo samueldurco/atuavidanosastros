@@ -1,5 +1,18 @@
 import { expect, test } from '@playwright/test';
 
+const savedLongitudes = {
+	sun: 280.3689167222144,
+	moon: 223.32372020768756,
+	mercury: 271.8892818502901,
+	venus: 241.5657928289756,
+	mars: 327.96330948817564,
+	jupiter: 25.253138616506664,
+	saturn: 40.39565905006797,
+	uranus: 314.8092480579414,
+	neptune: 303.1931811498641,
+	pluto: 251.4547956274414
+};
+
 for (const width of [1440, 820, 390, 320]) {
 	test(`birth chart keeps all roles and factors readable at ${width}`, async ({
 		page
@@ -10,6 +23,65 @@ for (const width of [1440, 820, 390, 320]) {
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
+		const chart = page.getByRole('img', { name: 'Cartografia natal tropical experimental' });
+		await expect(chart).toBeVisible();
+		await expect(chart.locator('[data-body]')).toHaveCount(10);
+		await expect(chart.locator('[data-house]')).toHaveCount(12);
+		await expect(chart.locator('[data-angle]')).toHaveCount(2);
+		const enlarge = page.getByRole('button', { name: 'Ampliar cartografia' });
+		await enlarge.click();
+		await expect(page.getByRole('button', { name: 'Ajustar à tela' })).toHaveAttribute(
+			'aria-pressed',
+			'true'
+		);
+		expect((await chart.boundingBox())?.width).toBeGreaterThanOrEqual(680);
+		const chartArea = page.getByRole('region', { name: 'Área da cartografia natal' });
+		await expect(chartArea).toHaveAttribute('tabindex', '0');
+		if (await chartArea.evaluate((element) => element.scrollWidth > element.clientWidth)) {
+			await chartArea.focus();
+			await page.keyboard.press('ArrowRight');
+			await expect
+				.poll(() => chartArea.evaluate((element) => element.scrollLeft))
+				.toBeGreaterThan(0);
+		}
+		await chartArea.screenshot({ path: testInfo.outputPath(`birth-chart-enlarged-${width}.png`) });
+		await page.getByRole('button', { name: 'Ajustar à tela' }).click();
+		await expect(chartArea).not.toHaveAttribute('tabindex', '0');
+		await page
+			.locator('#cartografia')
+			.screenshot({ path: testInfo.outputPath(`birth-chart-cartography-${width}.png`) });
+		for (const [body, longitude] of Object.entries(savedLongitudes)) {
+			const marker = chart.locator(`[data-body="${body}"]`);
+			// Reference ephemeris values may differ by a floating-point ULP between runtimes.
+			const saved = Number(await marker.getAttribute('data-longitude'));
+			expect(saved).toBeCloseTo(longitude, 10);
+			const index = Object.keys(savedLongitudes).indexOf(body),
+				radius = 250 - index * 19;
+			const radians = (saved * Math.PI) / 180;
+			expect(Number(await marker.locator('circle').getAttribute('cx'))).toBeCloseTo(
+				340 - radius * Math.cos(radians),
+				8
+			);
+			expect(Number(await marker.locator('circle').getAttribute('cy'))).toBeCloseTo(
+				340 + radius * Math.sin(radians),
+				8
+			);
+		}
+		await expect(
+			page.getByRole('list', { name: 'Legenda das posições natais' }).getByRole('link')
+		).toHaveCount(10);
+		const index = page.getByRole('navigation', { name: 'Índice do resultado' });
+		await expect(index.locator('a[href^="#capitulo-"]')).toHaveCount(13);
+		const chapterLink = index.locator('a[href="#capitulo-13"]');
+		await chapterLink.scrollIntoViewIfNeeded();
+		await chapterLink.focus();
+		await page.keyboard.press('Enter');
+		await expect(page.locator('#capitulo-13')).toBeInViewport();
+		const sunLink = page.locator('#cartografia a[href="#fact-position-sun"]');
+		await sunLink.scrollIntoViewIfNeeded();
+		await sunLink.focus();
+		await page.keyboard.press('Enter');
+		await expect(page.locator('#fact-position-sun')).toBeInViewport();
 		const reading = page.locator('#leitura');
 		await expect(reading.getByRole('heading', { level: 3 })).toHaveCount(13);
 		for (const title of [
@@ -98,6 +170,17 @@ test('birth chart pending review, revocation and failure withhold content and ex
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);
+		await expect(page.locator('#cartografia')).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 	}
+});
+
+test('birth chart with missing geometry retains its preserved text without drawing a substitute', async ({
+	page
+}) => {
+	await page.goto('/biblioteca/_spec/fluxo?state=ready&product=birth-chart&geometry=missing');
+	await expect(page.locator('#cartografia')).toHaveCount(0);
+	await expect(page.getByRole('link', { name: 'Cartografia natal', exact: true })).toHaveCount(0);
+	await expect(page.locator('#leitura article')).toHaveCount(13);
+	await expect(page.locator('#origem')).toContainText('Sol (position-sun)');
 });
