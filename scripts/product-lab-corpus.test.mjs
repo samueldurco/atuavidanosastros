@@ -192,14 +192,14 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.11.0');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.12.0');
   assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
     'c7d419b297da780a5b09f4ffbde88456b13d08ad0c7feba4380df978dc45edce');
   assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
     '4ee78d1b17e44beb38ae8de643124319f02a1cc67b36ee88a2b4767f6faf1ddd');
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
     '9c4f4667e11e35d699f045ff83cd747ac28c1b98ac68ef3b431105270411b8ec');
-  // Version 1.11.0 adds only the trusted ASC profile to existing requests.
+  // Version 1.12.0 checks MC persisted coherence; requests remain those of 1.11.0.
   assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     '7a8ae296f4a37e1afd2623f52ba96f3b7201b6a9523264498770808c88a9a4eb');
   const restored = corpus.cases.map(item => {

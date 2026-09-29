@@ -28,16 +28,17 @@ const sameContract = (v: unknown, expected: Record<string, unknown>): boolean =>
     Array.isArray(wanted) ? JSON.stringify(v[key]) === JSON.stringify(wanted) : v[key] === wanted);
 
 /** Persisted projection coherence only, never origin authentication or precision certification. */
-function inspectNatalProjection(value: CalculationSnapshot, productId: 'three-pillars' | 'birth-chart' | 'ascendant'): 'available' | 'unavailable' | null {
+function inspectNatalProjection(value: CalculationSnapshot, productId: 'three-pillars' | 'birth-chart' | 'ascendant' | 'midheaven'): 'available' | 'unavailable' | null {
   const { data } = value, { positions, angles, houses, provenance } = data;
   const full = productId === 'birth-chart';
+  const midheaven = productId === 'midheaven';
   const selectedBodies = full ? bodies : productId === 'three-pillars' ? ['sun', 'moon'] as const : [];
-  if (value.version !== natalProductContract.version || value.kind !== 'natal' || value.status !== 'experimental' ||
+  if (value.version !== natalProductContract.version || value.kind !== (midheaven ? 'purpose' : 'natal') || value.status !== 'experimental' ||
       data.productId !== productId || Object.keys(data).length !== 6 ||
       !sameContract(data.projection, natalProductContract) || !Array.isArray(positions) || positions.length !== selectedBodies.length ||
       !record(angles) || Object.keys(angles).length !== 2 ||
-      (full ? typeof angles.midheaven !== 'number' || !angle(angles.midheaven) : angles.midheaven !== null) ||
-      !(angles.ascendant === null || (typeof angles.ascendant === 'number' && angle(angles.ascendant))) ||
+      (full || midheaven ? typeof angles.midheaven !== 'number' || !angle(angles.midheaven) : angles.midheaven !== null) ||
+      (midheaven ? angles.ascendant !== null : !(angles.ascendant === null || (typeof angles.ascendant === 'number' && angle(angles.ascendant)))) ||
       !record(houses) || Object.keys(houses).length !== 3 || houses.system !== 'placidus' ||
       !Array.isArray(houses.cusps) || (full
         ? angles.ascendant === null
@@ -60,13 +61,13 @@ function inspectNatalProjection(value: CalculationSnapshot, productId: 'three-pi
         typeof p.retrograde !== 'boolean') return null;
     expected.set(`position-${body}`, `${bodyLabels[body]}: ${zodiacPosition(p.longitude).display}; movimento ${p.retrograde ? 'retrógrado' : 'direto'} da candidata`);
   }
-  const available = angles.ascendant !== null;
-  expected.set(available ? 'angle-ascendant' : 'ascendant-unavailable', available
+  const available = midheaven || angles.ascendant !== null;
+  if (!midheaven) expected.set(available ? 'angle-ascendant' : 'ascendant-unavailable', available
     ? `Ascendente: ${zodiacPosition(angles.ascendant as number).display}`
     : 'Ascendente não disponibilizado: condições fora do contrato conservador de casas/ângulos.');
-  if (full) {
+  if (full || midheaven) {
     expected.set('angle-midheaven', `Meio do Céu: ${zodiacPosition(angles.midheaven as number).display}`);
-    if (available) houses.cusps.forEach((cusp, index) => expected.set(`house-${index + 1}`,
+    if (full && available) houses.cusps.forEach((cusp, index) => expected.set(`house-${index + 1}`,
       `Cúspide ${index + 1} (Placidus): ${zodiacPosition(cusp as number).display}`));
   }
   if (!value.facts.every(fact => expected.has(fact.id)
@@ -88,6 +89,11 @@ export function inspectBirthChartProjection(value: CalculationSnapshot): 'availa
 /** ASC-only persisted projection; no planets, MC or house cusps may be injected. */
 export function inspectAscendantProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
   return inspectNatalProjection(value, 'ascendant');
+}
+
+/** MC-only persisted projection; no ASC, planets or house cusps are requested. */
+export function inspectMidheavenProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
+  return inspectNatalProjection(value, 'midheaven');
 }
 
 function validateChart(chart: NatalChart): void {

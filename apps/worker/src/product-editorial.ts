@@ -5,9 +5,9 @@ import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, t
   type Capability, type FactsEnvelope, type Tier, type ScoredReview, type Finding } from '@atv/ai';
 import { validateCalculation } from './product-processing.ts';
 import { validCareerCompassProjection } from './purpose-calculators.ts';
-import { inspectAscendantProjection, inspectBirthChartProjection, inspectThreePillarsProjection } from './natal-calculators.ts';
+import { inspectAscendantProjection, inspectBirthChartProjection, inspectMidheavenProjection, inspectThreePillarsProjection } from './natal-calculators.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.9.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.10.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -23,10 +23,11 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
   if (!calculation || !kind) return { status: 'blocked', reason: 'calculation_invalid' };
   if (productId === 'career-compass' && !validCareerCompassProjection(calculation))
     return { status: 'blocked', reason: 'calculation_invalid' };
-  if (productId === 'three-pillars' || productId === 'birth-chart' || productId === 'ascendant') {
+  if (productId === 'three-pillars' || productId === 'birth-chart' || productId === 'ascendant' || productId === 'midheaven') {
     const projection = productId === 'birth-chart'
       ? inspectBirthChartProjection(calculation) : productId === 'three-pillars'
-        ? inspectThreePillarsProjection(calculation) : inspectAscendantProjection(calculation);
+        ? inspectThreePillarsProjection(calculation) : productId === 'ascendant'
+          ? inspectAscendantProjection(calculation) : inspectMidheavenProjection(calculation);
     if (!projection) return { status: 'blocked', reason: 'calculation_invalid' };
     if (projection === 'unavailable') return { status: 'blocked', reason: 'insufficient_facts' };
   }
