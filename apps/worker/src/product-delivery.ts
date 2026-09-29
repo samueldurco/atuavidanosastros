@@ -4,6 +4,7 @@ import {
   tierLimits,
   synastryRoles,
   coupleDossierRoles,
+  horoscopeRoles,
   type Reading,
 } from "@atv/ai";
 import {
@@ -12,7 +13,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.15.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.16.0";
 const synastryBodies: Record<string, string> = {
   sun: "Sol",
   moon: "Lua",
@@ -119,6 +120,19 @@ function claimTitle(
   claim: Reading["claims"][number],
   productId: string,
 ): string {
+  if (productId === "horoscope") {
+    const body = synastryBodies[claim.id.slice("horoscope-base-".length)];
+    const themes: Record<string, string> = {
+      affection: "Amor e vínculo",
+      work: "Trabalho",
+      rhythm: "Ritmo",
+      attention: "Atenção",
+    };
+    const title = body
+      ? `${body} da amostra em contraste com a base natal`
+      : themes[claim.id.slice("horoscope-".length)];
+    return `${title ?? claim.id} — ${labels[claim.kind]} [${claim.id}]`;
+  }
   if (["synastry", "couple-dossier"].includes(productId)) {
     const prefix = productId === "couple-dossier" ? "dossier" : "synastry";
     const body = synastryBodies[claim.id.slice(`${prefix}-base-`.length)];
@@ -241,7 +255,7 @@ function project(
       });
     }
   }
-  if (productId === "date-reading") {
+  if (["date-reading", "horoscope"].includes(productId)) {
     for (const [title, pattern] of [
       ["Base natal", /^natal-/],
       ["Amostra da data (12h UTC)", /^sample-/],
@@ -259,6 +273,18 @@ function project(
       missingDateFields.push(
         "Nenhum contexto adicional foi informado para esta data.",
       );
+  }
+  if (productId === "horoscope") {
+    for (const [body, label] of Object.entries(synastryBodies)) {
+      const recorded = facts.filter((fact) =>
+        fact.id.startsWith(`transit-${body}-natal-`),
+      );
+      sections.push({
+        title: `${label} da amostra × corpos natais — Pares registrados`,
+        text: recorded.map((fact) => fact.display).join("\n\n"),
+        evidence: recorded.map((fact) => fact.id),
+      });
+    }
   }
   if (["dream-journal", "dream-reading"].includes(productId)) {
     const groups = [
@@ -291,21 +317,23 @@ function project(
   const orderedClaims =
     productId === "three-questions"
       ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-      : productId === "couple-dossier"
-        ? coupleDossierRoles.map((id) => claims.get(id)!)
-        : productId === "synastry"
-          ? synastryRoles.map((id) => claims.get(id)!)
-          : productId === "pair-preview"
-            ? ["pair-person-a", "pair-person-b", "pair-negotiation"].map((id) =>
-                claims.get(id)!,
-              )
-            : productId === "date-reading"
-              ? ["date-natal-basis", "date-sample", "date-contrast"].map((id) =>
-                  claims.get(id)!,
+      : productId === "horoscope"
+        ? horoscopeRoles.map((id) => claims.get(id)!)
+        : productId === "couple-dossier"
+          ? coupleDossierRoles.map((id) => claims.get(id)!)
+          : productId === "synastry"
+            ? synastryRoles.map((id) => claims.get(id)!)
+            : productId === "pair-preview"
+              ? ["pair-person-a", "pair-person-b", "pair-negotiation"].map(
+                  (id) => claims.get(id)!,
                 )
-              : productId === "dream-reading"
-                ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
-                : reading.claims;
+              : productId === "date-reading"
+                ? ["date-natal-basis", "date-sample", "date-contrast"].map(
+                    (id) => claims.get(id)!,
+                  )
+                : productId === "dream-reading"
+                  ? [...reading.claims].sort((a, b) => a.id.localeCompare(b.id))
+                  : reading.claims;
   for (const claim of orderedClaims) {
     if (productId === "three-questions") {
       const index = /^question-([1-3])-reading$/.exec(claim.id)?.[1];
@@ -354,7 +382,7 @@ function project(
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
-      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : productId === "synastry" ? "Síntese da Sinastria" : productId === "couple-dossier" ? "Síntese do Dossiê do Casal" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview", "synastry", "couple-dossier"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      title: `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : productId === "synastry" ? "Síntese da Sinastria" : productId === "couple-dossier" ? "Síntese do Dossiê do Casal" : productId === "horoscope" ? "Síntese do Horóscopo" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview", "synastry", "couple-dossier", "horoscope"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
       text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
@@ -367,7 +395,11 @@ function project(
         section.text.length > 20000 ||
         !section.evidence.length ||
         section.evidence.length >
-          (["synastry", "couple-dossier"].includes(productId) ? 121 : 100),
+          (productId === "horoscope"
+            ? 122
+            : ["synastry", "couple-dossier"].includes(productId)
+              ? 121
+              : 100),
     )
   )
     return null;
@@ -398,20 +430,34 @@ export async function prepareProductDelivery(
   });
   if (!input || !Object.hasOwn(tierLimits, input.tier))
     return reject("invalid_input");
-  const reading = parseReading(input.output, input.tier);
+  // The free preview has its own trusted transport profile, derived from the
+  // validated snapshot. A caller-supplied tier/profile cannot broaden it.
+  const horoscopePreparation =
+    input.productId === "horoscope"
+      ? prepareProductFacts(input.productId, input.calculation)
+      : undefined;
+  if (horoscopePreparation?.status === "blocked")
+    return reject(horoscopePreparation.reason);
+  const reading = parseReading(
+    input.output,
+    input.tier,
+    horoscopePreparation?.facts.editorialProfile,
+  );
   if (!reading) return reject("invalid_schema");
   const productId = input.productId;
-  const recordedPreparation = [
-    "three-questions",
-    "dream-journal",
-    "dream-reading",
-    "date-reading",
-    "pair-preview",
-    "synastry",
-    "couple-dossier",
-  ].includes(productId)
-    ? prepareProductFacts(productId, input.calculation)
-    : undefined;
+  const recordedPreparation =
+    horoscopePreparation ??
+    ([
+      "three-questions",
+      "dream-journal",
+      "dream-reading",
+      "date-reading",
+      "pair-preview",
+      "synastry",
+      "couple-dossier",
+    ].includes(productId)
+      ? prepareProductFacts(productId, input.calculation)
+      : undefined);
   if (recordedPreparation?.status === "blocked")
     return reject(recordedPreparation.reason);
   // Recorded fields and assessment share a captured calculation before the first await.

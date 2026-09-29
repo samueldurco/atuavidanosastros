@@ -40,17 +40,25 @@ export function productFactLabel(productId: string, id: string): string {
 					: undefined;
 		return label ? `${label} (${id})` : id;
 	}
-	if (productId === 'date-reading') {
+	if (['date-reading', 'horoscope'].includes(productId)) {
 		const part =
 			/^(natal|sample)-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)$/.exec(id);
+		const pair =
+			productId === 'horoscope'
+				? /^transit-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)-natal-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto)$/.exec(
+						id
+					)
+				: null;
 		const label =
 			id === 'sample-instant'
 				? 'Instante da amostra (12h UTC)'
 				: id === 'personal-context'
 					? 'Contexto informado'
-					: part
-						? `${part[1] === 'natal' ? 'Base natal' : 'Amostra da data'} · ${birthChartLabels[`position-${part[2]}`]}`
-						: undefined;
+					: pair
+						? `${birthChartLabels[`position-${pair[1]}`]} da amostra × ${birthChartLabels[`position-${pair[2]}`]} natal`
+						: part
+							? `${part[1] === 'natal' ? 'Base natal' : 'Amostra da data'} · ${birthChartLabels[`position-${part[2]}`]}`
+							: undefined;
 		return label ? `${label} (${id})` : id;
 	}
 	if (productId === 'dream-journal' || productId === 'dream-reading') {

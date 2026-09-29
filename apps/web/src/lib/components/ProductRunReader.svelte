@@ -70,7 +70,8 @@
 				'date-reading',
 				'pair-preview',
 				'synastry',
-				'couple-dossier'
+				'couple-dossier',
+				'horoscope'
 			].includes(data.run.productId)
 		)
 			return productFactLabel(data.run.productId, id);

@@ -1015,7 +1015,7 @@ it.each(profileProducts)(
 				if (candidate.status !== 'prepared_for_review')
 					throw new Error('missing_dossier_candidate');
 				expect(candidate.publication).toBe('blocked');
-				expect(candidate.content.version).toBe('atv-product-delivery/1.15.0');
+				expect(candidate.content.version).toBe('atv-product-delivery/1.16.0');
 				expect(candidate.content.sections).toHaveLength(35);
 				expect(candidate.content.sections.at(-2)!.evidence).toEqual([
 					...new Set(output.claims.flatMap((claim) => claim.evidence))
