@@ -3,6 +3,7 @@ import { isUuid, type LibraryItemSummary } from './library-result';
 import { parseProductCartography, type ProductCartography } from './product-cartography';
 import { parseWeekTemporalDetail, type WeekTemporalDetail } from './week-temporal-detail';
 import { parseSolarReturnCalendar, type SolarReturnCalendarView } from './solar-return-calendar';
+import { parsePersonalCalendarGrid, type PersonalCalendarGrid } from './personal-calendar-grid';
 
 export const runStates = [
 	'QUEUED',
@@ -32,6 +33,7 @@ export interface ProductRunView {
 		limits: string[];
 		temporal?: WeekTemporalDetail | null;
 		calendar?: SolarReturnCalendarView | null;
+		personalCalendar?: PersonalCalendarGrid | null;
 	} | null;
 	editorial: {
 		version: string;
@@ -173,6 +175,12 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 		}
 		if (v.productId === 'solar-return' && c.version === 'atv-solar-return-calculation/1.1.0') {
 			calculation.calendar = parseSolarReturnCalendar(c.calendar, facts);
+		}
+		if (
+			v.productId === 'personal-calendar' &&
+			c.version === 'atv-personal-calendar-calculation/1.1.0'
+		) {
+			calculation.personalCalendar = parsePersonalCalendarGrid(c.personalCalendar, facts);
 		}
 		editorial = {
 			version: e.version,

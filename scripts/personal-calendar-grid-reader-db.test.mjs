@@ -3,14 +3,13 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { setupProductDatabase, owner, other, file } from './helpers/product-database.mjs';
 import { asRole } from './helpers/artifact-fixture.mjs';
-import { buildSolarReturnCalendar } from '../apps/worker/src/solar-return-calendar.ts';
 
 const service = (db, sql, args = []) =>
   asRole(db, 'service_role', null, () => db.query(sql, args)).then(r => r.rows[0]?.data);
 const read = (db, id, user = owner) =>
   asRole(db, 'authenticated', user, () => db.query('select read_product_run($1) as data', [id])).then(r => r.rows[0].data);
 
-test('Solar Return SQL exposes only a released owner-scoped civil calendar with fact references', async t => {
+test('Personal Calendar SQL exposes only a released owner-scoped civil grid with reported marks', async t => {
   const db = await setupProductDatabase({ processing: true });
   t.after(() => db.close());
   for (const migration of [
@@ -21,34 +20,28 @@ test('Solar Return SQL exposes only a released owner-scoped civil calendar with 
     '20260929200000_personal_calendar_grid_reader.sql'
   ]) await db.exec(await file(`supabase/migrations/${migration}`));
   // Synthetic isolated flags and receipt exercise projection gates only; no production approval.
-  await db.exec("update workflow_releases set enabled=true,engine_approved=true,access_policy='free' where product_id='solar-return'");
-  const entries = [
-    { date: '2026-11-05', label: 'Mudança informada' },
-    { date: '2027-09-29', label: 'Data no limite final' }
-  ];
+  await db.exec("update workflow_releases set enabled=true,engine_approved=true,access_policy='free' where product_id='personal-calendar'");
   const input = {
-    version: 'atv-workflow/1.0.0', productId: 'solar-return', targetDate: '2026-09-29', returnYear: 2026,
+    version: 'atv-workflow/1.0.0', productId: 'personal-calendar', targetDate: '2024-02-01',
     birth: { localDateTime: '2000-09-29T12:00:00', utcInstant: '2000-09-29T12:00:00Z', timezone: 'UTC', latitude: 0, longitude: 0, locationSource: 'synthetic-reader-test' },
-    returnLocation: { city: 'Synthetic', timezone: 'UTC', latitude: 0, longitude: 0, locationSource: 'synthetic-reader-test' },
-    importantDates: { authorization: 'atv-solar-important-dates/1', entries },
+    calendarMarks: { authorization: 'atv-personal-calendar-marks/1', entries: [{ date: '2024-02-29', label: 'Mudanca informada' }] },
     consent: { storage: true, partner: false, continuity: false, policyVersion: 'atv-input-consent/1' }
   };
   const id = await asRole(db, 'authenticated', owner, () =>
-    db.query('select request_product_run($1,$2,$3) as id', ['solar-return', randomUUID(), input])
+    db.query('select request_product_run($1,$2,$3) as id', ['personal-calendar', randomUUID(), input])
   ).then(r => r.rows[0].id);
-  const calendar = buildSolarReturnCalendar(input.targetDate, entries);
-  calendar.privateNote = 'must stay private';
-  calendar.months[0].privateNote = 'must stay private';
+  const dates = Array.from({ length: 29 }, (_, index) => new Date(Date.UTC(2024,1,index+1)).toISOString().slice(0,10));
   const calculation = {
-    version: 'atv-solar-return-calculation/1.1.0', kind: 'cycles', status: 'experimental',
+    version: 'atv-personal-calendar-calculation/1.1.0', kind: 'cycles', status: 'experimental',
     facts: [
-      { id: 'return-date', kind: 'calculated', display: '2026-09-29', source: 'synthetic-reader-test' },
-      ...entries.map((entry, index) => ({ id: `important-date-${index + 1}`, kind: 'reported', display: `${entry.date}: ${entry.label}`, source: `input.importantDates.entries[${index}]` }))
+      { id: 'natal-sun', kind: 'calculated', display: 'Sol natal: 1 Aries', source: 'synthetic-reader-test' },
+      ...dates.map(date => ({ id: `civil-day-${date}`, kind: 'calculated', display: `Dia civil: ${date}`, source: 'atv-personal-calendar-calculation/1.1.0' })),
+      { id: 'reported-mark-1', kind: 'reported', display: '2024-02-29: Mudanca informada', source: 'input.calendarMarks.entries[0]' }
     ],
-    data: { calendarScaffold: calendar, natalSnapshot: { secret: 'must stay private' } },
-    limits: ['Grade civil, sem previsão.']
+    data: { monthStart: '2024-02-01', monthEndExclusive: '2024-03-01', dates, natalSunLongitude: 1, privateNote: 'must stay private' },
+    limits: ['Grade civil, sem previsao.']
   };
-  const claimWork = () => service(db, 'select claim_product_run_work($1,$2) as data', [['solar-return'], 60]);
+  const claimWork = () => service(db, 'select claim_product_run_work($1,$2) as data', [['personal-calendar'], 60]);
   const completeWork = (claim, calc = null) => service(db,
     'select complete_product_run_work($1,$2,$3,$4) as data', [id, claim.token, claim.revision, calc]);
   assert.equal((await completeWork(await claimWork(), calculation)).state, 'CALCULATED');
@@ -60,23 +53,22 @@ test('Solar Return SQL exposes only a released owner-scoped civil calendar with 
   const promotion = `fixture-${randomUUID()}`;
   const editorial = {
     version: 'fixture/1', promotionId: promotion, reviewDigest: 'a'.repeat(64), title: 'Leitura sintética',
-    sections: [{ title: 'Base', text: 'Texto sintético.', evidence: ['return-date'] }], limits: []
+    sections: [{ title: 'Base', text: 'Texto sintético.', evidence: ['natal-sun'] }], limits: []
   };
-  await db.query('insert into editorial_promotions values ($1,$2,$3,$4,null)', [promotion, 'solar-return', row.contract_version, 'b'.repeat(64)]);
+  await db.query('insert into editorial_promotions values ($1,$2,$3,$4,null)', [promotion, 'personal-calendar', row.contract_version, 'b'.repeat(64)]);
   const receipt = randomUUID();
   await db.query(`insert into product_editorial_receipts(id,run_id,revision,calculation,editorial,promotion_id,promotion_evidence_digest,basis_digest,review_digest,authority_reference,expires_at)
     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,'synthetic-reader-only',clock_timestamp()+interval '1 hour')`,
     [receipt, id, row.revision, calculation, editorial, promotion, 'b'.repeat(64), 'c'.repeat(64), editorial.reviewDigest]);
   await db.exec('update product_editorial_policy set enabled=true');
-  const claim = await service(db, 'select claim_product_editorial($1) as data', [['solar-return']]);
+  const claim = await service(db, 'select claim_product_editorial($1) as data', [['personal-calendar']]);
   assert.equal(claim.receiptId, receipt);
   assert.equal((await service(db, 'select complete_product_editorial($1,$2,$3,$4) as data', [id, receipt, claim.token, claim.revision])).state, 'READY');
   const result = await read(db, id);
   assert.equal(result.released, true);
-  assert.deepEqual(result.calculation.calendar.months.map(month => month.number), Array.from({ length: 12 }, (_, i) => i + 1));
-  assert.deepEqual(result.calculation.calendar.months[1].importantDateIds, ['important-date-1']);
-  assert.deepEqual(result.calculation.calendar.boundaryImportantDateIds, ['important-date-2']);
-  assert.deepEqual(Object.keys(result.calculation.calendar.months[0]).sort(), ['number','startDate','endDateExclusive','importantDateIds'].sort());
+  assert.deepEqual(result.calculation.personalCalendar.dates, dates);
+  assert.deepEqual(Object.keys(result.calculation.personalCalendar).sort(), ['version','basis','startDate','endDateExclusive','dates'].sort());
+  assert.equal(result.calculation.facts.at(-1).source, 'input.calendarMarks.entries[0]');
   assert.equal(JSON.stringify(result).includes('must stay private'), false);
   assert.equal(result.calculation.data, undefined);
   assert.equal(result.input, undefined);
