@@ -2,6 +2,7 @@ import { workflowFor } from '@atv/domain';
 import { isUuid, type LibraryItemSummary } from './library-result';
 import { parseProductCartography, type ProductCartography } from './product-cartography';
 import { parseWeekTemporalDetail, type WeekTemporalDetail } from './week-temporal-detail';
+import { parseSolarReturnCalendar, type SolarReturnCalendarView } from './solar-return-calendar';
 
 export const runStates = [
 	'QUEUED',
@@ -30,6 +31,7 @@ export interface ProductRunView {
 		facts: { id: string; kind: string; display: string; source: string }[];
 		limits: string[];
 		temporal?: WeekTemporalDetail | null;
+		calendar?: SolarReturnCalendarView | null;
 	} | null;
 	editorial: {
 		version: string;
@@ -168,6 +170,9 @@ export function parseProductRun(v: unknown): ProductRunView | null {
 		calculation = { version: c.version, facts, limits: [...c.limits] };
 		if (v.productId === 'week-reading' && c.version === 'atv-week-reading-calculation/1.2.0') {
 			calculation.temporal = parseWeekTemporalDetail(c.temporal);
+		}
+		if (v.productId === 'solar-return' && c.version === 'atv-solar-return-calculation/1.1.0') {
+			calculation.calendar = parseSolarReturnCalendar(c.calendar, facts);
 		}
 		editorial = {
 			version: e.version,

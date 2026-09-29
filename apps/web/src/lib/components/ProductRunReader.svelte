@@ -4,6 +4,7 @@
 	import { productCatalog, workflowFor } from '@atv/domain';
 	import ReadingShell from '$lib/components/shells/ReadingShell.svelte';
 	import NatalCartography from '$lib/components/NatalCartography.svelte';
+	import SolarReturnCalendar from '$lib/components/SolarReturnCalendar.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -376,6 +377,12 @@
 		{/snippet}
 		{#if failure}<StatePanel kind="error" title="Ação não confirmada" description={failure} />{/if}
 		{#if data.run.released && data.run.editorial && data.run.calculation}
+			{#if data.run.productId === 'solar-return' && data.run.calculation.calendar}
+				<SolarReturnCalendar
+					calendar={data.run.calculation.calendar}
+					facts={data.run.calculation.facts}
+				/>
+			{/if}
 			{#if data.run.productId === 'week-reading'}
 				<section id="semana" aria-labelledby="week-title">
 					<p class="eyebrow">

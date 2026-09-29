@@ -35,6 +35,12 @@ Cada data autorizada é vinculada pelo ID do seu fato `reported` a exatamente um
 
 Esta estrutura prepara a conferência de cobertura de E2, mas **não** é uma linha interpretativa mensal. A interpretação de cada mês ainda exige método editorial aprovado, evidência pertinente ao período, distinção entre geometria e relatos, revisão de utilidade e validação do modelo/prompt. Não há alegação de que a carta estática ou uma data informada prove um tema ou evento mensal.
 
+## Projeção privada da grade (WU197)
+
+`read_product_run` projeta a grade somente para o titular e somente após os gates de liberação, recibo editorial e promoção válida. A resposta `calculation.calendar` contém apenas versão, base, início/fim, doze intervalos civis e IDs de datas relatadas; não transmite `data.calendarScaffold`, input ou outros campos do snapshot. A projeção preserva os detalhes temporais da Semana para sua própria versão.
+
+O parser do leitor confere versão, doze fronteiras exatas, teto de três datas, unicidade, fonte `input.importantDates.entries[N]` e correspondência da data de cada fato `reported` com o intervalo ou a fronteira final. Grade inconsistente fica oculta, sem esconder a leitura já liberada. A interface identifica os intervalos como organização civil experimental e mostra somente relatos validados; não cria interpretação, evento ou previsão mensal. O teste SQL usa aprovação sintética em banco descartável e não muda o gate hospedado.
+
 ## Limites e próximo aceite
 
 O motor ainda depende de gauntlet independente, licença e homologação. A base não produz interpretação, previsões, mandala editorial, linha interpretativa de doze meses, áudios, check-ins, web/PDF final, renovação ou alertas. E1 permanece parcial até validar entrada real autorizada e o motor; E2–E5 mantêm gates próprios.
