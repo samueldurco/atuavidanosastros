@@ -102,9 +102,8 @@ export function prepareProductFacts(
   const kind = workflowFor(productId)?.kind;
   if (!calculation || !kind)
     return { status: "blocked", reason: "calculation_invalid" };
-  // The only Solar snapshot has a static return chart and a civil calendar.
-  // A full twelve-chapter product needs a versioned, reviewed monthly evidence profile.
-  if (productId === "solar-return")
+  // These experimental calendar bases lack reviewed temporal evidence for editorial delivery.
+  if (productId === "solar-return" || productId === "personal-calendar")
     return { status: "blocked", reason: "insufficient_facts" };
   // Inspect the original facts before generic validation can omit extra metadata.
   const temporalWeek =

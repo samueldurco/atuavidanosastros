@@ -8,7 +8,7 @@ export function inputFor(p) {
   const value = {version:WORKFLOW_VERSION, productId:p.id, consent:{...consent}};
   if (['natal','cycles','relationship','purpose'].includes(p.kind)) value.birth = {...birth};
   if (p.kind==='relationship') { value.partner={...birth}; value.consent.partner=true; }
-  if (p.kind==='cycles') value.targetDate='2026-09-09';
+  if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
   if (p.id==='solar-return') { value.returnYear=2026; value.returnLocation={city:'São Paulo', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic'}; }
   if (p.kind==='tarot') value.questions=Array.from({length:p.id==='three-questions'?3:1},(_,i)=>`Questão sintética ${i+1}`);
   if (p.kind==='dream') value.dream={date:'2026-09-09', narrative:'Uma porta azul em um jardim.',associations:['calma'],emotions:['curiosidade']};
@@ -36,6 +36,12 @@ test('solar return requires an explicit birthday city and coherent cycle year',(
     {targetDate:'2027-01-01'},
   ]) assert.equal(parseWorkflowInput({...value,...patch}),null);
   assert.deepEqual(parseWorkflowInput(value)?.returnLocation,value.returnLocation);
+});
+test('personal calendar names one complete civil month',()=>{
+  const value=inputFor(workflows.find(p=>p.id==='personal-calendar'));
+  assert.equal(parseWorkflowInput(value)?.targetDate,'2026-09-01');
+  for (const targetDate of ['2026-09-02','2026-09-00','2026-02-29'])
+    assert.equal(parseWorkflowInput({...value,targetDate}),null);
 });
 test('contracts reject invalid scopes, dates, excess input and third-party data without consent',()=>{
   assert.equal(validDate('2025-02-29'),false); assert.equal(validDate('2024-02-29'),true);

@@ -95,6 +95,8 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
       (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2099 ||
         !returnLocation(v.returnLocation) || String(v.targetDate).slice(0, 4) !== String(v.returnYear))))) return null;
+  // A calendar request names one complete civil month, never an implicit rolling interval.
+  if (product.id === 'personal-calendar' && String(v.targetDate).slice(8) !== '01') return null;
   if (product.id === 'solar-return' && v.importantDates !== undefined && !importantDates(v.importantDates, v.targetDate)) return null;
   if (product.kind === 'tarot' && (!strings(v.questions, 3, 400) ||
       v.questions.length !== (product.id === 'three-questions' ? 3 : 1))) return null;
