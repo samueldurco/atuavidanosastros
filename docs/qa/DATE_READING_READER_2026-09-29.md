@@ -1,0 +1,17 @@
+# Leitura da Data — local private reader
+
+RUN_ID: `ATV-20260902-170644Z-01A0630F`. WU152. Synthetic/offline evidence, R$0, no model/content homologation or gate promotion.
+
+Delivery `atv-product-delivery/1.12.0` projects the validated partial date sample into separate factual groups: ten natal positions, ten sample positions plus the canonical noon instant, and optional reported context. Three hypotheses appear in natal/sample/contrast order independently of incoming claim order. One synthesis retains all evidence and three practical questions. Labels distinguish natal/sample bodies while preserving each persisted ID. The explicit limit still states that no aspects, events, duration, intensity or temporal windows were calculated and that the sample does not represent the whole local day.
+
+Preparation captures the original calculation before asynchronous assessment; changed caller data cannot replace the recorded groups. Missing context produces no context group and an explicit absence limit. Existing review and publication authority remain mandatory, and final-delivery digests bind this version. Old receipts do not authorize changed content/version. No calculation or tier limit was changed.
+
+Local evidence in `test-results/`: `wu152-focal.log` (2 delivery tests); `wu152-worker.log` (130 tests); `wu152-root-sql.log` (15 processing tests); `wu152-web-sql.log` (15 private SQL lifecycle cases); `wu152-worker-check.log` and `wu152-web-check.log` (web zero errors/warnings). The SQL case saves the versioned result, retrieves it privately, renders all seven groups/roles and preserves the existing owner/release/recovery boundaries. Synthetic release/review fixtures prove code behavior only.
+
+Browser evidence: `wu152-e2e.log` passed 58 cases; four date cases had loaded obsolete question expectations while the file was being corrected. The focused final run `wu152-e2e-date-final.log` passed all six date cases, giving 62 distinct passing cases across the twelve readers. Date coverage includes 1440/820/390/320 widths, exact saved facts after history/reload, absent context, keyboard access, overflow at most one pixel and pending/revoked/failed states. Screenshots and inspection crops `wu152-top-*`, `wu152-reading-*` and `wu152-source-*` in `test-results/` show readable headings, hypotheses, facts and provenance without overlap or horizontal overflow. Long source lists wrap naturally on mobile. `wu152-format-check.log` passed. Exact staging/diff and secret checks are recorded in `wu152-staged.json`, `wu152.diff` and `wu152-secrets.log` before closure.
+
+The reader uses the existing local-only fixture route and real projection. It offers no PDF/cartography for this web-only catalog product and grants no download/email authority to the synthetic fixture.
+
+Prior CI: WU151 SHA `5590f28476232e540396fad7e8c19a45689901aa`, run `36531111690`, success (`wu152-ci.json`).
+
+E1 and E2 integral **BLOQUEADOS**: complete Cycles & Time calculations, engine homologation and useful approved interpretation remain outstanding. E3–E5 integral acceptance also requires legitimate approval and a hosted authenticated session. The local reader and persistence evidence do not close those milestones or release the product. Supabase project restoration remains its owner's action; no unchanged external blocker was retried. Gates remain closed and the mission continues through the remaining products, ATV+ and original plan.

@@ -583,6 +583,10 @@ for (const productId of products)
 				);
 				expect(html).toContain('O que você gostaria de observar na sua experiência atual?');
 			} else if (productId === 'date-reading') {
+				expect(parent?.editorial?.sections).toHaveLength(7);
+				expect(html).toContain('Base natal — Fatos registrados');
+				expect(html).toContain('Amostra da data (12h UTC) — Fatos registrados');
+				expect(html).toContain('Síntese da Leitura da Data (1) e três perguntas práticas');
 				expect(html).toContain('date-natal-basis');
 				expect(html).toContain('date-sample');
 				expect(html).toContain('date-contrast');

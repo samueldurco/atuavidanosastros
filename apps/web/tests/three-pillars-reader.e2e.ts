@@ -37,7 +37,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Ascendente (angle-ascendant)',
 			'Contexto pessoal relatado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.11.0',
+			'atv-product-delivery/1.12.0',
 			'Fixture de apresentação'
 		])
 			await expect(source).toContainText(label);
