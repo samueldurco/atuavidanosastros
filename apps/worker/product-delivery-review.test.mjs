@@ -19,13 +19,17 @@ const authority = {
     calibrations: ["fixture-calibration"],
   },
 };
-// Generic Tarot projection tests use Sim/Não responsável; daily-card profile is tested separately.
+// Generic Tarot projection tests use Três Perguntas; single-card profiles are tested separately.
 // Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
 const genericCalculation = await calculateTarot(
   {
     version: "atv-workflow/1.0.0",
-    productId: "tarot-yes-no",
-    questions: ["Que possibilidade posso observar?"],
+    productId: "three-questions",
+    questions: [
+      "Que possibilidade posso observar?",
+      "Que tensão posso considerar?",
+      "Que alternativa posso explorar?",
+    ],
     context: "Contexto sintético B",
     consent: {
       storage: true,
@@ -41,7 +45,7 @@ function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 2,
-    productId: "tarot-yes-no",
+    productId: "three-questions",
     tier: "free",
     calculation: structuredClone(genericCalculation),
     output: {
@@ -177,9 +181,11 @@ test("valid basis changes invalidate prior review and malformed calculations blo
   for (const mutate of [
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
-    (d) => (d.productId = "three-questions"),
     (d) => (d.tier = "premium"),
-    (d) => (d.calculation.facts[2].display = "Outro contexto consentido"),
+    (d) => d.calculation.limits.push("Outro limite da política candidata."),
+    (d) =>
+      (d.calculation.facts.find((f) => f.id === "tarot-context").display =
+        "Outro contexto consentido"),
     (d) => (d.output.title = "Outro título"),
     (d) => d.output.reflections.push("Que outra alternativa aparece?"),
     (d) => d.output.limits.push("Outro limite editorial."),
@@ -192,7 +198,7 @@ test("valid basis changes invalidate prior review and malformed calculations blo
     assert.equal("content" in result, false);
   }
   for (const mutate of [
-    (d) => d.calculation.limits.push("Outro limite da política candidata."),
+    (d) => (d.productId = "tarot-yes-no"),
     (d) => (d.calculation.version = ""),
     (d) => (d.calculation.kind = "dream"),
   ]) {

@@ -9,7 +9,7 @@ import { createContextCalculators } from '../apps/worker/src/context-calculators
 import { createPurposeCalculators, careerCompassContract } from '../apps/worker/src/purpose-calculators.ts';
 import { createProductProcessor, productCalculationCoverage } from '../apps/worker/src/product-runtime.ts';
 import { prepareProductFacts, evaluateProductDraft } from '../apps/worker/src/product-editorial.ts';
-import { tarotFocusEditorialTestFixture, dailyCardEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
+import { tarotFocusEditorialTestFixture, tarotYesNoEditorialTestFixture, dailyCardEditorialTestFixture } from './helpers/career-editorial-test-fixture.mjs';
 
 const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Fixture only']};
 const calculation={version:'fixture/1',kind:'tarot',status:'recorded',facts:[{id:'card-0',kind:'drawn',display:'Fixture',source:'synthetic'}],data:{cards:[0]},limits:[]};
@@ -201,7 +201,7 @@ test('persisted calculation enters offline Director without releasing content or
   const output={schemaVersion:'atv-reading/1.0.0',capability:'tarot-reflection',scope:'partial',title:'Recorte sintético',
     claims:[{id:'c1',kind:'fact',text:fact.display,evidence:[fact.id]}],relations:[],
     synthesis:[{claimIds:['c1'],text:'O sorteio foi preservado; esta fixture não constitui uma interpretação.'}],
-    reflections:['Que associação pessoal essa imagem desperta?'],limits:['Sem homologação editorial.'],...dailyCardEditorialTestFixture(prepared.facts), ...tarotFocusEditorialTestFixture(prepared.facts)};
+    reflections:['Que associação pessoal essa imagem desperta?'],limits:['Sem homologação editorial.'],...dailyCardEditorialTestFixture(prepared.facts), ...tarotFocusEditorialTestFixture(prepared.facts), ...tarotYesNoEditorialTestFixture(prepared.facts)};
   const draft={runId:id,revision:saved.revision,productId:'daily-card',tier:'free',calculation:saved.calculation,output};
   const assessed=await evaluateProductDraft(draft);assert.equal(assessed.status,'needs_editorial_review');
   assert.match(assessed.basisDigest,/^[a-f0-9]{64}$/);assert.equal(assessed.publication,'blocked');

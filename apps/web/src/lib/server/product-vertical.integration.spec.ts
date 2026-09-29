@@ -21,6 +21,7 @@ import {
 	ascendantEditorialTestFixture,
 	midheavenEditorialTestFixture,
 	tarotFocusEditorialTestFixture,
+	tarotYesNoEditorialTestFixture,
 	dailyCardEditorialTestFixture,
 	threePillarsEditorialTestFixture
 } from '../../../../../scripts/helpers/career-editorial-test-fixture.mjs';
@@ -234,6 +235,7 @@ async function fixture(productId: string) {
 					...midheavenEditorialTestFixture(facts.facts),
 					...dailyCardEditorialTestFixture(facts.facts),
 					...tarotFocusEditorialTestFixture(facts.facts),
+					...tarotYesNoEditorialTestFixture(facts.facts),
 					limits: [
 						'Aprovação fictícia somente para verificar persistência, permissões e recuperação.'
 					]
@@ -490,6 +492,13 @@ for (const productId of products)
 					parent?.calculation?.facts.filter((fact) => fact.kind === 'drawn').map((fact) => fact.id)
 				).toEqual(['card-1']);
 				expect(parent?.cartography).toBeNull();
+			} else if (productId === 'tarot-yes-no') {
+				expect(html).toContain('Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.');
+				expect(html).toContain('Que observação posso fazer ao testar um pequeno experimento hoje?');
+				expect(parent?.editorial?.sections).toHaveLength(6);
+				expect(
+					parent?.calculation?.facts.filter((fact) => fact.kind === 'drawn').map((fact) => fact.id)
+				).toEqual(['card-1']);
 			} else {
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');

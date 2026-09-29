@@ -244,3 +244,7 @@ Delivery1.7.0 nomeia as cinco afirmações e a síntese/pergunta preservando tex
 ## WU138 — Sim/Não responsável: coerência da base
 
 Preparação 1.16.0 valida projeção salva de `tarot-yes-no`: carta/pergunta/contexto, proveniência, limites e política candidata exatos, sem veredito. Divergências bloqueiam com `calculation_invalid` antes de revisar o draft. O sorteio e os requests válidos do corpus 1.17.0 permanecem iguais. Contrato `tarot-yes-no-calculation.md` e QA `../qa/TAROT_YES_NO_BASE_2026-09-28.md`; E1 integral bloqueado por revisão da política, E2–E5 pendentes de leitura/autoridade legítimas e validação hospedada.
+
+## WU139 — Sim/Não responsável: cobertura editorial
+
+Perfil `atv-tarot-yes-no-editorial/1.0.0`, prompt 1.0.10, preparação 1.17.0 e corpus 1.18.0 exigem fatos exatos da carta/pergunta e três hipóteses ligadas: condições, pergunta/contexto e autonomia. Síntese conjunta e uma pergunta prática preservam escolhas condicionais e o veredito nulo do cálculo. Faltas estruturais impedem revisão/publicação; scores e fixtures não homologam significado. Contrato `tarot-yes-no-editorial.md`, QA `../qa/TAROT_YES_NO_EDITORIAL_2026-09-29.md`. E2 local validado, integral bloqueado; próximo requisito independente é apresentação web das seis seções e salvamento/reabertura.

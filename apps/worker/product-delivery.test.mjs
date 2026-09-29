@@ -20,13 +20,17 @@ import {
   PRODUCT_DELIVERY_VERSION,
 } from "./src/product-delivery.ts";
 
-// Generic Tarot projection tests use Sim/Não responsável; daily-card profile is tested separately.
+// Generic Tarot projection tests use Três Perguntas; single-card profiles are tested separately.
 // Genuine deterministic calculation; interpretation and reviews remain synthetic fixtures.
 const genericCalculation = await calculateTarot(
   {
     version: "atv-workflow/1.0.0",
-    productId: "tarot-yes-no",
-    questions: ["Que possibilidade posso observar?"],
+    productId: "three-questions",
+    questions: [
+      "Que possibilidade posso observar?",
+      "Que tensão posso considerar?",
+      "Que alternativa posso explorar?",
+    ],
     context: "Contexto sintético B",
     consent: {
       storage: true,
@@ -42,7 +46,7 @@ function draft() {
   return {
     runId: "00000000-0000-4000-8000-000000000001",
     revision: 3,
-    productId: "tarot-yes-no",
+    productId: "three-questions",
     tier: "free",
     calculation: structuredClone(genericCalculation),
     output: {
@@ -742,7 +746,9 @@ test("digest binds exact delivery and original run, calculation provenance, revi
     (d) => (d.runId = "00000000-0000-4000-8000-000000000002"),
     (d) => d.revision++,
     (d) => (d.tier = "premium"),
-    (d) => (d.calculation.facts[2].display = "Outro contexto consentido"),
+    (d) =>
+      (d.calculation.facts.find((f) => f.id === "tarot-context").display =
+        "Outro contexto consentido"),
     (d) => (d.output.claims[1].text += " Outro ponto."),
     (d) => (d.output.relations[0].kind = "convergence"),
     (d) => d.output.reflections.reverse(),

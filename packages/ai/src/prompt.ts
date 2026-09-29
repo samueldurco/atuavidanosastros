@@ -1,4 +1,8 @@
 import {
+  TAROT_YES_NO_EDITORIAL_VERSION,
+  tarotYesNoInstructions,
+} from "./tarot-yes-no.ts";
+import {
   TAROT_FOCUS_EDITORIAL_VERSION,
   tarotFocusInstructions,
 } from "./tarot-focus.ts";
@@ -94,6 +98,9 @@ export function buildPrompt(request: EditorialRequest) {
       : []),
     ...(request.facts.editorialProfile === TAROT_FOCUS_EDITORIAL_VERSION
       ? [tarotFocusInstructions]
+      : []),
+    ...(request.facts.editorialProfile === TAROT_YES_NO_EDITORIAL_VERSION
+      ? [tarotYesNoInstructions]
       : []),
   ].join("\n");
   const prompt = JSON.stringify({

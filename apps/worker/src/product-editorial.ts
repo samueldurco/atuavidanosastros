@@ -1,3 +1,4 @@
+import { TAROT_YES_NO_EDITORIAL_VERSION } from "../../../packages/ai/src/tarot-yes-no.ts";
 import { workflowFor, type CalculationSnapshot, type WorkflowKind } from '@atv/domain';
 import { CONSTITUTION_VERSION, PROMPT_VERSION, SCHEMA_VERSION, RUBRIC_VERSION, tierLimits,
   validateFacts, hasInterpretiveBasis, parseReading, inspectReading, editorialDecision, revisionStrategy,
@@ -8,7 +9,7 @@ import { validCareerCompassProjection } from './purpose-calculators.ts';
 import { validDailyCardProjection, validTarotFocusProjection, validTarotYesNoProjection } from './symbolic-calculators.ts';
 import { inspectAscendantProjection, inspectBirthChartProjection, inspectMidheavenProjection, inspectThreePillarsProjection } from './natal-calculators.ts';
 
-export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.16.0';
+export const PRODUCT_EDITORIAL_VERSION = 'atv-product-editorial-evidence/1.17.0';
 const capability: Record<WorkflowKind, Capability> = {
   natal: 'natal-synthesis', cycles: 'cycle-context', relationship: 'relationship-dynamics',
   tarot: 'tarot-reflection', purpose: 'purpose-direction', dream: 'dream-exploration'
@@ -42,8 +43,10 @@ export function prepareProductFacts(productId: string, value: unknown): Preparat
   // The Lab has tighter limits than storage. Never silently omit, split or relabel evidence.
   if (!validateFacts(facts)) return { status: 'blocked', reason: 'facts_not_representable' };
   if (!hasInterpretiveBasis(facts)) return { status: 'blocked', reason: 'insufficient_facts' };
-  if (productId === 'tarot-yes-no' && !validTarotYesNoProjection(calculation))
-    return { status: 'blocked', reason: 'calculation_invalid' };
+  if (productId === 'tarot-yes-no') {
+    if (!validTarotYesNoProjection(calculation)) return { status: 'blocked', reason: 'calculation_invalid' };
+    facts.editorialProfile = TAROT_YES_NO_EDITORIAL_VERSION;
+  }
   if (productId === 'tarot-focus') {
     if (!validTarotFocusProjection(calculation)) return { status: 'blocked', reason: 'calculation_invalid' };
     facts.editorialProfile = TAROT_FOCUS_EDITORIAL_VERSION;

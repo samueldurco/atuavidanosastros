@@ -192,36 +192,38 @@ test('date draft gates reject changed UTC, invented events, expanded scope, comm
 });
 
 test('versioned request fingerprint catches silent factual drift, not editorial quality', () => {
-  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.17.0');
-  assert.equal(corpusDigest(corpus.cases.map(({ id, request }) => ({ id, request }))),
+  const legacyCases=corpus.cases.map(item=>{const v=structuredClone(item);if(v.productId==='tarot-yes-no'&&v.request)delete v.request.facts.editorialProfile;return v;});
+  assert.equal(corpusDigest(corpus.cases.map(({id,request})=>({id,request}))),'bac58d61a1d47192756ed7763f0775c3e4a2bc318c4dc7b5996b6d4fe7728ea7');
+  assert.equal(corpus.version, 'atv-product-facts-synthetic/1.18.0');
+  assert.equal(corpusDigest(legacyCases.map(({ id, request }) => ({ id, request }))),
     '58d1a7e26bd0398d373733efa0b5de361f48e6099d1dadbe4d7eb28d618e2fc5');
-  assert.equal(corpusDigest(corpus.cases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
+  assert.equal(corpusDigest(legacyCases.filter(item => item.suite !== 'date-context').map(({ id, request }) => ({ id, request }))),
     '6c80f0d9dead9f66271d9ba4a52e0f49ed07ba0513a378a8c3aeda4a192f1cad');
-  assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
+  assert.equal(corpusDigest(legacyCases.filter(item => !item.suite).map(({ id, request }) => ({ id, request }))),
     'd28dbc244ee0f7d3a44d6f31e831ad0f2bfebf484e751f04dcd88ac2a026de3c');
   // 1.17.0 adds only the trusted Foco Agora editorial profile.
-  const beforeFocus = corpus.cases.map(item => {
+  const beforeFocus = legacyCases.map(item => {
     const value = structuredClone({id:item.id, request:item.request});
     if (item.productId === 'tarot-focus' && value.request) delete value.request.facts.editorialProfile;
     return value;
   });
   assert.equal(corpusDigest(beforeFocus), '6e31af227a9271a9cc07eaaa1b5f95549048e137ab902bdb0dc77bb0e91ab7e7');
   // Version 1.15.0 added only the trusted daily-card editorial profile.
-  assert.equal(corpusDigest(corpus.cases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
+  assert.equal(corpusDigest(legacyCases.filter(item => !item.suite && item.productId !== 'career-compass').map(({ id, request }) => ({ id, request }))),
     '3bf22c0bad41a5adadc8ff92a703b686e742a79e01f679912597ee2841c3db58');
-  const beforeDaily = corpus.cases.map(item => {
+  const beforeDaily = legacyCases.map(item => {
     const value = structuredClone({id:item.id, request:item.request});
     if (['daily-card','tarot-focus'].includes(item.productId) && value.request) delete value.request.facts.editorialProfile;
     return value;
   });
   assert.equal(corpusDigest(beforeDaily), '022b697884ebabe85a1bf2f6b8a9be9fee0402dbe1e015bacb1350c54311b041');
-  const beforeMC = corpus.cases.map(item => {
+  const beforeMC = legacyCases.map(item => {
     const value = structuredClone({id:item.id, request:item.request});
     if (['midheaven','daily-card','tarot-focus'].includes(item.productId) && value.request) delete value.request.facts.editorialProfile;
     return value;
   });
   assert.equal(corpusDigest(beforeMC), 'c7d419b297da780a5b09f4ffbde88456b13d08ad0c7feba4380df978dc45edce');
-  const restored = corpus.cases.map(item => {
+  const restored = legacyCases.map(item => {
     const value = structuredClone({ id: item.id, request: item.request });
     if (['ascendant','midheaven','daily-card','tarot-focus'].includes(item.productId) && value.request) delete value.request.facts.editorialProfile;
     return value;

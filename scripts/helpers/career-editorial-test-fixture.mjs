@@ -1,3 +1,22 @@
+import { TAROT_YES_NO_EDITORIAL_VERSION, tarotYesNoRoles } from '../../packages/ai/src/tarot-yes-no.ts';
+/** Test-only yes/no coverage; never approved meanings, interpretation or review.
+ * @param {import('../../packages/ai/src/contracts.ts').FactsEnvelope} facts
+ */
+export function tarotYesNoEditorialTestFixture(facts) {
+  if (facts.editorialProfile !== TAROT_YES_NO_EDITORIAL_VERSION) return {};
+  const card=facts.facts.find(fact=>fact.id==='card-1');
+  const question=facts.facts.find(fact=>fact.id==='question-1');
+  if(!card || !question) throw new Error('fixture_tarot_yes_no_missing');
+  return {
+    claims:[{id:'tarot-yes-no-fact',kind:'fact',text:card.display,evidence:['card-1']},
+      {id:'yes-no-question-fact',kind:'fact',text:question.display,evidence:['question-1']},
+      ...tarotYesNoRoles.map(id=>({id,kind:'hypothesis',text:`Fixture estrutural de ${id}; sem significado homologado.`,evidence:id==='yes-no-conditions'?['card-1']:['card-1','question-1',...(id==='yes-no-question' && facts.facts.some(fact=>fact.id==='tarot-context')?['tarot-context']:[])]}))],
+    relations:[],
+    synthesis:[{claimIds:[...tarotYesNoRoles],text:'Síntese de cobertura da carta e pergunta; sem conteúdo aprovado.'}],
+    reflections:['Que observação posso fazer ao testar um pequeno experimento hoje?'],
+  };
+}
+
 import { TAROT_FOCUS_EDITORIAL_VERSION, tarotFocusRoles } from '../../packages/ai/src/tarot-focus.ts';
 import { MIDHEAVEN_EDITORIAL_VERSION, midheavenRoles } from '../../packages/ai/src/midheaven.ts';
 import { DAILY_CARD_EDITORIAL_VERSION, dailyCardRoles } from '../../packages/ai/src/daily-card.ts';

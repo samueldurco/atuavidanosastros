@@ -1,3 +1,7 @@
+import {
+  TAROT_YES_NO_EDITORIAL_VERSION,
+  inspectTarotYesNo,
+} from "./tarot-yes-no.ts";
 import type { FactsEnvelope, Reading, Tier } from "./contracts.ts";
 import {
   TAROT_FOCUS_EDITORIAL_VERSION,
@@ -166,6 +170,8 @@ export function inspectReading(
     findings.push(...inspectDailyCard(reading));
   if (facts.editorialProfile === TAROT_FOCUS_EDITORIAL_VERSION)
     findings.push(...inspectTarotFocus(reading, facts));
+  if (facts.editorialProfile === TAROT_YES_NO_EDITORIAL_VERSION)
+    findings.push(...inspectTarotYesNo(reading, facts));
   return {
     status: findings.length ? "rejected" : "needs_editorial_review",
     findings,
