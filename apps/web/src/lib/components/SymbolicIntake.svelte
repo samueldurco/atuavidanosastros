@@ -20,8 +20,7 @@
 		{
 			AVAILABLE:
 				'Você pode criar um pedido. A interpretação e os arquivos dependem das etapas de revisão e liberação.',
-			UNRELEASED:
-				'Este produto está em preparação. Nenhum modelo está homologado; novos pedidos estão desativados.',
+			UNRELEASED: 'Este produto está em preparação. Novos pedidos ainda não estão disponíveis.',
 			ACCESS_REQUIRED:
 				'Seu acesso atual não permite criar este pedido. Seus registros anteriores continuam na Biblioteca.',
 			UNAVAILABLE: 'Não foi possível verificar o acesso agora. Nenhum novo pedido será enviado.'
@@ -84,25 +83,25 @@
 
 <section class:tarot class="intake" aria-labelledby="intake-title" aria-busy={busy}>
 	<header class="intro">
-		<p class="eyebrow">{tarot ? 'Tarot · escuta simbólica' : 'Sonhos · caderno pessoal'}</p>
+		<p class="eyebrow">{tarot ? 'Tarot' : 'Sonhos'}</p>
 		<h1 id="intake-title">{product?.name}</h1>
 		<p class="lead">
 			{tarot
-				? 'Uma boa pergunta abre espaço para outras perspectivas.'
+				? 'Escreva a pergunta que você quer explorar com o Tarot.'
 				: atlas
-					? 'Escolha quando começa seu período privado de observação dos sonhos.'
-					: 'Registre o que ficou, antes de buscar um significado.'}
+					? 'Escolha a data de início do seu diário de sonhos de 30 dias.'
+					: 'Conte o sonho que você quer interpretar.'}
 		</p>
 		<p class="access-note">{accessMessage}</p>
 		{#if productId === 'tarot-yes-no'}
 			<p>
-				Esta leitura não produz um veredito automático de sim ou não. A carta não decide por você; a
-				interpretação responsável ainda depende de revisão e homologação.
+				A leitura explora a carta tirada e as condições relacionadas à sua pergunta. O resultado não
+				é uma resposta automática de sim ou não.
 			</p>
 		{:else if productId === 'tarot-focus'}
 			<p>
-				Traga uma questão do momento. O registro de uma carta é o ponto de partida, não uma previsão
-				nem uma instrução sobre o que fazer.
+				Escreva uma pergunta sobre o assunto que você quer explorar. A leitura relaciona a carta
+				tirada com essa pergunta.
 			</p>
 		{:else if productId === 'tarot-journey'}
 			<p>
@@ -125,13 +124,7 @@
 		<div class="writing">
 			<form bind:this={form} method="POST" onsubmit={submit} novalidate autocomplete="off">
 				<fieldset disabled={!canEnter}>
-					<legend
-						>{tarot
-							? 'Seu ponto de partida'
-							: atlas
-								? 'Início do caderno'
-								: 'O relato é seu'}</legend
-					>
+					<legend>{tarot ? 'Sua pergunta' : atlas ? 'Início do caderno' : 'Seu sonho'}</legend>
 					{#if tarot}
 						{#each Array.from({ length: productId === 'three-questions' ? 3 : 1 }, (_, i) => i + 1) as number (number)}
 							<Field
@@ -286,7 +279,7 @@
 						type="submit"
 						variant={tarot ? 'gold-on-night' : 'primary'}
 						pending={busy}
-						disabled={!canEnter}>Criar pedido</Button
+						disabled={!canEnter}>Solicitar leitura</Button
 					>
 				</fieldset>
 			</form>
@@ -297,22 +290,22 @@
 				{#if outcome.mode === 'recover'}<Button
 						variant={tarot ? 'gold-on-night' : 'secondary'}
 						pending={busy}
-						onclick={recover}>Consultar pedido original</Button
+						onclick={recover}>Consultar pedido</Button
 					>{/if}
 				{#if outcome.href}<div class="next">
 						<Button href={outcome.href} variant={tarot ? 'gold-on-night' : 'primary'}
-							>Abrir pedido na Biblioteca</Button
+							>Acompanhar na Biblioteca</Button
 						><Button
 							variant={tarot ? 'gold-on-night' : 'secondary'}
 							disabled={busy || access !== 'AVAILABLE'}
-							onclick={another}>Preparar outro pedido</Button
+							onclick={another}>Iniciar outra leitura</Button
 						>
 					</div>{/if}
 			</div>
 		</div>
 		<aside aria-label="Método e continuidade">
 			<p class="eyebrow">O que acontece depois</p>
-			<h2>{tarot ? 'Símbolos, não sentenças.' : 'Sentidos que partem de você.'}</h2>
+			<h2>{tarot ? 'Como funciona a leitura de Tarot' : 'Como funciona a leitura do sonho'}</h2>
 			<p>
 				{productId === 'tarot-journey'
 					? 'A pergunta e o objetivo são dados declarados por você. A tiragem e o percurso ainda não estão definidos; este formulário não sorteia cartas.'
@@ -325,14 +318,14 @@
 								: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
 			</p>
 			<ol>
-				<li>Seu pedido é salvo com uma referência recuperável.</li>
-				<li>O cálculo e a interpretação seguem etapas próprias.</li>
+				<li>Seu pedido fica salvo na Biblioteca.</li>
+				<li>A leitura passa pelo processamento e pela revisão.</li>
 				<li>Somente resultados revisados e liberados aparecem na Biblioteca.</li>
 			</ol>
 			<p>Não use esta leitura como orientação médica, jurídica ou financeira.</p>
 			<div class="continuity">
-				<h2>Seu caminho tem memória.</h2>
-				<p>Acompanhe o estado do pedido, consulte versões e retome seus registros.</p>
+				<h2>Acompanhe seu pedido</h2>
+				<p>Consulte o andamento e abra o resultado quando estiver disponível.</p>
 				<a href="/biblioteca">Voltar à Biblioteca →</a>
 			</div>
 		</aside>

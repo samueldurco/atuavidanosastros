@@ -73,9 +73,7 @@
 			outcome.mode === 'blocked' ||
 			(outcome.mode === 'new' && !allowed)}
 		onclick={act}
-		>{outcome.mode === 'recover'
-			? 'Consultar pedido original'
-			: 'Reprocessar em nova versão'}</Button
+		>{outcome.mode === 'recover' ? 'Consultar pedido' : 'Solicitar nova versão'}</Button
 	>
 	{#if outcome.message}<p bind:this={feedback} tabindex="-1" role="status">
 			{outcome.message}

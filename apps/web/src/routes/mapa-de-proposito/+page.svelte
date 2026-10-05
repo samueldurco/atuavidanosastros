@@ -1,8 +1,8 @@
 <svelte:head>
-	<title>Mapa de Propósito & Carreira — em preparação</title>
+	<title>Mapa de Carreira — em preparação</title>
 	<meta
 		name="description"
-		content="Conheça a proposta editorial do futuro Mapa de Propósito & Carreira. Acesso, preço e checkout ainda não estão disponíveis."
+		content="Conheça a proposta do Mapa de Carreira: vocação, trabalho e sua relação com dinheiro. Produto em preparação."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/mapa-de-proposito" />
 </svelte:head>
@@ -10,23 +10,23 @@
 <section class="hero">
 	<div class="container hero-grid">
 		<div>
-			<p class="eyebrow">Direção</p>
-			<h1 class="display">Mapa de Propósito<br />& Carreira</h1>
+			<p class="eyebrow">Carreira e dinheiro</p>
+			<h1 class="display">Mapa de Carreira</h1>
 			<p class="lead">
-				Uma futura leitura para organizar hipóteses sobre contribuição, rotina e presença pública —
-				com contexto e perguntas práticas, não promessas sobre destino, renda ou trabalho.
+				Explore vocação, rotina de trabalho e sua relação com dinheiro no mapa astral. O Mapa de
+				Carreira está em preparação. Você já pode calcular seu Meio do Céu gratuitamente.
 			</p>
 			<div class="actions">
-				<a class="button" href="/bussola-de-carreira">Conhecer a Bússola de Carreira</a>
-				<a class="button secondary" href="#metodo">Ver o método</a>
+				<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu</a>
+				<a class="button secondary" href="#metodo">O que o mapa vai analisar</a>
 			</div>
 		</div>
 		<aside class="status-card" aria-label="Estado da experiência">
 			<span class="status">Em preparação</span>
-			<h2>A experiência ainda não está aberta.</h2>
+			<h2>Este produto ainda não está disponível.</h2>
 			<p>
-				Acesso, preço e checkout só serão apresentados depois da validação contratual, editorial e
-				operacional. Não há compra ou lista de espera ativa nesta fase.
+				A compra e a lista de espera ainda não estão abertas. O preço e os detalhes da entrega serão
+				apresentados quando o produto estiver disponível.
 			</p>
 		</aside>
 	</div>
@@ -34,20 +34,20 @@
 
 <section id="metodo" class="section">
 	<div class="container">
-		<p class="eyebrow">Método</p>
-		<h2 class="h2">Três camadas, claramente separadas.</h2>
+		<p class="eyebrow">O que será analisado</p>
+		<h2 class="h2">Seu trabalho no mapa astral.</h2>
 		<div class="grid grid-3 layers">
 			<article class="card">
-				<h3>Dados calculados</h3>
-				<p>Posições, casas e aspectos com método, versão e limites de precisão identificáveis.</p>
+				<h3>Vocação e carreira</h3>
+				<p>Meio do Céu, casa 10 e os fatores ligados à vida profissional.</p>
 			</article>
 			<article class="card">
-				<h3>Hipóteses interpretativas</h3>
-				<p>Leituras editoriais para investigar; elas não se confundem com fatos ou previsões.</p>
+				<h3>Dinheiro e recursos</h3>
+				<p>Casa 2 e os fatores que ajudam a explorar sua relação com dinheiro e recursos.</p>
 			</article>
 			<article class="card">
-				<h3>Escolhas individuais</h3>
-				<p>Formação, território, saúde, oportunidades e decisão humana continuam no centro.</p>
+				<h3>Rotina de trabalho</h3>
+				<p>Casa 6, hábitos e organização do dia a dia.</p>
 			</article>
 		</div>
 	</div>
@@ -55,10 +55,10 @@
 
 <section class="scope">
 	<div class="container">
-		<p class="eyebrow">Escopo em estudo</p>
-		<h2 class="h2">Uma leitura para elaborar possibilidades.</h2>
+		<p class="eyebrow">Conteúdo previsto</p>
+		<h2 class="h2">Os assuntos da leitura.</h2>
 		<div class="scope-grid">
-			{#each ['Meio do Céu', 'Casas 2, 6 e 10', 'Recursos e rotina', 'Contribuição e presença', 'Perguntas e experimentos'] as item (item)}
+			{#each ['Meio do Céu', 'Casas 2, 6 e 10', 'Dinheiro e recursos', 'Vocação e trabalho', 'Perguntas para refletir'] as item (item)}
 				<article>
 					<span aria-hidden="true"></span>
 					<h3>{item}</h3>
@@ -70,14 +70,13 @@
 
 <section class="section">
 	<div class="reading delivery">
-		<p class="eyebrow">Entrega e privacidade</p>
-		<h2 class="h2">Web primeiro; recuperação pela Biblioteca quando disponível.</h2>
+		<p class="eyebrow">Sua leitura</p>
+		<h2 class="h2">Acompanhe pela Biblioteca.</h2>
 		<p class="lead">
-			Quando esta experiência existir, o resultado será apresentado no webapp e poderá ser
-			recuperado na Biblioteca. Dados natais não alimentam analytics; todo uso pede uma finalidade
-			clara.
+			Quando o produto estiver disponível, você poderá consultar o resultado na sua conta. A
+			Biblioteca reúne os pedidos e as leituras salvas.
 		</p>
-		<a class="button secondary" href="/metodo">Ler sobre cálculo, interpretação e escolha</a>
+		<a class="button secondary" href="/metodo">Como fazemos as leituras</a>
 	</div>
 </section>
 

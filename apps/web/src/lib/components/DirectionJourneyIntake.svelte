@@ -18,7 +18,7 @@
 		{
 			AVAILABLE:
 				'Você pode registrar um objetivo. Leitura, acompanhamento e entrega dependem de etapas próprias de revisão e liberação.',
-			UNRELEASED: 'A Jornada de Direção está em preparação; novos pedidos estão desativados.',
+			UNRELEASED: 'A Jornada de Carreira está em preparação; novos pedidos estão desativados.',
 			ACCESS_REQUIRED:
 				'Seu acesso atual não permite criar este pedido. Seus registros anteriores continuam na Biblioteca.',
 			UNAVAILABLE: 'Não foi possível verificar o acesso agora. Nenhum pedido será enviado.'
@@ -79,16 +79,16 @@
 </script>
 
 <section class="intake" aria-labelledby="journey-title" aria-busy={busy}>
-	<p class="eyebrow">Propósito & Prosperidade · 30 dias</p>
-	<h1 id="journey-title">Jornada de Direção</h1>
+	<p class="eyebrow">Carreira · 30 dias</p>
+	<h1 id="journey-title">Jornada de Carreira</h1>
 	<p class="lead">
-		Comece por uma direção que você queira explorar. Seu objetivo é um relato, não uma previsão ou
-		uma decisão tomada por você.
+		Escolha um objetivo de carreira para acompanhar durante 30 dias. Conte o que você quer
+		desenvolver e quando pretende começar.
 	</p>
 	<p class="access-note">{accessMessage}</p>
 	<form bind:this={form} method="POST" onsubmit={submit} novalidate autocomplete="off">
 		<fieldset disabled={!canEnter}>
-			<legend>Seu ponto de partida</legend>
+			<legend>Seu objetivo de carreira</legend>
 			<Field
 				id="goal"
 				label="Objetivo que deseja explorar (obrigatório)"
@@ -154,7 +154,7 @@
 			</p>
 			{#if errors.form}<p class="field-error">{errors.form}</p>{/if}
 			<Button type="submit" variant="primary" pending={busy} disabled={!canEnter}
-				>Criar pedido</Button
+				>Solicitar jornada</Button
 			>
 		</fieldset>
 	</form>
@@ -162,18 +162,18 @@
 			{outcome.message}
 		</p>{/if}
 	{#if outcome.mode === 'recover'}<Button variant="secondary" pending={busy} onclick={recover}
-			>Consultar pedido original</Button
+			>Consultar pedido</Button
 		>{/if}
 	{#if outcome.href}<div class="next">
-			<Button href={outcome.href} variant="primary">Abrir pedido na Biblioteca</Button><Button
+			<Button href={outcome.href} variant="primary">Acompanhar na Biblioteca</Button><Button
 				variant="secondary"
 				disabled={busy || access !== 'AVAILABLE'}
-				onclick={another}>Preparar outro pedido</Button
+				onclick={another}>Iniciar outro pedido</Button
 			>
 		</div>{/if}
 	<p class="boundary">
-		A leitura inicial, os experimentos e os check-ins ainda exigem método e revisão. O formulário
-		não produz recomendações de carreira, promessa de emprego ou síntese final.
+		A jornada está em preparação. A leitura inicial e as etapas de acompanhamento ainda não estão
+		disponíveis.
 	</p>
 	<a href="/biblioteca">Voltar à Biblioteca →</a>
 </section>

@@ -104,20 +104,20 @@
 <ContentShell kind="product">
 	<div data-stitch="P0-01 VRT-05">
 		<nav aria-label="Caminho da Bússola" class="breadcrumb">
-			<a href="/proposito">Propósito</a><span aria-hidden="true">/</span><span aria-current="page"
-				>Bússola de Carreira</span
+			<a href="/proposito">Carreira e dinheiro</a><span aria-hidden="true">/</span><span
+				aria-current="page">Bússola de Carreira</span
 			>
 		</nav>
 		<PageIntro
-			eyebrow="Ferramenta gratuita · direção e contribuição"
+			eyebrow="Cálculo gratuito · carreira"
 			title="Bússola de Carreira"
-			description="Seu Meio do Céu como ponto de partida para uma boa pergunta sobre o trabalho. O cálculo acontece sem cadastro."
+			description="Descubra o signo do seu Meio do Céu. Informe seus dados de nascimento para fazer o cálculo gratuito."
 		/>
 		<div class="tool-grid">
 			<form class="card natal-form" onsubmit={submit}>
 				<div class="form-heading">
 					<p class="eyebrow">01 · Seus dados</p>
-					<h2>Um ponto no tempo e no espaço.</h2>
+					<h2>Seus dados de nascimento</h2>
 					<p>Preencha os dados de nascimento com a maior precisão que tiver.</p>
 				</div>
 				<fieldset disabled={pending || savePending}>
@@ -189,7 +189,7 @@
 					<p class="input-note">Use coordenadas decimais. Leste é positivo; oeste é negativo.</p>
 					<Field
 						id="birth-offset"
-						label="Deslocamento UTC"
+						label="Fuso de nascimento (UTC)"
 						help="Exemplo: −03:00. Confirme o fuso histórico e o horário de verão da data."
 						>{#snippet children(describedBy)}<input
 								id="birth-offset"
@@ -202,19 +202,19 @@
 					>
 				</fieldset>
 				<Button type="submit" {pending} disabled={savePending}
-					>{pending ? 'Calculando…' : 'Calcular minha bússola'}</Button
+					>{pending ? 'Calculando…' : 'Calcular meu Meio do Céu'}</Button
 				>
 				<p class="input-note">Seus dados de nascimento não são salvos neste cálculo.</p>
 			</form>
 			<section class="result-column" aria-label="Resultado da Bússola">
 				{#if pending}<StatePanel
 						kind="loading"
-						title="Situando seu Meio do Céu…"
+						title="Calculando seu Meio do Céu…"
 						description="Estamos calculando a posição a partir dos dados informados."
 					/>
 				{:else if error}<StatePanel
 						kind="error"
-						title="Vamos conferir os dados?"
+						title="Confira os dados de nascimento"
 						description={error}
 					/>
 				{:else if result}<div class="calculated-result" role="status">
@@ -227,21 +227,24 @@
 								Seu Meio do Céu está em {result.sign}, a {result.degree.toFixed(2)}°.
 							</p>
 							<p class="result-reading">
-								Use este ponto como pergunta sobre contribuição pública, direção e ofício — não como
-								uma sentença sobre sua carreira.
+								Este é o signo do seu Meio do Céu, um dos fatores usados na leitura de carreira do
+								mapa astral.
 							</p>
 							{#if result.warning}<p class="warning">{result.warning}</p>{/if}
 							<div class="result-actions">
 								{#if data.canSave}<Button variant="secondary" onclick={save} pending={savePending}
 										>{savePending ? 'Salvando…' : 'Salvar na Biblioteca'}</Button
-									>{:else}<Button href="/entrar" variant="secondary"
-										>Entrar para salvar na Biblioteca</Button
+									>{:else}<Button href="/entrar?next=%2Fbussola-de-carreira" variant="secondary"
+										>Entrar para guardar meus cálculos</Button
 									>{/if}
-							</div></Card
+							</div>
+							{#if !data.canSave}<p class="muted">
+									Após entrar, preencha os dados novamente para calcular e salvar o resultado.
+								</p>{/if}</Card
 						>
 					</div>
 					<div class="method-note">
-						<p class="eyebrow">Método e contexto</p>
+						<p class="eyebrow">Detalhes do cálculo</p>
 						<p>
 							Cálculo tropical/Placidus: {result.provenance.provider}
 							{result.provenance.providerVersion}.

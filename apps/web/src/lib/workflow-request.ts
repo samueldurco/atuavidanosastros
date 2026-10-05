@@ -26,10 +26,10 @@ const uncertain = (): WorkflowRequestState => ({
 const storageBlocked = (): WorkflowRequestState => ({
 	mode: 'blocked',
 	message:
-		'Não foi possível preservar a chave de recuperação nesta aba. Nenhum novo pedido foi enviado. Consulte sua Biblioteca antes de tentar em outra aba.'
+		'Esta aba não conseguiu guardar o acompanhamento do pedido. Confira sua Biblioteca antes de tentar novamente.'
 });
 const refused: Record<string, { status: number; message: string }> = {
-	workflow_unreleased: { status: 409, message: 'Este produto ainda não está liberado.' },
+	workflow_unreleased: { status: 409, message: 'Este produto está em preparação.' },
 	entitlement_required: { status: 403, message: 'Seu acesso não permite este pedido agora.' },
 	request_limit: {
 		status: 429,
@@ -37,10 +37,10 @@ const refused: Record<string, { status: number; message: string }> = {
 	},
 	parent_not_reprocessable: {
 		status: 409,
-		message: 'Esta versão não pode ser reprocessada agora.'
+		message: 'Uma nova versão desta leitura está indisponível agora.'
 	},
 	parent_not_found: { status: 404, message: 'A versão original não está disponível.' },
-	invalid_input: { status: 400, message: 'O pedido não passou pela validação.' },
+	invalid_input: { status: 400, message: 'Confira os campos do formulário antes de enviar.' },
 	auth_required: { status: 401, message: 'Entre novamente para continuar.' },
 	same_origin_required: { status: 403, message: 'Abra esta página novamente para continuar.' }
 };
@@ -48,11 +48,11 @@ const refused: Record<string, { status: number; message: string }> = {
 const natalRefused: Record<string, { status: number; message: string }> = {
 	revision_conflict: {
 		status: 409,
-		message: 'Seu perfil mudou. Atualize os dados e revise o consentimento.'
+		message: 'Seus dados de nascimento mudaram. Confira a versão atual antes de enviar.'
 	},
 	natal_profile_required: {
 		status: 409,
-		message: 'Complete seu perfil natal antes de criar este pedido.'
+		message: 'Complete seus dados de nascimento antes de solicitar esta leitura.'
 	},
 	exact_time_required: { status: 409, message: 'Este pedido exige horário de nascimento exato.' },
 	profile_unavailable: { status: 409, message: 'Seu perfil não está disponível. Entre novamente.' }

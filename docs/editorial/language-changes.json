@@ -1,0 +1,2066 @@
+[
+  {
+    "file": "apps/web/src/lib/components/PublicHeader.svelte",
+    "before": "label: 'Universos'",
+    "after": "label: 'Astrologia'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PublicHeader.svelte",
+    "before": "label: 'Caderno'",
+    "after": "label: 'Artigos'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PublicHeader.svelte",
+    "before": "Meu atlas",
+    "after": "Minha conta",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PublicHeader.svelte",
+    "before": "Entrar no meu atlas",
+    "after": "Entrar",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SiteFooter.svelte",
+    "before": "Um atlas editorial para a vida.",
+    "after": "Astrologia para conhecer você.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SiteFooter.svelte",
+    "before": ">Caderno<",
+    "after": ">Artigos<",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SiteFooter.svelte",
+    "before": "Astrologia e símbolos com contexto, cuidado e espaço para escolha.",
+    "after": "Mapa astral, previsões, amor, carreira, Tarot e sonhos.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SiteFooter.svelte",
+    "before": "Explore os seis universos",
+    "after": "Conheça os temas",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": "label: 'Perfil natal'",
+    "after": "label: 'Dados de nascimento'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": ">Explorar ferramentas<",
+    "after": ">Bússola de Carreira<",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": ">Meu atlas<",
+    "after": ">Minha conta<",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": ">Seis universos<",
+    "after": ">Temas<",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": "Universos do atlas",
+    "after": "Temas de astrologia",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": ">Universos</button",
+    "after": ">Temas</button",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": "Universos no celular",
+    "after": "Temas no celular",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/shells/AuthenticatedShell.svelte",
+    "before": "Seu atlas pessoal.",
+    "after": "Minhas leituras.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/OrbitalPlate.svelte",
+    "before": "Composição orbital ilustrativa; não representa um mapa calculado",
+    "after": "Ilustração de órbitas",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/OrbitalPlate.svelte",
+    "before": "<span>Atlas Essencial</span><span>Composição orbital · ilustração</span>",
+    "after": "<span>A Tua Vida nos Astros</span><span>Ilustração</span>",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Seu arquivo pessoal",
+    "after": "Minha conta",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Entre para guardar o seu caminho.",
+    "after": "Entre para acessar suas leituras",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Um lugar para reencontrar suas leituras, acompanhar suas perguntas e continuar de onde parou.",
+    "after": "Use sua conta para acessar a Biblioteca e continuar a leitura que você escolheu.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Bem-vindo ao seu atlas.",
+    "after": "Acesse sua conta",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Use sua conta Google para acessar a Biblioteca e guardar os resultados que fizerem sentido para você.",
+    "after": "Continue com sua conta Google. Depois do login, você voltará à página que escolheu.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "action=\"?/google\"",
+    "after": "action={`?/google&next=${encodeURIComponent(data.next)}`}",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Continuidade com cuidado",
+    "after": "Sua Biblioteca",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "O que é seu encontra lugar aqui.",
+    "after": "Suas leituras em um só lugar",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Reencontrar",
+    "after": "Consultar",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/entrar/+page.svelte",
+    "before": "Volte às suas perguntas quando houver um novo contexto.",
+    "after": "Abra suas leituras quando quiser.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Um atlas editorial para a vida",
+    "after": "Astrologia e autoconhecimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Uma linguagem para olhar a vida com mais clareza.",
+    "after": "Conheça seu mapa. Explore seu momento.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Astrologia, Tarot e símbolos com método, contexto e responsabilidade — para reconhecer padrões e escolher seus próximos passos com mais clareza.",
+    "after": "Mapa astral, previsões, amor e carreira. Conheça as leituras de astrologia, consulte o Tarot e explore seus sonhos.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "href=\"/bussola-de-carreira\">Experimentar a Bússola de Carreira",
+    "after": "href=\"/meu-ceu\">Conhecer meu mapa astral",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Explorar os seis universos",
+    "after": "Ver todos os temas",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Princípios da experiência",
+    "after": "Temas de astrologia",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Cálculo quando há cálculo. Interpretação quando há interpretação.",
+    "after": "O que você quer descobrir?",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Sem fatalismo",
+    "after": "Mapa astral",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Privacidade por padrão",
+    "after": "Previsões",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Brasil · pt-BR",
+    "after": "Amor e carreira",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Seis caminhos, uma só linguagem",
+    "after": "Escolha um tema",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Comece pela pergunta que está viva agora.",
+    "after": "Astrologia para os assuntos da sua vida.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Um começo possível · gratuito",
+    "after": "Bússola de Carreira · cálculo gratuito",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Dê uma direção à sua pergunta.",
+    "after": "Descubra seu Meio do Céu.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "O Meio do Céu oferece um ponto de partida para pensar sua contribuição, seu ofício e o lugar que você deseja ocupar.",
+    "after": "Veja o signo do seu Meio do Céu, um dos pontos do mapa associados à vida profissional. O cálculo está disponível sem cadastro.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Calcular minha Bússola",
+    "after": "Calcular meu Meio do Céu",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Reflita sobre o resultado e salve se fizer sentido.",
+    "after": "Leia o resultado e salve na sua Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Método antes de promessa",
+    "after": "Como funciona",
+    "count": 2,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Cada leitura registra o que foi calculado, o que foi interpretado e onde existe incerteza. Nenhum resultado substitui contexto, cuidado profissional ou decisão humana.",
+    "after": "As leituras usam os dados que você informa. Você pode consultar os fatores do mapa e entender como cada resultado foi produzido.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Conheça nosso método",
+    "after": "Entender as leituras",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Leitura com contexto",
+    "after": "Artigos de astrologia",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Há mais de um jeito de fazer uma boa pergunta.",
+    "after": "Entenda seu mapa astral.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Conheça a proposta editorial do Caderno e os fundamentos que orientam cada leitura do atlas.",
+    "after": "Conheça os temas dos nossos guias sobre signos, casas, planetas e relacionamentos.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Conhecer o Caderno",
+    "after": "Conhecer os artigos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Direção e contribuição",
+    "after": "Carreira no mapa",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "O que o Meio do Céu pode ajudar você a perguntar",
+    "after": "O que é o Meio do Céu",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "Entre o cálculo, a interpretação e a sua escolha",
+    "after": "Como fazemos as leituras",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Seu contexto, quando você quiser.",
+    "after": "Dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Entre para iniciar ou recuperar seu perfil natal. Nenhum dado de nascimento é necessário para explorar o site.",
+    "after": "Entre para salvar ou consultar seus dados de nascimento.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "href: '/entrar'",
+    "after": "href: '/entrar?next=%2Fconta%2Fnascimento'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Não foi possível recuperar seu perfil natal.",
+    "after": "Não foi possível carregar seus dados de nascimento.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Não sabemos se o cadastro está completo. Tente recuperar o estado salvo antes de fazer alterações.",
+    "after": "Tente carregar os dados salvos antes de fazer alterações.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Recuperar perfil natal",
+    "after": "Carregar dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Seu perfil natal ainda não foi iniciado.",
+    "after": "Cadastre seus dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Você escolhe se deseja guardar seus dados de nascimento. Pode começar agora ou deixar para depois.",
+    "after": "Salve data, hora e local de nascimento para usar nas leituras.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Iniciar perfil natal",
+    "after": "Cadastrar dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Seu perfil natal está em andamento.",
+    "after": "Complete seus dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Retome quando tiver os dados necessários. Se não souber a hora, não precisa inventar uma.",
+    "after": "Complete os dados que faltam. Se não souber a hora, marque essa opção.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Retomar perfil natal",
+    "after": "Completar dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Seu perfil natal está salvo.",
+    "after": "Dados de nascimento salvos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "A hora foi informada como aproximada; essa incerteza permanece registrada. Revise os dados quando precisar.",
+    "after": "Você informou uma hora aproximada. Isso pode alterar o Ascendente e as casas do mapa.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Você pode revisar, corrigir ou apagar os dados guardados. Salvar o perfil não gera uma leitura nem libera produtos.",
+    "after": "Consulte, corrija ou exclua seus dados de nascimento.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/dashboard.ts",
+    "before": "Revisar perfil natal",
+    "after": "Revisar dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Continuidade ATV+",
+    "after": "Meus registros",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "O que você escolheu guardar.",
+    "after": "Registros salvos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Entre para consultar suas escolhas de continuidade. Esta prévia não contém registros pessoais.",
+    "after": "Entre para consultar os registros salvos na sua conta.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "href=\"/entrar\"",
+    "after": "href=\"/entrar?next=%2Fdashboard\"",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Não foi possível recuperar seu resumo de continuidade. Isso não significa que seus registros\n\t\t\tforam apagados.",
+    "after": "Não foi possível carregar seus registros. Tente novamente.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Recuperar resumo de continuidade",
+    "after": "Tentar novamente",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "A continuidade está desativada. Seus registros existentes podem ser consultados ou excluídos\n\t\t\t\tna Biblioteca.",
+    "after": "O uso dos registros em outras leituras está desativado. Você pode consultar ou excluir os registros salvos na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Você registrou consentimento para um escopo de leituras. Isso não libera o uso automático dos registros.",
+    "after": "Você autorizou o uso dos registros nas leituras indicadas no consentimento. O uso automático ainda está indisponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Sem consentimento ativo para usar seus registros como contexto. Revogar não apaga o que você guardou.",
+    "after": "Você não autorizou o uso dos registros em outras leituras. Os registros salvos continuam na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Nenhum registro de continuidade guardado.",
+    "after": "Você ainda não tem registros salvos.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Gerenciar minhas escolhas",
+    "after": "Gerenciar meus registros",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Este resumo não inicia uma interpretação. Nenhum modelo está homologado.",
+    "after": "O uso automático desses registros em novas leituras ainda não está disponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Três Pilares",
+    "after": "Sol, Lua e Ascendente",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Atlas da Vida 360",
+    "after": "Mapa Astral 360",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Leitura da Data",
+    "after": "Previsões para uma Data",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "name: 'Semana'",
+    "after": "name: 'Previsões da Semana'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Preview do par",
+    "after": "Combinação do Casal",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Sim/Não responsável",
+    "after": "Tarot Sim ou Não",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Mapa de Propósito & Carreira",
+    "after": "Mapa de Carreira",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Jornada de Direção",
+    "after": "Jornada de Carreira",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Leitura Essencial de Sonhos",
+    "after": "Interpretação de Sonhos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Dossiê do Sonho",
+    "after": "Leitura Aprofundada do Sonho",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "Atlas dos Sonhos",
+    "after": "Diário de Sonhos 30 Dias",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/catalog.ts",
+    "before": "name: 'A Tua Vida nos Astros+'",
+    "after": "name: 'ATV+'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/meio-do-ceu/+page.svelte",
+    "before": "Entenda o Meio do Céu como direção pública, contribuição e visibilidade — sem reduzir vocação a um signo.",
+    "after": "Descubra o que é o Meio do Céu e como ele entra na leitura de carreira do seu mapa astral.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/meio-do-ceu/+page.svelte",
+    "before": "Propósito & Prosperidade",
+    "after": "Carreira e dinheiro",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/meio-do-ceu/+page.svelte",
+    "before": "Meio do Céu: direção pública, não destino profissional.",
+    "after": "O que é o Meio do Céu?",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/meio-do-ceu/+page.svelte",
+    "before": "O ponto mais alto do mapa ajuda a formular perguntas sobre contribuição, reconhecimento e presença no mundo. Ele não escolhe seu trabalho e não promete sucesso financeiro.",
+    "after": "O Meio do Céu é um ponto do mapa ligado à vida profissional e ao reconhecimento. Seu signo ajuda a explorar como você quer ser visto pelo seu trabalho.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/meio-do-ceu/+page.svelte",
+    "before": "Signo e grau do Meio do Céu, regente, casa do regente, Casas 2, 6 e 10, planetas angulares e aspectos relevantes — sempre junto do contexto profissional que você quiser contar.",
+    "after": "Uma leitura de carreira considera o signo do Meio do Céu, o planeta que rege esse signo e outros fatores do mapa, como as Casas 2, 6 e 10. O cálculo gratuito abaixo mostra o signo e o grau do seu Meio do Céu.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/meio-do-ceu/+page.svelte",
+    "before": "Abrir a Bússola de Carreira",
+    "after": "Calcular meu Meio do Céu grátis",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": ">Propósito</a>",
+    "after": ">Carreira e dinheiro</a>",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Ferramenta gratuita · direção e contribuição",
+    "after": "Cálculo gratuito · carreira",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Seu Meio do Céu como ponto de partida para uma boa pergunta sobre o trabalho. O cálculo acontece sem cadastro.",
+    "after": "Descubra o signo do seu Meio do Céu. Informe seus dados de nascimento para fazer o cálculo gratuito.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Um ponto no tempo e no espaço.",
+    "after": "Seus dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Deslocamento UTC",
+    "after": "Fuso de nascimento (UTC)",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Calcular minha bússola",
+    "after": "Calcular meu Meio do Céu",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Situando seu Meio do Céu…",
+    "after": "Calculando seu Meio do Céu…",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Vamos conferir os dados?",
+    "after": "Confira os dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Use este ponto como pergunta sobre contribuição pública, direção e ofício — não como uma sentença sobre sua carreira.",
+    "after": "Este é o signo do seu Meio do Céu, um dos fatores usados na leitura de carreira do mapa astral.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/bussola-de-carreira/+page.svelte",
+    "before": "Método e contexto",
+    "after": "Detalhes do cálculo",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/CompassReader.svelte",
+    "before": "Um lugar para reencontrar seu resultado, com sua origem e seus limites.",
+    "after": "Consulte seu resultado salvo e os dados usados no cálculo.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalCartography.svelte",
+    "before": "Sua cartografia preservada",
+    "after": "Seu mapa astral",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalCartography.svelte",
+    "before": "Ampliar cartografia",
+    "after": "Ampliar mapa",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalCartography.svelte",
+    "before": "Área da cartografia natal",
+    "after": "Área do mapa astral",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalCartography.svelte",
+    "before": "cartografia.",
+    "after": "mapa.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Cartografia natal",
+    "after": "Mapa astral",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Baixar cartografia SVG",
+    "after": "Baixar mapa em SVG",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "cards e cartografia SVG elegíveis",
+    "after": "cards e mapa em SVG disponíveis",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Seu arquivo pessoal",
+    "after": "Minhas leituras",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Uma prévia do lugar onde suas leituras ficam guardadas. Entre para acessar seu acervo.",
+    "after": "Entre para acessar as leituras salvas na sua conta.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Leituras para reencontrar. Perguntas para continuar. Tudo o que você escolheu guardar no seu atlas.",
+    "after": "Abra suas leituras salvas, consulte pedidos ou escolha uma nova leitura.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Meu Céu, Ciclos &amp; Tempo, Tarot e Sonhos · consultar disponibilidade de novos pedidos",
+    "after": "Conhecer as leituras e consultar disponibilidade",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "As entradas abaixo dependem de liberação e acesso. Nenhum modelo está homologado.",
+    "after": "Confira a disponibilidade de cada produto antes de fazer um pedido.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Seu caminho tem memória.",
+    "after": "Suas leituras salvas",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Um espaço para o que importa",
+    "after": "Minhas leituras",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Explorar os seis universos",
+    "after": "Ver os temas de astrologia",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Este produto está em preparação. Nenhum modelo está homologado; novos pedidos estão desativados.",
+    "after": "Este produto está em preparação. Novos pedidos ainda não estão disponíveis.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Tarot · escuta simbólica",
+    "after": "Tarot",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Sonhos · caderno pessoal",
+    "after": "Sonhos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Uma boa pergunta abre espaço para outras perspectivas.",
+    "after": "Escreva a pergunta que você quer explorar com o Tarot.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Escolha quando começa seu período privado de observação dos sonhos.",
+    "after": "Escolha a data de início do seu diário de sonhos de 30 dias.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Registre o que ficou, antes de buscar um significado.",
+    "after": "Conte o sonho que você quer interpretar.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Esta leitura não produz um veredito automático de sim ou não. A carta não decide por você; a interpretação responsável ainda depende de revisão e homologação.",
+    "after": "A leitura explora a carta tirada e as condições relacionadas à sua pergunta. O resultado não é uma resposta automática de sim ou não.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Traga uma questão do momento. O registro de uma carta é o ponto de partida, não uma previsão nem uma instrução sobre o que fazer.",
+    "after": "Escreva uma pergunta sobre o assunto que você quer explorar. A leitura relaciona a carta tirada com essa pergunta.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Seu ponto de partida",
+    "after": "Sua pergunta",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "O relato é seu",
+    "after": "Seu sonho",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Símbolos, não sentenças.",
+    "after": "Como funciona a leitura de Tarot",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Sentidos que partem de você.",
+    "after": "Como funciona a leitura do sonho",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Você pode solicitar o processamento. Isso não significa que já exista resultado ou interpretação aprovada.",
+    "after": "Você pode enviar um pedido. Acompanhe o andamento na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Este produto ainda não está liberado. Nenhum modelo está homologado. Você pode consultar um pedido anterior.",
+    "after": "Este produto está em preparação. Novos pedidos ainda não estão disponíveis. Você pode consultar pedidos anteriores na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Seu ponto de partida",
+    "after": "Seu objetivo de carreira",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Seu ponto de partida",
+    "after": "Dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "Comece com uma pergunta. Quando você escolher salvar uma leitura, ela ganha um lugar aqui para acompanhar seu caminho.",
+    "after": "Os resultados que você salvar aparecerão aqui. Escolha um tema para conhecer as leituras.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/LibraryCollection.svelte",
+    "before": "href=\"/bussola-de-carreira\">Experimentar a Bússola de Carreira",
+    "after": "href=\"/meu-ceu\">Conhecer as leituras do mapa astral",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityManager.svelte",
+    "before": "Continuidade ATV+ · controles pessoais",
+    "after": "Meus registros · privacidade",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityManager.svelte",
+    "before": "Você escolhe o que continua.",
+    "after": "Gerenciar meus registros",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityManager.svelte",
+    "before": "Guardar uma leitura na Biblioteca não autoriza seu uso como contexto. Aqui você revisa referências e notas próprias. Nada é inferido automaticamente; nenhum modelo está homologado.",
+    "after": "Consulte suas notas e referências salvas. Para usar esses registros em outras leituras, é preciso uma autorização específica. O uso automático ainda está indisponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityManager.svelte",
+    "before": "Atualizar estado da continuidade",
+    "after": "Atualizar registros",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityManager.svelte",
+    "before": "Consultar continuidade",
+    "after": "Consultar meus registros",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityManager.svelte",
+    "before": "consentimento e gates vigentes. Salvar não inicia uma interpretação.",
+    "after": "sua autorização e da disponibilidade da leitura. Salvar uma nota não solicita uma nova leitura.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityAccess.svelte",
+    "before": "Um registro confirma a seleção no banco, não o uso por uma IA nem a entrega de uma interpretação. Nenhum modelo está homologado.",
+    "after": "Esses registros mostram quais referências foram selecionadas. O uso automático em novas leituras ainda está indisponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Propósito & Prosperidade · 30 dias",
+    "after": "Carreira · 30 dias",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Jornada de Direção",
+    "after": "Jornada de Carreira",
+    "count": 2,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Comece por uma direção que você queira explorar. Seu objetivo é um relato, não uma previsão ou uma decisão tomada por você.",
+    "after": "Escolha um objetivo de carreira para acompanhar durante 30 dias. Conte o que você quer desenvolver e quando pretende começar.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Seu nascimento,<br /> com cuidado.",
+    "after": "Seus dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Guarde os dados que conhece. Você pode corrigir seu perfil ou apagá-lo quando quiser.",
+    "after": "Cadastre data, hora e local de nascimento. Você pode corrigir ou excluir os dados depois.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Perfil natal salvo",
+    "after": "Dados de nascimento salvos",
+    "count": 2,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Preparar seu perfil",
+    "after": "Cadastrar dados",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Voltar ao seu atlas",
+    "after": "Voltar à minha conta",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Comece pelo que você sabe.",
+    "after": "Preencha seus dados de nascimento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Gerencie o que fica guardado.",
+    "after": "Revisar ou excluir dados",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Apagar todas as versões natais?",
+    "after": "Excluir todos os dados de nascimento?",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Seu caminho tem memória.",
+    "after": "Acompanhe seu pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Acompanhe o estado do pedido, consulte versões e retome seus registros.",
+    "after": "Consulte o andamento e abra o resultado quando estiver disponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Seu pedido é salvo com uma referência recuperável.",
+    "after": "Seu pedido fica salvo na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "O cálculo e a interpretação seguem etapas próprias.",
+    "after": "A leitura passa pelo processamento e pela revisão.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/loja/+page.svelte",
+    "before": "A futura curadoria da Loja dos Signos está em preparação. Nenhum produto, preço ou estoque foi publicado.",
+    "after": "Livros e objetos inspirados nos signos. Loja em preparação; compras ainda indisponíveis.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/loja/+page.svelte",
+    "before": "Uma curadoria futura de livros, objetos e edições com linguagem editorial. Ainda não há produtos, preços, estoque, prazo ou avaliações publicados.",
+    "after": "Livros e objetos inspirados na astrologia e nos signos. Estamos preparando a loja. As compras ainda não estão disponíveis.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/loja/+page.svelte",
+    "before": "Conhecer a proposta",
+    "after": "Ver página do signo",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/loja/signo/[signo]/+page.svelte",
+    "before": "Uma curadoria para {data.name}, no tempo certo.",
+    "after": "{data.name} na Loja dos Signos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/loja/signo/[signo]/+page.svelte",
+    "before": "Este espaço receberá uma seleção editorial quando existirem produtos reais, fornecedores verificados e políticas comerciais completas. Até lá, não exibimos vitrines vazias nem ofertas fictícias.",
+    "after": "Estamos preparando uma seleção de livros e objetos inspirados em {data.name}. As compras ainda não estão disponíveis.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/loja/signo/[signo]/+page.svelte",
+    "before": "A futura curadoria de ${data.name} está em preparação, sem produtos ou ofertas publicados.",
+    "after": "Livros e objetos inspirados em ${data.name}. Página da loja em preparação.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ConsentBanner.svelte",
+    "before": "Você escolhe o que mede a sua visita.",
+    "after": "Cookies e estatísticas de uso",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ConsentBanner.svelte",
+    "before": "Usamos armazenamento essencial para o site funcionar. Analytics só é carregado se você aceitar; não enviamos dados natais ou informações pessoais ao GA4.",
+    "after": "Usamos cookies essenciais para o site funcionar. Com sua permissão, também medimos o uso das páginas. Seus dados de nascimento não entram nessas estatísticas.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ConsentBanner.svelte",
+    "before": "Recusar analytics",
+    "after": "Recusar opcionais",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ConsentBanner.svelte",
+    "before": "Aceitar analytics",
+    "after": "Aceitar opcionais",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Recuperar sem gerar de novo",
+    "after": "Downloads",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Arquivos guardados",
+    "after": "Arquivos salvos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Consulte os arquivos efetivamente armazenados desta versão. Baixar um relatório gerado sob demanda não o adiciona automaticamente aqui.",
+    "after": "Veja os arquivos salvos desta leitura. Os relatórios que você baixa na seção acima são gerados na hora e aparecem separadamente.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Consultar arquivos guardados",
+    "after": "Ver arquivos salvos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Consulta indisponível neste estado.",
+    "after": "Os arquivos desta leitura não podem ser consultados agora.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Nenhum arquivo guardado disponível para esta versão e acesso. Isso não exclui o registro nem impede os downloads elegíveis sob demanda.",
+    "after": "Esta versão ainda não tem arquivos salvos disponíveis. Confira também os downloads na seção acima.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "Recuperar {label(artifact)}",
+    "after": "Baixar {label(artifact)}",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductArtifacts.svelte",
+    "before": "O acesso e a integridade são verificados a cada recuperação. Excluir o registro remove seus arquivos guardados, mas não as cópias já baixadas.",
+    "after": "Excluir esta leitura também remove seus arquivos salvos. As cópias que você já baixou continuam no seu dispositivo.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Entrega e privacidade",
+    "after": "E-mail",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Pedido de e-mail",
+    "after": "Lembrete por e-mail",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Uma solicitação registrada não confirma envio nem entrega. Nenhum endereço ou conteúdo da leitura fica salvo nesta aba.",
+    "after": "Peça um e-mail com o link da Biblioteca. Você pode acompanhar o pedido abaixo. O envio ainda precisa ser confirmado.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Solicito um e-mail sobre esta leitura para minha própria conta, conforme a política de entrega. Isso não autoriza marketing.",
+    "after": "Quero receber um e-mail com o link desta leitura na minha conta. Esta autorização vale apenas para esse pedido.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Não há pedidos de e-mail nesta leitura. Consultar não cria um pedido.",
+    "after": "Você ainda não pediu um lembrete para esta leitura.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Consultar pedido original",
+    "after": "Consultar pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductEmailRequest.svelte",
+    "before": "Consultar pedidos desta leitura",
+    "after": "Ver pedidos de e-mail",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ReaderContinuity.svelte",
+    "before": "Guardar referências para continuidade",
+    "after": "Salvar trechos nos meus registros",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ReaderContinuity.svelte",
+    "before": "Revise as seções no texto acima. Somente referências compatíveis com os limites de contexto aparecem na lista; o servidor verifica novamente a fonte. Salvar não inicia uma nova interpretação.",
+    "after": "Escolha os trechos desta leitura que você quer consultar depois. As opções disponíveis aparecem abaixo.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ReprocessAction.svelte",
+    "before": "Reprocessar em nova versão",
+    "after": "Solicitar nova versão",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ReprocessAction.svelte",
+    "before": "Consultar pedido original",
+    "after": "Consultar pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Criar pedido",
+    "after": "Solicitar jornada",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Consultar pedido original",
+    "after": "Consultar pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Abrir pedido na Biblioteca",
+    "after": "Acompanhar na Biblioteca",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "Preparar outro pedido",
+    "after": "Iniciar outro pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DirectionJourneyIntake.svelte",
+    "before": "A leitura inicial, os experimentos e os check-ins ainda exigem método e revisão. O formulário não produz recomendações de carreira, promessa de emprego ou síntese final.",
+    "after": "A jornada está em preparação. A leitura inicial e as etapas de acompanhamento ainda não estão disponíveis.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Criar pedido",
+    "after": "Solicitar leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Consultar pedido original",
+    "after": "Consultar pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Abrir pedido na Biblioteca",
+    "after": "Acompanhar na Biblioteca",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Preparar outro pedido",
+    "after": "Iniciar outra leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Da origem à leitura",
+    "after": "Como funciona",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Precisão antes da interpretação.",
+    "after": "Dos seus dados à leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Um horário aproximado não será tratado como exato. Mesmo com dados exatos, o motor e a revisão editorial têm limites próprios.",
+    "after": "O horário de nascimento influencia o Ascendente e as casas. Por isso, esta leitura precisa dos dados indicados no formulário.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "O motor valida e calcula os dados separadamente.",
+    "after": "Os dados são conferidos e o mapa é calculado.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "A interpretação depende de avaliação e liberação editorial.",
+    "after": "A leitura é revisada antes de aparecer na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "O pedido guarda uma cópia imutável do perfil conferido",
+    "after": "O pedido usa os dados de nascimento conferidos",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "O Dossiê do Casal ainda está em preparação. Sua leitura sobre comunicação, vínculo, desejo, segurança, autonomia, conflito, reparação, negociação e crescimento depende da validação do cálculo e da revisão editorial. Não oferece pontuação de compatibilidade, não presume acordos nem afirma sentimentos ou destino de outra pessoa.",
+    "after": "O Dossiê do Casal está em preparação. A proposta é aprofundar comunicação, desejo e convivência a partir dos dois mapas.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "A Sinastria ainda está em preparação. Sua leitura depende da validação do cálculo, da política de aspectos e da revisão editorial. Não oferece pontuação de compatibilidade nem afirma sentimentos, intenções ou destino de outra pessoa.",
+    "after": "A Sinastria está em preparação. Ela compara os dois mapas para explorar afinidades e diferenças no relacionamento.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "A base do par é parcial e experimental: posições separadas de Lua, Vênus e Marte. Não calcula aspectos entre mapas, casas ou pontuação de compatibilidade; não revela sentimentos, gênero ou destino de ninguém.",
+    "after": "Nesta versão de teste, a comparação usa as posições de Lua, Vênus e Marte de cada pessoa. Os aspectos entre os dois mapas ainda não são calculados.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "A Semana está em preparação. Esta base parcial reúne o perfil natal e sete amostras consecutivas; a leitura depende da homologação do motor e da revisão editorial. O fuso atual e o tema que você informar serão usados como contexto declarado. Esta base não calcula dias locais completos nem recebe datas importantes, calendário ou lembretes. Não autoriza alertas nem continuidade automática ATV+.",
+    "after": "As Previsões da Semana estão em preparação. A base de teste usa sete momentos consecutivos; a cobertura de cada dia ainda precisa ser validada. O fuso atual e o tema escolhido ajudam a situar seu pedido.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "A Revolução Solar está em preparação. O cálculo local busca o retorno do Sol natal, mas a precisão do motor, a carta da cidade declarada e a interpretação ainda exigem homologação. As datas importantes são relatos opcionais deste pedido. Não autorizam acompanhamento anual, alertas nem continuidade automática ATV+.",
+    "after": "A Revolução Solar está em preparação. Ela usa seu mapa natal e a cidade onde você estará no aniversário. As datas importantes que você informar ficam neste pedido; o acompanhamento anual ainda não está disponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "O Horóscopo personalizado está em preparação. Os temas de amor, trabalho, ritmo e atenção dependem da validação do cálculo e da revisão editorial. Esta amostra não cobre previsões diárias, semanais ou mensais, nem autoriza alertas ou renovação automática.",
+    "after": "O Horóscopo Personalizado está em preparação. As previsões diárias, semanais e mensais ainda precisam ser validadas antes da liberação.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "A base temporal é experimental. Seu fuso de nascimento não define sua localização atual. Esta amostra não cobre uma semana, um calendário ou uma revolução solar.",
+    "after": "A versão de teste analisa momentos específicos. Informe seu fuso atual quando solicitado, mesmo que seja diferente do local de nascimento.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Carreira não se resume a um signo: formação, território, condições de vida, saúde, oportunidades e escolhas importam. A base atual é parcial e experimental; não indica profissão, emprego ou renda.",
+    "after": "A base de teste usa uma parte do mapa. A leitura completa sobre carreira e dinheiro ainda está em preparação.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Você acompanha o estado na Biblioteca. Um pedido salvo não é uma leitura pronta; não prometemos PDF, áudio ou outros downloads antes da liberação.",
+    "after": "Acompanhe o andamento na Biblioteca. O resultado e seus downloads aparecem quando estiverem liberados.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Criar pedido",
+    "after": "Solicitar leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Consultar pedido original",
+    "after": "Consultar pedido",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Abrir pedido na Biblioteca",
+    "after": "Acompanhar na Biblioteca",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/SymbolicIntake.svelte",
+    "before": "Preparar outro pedido",
+    "after": "Iniciar outra leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PartnerBirthFields.svelte",
+    "before": "Dados da outra pessoa, usados apenas neste pedido. Não informe nome, contato ou contexto íntimo. Não criamos um perfil para ela nem buscamos sua localização automaticamente.",
+    "after": "Informe os dados de nascimento da outra pessoa com a permissão dela. Eles serão usados apenas nesta leitura. Deixe nomes e contatos fora do formulário.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PartnerBirthFields.svelte",
+    "before": "Aproximado — não elegível",
+    "after": "Aproximado — leitura indisponível",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PartnerBirthFields.svelte",
+    "before": "Desconhecido — não elegível",
+    "after": "Não sei — leitura indisponível",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/PartnerBirthFields.svelte",
+    "before": "Dados estruturados válidos para envio. O servidor fará uma nova validação.",
+    "after": "Dados preenchidos. Confira as informações antes de enviar.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-email-message.ts",
+    "before": "'atv-email-message/1.0.0'",
+    "after": "'atv-email-message/1.1.0'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-email-message.ts",
+    "before": "Seu acesso à Biblioteca ATV",
+    "after": "Sua leitura na Biblioteca ATV",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-email-message.ts",
+    "before": "Você pediu um lembrete para acessar sua leitura na Biblioteca.",
+    "after": "Aqui está o link que você pediu para acessar sua leitura.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-email-message.ts",
+    "before": "A disponibilidade da leitura é conferida ao acessar sua conta.",
+    "after": "Na Biblioteca, você encontra o andamento e o resultado disponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-email-message.ts",
+    "before": "Por privacidade, este e-mail não contém sua leitura nem seus dados de nascimento.",
+    "after": "Sua leitura e seus dados de nascimento ficam na sua conta.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-pdf.ts",
+    "before": "paragraph(\n\t\t\t'Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação profissional.'\n\t\t);",
+    "after": "",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-pdf.ts",
+    "before": "Para recuperar o estado atual ou solicitar nova versão, entre na sua Biblioteca. Esta cópia não se atualiza automaticamente.",
+    "after": "Consulte a Biblioteca para acompanhar atualizações ou solicitar uma nova versão. Este PDF guarda a versão que você baixou.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/workflow-request.ts",
+    "before": "Não foi possível preservar a chave de recuperação nesta aba. Nenhum novo pedido foi enviado. Consulte sua Biblioteca antes de tentar em outra aba.",
+    "after": "Esta aba não conseguiu guardar o acompanhamento do pedido. Confira sua Biblioteca antes de tentar novamente.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/workflow-request.ts",
+    "before": "Este produto ainda não está liberado.",
+    "after": "Este produto está em preparação.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/workflow-request.ts",
+    "before": "Esta versão não pode ser reprocessada agora.",
+    "after": "Uma nova versão desta leitura está indisponível agora.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/workflow-request.ts",
+    "before": "O pedido não passou pela validação.",
+    "after": "Confira os campos do formulário antes de enviar.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/workflow-request.ts",
+    "before": "Seu perfil mudou. Atualize os dados e revise o consentimento.",
+    "after": "Seus dados de nascimento mudaram. Confira a versão atual antes de enviar.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/workflow-request.ts",
+    "before": "Complete seu perfil natal antes de criar este pedido.",
+    "after": "Complete seus dados de nascimento antes de solicitar esta leitura.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "label: 'Pedido de e-mail'",
+    "after": "label: 'Lembrete por e-mail'",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Seu arquivo pessoal",
+    "after": "Sua leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Uma seção integral com suas bases e todos os limites. Não substitui a leitura completa. Conteúdos extensos podem não caber no card.",
+    "after": "Escolha um trecho da leitura para baixar como imagem. Trechos muito longos podem não caber no card.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Relatório para ler offline. O acesso será verificado novamente ao baixar. Cópias baixadas não são removidas ao excluir o registro.",
+    "after": "Baixe sua leitura para consultar depois. Excluir a versão na Biblioteca não apaga as cópias do seu dispositivo.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "O reprocessamento preserva as cartas já registradas. Não é um novo sorteio.",
+    "after": "A nova versão usa as mesmas cartas desta tiragem.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Reprocessamento indisponível para o estado ou acesso atual.",
+    "after": "Uma nova versão desta leitura está indisponível agora.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Atualizar estado",
+    "after": "Atualizar andamento",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Outras versões reprocessadas continuam na Biblioteca.",
+    "after": "As outras versões continuam na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DreamAtlasDiary.svelte",
+    "before": "Atlas dos Sonhos",
+    "after": "Diário de Sonhos 30 Dias",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DreamAtlasDiary.svelte",
+    "before": "Registre apenas sonhos deste período de 30 dias. Cada relato fica ligado a esta versão do Atlas e só aparece para você. A inclusão em uma síntese futura é uma escolha por registro; nenhuma síntese é gerada ao guardar.",
+    "after": "Registre seus sonhos durante os 30 dias deste diário. Só você pode ver os relatos. Em cada registro, escolha se ele poderá entrar em uma síntese quando essa função estiver disponível.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DreamAtlasDiary.svelte",
+    "before": "Período deste Atlas:",
+    "after": "Período deste diário:",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DreamAtlasDiary.svelte",
+    "before": "Novos registros indisponíveis no estado atual de acesso ou liberação. Seus registros já guardados continuam disponíveis para leitura e exclusão.",
+    "after": "Você não pode adicionar sonhos agora. Os registros salvos continuam disponíveis para leitura e exclusão.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DreamAtlasDiary.svelte",
+    "before": "Termos informados em mais de um registro incluído",
+    "after": "Emoções e associações repetidas",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DreamAtlasDiary.svelte",
+    "before": "Repetição literal de termos que você informou; nenhuma interpretação foi feita.",
+    "after": "Estes termos aparecem em mais de um sonho que você incluiu. A lista reúne o que você escreveu.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalIntake.svelte",
+    "before": "Não foi possível preservar a chave de recuperação nesta aba. Consulte sua Biblioteca.",
+    "after": "Esta aba não conseguiu guardar o acompanhamento do pedido. Confira sua Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/product-email-request.ts",
+    "before": "Não foi possível preservar a chave de recuperação nesta aba. Nenhuma alteração foi enviada. Consulte sua Biblioteca.",
+    "after": "Esta aba não conseguiu guardar o acompanhamento do pedido. Confira os pedidos de e-mail na Biblioteca.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-svg.ts",
+    "before": "Esta cartografia não é uma interpretação ou homologação.",
+    "after": "Este desenho mostra os dados do cálculo experimental.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  }
+]

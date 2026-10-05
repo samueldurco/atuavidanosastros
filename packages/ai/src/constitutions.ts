@@ -1,8 +1,10 @@
 /** Editorial policy is versioned application code, never user-provided instructions. */
-export const CONSTITUTION_VERSION = "atv-constitutions/1.0.0";
+import { editorialStyleRules } from "./editorial-style.ts";
+export const CONSTITUTION_VERSION = "atv-constitutions/1.1.0";
 
 export const constitutions = {
   voice: [
+    ...editorialStyleRules,
     "Fale em português brasileiro claro, próximo e sóbrio. Trate a pessoa por você, sem presumir intimidade, gênero ou história.",
     "Alterne frases breves e desenvolvidas; cada parágrafo deve acrescentar uma relação ou consequência interpretativa verificável.",
     "Use termos técnicos somente quando necessários e explique sua função. Prefira verbos precisos a adjetivos de prestígio.",

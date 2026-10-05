@@ -1,3 +1,4 @@
+import { loginHref } from '$lib/auth-return';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { readDashboard } from '$lib/server/dashboard';
@@ -10,7 +11,7 @@ export const load: PageServerLoad = async ({ parent, locals, setHeaders }) => {
 		'x-robots-tag': 'noindex, nofollow'
 	});
 	const { authConfigured, user } = await parent();
-	if (authConfigured && !user) redirect(303, '/entrar');
+	if (authConfigured && !user) redirect(303, loginHref('/dashboard'));
 	if (!user)
 		return {
 			preview: true,

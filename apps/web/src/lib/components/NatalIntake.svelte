@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { customerProduct } from '$lib/data/product-copy';
 	import { onMount, tick } from 'svelte';
 	import { validAtlasPriorities, validDate, workflowFor } from '@atv/domain';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -175,9 +176,9 @@
 	);
 	const accessMessage = $derived(
 		access === 'AVAILABLE'
-			? 'Você pode solicitar o processamento. Isso não significa que já exista resultado ou interpretação aprovada.'
+			? 'Você pode enviar um pedido. Acompanhe o andamento na Biblioteca.'
 			: access === 'UNRELEASED'
-				? 'Este produto ainda não está liberado. Nenhum modelo está homologado. Você pode consultar um pedido anterior.'
+				? 'Este produto está em preparação. Novos pedidos ainda não estão disponíveis. Você pode consultar pedidos anteriores na Biblioteca.'
 				: access === 'ACCESS_REQUIRED'
 					? 'Seu acesso não permite criar este pedido agora. A consulta de pedidos anteriores continua disponível.'
 					: 'Não foi possível confirmar a disponibilidade. Nenhum novo pedido será enviado.'
@@ -211,7 +212,7 @@
 			outcome = {
 				mode: 'blocked',
 				message:
-					'Não foi possível preservar a chave de recuperação nesta aba. Consulte sua Biblioteca.'
+					'Esta aba não conseguiu guardar o acompanhamento do pedido. Confira sua Biblioteca.'
 			};
 		}
 		initialized = true;
@@ -399,28 +400,18 @@
 	<header>
 		<p class="eyebrow">
 			{isPair
-				? 'Amor & Relações'
+				? 'Amor e relacionamentos'
 				: isCycle
-					? 'Ciclos & Tempo'
+					? 'Previsões'
 					: isLifeAtlas
-						? 'Quatro prioridades escolhidas por você para organizar a reflexão sobre o próximo mês.'
+						? 'Mapa astral'
 						: isCareer
-							? 'Propósito & Prosperidade'
-							: 'Meu Céu'} · novo pedido
+							? 'Carreira e dinheiro'
+							: 'Mapa astral'} · novo pedido
 		</p>
 		<h1 id="natal-product-title">{product?.name}</h1>
 		<p class="lead">
-			{isPair
-				? 'Duas origens, dados separados e limites claros.'
-				: isCycle
-					? isSolar
-						? 'Um ano escolhido por você, com cidade e localização do aniversário declaradas.'
-						: isWeek
-							? 'Sete datas consecutivas a partir do dia que você escolher.'
-							: 'Uma data escolhida por você, com o método à vista.'
-					: isCareer
-						? 'Uma base natal para reflexão sobre carreira, sem prescrição de profissão.'
-						: 'Seu céu começa nos dados que você escolheu guardar.'}
+			{customerProduct(productId)?.summary}
 		</p>
 		<p class="access-note">{accessMessage}</p>
 	</header>
@@ -914,7 +905,7 @@
 							!solarValid ||
 							!calendarValid ||
 							!atlasValid ||
-							!weekPreferencesValid}>Criar pedido</Button
+							!weekPreferencesValid}>Solicitar leitura</Button
 					>
 				</fieldset>
 			</form>
@@ -926,27 +917,27 @@
 						variant="secondary"
 						pending={busy}
 						disabled={loading}
-						onclick={recover}>Consultar pedido original</Button
+						onclick={recover}>Consultar pedido</Button
 					>{/if}
 				{#if outcome.href}<div class="actions">
-						<Button href={outcome.href}>Abrir pedido na Biblioteca</Button><Button
+						<Button href={outcome.href}>Acompanhar na Biblioteca</Button><Button
 							variant="secondary"
 							disabled={busy || loading || access !== 'AVAILABLE'}
-							onclick={another}>Preparar outro pedido</Button
+							onclick={another}>Iniciar outra leitura</Button
 						>
 					</div>{/if}
 			</div>
 		</div>
 		<aside aria-label="Método e continuidade">
-			<p class="eyebrow">Da origem à leitura</p>
-			<h2>Precisão antes da interpretação.</h2>
+			<p class="eyebrow">Como funciona</p>
+			<h2>Dos seus dados à leitura</h2>
 			<p>
-				Um horário aproximado não será tratado como exato. Mesmo com dados exatos, o motor e a
-				revisão editorial têm limites próprios.
+				O horário de nascimento influencia o Ascendente e as casas. Por isso, esta leitura precisa
+				dos dados indicados no formulário.
 			</p>
 			<ol>
 				<li>
-					O pedido guarda uma cópia imutável do perfil conferido{isPair
+					O pedido usa os dados de nascimento conferidos{isPair
 						? ' e dos dados da outra pessoa'
 						: isCycle
 							? isSolar
@@ -954,53 +945,44 @@
 								: ' e da data escolhida'
 							: ''}.
 				</li>
-				<li>O motor valida e calcula os dados separadamente.</li>
-				<li>A interpretação depende de avaliação e liberação editorial.</li>
+				<li>Os dados são conferidos e o mapa é calculado.</li>
+				<li>A leitura é revisada antes de aparecer na Biblioteca.</li>
 			</ol>
 			{#if isDossier}<p>
-					O Dossiê do Casal ainda está em preparação. Sua leitura sobre comunicação, vínculo,
-					desejo, segurança, autonomia, conflito, reparação, negociação e crescimento depende da
-					validação do cálculo e da revisão editorial. Não oferece pontuação de compatibilidade, não
-					presume acordos nem afirma sentimentos ou destino de outra pessoa.
+					O Dossiê do Casal está em preparação. A proposta é aprofundar comunicação, desejo e
+					convivência a partir dos dois mapas.
 				</p>{:else if isSynastry}<p>
-					A Sinastria ainda está em preparação. Sua leitura depende da validação do cálculo, da
-					política de aspectos e da revisão editorial. Não oferece pontuação de compatibilidade nem
-					afirma sentimentos, intenções ou destino de outra pessoa.
+					A Sinastria está em preparação. Ela compara os dois mapas para explorar afinidades e
+					diferenças no relacionamento.
 				</p>{:else if isPair}<p>
-					A base do par é parcial e experimental: posições separadas de Lua, Vênus e Marte. Não
-					calcula aspectos entre mapas, casas ou pontuação de compatibilidade; não revela
-					sentimentos, gênero ou destino de ninguém.
+					Nesta versão de teste, a comparação usa as posições de Lua, Vênus e Marte de cada pessoa.
+					Os aspectos entre os dois mapas ainda não são calculados.
 				</p>{/if}
 			{#if isWeek}<p>
-					A Semana está em preparação. Esta base parcial reúne o perfil natal e sete amostras
-					consecutivas; a leitura depende da homologação do motor e da revisão editorial. O fuso
-					atual e o tema que você informar serão usados como contexto declarado. Esta base não
-					calcula dias locais completos nem recebe datas importantes, calendário ou lembretes. Não
-					autoriza alertas nem continuidade automática ATV+.
+					As Previsões da Semana estão em preparação. A base de teste usa sete momentos
+					consecutivos; a cobertura de cada dia ainda precisa ser validada. O fuso atual e o tema
+					escolhido ajudam a situar seu pedido.
 				</p>{/if}
 			{#if isSolar}<p>
-					A Revolução Solar está em preparação. O cálculo local busca o retorno do Sol natal, mas a
-					precisão do motor, a carta da cidade declarada e a interpretação ainda exigem homologação.
-					As datas importantes são relatos opcionais deste pedido. Não autorizam acompanhamento
-					anual, alertas nem continuidade automática ATV+.
+					A Revolução Solar está em preparação. Ela usa seu mapa natal e a cidade onde você estará
+					no aniversário. As datas importantes que você informar ficam neste pedido; o
+					acompanhamento anual ainda não está disponível.
 				</p>{/if}
 			{#if isHoroscope}<p>
-					O Horóscopo personalizado está em preparação. Os temas de amor, trabalho, ritmo e atenção
-					dependem da validação do cálculo e da revisão editorial. Esta amostra não cobre previsões
-					diárias, semanais ou mensais, nem autoriza alertas ou renovação automática.
+					O Horóscopo Personalizado está em preparação. As previsões diárias, semanais e mensais
+					ainda precisam ser validadas antes da liberação.
 				</p>{/if}
 			{#if isTemporal && !isWeek}<p>
-					A base temporal é experimental. Seu fuso de nascimento não define sua localização atual.
-					Esta amostra não cobre uma semana, um calendário ou uma revolução solar.
+					A versão de teste analisa momentos específicos. Informe seu fuso atual quando solicitado,
+					mesmo que seja diferente do local de nascimento.
 				</p>{/if}
 			{#if isCareer}<p>
-					Carreira não se resume a um signo: formação, território, condições de vida, saúde,
-					oportunidades e escolhas importam. A base atual é parcial e experimental; não indica
-					profissão, emprego ou renda.
+					A base de teste usa uma parte do mapa. A leitura completa sobre carreira e dinheiro ainda
+					está em preparação.
 				</p>{/if}
 			<p>
-				Você acompanha o estado na Biblioteca. Um pedido salvo não é uma leitura pronta; não
-				prometemos PDF, áudio ou outros downloads antes da liberação.
+				Acompanhe o andamento na Biblioteca. O resultado e seus downloads aparecem quando estiverem
+				liberados.
 			</p>
 			<a href="/biblioteca">Voltar à Biblioteca →</a>
 		</aside>

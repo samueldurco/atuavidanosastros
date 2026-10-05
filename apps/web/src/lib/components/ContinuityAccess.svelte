@@ -83,8 +83,8 @@
 		revisões e datas, sem o conteúdo das notas ou leituras.
 	</p>
 	<p class="notice">
-		Um registro confirma a seleção no banco, não o uso por uma IA nem a entrega de uma
-		interpretação. Nenhum modelo está homologado.
+		Esses registros mostram quais referências foram selecionadas. O uso automático em novas leituras
+		ainda está indisponível.
 	</p>
 	<div class="actions">
 		<div bind:this={recoveryButton}>

@@ -1,7 +1,7 @@
 import { productCatalog } from '@atv/domain';
 import { parseProductRun } from '../product-run';
 
-export const NARRATION_VERSION = 'atv-audio-transcript/1.0.0';
+export const NARRATION_VERSION = 'atv-audio-transcript/1.1.0';
 export const NARRATION_MAX_BYTES = 90_000;
 export interface NarrationSegment {
 	id: string;
@@ -66,11 +66,6 @@ export async function prepareProductNarration(value: unknown) {
 	};
 	add('product', 'notice', `A Tua Vida nos Astros. ${product.name}.`);
 	add('title', 'title', editorial.title);
-	add(
-		'scope',
-		'notice',
-		'Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação profissional.'
-	);
 	for (const [i, section] of editorial.sections.entries()) {
 		add(`section-${i}-heading`, 'heading', section.title);
 		add(`section-${i}`, 'section', section.text, section.evidence);

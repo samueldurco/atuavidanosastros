@@ -4,34 +4,29 @@
 </script>
 
 <section class="continuity-summary" aria-labelledby="dashboard-continuity-title">
-	<p class="eyebrow">Continuidade ATV+</p>
-	<h2 id="dashboard-continuity-title">O que você escolheu guardar.</h2>
+	<p class="eyebrow">Meus registros</p>
+	<h2 id="dashboard-continuity-title">Registros salvos</h2>
 	{#if summary.state === 'PREVIEW'}
-		<p>
-			Entre para consultar suas escolhas de continuidade. Esta prévia não contém registros pessoais.
-		</p>
-		<a href="/entrar">Entrar para consultar →</a>
+		<p>Entre para consultar os registros salvos na sua conta.</p>
+		<a href="/entrar?next=%2Fdashboard">Entrar para consultar →</a>
 	{:else if summary.state === 'UNAVAILABLE'}
-		<p>
-			Não foi possível recuperar seu resumo de continuidade. Isso não significa que seus registros
-			foram apagados.
-		</p>
-		<a href="/dashboard">Recuperar resumo de continuidade →</a>
+		<p>Não foi possível carregar seus registros. Tente novamente.</p>
+		<a href="/dashboard">Tentar novamente →</a>
 		<a href="/biblioteca#continuity-heading">Consultar na Biblioteca →</a>
 	{:else if summary.state === 'AVAILABLE'}
 		{#if !summary.snapshot.enabled}
 			<p>
-				A continuidade está desativada. Seus registros existentes podem ser consultados ou excluídos
-				na Biblioteca.
+				O uso dos registros em outras leituras está desativado. Você pode consultar ou excluir os
+				registros salvos na Biblioteca.
 			</p>
 		{/if}
 		<p>
 			{summary.snapshot.consentState === 'granted'
-				? 'Você registrou consentimento para um escopo de leituras. Isso não libera o uso automático dos registros.'
-				: 'Sem consentimento ativo para usar seus registros como contexto. Revogar não apaga o que você guardou.'}
+				? 'Você autorizou o uso dos registros nas leituras indicadas no consentimento. O uso automático ainda está indisponível.'
+				: 'Você não autorizou o uso dos registros em outras leituras. Os registros salvos continuam na Biblioteca.'}
 		</p>
 		{#if summary.snapshot.counts.total === 0}
-			<p>Nenhum registro de continuidade guardado.</p>
+			<p>Você ainda não tem registros salvos.</p>
 		{:else}
 			<dl aria-label="Registros de continuidade">
 				<div>
@@ -52,9 +47,11 @@
 				</div>
 			</dl>
 		{/if}
-		<a href="/biblioteca#continuity-heading">Gerenciar minhas escolhas →</a>
+		<a href="/biblioteca#continuity-heading">Gerenciar meus registros →</a>
 	{/if}
-	<p class="limit">Este resumo não inicia uma interpretação. Nenhum modelo está homologado.</p>
+	<p class="limit">
+		O uso automático desses registros em novas leituras ainda não está disponível.
+	</p>
 </section>
 
 <style>

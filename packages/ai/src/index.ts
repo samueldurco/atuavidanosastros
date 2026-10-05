@@ -22,6 +22,7 @@ export class DisabledAiProvider implements AiProvider {
 
 export * from "./contracts.ts";
 export * from "./constitutions.ts";
+export * from "./editorial-style.ts";
 export * from "./schema.ts";
 export * from "./director.ts";
 export * from "./prompt.ts";

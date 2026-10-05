@@ -81,7 +81,7 @@ describe('eligible narration preparation — no synthesis or publication', () =>
 		);
 		expect(result.text).toBe(result.segments.map((s) => s.text).join('\n\n'));
 		expect(result.bytes).toBe(Buffer.byteLength(result.text, 'utf8'));
-		expect(result.text).toContain('não determina suas escolhas');
+		expect(result.segments.some((segment) => segment.id === 'scope')).toBe(false);
 		expect(result.text).toContain('não apaga arquivos já baixados');
 	});
 

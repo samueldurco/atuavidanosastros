@@ -18,36 +18,36 @@
 <section class="hero" data-stitch="PUB-01">
 	<div class="container hero-grid">
 		<div>
-			<p class="eyebrow">Um atlas editorial para a vida</p>
-			<h1 class="display">Uma linguagem para olhar a vida com mais clareza.</h1>
+			<p class="eyebrow">Astrologia e autoconhecimento</p>
+			<h1 class="display">Conheça seu mapa. Explore seu momento.</h1>
 			<p class="lead">
-				Astrologia, Tarot e símbolos com método, contexto e responsabilidade — para reconhecer
-				padrões e escolher seus próximos passos com mais clareza.
+				Mapa astral, previsões, amor e carreira. Conheça as leituras de astrologia, consulte o Tarot
+				e explore seus sonhos.
 			</p>
 			<div class="hero-actions">
-				<a class="button" href="/bussola-de-carreira">Experimentar a Bússola de Carreira</a><a
+				<a class="button" href="/meu-ceu">Conhecer meu mapa astral</a><a
 					class="button secondary"
-					href="#universos">Explorar os seis universos</a
+					href="#universos">Ver todos os temas</a
 				>
 			</div>
 		</div>
 		<OrbitalPlate />
 	</div>
 </section>
-<section class="trust" aria-label="Princípios da experiência">
+<section class="trust" aria-label="Temas de astrologia">
 	<div class="container trust-grid">
-		<p>Cálculo quando há cálculo. Interpretação quando há interpretação.</p>
+		<p>O que você quer descobrir?</p>
 		<ul>
-			<li>Sem fatalismo</li>
-			<li>Privacidade por padrão</li>
-			<li>Brasil · pt-BR</li>
+			<li>Mapa astral</li>
+			<li>Previsões</li>
+			<li>Amor e carreira</li>
 		</ul>
 	</div>
 </section>
 <section id="universos" class="section">
 	<div class="container">
-		<p class="eyebrow">Seis caminhos, uma só linguagem</p>
-		<h2 class="h2">Comece pela pergunta que está viva agora.</h2>
+		<p class="eyebrow">Escolha um tema</p>
+		<h2 class="h2">Astrologia para os assuntos da sua vida.</h2>
 		<div class="grid grid-3 universe-grid">
 			{#each universes as universe (universe.slug)}<article class="card universe">
 					<span class="universe-rule" aria-hidden="true"></span>
@@ -62,13 +62,13 @@
 <section class="tool-entry section">
 	<div class="container entry-grid">
 		<div>
-			<p class="eyebrow">Um começo possível · gratuito</p>
-			<h2 class="h2">Dê uma direção à sua pergunta.</h2>
+			<p class="eyebrow">Bússola de Carreira · cálculo gratuito</p>
+			<h2 class="h2">Descubra seu Meio do Céu.</h2>
 			<p class="lead">
-				O Meio do Céu oferece um ponto de partida para pensar sua contribuição, seu ofício e o lugar
-				que você deseja ocupar.
+				Veja o signo do seu Meio do Céu, um dos pontos do mapa associados à vida profissional. O
+				cálculo está disponível sem cadastro.
 			</p>
-			<a class="button" href="/bussola-de-carreira">Calcular minha Bússola</a>
+			<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu</a>
 		</div>
 		<ol>
 			<li>
@@ -89,7 +89,7 @@
 				<span>03</span>
 				<div>
 					<strong>Escolha como continuar</strong>
-					<p>Reflita sobre o resultado e salve se fizer sentido.</p>
+					<p>Leia o resultado e salve na sua Biblioteca.</p>
 				</div>
 			</li>
 		</ol>
@@ -98,13 +98,13 @@
 <section class="method section">
 	<div class="container entry-grid">
 		<div>
-			<p class="eyebrow">Método antes de promessa</p>
-			<h2 class="h2">Método antes de promessa.</h2>
+			<p class="eyebrow">Como funciona</p>
+			<h2 class="h2">Como funciona.</h2>
 			<p class="lead">
-				Cada leitura registra o que foi calculado, o que foi interpretado e onde existe incerteza.
-				Nenhum resultado substitui contexto, cuidado profissional ou decisão humana.
+				As leituras usam os dados que você informa. Você pode consultar os fatores do mapa e
+				entender como cada resultado foi produzido.
 			</p>
-			<a class="button secondary" href="/metodo">Conheça nosso método</a>
+			<a class="button secondary" href="/metodo">Entender as leituras</a>
 		</div>
 		<dl class="method-facts">
 			<div>
@@ -130,21 +130,16 @@
 <section class="section editorial-entry">
 	<div class="container entry-grid">
 		<div>
-			<p class="eyebrow">Leitura com contexto</p>
-			<h2 class="h2">Há mais de um jeito de fazer uma boa pergunta.</h2>
+			<p class="eyebrow">Artigos de astrologia</p>
+			<h2 class="h2">Entenda seu mapa astral.</h2>
 			<p class="lead">
-				Conheça a proposta editorial do Caderno e os fundamentos que orientam cada leitura do atlas.
+				Conheça os temas dos nossos guias sobre signos, casas, planetas e relacionamentos.
 			</p>
-			<a href="/caderno">Conhecer o Caderno →</a>
+			<a href="/caderno">Conhecer os artigos →</a>
 		</div>
 		<div class="editorial-links">
-			<a href="/meio-do-ceu"
-				><span>Direção e contribuição</span><strong
-					>O que o Meio do Céu pode ajudar você a perguntar</strong
-				></a
-			><a href="/metodo"
-				><span>Como lemos</span><strong>Entre o cálculo, a interpretação e a sua escolha</strong></a
-			>
+			<a href="/meio-do-ceu"><span>Carreira no mapa</span><strong>O que é o Meio do Céu</strong></a
+			><a href="/metodo"><span>Como lemos</span><strong>Como fazemos as leituras</strong></a>
 		</div>
 	</div>
 </section>

@@ -4,9 +4,9 @@
 	let open = $state(false);
 	let menuButton: HTMLButtonElement;
 	const navigation = [
-		{ href: '/#universos', label: 'Universos' },
+		{ href: '/#universos', label: 'Astrologia' },
 		{ href: '/bussola-de-carreira', label: 'Ferramentas' },
-		{ href: '/caderno', label: 'Caderno' },
+		{ href: '/caderno', label: 'Artigos' },
 		{ href: '/metodo', label: 'Método' },
 		{ href: '/loja', label: 'Loja' }
 	];
@@ -52,7 +52,7 @@
 			<a
 				class="button account"
 				href={page.data.user ? '/dashboard' : '/entrar'}
-				onclick={() => (open = false)}>{page.data.user ? 'Meu atlas' : 'Entrar no meu atlas'}</a
+				onclick={() => (open = false)}>{page.data.user ? 'Minha conta' : 'Entrar'}</a
 			>
 		</nav>
 	</div>

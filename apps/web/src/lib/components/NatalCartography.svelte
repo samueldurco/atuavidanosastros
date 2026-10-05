@@ -30,7 +30,7 @@
 
 <section id="cartografia" aria-labelledby="cartography-heading">
 	<p class="eyebrow">Coordenadas natais</p>
-	<h2 id="cartography-heading">Sua cartografia preservada</h2>
+	<h2 id="cartography-heading">Seu mapa astral</h2>
 	<p>
 		Posições, ângulos e cúspides desta versão. A geometria é experimental; leia os limites antes de
 		interpretar.
@@ -42,14 +42,14 @@
 				class="chart-size"
 				aria-pressed={enlarged}
 				onclick={() => (enlarged = !enlarged)}
-				>{enlarged ? 'Ajustar à tela' : 'Ampliar cartografia'}</button
+				>{enlarged ? 'Ajustar à tela' : 'Ampliar mapa'}</button
 			>
 			<!-- svelte-ignore a11y_no_noninteractive_tabindex (The enlarged scroll area needs keyboard focus for arrow-key navigation.) -->
 			<div
 				class="chart-viewport"
 				class:enlarged
 				role="region"
-				aria-label="Área da cartografia natal"
+				aria-label="Área do mapa astral"
 				tabindex={enlarged ? 0 : undefined}
 			>
 				<svg
@@ -126,8 +126,7 @@
 					Deslize para ver o mapa. Com teclado, foque a área e use as setas.
 				</p>{/if}
 			<figcaption>
-				Trilhas radiais apenas organizam os marcadores. Não há aspectos ou trânsitos nesta
-				cartografia.
+				Trilhas radiais apenas organizam os marcadores. Não há aspectos ou trânsitos nesta mapa.
 			</figcaption>
 		</figure>
 		<div class="positions">

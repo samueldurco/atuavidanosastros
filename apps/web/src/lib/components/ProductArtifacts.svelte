@@ -74,21 +74,21 @@
 </script>
 
 <section bind:this={root} id="arquivos" aria-labelledby="artifacts-title" aria-busy={busy}>
-	<p class="eyebrow">Recuperar sem gerar de novo</p>
-	<h2 id="artifacts-title">Arquivos guardados</h2>
+	<p class="eyebrow">Downloads</p>
+	<h2 id="artifacts-title">Arquivos salvos</h2>
 	<p>
-		Consulte os arquivos efetivamente armazenados desta versão. Baixar um relatório gerado sob
-		demanda não o adiciona automaticamente aqui.
+		Veja os arquivos salvos desta leitura. Os relatórios que você baixa na seção acima são gerados
+		na hora e aparecem separadamente.
 	</p>
 	<Button variant="secondary" onclick={() => consult()} {disabled} pending={busy}
-		>Consultar arquivos guardados</Button
+		>Ver arquivos salvos</Button
 	>
-	{#if disabled}<p>Consulta indisponível neste estado.</p>{/if}
+	{#if disabled}<p>Os arquivos desta leitura não podem ser consultados agora.</p>{/if}
 	<div aria-live="polite" aria-atomic="true">
 		{#if message}<p class:error={failed}>{message}</p>{/if}
 		{#if artifacts?.length === 0}<p>
-				Nenhum arquivo guardado disponível para esta versão e acesso. Isso não exclui o registro nem
-				impede os downloads elegíveis sob demanda.
+				Esta versão ainda não tem arquivos salvos disponíveis. Confira também os downloads na seção
+				acima.
 			</p>{/if}
 	</div>
 	{#if artifacts?.length}
@@ -113,15 +113,15 @@
 						</p>
 					</div>
 					<Button variant="secondary" disabled={busy || disabled} onclick={() => consult(artifact)}
-						>Recuperar {label(artifact)}</Button
+						>Baixar {label(artifact)}</Button
 					>
 				</li>
 			{/each}
 		</ul>
 	{/if}
 	<p class="privacy">
-		O acesso e a integridade são verificados a cada recuperação. Excluir o registro remove seus
-		arquivos guardados, mas não as cópias já baixadas.
+		Excluir esta leitura também remove seus arquivos salvos. As cópias que você já baixou continuam
+		no seu dispositivo.
 	</p>
 </section>
 

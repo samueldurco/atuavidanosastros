@@ -1,9 +1,5 @@
 <figure class="orbital-plate">
-	<svg
-		viewBox="0 0 400 400"
-		role="img"
-		aria-label="Composição orbital ilustrativa; não representa um mapa calculado"
-	>
+	<svg viewBox="0 0 400 400" role="img" aria-label="Ilustração de órbitas">
 		<g fill="none" stroke="currentColor" stroke-width="0.8"
 			><circle cx="200" cy="200" r="180" /><circle
 				cx="200"
@@ -22,7 +18,7 @@
 			/></g
 		>
 	</svg>
-	<figcaption><span>Atlas Essencial</span><span>Composição orbital · ilustração</span></figcaption>
+	<figcaption><span>A Tua Vida nos Astros</span><span>Ilustração</span></figcaption>
 </figure>
 
 <style>

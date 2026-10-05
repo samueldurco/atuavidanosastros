@@ -107,11 +107,11 @@
 </script>
 
 <section id="email" aria-labelledby="email-title" aria-busy={busy}>
-	<p class="eyebrow">Entrega e privacidade</p>
-	<h2 id="email-title">Pedido de e-mail</h2>
+	<p class="eyebrow">E-mail</p>
+	<h2 id="email-title">Lembrete por e-mail</h2>
 	<p>
-		Uma solicitação registrada não confirma envio nem entrega. Nenhum endereço ou conteúdo da
-		leitura fica salvo nesta aba.
+		Peça um e-mail com o link da Biblioteca. Você pode acompanhar o pedido abaixo. O envio ainda
+		precisa ser confirmado.
 	</p>
 	{#if !allowNew || synthetic || !ownerId}
 		<p>
@@ -124,8 +124,8 @@
 			<label class="consent"
 				><input type="checkbox" bind:checked={consent} disabled={disabled || busy || !ready} />
 				<span
-					>Solicito um e-mail sobre esta leitura para minha própria conta, conforme a política de
-					entrega. Isso não autoriza marketing.</span
+					>Quero receber um e-mail com o link desta leitura na minha conta. Esta autorização vale
+					apenas para esse pedido.</span
 				>
 			</label>
 		{/if}
@@ -141,7 +141,7 @@
 				variant="secondary"
 				disabled={!ready || disabled || synthetic}
 				pending={busy}
-				onclick={() => act('recover')}>Consultar pedido original</Button
+				onclick={() => act('recover')}>Consultar pedido</Button
 			>
 			{#if outcome.mode === 'requested'}
 				<Button
@@ -158,13 +158,11 @@
 			variant="secondary"
 			disabled={!historyReady || disabled || synthetic}
 			pending={busy}
-			onclick={() => consult()}>Consultar pedidos desta leitura</Button
+			onclick={() => consult()}>Ver pedidos de e-mail</Button
 		>
 	</div>
 	{#if historySelected && history.mode === 'ready' && history.receipts.length === 0}
-		<p class="history-empty">
-			Não há pedidos de e-mail nesta leitura. Consultar não cria um pedido.
-		</p>
+		<p class="history-empty">Você ainda não pediu um lembrete para esta leitura.</p>
 	{:else if historySelected && history.mode === 'ready' && history.receipts.length > 0}
 		<ul class="receipts" aria-label="Pedidos de e-mail desta leitura">
 			{#each history.receipts as receipt (receipt.id)}

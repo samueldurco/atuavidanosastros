@@ -250,7 +250,7 @@
 		contents={[
 			...(data.run.released
 				? [
-						...(birthGeometry ? [{ id: 'cartografia', label: 'Cartografia natal' }] : []),
+						...(birthGeometry ? [{ id: 'cartografia', label: 'Mapa astral' }] : []),
 						...(weekTimeline ? [{ id: 'semana', label: 'Sete amostras da semana' }] : []),
 						...(temporalFacts ? [{ id: 'semana', label: 'Busca temporal experimental' }] : []),
 						...(weekAreas ? [{ id: 'areas', label: 'Resumo por áreas' }] : []),
@@ -266,7 +266,7 @@
 					]
 				: []),
 			...(data.run.productId === 'dream-atlas' ? [{ id: 'diario', label: 'Diário privado' }] : []),
-			{ id: 'email', label: 'Pedido de e-mail' },
+			{ id: 'email', label: 'Lembrete por e-mail' },
 			{ id: 'historico', label: 'Histórico desta versão' }
 		]}
 	>
@@ -278,7 +278,7 @@
 					Referência sintética local — não é uma leitura homologada nem pertence a uma pessoa.
 				</p>{/if}
 			<PageIntro
-				eyebrow="Seu arquivo pessoal"
+				eyebrow="Sua leitura"
 				title={data.item.title}
 				description={`Guardado em ${date(data.run.createdAt)}. Cada versão preserva seu próprio histórico.`}
 			/>
@@ -299,7 +299,7 @@
 							onclick={() => download('svg')}
 							disabled={!!busy || !!data.synthetic}
 							pending={busy === 'download' && downloadFormat === 'svg'}
-							variant="secondary">Baixar cartografia SVG</Button
+							variant="secondary">Baixar mapa em SVG</Button
 						>
 					{/if}
 					{#if pdfEligible}
@@ -326,13 +326,13 @@
 							variant="secondary">Baixar card SVG</Button
 						>
 						<p>
-							Uma seção integral com suas bases e todos os limites. Não substitui a leitura
-							completa. Conteúdos extensos podem não caber no card.
+							Escolha um trecho da leitura para baixar como imagem. Trechos muito longos podem não
+							caber no card.
 						</p>
 					{/if}
 					<p>
-						Relatório para ler offline. O acesso será verificado novamente ao baixar. Cópias
-						baixadas não são removidas ao excluir o registro.
+						Baixe sua leitura para consultar depois. Excluir a versão na Biblioteca não apaga as
+						cópias do seu dispositivo.
 					</p>
 				{/if}
 				{#key data.run.id}
@@ -347,19 +347,19 @@
 				{/key}
 				<p>
 					{product?.kind === 'tarot'
-						? 'O reprocessamento preserva as cartas já registradas. Não é um novo sorteio.'
+						? 'A nova versão usa as mesmas cartas desta tiragem.'
 						: 'A nova tentativa usa os dados já registrados, sem alterar esta versão.'}
 				</p>
 				{#if !data.run.canReprocess}<p>
-						Reprocessamento indisponível para o estado ou acesso atual.
+						Uma nova versão desta leitura está indisponível agora.
 					</p>{/if}
 				<Button variant="tertiary" onclick={() => location.reload()} disabled={!!busy}
-					>Atualizar estado</Button
+					>Atualizar andamento</Button
 				>
 				{#if confirmDelete}
 					<p id="delete-warning">
-						Excluir remove esta versão, seu histórico e seus arquivos guardados. Outras versões
-						reprocessadas continuam na Biblioteca.
+						Excluir remove esta versão, seu histórico e seus arquivos guardados. As outras versões
+						continuam na Biblioteca.
 					</p>
 					<Button
 						variant="destructive"
@@ -589,7 +589,7 @@
 					</li>{/each}
 			</ol>
 			<p>
-				Relatórios web, PDF, cards e cartografia SVG elegíveis são gerados ao baixar, após nova
+				Relatórios web, PDF, cards e mapa em SVG disponíveis são gerados ao baixar, após nova
 				verificação de acesso. Outros formatos permanecem indisponíveis.
 			</p>
 		</section>

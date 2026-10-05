@@ -188,19 +188,19 @@
 </script>
 
 <section class="continuity" aria-labelledby="continuity-heading" data-stitch="MEM-02 CMP-02 SH-02">
-	<p class="eyebrow">Continuidade ATV+ · controles pessoais</p>
-	<h2 id="continuity-heading">Você escolhe o que continua.</h2>
+	<p class="eyebrow">Meus registros · privacidade</p>
+	<h2 id="continuity-heading">Gerenciar meus registros</h2>
 	<p>
-		Guardar uma leitura na Biblioteca não autoriza seu uso como contexto. Aqui você revisa
-		referências e notas próprias. Nada é inferido automaticamente; nenhum modelo está homologado.
+		Consulte suas notas e referências salvas. Para usar esses registros em outras leituras, é
+		preciso uma autorização específica. O uso automático ainda está indisponível.
 	</p>
 	<div bind:this={recoveryButton}>
 		<Button variant="secondary" pending={busy} onclick={() => read()}
 			>{busy
 				? 'Consultando ou salvando…'
 				: snapshot
-					? 'Atualizar estado da continuidade'
-					: 'Consultar continuidade'}</Button
+					? 'Atualizar registros'
+					: 'Consultar meus registros'}</Button
 		>
 	</div>
 	{#if failure}<p role="alert">{failure}</p>{/if}
@@ -386,7 +386,8 @@
 				>
 				<p>
 					Apenas registros marcados como relevantes podem ser selecionados para contexto, sempre sob
-					consentimento e gates vigentes. Salvar não inicia uma interpretação.
+					sua autorização e da disponibilidade da leitura. Salvar uma nota não solicita uma nova
+					leitura.
 				</p>
 				<div class="actions">
 					<Button type="submit" disabled={!valid}>Salvar registro revisado</Button

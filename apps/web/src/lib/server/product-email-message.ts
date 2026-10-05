@@ -1,7 +1,7 @@
 import { parseProductEmailReceipt } from '../product-email';
 import { parseProductRun } from '../product-run';
 
-export const EMAIL_MESSAGE_VERSION = 'atv-email-message/1.0.0';
+export const EMAIL_MESSAGE_VERSION = 'atv-email-message/1.1.0';
 export interface EmailMessageConfiguration {
 	/** Fixed trusted server configuration, never a request origin/URL/header. */
 	accountOrigin?: string;
@@ -59,13 +59,13 @@ export async function prepareProductEmailMessage(
 	)
 		return null;
 	const message = {
-		subject: 'Seu acesso à Biblioteca ATV',
+		subject: 'Sua leitura na Biblioteca ATV',
 		text: [
 			'A Tua Vida nos Astros',
-			'Você pediu um lembrete para acessar sua leitura na Biblioteca.',
+			'Aqui está o link que você pediu para acessar sua leitura.',
 			`Entre na sua conta para consultar: ${origin}/biblioteca`,
-			'A disponibilidade da leitura é conferida ao acessar sua conta.',
-			'Por privacidade, este e-mail não contém sua leitura nem seus dados de nascimento.'
+			'Na Biblioteca, você encontra o andamento e o resultado disponível.',
+			'Sua leitura e seus dados de nascimento ficam na sua conta.'
 		].join('\n\n')
 	};
 	// Capture primitives before asynchronous hashing; do not retain caller-owned objects.

@@ -52,7 +52,7 @@
 			uncertain = false;
 			message =
 				command?.action === 'save-natal'
-					? 'Perfil natal salvo. Isso não gera nem libera uma interpretação.'
+					? 'Dados de nascimento salvos. Isso não gera nem libera uma interpretação.'
 					: command?.action === 'forget-natal'
 						? 'Todas as versões do seu perfil natal foram apagadas. Sua Biblioteca não foi alterada.'
 						: command?.action === 'begin'
@@ -99,16 +99,16 @@
 
 <div class="onboarding" data-stitch="ID-02">
 	<aside class="orientation">
-		<p class="eyebrow">Seu ponto de partida</p>
-		<h1>Seu nascimento,<br /> com cuidado.</h1>
-		<p>Guarde os dados que conhece. Você pode corrigir seu perfil ou apagá-lo quando quiser.</p>
+		<p class="eyebrow">Dados de nascimento</p>
+		<h1>Seus dados de nascimento</h1>
+		<p>Cadastre data, hora e local de nascimento. Você pode corrigir ou excluir os dados depois.</p>
 		<div class="progress-block">
 			<strong
 				>{snapshot?.state === 'COMPLETE'
-					? 'Perfil natal salvo'
+					? 'Dados de nascimento salvos'
 					: snapshot?.state === 'IN_PROGRESS'
 						? 'Cadastro em andamento'
-						: 'Preparar seu perfil'}</strong
+						: 'Cadastrar dados'}</strong
 			>
 			<ol aria-label="Etapas do cadastro">
 				<li>01 · Conferir dados</li>
@@ -129,12 +129,12 @@
 			</p>
 			<a href="/metodo">Conheça o método →</a>
 		</div>
-		<a href="/dashboard">Voltar ao seu atlas</a>
+		<a href="/dashboard">Voltar à minha conta</a>
 	</aside>
 	<section class="form-panel" aria-label="Dados natais" aria-busy={busy}>
 		<header>
 			<p class="eyebrow">Perfil pessoal</p>
-			<h2>Comece pelo que você sabe.</h2>
+			<h2>Preencha seus dados de nascimento</h2>
 			<p>Este cadastro armazena dados. Ele não calcula um mapa nem habilita interpretações.</p>
 		</header>
 		<div class="feedback" bind:this={feedback} tabindex="-1">
@@ -305,7 +305,7 @@
 			</div>
 		</form>
 		{#if snapshot?.natal}<div class="manage">
-				<h2>Gerencie o que fica guardado.</h2>
+				<h2>Revisar ou excluir dados</h2>
 				<p>
 					Apagar o perfil remove todas as suas versões natais. Não apaga sua conta nem resultados da
 					Biblioteca, que podem conter cópias desses dados.
@@ -318,7 +318,7 @@
 			</div>{/if}
 	</section>
 </div>
-<Dialog bind:open={confirmForget} id="forget-natal" title="Apagar todas as versões natais?">
+<Dialog bind:open={confirmForget} id="forget-natal" title="Excluir todos os dados de nascimento?">
 	<p>
 		Esta ação não pode ser desfeita. Os dados de nascimento do seu perfil serão removidos. Sua conta
 		e os resultados da Biblioteca não serão apagados.
@@ -446,9 +446,6 @@
 			gap: 1.5rem;
 		}
 		.care {
-			display: none;
-		}
-		h1 br {
 			display: none;
 		}
 		.progress-block {
