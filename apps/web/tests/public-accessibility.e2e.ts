@@ -29,7 +29,7 @@ for (const viewport of viewports) {
 			const response = await page.goto(path);
 			expect(response?.status()).toBe(200);
 			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-			await expect(page.getByRole('button', { name: 'Recusar analytics' })).toBeVisible();
+			await expect(page.getByRole('button', { name: 'Recusar opcionais' })).toBeVisible();
 			await scan(page, testInfo);
 		});
 	}
@@ -38,17 +38,17 @@ for (const viewport of viewports) {
 		await page.setViewportSize(viewport);
 		const response = await page.goto('/pagina-inexistente-a11y');
 		expect(response?.status()).toBe(404);
-		await expect(page.getByRole('heading', { level: 1 })).toHaveText('404');
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Página não encontrada');
 		await expect(page).toHaveTitle('Página não encontrada — A Tua Vida nos Astros');
 		await scan(page, testInfo);
 		await page.getByRole('link', { name: 'Voltar ao início' }).click();
 		await expect(page).toHaveURL('/');
 	});
 
-	test(`home após recusar analytics ${viewport.name}`, async ({ page }, testInfo) => {
+	test(`home após recusar cookies opcionais ${viewport.name}`, async ({ page }, testInfo) => {
 		await page.setViewportSize(viewport);
 		await page.goto('/');
-		await page.getByRole('button', { name: 'Recusar analytics' }).click();
+		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 		await expect(page.getByRole('complementary', { name: 'Preferências de cookies' })).toHaveCount(
 			0
 		);
@@ -59,7 +59,7 @@ for (const viewport of viewports) {
 test('menu público aberto por teclado no celular', async ({ page }, testInfo) => {
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/');
-	await page.getByRole('button', { name: 'Recusar analytics' }).click();
+	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 	const menu = page.locator('button[aria-controls="primary-navigation"]');
 	await menu.focus();
 	await page.keyboard.press('Enter');

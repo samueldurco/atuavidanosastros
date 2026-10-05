@@ -2248,5 +2248,23 @@
     "count": 1,
     "priority": "P1",
     "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+error.svelte",
+    "before": "{page.status}",
+    "after": "Página não encontrada / Não foi possível carregar a página",
+    "literal": false,
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+error.svelte",
+    "before": "{page.error?.message}",
+    "after": "A página que você tentou abrir não existe ou mudou de endereço. / Tente novamente em alguns minutos.",
+    "literal": false,
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
   }
 ]

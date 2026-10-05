@@ -39,6 +39,10 @@ test('Mapa Astral stays recognizable from homepage to its offer on mobile', asyn
 	await expect(
 		page.getByRole('heading', { name: 'Mapa Astral', exact: true, level: 1 })
 	).toBeVisible();
+	await page.evaluate(() => window.scrollTo(0, 0));
+	await expect(
+		page.getByRole('heading', { name: 'Mapa Astral', exact: true, level: 1 })
+	).toBeInViewport();
 	await page.screenshot({ path: testInfo.outputPath('mapa-astral-mobile.png'), fullPage: true });
 	const overflow = await page.evaluate(
 		() => document.documentElement.scrollWidth > window.innerWidth
