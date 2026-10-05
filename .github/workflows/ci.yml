@@ -30,6 +30,29 @@ jobs:
       - run: pnpm test:db
       - run: pnpm build
 
+  accessibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: Public accessibility and keyboard regression
+        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts gate-b.e2e.ts --workers=1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-accessibility-results
+          path: apps/web/test-results/
+          retention-days: 7
+
   secrets:
     runs-on: ubuntu-latest
     permissions:
