@@ -2,48 +2,188 @@
 	import { signs, signNames } from '$lib/data/site';
 </script>
 
-<svelte:head
-	><title>Loja dos Signos — em preparação</title><meta
+<svelte:head>
+	<title>Loja dos Signos — em preparação</title>
+	<meta
 		name="description"
 		content="A futura curadoria da Loja dos Signos está em preparação. Nenhum produto, preço ou estoque foi publicado."
-	/><link rel="canonical" href="https://atuavidanosastros.com.br/loja" /></svelte:head
->
-<section class="section">
-	<div class="container">
-		<span class="status">Em preparação</span>
-		<h1 class="h1">Loja dos Signos</h1>
-		<p class="lead">
-			Uma curadoria futura de livros, objetos e edições com linguagem editorial. Ainda não há
-			produtos, preços, estoque, prazo ou avaliações publicados.
-		</p>
-		<div class="grid grid-3 signs">
-			{#each signs as sign (sign)}<a class="card" href={`/loja/signo/${sign}`}
-					><span aria-hidden="true">✦</span><strong>{signNames[sign]}</strong><small
-						>Conhecer a proposta</small
-					></a
-				>{/each}
+	/>
+	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
+</svelte:head>
+
+<section class="shop-hero section" data-stitch="FUT-01">
+	<div class="container hero-grid">
+		<div class="hero-copy">
+			<p class="eyebrow">Uma curadoria em construção</p>
+			<h1 class="display">Loja dos Signos</h1>
+			<p class="lead">
+				Um espaço para reunir livros, objetos e edições com cuidado editorial. Ainda não há
+				produtos, preços, estoque, prazo ou avaliações publicados.
+			</p>
+			<a class="button" href="#signos">Explorar os signos</a>
 		</div>
+		<aside class="preparation-note" aria-label="Estado da loja">
+			<span class="status">Em preparação</span>
+			<div class="note-rule" aria-hidden="true"></div>
+			<p class="note-title">Antes da primeira oferta</p>
+			<p>
+				Cada item precisa de fornecedor identificado, descrição verificada e condições de compra
+				claras. A curadoria ainda não foi publicada.
+			</p>
+		</aside>
+	</div>
+</section>
+
+<section class="shop-index section" id="signos" aria-labelledby="signos-title">
+	<div class="container">
+		<div class="index-intro">
+			<div>
+				<p class="eyebrow">Doze caminhos</p>
+				<h2 class="h2" id="signos-title">Explore por signo</h2>
+			</div>
+			<p>
+				Estas páginas mostram a proposta de navegação da Loja. Nenhuma delas representa uma seleção
+				de produtos disponível para compra.
+			</p>
+		</div>
+		<nav class="sign-grid" aria-label="Signos na loja">
+			{#each signs as sign, index (sign)}
+				<a class="sign-card" href={`/loja/signo/${sign}`}>
+					<span class="sign-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+					<strong>{signNames[sign]}</strong>
+					<span class="sign-action">Conhecer a proposta <span aria-hidden="true">→</span></span>
+				</a>
+			{/each}
+		</nav>
 	</div>
 </section>
 
 <style>
-	.signs {
-		margin-top: 3rem;
+	.shop-hero {
+		border-bottom: 1px solid var(--atv-border);
 	}
-	.signs a {
-		padding: 1.5rem;
-		text-decoration: none;
+	.hero-grid {
 		display: grid;
-		gap: 0.4rem;
-		color: var(--atv-text-primary);
+		grid-template-columns: minmax(0, 1.55fr) minmax(17rem, 0.65fr);
+		gap: clamp(2rem, 7vw, 7rem);
+		align-items: end;
 	}
-	.signs span {
-		color: var(--atv-gold-500);
+	.hero-copy {
+		max-width: 48rem;
 	}
-	.signs strong {
-		font: 500 1.8rem var(--atv-font-display);
+	.hero-copy .lead {
+		max-width: 38rem;
+		margin: 1.5rem 0 2rem;
 	}
-	.signs small {
+	.preparation-note {
+		padding: 1.75rem;
+		background: var(--atv-surface-card);
+		border: 1px solid var(--atv-border);
+		border-radius: var(--atv-radius-lg);
+	}
+	.note-rule {
+		width: 2rem;
+		height: 1px;
+		margin-top: 2.75rem;
+		background: var(--atv-gold-500);
+	}
+	.note-title {
+		margin: 1.25rem 0 0.5rem;
+		font: 500 1.6rem/1.2 var(--atv-font-display);
+	}
+	.preparation-note p:last-child {
+		margin: 0;
 		color: var(--atv-text-secondary);
+	}
+	.index-intro {
+		display: grid;
+		grid-template-columns: 1fr minmax(15rem, 0.7fr);
+		gap: 2rem;
+		align-items: end;
+		margin-bottom: 2.5rem;
+	}
+	.index-intro .h2 {
+		margin: 0;
+	}
+	.index-intro > p {
+		max-width: 28rem;
+		margin: 0;
+		color: var(--atv-text-secondary);
+	}
+	.sign-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.sign-card {
+		min-width: 0;
+		min-height: 11.5rem;
+		padding: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		text-decoration: none;
+		color: var(--atv-text-primary);
+		background: var(--atv-surface-card);
+		border: 1px solid var(--atv-border);
+		border-radius: var(--atv-radius-lg);
+		transition:
+			border-color var(--atv-motion-fast),
+			box-shadow var(--atv-motion-fast);
+	}
+	.sign-card:hover {
+		border-color: var(--atv-action);
+		box-shadow: var(--atv-shadow-1);
+	}
+	.sign-number {
+		color: var(--atv-text-accent);
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+	}
+	.sign-card strong {
+		margin: 0.5rem 0 auto;
+		font: 500 clamp(1.6rem, 2vw, 2rem)/1.2 var(--atv-font-display);
+	}
+	.sign-action {
+		padding-top: 1.25rem;
+		color: var(--atv-action);
+		font-size: 0.875rem;
+		font-weight: 700;
+	}
+	@media (max-width: 900px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1fr) minmax(14rem, 0.7fr);
+			gap: 2rem;
+		}
+		.sign-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 620px) {
+		.hero-grid,
+		.index-intro {
+			grid-template-columns: 1fr;
+		}
+		.preparation-note {
+			padding: 1.5rem;
+		}
+		.note-rule {
+			margin-top: 1.5rem;
+		}
+		.sign-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+		.sign-card {
+			min-height: 10rem;
+		}
+	}
+	@media (max-width: 350px) {
+		.sign-grid {
+			grid-template-columns: 1fr;
+		}
+		.sign-card {
+			min-height: 8.5rem;
+		}
 	}
 </style>
