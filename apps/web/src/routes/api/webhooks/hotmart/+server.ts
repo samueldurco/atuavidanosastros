@@ -20,25 +20,42 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ accepted: false, code: 'invalid_json' }, { status: 400 });
 	}
 	const notification = parseHotmartNotification(payload);
-	if (!notification) return json({ accepted: false, code: 'invalid_payload' }, { status: 400 });
+	if (
+		!notification ||
+		!notification.id.trim() ||
+		!notification.event.trim() ||
+		Array.isArray(notification.data)
+	)
+		return json({ accepted: false, code: 'invalid_payload' }, { status: 400 });
 
 	const key = publicEnv.PUBLIC_SUPABASE_URL;
 	const serviceRole = privateEnv.SUPABASE_SERVICE_ROLE_KEY;
 	if (!key || !serviceRole)
 		return json({ accepted: false, code: 'storage_unavailable' }, { status: 503 });
 	const supabase = createClient(key, serviceRole, { auth: { persistSession: false } });
+	const payloadHash = await sha256Hex(raw);
 	const { error } = await supabase.from('webhook_inbox').upsert(
 		{
 			provider: 'hotmart',
 			external_event_id: notification.id,
 			event_type: notification.event,
 			signature_verified: true,
-			payload_hash: await sha256Hex(raw),
+			payload_hash: payloadHash,
 			payload,
 			processing_state: 'RECEIVED'
 		},
 		{ onConflict: 'provider,external_event_id', ignoreDuplicates: true }
 	);
 	if (error) return json({ accepted: false, code: 'storage_error' }, { status: 503 });
+	const { data: stored, error: readError } = await supabase
+		.from('webhook_inbox')
+		.select('event_type,payload_hash')
+		.eq('provider', 'hotmart')
+		.eq('external_event_id', notification.id)
+		.single();
+	if (readError || !stored)
+		return json({ accepted: false, code: 'storage_error' }, { status: 503 });
+	if (stored.event_type !== notification.event || stored.payload_hash !== payloadHash)
+		return json({ accepted: false, code: 'event_id_conflict' }, { status: 409 });
 	return json({ accepted: true }, { status: 202 });
 };
