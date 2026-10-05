@@ -22,7 +22,8 @@ for (const viewport of [
 		expect(titleBox!.y + titleBox!.height).toBeLessThanOrEqual(box!.y + box!.height);
 		await page.screenshot({ path: testInfo.outputPath('consent-explanation.png') });
 		await expect(banner).toContainText('Analytics só é carregado se você aceitar');
-		const policy = banner.getByRole('link', { name: 'Conheça a política de cookies' });
+		const policy = banner.getByRole('link', { name: 'Privacidade e cookies' });
+		await expect(policy).toHaveAttribute('href', '/privacidade');
 		await policy.focus();
 		await expect(policy).toBeFocused();
 		for (const name of ['Recusar analytics', 'Aceitar analytics']) {
