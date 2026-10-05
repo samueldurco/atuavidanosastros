@@ -17,6 +17,7 @@ export interface NatalForm {
 	timezone: string;
 	offset: string;
 	source: string;
+	occurrence: string;
 }
 export const emptyNatalForm = (): NatalForm => ({
 	date: '',
@@ -28,6 +29,7 @@ export const emptyNatalForm = (): NatalForm => ({
 	longitude: '',
 	timezone: '',
 	offset: '',
+	occurrence: '',
 	source: ''
 });
 export function formFromNatal(natal: OnboardingSnapshot['natal']): NatalForm {
@@ -45,6 +47,7 @@ export function formFromNatal(natal: OnboardingSnapshot['natal']): NatalForm {
 		longitude: String(natal.longitude),
 		timezone: natal.timezone,
 		offset: `${seconds < 0 ? '-' : '+'}${pad(Math.floor(abs / 3600))}:${pad(Math.floor((abs % 3600) / 60))}:${pad(abs % 60)}`,
+		occurrence: natal.utcInstant,
 		source: natal.locationSource
 	};
 }
@@ -73,7 +76,7 @@ export function natalFormCommand(
 		return fail('Confira a data e a hora de nascimento.');
 	const offset = /^([+-])(\d{2}):([0-5]\d)(?::([0-5]\d))?$/.exec(form.offset.trim());
 	if (!offset || Number(offset[2]) > 23)
-		return fail('Informe o deslocamento UTC da data de nascimento, como -03:00.');
+		return fail('Selecione a cidade para calcular o horário automaticamente.');
 	const offsetSeconds =
 		(Number(offset[2]) * 3600 + Number(offset[3]) * 60 + Number(offset[4] ?? 0)) *
 		(offset[1] === '-' ? -1 : 1);
@@ -82,7 +85,7 @@ export function natalFormCommand(
 		return fail('O instante de nascimento deve estar entre 1900 e 2099.');
 	const decimal = /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/;
 	if (!decimal.test(form.latitude.trim()) || !decimal.test(form.longitude.trim()))
-		return fail('Informe latitude e longitude em graus decimais, usando ponto.');
+		return fail('Selecione uma cidade nos resultados da busca.');
 	const command = parseOnboardingCommand({
 		version: ONBOARDING_VERSION,
 		expectedRevision: revision,
@@ -102,5 +105,5 @@ export function natalFormCommand(
 	});
 	return command
 		? { command, error: '' }
-		: fail('Confira o local, país, coordenadas, fonte e identificador de fuso.');
+		: fail('Selecione novamente a cidade de nascimento e confira a data e a hora.');
 }

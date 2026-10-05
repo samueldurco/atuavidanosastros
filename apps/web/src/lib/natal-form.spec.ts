@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { emptyNatalForm, formFromNatal, natalFormCommand, type NatalForm } from './natal-form';
 const fixture = (): NatalForm => ({
+	occurrence: '',
 	date: '2000-01-01',
 	time: '12:30',
 	precision: 'APPROXIMATE',
