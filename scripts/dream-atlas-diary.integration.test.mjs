@@ -55,6 +55,9 @@ before(async () => {
   await db.exec(
     await file("supabase/migrations/20261005110000_dream_atlas_diary.sql"),
   );
+  await db.exec(
+    await file("supabase/migrations/20261005120000_dream_atlas_period_read.sql"),
+  );
   // Fixture release is local only; the migration leaves the real release off.
   await db.exec(
     "update workflow_releases set enabled=true,access_policy='free' where product_id='dream-atlas'",
@@ -73,9 +76,10 @@ after(async () => {
 test("owner can save, read, revise and exclude an entry; dates and revisions are bounded", async () => {
   assert.equal(await call("authenticated", owner, sql.save, entry()), 1);
   const saved = await call("authenticated", owner, sql.read, [runId]);
-  assert.equal(saved.length, 1);
-  assert.equal(saved[0].includeInSynthesis, false);
-  assert.equal(saved[0].narrative, entry()[4]);
+  assert.equal(saved.startDate, "2026-10-01");
+  assert.equal(saved.entries.length, 1);
+  assert.equal(saved.entries[0].includeInSynthesis, false);
+  assert.equal(saved.entries[0].narrative, entry()[4]);
   assert.equal(await call("authenticated", owner, sql.save, entry(1)), 2);
   await assert.rejects(
     call("authenticated", owner, sql.save, entry(1)),
@@ -150,14 +154,17 @@ test("disabled release stops writes but preserves owner read and deletion", asyn
     /atlas_unreleased/,
   );
   assert.equal(
-    (await call("authenticated", owner, sql.read, [runId])).length,
+    (await call("authenticated", owner, sql.read, [runId])).entries.length,
     1,
   );
   assert.equal(
     await call("authenticated", owner, sql.delete, [runId, entryId]),
     true,
   );
-  assert.deepEqual(await call("authenticated", owner, sql.read, [runId]), []);
+  assert.deepEqual(await call("authenticated", owner, sql.read, [runId]), {
+    startDate: "2026-10-01",
+    entries: [],
+  });
 });
 
 test("forward fix can revoke writes without deleting data or blocking owner access", async () => {
@@ -173,7 +180,7 @@ test("forward fix can revoke writes without deleting data or blocking owner acce
     /permission denied/,
   );
   assert.equal(
-    (await call("authenticated", owner, sql.read, [runId])).length,
+    (await call("authenticated", owner, sql.read, [runId])).entries.length,
     1,
   );
   assert.equal(

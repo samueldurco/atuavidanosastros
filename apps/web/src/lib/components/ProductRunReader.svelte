@@ -13,6 +13,7 @@
 	import ProductEmailRequest from '$lib/components/ProductEmailRequest.svelte';
 	import ReprocessAction from '$lib/components/ReprocessAction.svelte';
 	import ReaderContinuity from '$lib/components/ReaderContinuity.svelte';
+	import DreamAtlasDiary from '$lib/components/DreamAtlasDiary.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
 	import { weekReadingTimeline, weekReadingAreaLinks } from '$lib/week-reading-timeline';
@@ -264,6 +265,7 @@
 						{ id: 'arquivos', label: 'Arquivos guardados' }
 					]
 				: []),
+			...(data.run.productId === 'dream-atlas' ? [{ id: 'diario', label: 'Diário privado' }] : []),
 			{ id: 'email', label: 'Pedido de e-mail' },
 			{ id: 'historico', label: 'Histórico desta versão' }
 		]}
@@ -549,6 +551,15 @@
 					: runLabels[data.run.state]}
 				description={explanation}
 			/>{/if}
+		{#if data.run.productId === 'dream-atlas'}
+			{#key data.run.id}
+				<DreamAtlasDiary
+					runId={data.run.id}
+					access={data.atlasAccess ?? 'UNAVAILABLE'}
+					synthetic={!!data.synthetic}
+				/>
+			{/key}
+		{/if}
 		{#if data.run.released && data.run.editorial && data.run.calculation}
 			{#key `${data.run.id}:${data.run.revision}:${data.run.editorial.reviewDigest}`}
 				<ProductArtifacts run={data.run} disabled={!!data.synthetic || !!busy} />

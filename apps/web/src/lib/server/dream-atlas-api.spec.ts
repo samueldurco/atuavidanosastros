@@ -50,11 +50,11 @@ const save = (event: RequestEvent) => saveRoute(event as Parameters<typeof saveR
 const remove = (event: RequestEvent) => deleteRoute(event as Parameters<typeof deleteRoute>[0]);
 
 it('reads only private entries of the requested run through the owner RPC', async () => {
-	const s = setup([saved]);
+	const s = setup({ startDate: '2026-10-01', entries: [saved] });
 	const response = await read(s.event({ runId }));
 	expect(response.status).toBe(200);
 	expect(response.headers.get('cache-control')).toBe('private, no-store');
-	expect(await response.json()).toEqual({ entries: [saved] });
+	expect(await response.json()).toEqual({ startDate: '2026-10-01', entries: [saved] });
 	expect(s.rpc).toHaveBeenCalledWith('read_dream_atlas_entries', { p_run_id: runId });
 });
 
@@ -107,6 +107,6 @@ it('fails closed on authentication, cross-site writes, release denial and malfor
 	expect(cross.rpc).not.toHaveBeenCalled();
 	const off = setup(null, 'atlas_unreleased');
 	expect((await save(off.event({ runId, entryId, expectedRevision: 0, entry }))).status).toBe(409);
-	const foreign = setup([{ ...saved, runId: owner }]);
+	const foreign = setup({ startDate: '2026-10-01', entries: [{ ...saved, runId: owner }] });
 	expect((await read(foreign.event({ runId }))).status).toBe(503);
 });

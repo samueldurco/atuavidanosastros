@@ -1,6 +1,7 @@
 import { error, redirect } from '@sveltejs/kit';
 import { readLibraryResult } from '$lib/server/library-reader';
 import { libraryReturnCursor } from '$lib/library-page';
+import { readIntakeAccess } from '$lib/server/symbolic-intake';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent, locals, params, url, setHeaders }) => {
@@ -15,7 +16,12 @@ export const load: PageServerLoad = async ({ parent, locals, params, url, setHea
 	const data = await readLibraryResult(locals.supabase, user.id, params.id);
 	if (data.state === 'not-found') error(404, 'Este item não está disponível na sua Biblioteca.');
 	const libraryBefore = libraryReturnCursor(url.searchParams);
-	return data.state === 'workflow'
-		? { ...data, ownerId: user.id, libraryBefore }
-		: { ...data, libraryBefore };
+	if (data.state === 'workflow') {
+		const atlasAccess =
+			data.run.productId === 'dream-atlas'
+				? await readIntakeAccess(locals.supabase, 'dream-atlas')
+				: undefined;
+		return { ...data, ownerId: user.id, libraryBefore, atlasAccess };
+	}
+	return { ...data, libraryBefore };
 };

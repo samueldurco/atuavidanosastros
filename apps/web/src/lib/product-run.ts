@@ -50,6 +50,7 @@ export interface WorkflowReaderData {
 	run: ProductRunView;
 	synthetic?: boolean;
 	ownerId?: string;
+	atlasAccess?: 'AVAILABLE' | 'UNRELEASED' | 'ACCESS_REQUIRED' | 'UNAVAILABLE';
 }
 export const runLabels: Record<RunState, string> = {
 	QUEUED: 'Na fila de processamento',
