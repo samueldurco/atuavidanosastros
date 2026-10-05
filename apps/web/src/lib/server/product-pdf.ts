@@ -134,29 +134,60 @@ export async function renderProductPdf(value: unknown) {
 				y -= leading;
 			};
 			for (const part of text.replace(/\r\n?/g, '\n').split('\n')) {
+				const normalized = part.trim().replace(/[ \t]+/g, ' ');
+				if (normalized.length <= 80 && measure(normalized) <= contentWidth) {
+					line(normalized);
+					continue;
+				}
+				const words = normalized.split(' ');
+				const spaceWidth = measure(' ');
+				const prefixWidths = [0];
+				for (const word of words)
+					prefixWidths.push(prefixWidths.at(-1)! + measure(word) + spaceWidth);
 				let pending = '';
-				for (const word of part.trim().split(/[ \t]+/)) {
-					const next = pending ? `${pending} ${word}` : word;
-					if (measure(next) <= contentWidth) {
-						pending = next;
+				let index = 0;
+				while (index < words.length) {
+					// Individual word widths locate the likely break cheaply. Check the
+					// complete line around it so kerning cannot change the final wrap.
+					const candidate = (count: number) => {
+						const fitted = words.slice(index, index + count).join(' ');
+						return pending ? `${pending} ${fitted}` : fitted;
+					};
+					const pendingWidth = pending ? measure(pending) + spaceWidth : 0;
+					let low = 0;
+					let high = words.length - index;
+					while (low < high) {
+						const count = Math.ceil((low + high) / 2);
+						const approximate =
+							pendingWidth + prefixWidths[index + count] - prefixWidths[index] - spaceWidth;
+						if (approximate <= contentWidth) low = count;
+						else high = count - 1;
+					}
+					while (low > 0 && measure(candidate(low)) > contentWidth) low--;
+					while (low < words.length - index && measure(candidate(low + 1)) <= contentWidth) low++;
+					if (low) {
+						pending = candidate(low);
+						index += low;
+						if (index < words.length) {
+							line(pending);
+							pending = '';
+						}
 						continue;
 					}
 					if (pending) {
 						line(pending);
 						pending = '';
-					}
-					if (measure(word) <= contentWidth) {
-						pending = word;
 						continue;
 					}
 					// Break long identifiers without dropping or inserting characters.
-					for (const character of word) {
+					for (const character of words[index]) {
 						if (measure(pending + character) > contentWidth) {
 							line(pending);
 							pending = '';
 						}
 						pending += character;
 					}
+					index++;
 				}
 				line(pending);
 			}
