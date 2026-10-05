@@ -72,7 +72,7 @@ import {
   validDailyCardFacts,
 } from "./daily-card.ts";
 
-export const PROMPT_VERSION = "atv-editorial/1.0.20";
+export const PROMPT_VERSION = "atv-editorial/1.1.0";
 export const capabilities = [
   "natal-synthesis",
   "cycle-context",

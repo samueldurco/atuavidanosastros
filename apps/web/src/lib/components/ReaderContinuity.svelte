@@ -14,11 +14,10 @@
 {#if !synthetic && run.released && run.state === 'READY' && run.editorial && run.calculation}
 	{#key `${ownerId}:${run.id}:${run.revision}:${run.editorial.reviewDigest}`}
 		<details class="reader-continuity" data-stitch="MEM-03 SH-03">
-			<summary>Guardar referências para continuidade</summary>
+			<summary>Salvar trechos nos meus registros</summary>
 			<p>
-				Revise as seções no texto acima. Somente referências compatíveis com os limites de contexto
-				aparecem na lista; o servidor verifica novamente a fonte. Salvar não inicia uma nova
-				interpretação.
+				Escolha os trechos desta leitura que você quer consultar depois. As opções disponíveis
+				aparecem abaixo.
 			</p>
 			<ContinuityManager
 				sources={[

@@ -2,7 +2,7 @@ import { productCatalog } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
 
-export const WEB_EXPORT_VERSION = 'atv-web-export/1.1.0';
+export const WEB_EXPORT_VERSION = 'atv-web-export/1.2.0';
 export const EXPORT_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'";
 const escape = (value: string) =>
@@ -41,7 +41,7 @@ footer{border-top:1px solid #e4e8ef;margin-top:48px;padding-top:24px}h2,h3,dt{br
 <section id="origem" aria-labelledby="source-title"><h2 id="source-title">Base e limites</h2><dl>${calculation.facts.map((fact) => `<dt>${escape(productFactLabel(run.productId, fact.id))}</dt><dd>${escape(fact.display)}<small>${escape(fact.source)}</small></dd>`).join('')}</dl>
 <p>Método: ${escape(calculation.version)}. Edição: ${escape(editorial.version)}.</p>
 ${[...calculation.limits, ...editorial.limits].map((limit) => `<p class="text">${escape(limit)}</p>`).join('')}
-<p>Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação profissional.</p></section>
+</section>
 <section id="historico" aria-labelledby="history-title"><h2 id="history-title">Histórico desta versão</h2><ol>${run.history.map((entry) => `<li>Revisão ${entry.revision} · ${escape(runLabels[entry.state])} · ${escape(entry.at)}</li>`).join('')}</ol></section>
 <footer><p class="label">Registro: ${escape(run.id)}<br>Exportador: ${WEB_EXPORT_VERSION}<br>Revisão editorial: ${escape(editorial.reviewDigest)}</p><p>Para recuperar o estado atual ou solicitar nova versão, entre na sua Biblioteca. Esta cópia não se atualiza automaticamente.</p></footer>
 </main></body></html>`;

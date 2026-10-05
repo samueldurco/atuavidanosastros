@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head
-	><title>Seu atlas — A Tua Vida nos Astros</title><meta
+	><title>Minha conta — A Tua Vida nos Astros</title><meta
 		name="robots"
 		content="noindex,nofollow"
 	/></svelte:head
@@ -19,10 +19,10 @@
 <div data-stitch="MEM-01">
 	<PageIntro
 		eyebrow="Área pessoal"
-		title="Seu atlas, no seu tempo."
+		title="Minhas leituras"
 		description={data.preview
-			? 'Esta é uma prévia do seu espaço pessoal. Entre para guardar e reencontrar suas leituras.'
-			: 'Suas leituras e próximos caminhos, organizados em um só lugar.'}
+			? 'Entre para acessar suas leituras salvas e seus dados de nascimento.'
+			: 'Acesse suas leituras salvas ou escolha um tema para conhecer.'}
 	/>
 	{#if data.libraryError}<StatePanel
 			kind="error"
@@ -32,28 +32,32 @@
 		>{/if}
 	<section class="attention" aria-labelledby="attention-title">
 		<div>
-			<p class="eyebrow">Uma pergunta para começar</p>
-			<h2 id="attention-title">Que direção pede um olhar mais atento?</h2>
-			<p>
-				A Bússola de Carreira é um ponto de partida para observar sua contribuição e formular novas
-				perguntas sobre o trabalho.
-			</p>
-			<Button href="/bussola-de-carreira">Explorar minha direção</Button>
+			{#if data.items.length}
+				<p class="eyebrow">Sua última leitura</p>
+				<h2 id="attention-title">{data.items[0].title}</h2>
+				<p>Abra o resultado que você salvou na Biblioteca.</p>
+				<Button href={`/biblioteca/${data.items[0].id}`}>Abrir leitura</Button>
+			{:else}
+				<p class="eyebrow">Mapa astral, previsões e mais</p>
+				<h2 id="attention-title">Conheça as leituras de astrologia</h2>
+				<p>Explore seu mapa astral, amor, carreira e dinheiro, Tarot ou sonhos.</p>
+				<Button href="#paths-title">Ver os temas</Button>
+			{/if}
 		</div>
 		<div class="attention-note">
-			<span class="note-number">01</span><strong>Comece com o que você sabe.</strong>
+			<span class="note-number">01</span><strong>Seus dados de nascimento</strong>
 			<p>
-				Data, hora e cidade de nascimento ajudam a situar seu Meio do Céu. O cálculo inicial está
-				disponível sem cadastro.
+				Data, hora e local de nascimento são usados para calcular seu mapa astral. Você pode salvar
+				esses dados na sua conta.
 			</p>
-			<a href="/meio-do-ceu">Entender o Meio do Céu →</a>
+			<a href={natalCopy.href}>{natalCopy.action} →</a>
 		</div>
 	</section>
 	<div class="dashboard-grid">
 		<div>
 			<section aria-labelledby="resume-title">
 				<div class="section-label">
-					<h2 id="resume-title">Leituras para reencontrar</h2>
+					<h2 id="resume-title">Leituras salvas</h2>
 					<a href="/biblioteca">Ver Biblioteca →</a>
 				</div>
 				{#if data.items.length}<div class="recent-list">
@@ -69,44 +73,41 @@
 									</p>
 								</div>
 								<a href={`/biblioteca/${item.id}`} aria-label={`Abrir ${item.title}`}
-									>Reencontrar →</a
+									>Abrir leitura →</a
 								>
 							</article>{/each}
 					</div>
 				{:else if !data.libraryError}<StatePanel
-						title="Sua primeira leitura pode começar agora."
-						description="Ao salvar um resultado, ele ganha lugar na sua Biblioteca para você voltar quando quiser."
-						><Button href="/bussola-de-carreira" variant="secondary">Experimentar a Bússola</Button
+						title="Você ainda não tem leituras salvas."
+						description="Os resultados que você salvar aparecerão aqui. Conheça as leituras e veja a disponibilidade de cada uma."
+						><Button href="/meu-ceu" variant="secondary">Conhecer as leituras do mapa astral</Button
 						></StatePanel
 					>{/if}
 			</section>
 			<DashboardContinuity summary={data.continuity} />
 		</div>
 		<aside>
-			<Card eyebrow="Seu contexto importa" title="Método, antes de promessa."
+			<Card eyebrow="Como funciona" title="Entenda sua leitura"
 				><p class="context-copy">
-					Conheça a diferença entre o que é calculado e o que é interpretado em cada experiência.
+					Veja quais dados são usados no cálculo e como a interpretação é feita.
 				</p>
-				<a href="/metodo">Conhecer nosso método →</a></Card
+				<a href="/metodo">Como fazemos as leituras →</a></Card
 			>
 			<div class="account-note">
 				<h2>{natalCopy.title}</h2>
 				<p>{natalCopy.description}</p>
 				<a class="natal-action" href={natalCopy.href}>{natalCopy.action} →</a>
-				{#if data.natal.state === 'COMPLETE' && data.natal.timePrecision === 'APPROXIMATE'}
-					<p>Salvar o perfil não gera uma leitura nem libera produtos.</p>
-				{/if}
 			</div>
 			<div class="account-note">
-				<strong>Você escolhe o que guardar.</strong>
-				<p>Consulte como tratamos seus dados e quais escolhas estão disponíveis.</p>
-				<a href="/privacidade">Privacidade e cuidado →</a>
+				<strong>Seus dados pessoais</strong>
+				<p>Consulte as opções para guardar, revisar e excluir seus dados.</p>
+				<a href="/privacidade">Privacidade e dados →</a>
 			</div>
 		</aside>
 	</div>
 	<section class="universe-section" aria-labelledby="paths-title">
-		<p class="eyebrow">Seis universos</p>
-		<h2 id="paths-title">Continue pela sua pergunta.</h2>
+		<p class="eyebrow">Escolha um tema</p>
+		<h2 id="paths-title">O que você quer conhecer?</h2>
 		<div class="universe-grid">
 			{#each universes as universe, i (universe.slug)}<a href={`/${universe.slug}`}
 					><span class="index">0{i + 1}</span>

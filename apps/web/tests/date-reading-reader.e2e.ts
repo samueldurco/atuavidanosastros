@@ -14,7 +14,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=date-reading');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -44,7 +44,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Instante da amostra (12h UTC) (sample-instant)',
 			'Contexto informado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.15.0',
+			'atv-product-delivery/1.18.0',
 			'Base parcial: amostra única das 12h UTC;',
 			'sem aspectos, eventos, duração, intensidade ou janelas temporais calculados',
 			'não representa o dia local inteiro.'
@@ -56,9 +56,9 @@ for (const width of [1440, 820, 390, 320]) {
 			'Que escolha reversível gostaria de experimentar no seu contexto?'
 		])
 			await expect(reading).toContainText(question);
-		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
+		for (const name of ['Baixar leitura', 'Baixar imagem (SVG)', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
-		for (const name of ['Baixar cartografia SVG', 'Baixar PDF'])
+		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)

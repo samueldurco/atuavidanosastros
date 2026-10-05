@@ -17,8 +17,8 @@
 <ContentShell kind="product">
 	<PageIntro
 		eyebrow="Área de teste"
-		title="Explore os produtos"
-		description="Todos os pontos de entrada em um só lugar, com a disponibilidade atual de cada experiência."
+		title="Teste os produtos"
+		description="Veja os formulários dos 25 produtos e o que já está disponível para testar."
 	/>
 	<Card title="Comece pelo cálculo da Bússola de Carreira" variant="attention">
 		<p>
@@ -26,7 +26,7 @@
 			experimental; a interpretação completa ainda está em preparação.
 		</p>
 		<p>
-			<a href="/bussola-de-carreira">Testar o cálculo da Bússola de Carreira</a> ·
+			<a href="/bussola-de-carreira">Calcular meu Meio do Céu</a> ·
 			<a href="/meio-do-ceu">Ver Meio do Céu</a>
 		</p>
 	</Card>
@@ -39,12 +39,12 @@
 		</p>
 		<p>
 			Resultados completos, salvamento e formatos finais ainda dependem da liberação de cada
-			produto. Esta área não promete uma leitura concluída.
+			produto.
 		</p>
 		<div class="products">
 			{#each data.products.filter((product) => product.universe !== 'global') as product (product.id)}
 				<Card title={product.name} eyebrow="Leitura em preparação" variant="product">
-					<a href={`/biblioteca/nova/${product.id}`}>Ver entrada de {product.name}</a>
+					<a href={`/biblioteca/nova/${product.id}`}>Abrir formulário de {product.name}</a>
 				</Card>
 			{/each}
 		</div>

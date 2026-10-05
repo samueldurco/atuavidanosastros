@@ -1,68 +1,77 @@
 export const SITE = {
 	name: 'A Tua Vida nos Astros',
-	tagline: 'Um atlas editorial para a vida.',
+	tagline: 'Astrologia para conhecer você.',
 	url: 'https://atuavidanosastros.com.br',
 	description:
-		'Astrologia, Tarot e símbolos com método, contexto e linguagem responsável para orientar perguntas melhores.'
+		'Mapa astral, previsões, amor, carreira, Tarot e sonhos. Conheça os temas e as leituras da A Tua Vida nos Astros.'
 } as const;
 
 export const navigation = [
-	{ href: '/meu-ceu', label: 'Meu Céu' },
-	{ href: '/ciclos', label: 'Ciclos' },
+	{ href: '/meu-ceu', label: 'Mapa astral' },
+	{ href: '/ciclos', label: 'Previsões' },
 	{ href: '/amor', label: 'Amor' },
-	{ href: '/proposito', label: 'Propósito' },
+	{ href: '/proposito', label: 'Carreira e dinheiro' },
 	{ href: '/tarot', label: 'Tarot' },
 	{ href: '/sonhos', label: 'Sonhos' }
-] as const;
+];
 
 export const universes = [
 	{
 		slug: 'meu-ceu',
-		eyebrow: 'Identidade',
-		title: 'Meu Céu',
+		href: '/meu-ceu',
+		eyebrow: 'Sobre você',
+		title: 'Mapa astral',
 		description:
-			'Sol, Lua, Ascendente e o desenho singular do seu mapa — com contexto, método e espaço para escolha.',
-		cta: 'Começar pelos Três Pilares'
+			'Descubra o que Sol, Lua e Ascendente mostram sobre sua personalidade, emoções e relacionamentos.',
+		cta: 'Conhecer as leituras do mapa',
+		productUniverse: 'meu-ceu'
 	},
 	{
 		slug: 'ciclos',
-		eyebrow: 'Tempo',
-		title: 'Ciclos & Tempo',
+		href: '/ciclos',
+		eyebrow: 'Seu período',
+		title: 'Previsões',
 		description:
-			'Leituras para observar ritmos, trânsitos e temporadas sem transformar tendência em sentença.',
-		cta: 'Ler o céu de agora'
+			'Horóscopo, trânsitos e previsões para os dias, as semanas e o seu ano astrológico.',
+		cta: 'Conhecer as previsões',
+		productUniverse: 'ciclos-tempo'
 	},
 	{
 		slug: 'amor',
-		eyebrow: 'Encontro',
-		title: 'Amor & Relações',
-		description:
-			'Afinidades, tensões e acordos possíveis entre dois mapas, com consentimento e sem receitas prontas.',
-		cta: 'Conhecer a Sinastria'
+		href: '/amor',
+		eyebrow: 'Relacionamentos',
+		title: 'Amor e relacionamentos',
+		description: 'Conheça a combinação de dois mapas: atração, afinidades e desafios da relação.',
+		cta: 'Conhecer as leituras de amor',
+		productUniverse: 'amor-relacoes'
 	},
 	{
 		slug: 'proposito',
-		eyebrow: 'Direção',
-		title: 'Propósito & Prosperidade',
+		href: '/proposito',
+		eyebrow: 'Trabalho',
+		title: 'Carreira e dinheiro',
 		description:
-			'Vocação, contribuição e trabalho como campo de hipótese e experimento — não promessa de destino ou renda.',
-		cta: 'Usar a Bússola de Carreira'
+			'Explore sua vocação, sua vida profissional e sua relação com dinheiro no mapa astral.',
+		cta: 'Conhecer as leituras de carreira',
+		productUniverse: 'proposito-prosperidade'
 	},
 	{
 		slug: 'tarot',
-		eyebrow: 'Pergunta',
-		title: 'Tarot & Arcanos',
-		description:
-			'Imagens para desacelerar, nomear a pergunta e enxergar alternativas com responsabilidade.',
-		cta: 'Tirar a Carta do Dia'
+		href: '/tarot',
+		eyebrow: 'Sua pergunta',
+		title: 'Tarot',
+		description: 'Tire uma carta, faça suas perguntas e conheça as leituras de Tarot.',
+		cta: 'Conhecer as leituras de Tarot',
+		productUniverse: 'tarot-arcanos'
 	},
 	{
 		slug: 'sonhos',
-		eyebrow: 'Memória',
-		title: 'Sonhos & Símbolos',
-		description:
-			'Um caderno longitudinal para registrar imagens, recorrências e associações que pertencem à sua história.',
-		cta: 'Registrar um sonho'
+		href: '/sonhos',
+		eyebrow: 'Seus sonhos',
+		title: 'Sonhos',
+		description: 'Conte seus sonhos, explore seus símbolos e acompanhe os temas que se repetem.',
+		cta: 'Conhecer as leituras de sonhos',
+		productUniverse: 'sonhos-simbolos'
 	}
 ] as const;
 
@@ -107,56 +116,61 @@ export const editorialPages = {
 		eyebrow: 'Guia',
 		title: 'Vocação no mapa astral',
 		description:
-			'Uma leitura vocacional responsável cruza direção pública, recursos, rotina e contexto vivido. Nenhum signo escolhe uma profissão por você.',
-		cta: 'Conhecer a Bússola'
+			'Entenda como Meio do Céu, casas e planetas entram na leitura da sua vida profissional.',
+		cta: 'Calcular meu Meio do Céu',
+		href: '/bussola-de-carreira'
 	},
 	'carreira-no-mapa-astral': {
 		eyebrow: 'Guia',
 		title: 'Carreira no mapa astral',
-		description:
-			'O mapa oferece perguntas sobre contribuição e visibilidade. Formação, território, saúde, classe, oportunidades e escolhas também fazem parte da resposta.',
-		cta: 'Explorar seu Meio do Céu'
+		description: 'Conheça os fatores do mapa ligados a trabalho, rotina e carreira.',
+		cta: 'Calcular meu Meio do Céu',
+		href: '/bussola-de-carreira'
 	},
 	'casa-10': {
-		eyebrow: 'Atlas',
-		title: 'Casa 10: contribuição e presença pública',
-		description:
-			'A Casa 10 descreve como buscamos participar do mundo visível. É uma dimensão do mapa, não um cargo predeterminado.',
-		cta: 'Ler sobre o Meio do Céu'
+		eyebrow: 'Mapa astral',
+		title: 'Casa 10: carreira e vida pública',
+		description: 'Saiba o que a Casa 10 representa e como ela se relaciona com o Meio do Céu.',
+		cta: 'Entender o Meio do Céu',
+		href: '/meio-do-ceu'
 	},
 	metodo: {
-		eyebrow: 'Transparência',
-		title: 'Método: cálculo, interpretação e escolha',
+		eyebrow: 'Como funciona',
+		title: 'Como fazemos as leituras',
 		description:
-			'Separamos dados calculados, hipóteses interpretativas e decisões humanas. Cada resultado informa versão, origem e limites.',
-		cta: 'Explorar os universos'
+			'Conheça o cálculo dos mapas, a interpretação dos resultados e o tratamento de dados incompletos.',
+		cta: 'Ver os temas',
+		href: '/#universos'
 	},
 	caderno: {
-		eyebrow: 'Editorial',
-		title: 'Caderno',
-		description:
-			'Ensaios e guias para aprofundar perguntas sobre céu, tempo, relações, propósito, Tarot e sonhos.',
-		cta: 'Começar pelo Meu Céu'
+		eyebrow: 'Artigos',
+		title: 'Artigos de astrologia',
+		description: 'Guias sobre mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos.',
+		cta: 'Conhecer o mapa astral',
+		href: '/meu-ceu'
 	},
 	privacidade: {
-		eyebrow: 'Privacidade',
-		title: 'Seus dados merecem contexto e limite',
+		eyebrow: 'Seus dados',
+		title: 'Privacidade e dados pessoais',
 		description:
-			'Coletamos somente o necessário para a finalidade escolhida. Dados natais não são enviados ao analytics; controles de exportação e exclusão serão integrados à conta.',
-		cta: 'Entrar na sua conta'
+			'Veja como usamos seus dados de nascimento e suas leituras. Consulte os controles disponíveis na conta e na Biblioteca.',
+		cta: 'Acessar minha conta',
+		href: '/dashboard'
 	},
 	cookies: {
 		eyebrow: 'Preferências',
 		title: 'Cookies sob o seu controle',
 		description:
-			'Armazenamento essencial mantém o serviço. Analytics não essencial permanece desligado até consentimento e pode ser recusado com a mesma facilidade.',
-		cta: 'Voltar ao início'
+			'Usamos armazenamento essencial para manter o serviço. Analytics permanece desligado até você autorizar.',
+		cta: 'Voltar ao início',
+		href: '/'
 	},
 	suporte: {
-		eyebrow: 'Cuidado',
+		eyebrow: 'Ajuda',
 		title: 'Suporte',
 		description:
-			'Entregas, acesso e cobranças terão caminhos de recuperação rastreáveis. O endereço público aprovado é suporte@atuavidanosastros.com.br, sujeito à validação do domínio.',
-		cta: 'Abrir a Biblioteca'
+			'Precisa de ajuda com acesso, leituras ou cobrança? Consulte primeiro sua Biblioteca. O canal de atendimento está em preparação.',
+		cta: 'Abrir minhas leituras',
+		href: '/biblioteca'
 	}
 } as const;

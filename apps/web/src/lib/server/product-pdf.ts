@@ -8,7 +8,7 @@ import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 
-export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.2.0';
+export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.3.0';
 export const PDF_LIMITS = Object.freeze({
 	characters: 120_000,
 	pages: 40,
@@ -27,7 +27,9 @@ export async function renderProductPdf(value: unknown) {
 	if (JSON.stringify(run).length > PDF_LIMITS.characters) return null;
 	const started = performance.now();
 	const checkTime = () => {
-		if (performance.now() - started > PDF_LIMITS.milliseconds) throw new PdfUnavailable();
+		if (performance.now() - started > PDF_LIMITS.milliseconds) {
+			throw new PdfUnavailable();
+		}
 	};
 	try {
 		const doc = await PDFDocument.create();
@@ -239,9 +241,7 @@ export async function renderProductPdf(value: unknown) {
 		}
 		paragraph(`Método: ${calculation.version}. Edição: ${editorial.version}.`, label, 9, 14);
 		for (const limit of [...calculation.limits, ...editorial.limits]) paragraph(limit);
-		paragraph(
-			'Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação profissional.'
-		);
+
 		// Keep the compact version history and provenance together when possible.
 		ensure(200 + run.history.length * 20);
 		heading('Histórico desta versão');
@@ -261,7 +261,7 @@ export async function renderProductPdf(value: unknown) {
 			16
 		);
 		paragraph(
-			'Para recuperar o estado atual ou solicitar nova versão, entre na sua Biblioteca. Esta cópia não se atualiza automaticamente.'
+			'Consulte a Biblioteca para acompanhar atualizações ou solicitar uma nova versão. Este PDF guarda a versão que você baixou.'
 		);
 		for (const [index, sheet] of doc.getPages().entries()) {
 			sheet.drawLine({

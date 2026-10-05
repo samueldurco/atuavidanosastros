@@ -13,7 +13,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=midheaven');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -31,17 +31,19 @@ for (const width of [1440, 820, 390, 320]) {
 		const source = page.locator('#origem');
 		for (const label of [
 			'Meio do Céu (angle-midheaven)',
-			'atv-product-delivery/1.15.0',
+			'atv-product-delivery/1.18.0',
 			'Fixture de apresentação',
 			'parcial'
 		])
 			await expect(source).toContainText(label);
 		await expect(source.locator('dt')).toHaveCount(1);
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar mapa em SVG', exact: true })).toHaveCount(
+			0
+		);
 		await expect(
-			page.getByRole('button', { name: 'Baixar cartografia SVG', exact: true })
-		).toHaveCount(0);
-		await expect(page.getByRole('button', { name: 'Baixar card SVG', exact: true })).toBeDisabled();
+			page.getByRole('button', { name: 'Baixar imagem (SVG)', exact: true })
+		).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		expect(

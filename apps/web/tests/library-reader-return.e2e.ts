@@ -35,7 +35,7 @@ for (const reader of ['fluxo', 'leitor']) {
 			destination = new URL(route.request().url()).searchParams.get('before') ?? undefined;
 			await route.abort();
 		});
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await back.focus();
 		await expect(back).toBeFocused();
@@ -56,10 +56,10 @@ for (const reader of ['fluxo', 'leitor']) {
 		}
 	});
 
-	test(`${reader}: return is server-rendered without JavaScript`, async ({ browser }) => {
-		const context = await browser.newContext({ javaScriptEnabled: false });
+	test(`${reader}: return is server-rendered without JavaScript`, async ({ browser, baseURL }) => {
+		const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
 		const page = await context.newPage();
-		await page.goto(`http://127.0.0.1:4173/biblioteca/_spec/${reader}?fromBefore=${cursor}`);
+		await page.goto(`/biblioteca/_spec/${reader}?fromBefore=${cursor}`);
 		await expect(
 			page.getByRole('link', { name: 'Voltar à Biblioteca', exact: true })
 		).toHaveAttribute('href', target);

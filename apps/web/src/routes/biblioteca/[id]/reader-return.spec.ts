@@ -67,7 +67,7 @@ it.each(['', 'fromBefore=//external.test', `fromBefore=${cursor}&fromBefore=${cu
 it('never grants access based on an origin cursor', async () => {
 	await expect(load(event(`fromBefore=${cursor}`, false))).rejects.toMatchObject({
 		status: 303,
-		location: '/entrar'
+		location: '/entrar?next=%2Fbiblioteca%2F00000000-0000-4000-8000-000000000003'
 	});
 	expect(readLibraryResult).not.toHaveBeenCalled();
 });

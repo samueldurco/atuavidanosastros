@@ -181,7 +181,7 @@
 			return;
 		}
 		if (!dreamAtlasDateWithinPeriod(startDate, entry.dreamDate)) {
-			notice = 'Escolha uma data dentro do período deste Atlas.';
+			notice = 'Escolha uma data dentro dos 30 dias do diário.';
 			return;
 		}
 		const entryId = editing?.id ?? pendingEntryId ?? crypto.randomUUID();
@@ -302,20 +302,19 @@
 </script>
 
 <section id="diario" aria-labelledby="diary-title" class="diary">
-	<p class="eyebrow">Atlas dos Sonhos</p>
+	<p class="eyebrow">Diário de Sonhos 30 Dias</p>
 	<h2 id="diary-title">Diário privado do período</h2>
 	<p>
-		Registre apenas sonhos deste período de 30 dias. Cada relato fica ligado a esta versão do Atlas
-		e só aparece para você. A inclusão em uma síntese futura é uma escolha por registro; nenhuma
-		síntese é gerada ao guardar.
+		Registre seus sonhos durante os 30 dias deste diário. Só você pode ver os relatos. Em cada
+		registro, escolha se ele poderá entrar em uma síntese quando essa função estiver disponível.
 	</p>
 	{#if synthetic}
 		<p>Referência sintética: o diário privado não é carregado aqui.</p>
 	{:else}
 		{#if access !== 'AVAILABLE'}
 			<p>
-				Novos registros indisponíveis no estado atual de acesso ou liberação. Seus registros já
-				guardados continuam disponíveis para leitura e exclusão.
+				Você não pode adicionar sonhos agora. Os registros salvos continuam disponíveis para leitura
+				e exclusão.
 			</p>
 		{/if}
 		{#if notice}<p role="status" class="notice">{notice}</p>{/if}
@@ -324,7 +323,7 @@
 		{#if loaded}
 			{#if startDate && endDate}
 				<p>
-					Período deste Atlas: <time datetime={startDate}>{dateLabel(startDate)}</time> a
+					Período deste diário: <time datetime={startDate}>{dateLabel(startDate)}</time> a
 					<time datetime={endDate}>{dateLabel(endDate)}</time>.
 				</p>
 			{/if}
@@ -334,8 +333,11 @@
 					possível síntese e {facts.excludedCount} excluídos dela.
 				</p>
 				{#if facts.recurrences.length}
-					<h3>Termos informados em mais de um registro incluído</h3>
-					<p>Repetição literal de termos que você informou; nenhuma interpretação foi feita.</p>
+					<h3>Emoções e associações repetidas</h3>
+					<p>
+						Estes termos aparecem em mais de um sonho que você incluiu. A lista reúne o que você
+						escreveu.
+					</p>
 					<ul>
 						{#each facts.recurrences as observation (`${observation.source}:${observation.label}`)}
 							<li>

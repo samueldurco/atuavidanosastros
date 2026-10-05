@@ -39,7 +39,7 @@
 				title={data.item?.title ?? 'Resultado salvo'}
 				description={data.item
 					? `Guardado em ${date(data.item.created_at)}. Este arquivo recupera a posição calculada que você escolheu salvar.`
-					: 'Um lugar para reencontrar seu resultado, com sua origem e seus limites.'}
+					: 'Consulte seu resultado salvo e os dados usados no cálculo.'}
 			/>
 		{/snippet}
 		{#snippet actions()}

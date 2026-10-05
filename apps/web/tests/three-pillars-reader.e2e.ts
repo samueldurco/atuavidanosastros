@@ -6,7 +6,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=three-pillars');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -37,12 +37,12 @@ for (const width of [1440, 820, 390, 320]) {
 			'Ascendente (angle-ascendant)',
 			'Contexto pessoal relatado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.15.0',
+			'atv-product-delivery/1.18.0',
 			'Fixture de apresentação'
 		])
 			await expect(source).toContainText(label);
 		await expect(source).toContainText('parcial');
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		expect(
@@ -77,6 +77,6 @@ test('three pillars pending review, revocation and failure withhold the reading'
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toHaveCount(0);
 	}
 });

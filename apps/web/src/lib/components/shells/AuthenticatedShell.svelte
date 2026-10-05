@@ -8,7 +8,7 @@
 	const primary = [
 		{ href: '/dashboard', label: 'Visão geral' },
 		{ href: '/biblioteca', label: 'Biblioteca' },
-		{ href: '/conta/nascimento', label: 'Perfil natal' }
+		{ href: '/conta/nascimento', label: 'Dados de nascimento' }
 	];
 </script>
 
@@ -20,7 +20,7 @@
 			></a
 		>
 		<div class="header-actions">
-			<a href="/bussola-de-carreira">Explorar ferramentas</a><a
+			<a href="/bussola-de-carreira">Bússola de Carreira</a><a
 				class="chip"
 				href={page.data.user ? '/dashboard' : '/entrar'}
 				>{page.data.user ? 'Minha conta' : 'Entrar'}</a
@@ -29,7 +29,7 @@
 	</header>
 	<div class="member-layout">
 		<aside class="sidebar">
-			<p class="eyebrow">Meu atlas</p>
+			<p class="eyebrow">Minha conta</p>
 			<nav aria-label="Área pessoal">
 				{#each primary as item (item.href)}<a
 						href={item.href}
@@ -40,8 +40,8 @@
 					>{/each}
 			</nav>
 			<div class="universe-menu">
-				<p class="eyebrow">Seis universos</p>
-				<nav aria-label="Universos do atlas">
+				<p class="eyebrow">Temas</p>
+				<nav aria-label="Temas de astrologia">
 					{#each navigation as item (item.href)}<a href={item.href}>{item.label}</a>{/each}
 				</nav>
 			</div>
@@ -59,13 +59,13 @@
 					class="chip"
 					aria-expanded={expanded}
 					aria-controls="member-universes"
-					onclick={() => (expanded = !expanded)}>Universos</button
+					onclick={() => (expanded = !expanded)}>Temas</button
 				>
 			</nav>
 			{#if expanded}<nav
 					id="member-universes"
 					class="compact-universes"
-					aria-label="Universos no celular"
+					aria-label="Temas no celular"
 				>
 					{#each navigation as item (item.href)}<a
 							href={item.href}
@@ -74,7 +74,7 @@
 				</nav>{/if}
 			<main id="conteudo" tabindex="-1">{@render children()}</main>
 			<footer>
-				<span>Seu atlas pessoal.</span><a href="/privacidade">Privacidade</a><a href="/suporte"
+				<span>Minhas leituras.</span><a href="/privacidade">Privacidade</a><a href="/suporte"
 					>Suporte</a
 				>
 			</footer>

@@ -42,10 +42,12 @@ test('confirmed recovery opens only the owner library reference', async ({ page 
 	const navigation = page.waitForRequest(
 		(r) => new URL(r.url()).pathname === `/biblioteca/${library}/__data.json`
 	);
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await navigation;
 	// This fixture has no owner session. The real destination must retain its auth gate.
-	await expect(page).toHaveURL(/\/entrar$/);
+	await expect(page).toHaveURL(
+		(url) => url.pathname === '/entrar' && url.searchParams.get('next') === `/biblioteca/${library}`
+	);
 });
 
 test('lost acknowledgement, reload, null lookup and keyboard never replay', async ({ page }) => {
@@ -61,12 +63,12 @@ test('lost acknowledgement, reload, null lookup and keyboard never replay', asyn
 		await route.fulfill({ json: { request: null } });
 	});
 	await page.goto(path);
-	await page.getByRole('button', { name: 'Reprocessar em nova versão' }).click();
+	await page.getByRole('button', { name: 'Solicitar nova versão' }).click();
 	await expect(page.getByRole('status')).toBeFocused();
 	const stored = await page.evaluate((n) => sessionStorage.getItem(n), name);
 	expect(stored).toMatch(/^[a-f0-9-]{36}$/);
 	await page.reload();
-	const recover = page.getByRole('button', { name: 'Consultar pedido original' });
+	const recover = page.getByRole('button', { name: 'Consultar pedido' });
 	await recover.focus();
 	await page.keyboard.press('Enter');
 	await expect(page.getByRole('status')).toContainText('em andamento');
@@ -90,12 +92,12 @@ test('pending lookup locks sibling actions and revocation still permits recovery
 		await route.fulfill({ status: 503, json: { error: 'unavailable' } });
 	});
 	await page.goto(`${path}?released=false`);
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await expect(page.getByRole('button', { name: 'Outra ação local' })).toBeDisabled();
-	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeDisabled();
 	finish();
 	await expect(page.getByRole('status')).toBeFocused();
-	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeEnabled();
+	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeEnabled();
 });
 
 test('storage denied fails closed without sending requests', async ({ page }) => {
@@ -113,7 +115,7 @@ test('storage denied fails closed without sending requests', async ({ page }) =>
 	});
 	await page.goto(path);
 	await expect(page.getByRole('status')).toContainText('armazenamento');
-	await expect(page.getByRole('button', { name: 'Reprocessar em nova versão' })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar nova versão' })).toBeDisabled();
 	expect(requests).toBe(0);
 });
 
@@ -126,8 +128,8 @@ for (const width of [1440, 820, 390, 320]) {
 			route.fulfill({ json: { request: null } })
 		);
 		await page.goto(path);
-		await page.getByRole('button', { name: 'Recusar analytics' }).click();
-		const action = page.getByRole('button', { name: 'Consultar pedido original' });
+		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
+		const action = page.getByRole('button', { name: 'Consultar pedido' });
 		await action.click();
 		await expect(page.getByRole('status')).toBeFocused();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(

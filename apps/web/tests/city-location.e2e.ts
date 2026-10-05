@@ -18,7 +18,7 @@ test('city resolves coordinates and historical daylight saving without technical
 	await page.getByLabel('Data de nascimento').fill('2000-01-01');
 	await page.getByLabel('Hora de nascimento').fill('09:00');
 	await selectCity(page, '#birth-city', 'Sao Paulo', 'São Paulo, São Paulo, Brasil');
-	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
+	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect
 		.poll(() => submitted)
 		.toMatchObject({
@@ -29,7 +29,7 @@ test('city resolves coordinates and historical daylight saving without technical
 			locationSource: 'geonames:3448439/cities500-v1'
 		});
 	await page.locator('#birth-city').fill('São Pa');
-	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
+	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect(
 		page.getByText('Selecione sua cidade nos resultados da busca.', { exact: true })
 	).toBeVisible();
@@ -70,7 +70,7 @@ test('ambiguous birth hour requires choosing the recorded occurrence', async ({ 
 		utc = route.request().postDataJSON().utcInstant;
 		return route.fulfill({ status: 400, json: {} });
 	});
-	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
+	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect.poll(() => utc).toBe('2020-11-01T06:30:00.000Z');
 });
 
@@ -109,7 +109,7 @@ test('solar return resolves birthday city and renews consent when the city chang
 		'Autorizo guardar uma cópia dos dados natais conferidos, do ano',
 		{ exact: false }
 	);
-	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar leitura', exact: true });
 	await consent.check();
 	await expect(submit).toBeEnabled();
 	await page.locator('#solar-city').fill('London');

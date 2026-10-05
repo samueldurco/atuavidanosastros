@@ -20,7 +20,7 @@ const uncertain = (): ProductEmailRequestState => ({
 const blocked = (): ProductEmailRequestState => ({
 	mode: 'blocked',
 	message:
-		'Não foi possível preservar a chave de recuperação nesta aba. Nenhuma alteração foi enviada. Consulte sua Biblioteca.'
+		'Esta aba não conseguiu guardar o acompanhamento do pedido. Confira os pedidos de e-mail na Biblioteca.'
 });
 const refusals: Record<string, { status: number; message: string }> = {
 	auth_required: { status: 401, message: 'Entre novamente para continuar.' },

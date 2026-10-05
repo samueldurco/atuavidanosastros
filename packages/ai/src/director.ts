@@ -60,7 +60,8 @@ import {
   inspectThreePillars,
 } from "./three-pillars.ts";
 
-export const RUBRIC_VERSION = "atv-director/1.0.0";
+import { inspectEditorialStyle } from "./editorial-style.ts";
+export const RUBRIC_VERSION = "atv-director/1.1.0";
 export const dimensions = [
   "depth",
   "coherence",
@@ -175,6 +176,27 @@ export function inspectReading(
     ...reading.limits,
   ];
   const seen = new Set<string>();
+  findings.push(
+    ...inspectEditorialStyle([
+      { text: reading.title, location: "title" },
+      ...reading.claims
+        .filter((claim) => claim.kind !== "fact")
+        .map((claim) => ({ text: claim.text, location: claim.id })),
+      ...reading.relations.map((item, i) => ({
+        text: item.text,
+        location: `relations.${i}`,
+      })),
+      ...reading.synthesis.map((item, i) => ({
+        text: item.text,
+        location: `synthesis.${i}`,
+      })),
+      ...reading.reflections.map((text, i) => ({
+        text,
+        location: `reflections.${i}`,
+      })),
+      ...reading.limits.map((text, i) => ({ text, location: `limits.${i}` })),
+    ]),
+  );
   for (const [i, passage] of passages.entries()) {
     const text = normalize(passage);
     if (unsafe.some((pattern) => pattern.test(text)))

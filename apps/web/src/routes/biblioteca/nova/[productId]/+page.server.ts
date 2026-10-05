@@ -1,3 +1,4 @@
+import { loginHref } from '$lib/auth-return';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { symbolicProduct } from '$lib/symbolic-intake';
@@ -26,7 +27,7 @@ export const load: PageServerLoad = async ({ parent, params, locals, setHeaders 
 	)
 		error(404, 'Entrada de produto não disponível');
 	const { user } = await parent();
-	if (!user || !isUuid(user.id)) redirect(303, '/entrar');
+	if (!user || !isUuid(user.id)) redirect(303, loginHref(`/biblioteca/nova/${params.productId}`));
 	return {
 		ownerId: user.id,
 		productId: params.productId,

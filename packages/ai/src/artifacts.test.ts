@@ -9,7 +9,7 @@ test("manifest reads each fixed dependency once and is reproducible", () => {
   const manifest = createArtifactManifest(commit, (path) => { paths.push(path); return blob(path); });
   assert.deepEqual(manifest, createArtifactManifest(commit, blob));
   assert.equal(validArtifactManifest(manifest), true);
-  assert.equal(paths.length, 7);
+  assert.equal(paths.length, 8);
   assert.equal(new Set(paths).size, paths.length);
   assert.ok(paths.every(path => path.startsWith("packages/ai/src/")));
   assert.equal(new Set(Object.values(manifest.artifactDigests)).size, 4);

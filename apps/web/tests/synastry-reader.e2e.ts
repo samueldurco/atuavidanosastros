@@ -3,7 +3,7 @@ for (const width of [1440, 820, 390, 320])
 	test(`synastry complete structural reader at ${width}`, async ({ page }, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=synastry');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		const reading = page.locator('#leitura'),
@@ -49,12 +49,7 @@ for (const width of [1440, 820, 390, 320])
 		await expect(reading).toContainText('Que escolha reversível preserva autonomia na reparação?');
 		await expect(source).toContainText('compartilh');
 		await expect(source).toContainText('desconhecida');
-		for (const name of [
-			'Baixar PDF',
-			'Baixar relatório web',
-			'Baixar card SVG',
-			'Solicitar e-mail'
-		])
+		for (const name of ['Baixar PDF', 'Baixar leitura', 'Baixar imagem (SVG)', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)

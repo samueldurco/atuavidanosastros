@@ -5,7 +5,7 @@ import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 
-export const CARD_EXPORT_VERSION = 'atv-reading-card/1.0.0';
+export const CARD_EXPORT_VERSION = 'atv-reading-card/1.1.0';
 export const CARD_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";
 export const CARD_LIMITS = Object.freeze({
@@ -136,7 +136,7 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 			}
 			y += gap;
 		};
-		paragraph('A TUA VIDA NOS ASTROS · CARD DE LEITURA', 'label', 22, 32, 32);
+		paragraph('A TUA VIDA NOS ASTROS · SUA LEITURA', 'label', 22, 32, 32);
 		paragraph(product.name, 'label', 24, 34, 18);
 		paragraph(run.editorial.title, 'display', 52, 64, 26);
 		paragraph(
@@ -162,15 +162,8 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 			paragraph(fact.display, 'body', 26, 38, 8);
 			paragraph(fact.source, 'label', 20, 30, 20);
 		}
-		paragraph('LIMITES PRESERVADOS', 'label', 22, 32, 12);
+		paragraph('SOBRE ESTA LEITURA', 'label', 22, 32, 12);
 		for (const limit of limits) paragraph(limit, 'body', 26, 38, 14);
-		paragraph(
-			'Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação profissional.',
-			'label',
-			22,
-			32,
-			24
-		);
 		paragraph(
 			'Cópia privada de uma seção, não da leitura completa. Consulte as demais seções e o histórico na Biblioteca. Não compartilhe dados de outras pessoas.',
 			'label',

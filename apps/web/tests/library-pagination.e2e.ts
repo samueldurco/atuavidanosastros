@@ -78,11 +78,11 @@ for (const [width, height] of [
 	});
 }
 
-test('navegação por links funciona sem JavaScript', async ({ browser }) => {
-	const context = await browser.newContext({ javaScriptEnabled: false });
+test('navegação por links funciona sem JavaScript', async ({ browser, baseURL }) => {
+	const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
 	try {
 		const page = await context.newPage();
-		await page.goto(`http://127.0.0.1:4173${base}`);
+		await page.goto(base);
 		await page.getByRole('link', { name: 'Ver registros anteriores' }).click();
 		await expect(page.getByRole('article').first()).toContainText('Leitura sintética 3');
 		await page.getByRole('link', { name: 'Voltar aos mais recentes' }).click();

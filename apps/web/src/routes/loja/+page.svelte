@@ -6,7 +6,7 @@
 	<title>Loja dos Signos — em preparação</title>
 	<meta
 		name="description"
-		content="A futura curadoria da Loja dos Signos está em preparação. Nenhum produto, preço ou estoque foi publicado."
+		content="Livros e objetos inspirados nos signos. Loja em preparação; compras ainda indisponíveis."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
 </svelte:head>
@@ -14,21 +14,20 @@
 <section class="shop-hero section" data-stitch="FUT-01">
 	<div class="container hero-grid">
 		<div class="hero-copy">
-			<p class="eyebrow">Uma curadoria em construção</p>
+			<p class="eyebrow">Loja em preparação</p>
 			<h1 class="display">Loja dos Signos</h1>
 			<p class="lead">
-				Um espaço para reunir livros, objetos e edições com cuidado editorial. Ainda não há
-				produtos, preços, estoque, prazo ou avaliações publicados.
+				Livros e objetos inspirados na astrologia e nos signos. Estamos preparando a loja. As
+				compras ainda não estão disponíveis.
 			</p>
 			<a class="button" href="#signos">Explorar os signos</a>
 		</div>
 		<aside class="preparation-note" aria-label="Estado da loja">
 			<span class="status">Em preparação</span>
 			<div class="note-rule" aria-hidden="true"></div>
-			<p class="note-title">Antes da primeira oferta</p>
+			<p class="note-title">Compras ainda indisponíveis</p>
 			<p>
-				Cada item precisa de fornecedor identificado, descrição verificada e condições de compra
-				claras. A curadoria ainda não foi publicada.
+				Os produtos e as condições de compra serão exibidos aqui quando a loja estiver disponível.
 			</p>
 		</aside>
 	</div>
@@ -38,12 +37,12 @@
 	<div class="container">
 		<div class="index-intro">
 			<div>
-				<p class="eyebrow">Doze caminhos</p>
+				<p class="eyebrow">Os 12 signos</p>
 				<h2 class="h2" id="signos-title">Explore por signo</h2>
 			</div>
 			<p>
-				Estas páginas mostram a proposta de navegação da Loja. Nenhuma delas representa uma seleção
-				de produtos disponível para compra.
+				Escolha um signo para conhecer a página da loja. Os produtos serão adicionados quando
+				estiverem disponíveis.
 			</p>
 		</div>
 		<nav class="sign-grid" aria-label="Signos na loja">
@@ -51,7 +50,7 @@
 				<a class="sign-card" href={`/loja/signo/${sign}`}>
 					<span class="sign-number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
 					<strong>{signNames[sign]}</strong>
-					<span class="sign-action">Conhecer a proposta <span aria-hidden="true">→</span></span>
+					<span class="sign-action">Ver página do signo <span aria-hidden="true">→</span></span>
 				</a>
 			{/each}
 		</nav>

@@ -241,7 +241,7 @@ describe('dashboard minimal authenticated recovery', () => {
 				locals: { supabase: mock.client },
 				setHeaders
 			} as unknown as Parameters<typeof load>[0])
-		).rejects.toMatchObject({ status: 303, location: '/entrar' });
+		).rejects.toMatchObject({ status: 303, location: '/entrar?next=%2Fdashboard' });
 		expect(setHeaders).toHaveBeenCalledWith({
 			'cache-control': 'private, no-store',
 			'referrer-policy': 'no-referrer',

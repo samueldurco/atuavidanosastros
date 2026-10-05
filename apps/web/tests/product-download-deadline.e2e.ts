@@ -7,10 +7,10 @@ const endpoint = `/api/workflows/${run.id}/download`;
 const message = 'O download foi interrompido. Tente novamente; seu registro permanece salvo.';
 
 for (const [format, label, mime, extension] of [
-	['web', 'Baixar relatório web', 'text/html', 'html'],
+	['web', 'Baixar leitura', 'text/html', 'html'],
 	['pdf', 'Baixar PDF', 'application/pdf', 'pdf'],
-	['svg', 'Baixar cartografia SVG', 'image/svg+xml', 'svg'],
-	['card', 'Baixar card SVG', 'image/svg+xml', 'svg']
+	['svg', 'Baixar mapa em SVG', 'image/svg+xml', 'svg'],
+	['card', 'Baixar imagem (SVG)', 'image/svg+xml', 'svg']
 ]) {
 	test(`${format} timeout restores keyboard retry and late headers never download`, async ({
 		page
@@ -37,7 +37,7 @@ for (const [format, label, mime, extension] of [
 			await route.fulfill({ contentType: mime, body: 'synthetic download' });
 		});
 		await page.goto('/biblioteca/_spec/downloads');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.clock.install();
 		const button = page.getByRole('button', { name: label, exact: true });
@@ -86,7 +86,7 @@ test('stalled blob times out; leaving the reader prevents a late download', asyn
 	}, endpoint);
 	await page.goto('/biblioteca/_spec/downloads');
 	await page.clock.install();
-	const button = page.getByRole('button', { name: 'Baixar relatório web', exact: true });
+	const button = page.getByRole('button', { name: 'Baixar leitura', exact: true });
 	await button.click();
 	await expect
 		.poll(() =>

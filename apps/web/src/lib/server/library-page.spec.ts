@@ -283,7 +283,10 @@ describe('Biblioteca route and private cursor URL', () => {
 		load(value as unknown as Parameters<typeof load>[0]);
 	it('redirects an unauthenticated request with private headers', async () => {
 		const e = event(null);
-		await expect(call(e)).rejects.toMatchObject({ status: 303, location: '/entrar' });
+		await expect(call(e)).rejects.toMatchObject({
+			status: 303,
+			location: '/entrar?next=%2Fbiblioteca'
+		});
 		expect(e.setHeaders).toHaveBeenCalledWith({
 			'cache-control': 'private, no-store',
 			'referrer-policy': 'no-referrer',

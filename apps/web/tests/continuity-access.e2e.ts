@@ -49,7 +49,7 @@ async function fixture(page: Page, count = 1) {
 		return route.fulfill({ json: state.malformedClear ? { deleted: true } : { deleted } });
 	});
 	await page.goto('/biblioteca/_spec/acessos');
-	await page.getByRole('button', { name: 'Recusar analytics', exact: true }).click();
+	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 	return state;
 }
 const read = async (page: Page) => {

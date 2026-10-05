@@ -60,11 +60,13 @@ for (const viewport of [
 			const response = await page.goto(surface.path);
 			expect(response?.status()).toBe(200);
 			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-			await page.getByRole('button', { name: 'Recusar analytics' }).click();
+			await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 			if (surface.path === '/conta/_spec/nascimento') {
 				if (surface.onboardingError) {
 					await expect(page.getByRole('alert')).toBeVisible();
-					await expect(page.getByRole('button', { name: 'Salvar perfil natal' })).toBeDisabled();
+					await expect(
+						page.getByRole('button', { name: 'Salvar dados de nascimento' })
+					).toBeDisabled();
 				} else await expect(page.getByRole('button', { name: 'Completar depois' })).toBeEnabled();
 			}
 			if (surface.alert) await expect(page.getByRole('alert')).toContainText(surface.alert);

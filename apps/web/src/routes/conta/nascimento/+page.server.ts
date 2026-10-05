@@ -1,3 +1,4 @@
+import { loginHref } from '$lib/auth-return';
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -8,6 +9,6 @@ export const load: PageServerLoad = async ({ parent, setHeaders }) => {
 		'x-robots-tag': 'noindex, nofollow'
 	});
 	const { user } = await parent();
-	if (!user) redirect(303, '/entrar');
+	if (!user) redirect(303, loginHref('/conta/nascimento'));
 	return {};
 };

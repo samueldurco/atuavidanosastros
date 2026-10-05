@@ -25,8 +25,8 @@
 
 <div class="partner-fields">
 	<p>
-		Dados da outra pessoa, usados apenas neste pedido. Não informe nome, contato ou contexto íntimo.
-		Escolha a cidade de nascimento. Não criamos um perfil para ela.
+		Informe os dados de nascimento da outra pessoa com a permissão dela. Eles serão usados apenas
+		nesta leitura. Deixe nomes e contatos fora do formulário.
 	</p>
 	<Field id="partner-precision" label="Precisão do horário da outra pessoa">
 		{#snippet children(describedBy)}
@@ -39,8 +39,8 @@
 			>
 				<option value="">Selecione a precisão</option>
 				<option value="EXACT">Exato e conhecido</option>
-				<option value="APPROXIMATE">Aproximado — não elegível</option>
-				<option value="UNKNOWN">Desconhecido — não elegível</option>
+				<option value="APPROXIMATE">Aproximado — leitura indisponível</option>
+				<option value="UNKNOWN">Não sei — leitura indisponível</option>
 			</select>
 		{/snippet}
 	</Field>
@@ -70,7 +70,7 @@
 		{onchange}
 	/>
 	<p class="validation" role="status">
-		{error || 'Dados conferidos. Você pode continuar com as autorizações abaixo.'}
+		{error || 'Dados preenchidos. Confira as informações antes de enviar.'}
 	</p>
 </div>
 

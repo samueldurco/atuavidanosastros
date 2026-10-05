@@ -1292,7 +1292,7 @@ it.each(profileProducts)(
 		const conflict = await s.client.perform(true, stale);
 		expect(conflict).toMatchObject({
 			mode: 'new',
-			message: expect.stringContaining('perfil mudou')
+			message: expect.stringContaining('dados de nascimento mudaram')
 		});
 		expect(s.values.size).toBe(0);
 		expect(await counts()).toEqual({ runs: 0, events: 0, items: 0, receipts: 0 });

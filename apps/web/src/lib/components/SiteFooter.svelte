@@ -6,19 +6,21 @@
 	<div class="container footer-grid">
 		<div class="footer-brand">
 			<BrandLogo />
-			<p>Um atlas editorial para a vida.</p>
+			<p>Astrologia para conhecer você.</p>
 		</div>
 		<nav aria-label="Rodapé">
-			<a href="/metodo">Nosso método</a><a href="/caderno">Caderno</a><a href="/loja"
+			<a href="/metodo">Nosso método</a><a href="/caderno">Artigos</a><a href="/loja"
 				>Loja dos Signos</a
-			><a href="/termos">Termos de uso</a><a href="/privacidade">Privacidade</a><a href="/suporte"
-				>Suporte</a
-			>
+			><a href="/termos">Termos de uso</a><a href="/privacidade">Privacidade</a><button
+				type="button"
+				onclick={() => window.dispatchEvent(new Event('atv-cookie-preferences'))}
+				>Preferências de cookies</button
+			><a href="/suporte">Suporte</a>
 		</nav>
 	</div>
 	<div class="container fineprint">
-		<p>Astrologia e símbolos com contexto, cuidado e espaço para escolha.</p>
-		<a href="/#universos">Explore os seis universos <span aria-hidden="true">↗</span></a>
+		<p>Mapa astral, previsões, amor, carreira, Tarot e sonhos.</p>
+		<a href="/#universos">Conheça os temas <span aria-hidden="true">↗</span></a>
 	</div>
 </footer>
 
@@ -44,7 +46,15 @@
 		justify-content: flex-end;
 		gap: 0.5rem 1.5rem;
 	}
-	a {
+	button {
+		border: 0;
+		background: transparent;
+		padding: 0;
+		font: inherit;
+		cursor: pointer;
+	}
+	a,
+	button {
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;

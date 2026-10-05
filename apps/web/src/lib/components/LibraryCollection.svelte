@@ -6,9 +6,7 @@
 	import Field from '$lib/components/ui/Field.svelte';
 	import ContinuityManager from '$lib/components/ContinuityManager.svelte';
 	import ContinuityAccess from '$lib/components/ContinuityAccess.svelte';
-	import { symbolicProducts, symbolicProduct } from '$lib/symbolic-intake';
-	import { natalProducts } from '$lib/natal-request';
-	import { workflowFor } from '@atv/domain';
+	import { customerProducts } from '$lib/data/product-copy';
 	import { libraryItemHref, libraryPageHref, type LibraryPageData } from '$lib/library-page';
 	let {
 		data,
@@ -63,23 +61,18 @@
 >
 <div data-stitch="MEM-02">
 	<PageIntro
-		eyebrow="Seu arquivo pessoal"
+		eyebrow="Minhas leituras"
 		title="Biblioteca"
 		description={data.preview
-			? 'Uma prévia do lugar onde suas leituras ficam guardadas. Entre para acessar seu acervo.'
-			: 'Leituras para reencontrar. Perguntas para continuar. Tudo o que você escolheu guardar no seu atlas.'}
+			? 'Entre para acessar as leituras salvas na sua conta.'
+			: 'Abra suas leituras salvas, consulte pedidos ou escolha uma nova leitura.'}
 	/>
 	<details class="intake-options">
-		<summary
-			>Meu Céu, Ciclos &amp; Tempo, Tarot e Sonhos · consultar disponibilidade de novos pedidos</summary
-		>
-		<p>As entradas abaixo dependem de liberação e acesso. Nenhum modelo está homologado.</p>
+		<summary>Conhecer as leituras e consultar disponibilidade</summary>
+		<p>Confira a disponibilidade de cada produto antes de fazer um pedido.</p>
 		<ul>
-			{#each [...natalProducts, 'date-reading', 'pair-preview', ...symbolicProducts] as productId (productId)}<li
-				>
-					<a href={`/biblioteca/nova/${productId}`}
-						>{symbolicProduct(productId)?.name ?? workflowFor(productId)?.name}</a
-					>
+			{#each customerProducts as product (product.id)}<li>
+					<a href={product.href}>{product.name}</a>
 				</li>{/each}
 		</ul>
 	</details>
@@ -103,7 +96,7 @@
 		<section class="library-summary" aria-label="Resumo do acervo">
 			<div>
 				<p class="eyebrow">Continuidade</p>
-				<h2>Seu caminho tem memória.</h2>
+				<h2>Suas leituras salvas</h2>
 				<p>Os resultados salvos ficam aqui para consulta, com a data e o contexto disponíveis.</p>
 			</div>
 			<p class="item-count">
@@ -185,15 +178,14 @@
 	{:else}
 		<div class="empty-library">
 			<img src="/brand/logo/monogram/atv-monogram.svg" alt="" width="80" height="80" />
-			<p class="eyebrow">Um espaço para o que importa</p>
+			<p class="eyebrow">Minhas leituras</p>
 			<h2>Sua Biblioteca ainda está vazia.</h2>
 			<p>
-				Comece com uma pergunta. Quando você escolher salvar uma leitura, ela ganha um lugar aqui
-				para acompanhar seu caminho.
+				Os resultados que você salvar aparecerão aqui. Escolha um tema para conhecer as leituras.
 			</p>
-			<Button href="/bussola-de-carreira">Experimentar a Bússola de Carreira</Button><a
+			<Button href="/meu-ceu">Conhecer as leituras do mapa astral</Button><a
 				class="explore-link"
-				href="/#universos">Explorar os seis universos →</a
+				href="/#universos">Ver os temas de astrologia →</a
 			>
 		</div>
 	{/if}

@@ -15,20 +15,17 @@
 <ContentShell kind="product">
 	<div data-stitch="ID-01">
 		<PageIntro
-			eyebrow="Seu arquivo pessoal"
-			title="Entre para guardar o seu caminho."
-			description="Um lugar para reencontrar suas leituras, acompanhar suas perguntas e continuar de onde parou."
+			eyebrow="Minha conta"
+			title="Entre para acessar suas leituras"
+			description="Use sua conta para acessar a Biblioteca e continuar a leitura que você escolheu."
 		/>
 		<div class="access-grid">
 			<section class="card login" aria-labelledby="access-title">
 				<img src="/brand/logo/symbol/atv-symbol.svg" alt="" width="64" height="64" />
 				<p class="eyebrow">Acesso à sua conta</p>
-				<h2 id="access-title">Bem-vindo ao seu atlas.</h2>
-				<p>
-					Use sua conta Google para acessar a Biblioteca e guardar os resultados que fizerem sentido
-					para você.
-				</p>
-				<form method="POST" action="?/google">
+				<h2 id="access-title">Acesse sua conta</h2>
+				<p>Continue com sua conta Google. Depois do login, você voltará à página que escolheu.</p>
+				<form method="POST" action={`?/google&next=${encodeURIComponent(data.next)}`}>
 					<Button type="submit" disabled={!data.authConfigured}>Continuar com Google</Button>
 				</form>
 				{#if form?.message}<StatePanel
@@ -47,20 +44,20 @@
 				</p>
 			</section>
 			<aside class="access-context">
-				<p class="eyebrow">Continuidade com cuidado</p>
-				<h2>O que é seu encontra lugar aqui.</h2>
+				<p class="eyebrow">Sua Biblioteca</p>
+				<h2>Suas leituras em um só lugar</h2>
 				<ol>
 					<li>
 						<strong>Guardar</strong>
 						<p>Salve os resultados que você escolher manter.</p>
 					</li>
 					<li>
-						<strong>Reencontrar</strong>
+						<strong>Consultar</strong>
 						<p>Consulte suas leituras pela Biblioteca pessoal.</p>
 					</li>
 					<li>
 						<strong>Continuar</strong>
-						<p>Volte às suas perguntas quando houver um novo contexto.</p>
+						<p>Abra suas leituras quando quiser.</p>
 					</li>
 				</ol>
 				<a href="/suporte">Precisa de ajuda para acessar?</a>

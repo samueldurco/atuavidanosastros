@@ -117,10 +117,10 @@ test('blank partner and two unchecked consents → minimal request → private L
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 	await fill(page);
 	await page.getByLabel(privacy, { exact: false }).check();
-	await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await authorize(page);
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
-	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toHaveAttribute(
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
+	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toHaveAttribute(
 		'href',
 		`/biblioteca/${library}`
 	);
@@ -152,7 +152,7 @@ test('changing any partner field or rereading owner resets both authorizations',
 	await expect(page.getByLabel(permission, { exact: false })).not.toBeChecked();
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 	await authorize(page);
-	await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await page.getByRole('button', { name: 'Consultar perfil salvo', exact: true }).click();
 	await expect(page.getByLabel(permission, { exact: false })).not.toBeChecked();
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
@@ -169,13 +169,13 @@ test('unselected city blocks locally, server revision conflict clears draft and 
 	await fill(page);
 	await page.locator('#partner-city').fill('London');
 	await authorize(page);
-	await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await expect(page.getByText('Selecione a cidade para calcular', { exact: false })).toBeVisible();
 	expect(writes).toBe(0);
 	await selectCity(page, '#partner-city', 'London', 'London, England, Reino Unido');
 	await authorize(page);
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
-	await expect(page.getByText('Seu perfil mudou.', { exact: false })).toBeFocused();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
+	await expect(page.getByText('Seus dados de nascimento mudaram.', { exact: false })).toBeFocused();
 	await expect(page.locator('#partner-date')).toHaveValue('');
 	expect(await page.evaluate((name) => sessionStorage.getItem(name), slot)).toBeNull();
 	expect(writes).toBe(1);
@@ -191,8 +191,8 @@ test('lost acknowledgement clears partner draft; reload recovers without profile
 	await ready(page);
 	await fill(page);
 	await authorize(page);
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
-	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeVisible();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
+	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	await expect(page.locator('#partner-date')).toHaveValue('');
 	await page.unroute('**/api/onboarding');
 	let reads = 0;
@@ -202,8 +202,8 @@ test('lost acknowledgement clears partner draft; reload recovers without profile
 	});
 	await recovery(page);
 	await page.reload();
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
-	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
+	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
 	expect(writes).toBe(1);
 	expect(reads).toBe(0);
 });
@@ -221,9 +221,11 @@ for (const access of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 		});
 		await recovery(page);
 		await page.goto(path + '&access=' + access);
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
-		await page.getByRole('button', { name: 'Consultar pedido original' }).click();
-		await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
+		).toBeDisabled();
+		await page.getByRole('button', { name: 'Consultar pedido' }).click();
+		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
 		expect(forbidden).toBe(0);
 	});
 }
@@ -240,7 +242,9 @@ for (const variant of ['approximate', 'missing', 'malformed']) {
 					: value
 		);
 		await expect(page.locator('#partner-date')).toBeDisabled();
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
+		).toBeDisabled();
 	});
 }
 for (const width of [1440, 820, 390, 320]) {
@@ -260,7 +264,9 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.getByLabel(privacy, { exact: false })).toBeFocused();
 		await page.keyboard.press('Space');
 		await page.keyboard.press('Tab');
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeFocused();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
+		).toBeFocused();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
 		);

@@ -14,7 +14,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=tarot-focus');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -33,7 +33,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Carta registrada (card-1)',
 			'Pergunta relatada (question-1)',
 			'Contexto relatado (tarot-context)',
-			'atv-product-delivery/1.15.0',
+			'atv-product-delivery/1.18.0',
 			'Fixture de apresentação',
 			'parcial',
 			'input.questions[0]',
@@ -52,12 +52,12 @@ for (const width of [1440, 820, 390, 320]) {
 			'Relato sintético consentido: estou considerando uma pequena pausa.'
 		);
 		const savedCard = await cardValue.textContent();
+		await expect(page.getByText('A nova versão usa as mesmas cartas desta tiragem.')).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(
-			page.getByText('O reprocessamento preserva as cartas já registradas. Não é um novo sorteio.')
-		).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
-		await expect(page.getByRole('button', { name: 'Baixar card SVG', exact: true })).toBeDisabled();
-		for (const name of ['Baixar cartografia SVG', 'Baixar PDF'])
+			page.getByRole('button', { name: 'Baixar imagem (SVG)', exact: true })
+		).toBeDisabled();
+		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		expect(

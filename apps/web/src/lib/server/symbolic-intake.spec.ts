@@ -58,7 +58,10 @@ function event(user: unknown, productId = 'daily-card') {
 }
 it.each([null, { id: 'invalid' }])('requires verified identity before RPC %#', async (user) => {
 	const e = event(user);
-	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
+	await expect(load(e.args)).rejects.toMatchObject({
+		status: 303,
+		location: '/entrar?next=%2Fbiblioteca%2Fnova%2Fdaily-card'
+	});
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
 it('returns private minimal data without form input or entitlement rows', async () => {
@@ -113,7 +116,10 @@ it.each([
 	'dream-atlas'
 ])('requires authentication before loading %s access', async (productId) => {
 	const e = event(null, productId);
-	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });
+	await expect(load(e.args)).rejects.toMatchObject({
+		status: 303,
+		location: `/entrar?next=${encodeURIComponent(`/biblioteca/nova/${productId}`)}`
+	});
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
 it('does not imply availability of broader cycle products', async () => {

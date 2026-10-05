@@ -6,7 +6,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=career-compass');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -31,10 +31,10 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(source).toContainText('Contexto profissional relatado (personal-context)');
 		await expect(source).toContainText('input.context');
 		await expect(source).toContainText('atv-career-compass-calculation/1.0.0');
-		await expect(source).toContainText('atv-product-delivery/1.15.0');
+		await expect(source).toContainText('atv-product-delivery/1.18.0');
 		await expect(source).toContainText('Somente signo e grau experimentais do Meio do Céu');
 		await expect(source).toContainText('Fixture de apresentação');
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		expect(
@@ -61,6 +61,6 @@ test('career compass review, revocation and failure withhold reading and downloa
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toHaveCount(0);
 	}
 });

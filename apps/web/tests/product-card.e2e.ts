@@ -56,11 +56,11 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&format=card');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
-		await expect(page.getByRole('button', { name: 'Baixar card SVG' })).toBeDisabled();
-		const choice = page.getByLabel('Seção do card');
+		await expect(page.getByRole('button', { name: 'Baixar imagem (SVG)' })).toBeDisabled();
+		const choice = page.getByLabel('Trecho da leitura');
 		await expect(choice).toHaveValue('0');
 		await choice.selectOption('1');
 		await expect(choice).toHaveValue('1');
@@ -72,7 +72,7 @@ for (const width of [1440, 820, 390, 320]) {
 			fullPage: true
 		});
 		await page.goto('/biblioteca/_spec/fluxo?state=revoked&format=card');
-		await expect(page.getByRole('button', { name: 'Baixar card SVG' })).toHaveCount(0);
-		await expect(page.getByLabel('Seção do card')).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar imagem (SVG)' })).toHaveCount(0);
+		await expect(page.getByLabel('Trecho da leitura')).toHaveCount(0);
 	});
 }

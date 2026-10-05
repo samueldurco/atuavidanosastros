@@ -15,7 +15,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=dream-journal');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -56,7 +56,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'input.context',
 			'Nenhum histórico foi consultado',
 			'recorrência',
-			'atv-product-delivery/1.15.0',
+			'atv-product-delivery/1.18.0',
 			'Fixture de apresentação',
 			'parcial'
 		])
@@ -64,9 +64,9 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(reading).toContainText(
 			'Que associação pessoal você gostaria de explorar a partir deste relato?'
 		);
-		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
+		for (const name of ['Baixar leitura', 'Baixar imagem (SVG)', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
-		for (const name of ['Baixar cartografia SVG', 'Baixar PDF'])
+		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)

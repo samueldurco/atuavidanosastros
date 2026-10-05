@@ -21,12 +21,12 @@ for (const viewport of [
 		expect(titleBox!.y).toBeGreaterThanOrEqual(box!.y);
 		expect(titleBox!.y + titleBox!.height).toBeLessThanOrEqual(box!.y + box!.height);
 		await page.screenshot({ path: testInfo.outputPath('consent-explanation.png') });
-		await expect(banner).toContainText('Analytics só é carregado se você aceitar');
+		await expect(banner).toContainText('Com sua permissão, também medimos o uso das páginas.');
 		const policy = banner.getByRole('link', { name: 'Privacidade e cookies' });
 		await expect(policy).toHaveAttribute('href', '/privacidade');
 		await policy.focus();
 		await expect(policy).toBeFocused();
-		for (const name of ['Recusar analytics', 'Aceitar analytics']) {
+		for (const name of ['Recusar opcionais', 'Aceitar opcionais']) {
 			await page.keyboard.press('Tab');
 			const button = banner.getByRole('button', { name, exact: true });
 			await expect(button).toBeFocused();
@@ -36,7 +36,7 @@ for (const viewport of [
 		}
 		await page.keyboard.press('Shift+Tab');
 		await expect(
-			banner.getByRole('button', { name: 'Recusar analytics', exact: true })
+			banner.getByRole('button', { name: 'Recusar opcionais', exact: true })
 		).toBeFocused();
 		await page.screenshot({ path: testInfo.outputPath('consent-actions.png') });
 		await page.keyboard.press('Enter');

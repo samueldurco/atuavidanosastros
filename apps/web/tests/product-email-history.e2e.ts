@@ -12,14 +12,13 @@ const receipt = {
 };
 const cancelled = { ...receipt, state: 'CANCELLED', cancelledAt: '2026-09-28T10:01:00Z' };
 const older = { ...cancelled, id: '20000000-0000-4000-8000-000000000005', revision: 1 };
-const historyButton = (page: Page) =>
-	page.getByRole('button', { name: 'Consultar pedidos desta leitura' });
+const historyButton = (page: Page) => page.getByRole('button', { name: 'Ver pedidos de e-mail' });
 const cancelButton = (page: Page) =>
 	page.getByRole('button', { name: 'Cancelar pedido da revisão 3' });
 const status = (page: Page) => page.locator('#email [role=status]');
 async function open(page: Page) {
 	await page.goto('/biblioteca/_spec/email?mode=revoked');
-	const analytics = page.getByRole('button', { name: 'Recusar analytics' });
+	const analytics = page.getByRole('button', { name: 'Recusar opcionais' });
 	if (await analytics.isVisible()) await analytics.click();
 	await expect(historyButton(page)).toBeEnabled();
 }
@@ -61,7 +60,7 @@ for (const [width, height] of [
 		await expect(rows).toHaveCount(2);
 		await expect(rows.first()).toContainText('Revisão 3');
 		await expect(rows.last()).toContainText('Pedido cancelado');
-		await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Consultar pedido' })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toHaveCount(0);
 		await page.locator('#email').screenshot({ path: testInfo.outputPath(`history-${width}.png`) });
 		await cancelButton(page).focus();

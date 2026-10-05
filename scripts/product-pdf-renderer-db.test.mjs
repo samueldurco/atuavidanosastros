@@ -106,7 +106,7 @@ test("PDF 1.2 expands writes, retains exact historical bytes and has a reversibl
     () =>
       persistRenderedProductArtifact(rpc, {
         ...input,
-        rendererVersion: "atv-pdf-export/1.3.0",
+        rendererVersion: "atv-pdf-export/1.4.0",
       }),
     /artifact_invalid/,
   );

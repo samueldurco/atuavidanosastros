@@ -1,17 +1,19 @@
 import { productCatalog } from './catalog.ts';
 
 export const artifactFormats = {
-  web: { renderer: 'atv-web-export/1.1.0', mime: 'text/html; charset=utf-8', extension: 'html', maxBytes: 8388608 },
-  pdf: { renderer: 'atv-pdf-export/1.2.0', mime: 'application/pdf', extension: 'pdf', maxBytes: 8388608 },
-  svg: { renderer: 'atv-svg-export/1.0.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 },
-  card: { renderer: 'atv-reading-card/1.0.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 }
+  web: { renderer: 'atv-web-export/1.2.0', mime: 'text/html; charset=utf-8', extension: 'html', maxBytes: 8388608 },
+  pdf: { renderer: 'atv-pdf-export/1.3.0', mime: 'application/pdf', extension: 'pdf', maxBytes: 8388608 },
+  svg: { renderer: 'atv-svg-export/1.1.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 },
+  card: { renderer: 'atv-reading-card/1.1.0', mime: 'image/svg+xml; charset=utf-8', extension: 'svg', maxBytes: 2000000 }
 } as const;
 export type ArtifactFormat = keyof typeof artifactFormats;
 /** Retain byte-identical recovery of immutable artifacts from the preceding renderers. */
 export function artifactRendererSupported(format: ArtifactFormat, version: unknown): version is string {
   return version === artifactFormats[format].renderer ||
-    (format === 'web' && version === 'atv-web-export/1.0.0') ||
-    (format === 'pdf' && (version === 'atv-pdf-export/1.0.0' || version === 'atv-pdf-export/1.1.0'));
+    (format === 'web' && ['atv-web-export/1.0.0', 'atv-web-export/1.1.0'].includes(String(version))) ||
+    (format === 'pdf' && ['atv-pdf-export/1.0.0', 'atv-pdf-export/1.1.0', 'atv-pdf-export/1.2.0'].includes(String(version))) ||
+    (format === 'svg' && version === 'atv-svg-export/1.0.0') ||
+    (format === 'card' && version === 'atv-reading-card/1.0.0');
 }
 export interface ArtifactManifest {
   id: string; runId: string; revision: number; reviewDigest: string; format: ArtifactFormat;

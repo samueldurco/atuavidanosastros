@@ -8,7 +8,7 @@
 		content="noindex,follow"
 	/><meta
 		name="description"
-		content={`A futura curadoria de ${data.name} está em preparação, sem produtos ou ofertas publicados.`}
+		content={`Livros e objetos inspirados em ${data.name}. Loja em preparação.`}
 	/><link
 		rel="canonical"
 		href={`https://atuavidanosastros.com.br/loja/signo/${data.slug}`}
@@ -18,17 +18,17 @@
 	<div class="reading">
 		<a class="back-link" href="/loja">← Loja dos Signos</a>
 		<span class="status">Em preparação</span>
-		<p class="eyebrow">Curadoria por signo</p>
+		<p class="eyebrow">Loja dos Signos</p>
 		<h1 class="h1">{data.name} na Loja dos Signos</h1>
 		<p class="lead">
-			Esta página apresenta o caminho para uma futura seleção editorial. Ainda não há produtos,
-			preços ou disponibilidade publicados para {data.name}.
+			Estamos preparando uma seleção de livros e objetos inspirados em {data.name}. As compras ainda
+			não estão disponíveis.
 		</p>
 		<div class="preparation-detail">
-			<p class="eyebrow">Antes da publicação</p>
+			<p class="eyebrow">Disponibilidade</p>
 			<p>
-				A curadoria depende de itens reais, fornecedores verificados e políticas comerciais
-				completas. O signo organiza a navegação; ele não define suas preferências ou necessidades.
+				Os produtos, os preços e as condições de compra serão exibidos aqui quando a loja estiver
+				disponível.
 			</p>
 		</div>
 		<a class="button secondary" href="/loja">Voltar à Loja dos Signos</a>

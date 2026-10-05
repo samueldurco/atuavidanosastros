@@ -1,26 +1,37 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 	let visible = $state(false);
 	if (browser) visible = !localStorage.getItem('atv-analytics-consent');
+	onMount(() => {
+		const reopen = () => {
+			visible = true;
+		};
+		window.addEventListener('atv-cookie-preferences', reopen);
+		return () => window.removeEventListener('atv-cookie-preferences', reopen);
+	});
 	function choose(value: 'granted' | 'denied') {
+		const previous = localStorage.getItem('atv-analytics-consent');
 		localStorage.setItem('atv-analytics-consent', value);
 		visible = false;
-		if (value === 'granted') location.reload();
+		// The first refusal has no analytics running and must preserve the current task.
+		// Reload only when enabling analytics or stopping a previously granted session.
+		if (previous !== value && (value === 'granted' || previous === 'granted')) location.reload();
 	}
 </script>
 
 {#if visible}<aside class="consent" aria-label="Preferências de cookies">
 		<div>
-			<strong>Você escolhe o que mede a sua visita.</strong>
+			<strong>Cookies e estatísticas de uso</strong>
 			<p>
-				Usamos armazenamento essencial para o site funcionar. Analytics só é carregado se você
-				aceitar; não enviamos dados natais ou informações pessoais ao GA4.
+				Usamos cookies essenciais para o site funcionar. Com sua permissão, também medimos o uso das
+				páginas. Seus dados de nascimento não entram nessas estatísticas.
 			</p>
 			<a href="/privacidade">Privacidade e cookies</a>
 		</div>
 		<div class="actions">
-			<button class="secondary" onclick={() => choose('denied')}>Recusar analytics</button><button
-				onclick={() => choose('granted')}>Aceitar analytics</button
+			<button class="secondary" onclick={() => choose('denied')}>Recusar opcionais</button><button
+				onclick={() => choose('granted')}>Aceitar opcionais</button
 			>
 		</div>
 	</aside>{/if}

@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import PublicShell from '$lib/components/shells/PublicShell.svelte';
 	import AuthenticatedShell from '$lib/components/shells/AuthenticatedShell.svelte';
+	import SeoHead from '$lib/components/SeoHead.svelte';
 	let { children } = $props();
 	const reader = $derived(
 		/^\/biblioteca\/(?:[0-9a-f-]{36}|_spec\/leitor)\/?$/i.test(page.url.pathname)
@@ -15,6 +16,8 @@
 			)
 	);
 </script>
+
+<SeoHead seo={page.data.seo} />
 
 <svelte:head>
 	<link rel="icon" href="/brand/icons/favicon.svg" />

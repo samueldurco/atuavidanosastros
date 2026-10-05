@@ -7,7 +7,7 @@ import displayData from '../../../static/brand/fonts/bodoni-moda-variable.woff2?
 import bodyData from '../../../static/brand/fonts/newsreader-variable.woff2?inline';
 import labelData from '../../../static/brand/fonts/onest-variable.woff2?inline';
 
-export const SVG_EXPORT_VERSION = 'atv-svg-export/1.0.0';
+export const SVG_EXPORT_VERSION = 'atv-svg-export/1.1.0';
 export const SVG_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";
 const escape = (value: string) =>
@@ -138,8 +138,8 @@ export function renderProductSvg(value: unknown) {
 	};
 	const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1360" viewBox="0 0 1000 1360" role="img" aria-labelledby="chart-title chart-desc" lang="pt-BR">
-<title id="chart-title">${escape(product.name)} — cartografia de posições</title>
-<desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Trilhas radiais separam os corpos, não representam distância. Linhas de casas e ângulos não são aspectos. Coordenadas também constam na legenda. Esta cartografia não é uma interpretação ou homologação.</desc>
+<title id="chart-title">${escape(product.name)} — posições no mapa astral</title>
+<desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Trilhas radiais separam os corpos, não representam distância. Linhas de casas e ângulos não são aspectos. Coordenadas também constam na legenda. Este desenho mostra os dados do cálculo experimental.</desc>
 <metadata>${escape(JSON.stringify(metadata))}</metadata>
 <style>@font-face{font-family:ATVDisplay;src:url('${displayData}') format('woff2')}@font-face{font-family:ATVBody;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}
 text{fill:#142139;font-family:ATVLabel,sans-serif;font-size:16px}.title{font-family:ATVDisplay,serif;font-size:42px}.sign{font-family:ATVBody,serif;font-size:21px}.label{font-size:13px;letter-spacing:2px;fill:#826124}.note,.house-label{font-size:15px;fill:#45516a}.legend{font-size:17px}.tick{stroke:#8791a2;stroke-width:1}.cusp{stroke:#abb2bd;stroke-width:1;stroke-dasharray:3 5}.angle{stroke:#95702b;stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:#142139;stroke:#fffdf7;stroke-width:2}.body-number{fill:#fffdf7;font-size:11px}.center{font-family:ATVBody,serif;font-size:22px}</style>
