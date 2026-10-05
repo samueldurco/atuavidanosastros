@@ -22,6 +22,8 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - name: Audit dependency advisories
+        run: pnpm audit --audit-level=low
       - run: pnpm check
       - run: pnpm lint
       - run: pnpm test:unit

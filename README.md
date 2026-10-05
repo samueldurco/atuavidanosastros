@@ -22,10 +22,13 @@ Pré-requisitos: Node 22+, pnpm 11 e um runtime compatível com Docker para o Su
 
 ```bash
 pnpm install
+pnpm audit --audit-level=low
 pnpm check
 pnpm test:unit
 pnpm dev
 ```
+
+O CI audita dependências de produção, desenvolvimento e opcionais e bloqueia alertas de severidade baixa ou superior. Corrija com versões atualizadas ou overrides específicos revisados; não ignore alertas. Falhas de acesso ao registro exigem uma nova execução, sem desativar o gate.
 
 Copie `.env.example` para um arquivo local ignorado pelo Git e preencha os valores somente pelo fluxo seguro do ambiente. O repositório nunca contém secrets.
 
@@ -36,4 +39,3 @@ Copie `.env.example` para um arquivo local ignorado pelo Git e preencha os valor
 - Produção: `atuavidanosastros.com.br`, Supabase `irgnhvouvzyoqfmltrna` e secrets isolados.
 
 Nenhum recurso pago ou upgrade automático é permitido nesta fase.
-
