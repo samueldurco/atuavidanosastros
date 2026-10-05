@@ -3,7 +3,11 @@ import { env as publicEnv } from '$env/dynamic/public';
 import { requireAdmin } from '$lib/server/admin-access';
 import { requireTikTokConfig } from '$lib/server/tiktok-config';
 import { encryptTikTokTokens, oauthStateMatches } from '$lib/server/tiktok-credentials';
-import { exchangeTikTokAuthorizationCode, TikTokDisplayClient } from '@atv/integrations';
+import {
+	exchangeTikTokAuthorizationCode,
+	TikTokDisplayClient,
+	TIKTOK_UPLOAD_SCOPES
+} from '@atv/integrations';
 import { createClient } from '@supabase/supabase-js';
 import { error, isHttpError, isRedirect, redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
@@ -33,7 +37,7 @@ export const GET: RequestHandler = async ({ cookies, locals, url }) => {
 			redirectUri,
 			code
 		});
-		const missingScopes = ['user.info.basic'].filter((scope) => !tokens.scopes.includes(scope));
+		const missingScopes = TIKTOK_UPLOAD_SCOPES.filter((scope) => !tokens.scopes.includes(scope));
 		if (missingScopes.length > 0)
 			error(400, 'O TikTok não concedeu todas as permissões necessárias.');
 

@@ -2,6 +2,8 @@ const TIKTOK_AUTHORIZATION_URL = 'https://www.tiktok.com/v2/auth/authorize/';
 const TIKTOK_API_BASE_URL = 'https://open.tiktokapis.com/v2';
 
 export const TIKTOK_LOGIN_SCOPES = ['user.info.basic'] as const;
+/** Account identification and draft upload; does not grant Direct Post access. */
+export const TIKTOK_UPLOAD_SCOPES = ['user.info.basic', 'video.upload'] as const;
 export const TIKTOK_DISPLAY_SCOPES = ['user.info.basic', 'video.list'] as const;
 
 type Fetch = typeof fetch;

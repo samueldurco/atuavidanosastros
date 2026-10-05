@@ -2,7 +2,7 @@ import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 import { requireAdmin } from '$lib/server/admin-access';
 import { requireTikTokConfig } from '$lib/server/tiktok-config';
-import { createTikTokAuthorizationUrl } from '@atv/integrations';
+import { createTikTokAuthorizationUrl, TIKTOK_UPLOAD_SCOPES } from '@atv/integrations';
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
@@ -13,7 +13,12 @@ export const GET: RequestHandler = async ({ cookies, locals, url }) => {
 	const { clientKey, redirectUri } = await requireTikTokConfig(privateEnv, publicEnv, url);
 
 	const state = crypto.randomUUID().replace(/-/g, '');
-	const authorizationUrl = createTikTokAuthorizationUrl({ clientKey, redirectUri, state });
+	const authorizationUrl = createTikTokAuthorizationUrl({
+		clientKey,
+		redirectUri,
+		state,
+		scopes: TIKTOK_UPLOAD_SCOPES
+	});
 	cookies.set(OAUTH_COOKIE, state, {
 		httpOnly: true,
 		secure: url.protocol === 'https:',

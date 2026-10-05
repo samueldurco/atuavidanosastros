@@ -1,6 +1,7 @@
 import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 import { createClient } from '@supabase/supabase-js';
+import { TIKTOK_UPLOAD_SCOPES } from '@atv/integrations';
 import { error, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
@@ -27,6 +28,7 @@ export const load: PageServerLoad = async ({ parent, url }) => {
 			inbox: [],
 			tiktokConfigured,
 			tiktokConnection: null,
+			tiktokUploadAuthorized: false,
 			tiktokNotice: false
 		};
 	const supabase = createClient(
@@ -50,12 +52,16 @@ export const load: PageServerLoad = async ({ parent, url }) => {
 			.eq('id', 'primary')
 			.maybeSingle()
 	]);
+	const tiktokUploadAuthorized = TIKTOK_UPLOAD_SCOPES.every((scope) =>
+		(tiktok.data?.scopes ?? []).includes(scope)
+	);
 	return {
 		products: products.data ?? [],
 		flags: flags.data ?? [],
 		inbox: inbox.data ?? [],
 		tiktokConfigured,
 		tiktokConnection: tiktok.data ?? null,
-		tiktokNotice: url.searchParams.get('tiktok') === 'connected' && Boolean(tiktok.data)
+		tiktokUploadAuthorized,
+		tiktokNotice: url.searchParams.get('tiktok') === 'connected' && tiktokUploadAuthorized
 	};
 };
