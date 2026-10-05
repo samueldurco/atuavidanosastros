@@ -33,6 +33,8 @@
 		right: 1rem;
 		bottom: 1rem;
 		max-width: 70rem;
+		max-height: calc(100dvh - 2rem);
+		overflow-y: auto;
 		margin: auto;
 		background: var(--atv-surface-card);
 		color: var(--atv-text-primary);
