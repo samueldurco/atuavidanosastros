@@ -7,13 +7,7 @@
 	><title>{SITE.name} — {SITE.tagline}</title><meta
 		name="description"
 		content={SITE.description}
-	/><link rel="canonical" href={SITE.url} /><meta property="og:title" content={SITE.name} /><meta
-		property="og:description"
-		content={SITE.description}
-	/><meta
-		property="og:image"
-		content={`${SITE.url}/brand/social/og-default-1200x630.png`}
-	/></svelte:head
+	/><link rel="canonical" href={SITE.url} /></svelte:head
 >
 <section class="hero" data-stitch="PUB-01">
 	<div class="container hero-grid">

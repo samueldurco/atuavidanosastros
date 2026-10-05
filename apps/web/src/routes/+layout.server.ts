@@ -1,10 +1,13 @@
 import type { LayoutServerLoad } from './$types';
+import { legacySeo } from '$lib/seo';
 
-export const load: LayoutServerLoad = async ({ locals }) => {
-	if (!locals.supabase) return { authConfigured: false, user: null };
+export const load: LayoutServerLoad = async ({ locals, url }) => {
+	const seo = legacySeo(url.pathname);
+	if (!locals.supabase) return { authConfigured: false, user: null, seo };
 	const { data, error } = await locals.supabase.auth.getClaims();
 	const claims = !error ? data?.claims : undefined;
 	return {
+		seo,
 		authConfigured: true,
 		user: claims?.sub
 			? { id: claims.sub, email: typeof claims.email === 'string' ? claims.email : null }
