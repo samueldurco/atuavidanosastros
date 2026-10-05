@@ -1,12 +1,32 @@
 import { beforeEach, expect, it, vi } from 'vitest';
 import { load } from './+page.server';
 import { readLibraryResult } from '$lib/server/library-reader';
+import type { WorkflowReaderData } from '$lib/product-run';
 
 vi.mock('$lib/server/library-reader', () => ({ readLibraryResult: vi.fn() }));
 const cursor = 'AB000000-0000-4000-8000-000000000004';
 const owner = '00000000-0000-4000-8000-000000000001';
 const item = '00000000-0000-4000-8000-000000000003';
 const client = {};
+const workflow: WorkflowReaderData = {
+	state: 'workflow',
+	item: { id: item, title: 'Semana', universe: 'ASTROLOGIA', created_at: '2026-10-05T00:00:00Z' },
+	run: {
+		id: '00000000-0000-4000-8000-000000000005',
+		productId: 'week-reading',
+		state: 'QUEUED',
+		revision: 1,
+		parentId: null,
+		createdAt: '2026-10-05T00:00:00Z',
+		updatedAt: '2026-10-05T00:00:00Z',
+		released: false,
+		canReprocess: false,
+		libraryItemId: item,
+		history: [{ revision: 1, state: 'QUEUED', at: '2026-10-05T00:00:00Z' }],
+		calculation: null,
+		editorial: null
+	}
+};
 function event(query = '', authenticated = true) {
 	return {
 		parent: async () => ({ user: authenticated ? { id: owner } : null }),
@@ -20,9 +40,9 @@ beforeEach(() => vi.resetAllMocks());
 it.each(['workflow', 'ready', 'unavailable', 'unsupported'] as const)(
 	'forwards a validated navigation cursor for %s without changing the owner read',
 	async (state) => {
-		vi.mocked(readLibraryResult).mockResolvedValue({ state } as Awaited<
-			ReturnType<typeof readLibraryResult>
-		>);
+		vi.mocked(readLibraryResult).mockResolvedValue(
+			state === 'workflow' ? workflow : ({ state } as Awaited<ReturnType<typeof readLibraryResult>>)
+		);
 		const request = event(`fromBefore=${cursor}`);
 		const result = await load(request);
 		expect(result).toMatchObject({ state, libraryBefore: cursor.toLowerCase() });
