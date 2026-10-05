@@ -1,3 +1,4 @@
+import { resolvedCivilInstant } from './city-location';
 import { PAIR_REQUEST_VERSION, parsePairRequestInput, type PairRequestInput } from './pair-request';
 
 export interface PartnerForm {
@@ -8,6 +9,10 @@ export interface PartnerForm {
 	offset: string;
 	latitude: string;
 	longitude: string;
+	location: string;
+	country: string;
+	source: string;
+	occurrence: string;
 }
 export const emptyPartnerForm = (): PartnerForm => ({
 	date: '',
@@ -16,7 +21,11 @@ export const emptyPartnerForm = (): PartnerForm => ({
 	timezone: '',
 	offset: '',
 	latitude: '',
-	longitude: ''
+	longitude: '',
+	location: '',
+	country: '',
+	source: '',
+	occurrence: ''
 });
 
 /** Local validation helps the form; SQL remains the independent authority. No guessed time/zone. */
@@ -34,6 +43,16 @@ export function partnerFormValue(form: PartnerForm): {
 		!/^\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?$/.test(form.time)
 	)
 		return fail('Confira a data e a hora de nascimento da outra pessoa.');
+	if (form.source) {
+		try {
+			form = {
+				...form,
+				offset: resolvedCivilInstant(form.date, form.time, form.timezone, form.occurrence).offset
+			};
+		} catch (error) {
+			return fail(error instanceof Error ? error.message : 'Confira a cidade e o horário.');
+		}
+	}
 	const localDateTime = `${form.date}T${form.time.length === 5 ? `${form.time}:00` : form.time}`;
 	const local = new Date(`${localDateTime}Z`);
 	if (
@@ -43,7 +62,7 @@ export function partnerFormValue(form: PartnerForm): {
 		return fail('Confira a data e a hora de nascimento da outra pessoa.');
 	const offset = /^([+-])(\d{2}):([0-5]\d)(?::([0-5]\d))?$/.exec(form.offset.trim());
 	if (!offset || Number(offset[2]) > 23)
-		return fail('Informe o deslocamento UTC válido na data de nascimento, como -03:00.');
+		return fail('Selecione a cidade para calcular o horário automaticamente.');
 	const seconds =
 		(Number(offset[2]) * 3600 + Number(offset[3]) * 60 + Number(offset[4] ?? 0)) *
 		(offset[1] === '-' ? -1 : 1);
@@ -68,15 +87,13 @@ export function partnerFormValue(form: PartnerForm): {
 			`${p.year}-${p.month}-${p.day}T${p.hour}:${p.minute}:${p.second}` !==
 			localDateTime.slice(0, 19)
 		)
-			return fail(
-				'O fuso, o deslocamento UTC e a hora local não correspondem. Confira o horário de verão daquela data.'
-			);
+			return fail('Confira a cidade, a data e a hora de nascimento.');
 	} catch {
-		return fail('Informe um identificador de fuso válido, como America/Sao_Paulo.');
+		return fail('Selecione uma cidade nos resultados da busca.');
 	}
 	const decimal = /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/;
 	if (!decimal.test(form.latitude.trim()) || !decimal.test(form.longitude.trim()))
-		return fail('Informe latitude e longitude em graus decimais, usando ponto.');
+		return fail('Selecione a cidade de nascimento da outra pessoa.');
 	// Constant technical provenance, never identity or free context.
 	const command = parsePairRequestInput({
 		version: PAIR_REQUEST_VERSION,
@@ -88,7 +105,7 @@ export function partnerFormValue(form: PartnerForm): {
 			timezone,
 			latitude: Number(form.latitude),
 			longitude: Number(form.longitude),
-			locationSource: 'manual-partner/1',
+			locationSource: form.source || 'manual-partner/1',
 			timePrecision: 'EXACT'
 		},
 		consent: {
@@ -106,5 +123,5 @@ export function partnerFormValue(form: PartnerForm): {
 	});
 	return command
 		? { partner: command.partner, error: '' }
-		: fail('Confira o fuso e os limites das coordenadas (latitude ±90, longitude ±180).');
+		: fail('Selecione novamente a cidade de nascimento.');
 }

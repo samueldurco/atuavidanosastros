@@ -2,6 +2,8 @@
 	import { onMount, tick } from 'svelte';
 	import Button from './ui/Button.svelte';
 	import Field from './ui/Field.svelte';
+	import BirthCityFields from './BirthCityFields.svelte';
+	import { resolvedCivilInstant } from '$lib/city-location';
 	import Dialog from './ui/Dialog.svelte';
 	import {
 		ONBOARDING_VERSION,
@@ -24,7 +26,7 @@
 		revision_conflict:
 			'Seu perfil mudou em outra aba. Recarregue o perfil salvo antes de tentar novamente.',
 		invalid_input:
-			'Os dados não passaram pela validação. Confira data, hora, fuso, deslocamento UTC e coordenadas. Horários inexistentes no fuso não são aceitos.',
+			'Confira a data, a hora e a cidade selecionada. Esse horário precisa existir na cidade de nascimento.',
 		auth_required: 'Sua sessão terminou. Entre novamente para recuperar seu perfil.',
 		profile_unavailable: 'Este perfil não está disponível para atualização.',
 		same_origin_required:
@@ -83,6 +85,19 @@
 	function save(event: SubmitEvent) {
 		event.preventDefault();
 		if (!snapshot || locked) return;
+		if (form.precision !== 'UNKNOWN') {
+			try {
+				form.offset = resolvedCivilInstant(
+					form.date,
+					form.time,
+					form.timezone,
+					form.occurrence
+				).offset;
+			} catch (issue) {
+				error = issue instanceof Error ? issue.message : 'Selecione a cidade e confira o horário.';
+				return;
+			}
+		}
 		const result = natalFormCommand(form, snapshot.revision, consent);
 		if (!result.command) {
 			error = result.error;
@@ -199,87 +214,7 @@
 			</fieldset>
 			<fieldset disabled={locked}>
 				<legend>Local e referência temporal</legend>
-				<p class="help">
-					Ainda não há busca automática de cidade. Confira as coordenadas e o fuso em uma fonte de
-					sua confiança. Não envie dados de outra pessoa.
-				</p>
-				<Field id="natal-location" label="Cidade e região de nascimento"
-					>{#snippet children(describedBy)}<input
-							id="natal-location"
-							maxlength="200"
-							required
-							bind:value={form.location}
-							aria-describedby={describedBy}
-						/>{/snippet}</Field
-				>
-				<div class="field-grid">
-					<Field id="natal-country" label="Código do país" help="Duas letras, por exemplo BR ou PT."
-						>{#snippet children(describedBy)}<input
-								id="natal-country"
-								maxlength="2"
-								pattern={'[A-Za-z]{2}'}
-								required
-								bind:value={form.country}
-								aria-describedby={describedBy}
-							/>{/snippet}</Field
-					>
-					<Field
-						id="natal-zone"
-						label="Fuso IANA"
-						help="Por exemplo America/Sao_Paulo. Não usamos o fuso do seu dispositivo."
-						>{#snippet children(describedBy)}<input
-								id="natal-zone"
-								maxlength="80"
-								required
-								bind:value={form.timezone}
-								aria-describedby={describedBy}
-								spellcheck="false"
-							/>{/snippet}</Field
-					>
-					<Field id="natal-lat" label="Latitude" help="De -90 a 90; use ponto decimal."
-						>{#snippet children(describedBy)}<input
-								id="natal-lat"
-								inputmode="text"
-								required
-								bind:value={form.latitude}
-								aria-describedby={describedBy}
-							/>{/snippet}</Field
-					>
-					<Field id="natal-lon" label="Longitude" help="De -180 a 180; use ponto decimal."
-						>{#snippet children(describedBy)}<input
-								id="natal-lon"
-								inputmode="text"
-								required
-								bind:value={form.longitude}
-								aria-describedby={describedBy}
-							/>{/snippet}</Field
-					>
-				</div>
-				<Field
-					id="natal-offset"
-					label="Deslocamento UTC na data de nascimento"
-					help="Exemplo: -03:00. Se houver horário repetido na mudança de fuso, este valor distingue os dois instantes. Não confirmamos regras históricas automaticamente."
-					>{#snippet children(describedBy)}<input
-							id="natal-offset"
-							placeholder="±HH:MM"
-							maxlength="9"
-							required
-							bind:value={form.offset}
-							aria-describedby={describedBy}
-						/>{/snippet}</Field
-				>
-				<Field
-					id="natal-source"
-					label="Fonte das coordenadas e do fuso"
-					help="Indique a referência consultada, sem incluir documentos ou dados sensíveis."
-					>{#snippet children(describedBy)}<input
-							id="natal-source"
-							maxlength="80"
-							required
-							bind:value={form.source}
-							aria-describedby={describedBy}
-						/>{/snippet}</Field
-				>
+				<BirthCityFields id="natal-location" label="Cidade de nascimento" bind:form />
 			</fieldset>
 			<fieldset class="consent" disabled={locked}>
 				<legend>Sua escolha de armazenamento</legend>
@@ -393,11 +328,6 @@
 		padding-right: 0.75rem;
 		font-size: 0.9375rem;
 	}
-	.field-grid {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1.25rem;
-	}
 	input,
 	select {
 		width: 100%;
@@ -456,9 +386,6 @@
 	@media (max-width: 600px) {
 		.form-panel {
 			padding: 1.25rem;
-		}
-		.field-grid {
-			grid-template-columns: 1fr;
 		}
 	}
 </style>

@@ -1,3 +1,4 @@
+import { selectCity } from './fixtures/city-search';
 import { expect, test } from '@playwright/test';
 test('home entrega proposta e navegação principal', async ({ page }) => {
 	await page.goto('/');
@@ -29,12 +30,11 @@ test('Bússola calcula Meio do Céu sem cadastro', async ({ page }) => {
 	await page.goto('/bussola-de-carreira');
 	await page.getByLabel('Data de nascimento').fill('2000-01-01');
 	await page.getByLabel('Hora de nascimento').fill('09:00');
-	await page.getByLabel('Cidade de nascimento').fill('São Paulo, Brasil');
-	await page.getByLabel('Latitude').fill('-23.5505');
-	await page.getByLabel('Longitude').fill('-46.6333');
-	await page.getByLabel('Fuso de nascimento (UTC)').fill('-03:00');
+	await selectCity(page, '#birth-city', 'São Paulo', 'São Paulo, São Paulo, Brasil');
 	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect(page.getByRole('heading', { name: /Meio do Céu em/ })).toBeVisible();
-	await expect(page.getByText(/Dados de nascimento não são armazenados/)).toBeVisible();
+	await expect(
+		page.getByText('Seus dados de nascimento não são salvos neste cálculo.')
+	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Entrar para guardar meus cálculos' })).toBeVisible();
 });

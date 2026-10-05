@@ -4,7 +4,7 @@ Fundação interna, sem scheduler, rota HTTP, cliente service_role, credencial o
 
 ## SQL
 
-`20260928170000_product_continuity_maintenance.sql` substitui a implementação da RPC sem argumentos `purge_expired_product_continuity_access()`, preservando sua assinatura e acesso exclusivo de service_role. Cada chamada remove **até 500 eventos já expirados**, ordenados por expiração e UUID, com `FOR UPDATE SKIP LOCKED`. Filhos de auditoria são removidos por FK; notas curadas, fontes, consentimentos e eventos vigentes são preservados. O limite é de eventos pai, não de todos os registros físicos afetados (cada evento pode possuir até 12 itens).
+`20260928170100_product_continuity_maintenance.sql` substitui a implementação da RPC sem argumentos `purge_expired_product_continuity_access()`, preservando sua assinatura e acesso exclusivo de service_role. Cada chamada remove **até 500 eventos já expirados**, ordenados por expiração e UUID, com `FOR UPDATE SKIP LOCKED`. Filhos de auditoria são removidos por FK; notas curadas, fontes, consentimentos e eventos vigentes são preservados. O limite é de eventos pai, não de todos os registros físicos afetados (cada evento pode possuir até 12 itens).
 
 `SECURITY DEFINER` usa `search_path` vazio e tabelas qualificadas. Clientes não fornecem proprietário, IDs, data-limite ou tamanho de lote. As tabelas continuam sem acesso direto. A manutenção não depende de consentimento ou policy ativa: desligar o uso não deve impedir o descarte do que já expirou. O forward-fix dedicado revoga explicitamente a capacidade de manutenção quando necessário.
 

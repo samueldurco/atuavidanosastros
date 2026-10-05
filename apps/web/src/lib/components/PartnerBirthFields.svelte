@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Field from '$lib/components/ui/Field.svelte';
+	import BirthCityFields from './BirthCityFields.svelte';
 	import type { PartnerForm } from '$lib/partner-form';
 	let {
 		form = $bindable(),
@@ -18,30 +19,6 @@
 			label: 'Hora local da outra pessoa',
 			type: 'time',
 			help: 'Informe somente a hora conhecida. Não adotamos meio-dia como padrão.'
-		},
-		{
-			key: 'timezone',
-			label: 'Fuso da outra pessoa',
-			type: 'text',
-			help: 'Identificador IANA, como America/Sao_Paulo, ou UTC.'
-		},
-		{
-			key: 'offset',
-			label: 'Deslocamento UTC naquela data',
-			type: 'text',
-			help: 'Como -03:00; considere o horário de verão da data, não o deslocamento de hoje.'
-		},
-		{
-			key: 'latitude',
-			label: 'Latitude de nascimento da outra pessoa',
-			type: 'text',
-			help: 'Graus decimais entre -90 e 90, usando ponto.'
-		},
-		{
-			key: 'longitude',
-			label: 'Longitude de nascimento da outra pessoa',
-			type: 'text',
-			help: 'Graus decimais entre -180 e 180, usando ponto.'
 		}
 	] as const;
 </script>
@@ -86,6 +63,12 @@
 			{/snippet}
 		</Field>
 	{/each}
+	<BirthCityFields
+		id="partner-city"
+		label="Cidade de nascimento da outra pessoa"
+		bind:form
+		{onchange}
+	/>
 	<p class="validation" role="status">
 		{error || 'Dados preenchidos. Confira as informações antes de enviar.'}
 	</p>

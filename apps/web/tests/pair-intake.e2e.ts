@@ -1,3 +1,4 @@
+import { selectCity } from './fixtures/city-search';
 import { expect, test, type Page } from '@playwright/test';
 const owner = '00000000-0000-4000-8000-000000000056';
 const key = '00000000-0000-4000-8000-000000000077';
@@ -39,10 +40,7 @@ async function fill(page: Page) {
 		.selectOption('EXACT');
 	await page.getByLabel('Data de nascimento da outra pessoa', { exact: true }).fill('2000-02-29');
 	await page.getByLabel('Hora local da outra pessoa', { exact: true }).fill('10:00:00.125');
-	await page.getByLabel('Fuso da outra pessoa', { exact: true }).fill('UTC');
-	await page.getByLabel('Deslocamento UTC naquela data', { exact: true }).fill('+00:00');
-	await page.getByLabel('Latitude de nascimento da outra pessoa', { exact: true }).fill('51.5');
-	await page.getByLabel('Longitude de nascimento da outra pessoa', { exact: true }).fill('-0.12');
+	await selectCity(page, '#partner-city', 'London', 'London, England, Reino Unido');
 }
 async function authorize(page: Page) {
 	await page.getByLabel(permission, { exact: false }).check();
@@ -90,10 +88,10 @@ test('blank partner and two unchecked consents → minimal request → private L
 			partner: {
 				localDateTime: '2000-02-29T10:00:00.125',
 				utcInstant: '2000-02-29T10:00:00.125Z',
-				timezone: 'UTC',
-				latitude: 51.5,
-				longitude: -0.12,
-				locationSource: 'manual-partner/1',
+				timezone: 'Europe/London',
+				latitude: 51.50853,
+				longitude: -0.12574,
+				locationSource: 'geonames:2643743/cities500-v1',
 				timePrecision: 'EXACT'
 			},
 			consent: {
@@ -142,10 +140,7 @@ test('changing any partner field or rereading owner resets both authorizations',
 	for (const [selector, value] of [
 		['#partner-date', '2000-03-01'],
 		['#partner-time', '11:00'],
-		['#partner-timezone', 'Etc/UTC'],
-		['#partner-offset', '+00:00:00'],
-		['#partner-latitude', '50'],
-		['#partner-longitude', '0']
+		['#partner-city', 'Paris']
 	]) {
 		await authorize(page);
 		await page.locator(selector).fill(value);
@@ -162,7 +157,7 @@ test('changing any partner field or rereading owner resets both authorizations',
 	await expect(page.getByLabel(permission, { exact: false })).not.toBeChecked();
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 });
-test('mismatched UTC blocks locally, server revision conflict clears draft and key', async ({
+test('unselected city blocks locally, server revision conflict clears draft and key', async ({
 	page
 }) => {
 	let writes = 0;
@@ -172,12 +167,12 @@ test('mismatched UTC blocks locally, server revision conflict clears draft and k
 	});
 	await ready(page);
 	await fill(page);
-	await page.locator('#partner-offset').fill('+01:00');
+	await page.locator('#partner-city').fill('London');
 	await authorize(page);
 	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
-	await expect(page.getByText('O fuso, o deslocamento UTC', { exact: false })).toBeVisible();
+	await expect(page.getByText('Selecione a cidade para calcular', { exact: false })).toBeVisible();
 	expect(writes).toBe(0);
-	await page.locator('#partner-offset').fill('+00:00');
+	await selectCity(page, '#partner-city', 'London', 'London, England, Reino Unido');
 	await authorize(page);
 	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 	await expect(page.getByText('Seus dados de nascimento mudaram.', { exact: false })).toBeFocused();

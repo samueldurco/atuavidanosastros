@@ -69,7 +69,7 @@
 				<span>01</span>
 				<div>
 					<strong>Traga seus dados de nascimento</strong>
-					<p>Data, hora, coordenadas e fuso histórico.</p>
+					<p>Data, hora e cidade. A localização é calculada automaticamente.</p>
 				</div>
 			</li>
 			<li>

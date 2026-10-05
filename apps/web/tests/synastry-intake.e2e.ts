@@ -1,3 +1,4 @@
+import { selectCity } from './fixtures/city-search';
 import { expect, test, type Page } from '@playwright/test';
 const owner = '00000000-0000-4000-8000-000000000056';
 const runId = '00000000-0000-4000-8000-000000000078';
@@ -38,10 +39,7 @@ async function fill(page: Page) {
 		.selectOption('EXACT');
 	await page.getByLabel('Data de nascimento da outra pessoa', { exact: true }).fill('2000-02-29');
 	await page.getByLabel('Hora local da outra pessoa', { exact: true }).fill('10:00:00.125');
-	await page.getByLabel('Fuso da outra pessoa', { exact: true }).fill('UTC');
-	await page.getByLabel('Deslocamento UTC naquela data', { exact: true }).fill('+00:00');
-	await page.getByLabel('Latitude de nascimento da outra pessoa', { exact: true }).fill('51.5');
-	await page.getByLabel('Longitude de nascimento da outra pessoa', { exact: true }).fill('-0.12');
+	await selectCity(page, '#partner-city', 'London', 'London, England, Reino Unido');
 }
 async function authorize(page: Page) {
 	await page.getByLabel(permission, { exact: false }).check();
@@ -90,10 +88,10 @@ test('Sinastria: blank partner/context and two unchecked consents → minimal re
 			partner: {
 				localDateTime: '2000-02-29T10:00:00.125',
 				utcInstant: '2000-02-29T10:00:00.125Z',
-				timezone: 'UTC',
-				latitude: 51.5,
-				longitude: -0.12,
-				locationSource: 'manual-partner/1',
+				timezone: 'Europe/London',
+				latitude: 51.50853,
+				longitude: -0.12574,
+				locationSource: 'geonames:2643743/cities500-v1',
 				timePrecision: 'EXACT'
 			},
 			consent: {

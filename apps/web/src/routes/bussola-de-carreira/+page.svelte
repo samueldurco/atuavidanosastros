@@ -1,4 +1,7 @@
 <script lang="ts">
+	import BirthCityFields from '$lib/components/BirthCityFields.svelte';
+	import { emptyNatalForm } from '$lib/natal-form';
+	import { resolvedCivilInstant } from '$lib/city-location';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -7,12 +10,13 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import { isUuid } from '$lib/library-result';
 	let { data } = $props();
-	let city = $state('');
 	let date = $state('');
 	let time = $state('');
-	let latitude = $state('');
-	let longitude = $state('');
-	let utcOffset = $state('-03:00');
+	let birthForm = $state(emptyNatalForm());
+	$effect(() => {
+		birthForm.date = date;
+		birthForm.time = time;
+	});
 	let pending = $state(false);
 	let savePending = $state(false);
 	let saveMessage = $state('');
@@ -38,24 +42,30 @@
 		savedItemId = null;
 		try {
 			const localDateTime = `${date}T${time}:00`;
+			if (!birthForm.location) throw new Error('Selecione sua cidade nos resultados da busca.');
+			const resolved = resolvedCivilInstant(date, time, birthForm.timezone, birthForm.occurrence);
 			const input = {
 				localDateTime,
-				timezone: `UTC${utcOffset}`,
-				utcInstant: new Date(`${localDateTime}${utcOffset}`).toISOString(),
-				latitude: Number(latitude),
-				longitude: Number(longitude),
-				locationSource: 'user-provided-coordinates'
+				timezone: birthForm.timezone,
+				utcInstant: resolved.utcInstant,
+				latitude: Number(birthForm.latitude),
+				longitude: Number(birthForm.longitude),
+				locationSource: birthForm.source
 			};
 			const response = await fetch('/api/astrology/midheaven', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify(input)
 			});
-			if (!response.ok) throw new Error();
+			if (!response.ok)
+				throw new Error('Não foi possível calcular. Confira a data, a hora e a cidade.');
 			result = await response.json();
 			submittedInput = input;
-		} catch {
-			error = 'Não foi possível calcular com esses dados. Revise data, hora, fuso e coordenadas.';
+		} catch (issue) {
+			error =
+				issue instanceof Error && issue.message
+					? issue.message
+					: 'Não foi possível calcular. Confira a data, a hora e a cidade.';
 		} finally {
 			pending = false;
 		}
@@ -71,7 +81,8 @@
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify(submittedInput)
 			});
-			if (!response.ok) throw new Error();
+			if (!response.ok)
+				throw new Error('Não foi possível calcular. Confira a data, a hora e a cidade.');
 			saveMessage = 'Sua Bússola foi salva na Biblioteca.';
 			const saved = await response.json();
 			savedItemId =
@@ -145,61 +156,7 @@
 								/>{/snippet}</Field
 						>
 					</div>
-					<Field
-						id="birth-city"
-						label="Cidade de nascimento"
-						help="A cidade serve como referência. Informe as coordenadas correspondentes abaixo."
-						>{#snippet children(describedBy)}<input
-								id="birth-city"
-								bind:value={city}
-								type="text"
-								required
-								autocomplete="address-level2"
-								placeholder="Cidade, estado, país"
-								aria-describedby={describedBy}
-							/>{/snippet}</Field
-					>
-					<div class="field-pair">
-						<Field id="birth-latitude" label="Latitude"
-							>{#snippet children(describedBy)}<input
-									id="birth-latitude"
-									bind:value={latitude}
-									type="number"
-									min="-90"
-									max="90"
-									step="any"
-									required
-									placeholder="-23.5505"
-									aria-describedby={describedBy}
-								/>{/snippet}</Field
-						><Field id="birth-longitude" label="Longitude"
-							>{#snippet children(describedBy)}<input
-									id="birth-longitude"
-									bind:value={longitude}
-									type="number"
-									min="-180"
-									max="180"
-									step="any"
-									required
-									placeholder="-46.6333"
-									aria-describedby={describedBy}
-								/>{/snippet}</Field
-						>
-					</div>
-					<p class="input-note">Use coordenadas decimais. Leste é positivo; oeste é negativo.</p>
-					<Field
-						id="birth-offset"
-						label="Fuso de nascimento (UTC)"
-						help="Exemplo: −03:00. Confirme o fuso histórico e o horário de verão da data."
-						>{#snippet children(describedBy)}<input
-								id="birth-offset"
-								bind:value={utcOffset}
-								type="text"
-								pattern="[+-][0-2][0-9]:[0-5][0-9]"
-								required
-								aria-describedby={describedBy}
-							/>{/snippet}</Field
-					>
+					<BirthCityFields id="birth-city" label="Cidade de nascimento" bind:form={birthForm} />
 				</fieldset>
 				<Button type="submit" {pending} disabled={savePending}
 					>{pending ? 'Calculando…' : 'Calcular meu Meio do Céu'}</Button
@@ -276,8 +233,8 @@
 					</div>
 					<Card variant="data" title="Antes de começar"
 						><p>
-							Coordenadas e fuso precisam corresponder ao local e à data de nascimento. Uma
-							informação aproximada pede uma leitura mais cautelosa.
+							Confira a cidade, a data e a hora de nascimento. A localização e o fuso são definidos
+							automaticamente. Uma hora aproximada pede uma leitura mais cautelosa.
 						</p>
 						<a href="/meio-do-ceu">Entender o Meio do Céu →</a></Card
 					>{/if}

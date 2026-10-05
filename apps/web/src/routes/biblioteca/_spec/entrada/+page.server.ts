@@ -17,6 +17,7 @@ export const load: PageServerLoad = ({ url, setHeaders }) => {
 			!natalProducts.includes(productId as NatalProduct) &&
 			productId !== 'date-reading' &&
 			productId !== 'week-reading' &&
+			productId !== 'solar-return' &&
 			productId !== 'horoscope' &&
 			productId !== 'pair-preview' &&
 			productId !== 'synastry' &&

@@ -1,3 +1,4 @@
+import { selectCity } from './fixtures/city-search';
 import { expect, test, type Page } from '@playwright/test';
 const owner = '00000000-0000-4000-8000-000000000056';
 const key = '00000000-0000-4000-8000-000000000067';
@@ -38,11 +39,11 @@ async function ready(page: Page, value: unknown = snapshot()) {
 	await page.getByRole('button', { name: 'Consultar perfil salvo', exact: true }).click();
 }
 async function preferences(page: Page) {
-	const timezone = page.getByLabel('Fuso atual da consulta', { exact: true });
+	const timezone = page.locator('#week-city');
 	const theme = page.getByLabel('Tema da semana', { exact: true });
 	await expect(timezone).toHaveValue('');
 	await expect(theme).toHaveValue('');
-	await timezone.fill('America/Fortaleza');
+	await selectCity(page, '#week-city', 'Fortaleza', 'Fortaleza, Ceará, Brasil');
 	await theme.selectOption('priorities');
 }
 async function recovery(page: Page) {
@@ -124,7 +125,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	expect(Object.keys(stored)).toEqual([slot]);
 	expect(stored[slot]).toMatch(/^[a-f0-9-]{36}$/);
 	await expect(date).toHaveValue('');
-	await expect(page.getByLabel('Fuso atual da consulta', { exact: true })).toHaveValue('');
+	await expect(page.locator('#week-city')).toHaveValue('');
 	await expect(page.getByLabel('Tema da semana', { exact: true })).toHaveValue('');
 	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
 	expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).not.toContain(report);
@@ -160,11 +161,11 @@ test('out-of-range date and profile revision conflict cannot silently reuse cons
 	expect(writes).toBe(1);
 });
 
-test('timezone and theme require explicit choices; changes invalidate consent and malformed timezone blocks', async ({
+test('city and theme require explicit choices; changes invalidate consent and unselected city blocks', async ({
 	page
 }) => {
 	await ready(page);
-	const timezone = page.getByLabel('Fuso atual da consulta', { exact: true });
+	const timezone = page.locator('#week-city');
 	const theme = page.getByLabel('Tema da semana', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
 	const submit = page.getByRole('button', { name: 'Solicitar leitura', exact: true });
@@ -173,7 +174,7 @@ test('timezone and theme require explicit choices; changes invalidate consent an
 	await page.getByLabel('Data inicial da semana', { exact: true }).fill('2028-02-29');
 	await consent.check();
 	await expect(submit).toBeDisabled();
-	await timezone.fill('America/Fortaleza');
+	await selectCity(page, '#week-city', 'Fortaleza', 'Fortaleza, Ceará, Brasil');
 	await expect(consent).not.toBeChecked();
 	await consent.check();
 	await expect(submit).toBeDisabled();
@@ -183,10 +184,10 @@ test('timezone and theme require explicit choices; changes invalidate consent an
 	await expect(submit).toBeEnabled();
 	await timezone.fill('UTC+03:00');
 	await expect(consent).not.toBeChecked();
-	await expect(timezone).toHaveAttribute('aria-invalid', 'true');
+	await expect(page.locator('#week-city-results [role="option"]')).toHaveCount(0);
 	await consent.check();
 	await expect(submit).toBeDisabled();
-	await timezone.fill('UTC');
+	await selectCity(page, '#week-city', 'London', 'London, England, Reino Unido');
 	await expect(consent).not.toBeChecked();
 	await consent.check();
 	await expect(submit).toBeEnabled();
@@ -194,7 +195,9 @@ test('timezone and theme require explicit choices; changes invalidate consent an
 	await expect(consent).not.toBeChecked();
 	await consent.check();
 	await expect(submit).toBeDisabled();
-	await expect(page.getByText('O fuso natal permanece separado.', { exact: false })).toBeVisible();
+	await expect(
+		page.getByText('O fuso da cidade será usado como contexto deste pedido.', { exact: false })
+	).toBeVisible();
 });
 test('lost acknowledgement reload uses UUID recovery without profile/date or replay', async ({
 	page

@@ -40,6 +40,8 @@
 	} from '$lib/pair-request';
 	import { emptyPartnerForm, partnerFormValue } from '$lib/partner-form';
 	import PartnerBirthFields from './PartnerBirthFields.svelte';
+	import CitySearch from './CitySearch.svelte';
+	import type { CityLocation } from '$lib/city-location';
 	import type { OnboardingSnapshot } from '$lib/onboarding';
 	import { requestOnboarding } from '$lib/onboarding-client';
 	import type { IntakeAccess } from '$lib/symbolic-intake';
@@ -54,13 +56,15 @@
 	let busy = $state(false);
 	let consent = $state(false);
 	let targetDate = $state('');
-	let weekTimezone = $state('');
+	let weekCity = $state<CityLocation | null>(null);
+	const weekTimezone = $derived(weekCity?.timezone ?? '');
 	let weekTheme = $state('');
 	let solarYear = $state('');
-	let solarCity = $state('');
-	let solarTimezone = $state('');
-	let solarLatitude = $state('');
-	let solarLongitude = $state('');
+	let solarLocation = $state<CityLocation | null>(null);
+	const solarCity = $derived(solarLocation?.label ?? '');
+	const solarTimezone = $derived(solarLocation?.timezone ?? '');
+	const solarLatitude = $derived(solarLocation ? String(solarLocation.latitude) : '');
+	const solarLongitude = $derived(solarLocation ? String(solarLocation.longitude) : '');
 	let solarImportantDates = $state([
 		{ date: '', label: '' },
 		{ date: '', label: '' },
@@ -349,13 +353,10 @@
 		calendarMonth = '';
 		calendarMarks = Array.from({ length: 5 }, () => ({ date: '', label: '' }));
 		calendarMarksAuthorized = false;
-		weekTimezone = '';
+		weekCity = null;
 		weekTheme = '';
 		solarYear = '';
-		solarCity = '';
-		solarTimezone = '';
-		solarLatitude = '';
-		solarLongitude = '';
+		solarLocation = null;
 		partnerForm = emptyPartnerForm();
 		resetConsents();
 		snapshot = null;
@@ -379,13 +380,10 @@
 		calendarMonth = '';
 		calendarMarks = Array.from({ length: 5 }, () => ({ date: '', label: '' }));
 		calendarMarksAuthorized = false;
-		weekTimezone = '';
+		weekCity = null;
 		weekTheme = '';
 		solarYear = '';
-		solarCity = '';
-		solarTimezone = '';
-		solarLatitude = '';
-		solarLongitude = '';
+		solarLocation = null;
 		partnerForm = emptyPartnerForm();
 		resetConsents();
 		snapshot = null;
@@ -433,14 +431,6 @@
 						<div>
 							<dt>Local de nascimento</dt>
 							<dd>{snapshot.natal.locationLabel} · {snapshot.natal.countryCode}</dd>
-						</div>
-						<div>
-							<dt>Coordenadas</dt>
-							<dd>{snapshot.natal.latitude}, {snapshot.natal.longitude}</dd>
-						</div>
-						<div>
-							<dt>Fuso e instante UTC</dt>
-							<dd>{snapshot.natal.timezone} · {snapshot.natal.utcInstant}</dd>
 						</div>
 						<div>
 							<dt>Revisão consultada</dt>
@@ -618,7 +608,7 @@
 									id="solar-year"
 									type="text"
 									inputmode="numeric"
-									pattern="[0-9]{4}"
+									pattern={'[0-9]{4}'}
 									required
 									maxlength="4"
 									autocomplete="off"
@@ -629,79 +619,12 @@
 							{/snippet}
 						</Field>
 						{#if solarDate}<p class="privacy">Data de referência derivada: {solarDate}.</p>{/if}
-						<Field
+						<CitySearch
 							id="solar-city"
 							label="Cidade do aniversário"
-							help="Informe a cidade em que estará no aniversário deste ano. Não usamos a cidade do nascimento como localização atual."
-						>
-							{#snippet children(describedBy)}
-								<input
-									id="solar-city"
-									type="text"
-									required
-									maxlength="120"
-									autocomplete="off"
-									bind:value={solarCity}
-									oninput={resetConsents}
-									aria-describedby={describedBy}
-								/>
-							{/snippet}
-						</Field>
-						<Field
-							id="solar-timezone"
-							label="Fuso da cidade do aniversário"
-							help="Informe o fuso IANA da cidade, por exemplo America/Sao_Paulo, ou UTC. Ele pertence a este pedido e não altera o perfil natal."
-						>
-							{#snippet children(describedBy)}
-								<input
-									id="solar-timezone"
-									type="text"
-									required
-									maxlength="64"
-									autocomplete="off"
-									spellcheck="false"
-									bind:value={solarTimezone}
-									oninput={resetConsents}
-									aria-describedby={describedBy}
-								/>
-							{/snippet}
-						</Field>
-						<Field
-							id="solar-latitude"
-							label="Latitude da cidade"
-							help="Coordenada decimal declarada, de -90 a 90. Confira a localização antes de autorizar o pedido."
-						>
-							{#snippet children(describedBy)}
-								<input
-									id="solar-latitude"
-									type="text"
-									inputmode="decimal"
-									required
-									autocomplete="off"
-									bind:value={solarLatitude}
-									oninput={resetConsents}
-									aria-describedby={describedBy}
-								/>
-							{/snippet}
-						</Field>
-						<Field
-							id="solar-longitude"
-							label="Longitude da cidade"
-							help="Coordenada decimal declarada, de -180 a 180. A fonte do pedido será registrada como declaração manual."
-						>
-							{#snippet children(describedBy)}
-								<input
-									id="solar-longitude"
-									type="text"
-									inputmode="decimal"
-									required
-									autocomplete="off"
-									bind:value={solarLongitude}
-									oninput={resetConsents}
-									aria-describedby={describedBy}
-								/>
-							{/snippet}
-						</Field>
+							bind:value={solarLocation}
+							onchange={resetConsents}
+						/>
 						<fieldset class="solar-dates">
 							<legend>Datas importantes deste ciclo (opcional)</legend>
 							<p class="privacy">
@@ -752,34 +675,21 @@
 							</label>
 						</fieldset>
 						<p class="privacy">
-							A base local de cálculo é experimental. Cidade, fuso e coordenadas devem corresponder
-							ao mesmo local. Nenhuma leitura ou PDF está liberado.
+							A base local de cálculo é experimental. A cidade selecionada é a cidade em que você
+							estará no aniversário. Nenhuma leitura ou PDF está liberado.
 						</p>
 					{/if}
 					{#if isWeek}
-						<Field
-							id="week-timezone"
-							label="Fuso atual da consulta"
-							help="Informe um fuso IANA, como America/Sao_Paulo, ou UTC. Esta escolha será guardada como contexto declarado; a base atual continua às 12h UTC e não calcula dias locais completos. O fuso natal permanece separado."
-							error={weekTimezone && !validWeekTimezone(weekTimezone)
-								? 'Informe um fuso IANA válido ou UTC.'
-								: undefined}
-						>
-							{#snippet children(describedBy)}
-								<input
-									id="week-timezone"
-									type="text"
-									required
-									maxlength="64"
-									autocomplete="off"
-									spellcheck="false"
-									bind:value={weekTimezone}
-									oninput={resetConsents}
-									aria-describedby={describedBy}
-									aria-invalid={!!weekTimezone && !validWeekTimezone(weekTimezone)}
-								/>
-							{/snippet}
-						</Field>
+						<CitySearch
+							id="week-city"
+							label="Cidade em que você está nesta semana"
+							bind:value={weekCity}
+							onchange={resetConsents}
+						/>
+						<p class="privacy">
+							O fuso da cidade será usado como contexto deste pedido. A base atual permanece às 12h
+							UTC e não calcula dias locais completos.
+						</p>
 						<Field
 							id="week-theme"
 							label="Tema da semana"
@@ -876,9 +786,9 @@
 							: isPair
 								? 'Autorizo guardar as cópias dos dados natais conferidos de ambas as pessoas e os resultados deste pedido na minha conta.'
 								: isWeek
-									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do fuso atual e tema que declarei, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
+									? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do fuso da cidade selecionada e tema que declarei, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 									: isSolar
-										? 'Autorizo guardar uma cópia dos dados natais conferidos, do ano, da cidade, do fuso e das coordenadas que declarei para o aniversário, das datas importantes autorizadas, do contexto opcional e dos resultados deste pedido na minha conta.'
+										? 'Autorizo guardar uma cópia dos dados natais conferidos, do ano, da cidade selecionada para o aniversário e da localização calculada automaticamente, das datas importantes autorizadas, do contexto opcional e dos resultados deste pedido na minha conta.'
 										: isTemporal
 											? 'Autorizo guardar uma cópia dos dados natais conferidos, da data escolhida, do contexto que escolhi informar e dos resultados deste pedido na minha conta.'
 											: isCalendar
@@ -1069,13 +979,8 @@
 		margin-top: 1rem;
 	}
 	input[type='date'],
-	#week-timezone,
 	#week-theme,
-	#solar-year,
-	#solar-city,
-	#solar-timezone,
-	#solar-latitude,
-	#solar-longitude {
+	#solar-year {
 		box-sizing: border-box;
 		width: 100%;
 		min-width: 0;
