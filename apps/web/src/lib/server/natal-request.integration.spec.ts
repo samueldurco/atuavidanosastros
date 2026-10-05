@@ -599,7 +599,11 @@ it.each([
 	{ version: 'atv-natal-request/4', productId: 'life-atlas' },
 	{ version: 'atv-natal-request/4', productId: 'life-atlas', atlas: null },
 	{ version: 'atv-natal-request/4', productId: 'life-atlas', atlas: { priorities: 'A' } },
-	{ version: 'atv-natal-request/4', productId: 'life-atlas', atlas: { priorities: [1, 'B', 'C', 'D'] } },
+	{
+		version: 'atv-natal-request/4',
+		productId: 'life-atlas',
+		atlas: { priorities: [1, 'B', 'C', 'D'] }
+	},
 	{
 		version: 'atv-natal-request/4',
 		productId: 'life-atlas',
