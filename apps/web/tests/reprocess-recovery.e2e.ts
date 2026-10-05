@@ -45,7 +45,9 @@ test('confirmed recovery opens only the owner library reference', async ({ page 
 	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await navigation;
 	// This fixture has no owner session. The real destination must retain its auth gate.
-	await expect(page).toHaveURL(/\/entrar$/);
+	await expect(page).toHaveURL(
+		(url) => url.pathname === '/entrar' && url.searchParams.get('next') === `/biblioteca/${library}`
+	);
 });
 
 test('lost acknowledgement, reload, null lookup and keyboard never replay', async ({ page }) => {

@@ -42,8 +42,11 @@ test('coleção aponta para item e acesso sem sessão volta à entrada', async (
 	await page.goto('/biblioteca/_spec');
 	const first = page.getByRole('link', { name: /Abrir Bússola/ }).first();
 	await expect(first).toHaveAttribute('href', /\/biblioteca\/[0-9a-f-]{36}/);
+	const readingHref = await first.getAttribute('href');
 	await first.click();
-	await expect(page).toHaveURL(/\/entrar$/);
+	await expect(page).toHaveURL(
+		(url) => url.pathname === '/entrar' && url.searchParams.get('next') === readingHref
+	);
 	const privateResponse = await request.get('/biblioteca/00000000-0000-0000-0000-000000000001', {
 		maxRedirects: 0
 	});

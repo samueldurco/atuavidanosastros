@@ -131,7 +131,9 @@ test('disabled and corrupt storage states cannot issue network mutations', async
 	await page.locator('#email').screenshot({ path: testInfo.outputPath('email-disabled.png') });
 	await retained(page, 'corrupt');
 	await page.reload();
-	await expect(page.locator('#email [role=status]')).toContainText('Nenhuma alteração foi enviada');
+	await expect(page.locator('#email [role=status]')).toContainText(
+		'Esta aba não conseguiu guardar o acompanhamento do pedido.'
+	);
 	await expect(page.locator('#email button')).toHaveCount(1);
 	await expect(page.getByRole('button', { name: 'Ver pedidos de e-mail' })).toBeEnabled();
 	expect(calls).toBe(0);

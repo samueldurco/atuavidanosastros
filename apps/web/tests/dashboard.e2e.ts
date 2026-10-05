@@ -24,7 +24,8 @@ for (const [state, title, action] of [
 		const response = await page.goto(`/dashboard/_spec?state=${state}`);
 		expect(response?.headers()['cache-control']).toContain('no-store');
 		await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
-		await expect(page.getByRole('link', { name: `${action} →`, exact: true })).toHaveAttribute(
+		await expect(page.locator('.natal-action')).toHaveText(`${action} →`);
+		await expect(page.locator('.natal-action')).toHaveAttribute(
 			'href',
 			state === 'preview' ? '/entrar?next=%2Fconta%2Fnascimento' : '/conta/nascimento'
 		);
@@ -122,7 +123,8 @@ for (const [width, height] of [
 		expect(await continuityLink.evaluate((el) => getComputedStyle(el).outlineStyle)).not.toBe(
 			'none'
 		);
-		const link = page.getByRole('link', { name: 'Revisar dados de nascimento →', exact: true });
+		const link = page.locator('.natal-action');
+		await expect(link).toHaveText('Revisar dados de nascimento →');
 		await link.focus();
 		await expect(link).toBeFocused();
 		expect((await link.boundingBox())?.height).toBeGreaterThanOrEqual(44);

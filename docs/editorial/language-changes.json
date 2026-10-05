@@ -2266,5 +2266,64 @@
     "count": 1,
     "priority": "P1",
     "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Baixar relatório web",
+    "after": "Baixar leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Seção do card",
+    "after": "Trecho da leitura",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Baixar card SVG",
+    "after": "Baixar imagem (SVG)",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "caber no card.",
+    "after": "caber na imagem.",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/Dashboard.svelte",
+    "before": "Hora aproximada pode alterar o Ascendente e as casas do mapa.",
+    "after": "Aviso mantido na descrição de dados natais; duplicação removida.",
+    "count": 1,
+    "literal": false,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/DashboardContinuity.svelte",
+    "before": "Aviso de indisponibilidade repetido no parágrafo de consentimento.",
+    "after": "Você autorizou o uso dos registros nas leituras indicadas no consentimento. Aviso de indisponibilidade permanece uma vez no estado da função.",
+    "count": 1,
+    "literal": false,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "Arquivos guardados",
+    "after": "Arquivos salvos",
+    "count": 1,
+    "literal": true,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
   }
 ]

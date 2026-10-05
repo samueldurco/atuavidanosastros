@@ -262,7 +262,7 @@
 								}))
 							: []),
 						{ id: 'origem', label: 'Base e limites' },
-						{ id: 'arquivos', label: 'Arquivos guardados' }
+						{ id: 'arquivos', label: 'Arquivos salvos' }
 					]
 				: []),
 			...(data.run.productId === 'dream-atlas' ? [{ id: 'diario', label: 'Diário privado' }] : []),
@@ -292,7 +292,7 @@
 						onclick={() => download('web')}
 						disabled={!!busy || data.synthetic}
 						pending={busy === 'download' && downloadFormat === 'web'}
-						variant="secondary">Baixar relatório web</Button
+						variant="secondary">Baixar leitura</Button
 					>
 					{#if svgEligible}
 						<Button
@@ -312,7 +312,7 @@
 					{/if}
 					{#if cardEligible && data.run.editorial}
 						<div class="card-choice">
-							<label for="card-section">Seção do card</label>
+							<label for="card-section">Trecho da leitura</label>
 							<select id="card-section" bind:value={cardSection} disabled={!!busy}>
 								{#each data.run.editorial.sections as section, index (index)}
 									<option value={index}>{index + 1}. {section.title}</option>
@@ -323,11 +323,11 @@
 							onclick={() => download('card')}
 							disabled={!!busy || data.synthetic}
 							pending={busy === 'download' && downloadFormat === 'card'}
-							variant="secondary">Baixar card SVG</Button
+							variant="secondary">Baixar imagem (SVG)</Button
 						>
 						<p>
 							Escolha um trecho da leitura para baixar como imagem. Trechos muito longos podem não
-							caber no card.
+							caber na imagem.
 						</p>
 					{/if}
 					<p>

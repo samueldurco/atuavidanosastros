@@ -6,9 +6,7 @@ test('Loja mantém as 12 rotas editoriais sem ofertas publicadas', async ({ page
 	await expect(
 		page.getByRole('navigation', { name: 'Signos na loja' }).getByRole('link')
 	).toHaveCount(12);
-	await expect(
-		page.getByText(/Ainda não há\s+produtos, preços, estoque, prazo ou avaliações publicados/)
-	).toBeVisible();
+	await expect(page.getByText('Compras ainda indisponíveis', { exact: true })).toBeVisible();
 	expect(await page.locator('script[type="application/ld+json"]').allTextContents()).not.toEqual(
 		expect.arrayContaining([expect.stringMatching(/"@(type|context)"\s*:\s*"(Product|Offer)"/)])
 	);
@@ -19,9 +17,7 @@ test('Loja mantém as 12 rotas editoriais sem ofertas publicadas', async ({ page
 	await expect(page).toHaveURL(/\/loja\/signo\/aries$/);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Áries na Loja dos Signos');
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
-	await expect(
-		page.getByText(/Ainda não há\s+produtos,\s+preços ou disponibilidade publicados/)
-	).toBeVisible();
+	await expect(page.getByText(/As compras ainda\s+não estão disponíveis/)).toBeVisible();
 	const refuseAnalytics = page.getByRole('button', { name: 'Recusar opcionais' });
 	if (await refuseAnalytics.isVisible()) await refuseAnalytics.click();
 	await page.screenshot({ path: '../../test-results/gate-b/loja-signo-1280.png', fullPage: true });

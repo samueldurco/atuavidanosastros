@@ -10,7 +10,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.getByRole('main')).toHaveCount(1);
 		await expect(page.getByRole('heading', { name: 'Espaço para uma pergunta' })).toBeVisible();
 		await expect(page.getByRole('button', { name: 'Solicitar nova versão' })).toBeDisabled();
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		await expect(page.getByText('Salvar trechos nos meus registros', { exact: true })).toHaveCount(
 			0
@@ -67,7 +67,7 @@ test('unapproved/revoked/failed results never masquerade as delivered readings',
 		await page.goto(`/biblioteca/_spec/fluxo?state=${state}`);
 		await expect(page.getByRole('heading', { name: label, exact: true })).toBeVisible();
 		await expect(page.getByRole('heading', { name: 'Espaço para uma pergunta' })).toHaveCount(0);
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toHaveCount(0);
 		await expect(page.getByText('Salvar trechos nos meus registros', { exact: true })).toHaveCount(
 			0
 		);

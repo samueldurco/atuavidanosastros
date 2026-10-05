@@ -6,7 +6,7 @@ const headings = [
 	'Possibilidades, limites e alternativas — Hipótese [yes-no-conditions]',
 	'Sua pergunta e o que verificar — Hipótese [yes-no-question]',
 	'Sua escolha e um passo reversível — Hipótese [yes-no-autonomy]',
-	'Síntese do Tarot Sim ou Não (1) e uma pergunta prática'
+	'Síntese do Sim/Não responsável (1) e uma pergunta prática'
 ];
 for (const width of [1440, 820, 390, 320]) {
 	test(`tarot yes-no preserves its saved draw and reported question at ${width}`, async ({
@@ -51,8 +51,10 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(source).toContainText('Relato sintético consentido.');
 		const savedCard = await cardValue.textContent();
 		await expect(page.getByText('A nova versão usa as mesmas cartas desta tiragem.')).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
-		await expect(page.getByRole('button', { name: 'Baixar card SVG', exact: true })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
+		await expect(
+			page.getByRole('button', { name: 'Baixar imagem (SVG)', exact: true })
+		).toBeDisabled();
 		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();

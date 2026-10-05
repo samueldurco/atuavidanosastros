@@ -61,7 +61,7 @@ async function fill(page: Page) {
 		['Fuso IANA', 'America/Sao_Paulo'],
 		['Latitude', '-23.5'],
 		['Longitude', '-46.6'],
-		['Fuso de nascimento (UTC) na data de nascimento', '-02:00'],
+		['Deslocamento UTC na data de nascimento', '-02:00'],
 		['Fonte das coordenadas e do fuso', 'Fixture local']
 	])
 		await page.getByLabel(label, { exact: true }).fill(value);
@@ -236,7 +236,9 @@ for (const [width, height] of [
 		await page.emulateMedia({ reducedMotion: 'reduce' });
 		await setup(page);
 		await fill(page);
-		await expect(page.getByRole('heading', { name: 'Seu nascimento, com cuidado.' })).toBeVisible();
+		await expect(
+			page.getByRole('heading', { name: 'Seus dados de nascimento', level: 1, exact: true })
+		).toBeVisible();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
 		);

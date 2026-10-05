@@ -97,9 +97,6 @@
 				<h2>{natalCopy.title}</h2>
 				<p>{natalCopy.description}</p>
 				<a class="natal-action" href={natalCopy.href}>{natalCopy.action} →</a>
-				{#if data.natal.state === 'COMPLETE' && data.natal.timePrecision === 'APPROXIMATE'}
-					<p>Hora aproximada pode alterar o Ascendente e as casas do mapa.</p>
-				{/if}
 			</div>
 			<div class="account-note">
 				<strong>Seus dados pessoais</strong>

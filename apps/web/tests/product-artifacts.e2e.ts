@@ -65,7 +65,7 @@ for (const stalled of ['list', 'download']) {
 		const consult = page.getByRole('button', { name: 'Ver arquivos salvos' });
 		await consult.click();
 		if (stalled === 'download')
-			await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+			await page.getByRole('button', { name: 'Baixar Leitura no site' }).click();
 		await expect.poll(() => calls).toBe(1);
 		await page.clock.fastForward(30001);
 		await expect(
@@ -87,7 +87,7 @@ for (const stalled of ['list', 'download']) {
 		await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toBeVisible();
 		expect(downloads).toBe(0);
 		const download = page.waitForEvent('download');
-		await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+		await page.getByRole('button', { name: 'Baixar Leitura no site' }).click();
 		expect(await readFile((await (await download).path())!, 'utf8')).toBe(body);
 		expect(downloads).toBe(1);
 	});
@@ -119,13 +119,13 @@ for (const width of [1440, 820, 390, 320]) {
 		await page.getByRole('button', { name: 'Ver arquivos salvos' }).click();
 		await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toBeVisible();
 		const download = page.waitForEvent('download');
-		await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+		await page.getByRole('button', { name: 'Baixar Leitura no site' }).click();
 		const result = await download;
 		expect(await readFile((await result.path())!, 'utf8')).toBe(body);
 		await expect(
 			page.getByText('Arquivo verificado e enviado ao navegador para download.')
 		).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Recuperar Relatório web' })).toBeFocused();
+		await expect(page.getByRole('button', { name: 'Baixar Leitura no site' })).toBeFocused();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
 		).toBeLessThanOrEqual(1);
@@ -165,7 +165,9 @@ test('empty, unavailable, expired, revoked and corrupt downloads allow safe retr
 	await page.goto('/biblioteca/_spec/arquivos');
 	const consult = page.getByRole('button', { name: 'Ver arquivos salvos' });
 	await consult.click();
-	await expect(page.getByText(/Nenhum arquivo guardado disponível/)).toBeVisible();
+	await expect(
+		page.getByText(/Esta versão ainda não tem arquivos salvos disponíveis/)
+	).toBeVisible();
 	mode = 'error';
 	await consult.click();
 	await expect(
@@ -176,13 +178,13 @@ test('empty, unavailable, expired, revoked and corrupt downloads allow safe retr
 	await expect(page.getByText('Entre novamente para consultar seus arquivos.')).toBeVisible();
 	mode = 'ready';
 	await consult.click();
-	await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+	await page.getByRole('button', { name: 'Baixar Leitura no site' }).click();
 	await expect(page.getByText(/O arquivo ou seu acesso não está disponível/)).toBeVisible();
 	await expect(consult).toBeFocused();
 	await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toHaveCount(0);
 	downloadStatus = 200;
 	await consult.click();
-	await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
+	await page.getByRole('button', { name: 'Baixar Leitura no site' }).click();
 	await expect(
 		page.getByText('Não foi possível recuperar os arquivos. Tente novamente.')
 	).toBeVisible();

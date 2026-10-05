@@ -15,15 +15,17 @@ for (const product of ['tarot-focus', 'tarot-yes-no']) {
 			return route.abort();
 		});
 		await page.goto(`${path}?product=${product}&access=UNRELEASED`);
-		await expect(page.getByText('Nenhum modelo está homologado', { exact: false })).toBeVisible();
+		await expect(
+			page.getByText('Este produto está em preparação.', { exact: false })
+		).toBeVisible();
 		await expect(
 			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 		await expect(
 			page.getByText(
 				product === 'tarot-yes-no'
-					? 'Esta leitura não produz um veredito automático'
-					: 'Traga uma questão do momento',
+					? /O resultado não\s+é uma resposta automática de sim ou não\./
+					: 'Escreva uma pergunta sobre o assunto que você quer explorar.',
 				{ exact: false }
 			)
 		).toBeVisible();
@@ -139,7 +141,7 @@ for (const product of [
 		const stored = await page.evaluate(() => ({ ...sessionStorage }));
 		expect(Object.keys(stored)).toEqual([slot(product)]);
 		expect(stored[slot(product)]).toMatch(/^[a-f0-9-]{36}$/);
-		await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
+		await page.getByRole('button', { name: 'Iniciar outra leitura' }).click();
 		await expect(
 			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeEnabled();
@@ -206,7 +208,7 @@ test('lost acknowledgement, reload, revoked eligibility and null lookup never re
 	await page.keyboard.press('Enter');
 	await expect(page.getByRole('status')).toContainText('em andamento');
 	await expect(page.getByRole('status')).toBeFocused();
-	await expect(page.getByRole('button', { name: 'Iniciar outro pedido' })).toHaveCount(0);
+	await expect(page.getByRole('button', { name: 'Iniciar outra leitura' })).toHaveCount(0);
 	expect(writes).toBe(1);
 	expect(reads).toBe(1);
 	expect(await page.evaluate((name) => sessionStorage.getItem(name), slot('daily-card'))).toBe(
@@ -229,7 +231,7 @@ for (const access of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 		await page.reload();
 		await page.getByRole('button', { name: 'Consultar pedido' }).click();
 		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Iniciar outro pedido' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Iniciar outra leitura' })).toBeDisabled();
 	});
 }
 test('pending request locks fields and repeated activation; exact prewrite refusal permits editing', async ({
@@ -251,13 +253,16 @@ test('pending request locks fields and repeated activation; exact prewrite refus
 	await expect(page.getByLabel('Sua pergunta')).toBeDisabled();
 	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	finish();
-	await expect(page.getByRole('status')).toContainText('ainda não está liberado');
+	await expect(page.getByRole('status')).toContainText('Este produto está em preparação.');
 	await expect(page.getByLabel('Sua pergunta')).toBeEnabled();
 	expect(writes).toBe(1);
 });
 test('production intake route retains server authentication', async ({ page }) => {
 	await page.goto('/biblioteca/nova/daily-card');
-	await expect(page).toHaveURL(/\/entrar$/);
+	await expect(page).toHaveURL(
+		(url) =>
+			url.pathname === '/entrar' && url.searchParams.get('next') === '/biblioteca/nova/daily-card'
+	);
 });
 for (const width of [1440, 820, 390, 320]) {
 	test(`composition, keyboard labels and no overflow at ${width}px`, async ({ page }) => {

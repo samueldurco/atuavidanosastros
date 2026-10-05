@@ -122,7 +122,7 @@ for (const product of [
 		const stored = await page.evaluate(() => ({ ...sessionStorage }));
 		expect(Object.keys(stored)).toEqual([slot(product)]);
 		expect(stored[slot(product)]).toMatch(/^[a-f0-9-]{36}$/);
-		await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
+		await page.getByRole('button', { name: 'Iniciar outra leitura' }).click();
 		await expect(
 			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
@@ -170,7 +170,7 @@ test('career report: reconsent, exact private command, lost acknowledgement and 
 	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
 	expect(writes).toBe(1);
-	await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
+	await page.getByRole('button', { name: 'Iniciar outra leitura' }).click();
 	await page.getByRole('button', { name: 'Consultar perfil salvo', exact: true }).click();
 	await expect(report).toHaveValue('');
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
@@ -279,7 +279,7 @@ test('denied recovery storage never enables creation', async ({ page }) => {
 	await ready(page);
 	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await expect(
-		page.getByText('Não foi possível preservar a chave', { exact: false })
+		page.getByText('Esta aba não conseguiu guardar o acompanhamento do pedido.', { exact: false })
 	).toBeVisible();
 });
 for (const product of ['birth-chart', 'career-compass']) {

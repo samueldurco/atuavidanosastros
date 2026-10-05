@@ -48,8 +48,10 @@ for (const width of [1440, 820, 390, 320]) {
 			.locator('dd');
 		const savedCard = await cardValue.textContent();
 		await expect(page.getByText('A nova versão usa as mesmas cartas desta tiragem.')).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
-		await expect(page.getByRole('button', { name: 'Baixar card SVG', exact: true })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
+		await expect(
+			page.getByRole('button', { name: 'Baixar imagem (SVG)', exact: true })
+		).toBeDisabled();
 		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();

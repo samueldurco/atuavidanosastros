@@ -61,7 +61,7 @@ for (const width of [1440, 820, 390, 320])
 		await expect(source).toContainText('Contexto informado (personal-context)');
 		await expect(source).toContainText('não foram calculados');
 		await expect(reading).toContainText('Síntese da Semana (4) e três perguntas práticas');
-		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
+		for (const name of ['Baixar leitura', 'Baixar imagem (SVG)', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toBeDisabled();
 		expect(
@@ -139,9 +139,7 @@ test('Week unavailable states withhold private reading, timeline and downloads',
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		for (const id of ['semana', 'areas', 'leitura', 'origem'])
 			await expect(page.locator(`#${id}`)).toHaveCount(0);
-		await expect(
-			page.getByRole('button', { name: 'Baixar relatório web', exact: true })
-		).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar leitura', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 	}
 	await page.goto('/biblioteca/00000000-0000-4000-8000-000000000183');

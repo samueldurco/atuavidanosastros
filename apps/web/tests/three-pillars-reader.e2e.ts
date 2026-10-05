@@ -17,7 +17,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Sol e Lua: intenção e necessidade — Hipótese [sun-moon-dynamics]',
 			'Ascendente: abordagem e expressão — Hipótese [ascendant-expression]',
 			'Relações (1)',
-			'Síntese dos Sol, Lua e Ascendente (1) e três perguntas práticas'
+			'Síntese dos Três Pilares (1) e três perguntas práticas'
 		])
 			await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		const reading = page.locator('#leitura');
@@ -42,7 +42,7 @@ for (const width of [1440, 820, 390, 320]) {
 		])
 			await expect(source).toContainText(label);
 		await expect(source).toContainText('parcial');
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		expect(
@@ -58,7 +58,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await page.reload();
 		await expect(
 			page.getByRole('heading', {
-				name: 'Síntese dos Sol, Lua e Ascendente (1) e três perguntas práticas',
+				name: 'Síntese dos Três Pilares (1) e três perguntas práticas',
 				exact: true
 			})
 		).toBeVisible();
@@ -77,6 +77,6 @@ test('three pillars pending review, revocation and failure withhold the reading'
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toHaveCount(0);
 	}
 });

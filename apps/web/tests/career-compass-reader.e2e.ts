@@ -34,7 +34,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(source).toContainText('atv-product-delivery/1.18.0');
 		await expect(source).toContainText('Somente signo e grau experimentais do Meio do Céu');
 		await expect(source).toContainText('Fixture de apresentação');
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
 		await expect(page.getByRole('button', { name: 'Solicitar e-mail' })).toBeDisabled();
 		expect(
@@ -61,6 +61,6 @@ test('career compass review, revocation and failure withhold reading and downloa
 		await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		await expect(page.locator('#leitura')).toHaveCount(0);
 		await expect(page.locator('#origem')).toHaveCount(0);
-		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toHaveCount(0);
 	}
 });

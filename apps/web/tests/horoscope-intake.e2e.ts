@@ -117,7 +117,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	await expect(date).toHaveValue('');
 	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
 	expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).not.toContain(report);
-	await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
+	await page.getByRole('button', { name: 'Iniciar outra leitura' }).click();
 	await expect(submit).toBeDisabled();
 	await expect(consent).not.toBeChecked();
 });

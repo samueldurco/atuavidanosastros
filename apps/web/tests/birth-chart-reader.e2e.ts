@@ -133,7 +133,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Posições e signos são fatos experimentais'
 		])
 			await expect(source).toContainText(label);
-		for (const name of ['Baixar relatório web', 'Baixar PDF', 'Baixar mapa em SVG'])
+		for (const name of ['Baixar leitura', 'Baixar PDF', 'Baixar mapa em SVG'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)

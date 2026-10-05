@@ -22,7 +22,7 @@
 		{/if}
 		<p>
 			{summary.snapshot.consentState === 'granted'
-				? 'Você autorizou o uso dos registros nas leituras indicadas no consentimento. O uso automático ainda está indisponível.'
+				? 'Você autorizou o uso dos registros nas leituras indicadas no consentimento.'
 				: 'Você não autorizou o uso dos registros em outras leituras. Os registros salvos continuam na Biblioteca.'}
 		</p>
 		{#if summary.snapshot.counts.total === 0}

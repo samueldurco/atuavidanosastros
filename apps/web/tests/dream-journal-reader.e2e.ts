@@ -64,7 +64,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(reading).toContainText(
 			'Que associação pessoal você gostaria de explorar a partir deste relato?'
 		);
-		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
+		for (const name of ['Baixar leitura', 'Baixar imagem (SVG)', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
 		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);

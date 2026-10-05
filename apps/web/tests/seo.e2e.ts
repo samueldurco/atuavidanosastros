@@ -8,7 +8,7 @@ test('empty editorial hubs have SSR content, one canonical and no indexing', asy
 		const response = await request.get(path, { headers: { accept: 'text/html' } });
 		expect(response.status()).toBe(200);
 		const html = await response.text();
-		expect(html).toContain('Ainda não há publicações liberadas');
+		expect(html).toContain('Nenhum artigo publicado ainda');
 		expect(html).not.toContain('application/ld+json');
 		await page.goto(path);
 		await expect(page.locator('h1')).toHaveCount(1);
@@ -40,7 +40,7 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 		'/toString'
 	]) {
 		const response = await request.get(path, { headers: { accept: 'text/html' } });
-		expect(response.status()).toBe(404);
+		expect(response.status(), path).toBe(404);
 		const body = await response.text();
 		// A plain HTTP 404 is also non-indexable; only an HTML error shell owns metadata.
 		if (/<html\b/i.test(body)) {
