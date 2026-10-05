@@ -9,3 +9,9 @@ allowBuilds:
 onlyBuiltDependencies:
   - esbuild
   - supabase
+
+# Security fixes for transitives pinned by the current upstream packages.
+overrides:
+  '@sveltejs/kit>cookie': 0.7.2
+  'miniflare>sharp': 0.35.4
+  'miniflare>undici': 7.29.1
