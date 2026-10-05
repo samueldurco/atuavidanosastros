@@ -99,7 +99,12 @@ function validateRedirectUri(value: string): string {
 
 async function safeTikTokFetch(fetchImpl: Fetch, url: string, init: RequestInit): Promise<Response> {
   try {
-    return await fetchImpl(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(15_000) });
+    // workerd supports manual/follow only. Never forward credentials through a redirect.
+    const response = await fetchImpl(url, { ...init, redirect: 'manual', signal: AbortSignal.timeout(15_000) });
+    if (response.status >= 300 && response.status < 400) {
+      throw new Error('Redirecionamento do TikTok não permitido');
+    }
+    return response;
   } catch {
     throw new TikTokApiError({ message: 'Falha de comunicação com o TikTok', status: 0, code: 'network_error' });
   }

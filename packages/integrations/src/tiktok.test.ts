@@ -29,7 +29,7 @@ test('troca authorization code sem enviar segredo na URL', async () => {
     redirectUri: 'https://example.com/callback',
     now: new Date('2026-09-16T12:00:00.000Z'),
     fetchImpl: async (input, init) => {
-      assert.equal(init?.redirect, 'error');
+      assert.equal(init?.redirect, 'manual');
       assert.ok(init?.signal);
       observedUrl = String(input);
       observedBody = String(init?.body);
@@ -69,6 +69,31 @@ test('não propaga mensagens de transporte ou provedor que podem conter segredos
       assert.equal(error.message.includes(canary), false);
       return true;
     });
+  }
+});
+
+test('recusa redirecionamentos sem ler respostas nem encaminhar credenciais', async () => {
+  for (const status of [300, 301, 302, 303, 304, 307, 308, 399]) {
+    let requests = 0;
+    let bodyRead = false;
+    await assert.rejects(() => exchangeTikTokAuthorizationCode({
+      clientKey: 'key', clientSecret: 'secret-canary', code: 'code', redirectUri: 'https://example.com/callback',
+      fetchImpl: async (input, init) => {
+        requests += 1;
+        assert.equal(String(input), 'https://open.tiktokapis.com/v2/oauth/token/');
+        assert.equal(init?.redirect, 'manual');
+        const response = new Response(null, { status, headers: { Location: 'https://example.invalid/secret-sink' } });
+        response.json = async () => { bodyRead = true; throw new Error('secret-canary'); };
+        return response;
+      }
+    }), (error) => {
+      assert.ok(error instanceof TikTokApiError);
+      assert.equal(error.code, 'network_error');
+      assert.equal(error.message.includes('secret-canary'), false);
+      return true;
+    });
+    assert.equal(requests, 1);
+    assert.equal(bodyRead, false);
   }
 });
 
