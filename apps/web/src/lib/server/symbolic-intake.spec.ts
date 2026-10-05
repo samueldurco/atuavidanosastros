@@ -75,7 +75,7 @@ it('returns private minimal data without form input or entitlement rows', async 
 	});
 });
 it('rejects a product without an implemented form before querying', async () => {
-	const e = event({ id: owner }, 'dream-atlas');
+	const e = event({ id: owner }, 'unknown-product');
 	await expect(load(e.args)).rejects.toMatchObject({ status: 404 });
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
@@ -90,7 +90,8 @@ it.each([
 	'personal-calendar',
 	'direction-journey',
 	'tarot-journey',
-	'dream-dossier'
+	'dream-dossier',
+	'dream-atlas'
 ])('loads only minimal access for supported intake %s', async (productId) => {
 	const e = event({ id: owner }, productId);
 	expect(await load(e.args)).toEqual({ ownerId: owner, productId, access: 'UNRELEASED' });
@@ -108,7 +109,8 @@ it.each([
 	'personal-calendar',
 	'direction-journey',
 	'tarot-journey',
-	'dream-dossier'
+	'dream-dossier',
+	'dream-atlas'
 ])('requires authentication before loading %s access', async (productId) => {
 	const e = event(null, productId);
 	await expect(load(e.args)).rejects.toMatchObject({ status: 303, location: '/entrar' });

@@ -3,7 +3,9 @@ import { parseSymbolicForm, symbolicProduct, symbolicProducts } from './symbolic
 function form(product = 'daily-card') {
 	const data = new FormData();
 	data.set('storage', 'on');
-	if (product.startsWith('dream')) {
+	if (product === 'dream-atlas') {
+		data.set('startDate', '2026-09-09');
+	} else if (product.startsWith('dream')) {
 		data.set('date', '2024-02-29');
 		data.set('narrative', 'Relato sintético.');
 	} else {
@@ -51,6 +53,48 @@ it('accepts only the principal dream for the unreleased Dream Dossier intake', (
 	});
 	expect(symbolicProducts).not.toContain('dream-dossier');
 });
+it('keeps the unreleased Dream Atlas period separate from individual dreams', () => {
+	const data = form('dream-atlas');
+	data.set('context', 'Contexto sintético do período');
+	const { input, errors } = parseSymbolicForm('dream-atlas', data);
+	expect(errors).toEqual({});
+	expect(input).toMatchObject({
+		productId: 'dream-atlas',
+		consent: { storage: true, continuity: false },
+		dreamAtlas: { startDate: '2026-09-09' },
+		context: 'Contexto sintético do período'
+	});
+	expect(input?.dream).toBeUndefined();
+	expect(symbolicProducts).not.toContain('dream-atlas');
+});
+it.each(['date', 'narrative', 'priorDreams', 'history', 'continuity'])(
+	'rejects Dream Atlas field %s outside its initial scope',
+	(name) => {
+		const data = form('dream-atlas');
+		data.set(name, 'forged');
+		expect(parseSymbolicForm('dream-atlas', data).input).toBeNull();
+	}
+);
+it('does not treat general continuity consent as Dream Atlas history selection', () => {
+	const data = form('dream-atlas');
+	data.set('continuity', 'on');
+	expect(parseSymbolicForm('dream-atlas', data).input).toBeNull();
+});
+it.each(['', '2026-02-30', '2099-12-03', '2100-01-01'])(
+	'rejects invalid Dream Atlas start date %s',
+	(startDate) => {
+		const data = form('dream-atlas');
+		data.set('startDate', startDate);
+		expect(parseSymbolicForm('dream-atlas', data).errors.startDate).toBeTruthy();
+	}
+);
+it('rejects duplicate or file Dream Atlas dates', () => {
+	const data = form('dream-atlas');
+	data.append('startDate', '2026-09-10');
+	expect(parseSymbolicForm('dream-atlas', data).input).toBeNull();
+	data.set('startDate', new Blob(['file']));
+	expect(parseSymbolicForm('dream-atlas', data).input).toBeNull();
+});
 it.each(['priorRunId', 'priorDreams', 'history', 'recurrence'])(
 	'rejects undeclared Dream Dossier history field %s',
 	(name) => {
@@ -91,13 +135,10 @@ it.each(['tarot-focus', 'tarot-yes-no'])(
 		}
 	}
 );
-it.each(['birth-chart', 'yes-no', 'dream-atlas', '', '../daily-card'])(
-	'rejects unsupported product %s',
-	(id) => {
-		expect(symbolicProduct(id)).toBeUndefined();
-		expect(parseSymbolicForm(id, form()).input).toBeNull();
-	}
-);
+it.each(['birth-chart', 'yes-no', '', '../daily-card'])('rejects unsupported product %s', (id) => {
+	expect(symbolicProduct(id)).toBeUndefined();
+	expect(parseSymbolicForm(id, form()).input).toBeNull();
+});
 it.each(['', 'true', 'off'])('never implies storage consent from %s', (consent) => {
 	const data = form();
 	data.set('storage', consent);

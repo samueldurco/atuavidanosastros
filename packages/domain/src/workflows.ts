@@ -42,6 +42,7 @@ export interface WorkflowInput {
   journey?: { goal: string; startDate: string };
   tarotJourney?: { goal: string };
   atlas?: { priorities: [string, string, string, string] };
+  dreamAtlas?: { startDate: string };
   context?: string;
   questions?: string[];
   dream?: { date: string; narrative: string; associations: string[]; emotions: string[] };
@@ -115,10 +116,11 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.id === 'direction-journey') fields.push('journey');
   if (product.id === 'tarot-journey') fields.push('tarotJourney');
   if (product.id === 'life-atlas') fields.push('atlas');
+  if (product.id === 'dream-atlas') fields.push('dreamAtlas');
   if (product.kind === 'relationship') fields.push('partner');
   if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
   if (product.kind === 'tarot') fields.push('questions');
-  if (product.kind === 'dream') fields.push('dream');
+  if (product.kind === 'dream' && product.id !== 'dream-atlas') fields.push('dream');
   if (!keysOnly(v, fields) || (v.context !== undefined && !text(v.context, 1200))) return null;
   if (fields.includes('birth') && !birth(v.birth)) return null;
   if (product.id === 'direction-journey' && (!object(v.journey) ||
@@ -131,6 +133,10 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.id === 'life-atlas' &&
       (!object(v.atlas) || !keysOnly(v.atlas, ['priorities']) ||
        !validAtlasPriorities(v.atlas.priorities))) return null;
+  if (product.id === 'dream-atlas' &&
+      (!object(v.dreamAtlas) || !keysOnly(v.dreamAtlas, ['startDate']) ||
+       Object.keys(v.dreamAtlas).length !== 1 || !validDate(v.dreamAtlas.startDate) ||
+       v.dreamAtlas.startDate > '2099-12-02' || v.consent.continuity)) return null;
   if (product.kind === 'relationship' && (!birth(v.partner) || !v.consent.partner)) return null;
   if (product.kind !== 'relationship' && v.consent.partner) return null;
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
@@ -142,7 +148,8 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.id === 'personal-calendar' && v.calendarMarks !== undefined && !calendarMarks(v.calendarMarks, v.targetDate)) return null;
   if (product.kind === 'tarot' && (!strings(v.questions, 3, 400) ||
       v.questions.length !== (product.id === 'three-questions' ? 3 : 1))) return null;
-  if (product.kind === 'dream' && (!object(v.dream) || !keysOnly(v.dream, ['date', 'narrative', 'associations', 'emotions']) ||
+  if (product.kind === 'dream' && product.id !== 'dream-atlas' &&
+      (!object(v.dream) || !keysOnly(v.dream, ['date', 'narrative', 'associations', 'emotions']) ||
       !validDate(v.dream.date) || !text(v.dream.narrative, 6000) ||
       !strings(v.dream.associations, 8, 200) || !strings(v.dream.emotions, 8, 80))) return null;
   return structuredClone(v) as unknown as WorkflowInput;

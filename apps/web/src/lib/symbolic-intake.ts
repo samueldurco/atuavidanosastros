@@ -10,7 +10,7 @@ export const symbolicProducts = [
 ] as const;
 export const symbolicProduct = (id: string) =>
 	symbolicProducts.some((candidate) => candidate === id) ||
-	['tarot-journey', 'dream-dossier'].includes(id)
+	['tarot-journey', 'dream-dossier', 'dream-atlas'].includes(id)
 		? workflowFor(id)
 		: undefined;
 export type IntakeAccess = 'AVAILABLE' | 'UNRELEASED' | 'ACCESS_REQUIRED' | 'UNAVAILABLE';
@@ -74,6 +74,13 @@ export function parseSymbolicForm(productId: string, form: FormData) {
 				errors.goal = 'Use até 400 caracteres, sem caracteres de controle.';
 			candidate = { ...base, questions, tarotJourney: { goal } };
 		} else candidate = { ...base, questions };
+	} else if (productId === 'dream-atlas') {
+		allowed.push('startDate');
+		const startDate = value('startDate');
+		if (!validDate(startDate) || startDate > '2099-12-02')
+			errors.startDate =
+				'Informe uma data válida de início para os 30 dias, entre 1900-01-01 e 2099-12-02.';
+		candidate = { ...base, dreamAtlas: { startDate } };
 	} else if (product?.kind === 'dream') {
 		allowed.push('continuity', 'date', 'narrative', 'associations', 'emotions');
 		const date = value('date');

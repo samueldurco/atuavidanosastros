@@ -14,7 +14,8 @@ export function inputFor(p) {
   if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
   if (p.id==='solar-return') { value.returnYear=2026; value.returnLocation={city:'São Paulo', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic'}; }
   if (p.kind==='tarot') value.questions=Array.from({length:p.id==='three-questions'?3:1},(_,i)=>`Questão sintética ${i+1}`);
-  if (p.kind==='dream') value.dream={date:'2026-09-09', narrative:'Uma porta azul em um jardim.',associations:['calma'],emotions:['curiosidade']};
+  if (p.id==='dream-atlas') value.dreamAtlas={startDate:'2026-09-09'};
+  else if (p.kind==='dream') value.dream={date:'2026-09-09', narrative:'Uma porta azul em um jardim.',associations:['calma'],emotions:['curiosidade']};
   return value;
 }
 test('all 25 products cover six universes, with gated, typed input',()=>{
@@ -80,6 +81,17 @@ test('life atlas requires four distinct priorities declared by the person',()=>{
     assert.equal(parseWorkflowInput({...value,atlas}),null);
   assert.equal(parseWorkflowInput({...value,birth:undefined}),null);
   assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='birth-chart')),atlas:value.atlas}),null);
+});
+test('dream atlas starts a bounded 30-day period without an implied dream or history',()=>{
+  const value=inputFor(workflows.find(p=>p.id==='dream-atlas'));
+  assert.deepEqual(parseWorkflowInput(value)?.dreamAtlas,{startDate:'2026-09-09'});
+  assert.deepEqual(parseWorkflowInput({...value,dreamAtlas:{startDate:'2099-12-02'}})?.dreamAtlas,{startDate:'2099-12-02'});
+  for (const dreamAtlas of [undefined,{}, {startDate:'2026-02-30'},
+    {startDate:'2099-12-03'}, {startDate:'2026-09-09',priorDreams:['forged']}])
+    assert.equal(parseWorkflowInput({...value,dreamAtlas}),null);
+  assert.equal(parseWorkflowInput({...value,consent:{...value.consent,continuity:true}}),null);
+  assert.equal(parseWorkflowInput({...value,dream:{date:'2026-09-09',narrative:'forged',associations:[],emotions:[]}}),null);
+  assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='dream-reading')),dreamAtlas:value.dreamAtlas}),null);
 });
 test('personal calendar preserves specifically authorized marks only within its month',()=>{
   const value=inputFor(workflows.find(p=>p.id==='personal-calendar'));

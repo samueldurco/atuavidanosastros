@@ -8,6 +8,7 @@
 		$props();
 	const product = $derived(symbolicProduct(productId));
 	const tarot = $derived(product?.kind === 'tarot');
+	const atlas = $derived(productId === 'dream-atlas');
 	let client: ReturnType<typeof createWorkflowRequest> | undefined;
 	let outcome = $state<WorkflowRequestState>({ mode: 'blocked', message: '' });
 	let busy = $state(false);
@@ -88,7 +89,9 @@
 		<p class="lead">
 			{tarot
 				? 'Uma boa pergunta abre espaço para outras perspectivas.'
-				: 'Registre o que ficou, antes de buscar um significado.'}
+				: atlas
+					? 'Escolha quando começa seu período privado de observação dos sonhos.'
+					: 'Registre o que ficou, antes de buscar um significado.'}
 		</p>
 		<p class="access-note">{accessMessage}</p>
 		{#if productId === 'tarot-yes-no'}
@@ -111,13 +114,24 @@
 				Registre o sonho que você quer explorar. A escolha de registros anteriores e a comparação
 				entre sonhos ainda não estão disponíveis neste formulário.
 			</p>
+		{:else if atlas}
+			<p>
+				Este início delimita 30 dias de calendário. O caderno diário, as leituras semanais e a
+				síntese final ainda não estão disponíveis.
+			</p>
 		{/if}
 	</header>
 	<div class="workspace">
 		<div class="writing">
 			<form bind:this={form} method="POST" onsubmit={submit} novalidate autocomplete="off">
 				<fieldset disabled={!canEnter}>
-					<legend>{tarot ? 'Seu ponto de partida' : 'O relato é seu'}</legend>
+					<legend
+						>{tarot
+							? 'Seu ponto de partida'
+							: atlas
+								? 'Início do caderno'
+								: 'O relato é seu'}</legend
+					>
 					{#if tarot}
 						{#each Array.from({ length: productId === 'three-questions' ? 3 : 1 }, (_, i) => i + 1) as number (number)}
 							<Field
@@ -155,6 +169,24 @@
 										aria-describedby={describedBy}></textarea>{/snippet}
 							</Field>
 						{/if}
+					{:else if atlas}
+						<Field
+							id="startDate"
+							label="Data de início dos 30 dias (obrigatória)"
+							help="O período começa nesta data e inclui 30 dias de calendário. Nenhum sonho anterior é carregado."
+							error={errors.startDate}
+						>
+							{#snippet children(describedBy)}<input
+									id="startDate"
+									name="startDate"
+									type="date"
+									min="1900-01-01"
+									max="2099-12-02"
+									required
+									aria-invalid={!!errors.startDate}
+									aria-describedby={describedBy}
+								/>{/snippet}
+						</Field>
 					{:else}
 						<Field id="date" label="Data do sonho (obrigatória)" error={errors.date}>
 							{#snippet children(describedBy)}<input
@@ -214,7 +246,7 @@
 					{/if}
 					<Field
 						id="context"
-						label="Contexto do momento (opcional)"
+						label={atlas ? 'Contexto do período (opcional)' : 'Contexto do momento (opcional)'}
 						help="Até 1.200 caracteres. Evite nomes completos e dados de outras pessoas."
 						error={errors.context}
 					>
@@ -240,7 +272,7 @@
 						></label
 					>
 					{#if errors.storage}<p class="field-error" id="storage-error">{errors.storage}</p>{/if}
-					{#if !tarot}<label class="consent" for="continuity"
+					{#if !tarot && !atlas}<label class="consent" for="continuity"
 							><input id="continuity" name="continuity" type="checkbox" /><span
 								>Autorizo usar este relato na continuidade de minhas leituras de sonhos. (Opcional)</span
 							></label
@@ -286,9 +318,11 @@
 					? 'A pergunta e o objetivo são dados declarados por você. A tiragem e o percurso ainda não estão definidos; este formulário não sorteia cartas.'
 					: productId === 'dream-dossier'
 						? 'Este formulário registra apenas o sonho principal. O consentimento opcional de continuidade não seleciona nem carrega sonhos anteriores; a comparação do dossiê depende de uma etapa própria.'
-						: tarot
-							? 'As cartas são sorteadas pelo motor do produto após o pedido. Nenhuma carta ou interpretação é criada por este formulário.'
-							: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
+						: atlas
+							? 'Este formulário registra somente o início e o contexto opcional do período. Não carrega relatos anteriores, identifica padrões ou cria leituras. Os registros diários dependerão de uma etapa própria.'
+							: tarot
+								? 'As cartas são sorteadas pelo motor do produto após o pedido. Nenhuma carta ou interpretação é criada por este formulário.'
+								: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
 			</p>
 			<ol>
 				<li>Seu pedido é salvo com uma referência recuperável.</li>
