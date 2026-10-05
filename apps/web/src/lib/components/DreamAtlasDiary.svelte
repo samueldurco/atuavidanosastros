@@ -4,6 +4,7 @@
 		DREAM_ATLAS_ENTRY_VERSION,
 		dreamAtlasDateWithinPeriod,
 		parseDreamAtlasEntryInput,
+		prepareDreamAtlasFacts,
 		validDate
 	} from '@atv/domain';
 	import type { DreamAtlasEntryInput } from '@atv/domain';
@@ -41,6 +42,7 @@
 			? new Date(Date.parse(`${startDate}T00:00:00Z`) + 29 * 86_400_000).toISOString().slice(0, 10)
 			: null
 	);
+	const facts = $derived(startDate ? prepareDreamAtlasFacts(startDate, entries) : null);
 	const lines = (value: string) =>
 		value
 			.split(/\r?\n/)
@@ -325,6 +327,26 @@
 					Período deste Atlas: <time datetime={startDate}>{dateLabel(startDate)}</time> a
 					<time datetime={endDate}>{dateLabel(endDate)}</time>.
 				</p>
+			{/if}
+			{#if facts}
+				<p>
+					{facts.recordedCount} registros no diário; {facts.includedEntryIds.length} incluídos para uma
+					possível síntese e {facts.excludedCount} excluídos dela.
+				</p>
+				{#if facts.recurrences.length}
+					<h3>Termos informados em mais de um registro incluído</h3>
+					<p>Repetição literal de termos que você informou; nenhuma interpretação foi feita.</p>
+					<ul>
+						{#each facts.recurrences as observation (`${observation.source}:${observation.label}`)}
+							<li>
+								{observation.source === 'reported-emotion'
+									? 'Emoção relatada'
+									: 'Associação pessoal'}:
+								{observation.label} ({observation.entryIds.length} registros)
+							</li>
+						{/each}
+					</ul>
+				{/if}
 			{/if}
 			{#if entries.length === 0}<p>Nenhum sonho registrado neste período.</p>{/if}
 			<ol class="entries">

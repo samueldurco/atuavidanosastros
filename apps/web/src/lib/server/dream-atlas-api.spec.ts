@@ -54,7 +54,17 @@ it('reads only private entries of the requested run through the owner RPC', asyn
 	const response = await read(s.event({ runId }));
 	expect(response.status).toBe(200);
 	expect(response.headers.get('cache-control')).toBe('private, no-store');
-	expect(await response.json()).toEqual({ startDate: '2026-10-01', entries: [saved] });
+	expect(await response.json()).toEqual({
+		startDate: '2026-10-01',
+		entries: [saved],
+		facts: expect.objectContaining({
+			version: 'atv-dream-atlas-facts/1',
+			recordedCount: 1,
+			includedEntryIds: [],
+			excludedCount: 1,
+			recurrences: []
+		})
+	});
 	expect(s.rpc).toHaveBeenCalledWith('read_dream_atlas_entries', { p_run_id: runId });
 });
 
@@ -109,4 +119,6 @@ it('fails closed on authentication, cross-site writes, release denial and malfor
 	expect((await save(off.event({ runId, entryId, expectedRevision: 0, entry }))).status).toBe(409);
 	const foreign = setup({ startDate: '2026-10-01', entries: [{ ...saved, runId: owner }] });
 	expect((await read(foreign.event({ runId }))).status).toBe(503);
+	const outside = setup({ startDate: '2026-09-01', entries: [saved] });
+	expect((await read(outside.event({ runId }))).status).toBe(503);
 });

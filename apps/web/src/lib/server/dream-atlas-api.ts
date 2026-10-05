@@ -1,5 +1,5 @@
 import { json, type RequestEvent } from '@sveltejs/kit';
-import { parseDreamAtlasEntryInput, validDate } from '@atv/domain';
+import { parseDreamAtlasEntryInput, prepareDreamAtlasFacts, validDate } from '@atv/domain';
 import { readSmallJson } from './request-json';
 import { withRpcDeadline } from './rpc-deadline';
 import { isUuid } from '$lib/library-result';
@@ -137,8 +137,12 @@ export async function dreamAtlasApi(event: Event, action: Action): Promise<Respo
 				: fail('atlas_service_unavailable', 503);
 		if (action === 'read') {
 			const entries = object(data) ? parseEntries(data.entries, String(value.runId)) : null;
-			return entries && object(data) && validDate(data.startDate) && data.startDate <= '2099-12-02'
-				? reply({ startDate: data.startDate, entries })
+			const facts =
+				entries && object(data) && validDate(data.startDate)
+					? prepareDreamAtlasFacts(data.startDate, entries)
+					: null;
+			return facts && object(data)
+				? reply({ startDate: data.startDate, entries, facts })
 				: fail('atlas_service_unavailable', 503);
 		}
 		if (action === 'delete')
