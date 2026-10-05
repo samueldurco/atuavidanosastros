@@ -27,7 +27,7 @@ const tokens = {
 	accessToken: 'synthetic-access',
 	refreshToken: 'synthetic-refresh',
 	openId: 'synthetic-open-id',
-	scopes: ['user.info.basic'],
+	scopes: ['user.info.basic', 'video.upload'],
 	accessExpiresAt: '2026-10-06T12:00:00Z',
 	refreshExpiresAt: '2027-10-05T12:00:00Z'
 };
@@ -84,12 +84,18 @@ it('recusa início sem autenticação disponível', async () => {
 	expect(input.cookies.set).not.toHaveBeenCalled();
 });
 
-it('redireciona com apenas identificação básica e state em cookie seguro', async () => {
+it('solicita identificação e envio de vídeos sem Direct Post, com state seguro', async () => {
 	const input = event('connect');
-	await expect(connect(input)).rejects.toMatchObject({
+	const result = await Promise.resolve(connect(input)).catch((failure: unknown) => failure);
+	if (!result || typeof result !== 'object' || !('location' in result)) {
+		throw new Error('A conexão deve redirecionar para a autorização TikTok.');
+	}
+	expect(result).toMatchObject({
 		status: 303,
 		location: expect.stringContaining('https://www.tiktok.com/')
 	});
+	const authorization = new URL(String(result.location));
+	expect(authorization.searchParams.get('scope')).toBe('user.info.basic,video.upload');
 	expect(input.cookies.set).toHaveBeenCalledWith(
 		'atv_tiktok_oauth_state',
 		expect.any(String),
@@ -143,13 +149,17 @@ it('recusa autorização negada e código ausente', async () => {
 	expect(mocks.exchange).not.toHaveBeenCalled();
 });
 
-it('recusa permissões insuficientes sem gravar', async () => {
-	mocks.exchange.mockResolvedValue({ ...tokens, scopes: [] });
-	await expect(
-		callback(event('callback?state=valid-state&code=synthetic-code'))
-	).rejects.toMatchObject({ status: 400 });
-	expect(mocks.upsert).not.toHaveBeenCalled();
-});
+it.each([{ scopes: [] }, { scopes: ['user.info.basic'] }, { scopes: ['video.upload'] }])(
+	'recusa autorização parcial $scopes antes de consultar perfil ou gravar',
+	async ({ scopes }) => {
+		mocks.exchange.mockResolvedValue({ ...tokens, scopes });
+		await expect(
+			callback(event('callback?state=valid-state&code=synthetic-code'))
+		).rejects.toMatchObject({ status: 400 });
+		expect(mocks.upsert).not.toHaveBeenCalled();
+		expect(mocks.profile).not.toHaveBeenCalled();
+	}
+);
 
 it('recusa identidade divergente sem gravar', async () => {
 	mocks.profile.mockResolvedValue({ openId: 'another-id' });
@@ -169,7 +179,7 @@ it('confirma somente depois de armazenar credenciais criptografadas', async () =
 	expect(stored).toMatchObject({
 		id: 'primary',
 		owner_user_id: 'synthetic-admin',
-		scopes: ['user.info.basic']
+		scopes: ['user.info.basic', 'video.upload']
 	});
 	expect(
 		await decryptTikTokTokens(

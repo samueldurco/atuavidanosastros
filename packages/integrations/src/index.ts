@@ -46,6 +46,7 @@ export {
   refreshTikTokAccessToken,
   TIKTOK_DISPLAY_SCOPES,
   TIKTOK_LOGIN_SCOPES,
+  TIKTOK_UPLOAD_SCOPES,
   TikTokApiError,
   TikTokDisplayClient
 } from './tiktok.ts';

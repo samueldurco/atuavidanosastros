@@ -13,7 +13,7 @@
 		<p class="eyebrow">Backoffice restrito</p>
 		<h1 class="h1">Operação</h1>
 		{#if data.tiktokNotice}<p class="notice" role="status">
-				TikTok conectado e perfil verificado.
+				Conta TikTok conectada com permissão de envio de vídeos.
 			</p>{/if}
 		<div class="grid grid-3">
 			<article class="card panel">
@@ -34,22 +34,28 @@
 		</div>
 		<section class="card panel integration" aria-labelledby="tiktok-heading">
 			<div>
-				<p class="eyebrow">Login Kit · Identificação básica</p>
-				<h2 id="tiktok-heading">TikTok</h2>
+				<p class="eyebrow">Conteúdo da marca · Content Posting API</p>
+				<h2 id="tiktok-heading">TikTok do ATVNA</h2>
 				{#if data.tiktokConnection}
 					<p><strong>{data.tiktokConnection.display_name}</strong> está conectado.</p>
-					<p class="muted">
-						Perfil autorizado; tokens armazenados de forma cifrada. Publicação ainda indisponível.
-					</p>
+					{#if data.tiktokUploadAuthorized}
+						<p class="muted">Permissão de envio de vídeos concedida; credenciais protegidas.</p>
+					{:else}
+						<p class="muted">Reconecte a conta para autorizar o envio de vídeos.</p>
+					{/if}
 				{:else if data.tiktokConfigured}
-					<p>Credenciais configuradas. Falta autorizar a conta do TikTok.</p>
+					<p>Credenciais configuradas. Falta autorizar o envio de vídeos na conta da marca.</p>
 				{:else}
 					<p>Configuração de credenciais pendente no ambiente seguro.</p>
 				{/if}
+				<p class="muted">
+					Preparação da integração: o envio de vídeos ainda será implementado. Nesta modalidade,
+					cada vídeo precisa ser revisado e publicado no aplicativo TikTok.
+				</p>
 			</div>
 			{#if data.tiktokConfigured}
 				<a class="button" href="/api/integrations/tiktok/connect">
-					{data.tiktokConnection ? 'Reconectar TikTok' : 'Conectar TikTok'}
+					{data.tiktokConnection ? 'Reautorizar envio de vídeos' : 'Conectar conta da marca'}
 				</a>
 			{/if}
 		</section>

@@ -30,8 +30,8 @@ export const legalDocuments = {
 			{
 				title: 'Conexões com plataformas',
 				paragraphs: [
-					'A integração TikTok em preparação utiliza autorização OAuth, sem solicitar sua senha TikTok. O acesso inicial se limita à identificação básica do perfil autorizado. Conectar um perfil não inicia publicação nem concede, por si só, permissões de postagem.',
-					'A eventual publicação dependerá das permissões, confirmação do responsável, revisão do conteúdo e regras da plataforma. Você pode revogar o acesso nas configurações da própria plataforma e solicitar a remoção dos dados da conexão ao suporte. Serviços de terceiros têm termos e disponibilidade próprios.'
+					'A integração TikTok em preparação é um recurso administrativo para a conta da marca ATVNA. A autorização OAuth solicita identificação básica do perfil e permissão de envio de vídeos, sem solicitar sua senha TikTok. Essa conexão não é uma forma de entrar na ATVNA e não inicia publicação.',
+					'O envio de vídeos ainda está em preparação. Na modalidade de envio ao TikTok, o responsável deverá revisar e finalizar cada publicação no aplicativo TikTok. Publicação automática dependerá de habilitação própria e das regras da plataforma. Você pode revogar o acesso nas configurações da plataforma e solicitar a remoção dos dados da conexão ao suporte. Serviços de terceiros têm termos e disponibilidade próprios.'
 				]
 			},
 			{
@@ -71,7 +71,7 @@ export const legalDocuments = {
 				title: 'Conexão TikTok',
 				paragraphs: [
 					'Quando o administrador autoriza a conexão, recebemos o identificador do perfil, nome de exibição, avatar, permissões concedidas e tokens de acesso e renovação com suas validades. Tokens são armazenados criptografados no servidor; não devem aparecer em páginas públicas ou registros de diagnóstico.',
-					'A finalidade inicial é identificar e manter a conexão do perfil autorizado. A integração não publica conteúdo automaticamente. A revogação pode ser feita no TikTok; solicite também ao suporte a remoção dos dados armazenados pela ATVNA. A revogação impede novas operações autorizadas, mas não remove conteúdo já publicado na plataforma.'
+					'A finalidade é manter a conexão da conta da marca e preparar o envio de vídeos institucionais para divulgação orgânica da ATVNA. A permissão de envio não autoriza publicar dados pessoais ou conteúdos privados de clientes. O envio ainda não está disponível e a integração não publica conteúdo automaticamente. A revogação pode ser feita no TikTok; solicite também ao suporte a remoção dos dados armazenados pela ATVNA. A revogação impede novas operações autorizadas, mas não remove conteúdo já publicado na plataforma.'
 				]
 			},
 			{
