@@ -16,7 +16,7 @@ beforeAll(async () => {
 		'20260928133000_product_continuity_selection.sql',
 		'20260928140000_product_continuity_profile_guard.sql',
 		'20260928160000_product_continuity_access.sql',
-		'20260928170000_product_continuity_maintenance.sql'
+		'20260928170100_product_continuity_maintenance.sql'
 	])
 		await db.exec(await file(`supabase/migrations/${name}`));
 }, 20000);
