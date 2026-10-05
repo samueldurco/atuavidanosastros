@@ -2,6 +2,7 @@ import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 import { requireAdmin } from '$lib/server/admin-access';
 import { requireTikTokConfig } from '$lib/server/tiktok-config';
+import { tikTokConnectionFailure, type TikTokConnectionStage } from '$lib/server/tiktok-failure';
 import { encryptTikTokTokens, oauthStateMatches } from '$lib/server/tiktok-credentials';
 import {
 	exchangeTikTokAuthorizationCode,
@@ -30,6 +31,7 @@ export const GET: RequestHandler = async ({ cookies, locals, url }) => {
 	const { clientKey, clientSecret, redirectUri, encryptionKey, serviceRole, supabaseUrl } =
 		await requireTikTokConfig(privateEnv, publicEnv, url);
 
+	let stage: TikTokConnectionStage = 'tokens';
 	try {
 		const tokens = await exchangeTikTokAuthorizationCode({
 			clientKey,
@@ -41,10 +43,13 @@ export const GET: RequestHandler = async ({ cookies, locals, url }) => {
 		if (missingScopes.length > 0)
 			error(400, 'O TikTok não concedeu todas as permissões necessárias.');
 
+		stage = 'profile';
 		const profile = await new TikTokDisplayClient({ accessToken: tokens.accessToken }).getProfile();
 		if (profile.openId !== tokens.openId)
 			error(400, 'A identidade retornada pelo TikTok não confere.');
+		stage = 'encryption';
 		const encrypted = await encryptTikTokTokens(tokens, encryptionKey);
+		stage = 'storage';
 		const supabase = createClient(supabaseUrl, serviceRole, { auth: { persistSession: false } });
 		const { error: storageError } = await supabase.from('tiktok_connections').upsert({
 			id: 'primary',
@@ -63,6 +68,6 @@ export const GET: RequestHandler = async ({ cookies, locals, url }) => {
 		redirect(303, '/admin?tiktok=connected');
 	} catch (failure) {
 		if (isHttpError(failure) || isRedirect(failure)) throw failure;
-		error(503, 'Não foi possível concluir a conexão do TikTok. Tente autorizar novamente.');
+		error(503, tikTokConnectionFailure(stage, failure));
 	}
 };
