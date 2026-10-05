@@ -3,6 +3,8 @@ import { beforeEach, expect, it, vi } from 'vitest';
 import { GET as connect } from './connect/+server';
 import { GET as callback } from './callback/+server';
 import { decryptTikTokTokens } from '$lib/server/tiktok-credentials';
+import { tikTokConnectionFailure } from '$lib/server/tiktok-failure';
+import { TikTokApiError } from '@atv/integrations';
 
 const mocks = vi.hoisted(() => ({
 	privateEnv: {} as Record<string, string>,
@@ -202,7 +204,55 @@ it('não expõe mensagens do provedor no erro público', async () => {
 		callback(event('callback?state=valid-state&code=synthetic-code'))
 	).rejects.toMatchObject({
 		status: 503,
-		body: { message: 'Não foi possível concluir a conexão do TikTok. Tente autorizar novamente.' }
+		body: {
+			message:
+				'Não foi possível concluir a conexão do TikTok. Referência: tokens/unexpected_error. Inicie uma nova autorização pelo painel administrativo.'
+		}
 	});
 	expect(mocks.upsert).not.toHaveBeenCalled();
+});
+
+it.each([
+	['exchange', 'tokens'],
+	['profile', 'profile'],
+	['upsert', 'storage']
+] as const)('identifica falha em %s sem expor mensagens ou log IDs', async (operation, stage) => {
+	mocks[operation].mockRejectedValue(
+		new TikTokApiError({
+			message: 'synthetic-access synthetic-secret',
+			status: 400,
+			code: 'network_error',
+			logId: 'synthetic-refresh'
+		})
+	);
+	await expect(
+		callback(event('callback?state=valid-state&code=synthetic-code'))
+	).rejects.toMatchObject({
+		status: 503,
+		body: {
+			message: `Não foi possível concluir a conexão do TikTok. Referência: ${stage}/network_error. Inicie uma nova autorização pelo painel administrativo.`
+		}
+	});
+});
+
+it('restringe códigos de diagnóstico a uma lista fixa, inclusive na criptografia', () => {
+	const failure = new TikTokApiError({
+		message: 'synthetic-secret',
+		status: 400,
+		code: 'synthetic-code synthetic-access',
+		logId: 'synthetic-refresh'
+	});
+	expect(tikTokConnectionFailure('encryption', failure)).toBe(
+		'Não foi possível concluir a conexão do TikTok. Referência: encryption/unexpected_error. Inicie uma nova autorização pelo painel administrativo.'
+	);
+	expect(
+		tikTokConnectionFailure(
+			'tokens',
+			new TikTokApiError({
+				message: 'synthetic-secret',
+				status: 400,
+				code: 'invalid_grant'
+			})
+		)
+	).toContain('tokens/invalid_grant');
 });
