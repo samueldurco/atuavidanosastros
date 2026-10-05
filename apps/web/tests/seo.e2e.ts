@@ -95,7 +95,7 @@ test('legacy home and private pages keep a single, safe robots tag', async ({ pa
 test('editorial shell remains legible on mobile without horizontal overflow', async ({ page }) => {
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/noticias');
-	await page.getByRole('button', { name: 'Recusar analytics', exact: true }).click();
+	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
 		true

@@ -22,7 +22,7 @@ test('Loja mantém as 12 rotas editoriais sem ofertas publicadas', async ({ page
 	await expect(
 		page.getByText(/Ainda não há\s+produtos,\s+preços ou disponibilidade publicados/)
 	).toBeVisible();
-	const refuseAnalytics = page.getByRole('button', { name: 'Recusar analytics' });
+	const refuseAnalytics = page.getByRole('button', { name: 'Recusar opcionais' });
 	if (await refuseAnalytics.isVisible()) await refuseAnalytics.click();
 	await page.screenshot({ path: '../../test-results/gate-b/loja-signo-1280.png', fullPage: true });
 	await page.setViewportSize({ width: 390, height: 900 });
@@ -36,7 +36,7 @@ for (const width of [1440, 820, 390, 320]) {
 	test(`Loja cabe na viewport de ${width}px`, async ({ page }) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/loja');
-		const refuseAnalytics = page.getByRole('button', { name: 'Recusar analytics' });
+		const refuseAnalytics = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await refuseAnalytics.isVisible()) await refuseAnalytics.click();
 		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 		const horizontalOverflow = await page.evaluate(

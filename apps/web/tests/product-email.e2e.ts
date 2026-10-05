@@ -16,7 +16,7 @@ const receipt = {
 const cancelled = { ...receipt, state: 'CANCELLED', cancelledAt: '2026-09-28T10:01:00Z' };
 async function open(page: Page, mode = 'available') {
 	await page.goto(`/biblioteca/_spec/email?mode=${mode}`);
-	const analytics = page.getByRole('button', { name: 'Recusar analytics' });
+	const analytics = page.getByRole('button', { name: 'Recusar opcionais' });
 	if (await analytics.isVisible()) await analytics.click();
 }
 async function retained(page: Page, value = key) {
@@ -60,7 +60,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'não confirma envio nem entrega'
 		);
 		await expect(page.locator('#email [role=status]')).toBeFocused();
-		await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+		await page.getByRole('button', { name: 'Consultar pedido' }).click();
 		await page.getByRole('button', { name: 'Cancelar pedido', exact: true }).click();
 		await expect(page.locator('#email [role=status]')).toContainText('Pedido cancelado');
 		await expect(page.getByRole('button', { name: 'Cancelar pedido', exact: true })).toHaveCount(0);
@@ -88,7 +88,7 @@ test('revoked reader without digest can recover and cancel, but never request ag
 		page.getByText('Novos pedidos de e-mail estão indisponíveis.', { exact: false })
 	).toBeVisible();
 	expect(actions).toEqual([]);
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await page.getByRole('button', { name: 'Cancelar pedido', exact: true }).click();
 	await expect(page.locator('#email [role=status]')).toContainText('Pedido cancelado');
 	expect(actions).toEqual(['recover', 'cancel']);
@@ -111,9 +111,9 @@ test('lost acknowledgement survives reload with one request and no consent repla
 	await open(page);
 	await page.getByRole('checkbox').check();
 	await page.getByRole('button', { name: 'Solicitar e-mail' }).click();
-	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeVisible();
+	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	await page.reload();
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await expect(page.locator('#email [role=status]')).toContainText('Solicitação registrada');
 	expect(requests).toBe(1);
 	await expect(page.getByRole('checkbox')).toHaveCount(0);
@@ -133,7 +133,7 @@ test('disabled and corrupt storage states cannot issue network mutations', async
 	await page.reload();
 	await expect(page.locator('#email [role=status]')).toContainText('Nenhuma alteração foi enviada');
 	await expect(page.locator('#email button')).toHaveCount(1);
-	await expect(page.getByRole('button', { name: 'Consultar pedidos desta leitura' })).toBeEnabled();
+	await expect(page.getByRole('button', { name: 'Ver pedidos de e-mail' })).toBeEnabled();
 	expect(calls).toBe(0);
 });
 test('pending request locks controls and cancellation failure requires recovery', async ({
@@ -160,7 +160,7 @@ test('pending request locks controls and cancellation failure requires recovery'
 	release();
 	await page.getByRole('button', { name: 'Cancelar pedido', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Cancelar pedido', exact: true })).toHaveCount(0);
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
 	await expect(page.locator('#email [role=status]')).toContainText('Pedido cancelado');
 });
 test('unintercepted local fixture cannot bypass authentication', async ({ page }) => {
@@ -175,7 +175,7 @@ test('unintercepted local fixture cannot bypass authentication', async ({ page }
 	});
 	expect(response.headers()['cache-control']).toContain('no-store');
 	if (response.status() === 503) {
-		await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 		expect(await page.evaluate((name) => sessionStorage.getItem(name), name)).toMatch(
 			/^[a-f0-9-]{36}$/
 		);

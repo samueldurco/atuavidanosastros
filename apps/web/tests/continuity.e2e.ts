@@ -69,7 +69,7 @@ async function fixture(page: Page, value = initial(), fixturePath = path) {
 	return state;
 }
 async function load(page: Page) {
-	await page.getByRole('button', { name: 'Consultar continuidade', exact: true }).click();
+	await page.getByRole('button', { name: 'Consultar meus registros', exact: true }).click();
 	await expect(page.getByText('Estado consultado.', { exact: false })).toBeVisible();
 }
 async function authorize(page: Page) {
@@ -90,7 +90,7 @@ async function note(page: Page, text = 'Tema sintético escrito por mim.') {
 async function readerFixture(page: Page) {
 	const state = await fixture(page, initial(), '/biblioteca/_spec/referencias');
 	expect(state.reads).toBe(0);
-	await page.getByText('Guardar referências para continuidade', { exact: true }).click();
+	await page.getByText('Salvar trechos nos meus registros', { exact: true }).click();
 	expect(state.reads).toBe(0);
 	await load(page);
 	await authorize(page);
@@ -148,9 +148,9 @@ test('leitor: navegação limpa consulta, aceite e rascunho; sintético/revogado
 	await chooseReference(page, 'hypothesis-0');
 	const reads = state.reads;
 	await page.getByRole('button', { name: 'Trocar leitura de teste' }).click();
-	await page.getByText('Guardar referências para continuidade', { exact: true }).click();
+	await page.getByText('Salvar trechos nos meus registros', { exact: true }).click();
 	await expect(
-		page.getByRole('button', { name: 'Consultar continuidade', exact: true })
+		page.getByRole('button', { name: 'Consultar meus registros', exact: true })
 	).toBeVisible();
 	await expect(page.getByLabel('Referência da leitura', { exact: true })).toHaveCount(0);
 	expect(state.reads).toBe(reads);
@@ -235,9 +235,7 @@ test('consentimento explícito → nota → revisão CAS → revogação → exc
 	await page.getByRole('button', { name: 'Confirmar exclusão do registro' }).click();
 	await expect(page.getByText('Você ainda não guardou referências')).toBeVisible();
 	expect(state.value.items).toHaveLength(0);
-	await expect(
-		page.getByRole('button', { name: 'Atualizar estado da continuidade' })
-	).toBeFocused();
+	await expect(page.getByRole('button', { name: 'Atualizar registros' })).toBeFocused();
 });
 
 for (const code of [401, 409]) {
@@ -273,7 +271,7 @@ test('falha na releitura após gravação confirma recuperação sem novo POST d
 		.fill('Nota confirmada com consulta indisponível');
 	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
 	await expect(page.getByRole('alert')).toContainText('Nenhuma nova alteração');
-	await expect(page.getByRole('button', { name: 'Consultar continuidade' })).toBeFocused();
+	await expect(page.getByRole('button', { name: 'Consultar meus registros' })).toBeFocused();
 	state.malformed = false;
 	await load(page);
 	await expect(
@@ -313,7 +311,7 @@ test('resposta perdida bloqueia reenvio; recuperação encontra gravação e ren
 	await page.getByLabel('Sua nota', { exact: true }).fill('Nota com resposta perdida');
 	await page.getByRole('button', { name: 'Salvar registro revisado' }).click();
 	await expect(page.getByRole('alert')).toContainText('Ela pode ter sido salva');
-	await expect(page.getByRole('button', { name: 'Consultar continuidade' })).toBeFocused();
+	await expect(page.getByRole('button', { name: 'Consultar meus registros' })).toBeFocused();
 	expect(state.writes).toHaveLength(2);
 	await load(page);
 	await expect(page.getByText('Nota com resposta perdida', { exact: true })).toBeVisible();
@@ -328,7 +326,7 @@ test('snapshot inválido não abre controles; texto hostil é texto; disabled pr
 }) => {
 	const state = await fixture(page);
 	state.malformed = true;
-	await page.getByRole('button', { name: 'Consultar continuidade' }).click();
+	await page.getByRole('button', { name: 'Consultar meus registros' }).click();
 	await expect(page.getByRole('alert')).toContainText('Não foi possível consultar');
 	await expect(page.getByRole('button', { name: 'Salvar autorização e escopo' })).toHaveCount(0);
 	state.malformed = false;
@@ -337,7 +335,7 @@ test('snapshot inválido não abre controles; texto hostil é texto; disabled pr
 	await note(page, '<img src=x onerror=alert(1)>');
 	await expect(page.locator('.continuity img')).toHaveCount(0);
 	state.value.enabled = false;
-	await page.getByRole('button', { name: 'Atualizar estado da continuidade' }).click();
+	await page.getByRole('button', { name: 'Atualizar registros' }).click();
 	await expect(page.getByText('Continuidade indisponível para novas autorizações')).toBeVisible();
 	await expect(page.getByRole('button', { name: 'Revisar registro' })).toBeDisabled();
 	await expect(page.getByRole('button', { name: 'Revogar autorização' })).toBeEnabled();

@@ -18,6 +18,7 @@
 		"gen": "wrangler types"
 	},
 	"dependencies": {
+		"@atv/ai": "workspace:*",
 		"@atv/astrology": "workspace:*",
 		"@atv/content": "workspace:*",
 		"@atv/domain": "workspace:*",

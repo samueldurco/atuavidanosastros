@@ -16,7 +16,9 @@ for (const product of ['tarot-focus', 'tarot-yes-no']) {
 		});
 		await page.goto(`${path}?product=${product}&access=UNRELEASED`);
 		await expect(page.getByText('Nenhum modelo está homologado', { exact: false })).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+		).toBeDisabled();
 		await expect(
 			page.getByText(
 				product === 'tarot-yes-no'
@@ -34,7 +36,9 @@ for (const width of [320, 390, 820, 1440]) {
 		await page.emulateMedia({ reducedMotion: 'reduce' });
 		for (const product of ['tarot-focus', 'tarot-yes-no']) {
 			await page.goto(`${path}?product=${product}`);
-			await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeEnabled();
+			await expect(
+				page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			).toBeEnabled();
 			await page.getByLabel('Sua pergunta').focus();
 			await expect(page.getByLabel('Sua pergunta')).toBeFocused();
 			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
@@ -122,12 +126,12 @@ for (const product of [
 		await page.goto(`${path}?product=${product}`);
 		expect(writes).toBe(0);
 		await fill(page, product);
-		await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
+		await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
 		// A successful acknowledgement automatically uses the verified recovery projection.
 		await expect(page.getByRole('status')).toContainText(
 			'não significa que a leitura já esteja pronta'
 		);
-		await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toHaveAttribute(
+		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toHaveAttribute(
 			'href',
 			`/biblioteca/${library}`
 		);
@@ -135,8 +139,10 @@ for (const product of [
 		const stored = await page.evaluate(() => ({ ...sessionStorage }));
 		expect(Object.keys(stored)).toEqual([slot(product)]);
 		expect(stored[slot(product)]).toMatch(/^[a-f0-9-]{36}$/);
-		await page.getByRole('button', { name: 'Preparar outro pedido' }).click();
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeEnabled();
+		await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+		).toBeEnabled();
 		await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 		await expect(
 			page.getByLabel(
@@ -160,7 +166,7 @@ test('validation has associated messages and preserves entered values without se
 		return route.abort();
 	});
 	await page.goto(path);
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
 	await expect(page.getByRole('status')).toBeFocused();
 	await expect(page.getByLabel('Sua pergunta')).toHaveAttribute('aria-invalid', 'true');
 	await expect(page.getByLabel('Sua pergunta')).toHaveAttribute(
@@ -168,7 +174,7 @@ test('validation has associated messages and preserves entered values without se
 		/question1-error/
 	);
 	await page.getByLabel('Sua pergunta').fill('Pergunta preservada');
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
 	await expect(page.getByLabel('Sua pergunta')).toHaveValue('Pergunta preservada');
 	expect(writes).toBe(0);
 });
@@ -188,19 +194,19 @@ test('lost acknowledgement, reload, revoked eligibility and null lookup never re
 	});
 	await page.goto(path);
 	await fill(page, 'daily-card');
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
 	await expect(page.getByRole('status')).toBeFocused();
 	const original = await page.evaluate((name) => sessionStorage.getItem(name), slot('daily-card'));
 	await page.goto(`${path}?access=UNRELEASED`);
 	await page.reload();
 	await expect(page.getByLabel('Sua pergunta')).toHaveValue('');
-	await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
-	const recover = page.getByRole('button', { name: 'Consultar pedido original' });
+	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
+	const recover = page.getByRole('button', { name: 'Consultar pedido' });
 	await recover.focus();
 	await page.keyboard.press('Enter');
 	await expect(page.getByRole('status')).toContainText('em andamento');
 	await expect(page.getByRole('status')).toBeFocused();
-	await expect(page.getByRole('button', { name: 'Preparar outro pedido' })).toHaveCount(0);
+	await expect(page.getByRole('button', { name: 'Iniciar outro pedido' })).toHaveCount(0);
 	expect(writes).toBe(1);
 	expect(reads).toBe(1);
 	expect(await page.evaluate((name) => sessionStorage.getItem(name), slot('daily-card'))).toBe(
@@ -212,16 +218,18 @@ for (const access of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 		page
 	}) => {
 		await page.goto(`${path}?access=${access}`);
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+		).toBeDisabled();
 		await page.evaluate(({ name, key }) => sessionStorage.setItem(name, key), {
 			name: slot('daily-card'),
 			key
 		});
 		await mockRecovery(page);
 		await page.reload();
-		await page.getByRole('button', { name: 'Consultar pedido original' }).click();
-		await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Preparar outro pedido' })).toBeDisabled();
+		await page.getByRole('button', { name: 'Consultar pedido' }).click();
+		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
+		await expect(page.getByRole('button', { name: 'Iniciar outro pedido' })).toBeDisabled();
 	});
 }
 test('pending request locks fields and repeated activation; exact prewrite refusal permits editing', async ({
@@ -239,9 +247,9 @@ test('pending request locks fields and repeated activation; exact prewrite refus
 	});
 	await page.goto(path);
 	await fill(page, 'daily-card');
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
 	await expect(page.getByLabel('Sua pergunta')).toBeDisabled();
-	await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
 	finish();
 	await expect(page.getByRole('status')).toContainText('ainda não está liberado');
 	await expect(page.getByLabel('Sua pergunta')).toBeEnabled();
@@ -256,7 +264,9 @@ for (const width of [1440, 820, 390, 320]) {
 		await page.setViewportSize({ width, height: 1000 });
 		for (const product of ['three-questions', 'dream-reading', 'dream-journal']) {
 			await page.goto(`${path}?product=${product}`);
-			await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeEnabled();
+			await expect(
+				page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			).toBeEnabled();
 			expect(
 				await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)
 			).toBe(true);

@@ -6,7 +6,7 @@ const headings = [
 	'Base natal: possibilidade simbólica — Hipótese [date-natal-basis]',
 	'Amostra da data: possibilidade simbólica — Hipótese [date-sample]',
 	'Contraste entre base natal e amostra — Hipótese [date-contrast]',
-	'Síntese da Leitura da Data (1) e três perguntas práticas'
+	'Síntese da Previsões para uma Data (1) e três perguntas práticas'
 ];
 for (const width of [1440, 820, 390, 320]) {
 	test(`date reader separates recorded base and sample from hypotheses at ${width}`, async ({
@@ -14,7 +14,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=date-reading');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -58,7 +58,7 @@ for (const width of [1440, 820, 390, 320]) {
 			await expect(reading).toContainText(question);
 		for (const name of ['Baixar relatório web', 'Baixar card SVG', 'Solicitar e-mail'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
-		for (const name of ['Baixar cartografia SVG', 'Baixar PDF'])
+		for (const name of ['Baixar mapa em SVG', 'Baixar PDF'])
 			await expect(page.getByRole('button', { name, exact: true })).toHaveCount(0);
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)

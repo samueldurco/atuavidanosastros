@@ -1,4 +1,5 @@
 import { SITE, signs } from '$lib/data/site';
+import { inspectEditorialStyle } from '@atv/ai/editorial-style';
 import {
 	editorialHubs,
 	evergreenGuidePaths,
@@ -175,6 +176,20 @@ export function validDocument(document: EditorialDocument, now: Date): boolean {
 					section.paragraphs.length === 0 ||
 					section.paragraphs.some((paragraph) => !paragraph.trim())
 			)
+		)
+			return false;
+		if (
+			inspectEditorialStyle([
+				{ text: document.title, location: 'title' },
+				{ text: document.description, location: 'description' },
+				...document.sections.flatMap((section, index) => [
+					{ text: section.heading, location: `sections.${index}.heading` },
+					...section.paragraphs.map((text, paragraph) => ({
+						text,
+						location: `sections.${index}.${paragraph}`
+					}))
+				])
+			]).length > 0
 		)
 			return false;
 		if (

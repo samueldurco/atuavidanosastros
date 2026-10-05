@@ -54,8 +54,7 @@
 		{#if document.calculation}<aside class="card">
 				<h2>Base calculada</h2>
 				<p>
-					Motor {document.calculation.engine}, versão {document.calculation.version}. A
-					interpretação não substitui escolhas nem orientação profissional.
+					Motor {document.calculation.engine}, versão {document.calculation.version}.
 				</p>
 				<p>
 					Cobertura: <time datetime={document.calculation.coverageStart}

@@ -62,7 +62,7 @@ for (const stalled of ['list', 'download']) {
 		});
 		await page.goto('/biblioteca/_spec/arquivos');
 		await page.clock.install();
-		const consult = page.getByRole('button', { name: 'Consultar arquivos guardados' });
+		const consult = page.getByRole('button', { name: 'Ver arquivos salvos' });
 		await consult.click();
 		if (stalled === 'download')
 			await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
@@ -113,10 +113,10 @@ for (const width of [1440, 820, 390, 320]) {
 			})
 		);
 		await page.goto('/biblioteca/_spec/arquivos');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		expect(lists).toBe(0);
-		await page.getByRole('button', { name: 'Consultar arquivos guardados' }).click();
+		await page.getByRole('button', { name: 'Ver arquivos salvos' }).click();
 		await expect(page.getByRole('list', { name: 'Arquivos disponíveis' })).toBeVisible();
 		const download = page.waitForEvent('download');
 		await page.getByRole('button', { name: 'Recuperar Relatório web' }).click();
@@ -163,7 +163,7 @@ test('empty, unavailable, expired, revoked and corrupt downloads allow safe retr
 		})
 	);
 	await page.goto('/biblioteca/_spec/arquivos');
-	const consult = page.getByRole('button', { name: 'Consultar arquivos guardados' });
+	const consult = page.getByRole('button', { name: 'Ver arquivos salvos' });
 	await consult.click();
 	await expect(page.getByText(/Nenhum arquivo guardado disponível/)).toBeVisible();
 	mode = 'error';
@@ -193,11 +193,11 @@ test('reader integrates index and synthetic guard; revoked readings hide consult
 	request
 }) => {
 	await page.goto('/biblioteca/_spec/fluxo?state=ready');
-	await page.getByRole('link', { name: 'Arquivos guardados', exact: true }).click();
-	await expect(page.getByRole('heading', { name: 'Arquivos guardados' })).toBeInViewport();
-	await expect(page.getByRole('button', { name: 'Consultar arquivos guardados' })).toBeDisabled();
+	await page.getByRole('link', { name: 'Arquivos salvos', exact: true }).click();
+	await expect(page.getByRole('heading', { name: 'Arquivos salvos' })).toBeInViewport();
+	await expect(page.getByRole('button', { name: 'Ver arquivos salvos' })).toBeDisabled();
 	await page.goto('/biblioteca/_spec/fluxo?state=revoked');
-	await expect(page.getByRole('button', { name: 'Consultar arquivos guardados' })).toHaveCount(0);
+	await expect(page.getByRole('button', { name: 'Ver arquivos salvos' })).toHaveCount(0);
 	const response = await request.get(endpoint);
 	expect([401, 503]).toContain(response.status());
 	expect(response.headers()['cache-control']).toContain('no-store');

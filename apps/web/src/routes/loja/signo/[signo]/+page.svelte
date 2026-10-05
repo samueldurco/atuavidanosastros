@@ -21,12 +21,14 @@
 		<p class="eyebrow">Loja dos Signos</p>
 		<h1 class="h1">{data.name} na Loja dos Signos</h1>
 		<p class="lead">
-			Estamos preparando uma seleção de livros e objetos inspirados em {data.name}. As compras ainda não estão disponíveis.
+			Estamos preparando uma seleção de livros e objetos inspirados em {data.name}. As compras ainda
+			não estão disponíveis.
 		</p>
 		<div class="preparation-detail">
 			<p class="eyebrow">Disponibilidade</p>
 			<p>
-				Os produtos, os preços e as condições de compra serão exibidos aqui quando a loja estiver disponível.
+				Os produtos, os preços e as condições de compra serão exibidos aqui quando a loja estiver
+				disponível.
 			</p>
 		</div>
 		<a class="button secondary" href="/loja">Voltar à Loja dos Signos</a>

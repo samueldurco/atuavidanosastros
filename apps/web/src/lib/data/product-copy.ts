@@ -115,7 +115,7 @@ export function customerProduct(id: string) {
 	return {
 		...product,
 		...copy,
-		href: product.personalized ? `/biblioteca/nova/${product.id}` : '/dashboard',
+		href: `/produtos/${product.slug}`,
 		// An unreleased product offers details, never a promise of immediate delivery.
 		cta: product.state === 'ACTIVE' ? copy.action : `Conhecer ${product.name}`
 	};

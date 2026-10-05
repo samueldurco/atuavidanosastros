@@ -134,9 +134,7 @@ async function fixture(productId: string) {
 	const db = await setupProductDatabase({ processing: true });
 	try {
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
-		await db.exec(
-			await file('supabase/migrations/20260928234000_product_artifact_renderer_versions.sql')
-		);
+		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
 		await db.exec(
 			await file('supabase/migrations/20260923110000_product_editorial_publication.sql')
 		);

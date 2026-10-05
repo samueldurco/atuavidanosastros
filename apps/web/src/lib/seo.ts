@@ -30,23 +30,23 @@ export const legacyPublicPaths = [
 ] as const;
 export const editorialHubs = {
 	'/noticias': {
-		title: 'Notícias e leituras do céu',
-		description: 'Reportagens, colunas e guias com autoria, fontes e revisão editorial.',
+		title: 'Notícias de astrologia',
+		description: 'Notícias, artigos e guias sobre astrologia e autoconhecimento.',
 		kind: 'news'
 	},
 	'/signos': {
-		title: 'Atlas dos signos',
-		description: 'Perfis dos signos com contexto, método e espaço para diferenças individuais.',
+		title: 'Os 12 signos',
+		description: 'Conheça as características dos signos no amor, no trabalho e nas relações.',
 		kind: 'sign-profile'
 	},
 	'/horoscopo': {
-		title: 'Horóscopo com contexto',
-		description: 'Leituras por signo que distinguem fatos calculados, interpretação e escolha.',
+		title: 'Horóscopo e previsões',
+		description: 'Previsões por signo para o amor, o trabalho e o seu dia a dia.',
 		kind: 'horoscope'
 	},
 	'/compatibilidade': {
 		title: 'Compatibilidade entre signos',
-		description: 'Afinidades como perguntas sobre relações, não como vereditos sobre pessoas.',
+		description: 'Descubra as afinidades entre os signos no amor e na convivência.',
 		kind: 'compatibility'
 	}
 } as const;
@@ -85,17 +85,16 @@ export function legacySeo(path: string): PageSeo | null {
 		'/meio-do-ceu': {
 			title: 'Meio do Céu no mapa astral',
 			description:
-				'Entenda o Meio do Céu como direção pública, contribuição e visibilidade — sem reduzir vocação a um signo.'
+				'Descubra o que o Meio do Céu mostra sobre carreira, reconhecimento e vida profissional.'
 		},
 		'/bussola-de-carreira': {
 			title: 'Bússola de Carreira grátis',
-			description:
-				'Descubra as perguntas do seu Meio do Céu com uma ferramenta gratuita e linguagem profissional responsável.'
+			description: 'Calcule seu Meio do Céu grátis com sua data, hora e local de nascimento.'
 		},
 		'/mapa-de-proposito': {
 			title: 'Mapa de Propósito & Carreira — em preparação',
 			description:
-				'Proposta de leitura vocacional em preparação. Acesso, preço e checkout ainda não estão disponíveis.'
+				'Conheça a leitura de carreira, trabalho e dinheiro no mapa astral. Produto em preparação.'
 		},
 		'/loja': {
 			title: 'Loja dos signos — em preparação',

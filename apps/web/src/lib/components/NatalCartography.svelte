@@ -29,7 +29,7 @@
 </script>
 
 <section id="cartografia" aria-labelledby="cartography-heading">
-	<p class="eyebrow">Coordenadas natais</p>
+	<p class="eyebrow">Mapa de nascimento</p>
 	<h2 id="cartography-heading">Seu mapa astral</h2>
 	<p>
 		Posições, ângulos e cúspides desta versão. A geometria é experimental; leia os limites antes de
@@ -57,7 +57,7 @@
 					role="img"
 					aria-labelledby="natal-chart-title natal-chart-description"
 				>
-					<title id="natal-chart-title">Cartografia natal tropical experimental</title>
+					<title id="natal-chart-title">Mapa astral natal experimental</title>
 					<desc id="natal-chart-description"
 						>Os dez números correspondem à lista de posições. Zero de Áries fica à esquerda e as
 						longitudes crescem no sentido anti-horário. Trilhas radiais separam os marcadores; não

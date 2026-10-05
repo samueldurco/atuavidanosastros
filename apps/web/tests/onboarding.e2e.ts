@@ -43,7 +43,7 @@ async function setup(page: Page) {
 	});
 	await page.goto('/conta/_spec/nascimento');
 	await expect(page.getByRole('button', { name: 'Completar depois' })).toBeEnabled();
-	await page.getByRole('button', { name: 'Recusar analytics' }).click();
+	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 	return {
 		commands,
 		fail: (value: string) => {
@@ -61,7 +61,7 @@ async function fill(page: Page) {
 		['Fuso IANA', 'America/Sao_Paulo'],
 		['Latitude', '-23.5'],
 		['Longitude', '-46.6'],
-		['Deslocamento UTC na data de nascimento', '-02:00'],
+		['Fuso de nascimento (UTC) na data de nascimento', '-02:00'],
 		['Fonte das coordenadas e do fuso', 'Fixture local']
 	])
 		await page.getByLabel(label, { exact: true }).fill(value);
@@ -83,7 +83,7 @@ test('explicit consent, save, reload, correction and scoped deletion', async ({ 
 		)
 	).toEqual([]);
 	await submit.click();
-	await expect(page.getByRole('status')).toContainText('Perfil natal salvo');
+	await expect(page.getByRole('status')).toContainText('Dados de nascimento salvos');
 	expect(api.commands).toHaveLength(1);
 	expect(api.commands[0]).toMatchObject({
 		expectedRevision: 0,
@@ -95,7 +95,7 @@ test('explicit consent, save, reload, correction and scoped deletion', async ({ 
 	await page.getByLabel('Cidade e região de nascimento').fill('Correção sintética');
 	await page.getByRole('checkbox').check();
 	await submit.click();
-	await expect(page.getByRole('status')).toContainText('Perfil natal salvo');
+	await expect(page.getByRole('status')).toContainText('Dados de nascimento salvos');
 	expect(api.commands[1].expectedRevision).toBe(1);
 	const forget = page.getByRole('button', { name: 'Apagar perfil natal', exact: true });
 	await forget.click();
@@ -222,7 +222,7 @@ test('pending submission disables mutations and sends exactly one command', asyn
 	await expect(page.getByRole('button', { name: 'Completar depois' })).toBeDisabled();
 	await expect(page.getByLabel('Cidade e região de nascimento')).toBeDisabled();
 	release();
-	await expect(page.getByRole('status')).toContainText('Perfil natal salvo');
+	await expect(page.getByRole('status')).toContainText('Dados de nascimento salvos');
 	expect(api.commands).toHaveLength(1);
 });
 for (const [width, height] of [

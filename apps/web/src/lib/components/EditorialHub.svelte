@@ -6,7 +6,7 @@
 
 <section class="section">
 	<div class="reading">
-		<p class="eyebrow">Caderno do céu</p>
+		<p class="eyebrow">Artigos de astrologia</p>
 		<h1 class="h1">{seo.title.split(' — ')[0]}</h1>
 		<p class="lead">{seo.description}</p>
 		{#if documents.length}
@@ -28,18 +28,11 @@
 			{/each}
 		{:else}
 			<div class="card">
-				<h2>Um acervo começa pelo cuidado</h2>
-				<p>
-					Ainda não há publicações liberadas neste acervo. Cada leitura precisa de autoria
-					identificada, fontes e revisão editorial antes de aparecer aqui.
-				</p>
-				<p>
-					Não publicamos previsões sem fatos calculados e verificados, nem transformamos um signo em
-					sentença sobre a sua vida.
-				</p>
+				<h2>Nenhum artigo publicado ainda</h2>
+				<p>Os novos artigos aparecerão aqui assim que forem publicados.</p>
 			</div>
 		{/if}
-		<p><a href="/metodo">Conheça nosso método</a> · <a href="/caderno">Explore o Caderno</a></p>
+		<p><a href="/metodo">Como fazemos as leituras</a> · <a href="/caderno">Ver artigos</a></p>
 		{#if seo.path === '/noticias'}<p><a href="/noticias/feed.xml">Acompanhar pelo RSS</a></p>{/if}
 	</div>
 </section>

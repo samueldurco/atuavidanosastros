@@ -4,7 +4,7 @@ for (const width of [1440, 820, 390, 320])
 		test.setTimeout(60_000);
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=week-reading');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		const timeline = page.locator('#semana'),
@@ -103,7 +103,7 @@ for (const width of [390, 320])
 		await page.goto(
 			'/biblioteca/_spec/fluxo?state=ready&product=week-reading&calculation=temporal'
 		);
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		const detail = page.locator('.week-temporal-detail');
 		await expect(detail).toContainText('Mostrando 1 de 1 contatos/cruzamentos');

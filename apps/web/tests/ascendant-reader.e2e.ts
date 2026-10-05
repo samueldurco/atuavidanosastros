@@ -13,7 +13,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=ascendant');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -39,7 +39,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(source.locator('dt')).toHaveCount(1);
 		await expect(page.getByRole('button', { name: 'Baixar relatório web' })).toBeDisabled();
 		await expect(
-			page.getByRole('button', { name: 'Baixar cartografia SVG', exact: true })
+			page.getByRole('button', { name: 'Baixar mapa em SVG', exact: true })
 		).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar card SVG', exact: true })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);

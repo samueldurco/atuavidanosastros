@@ -95,7 +95,7 @@
 <svelte:head
 	><title>Bússola de Carreira grátis — A Tua Vida nos Astros</title><meta
 		name="description"
-		content="Descubra as perguntas do seu Meio do Céu com uma ferramenta gratuita e linguagem profissional responsável."
+		content="Calcule seu Meio do Céu gratuitamente com sua data, hora e local de nascimento. Conheça esse ponto do mapa ligado à carreira."
 	/><link
 		rel="canonical"
 		href="https://atuavidanosastros.com.br/bussola-de-carreira"
@@ -284,13 +284,13 @@
 			</section>
 		</div>
 		<section class="continuity">
-			<p class="eyebrow">Direção não é destino</p>
-			<h2>O contexto da sua vida também faz parte da leitura.</h2>
+			<p class="eyebrow">Carreira no mapa astral</p>
+			<h2>Quer conhecer outros fatores do seu mapa?</h2>
 			<p>
-				Formação, oportunidade, território e escolhas não cabem em um único ponto do mapa. Use o
-				resultado para explorar possibilidades e formular perguntas melhores.
+				Conheça a leitura sobre vocação, trabalho e sua relação com dinheiro. Veja o que ela aborda
+				e os dados necessários para começar.
 			</p>
-			<a href="/mapa-de-proposito">Conhecer o Mapa de Propósito &amp; Carreira →</a>
+			<a href="/produtos/mapa-proposito-carreira">Conhecer o Mapa de Carreira →</a>
 		</section>
 	</div>
 </ContentShell>

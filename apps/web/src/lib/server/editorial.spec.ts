@@ -87,6 +87,22 @@ async function sign(
 	};
 }
 describe('independent editorial authority', () => {
+	it('applies the customer style filter without blocking concrete astrology topics', () => {
+		expect(
+			validDocument(fixture({ title: 'Previsões para 2027 e sua relação com dinheiro' }), now)
+		).toBe(true);
+		expect(validDocument(fixture({ title: 'Cartografia celeste' }), now)).toBe(false);
+		expect(
+			validDocument(
+				fixture({
+					sections: [
+						{ heading: 'Leitura', paragraphs: ['Com consentimento e sem receitas prontas.'] }
+					]
+				}),
+				now
+			)
+		).toBe(false);
+	});
 	it('keeps the live registry empty without approved authors, content and keys', async () => {
 		expect(await publishedEditorial(now)).toEqual([]);
 	});

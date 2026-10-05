@@ -22,7 +22,7 @@ for (const viewport of viewports) {
 		for (const path of surfaces) {
 			await page.goto(path);
 			await page.evaluate(() => document.fonts.ready);
-			const reject = page.getByRole('button', { name: 'Recusar analytics' });
+			const reject = page.getByRole('button', { name: 'Recusar opcionais' });
 			if (await reject.isVisible()) {
 				await page.screenshot({ path: testInfo.outputPath(`consent-${viewport.name}.png`) });
 				await reject.click();
@@ -95,10 +95,10 @@ test('Bússola mostra erro recuperável com os campos preservados', async ({ pag
 	await page.route('**/api/astrology/midheaven', (route) =>
 		route.fulfill({ status: 503, json: { code: 'unavailable' } })
 	);
-	await page.getByRole('button', { name: 'Calcular minha bússola' }).click();
-	await expect(page.getByRole('alert')).toContainText('Vamos conferir os dados?');
+	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
+	await expect(page.getByRole('alert')).toContainText('Confira os dados de nascimento');
 	await expect(page.getByLabel('Data de nascimento')).toHaveValue('2000-01-01');
-	await expect(page.getByRole('button', { name: 'Calcular minha bússola' })).toBeEnabled();
+	await expect(page.getByRole('button', { name: 'Calcular meu Meio do Céu' })).toBeEnabled();
 });
 
 test('Biblioteca filtra o acervo sintético sem confundir vazio e erro', async ({ page }) => {

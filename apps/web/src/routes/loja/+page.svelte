@@ -17,7 +17,8 @@
 			<p class="eyebrow">Loja em preparação</p>
 			<h1 class="display">Loja dos Signos</h1>
 			<p class="lead">
-				Livros e objetos inspirados na astrologia e nos signos. Estamos preparando a loja. As compras ainda não estão disponíveis.
+				Livros e objetos inspirados na astrologia e nos signos. Estamos preparando a loja. As
+				compras ainda não estão disponíveis.
 			</p>
 			<a class="button" href="#signos">Explorar os signos</a>
 		</div>
@@ -40,7 +41,8 @@
 				<h2 class="h2" id="signos-title">Explore por signo</h2>
 			</div>
 			<p>
-				Escolha um signo para conhecer a página da loja. Os produtos serão adicionados quando estiverem disponíveis.
+				Escolha um signo para conhecer a página da loja. Os produtos serão adicionados quando
+				estiverem disponíveis.
 			</p>
 		</div>
 		<nav class="sign-grid" aria-label="Signos na loja">

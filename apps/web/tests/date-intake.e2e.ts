@@ -91,7 +91,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	await ready(page);
 	const date = page.getByLabel('Data da leitura', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
-	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar jornada', exact: true });
 	await expect(date).toHaveValue('');
 	await expect(submit).toBeDisabled();
 	await consent.check();
@@ -106,7 +106,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	).toBeVisible();
 	await consent.check();
 	await submit.click();
-	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toHaveAttribute(
+	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toHaveAttribute(
 		'href',
 		`/biblioteca/${library}`
 	);
@@ -117,7 +117,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	await expect(date).toHaveValue('');
 	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
 	expect(await page.evaluate(() => JSON.stringify({ ...localStorage }))).not.toContain(report);
-	await page.getByRole('button', { name: 'Preparar outro pedido' }).click();
+	await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
 	await expect(submit).toBeDisabled();
 	await expect(consent).not.toBeChecked();
 });
@@ -132,7 +132,7 @@ test('out-of-range date and profile revision conflict cannot silently reuse cons
 	await ready(page);
 	const date = page.getByLabel('Data da leitura', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
-	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar jornada', exact: true });
 	await date.fill('2100-01-01');
 	await expect(date).toHaveAttribute('aria-invalid', 'true');
 	await consent.check();
@@ -159,8 +159,8 @@ test('lost acknowledgement reload uses UUID recovery without profile/date or rep
 	await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
 	await page.getByLabel(contextLabel, { exact: true }).fill(report);
 	await page.getByLabel(privacy, { exact: false }).check();
-	await page.getByRole('button', { name: 'Criar pedido', exact: true }).click();
-	await expect(page.getByRole('button', { name: 'Consultar pedido original' })).toBeVisible();
+	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
 	expect(Object.keys(await page.evaluate(() => ({ ...sessionStorage })))).toEqual([slot]);
 	await page.unroute('**/api/onboarding');
@@ -171,8 +171,8 @@ test('lost acknowledgement reload uses UUID recovery without profile/date or rep
 	});
 	await recovery(page);
 	await page.reload();
-	await page.getByRole('button', { name: 'Consultar pedido original' }).click();
-	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+	await page.getByRole('button', { name: 'Consultar pedido' }).click();
+	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
 	expect(writes).toBe(1);
 	expect(reads).toBe(0);
 });
@@ -190,9 +190,11 @@ for (const state of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 		await page.addInitScript(({ slot, key }) => sessionStorage.setItem(slot, key), { slot, key });
 		await recovery(page);
 		await page.goto(path + '&access=' + state);
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
-		await page.getByRole('button', { name: 'Consultar pedido original' }).click();
-		await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+		).toBeDisabled();
+		await page.getByRole('button', { name: 'Consultar pedido' }).click();
+		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
 		expect(requests).toBe(0);
 	});
 }
@@ -208,7 +210,9 @@ for (const variant of ['approximate', 'missing', 'malformed']) {
 					? { ...value, state: 'EMPTY', natal: null }
 					: value
 		);
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeDisabled();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+		).toBeDisabled();
 		await expect(page.getByLabel('Data da leitura', { exact: true })).toBeDisabled();
 	});
 }
@@ -227,7 +231,9 @@ for (const width of [1440, 820, 390, 320]) {
 		await page.keyboard.press('Space');
 		await expect(consent).toBeChecked();
 		await page.keyboard.press('Tab');
-		await expect(page.getByRole('button', { name: 'Criar pedido', exact: true })).toBeFocused();
+		await expect(
+			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+		).toBeFocused();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
 		);
@@ -258,7 +264,7 @@ test('blank report is optional; whitespace is invalid and max length is enforced
 	await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
 	const context = page.getByLabel(contextLabel, { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
-	const submit = page.getByRole('button', { name: 'Criar pedido', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar jornada', exact: true });
 	await expect(context).toHaveAttribute('maxlength', '1200');
 	await context.fill('   ');
 	await expect(context).toHaveAttribute('aria-invalid', 'true');
@@ -273,6 +279,6 @@ test('blank report is optional; whitespace is invalid and max length is enforced
 	await expect(consent).not.toBeChecked();
 	await consent.check();
 	await submit.click();
-	await expect(page.getByRole('link', { name: 'Abrir pedido na Biblioteca' })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
 	expect(writes).toBe(1);
 });

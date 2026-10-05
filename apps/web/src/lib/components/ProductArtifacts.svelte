@@ -20,7 +20,12 @@
 		alive = false;
 		controller?.abort();
 	});
-	const labels = { web: 'Relatório web', pdf: 'PDF', svg: 'Cartografia SVG', card: 'Card SVG' };
+	const labels = {
+		web: 'Leitura no site',
+		pdf: 'PDF',
+		svg: 'Imagem do mapa',
+		card: 'Imagem da leitura'
+	};
 	const label = (v: ArtifactManifest) =>
 		`${labels[v.format]}${v.format === 'card' ? ` — seção ${v.section + 1}` : ''}`;
 	async function consult(artifact?: ArtifactManifest) {

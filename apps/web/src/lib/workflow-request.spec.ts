@@ -102,9 +102,7 @@ it('routes the private Solar Return command and forgets a verified release refus
 		},
 		consent
 	};
-	expect((await client.perform(true, solarInput)).message).toBe(
-		'Este produto ainda não está liberado.'
-	);
+	expect((await client.perform(true, solarInput)).message).toBe('Este produto está em preparação.');
 	expect(fetcher.mock.calls[0][0]).toBe('/api/workflows/solar-return');
 	expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({
 		requestKey: key,
@@ -145,7 +143,7 @@ it('routes a calendar month with authorized reports through the private request 
 		consent
 	};
 	expect((await client.perform(true, calendarInput)).message).toBe(
-		'Este produto ainda não está liberado.'
+		'Este produto está em preparação.'
 	);
 	expect(fetcher.mock.calls[0][0]).toBe('/api/workflows/personal-calendar');
 	expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body))).toEqual({

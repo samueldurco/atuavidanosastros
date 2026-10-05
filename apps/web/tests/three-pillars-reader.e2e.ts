@@ -6,7 +6,7 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=three-pillars');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
@@ -17,7 +17,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Sol e Lua: intenção e necessidade — Hipótese [sun-moon-dynamics]',
 			'Ascendente: abordagem e expressão — Hipótese [ascendant-expression]',
 			'Relações (1)',
-			'Síntese dos Três Pilares (1) e três perguntas práticas'
+			'Síntese dos Sol, Lua e Ascendente (1) e três perguntas práticas'
 		])
 			await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		const reading = page.locator('#leitura');
@@ -58,7 +58,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await page.reload();
 		await expect(
 			page.getByRole('heading', {
-				name: 'Síntese dos Três Pilares (1) e três perguntas práticas',
+				name: 'Síntese dos Sol, Lua e Ascendente (1) e três perguntas práticas',
 				exact: true
 			})
 		).toBeVisible();

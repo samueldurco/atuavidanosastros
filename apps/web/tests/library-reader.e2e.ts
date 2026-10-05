@@ -9,7 +9,7 @@ for (const viewport of [
 	test(`leitor recuperável: composição ${viewport.width}`, async ({ page }, testInfo) => {
 		await page.setViewportSize(viewport);
 		await page.goto('/biblioteca/_spec/leitor');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('heading', { level: 1 })).toContainText('referência sintética');

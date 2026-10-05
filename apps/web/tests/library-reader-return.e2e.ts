@@ -35,7 +35,7 @@ for (const reader of ['fluxo', 'leitor']) {
 			destination = new URL(route.request().url()).searchParams.get('before') ?? undefined;
 			await route.abort();
 		});
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await back.focus();
 		await expect(back).toBeFocused();

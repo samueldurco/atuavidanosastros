@@ -19,23 +19,23 @@ for (const width of [1440, 820, 390, 320]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&product=birth-chart');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
-		const chart = page.getByRole('img', { name: 'Cartografia natal tropical experimental' });
+		const chart = page.getByRole('img', { name: 'Mapa astral tropical experimental' });
 		await expect(chart).toBeVisible();
 		await expect(chart.locator('[data-body]')).toHaveCount(10);
 		await expect(chart.locator('[data-house]')).toHaveCount(12);
 		await expect(chart.locator('[data-angle]')).toHaveCount(2);
-		const enlarge = page.getByRole('button', { name: 'Ampliar cartografia' });
+		const enlarge = page.getByRole('button', { name: 'Ampliar mapa' });
 		await enlarge.click();
 		await expect(page.getByRole('button', { name: 'Ajustar à tela' })).toHaveAttribute(
 			'aria-pressed',
 			'true'
 		);
 		expect((await chart.boundingBox())?.width).toBeGreaterThanOrEqual(680);
-		const chartArea = page.getByRole('region', { name: 'Área da cartografia natal' });
+		const chartArea = page.getByRole('region', { name: 'Área do mapa astral' });
 		await expect(chartArea).toHaveAttribute('tabindex', '0');
 		if (await chartArea.evaluate((element) => element.scrollWidth > element.clientWidth)) {
 			await chartArea.focus();
@@ -133,7 +133,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Posições e signos são fatos experimentais'
 		])
 			await expect(source).toContainText(label);
-		for (const name of ['Baixar relatório web', 'Baixar PDF', 'Baixar cartografia SVG'])
+		for (const name of ['Baixar relatório web', 'Baixar PDF', 'Baixar mapa em SVG'])
 			await expect(page.getByRole('button', { name, exact: true })).toBeDisabled();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
@@ -180,7 +180,7 @@ test('birth chart with missing geometry retains its preserved text without drawi
 }) => {
 	await page.goto('/biblioteca/_spec/fluxo?state=ready&product=birth-chart&geometry=missing');
 	await expect(page.locator('#cartografia')).toHaveCount(0);
-	await expect(page.getByRole('link', { name: 'Cartografia natal', exact: true })).toHaveCount(0);
+	await expect(page.getByRole('link', { name: 'Mapa astral', exact: true })).toHaveCount(0);
 	await expect(page.locator('#leitura article')).toHaveCount(13);
 	await expect(page.locator('#origem')).toContainText('Sol (position-sun)');
 });

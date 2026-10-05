@@ -50,10 +50,10 @@ for (const width of [1440, 820, 390, 320]) {
 	test(`SVG action is eligible, synthetic and responsive ${width}`, async ({ page }, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/biblioteca/_spec/fluxo?state=ready&format=svg');
-		const consent = page.getByRole('button', { name: 'Recusar analytics' });
+		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
-		await expect(page.getByRole('button', { name: 'Baixar cartografia SVG' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Baixar mapa em SVG' })).toBeDisabled();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
 		).toBeLessThanOrEqual(1);
@@ -62,6 +62,6 @@ for (const width of [1440, 820, 390, 320]) {
 			fullPage: true
 		});
 		await page.goto('/biblioteca/_spec/fluxo?state=revoked&format=svg');
-		await expect(page.getByRole('button', { name: 'Baixar cartografia SVG' })).toHaveCount(0);
+		await expect(page.getByRole('button', { name: 'Baixar mapa em SVG' })).toHaveCount(0);
 	});
 }

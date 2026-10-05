@@ -170,7 +170,7 @@ it('server release gate refuses the first submission even if client allowNew is 
 	const s = browser();
 	expect(await s.client.perform(true, input)).toMatchObject({
 		mode: 'new',
-		message: expect.stringContaining('não está liberado')
+		message: expect.stringContaining('está em preparação')
 	});
 	expect(s.values.size).toBe(0);
 	expect((await db.query('select count(*) as n from product_runs')).rows).toEqual([{ n: 0 }]);

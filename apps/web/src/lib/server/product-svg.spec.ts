@@ -33,7 +33,9 @@ describe('saved cartography contract and inert SVG', () => {
 			);
 			expect(first.svg).toContain('data:font/woff2;base64,');
 			expect(first.svg).not.toMatch(/<(script|image|use|foreignObject|a)\b|\bhref=|\bonload=/);
-			expect(first.svg).toContain('não é uma interpretação ou homologação');
+			expect(first.svg).toContain(
+				'Posições tropicais geocêntricas preservadas do cálculo experimental'
+			);
 		}
 	);
 	it('maps cardinal longitudes without angular displacement or aspect claims', () => {
