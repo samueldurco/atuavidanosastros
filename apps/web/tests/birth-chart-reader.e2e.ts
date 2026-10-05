@@ -23,7 +23,7 @@ for (const width of [1440, 820, 390, 320]) {
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
-		const chart = page.getByRole('img', { name: 'Mapa astral tropical experimental' });
+		const chart = page.getByRole('img', { name: 'Mapa astral natal experimental' });
 		await expect(chart).toBeVisible();
 		await expect(chart.locator('[data-body]')).toHaveCount(10);
 		await expect(chart.locator('[data-house]')).toHaveCount(12);
@@ -127,7 +127,7 @@ for (const width of [1440, 820, 390, 320]) {
 			'Meio do Céu (angle-midheaven)',
 			'Contexto pessoal relatado (personal-context)',
 			'input.context',
-			'atv-product-delivery/1.15.0',
+			'atv-product-delivery/1.18.0',
 			'Fixture de apresentação',
 			'parcial',
 			'Posições e signos são fatos experimentais'
@@ -180,7 +180,7 @@ test('birth chart with missing geometry retains its preserved text without drawi
 }) => {
 	await page.goto('/biblioteca/_spec/fluxo?state=ready&product=birth-chart&geometry=missing');
 	await expect(page.locator('#cartografia')).toHaveCount(0);
-	await expect(page.getByRole('link', { name: 'Mapa astral', exact: true })).toHaveCount(0);
+	await expect(page.locator('a[href="#cartografia"]')).toHaveCount(0);
 	await expect(page.locator('#leitura article')).toHaveCount(13);
 	await expect(page.locator('#origem')).toContainText('Sol (position-sun)');
 });

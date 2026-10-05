@@ -7,12 +7,9 @@ async function files(directory) {
   return (await Promise.all(entries.map((entry) => entry.isDirectory()
     ? files(join(directory, entry.name)) : [join(directory, entry.name)]))).flat();
 }
-const roots = ['apps/web/src/lib/components', 'apps/web/src/routes', 'apps/web/src/lib/data'];
+const roots = ['apps/web/src/lib', 'apps/web/src/routes'];
 const sources = (await Promise.all(roots.map(files))).flat().filter((path) =>
   /\.(svelte|ts)$/.test(path) && !/\.(spec|test)\./.test(path) && !/[\\/](admin|_spec|api|design-system)[\\/]/.test(path));
-sources.push('apps/web/src/lib/seo.ts', 'apps/web/src/lib/server/product-pdf.ts',
-  'apps/web/src/lib/server/product-narration.ts', 'apps/web/src/lib/server/product-email-message.ts',
-  'apps/web/src/lib/server/product-svg.ts');
 const findings = [];
 for (const path of sources) {
   const source = await readFile(path, 'utf8');

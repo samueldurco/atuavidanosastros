@@ -22,7 +22,7 @@
 			{#each data.sections as section (section.title)}
 				<section class="topic-section">
 					<h2>{section.title}</h2>
-					{#each section.paragraphs as paragraph}<p>{paragraph}</p>{/each}
+					{#each section.paragraphs as paragraph, index (index)}<p>{paragraph}</p>{/each}
 				</section>
 			{/each}
 			{#if data.products.length}

@@ -30,7 +30,8 @@ begin
   if expected_renderer is null or p_renderer is null or (p_renderer is distinct from expected_renderer and not
       ((p_format='web' and p_renderer in ('atv-web-export/1.1.0','atv-web-export/1.2.0')) or
        (p_format='pdf' and p_renderer in ('atv-pdf-export/1.1.0','atv-pdf-export/1.2.0','atv-pdf-export/1.3.0')) or
-       (p_format='svg' and p_renderer='atv-svg-export/1.1.0'))) or p_section is null
+       (p_format='svg' and p_renderer='atv-svg-export/1.1.0') or
+       (p_format='card' and p_renderer='atv-reading-card/1.1.0'))) or p_section is null
     or (p_format='card' and (p_section<0 or p_section>=jsonb_array_length(r.editorial->'sections') or p_section>39))
     or (p_format<>'card' and p_section<>-1)
     or (p_format='svg' and (r.product_id not in ('birth-chart','ascendant')

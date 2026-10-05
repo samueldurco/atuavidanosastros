@@ -110,6 +110,17 @@ test("Language renderers expand writes, retains exact historical bytes and has a
       }),
     /artifact_invalid/,
   );
+  const savedCards = [];
+  for (const version of ["1.0.0", "1.1.0"]) {
+    const candidate = { ...input, format: "card", section: 0,
+      rendererVersion: `atv-reading-card/${version}`,
+      bytes: new TextEncoder().encode(`<svg>Version ${version}</svg>`) };
+    const manifest = await persistRenderedProductArtifact(rpc, candidate);
+    const recovered = await read(manifest.id);
+    assert.equal(recovered.rendererVersion, candidate.rendererVersion);
+    assert.deepEqual(Buffer.from(recovered.bodyBase64, "base64"), Buffer.from(candidate.bytes));
+    savedCards.push(manifest);
+  }
   await db.exec(
     await file("supabase/forward-fixes/disable_language_renderer_versions.sql"),
   );
@@ -118,6 +129,7 @@ test("Language renderers expand writes, retains exact historical bytes and has a
     /artifact_unavailable/,
   );
   assert.equal((await read(saved[3].id)).sha256, saved[3].sha256);
+  for (const card of savedCards) assert.equal((await read(card.id)).sha256, card.sha256);
   await db.exec(
     await file(
       "supabase/migrations/20261005150000_language_renderer_versions.sql",

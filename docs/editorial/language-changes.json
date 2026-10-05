@@ -2062,5 +2062,167 @@
     "count": 1,
     "priority": "P1",
     "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/auth-return.ts",
+    "before": "O login não conservava de forma compartilhada a leitura escolhida.",
+    "after": "Destinos internos conhecidos são conservados após OAuth ou confirmação por e-mail; dados de formulário não entram na URL.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/Dashboard.svelte",
+    "before": "A entrada destacava uma pergunta vaga sobre direção e priorizava carreira.",
+    "after": "Minhas leituras; última leitura quando existe, catálogo de temas quando não existe e falha separada de Biblioteca vazia.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/+page.svelte",
+    "before": "A primeira chamada priorizava a Bússola de Carreira.",
+    "after": "Conhecer meu mapa astral leva a /meu-ceu; o cálculo gratuito de Meio do Céu tem chamada própria.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/routes/produtos/[slug]/+page.svelte",
+    "before": "Os produtos não tinham uma apresentação pública comum com dados, escopo, formatos e disponibilidade.",
+    "after": "26 apresentações públicas por produto; ação conforme disponibilidade, preparação fora do índice e nenhuma oferta de pagamento fictícia.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/data/product-copy.ts",
+    "before": "Benefícios e ações usavam textos dispersos e nomes pouco reconhecíveis.",
+    "after": "Benefício e ação próprios para 25 produtos e ATV+, com mapa astral, previsões, amor, dinheiro, carreira, Tarot e sonhos.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ConsentBanner.svelte",
+    "before": "As preferências de cookies não podiam ser reabertas pelo rodapé.",
+    "after": "Recusar opcionais, aceitar opcionais e reabrir preferências; recusa interrompe a análise opcional.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/editorial.ts",
+    "before": "A aprovação editorial não incluía a verificação compartilhada das expressões descartadas.",
+    "after": "Títulos, descrições, subtítulos e parágrafos passam pelo filtro editorial; autores, fontes, datas e aprovação continuam exigidos.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-card.ts",
+    "before": "A imagem usava rótulos abstratos e repetia um aviso genérico no rodapé.",
+    "after": "Sua leitura e Sobre esta leitura; limites específicos preservados; exportador atv-reading-card/1.1.0.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ProductRunReader.svelte",
+    "before": "O leitor encerrava todos os produtos com o mesmo aviso genérico.",
+    "after": "O leitor apresenta o conteúdo e os limites próprios do resultado, sem o rodapé repetido.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-pdf.ts",
+    "before": "O PDF usava o modelo editorial anterior.",
+    "after": "Modelo PDF 1.3 com rótulos diretos e conteúdo preservado; orçamento de renderização permanece 5000 ms.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-export.ts",
+    "before": "O exportador web usava a versão anterior do modelo.",
+    "after": "Modelo web 1.2 com rótulos diretos e dados privados preservados.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-svg.ts",
+    "before": "A imagem do mapa usava terminologia ornamental.",
+    "after": "Mapa astral natal experimental; exportador SVG 1.1 preserva a geometria e os limites técnicos.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-narration.ts",
+    "before": "A narração usava o modelo editorial anterior.",
+    "after": "Narração 1.1 mantém os fatos e usa rótulos diretos; transcrição não é anunciada como áudio produzido.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/server/product-email-message.ts",
+    "before": "A mensagem de e-mail usava o modelo editorial anterior.",
+    "after": "Mensagem 1.1 identifica a leitura e o link; pedido registrado continua distinto de envio realizado.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/ai/src/editorial-style.ts",
+    "before": "Não havia uma revisão compartilhada dos vícios de linguagem citados pelo usuário.",
+    "after": "Regras de escrita específica, expressões descartadas e detecção de avisos repetidos; somente texto autoral é inspecionado.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/ai/src/prompt.ts",
+    "before": "O prompt não incorporava o novo guia de linguagem.",
+    "after": "Prompt editorial 1.1 inclui o artefato de estilo; a mudança de hash exige nova aprovação sem ativar modelo produtivo.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "packages/domain/src/artifacts.ts",
+    "before": "Os modelos novos ainda não eram reconhecidos pelo contrato de arquivos.",
+    "after": "Contrato aceita as novas versões e mantém recuperação das versões históricas imutáveis.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "supabase/migrations/20261005150000_language_renderer_versions.sql",
+    "before": "A lista SQL de exportadores não incluía os novos modelos.",
+    "after": "Migração aditiva e forward-fix permitem os novos modelos; autorização, dados e recuperação dos antigos são preservados.",
+    "literal": false,
+    "type": "FLOW_OR_TEMPLATE_CHANGE",
+    "priority": "P0",
+    "status": "CORRIGIDO_LOCAL"
   }
 ]

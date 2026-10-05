@@ -10,14 +10,18 @@ test('manifest is a minimal frozen projection and never exposes storage data',()
  assert.deepEqual(parsed,manifest);assert.ok(Object.isFrozen(parsed));
 });
 
-test('web and PDF retain the exact historical renderer while rejecting unrecognized versions',()=>{
+test('web, PDF, SVG and reading cards retain historical renderers while rejecting future versions',()=>{
  const birth={...reading,productId:'birth-chart'};
- for(const [format,prefix] of [['web','atv-web-export'],['pdf','atv-pdf-export']]) {
-  for(const version of format === 'pdf' ? ['1.0.0','1.1.0','1.2.0'] : ['1.0.0','1.1.0']) {
-   const input={...manifest,format,section:-1,rendererVersion:`${prefix}/${version}`};
+ for(const [format,prefix,versions,future] of [
+  ['web','atv-web-export',['1.0.0','1.1.0','1.2.0'],'1.3.0'],
+  ['pdf','atv-pdf-export',['1.0.0','1.1.0','1.2.0','1.3.0'],'1.4.0'],
+  ['svg','atv-svg-export',['1.0.0','1.1.0'],'1.2.0'],
+  ['card','atv-reading-card',['1.0.0','1.1.0'],'1.2.0']]) {
+  for(const version of versions) {
+   const input={...manifest,format,section:format==='card'?1:-1,rendererVersion:`${prefix}/${version}`};
    assert.deepEqual(parseArtifactManifest(input,birth),input);
   }
-  assert.equal(parseArtifactManifest({...manifest,format,section:-1,rendererVersion:`${prefix}/${format === 'pdf' ? '1.3.0' : '1.2.0'}`},birth),null);
+  assert.equal(parseArtifactManifest({...manifest,format,section:format==='card'?1:-1,rendererVersion:`${prefix}/${future}`},birth),null);
  }
 });
 test('manifest binds exact run, revision, review and section and supported renderer',()=>{

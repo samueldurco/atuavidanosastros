@@ -15,7 +15,7 @@
 		<p>{data.details.input}</p>
 		<h2>Formatos previstos</h2>
 		<ul>
-			{#each data.product.delivery as format}<li>{formatLabels[format]}</li>{/each}
+			{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
 		</ul>
 		{#if data.product.state === 'ACTIVE' && data.product.personalized}
 			<Button href={`/biblioteca/nova/${data.product.id}`}>{data.product.action}</Button>

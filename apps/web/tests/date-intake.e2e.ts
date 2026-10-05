@@ -91,7 +91,7 @@ test('explicit date and separate consent → minimal command → Library, UUID-o
 	await ready(page);
 	const date = page.getByLabel('Data da leitura', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
-	const submit = page.getByRole('button', { name: 'Solicitar jornada', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar leitura', exact: true });
 	await expect(date).toHaveValue('');
 	await expect(submit).toBeDisabled();
 	await consent.check();
@@ -132,7 +132,7 @@ test('out-of-range date and profile revision conflict cannot silently reuse cons
 	await ready(page);
 	const date = page.getByLabel('Data da leitura', { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
-	const submit = page.getByRole('button', { name: 'Solicitar jornada', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar leitura', exact: true });
 	await date.fill('2100-01-01');
 	await expect(date).toHaveAttribute('aria-invalid', 'true');
 	await consent.check();
@@ -141,7 +141,7 @@ test('out-of-range date and profile revision conflict cannot silently reuse cons
 	await date.fill('2028-02-29');
 	await consent.check();
 	await submit.click();
-	await expect(page.getByText('Seu perfil mudou.', { exact: false })).toBeFocused();
+	await expect(page.getByText('Seus dados de nascimento mudaram.', { exact: false })).toBeFocused();
 	await expect(consent).not.toBeChecked();
 	await expect(submit).toBeDisabled();
 	expect(await page.evaluate((name) => sessionStorage.getItem(name), slot)).toBeNull();
@@ -159,7 +159,7 @@ test('lost acknowledgement reload uses UUID recovery without profile/date or rep
 	await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
 	await page.getByLabel(contextLabel, { exact: true }).fill(report);
 	await page.getByLabel(privacy, { exact: false }).check();
-	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	await expect(page.getByLabel(contextLabel, { exact: true })).toHaveValue('');
 	expect(Object.keys(await page.evaluate(() => ({ ...sessionStorage })))).toEqual([slot]);
@@ -191,7 +191,7 @@ for (const state of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 		await recovery(page);
 		await page.goto(path + '&access=' + state);
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 		await page.getByRole('button', { name: 'Consultar pedido' }).click();
 		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
@@ -211,7 +211,7 @@ for (const variant of ['approximate', 'missing', 'malformed']) {
 					: value
 		);
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 		await expect(page.getByLabel('Data da leitura', { exact: true })).toBeDisabled();
 	});
@@ -232,7 +232,7 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(consent).toBeChecked();
 		await page.keyboard.press('Tab');
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeFocused();
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
@@ -264,7 +264,7 @@ test('blank report is optional; whitespace is invalid and max length is enforced
 	await page.getByLabel('Data da leitura', { exact: true }).fill('2028-02-29');
 	const context = page.getByLabel(contextLabel, { exact: true });
 	const consent = page.getByLabel(privacy, { exact: false });
-	const submit = page.getByRole('button', { name: 'Solicitar jornada', exact: true });
+	const submit = page.getByRole('button', { name: 'Solicitar leitura', exact: true });
 	await expect(context).toHaveAttribute('maxlength', '1200');
 	await context.fill('   ');
 	await expect(context).toHaveAttribute('aria-invalid', 'true');

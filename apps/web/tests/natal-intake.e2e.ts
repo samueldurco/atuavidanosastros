@@ -110,10 +110,10 @@ for (const product of [
 		expect(writes).toBe(0);
 		await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 		await page.getByLabel(privacy, { exact: false }).check();
-		await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+		await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toHaveAttribute(
 			'href',
 			`/biblioteca/${library}`
@@ -124,7 +124,7 @@ for (const product of [
 		expect(stored[slot(product)]).toMatch(/^[a-f0-9-]{36}$/);
 		await page.getByRole('button', { name: 'Iniciar outro pedido' }).click();
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 		await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 	});
@@ -152,11 +152,11 @@ test('career report: reconsent, exact private command, lost acknowledgement and 
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 	await expect(report).toHaveAttribute('aria-invalid', 'true');
 	await page.getByLabel(privacy, { exact: false }).check();
-	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await report.fill(context);
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
 	await page.getByLabel(privacy, { exact: false }).check();
-	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	const stored = await page.evaluate(() => ({
 		session: { ...sessionStorage },
@@ -194,7 +194,7 @@ for (const state of ['UNRELEASED', 'ACCESS_REQUIRED', 'UNAVAILABLE']) {
 		await recovery(page);
 		await page.goto(path + 'birth-chart&access=' + state);
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 		await page.getByRole('button', { name: 'Consultar pedido' }).click();
 		await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toBeVisible();
@@ -228,7 +228,7 @@ for (const variant of ['approximate', 'missing', 'malformed', 'unavailable']) {
 			)
 		).toBeVisible();
 		await expect(
-			page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+			page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 		).toBeDisabled();
 	});
 }
@@ -242,9 +242,9 @@ test('revision conflict requires explicit fresh read and consent; never automati
 	});
 	await ready(page);
 	await page.getByLabel(privacy, { exact: false }).check();
-	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
-	await expect(page.getByText('Seu perfil mudou.', { exact: false })).toBeFocused();
-	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
+	await expect(page.getByText('Seus dados de nascimento mudaram.', { exact: false })).toBeFocused();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await page.getByRole('button', { name: 'Consultar perfil salvo', exact: true }).click();
 	await expect(page.getByLabel(privacy, { exact: false })).toBeEnabled();
 	await expect(page.getByLabel(privacy, { exact: false })).not.toBeChecked();
@@ -260,7 +260,7 @@ test('lost acknowledgement survives reload and missing profile without replay', 
 	});
 	await ready(page);
 	await page.getByLabel(privacy, { exact: false }).check();
-	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	await page.reload();
 	await recovery(page);
@@ -277,7 +277,7 @@ test('denied recovery storage never enables creation', async ({ page }) => {
 		})
 	);
 	await ready(page);
-	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await expect(
 		page.getByText('Não foi possível preservar a chave', { exact: false })
 	).toBeVisible();
@@ -304,7 +304,7 @@ for (const product of ['birth-chart', 'career-compass']) {
 			await expect(page.getByLabel(privacy, { exact: false })).toBeChecked();
 			await page.keyboard.press('Tab');
 			await expect(
-				page.getByRole('button', { name: 'Solicitar jornada', exact: true })
+				page.getByRole('button', { name: 'Solicitar leitura', exact: true })
 			).toBeFocused();
 			expect(
 				await page.locator('.skip-link').evaluate((link) => getComputedStyle(link).clipPath)

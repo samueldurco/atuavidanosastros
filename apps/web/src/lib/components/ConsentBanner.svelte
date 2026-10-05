@@ -11,9 +11,12 @@
 		return () => window.removeEventListener('atv-cookie-preferences', reopen);
 	});
 	function choose(value: 'granted' | 'denied') {
+		const previous = localStorage.getItem('atv-analytics-consent');
 		localStorage.setItem('atv-analytics-consent', value);
 		visible = false;
-		location.reload();
+		// The first refusal has no analytics running and must preserve the current task.
+		// Reload only when enabling analytics or stopping a previously granted session.
+		if (previous !== value && (value === 'granted' || previous === 'granted')) location.reload();
 	}
 </script>
 

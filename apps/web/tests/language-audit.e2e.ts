@@ -57,10 +57,36 @@ test('home CTA introduces the requested map and cookie preferences remain access
 	await expect(
 		page.getByRole('link', { name: 'Conhecer meu mapa astral', exact: true })
 	).toHaveAttribute('href', '/meu-ceu');
+	await page.evaluate(() => ((window as Window & { taskMarker?: string }).taskMarker = 'active'));
 	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 	await expect(page.getByRole('button', { name: 'Recusar opcionais' })).toHaveCount(0);
+	expect(await page.evaluate(() => (window as Window & { taskMarker?: string }).taskMarker)).toBe(
+		'active'
+	);
 	await page.getByRole('button', { name: 'Preferências de cookies' }).click();
 	await expect(page.getByRole('button', { name: 'Aceitar opcionais' })).toBeVisible();
+});
+
+test('revoking optional cookies reloads without starting analytics again', async ({ page }) => {
+	let analyticsRequests = 0;
+	await page.route('https://www.googletagmanager.com/**', async (route) => {
+		analyticsRequests++;
+		await route.fulfill({ contentType: 'application/javascript', body: '' });
+	});
+	await page.addInitScript(() => {
+		if (!localStorage.getItem('atv-analytics-consent'))
+			localStorage.setItem('atv-analytics-consent', 'granted');
+	});
+	await page.goto('/');
+	await expect.poll(() => analyticsRequests).toBe(1);
+	await page.getByRole('button', { name: 'Preferências de cookies' }).click();
+	await Promise.all([
+		page.waitForEvent('load'),
+		page.getByRole('button', { name: 'Recusar opcionais' }).click()
+	]);
+	expect(await page.evaluate(() => localStorage.getItem('atv-analytics-consent'))).toBe('denied');
+	expect(analyticsRequests).toBe(1);
+	await expect(page.getByRole('button', { name: 'Recusar opcionais' })).toHaveCount(0);
 });
 
 for (const width of [1440, 390, 320]) {

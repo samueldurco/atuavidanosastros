@@ -39,7 +39,7 @@ async function fill(page: Page) {
 	await page.getByLabel('Data de nascimento da outra pessoa', { exact: true }).fill('2000-02-29');
 	await page.getByLabel('Hora local da outra pessoa', { exact: true }).fill('10:00:00.125');
 	await page.getByLabel('Fuso da outra pessoa', { exact: true }).fill('UTC');
-	await page.getByLabel('Fuso de nascimento (UTC) naquela data', { exact: true }).fill('+00:00');
+	await page.getByLabel('Deslocamento UTC naquela data', { exact: true }).fill('+00:00');
 	await page.getByLabel('Latitude de nascimento da outra pessoa', { exact: true }).fill('51.5');
 	await page.getByLabel('Longitude de nascimento da outra pessoa', { exact: true }).fill('-0.12');
 }
@@ -121,9 +121,9 @@ test('Dossiê do Casal: blank partner/context and two unchecked consents → min
 	await fill(page);
 	await page.locator('#couple-dossier-context').fill('Conversar sobre autonomia e segurança.');
 	await page.getByLabel(privacy, { exact: false }).check();
-	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	await authorize(page);
-	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 	await expect(page.getByRole('link', { name: 'Acompanhar na Biblioteca' })).toHaveAttribute(
 		'href',
 		`/biblioteca/${library}`
@@ -151,7 +151,7 @@ test('lost acknowledgement clears partner and context drafts; reload recovers wi
 	await fill(page);
 	await page.locator('#couple-dossier-context').fill('Relato sintético privado.');
 	await authorize(page);
-	await page.getByRole('button', { name: 'Solicitar jornada', exact: true }).click();
+	await page.getByRole('button', { name: 'Solicitar leitura', exact: true }).click();
 	await expect(page.getByRole('button', { name: 'Consultar pedido' })).toBeVisible();
 	await expect(page.locator('#partner-date')).toHaveValue('');
 	await expect(page.locator('#couple-dossier-context')).toHaveValue('');
@@ -188,7 +188,7 @@ test('editing context renews both consents; invalid context cannot send or persi
 	await page.locator('#couple-dossier-context').fill('   ');
 	await authorize(page);
 	await expect(page.locator('#couple-dossier-context')).toHaveAttribute('aria-invalid', 'true');
-	await expect(page.getByRole('button', { name: 'Solicitar jornada', exact: true })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Solicitar leitura', exact: true })).toBeDisabled();
 	expect(await page.evaluate((name) => sessionStorage.getItem(name), slot)).toBeNull();
 	expect(writes).toBe(0);
 });

@@ -539,10 +539,6 @@
 					>
 						{limit}
 					</p>{/each}
-				<p>
-					Esta leitura é simbólica e não determina suas escolhas. Não substitui orientação
-					profissional.
-				</p>
 			</section>
 		{:else}<StatePanel
 				kind={data.run.state === 'FAILED' ? 'error' : 'info'}
