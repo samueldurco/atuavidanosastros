@@ -12,11 +12,13 @@ for (const product of customerProducts) {
 		await expect(page.locator('main')).toContainText(product.summary);
 		await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
 		await expect(page.locator('main form')).toHaveCount(0);
-		if (product.id === 'birth-chart')
+		if (product.id === 'birth-chart') {
+			await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 			await page.screenshot({
 				path: testInfo.outputPath('mapa-astral-desktop.png'),
 				fullPage: true
 			});
+		}
 		await expect(page.getByRole('button', { name: /Comprar|Pagar|Gerar agora/ })).toHaveCount(0);
 		await expect(page.locator('main')).not.toContainText(
 			/cartografia celeste|atlas editorial|Que direção pede/
@@ -29,6 +31,7 @@ test('Mapa Astral stays recognizable from homepage to its offer on mobile', asyn
 }, testInfo) => {
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/');
+	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 	await page.getByRole('link', { name: 'Conhecer meu mapa astral', exact: true }).first().click();
 	await expect(page).toHaveURL(/\/meu-ceu$/);
 	await page.locator('a[href="/produtos/mapa-astral"]').first().click();

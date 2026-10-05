@@ -68,7 +68,7 @@
 		}
 		busy = false;
 		await read(
-			`Limpeza confirmada: ${deleted} registro(s) removido(s). Consulta atualizada; novos registros podem aparecer depois da limpeza.`
+			`Limpeza confirmada: ${deleted} ${deleted === 1 ? 'registro removido' : 'registros removidos'}. Consulta atualizada; novos registros podem aparecer depois da limpeza.`
 		);
 		await tick();
 		recoveryButton?.querySelector('button')?.focus();
@@ -108,9 +108,10 @@
 	<p role="status">{status}</p>
 	{#if snapshot}
 		<p>
-			{snapshot.events.length} registro(s) disponível(is). Datas em UTC. Registros expirados não aparecem;
-			isso não comprova descarte físico. Excluir uma nota ou sua leitura também remove os registros de
-			acesso vinculados.
+			{snapshot.events.length}
+			{snapshot.events.length === 1 ? 'registro disponível' : 'registros disponíveis'}. Datas em
+			UTC. Registros expirados não aparecem; isso não comprova descarte físico. Excluir uma nota ou
+			sua leitura também remove os registros de acesso vinculados.
 		</p>
 		{#if !snapshot.events.length}<p class="notice">
 				Nenhum registro de acesso disponível nesta consulta. Isso não comprova ausência de seleções
@@ -121,7 +122,8 @@
 				<li>
 					<h3>Seleção registrada · {date(event.createdAt)} UTC</h3>
 					<p>
-						{event.items.length} referência(s) · consentimento na revisão {event.consentRevision}.
+						{event.items.length}
+						{event.items.length === 1 ? 'referência' : 'referências'} · consentimento na revisão {event.consentRevision}.
 						Visível até {date(event.expiresAt)} UTC.
 					</p>
 					<details>

@@ -2224,5 +2224,29 @@
     "type": "FLOW_OR_TEMPLATE_CHANGE",
     "priority": "P0",
     "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityAccess.svelte",
+    "before": "registro(s) removido(s)",
+    "after": "${deleted === 1 ? 'registro removido' : 'registros removidos'}",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityAccess.svelte",
+    "before": "{snapshot.events.length} registro(s) disponível(is).",
+    "after": "{snapshot.events.length === 1 ? 'registro disponível' : 'registros disponíveis'}",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/ContinuityAccess.svelte",
+    "before": "{event.items.length} referência(s)",
+    "after": "{event.items.length === 1 ? 'referência' : 'referências'}",
+    "count": 1,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
   }
 ]
