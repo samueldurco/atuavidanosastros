@@ -1,6 +1,10 @@
 import { expect, it } from 'vitest';
 import { emptyPartnerForm, partnerFormValue, type PartnerForm } from './partner-form';
 const form = (): PartnerForm => ({
+	location: '',
+	country: '',
+	source: '',
+	occurrence: '',
 	date: '2000-02-29',
 	time: '10:00:00.125',
 	precision: 'EXACT',

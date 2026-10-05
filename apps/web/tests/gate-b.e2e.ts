@@ -1,3 +1,4 @@
+import { selectCity } from './fixtures/city-search';
 import { expect, test } from '@playwright/test';
 
 const surfaces = [
@@ -89,9 +90,7 @@ test('Bússola mostra erro recuperável com os campos preservados', async ({ pag
 	await page.goto('/bussola-de-carreira');
 	await page.getByLabel('Data de nascimento').fill('2000-01-01');
 	await page.getByLabel('Hora de nascimento').fill('09:00');
-	await page.getByLabel('Cidade de nascimento').fill('São Paulo, Brasil');
-	await page.getByLabel('Latitude', { exact: true }).fill('-23.5505');
-	await page.getByLabel('Longitude', { exact: true }).fill('-46.6333');
+	await selectCity(page, '#birth-city', 'Sao Paulo', 'São Paulo, São Paulo, Brasil');
 	await page.route('**/api/astrology/midheaven', (route) =>
 		route.fulfill({ status: 503, json: { code: 'unavailable' } })
 	);

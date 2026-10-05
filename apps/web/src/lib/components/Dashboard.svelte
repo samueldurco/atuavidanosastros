@@ -43,8 +43,8 @@
 		<div class="attention-note">
 			<span class="note-number">01</span><strong>Comece com o que você sabe.</strong>
 			<p>
-				Data, hora e coordenadas de nascimento ajudam a situar seu Meio do Céu. O cálculo inicial
-				está disponível sem cadastro.
+				Data, hora e cidade de nascimento ajudam a situar seu Meio do Céu. O cálculo inicial está
+				disponível sem cadastro.
 			</p>
 			<a href="/meio-do-ceu">Entender o Meio do Céu →</a>
 		</div>
