@@ -298,7 +298,8 @@
 				<Button
 					type="submit"
 					pending={busy}
-					disabled={locked || !consent || form.precision === 'UNKNOWN'}>Salvar perfil natal</Button
+					disabled={locked || !consent || form.precision === 'UNKNOWN'}
+					>Salvar dados de nascimento</Button
 				><Button variant="secondary" disabled={locked} onclick={() => action('begin')}
 					>Completar depois</Button
 				>

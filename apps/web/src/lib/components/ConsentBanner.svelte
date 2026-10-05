@@ -27,7 +27,7 @@
 				Usamos cookies essenciais para o site funcionar. Com sua permissão, também medimos o uso das
 				páginas. Seus dados de nascimento não entram nessas estatísticas.
 			</p>
-			<a href="/cookies">Conheça a política de cookies</a>
+			<a href="/privacidade">Privacidade e cookies</a>
 		</div>
 		<div class="actions">
 			<button class="secondary" onclick={() => choose('denied')}>Recusar opcionais</button><button
@@ -44,6 +44,8 @@
 		right: 1rem;
 		bottom: 1rem;
 		max-width: 70rem;
+		max-height: calc(100dvh - 2rem);
+		overflow-y: auto;
 		margin: auto;
 		background: var(--atv-surface-card);
 		color: var(--atv-text-primary);

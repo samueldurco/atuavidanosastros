@@ -2325,5 +2325,14 @@
     "literal": true,
     "priority": "P1",
     "status": "CORRIGIDO_LOCAL"
+  },
+  {
+    "file": "apps/web/src/lib/components/NatalOnboarding.svelte",
+    "before": "Salvar perfil natal",
+    "after": "Salvar dados de nascimento",
+    "count": 1,
+    "literal": true,
+    "priority": "P1",
+    "status": "CORRIGIDO_LOCAL"
   }
 ]

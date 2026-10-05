@@ -71,7 +71,7 @@ test('explicit consent, save, reload, correction and scoped deletion', async ({ 
 	await expect(page.getByLabel('Data de nascimento', { exact: true })).toHaveValue('');
 	await expect(page.getByLabel('O que você sabe sobre a hora?')).toHaveValue('UNKNOWN');
 	await fill(page);
-	const submit = page.getByRole('button', { name: 'Salvar perfil natal' });
+	const submit = page.getByRole('button', { name: 'Salvar dados de nascimento' });
 	await expect(submit).toBeDisabled();
 	await page.getByRole('checkbox').check();
 	expect(
@@ -131,9 +131,9 @@ test('lost response after saving recovers the committed version without duplicat
 	await fill(page);
 	await page.getByRole('checkbox').check();
 	api.fail('lost_after_save');
-	await page.getByRole('button', { name: 'Salvar perfil natal' }).click();
+	await page.getByRole('button', { name: 'Salvar dados de nascimento' }).click();
 	await expect(page.getByRole('alert')).toContainText('pode ter sido salvo');
-	await expect(page.getByRole('button', { name: 'Salvar perfil natal' })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Salvar dados de nascimento' })).toBeDisabled();
 	api.fail('');
 	await page.getByRole('button', { name: 'Recarregar perfil salvo' }).click();
 	await expect(page.getByText('Versão 1 · Hora aproximada')).toBeVisible();
@@ -152,7 +152,7 @@ test('unknown hour allows only begin and preserves the draft without persisting 
 		{ version: ONBOARDING_VERSION, expectedRevision: 0, action: 'begin' }
 	]);
 	await expect(page.getByLabel('Data de nascimento', { exact: true })).toHaveValue('2000-01-01');
-	await expect(page.getByRole('button', { name: 'Salvar perfil natal' })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Salvar dados de nascimento' })).toBeDisabled();
 });
 for (const failure of ['revision_conflict', 'auth_required', 'network', 'malformed'])
 	test(`${failure} preserves draft, blocks repeat and requires successful recovery`, async ({
@@ -162,9 +162,9 @@ for (const failure of ['revision_conflict', 'auth_required', 'network', 'malform
 		await fill(page);
 		await page.getByRole('checkbox').check();
 		api.fail(failure);
-		await page.getByRole('button', { name: 'Salvar perfil natal' }).click();
+		await page.getByRole('button', { name: 'Salvar dados de nascimento' }).click();
 		await expect(page.getByRole('alert')).toBeVisible();
-		await expect(page.getByRole('button', { name: 'Salvar perfil natal' })).toBeDisabled();
+		await expect(page.getByRole('button', { name: 'Salvar dados de nascimento' })).toBeDisabled();
 		await expect(page.getByLabel('Cidade e região de nascimento')).toHaveValue('Local sintético');
 		const recover = page.getByRole('button', { name: 'Recarregar perfil salvo' });
 		await recover.click();
@@ -182,9 +182,9 @@ test('known invalid input allows correction without recovery or silent retry', a
 	await fill(page);
 	await page.getByRole('checkbox').check();
 	api.fail('invalid_input');
-	await page.getByRole('button', { name: 'Salvar perfil natal' }).click();
+	await page.getByRole('button', { name: 'Salvar dados de nascimento' }).click();
 	await expect(page.getByRole('alert')).toContainText('validação');
-	await expect(page.getByRole('button', { name: 'Salvar perfil natal' })).toBeEnabled();
+	await expect(page.getByRole('button', { name: 'Salvar dados de nascimento' })).toBeEnabled();
 	expect(api.commands).toHaveLength(1);
 });
 test('private route requires authentication; local fixture is no-store', async ({ page }) => {
@@ -216,9 +216,9 @@ test('pending submission disables mutations and sends exactly one command', asyn
 		await pending;
 		await route.fallback();
 	});
-	await page.getByRole('button', { name: 'Salvar perfil natal' }).click();
+	await page.getByRole('button', { name: 'Salvar dados de nascimento' }).click();
 	await expect(page.getByRole('status')).toContainText('Aguarde a confirmação');
-	await expect(page.getByRole('button', { name: 'Salvar perfil natal' })).toBeDisabled();
+	await expect(page.getByRole('button', { name: 'Salvar dados de nascimento' })).toBeDisabled();
 	await expect(page.getByRole('button', { name: 'Completar depois' })).toBeDisabled();
 	await expect(page.getByLabel('Cidade e região de nascimento')).toBeDisabled();
 	release();

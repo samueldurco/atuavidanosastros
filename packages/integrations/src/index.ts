@@ -39,3 +39,19 @@ export async function verifyHotmartHottok(received: string | null, expected: str
   }
   return mismatch === 0;
 }
+
+export {
+  createTikTokAuthorizationUrl,
+  exchangeTikTokAuthorizationCode,
+  refreshTikTokAccessToken,
+  TIKTOK_DISPLAY_SCOPES,
+  TIKTOK_LOGIN_SCOPES,
+  TikTokApiError,
+  TikTokDisplayClient
+} from './tiktok.ts';
+export type {
+  TikTokOAuthTokens,
+  TikTokProfile,
+  TikTokVideo,
+  TikTokVideoPage
+} from './tiktok.ts';

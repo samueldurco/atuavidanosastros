@@ -32,6 +32,10 @@ Os arquivos extensos em `test-results/` são evidências locais, não conteúdo 
 
 ## Documentação e continuidade
 
+### Integração das mudanças concorrentes
+
+A revisão incorpora `origin/main` em `9fe028b`: acessibilidade privada, consentimento em telas pequenas, proteção de telemetria, ações de CI fixadas por hash e preparação legal/TikTok. Os conflitos foram conciliados preservando os links legais e a escolha de cookies no rodapé, os testes de banco de ambas as frentes e a configuração segura do CI. O botão de nascimento passa a dizer “Salvar dados de nascimento”. A validação incremental e o CI do commit integrado ficam na pasta de evidências; os 483 percursos acima correspondem à base anterior à integração e não incluem os novos casos da branch principal.
+
 - `docs/editorial/GUIA_LINGUAGEM_ATVNA.md`: voz, vocabulário, exemplos, critérios por estado e revisão dos entregáveis.
 - `docs/editorial/AUDITORIA_PRODUTOS_2026-10-05.md`: matriz dos 26 percursos, ações e formatos.
 - `docs/editorial/language-changes.json`: substituições literais e mudanças de fluxo/modelo, estas explicitamente identificadas como descrições.

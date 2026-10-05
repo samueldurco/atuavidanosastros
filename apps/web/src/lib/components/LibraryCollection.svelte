@@ -141,7 +141,7 @@
 		<p class="result-count">
 			Busca, filtros e ordenação se aplicam somente aos registros desta página.
 		</p>
-		{#if visible.length}<div class="collection" aria-label="Itens salvos">
+		{#if visible.length}<section class="collection" aria-label="Itens salvos">
 				{#each visible as item (item.id)}<article class="card item">
 						<div class="item-cover" aria-hidden="true">
 							<img src="/brand/logo/symbol/atv-symbol.svg" alt="" width="64" height="64" />
@@ -162,7 +162,7 @@
 							>
 						</div>
 					</article>{/each}
-			</div>
+			</section>
 		{:else}<StatePanel
 				title="Nenhuma leitura com esses filtros."
 				description="Tente outro nome ou volte a ver todas as suas leituras."

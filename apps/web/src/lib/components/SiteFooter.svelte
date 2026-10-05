@@ -11,7 +11,7 @@
 		<nav aria-label="Rodapé">
 			<a href="/metodo">Nosso método</a><a href="/caderno">Artigos</a><a href="/loja"
 				>Loja dos Signos</a
-			><a href="/privacidade">Privacidade</a><button
+			><a href="/termos">Termos de uso</a><a href="/privacidade">Privacidade</a><button
 				type="button"
 				onclick={() => window.dispatchEvent(new Event('atv-cookie-preferences'))}
 				>Preferências de cookies</button
