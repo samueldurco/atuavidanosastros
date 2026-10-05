@@ -1,0 +1,3127 @@
+{
+  "schema_version": "atv-seo-keyword-map/1.0.0",
+  "prepared_date": "2026-10-05",
+  "run_id": "ATV-20260902-170644Z-01A0630F",
+  "canonical_origin": "https://atuavidanosastros.com.br",
+  "locale": "pt-BR",
+  "market": "BR",
+  "status": "PREPARATION_ONLY",
+  "release_flags": {
+    "publish": false,
+    "hosted_validated": false,
+    "search_console_configured": false,
+    "radar_automation_enabled": false,
+    "monthly_spend_brl": 0
+  },
+  "query_evidence_default": {
+    "classification": "CANDIDATE_UNMEASURED",
+    "source": null,
+    "observed_at": null,
+    "monthly_volume": null,
+    "trends_score": null,
+    "search_console_impressions": null
+  },
+  "normalization": "NFD, remover marcas diacríticas, minúsculas, espaços simples; uma consulta normalizada tem um único proprietário no mapa, sem promessa sobre a escolha do Google.",
+  "route_policy": {
+    "published_only": true,
+    "public_content_only": true,
+    "unpublished_response": "404 ou preview autenticado com noindex; nunca HTML vazio indexável",
+    "staging_indexable": false,
+    "canonical": "absoluta, origem configurada, path sem parâmetros ou fragmentos",
+    "private_outputs_indexable": false
+  },
+  "sign_order": [
+    {
+      "slug": "aries",
+      "name": "Áries"
+    },
+    {
+      "slug": "touro",
+      "name": "Touro"
+    },
+    {
+      "slug": "gemeos",
+      "name": "Gêmeos"
+    },
+    {
+      "slug": "cancer",
+      "name": "Câncer"
+    },
+    {
+      "slug": "leao",
+      "name": "Leão"
+    },
+    {
+      "slug": "virgem",
+      "name": "Virgem"
+    },
+    {
+      "slug": "libra",
+      "name": "Libra"
+    },
+    {
+      "slug": "escorpiao",
+      "name": "Escorpião"
+    },
+    {
+      "slug": "sagitario",
+      "name": "Sagitário"
+    },
+    {
+      "slug": "capricornio",
+      "name": "Capricórnio"
+    },
+    {
+      "slug": "aquario",
+      "name": "Aquário"
+    },
+    {
+      "slug": "peixes",
+      "name": "Peixes"
+    }
+  ],
+  "foundation_routes": [
+    {
+      "path": "/meu-ceu",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/ciclos",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/amor",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/proposito",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/tarot",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/sonhos",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/caderno",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/metodo",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/privacidade",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/cookies",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/suporte",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL"
+    },
+    {
+      "path": "/sobre",
+      "observed_route_state": "PROPOSED"
+    },
+    {
+      "path": "/contato",
+      "observed_route_state": "PROPOSED"
+    },
+    {
+      "path": "/pessoas",
+      "observed_route_state": "PROPOSED"
+    },
+    {
+      "path": "/politica-editorial",
+      "observed_route_state": "PROPOSED"
+    },
+    {
+      "path": "/correcoes",
+      "observed_route_state": "PROPOSED"
+    }
+  ],
+  "pages": [
+    {
+      "path": "/signos",
+      "content_kind": "SIGN_INDEX",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signos",
+      "secondary_queries": [
+        "signos do zodíaco",
+        "os 12 signos",
+        "datas dos signos",
+        "qual é meu signo",
+        "signos e personalidade",
+        "ordem dos signos",
+        "símbolos dos signos"
+      ],
+      "title_template": "Signos do zodíaco: datas e características | ATVNA",
+      "h1_template": "Os 12 signos do zodíaco",
+      "contextual_links": [
+        "/signos/aries",
+        "/signos/touro",
+        "/signos/gemeos",
+        "/signos/cancer",
+        "/signos/leao",
+        "/signos/virgem",
+        "/signos/libra",
+        "/signos/escorpiao",
+        "/signos/sagitario",
+        "/signos/capricornio",
+        "/signos/aquario",
+        "/signos/peixes"
+      ]
+    },
+    {
+      "path": "/horoscopo",
+      "content_kind": "HOROSCOPE_INDEX",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo",
+      "secondary_queries": [
+        "horóscopo de hoje",
+        "horóscopo diário",
+        "horóscopo da semana",
+        "horóscopo do mês",
+        "horóscopo de amanhã",
+        "horóscopo para todos os signos",
+        "previsões dos signos hoje"
+      ],
+      "title_template": "Horóscopo de hoje, da semana e do mês | ATVNA",
+      "h1_template": "Horóscopo dos signos",
+      "contextual_links": [
+        "/horoscopo/aries",
+        "/horoscopo/touro",
+        "/horoscopo/gemeos",
+        "/horoscopo/cancer",
+        "/horoscopo/leao",
+        "/horoscopo/virgem",
+        "/horoscopo/libra",
+        "/horoscopo/escorpiao",
+        "/horoscopo/sagitario",
+        "/horoscopo/capricornio",
+        "/horoscopo/aquario",
+        "/horoscopo/peixes"
+      ]
+    },
+    {
+      "path": "/compatibilidade",
+      "content_kind": "COMPATIBILITY_INDEX",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "compatibilidade dos signos",
+      "secondary_queries": [
+        "signos que combinam",
+        "combinação dos signos",
+        "compatibilidade amorosa dos signos",
+        "quais signos combinam no amor",
+        "signos e relacionamentos",
+        "compatibilidade de Áries",
+        "quais signos combinam com Áries",
+        "com quem Áries combina",
+        "compatibilidade de Touro",
+        "quais signos combinam com Touro",
+        "com quem Touro combina",
+        "compatibilidade de Gêmeos",
+        "quais signos combinam com Gêmeos",
+        "com quem Gêmeos combina",
+        "compatibilidade de Câncer",
+        "quais signos combinam com Câncer",
+        "com quem Câncer combina",
+        "compatibilidade de Leão",
+        "quais signos combinam com Leão",
+        "com quem Leão combina",
+        "compatibilidade de Virgem",
+        "quais signos combinam com Virgem",
+        "com quem Virgem combina",
+        "compatibilidade de Libra",
+        "quais signos combinam com Libra",
+        "com quem Libra combina",
+        "compatibilidade de Escorpião",
+        "quais signos combinam com Escorpião",
+        "com quem Escorpião combina",
+        "compatibilidade de Sagitário",
+        "quais signos combinam com Sagitário",
+        "com quem Sagitário combina",
+        "compatibilidade de Capricórnio",
+        "quais signos combinam com Capricórnio",
+        "com quem Capricórnio combina",
+        "compatibilidade de Aquário",
+        "quais signos combinam com Aquário",
+        "com quem Aquário combina",
+        "compatibilidade de Peixes",
+        "quais signos combinam com Peixes",
+        "com quem Peixes combina"
+      ],
+      "title_template": "Compatibilidade dos signos e relacionamentos | ATVNA",
+      "h1_template": "Compatibilidade dos signos",
+      "contextual_links": [
+        "/amor",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/noticias",
+      "content_kind": "NEWS_INDEX",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "notícias de astrologia",
+      "secondary_queries": [
+        "notícias astrológicas",
+        "acontecimentos astrológicos",
+        "atualidades sobre astrologia"
+      ],
+      "title_template": "Notícias e atualidades de astrologia | ATVNA",
+      "h1_template": "Notícias de astrologia",
+      "contextual_links": [
+        "/calendario-astral",
+        "/caderno",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/aries",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Áries",
+      "secondary_queries": [
+        "signo Áries",
+        "Áries signo",
+        "características de Áries",
+        "personalidade de Áries",
+        "datas do signo de Áries",
+        "elemento de Áries",
+        "planeta regente de Áries",
+        "modalidade de Áries",
+        "Áries no amor",
+        "Áries no trabalho",
+        "Áries e dinheiro",
+        "pontos fortes de Áries",
+        "desafios de Áries",
+        "como é uma pessoa de Áries",
+        "significado de Áries",
+        "Áries na amizade",
+        "Áries na família",
+        "Áries e comunicação",
+        "Áries e autoconhecimento",
+        "quando começa o signo de Áries"
+      ],
+      "title_template": "Áries: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Áries: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/aries",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/aries",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Áries",
+      "secondary_queries": [
+        "horóscopo de Áries hoje",
+        "Áries hoje",
+        "horóscopo diário de Áries",
+        "horóscopo de Áries amanhã",
+        "horóscopo semanal de Áries",
+        "horóscopo de Áries esta semana",
+        "horóscopo mensal de Áries",
+        "horóscopo de Áries este mês",
+        "horóscopo do amor de Áries",
+        "horóscopo de Áries no trabalho",
+        "horóscopo de Áries para dinheiro"
+      ],
+      "title_template": "Horóscopo de Áries: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Áries",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/aries",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/touro",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Touro",
+      "secondary_queries": [
+        "signo Touro",
+        "Touro signo",
+        "características de Touro",
+        "personalidade de Touro",
+        "datas do signo de Touro",
+        "elemento de Touro",
+        "planeta regente de Touro",
+        "modalidade de Touro",
+        "Touro no amor",
+        "Touro no trabalho",
+        "Touro e dinheiro",
+        "pontos fortes de Touro",
+        "desafios de Touro",
+        "como é uma pessoa de Touro",
+        "significado de Touro",
+        "Touro na amizade",
+        "Touro na família",
+        "Touro e comunicação",
+        "Touro e autoconhecimento",
+        "quando começa o signo de Touro"
+      ],
+      "title_template": "Touro: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Touro: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/touro",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/touro",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Touro",
+      "secondary_queries": [
+        "horóscopo de Touro hoje",
+        "Touro hoje",
+        "horóscopo diário de Touro",
+        "horóscopo de Touro amanhã",
+        "horóscopo semanal de Touro",
+        "horóscopo de Touro esta semana",
+        "horóscopo mensal de Touro",
+        "horóscopo de Touro este mês",
+        "horóscopo do amor de Touro",
+        "horóscopo de Touro no trabalho",
+        "horóscopo de Touro para dinheiro"
+      ],
+      "title_template": "Horóscopo de Touro: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Touro",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/touro",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/gemeos",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Gêmeos",
+      "secondary_queries": [
+        "signo Gêmeos",
+        "Gêmeos signo",
+        "características de Gêmeos",
+        "personalidade de Gêmeos",
+        "datas do signo de Gêmeos",
+        "elemento de Gêmeos",
+        "planeta regente de Gêmeos",
+        "modalidade de Gêmeos",
+        "Gêmeos no amor",
+        "Gêmeos no trabalho",
+        "Gêmeos e dinheiro",
+        "pontos fortes de Gêmeos",
+        "desafios de Gêmeos",
+        "como é uma pessoa de Gêmeos",
+        "significado de Gêmeos",
+        "Gêmeos na amizade",
+        "Gêmeos na família",
+        "Gêmeos e comunicação",
+        "Gêmeos e autoconhecimento",
+        "quando começa o signo de Gêmeos"
+      ],
+      "title_template": "Gêmeos: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Gêmeos: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/gemeos",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/gemeos",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Gêmeos",
+      "secondary_queries": [
+        "horóscopo de Gêmeos hoje",
+        "Gêmeos hoje",
+        "horóscopo diário de Gêmeos",
+        "horóscopo de Gêmeos amanhã",
+        "horóscopo semanal de Gêmeos",
+        "horóscopo de Gêmeos esta semana",
+        "horóscopo mensal de Gêmeos",
+        "horóscopo de Gêmeos este mês",
+        "horóscopo do amor de Gêmeos",
+        "horóscopo de Gêmeos no trabalho",
+        "horóscopo de Gêmeos para dinheiro"
+      ],
+      "title_template": "Horóscopo de Gêmeos: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Gêmeos",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/gemeos",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/cancer",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Câncer",
+      "secondary_queries": [
+        "signo Câncer",
+        "Câncer signo",
+        "características de Câncer",
+        "personalidade de Câncer",
+        "datas do signo de Câncer",
+        "elemento de Câncer",
+        "planeta regente de Câncer",
+        "modalidade de Câncer",
+        "Câncer no amor",
+        "Câncer no trabalho",
+        "Câncer e dinheiro",
+        "pontos fortes de Câncer",
+        "desafios de Câncer",
+        "como é uma pessoa de Câncer",
+        "significado de Câncer",
+        "Câncer na amizade",
+        "Câncer na família",
+        "Câncer e comunicação",
+        "Câncer e autoconhecimento",
+        "quando começa o signo de Câncer"
+      ],
+      "title_template": "Câncer: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Câncer: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/cancer",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/cancer",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Câncer",
+      "secondary_queries": [
+        "horóscopo de Câncer hoje",
+        "Câncer hoje",
+        "horóscopo diário de Câncer",
+        "horóscopo de Câncer amanhã",
+        "horóscopo semanal de Câncer",
+        "horóscopo de Câncer esta semana",
+        "horóscopo mensal de Câncer",
+        "horóscopo de Câncer este mês",
+        "horóscopo do amor de Câncer",
+        "horóscopo de Câncer no trabalho",
+        "horóscopo de Câncer para dinheiro"
+      ],
+      "title_template": "Horóscopo de Câncer: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Câncer",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/cancer",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/leao",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Leão",
+      "secondary_queries": [
+        "signo Leão",
+        "Leão signo",
+        "características de Leão",
+        "personalidade de Leão",
+        "datas do signo de Leão",
+        "elemento de Leão",
+        "planeta regente de Leão",
+        "modalidade de Leão",
+        "Leão no amor",
+        "Leão no trabalho",
+        "Leão e dinheiro",
+        "pontos fortes de Leão",
+        "desafios de Leão",
+        "como é uma pessoa de Leão",
+        "significado de Leão",
+        "Leão na amizade",
+        "Leão na família",
+        "Leão e comunicação",
+        "Leão e autoconhecimento",
+        "quando começa o signo de Leão"
+      ],
+      "title_template": "Leão: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Leão: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/leao",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/leao",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Leão",
+      "secondary_queries": [
+        "horóscopo de Leão hoje",
+        "Leão hoje",
+        "horóscopo diário de Leão",
+        "horóscopo de Leão amanhã",
+        "horóscopo semanal de Leão",
+        "horóscopo de Leão esta semana",
+        "horóscopo mensal de Leão",
+        "horóscopo de Leão este mês",
+        "horóscopo do amor de Leão",
+        "horóscopo de Leão no trabalho",
+        "horóscopo de Leão para dinheiro"
+      ],
+      "title_template": "Horóscopo de Leão: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Leão",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/leao",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/virgem",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Virgem",
+      "secondary_queries": [
+        "signo Virgem",
+        "Virgem signo",
+        "características de Virgem",
+        "personalidade de Virgem",
+        "datas do signo de Virgem",
+        "elemento de Virgem",
+        "planeta regente de Virgem",
+        "modalidade de Virgem",
+        "Virgem no amor",
+        "Virgem no trabalho",
+        "Virgem e dinheiro",
+        "pontos fortes de Virgem",
+        "desafios de Virgem",
+        "como é uma pessoa de Virgem",
+        "significado de Virgem",
+        "Virgem na amizade",
+        "Virgem na família",
+        "Virgem e comunicação",
+        "Virgem e autoconhecimento",
+        "quando começa o signo de Virgem"
+      ],
+      "title_template": "Virgem: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Virgem: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/virgem",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/virgem",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Virgem",
+      "secondary_queries": [
+        "horóscopo de Virgem hoje",
+        "Virgem hoje",
+        "horóscopo diário de Virgem",
+        "horóscopo de Virgem amanhã",
+        "horóscopo semanal de Virgem",
+        "horóscopo de Virgem esta semana",
+        "horóscopo mensal de Virgem",
+        "horóscopo de Virgem este mês",
+        "horóscopo do amor de Virgem",
+        "horóscopo de Virgem no trabalho",
+        "horóscopo de Virgem para dinheiro"
+      ],
+      "title_template": "Horóscopo de Virgem: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Virgem",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/virgem",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/libra",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Libra",
+      "secondary_queries": [
+        "signo Libra",
+        "Libra signo",
+        "características de Libra",
+        "personalidade de Libra",
+        "datas do signo de Libra",
+        "elemento de Libra",
+        "planeta regente de Libra",
+        "modalidade de Libra",
+        "Libra no amor",
+        "Libra no trabalho",
+        "Libra e dinheiro",
+        "pontos fortes de Libra",
+        "desafios de Libra",
+        "como é uma pessoa de Libra",
+        "significado de Libra",
+        "Libra na amizade",
+        "Libra na família",
+        "Libra e comunicação",
+        "Libra e autoconhecimento",
+        "quando começa o signo de Libra"
+      ],
+      "title_template": "Libra: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Libra: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/libra",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/libra",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Libra",
+      "secondary_queries": [
+        "horóscopo de Libra hoje",
+        "Libra hoje",
+        "horóscopo diário de Libra",
+        "horóscopo de Libra amanhã",
+        "horóscopo semanal de Libra",
+        "horóscopo de Libra esta semana",
+        "horóscopo mensal de Libra",
+        "horóscopo de Libra este mês",
+        "horóscopo do amor de Libra",
+        "horóscopo de Libra no trabalho",
+        "horóscopo de Libra para dinheiro"
+      ],
+      "title_template": "Horóscopo de Libra: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Libra",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/libra",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/escorpiao",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Escorpião",
+      "secondary_queries": [
+        "signo Escorpião",
+        "Escorpião signo",
+        "características de Escorpião",
+        "personalidade de Escorpião",
+        "datas do signo de Escorpião",
+        "elemento de Escorpião",
+        "planeta regente de Escorpião",
+        "modalidade de Escorpião",
+        "Escorpião no amor",
+        "Escorpião no trabalho",
+        "Escorpião e dinheiro",
+        "pontos fortes de Escorpião",
+        "desafios de Escorpião",
+        "como é uma pessoa de Escorpião",
+        "significado de Escorpião",
+        "Escorpião na amizade",
+        "Escorpião na família",
+        "Escorpião e comunicação",
+        "Escorpião e autoconhecimento",
+        "quando começa o signo de Escorpião"
+      ],
+      "title_template": "Escorpião: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Escorpião: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/escorpiao",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/escorpiao",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Escorpião",
+      "secondary_queries": [
+        "horóscopo de Escorpião hoje",
+        "Escorpião hoje",
+        "horóscopo diário de Escorpião",
+        "horóscopo de Escorpião amanhã",
+        "horóscopo semanal de Escorpião",
+        "horóscopo de Escorpião esta semana",
+        "horóscopo mensal de Escorpião",
+        "horóscopo de Escorpião este mês",
+        "horóscopo do amor de Escorpião",
+        "horóscopo de Escorpião no trabalho",
+        "horóscopo de Escorpião para dinheiro"
+      ],
+      "title_template": "Horóscopo de Escorpião: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Escorpião",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/escorpiao",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/sagitario",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Sagitário",
+      "secondary_queries": [
+        "signo Sagitário",
+        "Sagitário signo",
+        "características de Sagitário",
+        "personalidade de Sagitário",
+        "datas do signo de Sagitário",
+        "elemento de Sagitário",
+        "planeta regente de Sagitário",
+        "modalidade de Sagitário",
+        "Sagitário no amor",
+        "Sagitário no trabalho",
+        "Sagitário e dinheiro",
+        "pontos fortes de Sagitário",
+        "desafios de Sagitário",
+        "como é uma pessoa de Sagitário",
+        "significado de Sagitário",
+        "Sagitário na amizade",
+        "Sagitário na família",
+        "Sagitário e comunicação",
+        "Sagitário e autoconhecimento",
+        "quando começa o signo de Sagitário"
+      ],
+      "title_template": "Sagitário: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Sagitário: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/sagitario",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/sagitario",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Sagitário",
+      "secondary_queries": [
+        "horóscopo de Sagitário hoje",
+        "Sagitário hoje",
+        "horóscopo diário de Sagitário",
+        "horóscopo de Sagitário amanhã",
+        "horóscopo semanal de Sagitário",
+        "horóscopo de Sagitário esta semana",
+        "horóscopo mensal de Sagitário",
+        "horóscopo de Sagitário este mês",
+        "horóscopo do amor de Sagitário",
+        "horóscopo de Sagitário no trabalho",
+        "horóscopo de Sagitário para dinheiro"
+      ],
+      "title_template": "Horóscopo de Sagitário: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Sagitário",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/sagitario",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/capricornio",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Capricórnio",
+      "secondary_queries": [
+        "signo Capricórnio",
+        "Capricórnio signo",
+        "características de Capricórnio",
+        "personalidade de Capricórnio",
+        "datas do signo de Capricórnio",
+        "elemento de Capricórnio",
+        "planeta regente de Capricórnio",
+        "modalidade de Capricórnio",
+        "Capricórnio no amor",
+        "Capricórnio no trabalho",
+        "Capricórnio e dinheiro",
+        "pontos fortes de Capricórnio",
+        "desafios de Capricórnio",
+        "como é uma pessoa de Capricórnio",
+        "significado de Capricórnio",
+        "Capricórnio na amizade",
+        "Capricórnio na família",
+        "Capricórnio e comunicação",
+        "Capricórnio e autoconhecimento",
+        "quando começa o signo de Capricórnio"
+      ],
+      "title_template": "Capricórnio: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Capricórnio: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/capricornio",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/capricornio",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Capricórnio",
+      "secondary_queries": [
+        "horóscopo de Capricórnio hoje",
+        "Capricórnio hoje",
+        "horóscopo diário de Capricórnio",
+        "horóscopo de Capricórnio amanhã",
+        "horóscopo semanal de Capricórnio",
+        "horóscopo de Capricórnio esta semana",
+        "horóscopo mensal de Capricórnio",
+        "horóscopo de Capricórnio este mês",
+        "horóscopo do amor de Capricórnio",
+        "horóscopo de Capricórnio no trabalho",
+        "horóscopo de Capricórnio para dinheiro"
+      ],
+      "title_template": "Horóscopo de Capricórnio: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Capricórnio",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/capricornio",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/aquario",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Aquário",
+      "secondary_queries": [
+        "signo Aquário",
+        "Aquário signo",
+        "características de Aquário",
+        "personalidade de Aquário",
+        "datas do signo de Aquário",
+        "elemento de Aquário",
+        "planeta regente de Aquário",
+        "modalidade de Aquário",
+        "Aquário no amor",
+        "Aquário no trabalho",
+        "Aquário e dinheiro",
+        "pontos fortes de Aquário",
+        "desafios de Aquário",
+        "como é uma pessoa de Aquário",
+        "significado de Aquário",
+        "Aquário na amizade",
+        "Aquário na família",
+        "Aquário e comunicação",
+        "Aquário e autoconhecimento",
+        "quando começa o signo de Aquário"
+      ],
+      "title_template": "Aquário: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Aquário: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/aquario",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/aquario",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Aquário",
+      "secondary_queries": [
+        "horóscopo de Aquário hoje",
+        "Aquário hoje",
+        "horóscopo diário de Aquário",
+        "horóscopo de Aquário amanhã",
+        "horóscopo semanal de Aquário",
+        "horóscopo de Aquário esta semana",
+        "horóscopo mensal de Aquário",
+        "horóscopo de Aquário este mês",
+        "horóscopo do amor de Aquário",
+        "horóscopo de Aquário no trabalho",
+        "horóscopo de Aquário para dinheiro"
+      ],
+      "title_template": "Horóscopo de Aquário: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Aquário",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/aquario",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/signos/peixes",
+      "content_kind": "SIGN_PROFILE",
+      "implementation_phase": "SEO2",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "signo de Peixes",
+      "secondary_queries": [
+        "signo Peixes",
+        "Peixes signo",
+        "características de Peixes",
+        "personalidade de Peixes",
+        "datas do signo de Peixes",
+        "elemento de Peixes",
+        "planeta regente de Peixes",
+        "modalidade de Peixes",
+        "Peixes no amor",
+        "Peixes no trabalho",
+        "Peixes e dinheiro",
+        "pontos fortes de Peixes",
+        "desafios de Peixes",
+        "como é uma pessoa de Peixes",
+        "significado de Peixes",
+        "Peixes na amizade",
+        "Peixes na família",
+        "Peixes e comunicação",
+        "Peixes e autoconhecimento",
+        "quando começa o signo de Peixes"
+      ],
+      "title_template": "Peixes: datas e características do signo | ATVNA",
+      "h1_template": "Signo de Peixes: características e significado",
+      "contextual_links": [
+        "/signos",
+        "/horoscopo/peixes",
+        "/compatibilidade",
+        "/ascendente",
+        "/lua-no-mapa-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/horoscopo/peixes",
+      "content_kind": "SIGN_HOROSCOPE",
+      "implementation_phase": "SEO3",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "horóscopo de Peixes",
+      "secondary_queries": [
+        "horóscopo de Peixes hoje",
+        "Peixes hoje",
+        "horóscopo diário de Peixes",
+        "horóscopo de Peixes amanhã",
+        "horóscopo semanal de Peixes",
+        "horóscopo de Peixes esta semana",
+        "horóscopo mensal de Peixes",
+        "horóscopo de Peixes este mês",
+        "horóscopo do amor de Peixes",
+        "horóscopo de Peixes no trabalho",
+        "horóscopo de Peixes para dinheiro"
+      ],
+      "title_template": "Horóscopo de Peixes: hoje, semana e mês | ATVNA",
+      "h1_template": "Horóscopo de Peixes",
+      "contextual_links": [
+        "/horoscopo",
+        "/signos/peixes",
+        "/calendario-astral",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/aries",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Áries",
+      "secondary_queries": [
+        "Áries e Áries no amor",
+        "compatibilidade entre Áries e Áries"
+      ],
+      "title_template": "Áries e Áries: compatibilidade | ATVNA",
+      "h1_template": "Áries e Áries: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/touro",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Touro",
+      "secondary_queries": [
+        "Áries e Touro no amor",
+        "compatibilidade entre Áries e Touro",
+        "Touro combina com Áries"
+      ],
+      "title_template": "Áries e Touro: compatibilidade | ATVNA",
+      "h1_template": "Áries e Touro: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/touro",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/gemeos",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Gêmeos",
+      "secondary_queries": [
+        "Áries e Gêmeos no amor",
+        "compatibilidade entre Áries e Gêmeos",
+        "Gêmeos combina com Áries"
+      ],
+      "title_template": "Áries e Gêmeos: compatibilidade | ATVNA",
+      "h1_template": "Áries e Gêmeos: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/gemeos",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/cancer",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Câncer",
+      "secondary_queries": [
+        "Áries e Câncer no amor",
+        "compatibilidade entre Áries e Câncer",
+        "Câncer combina com Áries"
+      ],
+      "title_template": "Áries e Câncer: compatibilidade | ATVNA",
+      "h1_template": "Áries e Câncer: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/cancer",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/leao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Leão",
+      "secondary_queries": [
+        "Áries e Leão no amor",
+        "compatibilidade entre Áries e Leão",
+        "Leão combina com Áries"
+      ],
+      "title_template": "Áries e Leão: compatibilidade | ATVNA",
+      "h1_template": "Áries e Leão: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/leao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/virgem",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Virgem",
+      "secondary_queries": [
+        "Áries e Virgem no amor",
+        "compatibilidade entre Áries e Virgem",
+        "Virgem combina com Áries"
+      ],
+      "title_template": "Áries e Virgem: compatibilidade | ATVNA",
+      "h1_template": "Áries e Virgem: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/virgem",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Libra",
+      "secondary_queries": [
+        "Áries e Libra no amor",
+        "compatibilidade entre Áries e Libra",
+        "Libra combina com Áries"
+      ],
+      "title_template": "Áries e Libra: compatibilidade | ATVNA",
+      "h1_template": "Áries e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Escorpião",
+      "secondary_queries": [
+        "Áries e Escorpião no amor",
+        "compatibilidade entre Áries e Escorpião",
+        "Escorpião combina com Áries"
+      ],
+      "title_template": "Áries e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Áries e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Sagitário",
+      "secondary_queries": [
+        "Áries e Sagitário no amor",
+        "compatibilidade entre Áries e Sagitário",
+        "Sagitário combina com Áries"
+      ],
+      "title_template": "Áries e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Áries e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Capricórnio",
+      "secondary_queries": [
+        "Áries e Capricórnio no amor",
+        "compatibilidade entre Áries e Capricórnio",
+        "Capricórnio combina com Áries"
+      ],
+      "title_template": "Áries e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Áries e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Aquário",
+      "secondary_queries": [
+        "Áries e Aquário no amor",
+        "compatibilidade entre Áries e Aquário",
+        "Aquário combina com Áries"
+      ],
+      "title_template": "Áries e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Áries e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aries/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Áries combina com Peixes",
+      "secondary_queries": [
+        "Áries e Peixes no amor",
+        "compatibilidade entre Áries e Peixes",
+        "Peixes combina com Áries"
+      ],
+      "title_template": "Áries e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Áries e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aries",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/touro",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Touro",
+      "secondary_queries": [
+        "Touro e Touro no amor",
+        "compatibilidade entre Touro e Touro"
+      ],
+      "title_template": "Touro e Touro: compatibilidade | ATVNA",
+      "h1_template": "Touro e Touro: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/gemeos",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Gêmeos",
+      "secondary_queries": [
+        "Touro e Gêmeos no amor",
+        "compatibilidade entre Touro e Gêmeos",
+        "Gêmeos combina com Touro"
+      ],
+      "title_template": "Touro e Gêmeos: compatibilidade | ATVNA",
+      "h1_template": "Touro e Gêmeos: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/gemeos",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/cancer",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Câncer",
+      "secondary_queries": [
+        "Touro e Câncer no amor",
+        "compatibilidade entre Touro e Câncer",
+        "Câncer combina com Touro"
+      ],
+      "title_template": "Touro e Câncer: compatibilidade | ATVNA",
+      "h1_template": "Touro e Câncer: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/cancer",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/leao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Leão",
+      "secondary_queries": [
+        "Touro e Leão no amor",
+        "compatibilidade entre Touro e Leão",
+        "Leão combina com Touro"
+      ],
+      "title_template": "Touro e Leão: compatibilidade | ATVNA",
+      "h1_template": "Touro e Leão: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/leao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/virgem",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Virgem",
+      "secondary_queries": [
+        "Touro e Virgem no amor",
+        "compatibilidade entre Touro e Virgem",
+        "Virgem combina com Touro"
+      ],
+      "title_template": "Touro e Virgem: compatibilidade | ATVNA",
+      "h1_template": "Touro e Virgem: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/virgem",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Libra",
+      "secondary_queries": [
+        "Touro e Libra no amor",
+        "compatibilidade entre Touro e Libra",
+        "Libra combina com Touro"
+      ],
+      "title_template": "Touro e Libra: compatibilidade | ATVNA",
+      "h1_template": "Touro e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Escorpião",
+      "secondary_queries": [
+        "Touro e Escorpião no amor",
+        "compatibilidade entre Touro e Escorpião",
+        "Escorpião combina com Touro"
+      ],
+      "title_template": "Touro e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Touro e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Sagitário",
+      "secondary_queries": [
+        "Touro e Sagitário no amor",
+        "compatibilidade entre Touro e Sagitário",
+        "Sagitário combina com Touro"
+      ],
+      "title_template": "Touro e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Touro e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Capricórnio",
+      "secondary_queries": [
+        "Touro e Capricórnio no amor",
+        "compatibilidade entre Touro e Capricórnio",
+        "Capricórnio combina com Touro"
+      ],
+      "title_template": "Touro e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Touro e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Aquário",
+      "secondary_queries": [
+        "Touro e Aquário no amor",
+        "compatibilidade entre Touro e Aquário",
+        "Aquário combina com Touro"
+      ],
+      "title_template": "Touro e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Touro e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/touro/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Touro combina com Peixes",
+      "secondary_queries": [
+        "Touro e Peixes no amor",
+        "compatibilidade entre Touro e Peixes",
+        "Peixes combina com Touro"
+      ],
+      "title_template": "Touro e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Touro e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/touro",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/gemeos",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Gêmeos",
+      "secondary_queries": [
+        "Gêmeos e Gêmeos no amor",
+        "compatibilidade entre Gêmeos e Gêmeos"
+      ],
+      "title_template": "Gêmeos e Gêmeos: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Gêmeos: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/cancer",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Câncer",
+      "secondary_queries": [
+        "Gêmeos e Câncer no amor",
+        "compatibilidade entre Gêmeos e Câncer",
+        "Câncer combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Câncer: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Câncer: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/cancer",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/leao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Leão",
+      "secondary_queries": [
+        "Gêmeos e Leão no amor",
+        "compatibilidade entre Gêmeos e Leão",
+        "Leão combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Leão: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Leão: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/leao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/virgem",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Virgem",
+      "secondary_queries": [
+        "Gêmeos e Virgem no amor",
+        "compatibilidade entre Gêmeos e Virgem",
+        "Virgem combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Virgem: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Virgem: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/virgem",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Libra",
+      "secondary_queries": [
+        "Gêmeos e Libra no amor",
+        "compatibilidade entre Gêmeos e Libra",
+        "Libra combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Libra: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Escorpião",
+      "secondary_queries": [
+        "Gêmeos e Escorpião no amor",
+        "compatibilidade entre Gêmeos e Escorpião",
+        "Escorpião combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Sagitário",
+      "secondary_queries": [
+        "Gêmeos e Sagitário no amor",
+        "compatibilidade entre Gêmeos e Sagitário",
+        "Sagitário combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Capricórnio",
+      "secondary_queries": [
+        "Gêmeos e Capricórnio no amor",
+        "compatibilidade entre Gêmeos e Capricórnio",
+        "Capricórnio combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Aquário",
+      "secondary_queries": [
+        "Gêmeos e Aquário no amor",
+        "compatibilidade entre Gêmeos e Aquário",
+        "Aquário combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/gemeos/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Gêmeos combina com Peixes",
+      "secondary_queries": [
+        "Gêmeos e Peixes no amor",
+        "compatibilidade entre Gêmeos e Peixes",
+        "Peixes combina com Gêmeos"
+      ],
+      "title_template": "Gêmeos e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Gêmeos e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/gemeos",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/cancer",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Câncer",
+      "secondary_queries": [
+        "Câncer e Câncer no amor",
+        "compatibilidade entre Câncer e Câncer"
+      ],
+      "title_template": "Câncer e Câncer: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Câncer: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/leao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Leão",
+      "secondary_queries": [
+        "Câncer e Leão no amor",
+        "compatibilidade entre Câncer e Leão",
+        "Leão combina com Câncer"
+      ],
+      "title_template": "Câncer e Leão: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Leão: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/leao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/virgem",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Virgem",
+      "secondary_queries": [
+        "Câncer e Virgem no amor",
+        "compatibilidade entre Câncer e Virgem",
+        "Virgem combina com Câncer"
+      ],
+      "title_template": "Câncer e Virgem: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Virgem: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/virgem",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Libra",
+      "secondary_queries": [
+        "Câncer e Libra no amor",
+        "compatibilidade entre Câncer e Libra",
+        "Libra combina com Câncer"
+      ],
+      "title_template": "Câncer e Libra: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Escorpião",
+      "secondary_queries": [
+        "Câncer e Escorpião no amor",
+        "compatibilidade entre Câncer e Escorpião",
+        "Escorpião combina com Câncer"
+      ],
+      "title_template": "Câncer e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Sagitário",
+      "secondary_queries": [
+        "Câncer e Sagitário no amor",
+        "compatibilidade entre Câncer e Sagitário",
+        "Sagitário combina com Câncer"
+      ],
+      "title_template": "Câncer e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Capricórnio",
+      "secondary_queries": [
+        "Câncer e Capricórnio no amor",
+        "compatibilidade entre Câncer e Capricórnio",
+        "Capricórnio combina com Câncer"
+      ],
+      "title_template": "Câncer e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Aquário",
+      "secondary_queries": [
+        "Câncer e Aquário no amor",
+        "compatibilidade entre Câncer e Aquário",
+        "Aquário combina com Câncer"
+      ],
+      "title_template": "Câncer e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/cancer/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Câncer combina com Peixes",
+      "secondary_queries": [
+        "Câncer e Peixes no amor",
+        "compatibilidade entre Câncer e Peixes",
+        "Peixes combina com Câncer"
+      ],
+      "title_template": "Câncer e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Câncer e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/cancer",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/leao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Leão",
+      "secondary_queries": [
+        "Leão e Leão no amor",
+        "compatibilidade entre Leão e Leão"
+      ],
+      "title_template": "Leão e Leão: compatibilidade | ATVNA",
+      "h1_template": "Leão e Leão: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/virgem",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Virgem",
+      "secondary_queries": [
+        "Leão e Virgem no amor",
+        "compatibilidade entre Leão e Virgem",
+        "Virgem combina com Leão"
+      ],
+      "title_template": "Leão e Virgem: compatibilidade | ATVNA",
+      "h1_template": "Leão e Virgem: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/virgem",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Libra",
+      "secondary_queries": [
+        "Leão e Libra no amor",
+        "compatibilidade entre Leão e Libra",
+        "Libra combina com Leão"
+      ],
+      "title_template": "Leão e Libra: compatibilidade | ATVNA",
+      "h1_template": "Leão e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Escorpião",
+      "secondary_queries": [
+        "Leão e Escorpião no amor",
+        "compatibilidade entre Leão e Escorpião",
+        "Escorpião combina com Leão"
+      ],
+      "title_template": "Leão e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Leão e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Sagitário",
+      "secondary_queries": [
+        "Leão e Sagitário no amor",
+        "compatibilidade entre Leão e Sagitário",
+        "Sagitário combina com Leão"
+      ],
+      "title_template": "Leão e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Leão e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Capricórnio",
+      "secondary_queries": [
+        "Leão e Capricórnio no amor",
+        "compatibilidade entre Leão e Capricórnio",
+        "Capricórnio combina com Leão"
+      ],
+      "title_template": "Leão e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Leão e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Aquário",
+      "secondary_queries": [
+        "Leão e Aquário no amor",
+        "compatibilidade entre Leão e Aquário",
+        "Aquário combina com Leão"
+      ],
+      "title_template": "Leão e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Leão e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/leao/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Leão combina com Peixes",
+      "secondary_queries": [
+        "Leão e Peixes no amor",
+        "compatibilidade entre Leão e Peixes",
+        "Peixes combina com Leão"
+      ],
+      "title_template": "Leão e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Leão e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/leao",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/virgem",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Virgem",
+      "secondary_queries": [
+        "Virgem e Virgem no amor",
+        "compatibilidade entre Virgem e Virgem"
+      ],
+      "title_template": "Virgem e Virgem: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Virgem: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Libra",
+      "secondary_queries": [
+        "Virgem e Libra no amor",
+        "compatibilidade entre Virgem e Libra",
+        "Libra combina com Virgem"
+      ],
+      "title_template": "Virgem e Libra: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Escorpião",
+      "secondary_queries": [
+        "Virgem e Escorpião no amor",
+        "compatibilidade entre Virgem e Escorpião",
+        "Escorpião combina com Virgem"
+      ],
+      "title_template": "Virgem e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Sagitário",
+      "secondary_queries": [
+        "Virgem e Sagitário no amor",
+        "compatibilidade entre Virgem e Sagitário",
+        "Sagitário combina com Virgem"
+      ],
+      "title_template": "Virgem e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Capricórnio",
+      "secondary_queries": [
+        "Virgem e Capricórnio no amor",
+        "compatibilidade entre Virgem e Capricórnio",
+        "Capricórnio combina com Virgem"
+      ],
+      "title_template": "Virgem e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Aquário",
+      "secondary_queries": [
+        "Virgem e Aquário no amor",
+        "compatibilidade entre Virgem e Aquário",
+        "Aquário combina com Virgem"
+      ],
+      "title_template": "Virgem e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/virgem/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Virgem combina com Peixes",
+      "secondary_queries": [
+        "Virgem e Peixes no amor",
+        "compatibilidade entre Virgem e Peixes",
+        "Peixes combina com Virgem"
+      ],
+      "title_template": "Virgem e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Virgem e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/virgem",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/libra/libra",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Libra combina com Libra",
+      "secondary_queries": [
+        "Libra e Libra no amor",
+        "compatibilidade entre Libra e Libra"
+      ],
+      "title_template": "Libra e Libra: compatibilidade | ATVNA",
+      "h1_template": "Libra e Libra: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/libra",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/libra/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Libra combina com Escorpião",
+      "secondary_queries": [
+        "Libra e Escorpião no amor",
+        "compatibilidade entre Libra e Escorpião",
+        "Escorpião combina com Libra"
+      ],
+      "title_template": "Libra e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Libra e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/libra",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/libra/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Libra combina com Sagitário",
+      "secondary_queries": [
+        "Libra e Sagitário no amor",
+        "compatibilidade entre Libra e Sagitário",
+        "Sagitário combina com Libra"
+      ],
+      "title_template": "Libra e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Libra e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/libra",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/libra/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Libra combina com Capricórnio",
+      "secondary_queries": [
+        "Libra e Capricórnio no amor",
+        "compatibilidade entre Libra e Capricórnio",
+        "Capricórnio combina com Libra"
+      ],
+      "title_template": "Libra e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Libra e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/libra",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/libra/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Libra combina com Aquário",
+      "secondary_queries": [
+        "Libra e Aquário no amor",
+        "compatibilidade entre Libra e Aquário",
+        "Aquário combina com Libra"
+      ],
+      "title_template": "Libra e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Libra e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/libra",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/libra/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Libra combina com Peixes",
+      "secondary_queries": [
+        "Libra e Peixes no amor",
+        "compatibilidade entre Libra e Peixes",
+        "Peixes combina com Libra"
+      ],
+      "title_template": "Libra e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Libra e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/libra",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/escorpiao/escorpiao",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Escorpião combina com Escorpião",
+      "secondary_queries": [
+        "Escorpião e Escorpião no amor",
+        "compatibilidade entre Escorpião e Escorpião"
+      ],
+      "title_template": "Escorpião e Escorpião: compatibilidade | ATVNA",
+      "h1_template": "Escorpião e Escorpião: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/escorpiao",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/escorpiao/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Escorpião combina com Sagitário",
+      "secondary_queries": [
+        "Escorpião e Sagitário no amor",
+        "compatibilidade entre Escorpião e Sagitário",
+        "Sagitário combina com Escorpião"
+      ],
+      "title_template": "Escorpião e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Escorpião e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/escorpiao",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/escorpiao/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Escorpião combina com Capricórnio",
+      "secondary_queries": [
+        "Escorpião e Capricórnio no amor",
+        "compatibilidade entre Escorpião e Capricórnio",
+        "Capricórnio combina com Escorpião"
+      ],
+      "title_template": "Escorpião e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Escorpião e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/escorpiao",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/escorpiao/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Escorpião combina com Aquário",
+      "secondary_queries": [
+        "Escorpião e Aquário no amor",
+        "compatibilidade entre Escorpião e Aquário",
+        "Aquário combina com Escorpião"
+      ],
+      "title_template": "Escorpião e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Escorpião e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/escorpiao",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/escorpiao/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Escorpião combina com Peixes",
+      "secondary_queries": [
+        "Escorpião e Peixes no amor",
+        "compatibilidade entre Escorpião e Peixes",
+        "Peixes combina com Escorpião"
+      ],
+      "title_template": "Escorpião e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Escorpião e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/escorpiao",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/sagitario/sagitario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Sagitário combina com Sagitário",
+      "secondary_queries": [
+        "Sagitário e Sagitário no amor",
+        "compatibilidade entre Sagitário e Sagitário"
+      ],
+      "title_template": "Sagitário e Sagitário: compatibilidade | ATVNA",
+      "h1_template": "Sagitário e Sagitário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/sagitario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/sagitario/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Sagitário combina com Capricórnio",
+      "secondary_queries": [
+        "Sagitário e Capricórnio no amor",
+        "compatibilidade entre Sagitário e Capricórnio",
+        "Capricórnio combina com Sagitário"
+      ],
+      "title_template": "Sagitário e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Sagitário e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/sagitario",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/sagitario/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Sagitário combina com Aquário",
+      "secondary_queries": [
+        "Sagitário e Aquário no amor",
+        "compatibilidade entre Sagitário e Aquário",
+        "Aquário combina com Sagitário"
+      ],
+      "title_template": "Sagitário e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Sagitário e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/sagitario",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/sagitario/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Sagitário combina com Peixes",
+      "secondary_queries": [
+        "Sagitário e Peixes no amor",
+        "compatibilidade entre Sagitário e Peixes",
+        "Peixes combina com Sagitário"
+      ],
+      "title_template": "Sagitário e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Sagitário e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/sagitario",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/capricornio/capricornio",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Capricórnio combina com Capricórnio",
+      "secondary_queries": [
+        "Capricórnio e Capricórnio no amor",
+        "compatibilidade entre Capricórnio e Capricórnio"
+      ],
+      "title_template": "Capricórnio e Capricórnio: compatibilidade | ATVNA",
+      "h1_template": "Capricórnio e Capricórnio: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/capricornio",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/capricornio/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Capricórnio combina com Aquário",
+      "secondary_queries": [
+        "Capricórnio e Aquário no amor",
+        "compatibilidade entre Capricórnio e Aquário",
+        "Aquário combina com Capricórnio"
+      ],
+      "title_template": "Capricórnio e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Capricórnio e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/capricornio",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/capricornio/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Capricórnio combina com Peixes",
+      "secondary_queries": [
+        "Capricórnio e Peixes no amor",
+        "compatibilidade entre Capricórnio e Peixes",
+        "Peixes combina com Capricórnio"
+      ],
+      "title_template": "Capricórnio e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Capricórnio e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/capricornio",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aquario/aquario",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Aquário combina com Aquário",
+      "secondary_queries": [
+        "Aquário e Aquário no amor",
+        "compatibilidade entre Aquário e Aquário"
+      ],
+      "title_template": "Aquário e Aquário: compatibilidade | ATVNA",
+      "h1_template": "Aquário e Aquário: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aquario",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/aquario/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Aquário combina com Peixes",
+      "secondary_queries": [
+        "Aquário e Peixes no amor",
+        "compatibilidade entre Aquário e Peixes",
+        "Peixes combina com Aquário"
+      ],
+      "title_template": "Aquário e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Aquário e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/aquario",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/compatibilidade/peixes/peixes",
+      "content_kind": "SIGN_PAIR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "Peixes combina com Peixes",
+      "secondary_queries": [
+        "Peixes e Peixes no amor",
+        "compatibilidade entre Peixes e Peixes"
+      ],
+      "title_template": "Peixes e Peixes: compatibilidade | ATVNA",
+      "h1_template": "Peixes e Peixes: afinidades e diferenças",
+      "contextual_links": [
+        "/compatibilidade",
+        "/signos/peixes",
+        "/amor",
+        "/metodo"
+      ]
+    },
+    {
+      "path": "/mercurio-retrogrado",
+      "content_kind": "EVENT_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "mercúrio retrógrado",
+      "secondary_queries": [
+        "o que é mercúrio retrógrado",
+        "significado de mercúrio retrógrado",
+        "mercúrio retrógrado na astrologia"
+      ],
+      "title_template": "Mercúrio retrógrado: guia e contexto | ATVNA",
+      "h1_template": "Mercúrio retrógrado",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/noticias",
+        "/ciclos"
+      ]
+    },
+    {
+      "path": "/lua-cheia",
+      "content_kind": "EVENT_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "lua cheia",
+      "secondary_queries": [
+        "significado da lua cheia",
+        "lua cheia na astrologia",
+        "o que representa a lua cheia"
+      ],
+      "title_template": "Lua cheia: guia e contexto | ATVNA",
+      "h1_template": "Lua cheia",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/noticias",
+        "/ciclos"
+      ]
+    },
+    {
+      "path": "/lua-nova",
+      "content_kind": "EVENT_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "lua nova",
+      "secondary_queries": [
+        "significado da lua nova",
+        "lua nova na astrologia",
+        "o que representa a lua nova"
+      ],
+      "title_template": "Lua nova: guia e contexto | ATVNA",
+      "h1_template": "Lua nova",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/noticias",
+        "/ciclos"
+      ]
+    },
+    {
+      "path": "/eclipses",
+      "content_kind": "EVENT_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "eclipses",
+      "secondary_queries": [
+        "eclipse solar e lunar",
+        "significado dos eclipses na astrologia",
+        "o que é um eclipse"
+      ],
+      "title_template": "Eclipses: guia e contexto | ATVNA",
+      "h1_template": "Eclipses",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/noticias",
+        "/ciclos"
+      ]
+    },
+    {
+      "path": "/calendario-astral",
+      "content_kind": "EVENT_CALENDAR",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "calendário astral",
+      "secondary_queries": [
+        "calendário astrológico",
+        "próximos eventos astrológicos",
+        "datas dos eventos astrológicos"
+      ],
+      "title_template": "Calendário astral: guia e contexto | ATVNA",
+      "h1_template": "Calendário astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/noticias",
+        "/ciclos"
+      ]
+    },
+    {
+      "path": "/ascendente",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "ascendente",
+      "secondary_queries": [
+        "o que é ascendente",
+        "significado do ascendente",
+        "diferença entre signo e ascendente"
+      ],
+      "title_template": "Ascendente: guia e contexto | ATVNA",
+      "h1_template": "Ascendente",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/lua-no-mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "lua no mapa astral",
+      "secondary_queries": [
+        "signo lunar",
+        "o que é signo lunar",
+        "significado da lua no mapa astral"
+      ],
+      "title_template": "Lua no mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Lua no mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "mapa astral",
+      "secondary_queries": [
+        "o que é mapa astral",
+        "como ler o mapa astral",
+        "significado do mapa astral"
+      ],
+      "title_template": "Mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/elementos-dos-signos",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "elementos dos signos",
+      "secondary_queries": [
+        "signos de fogo",
+        "signos de terra",
+        "signos de ar",
+        "signos de água"
+      ],
+      "title_template": "Elementos dos signos: guia e contexto | ATVNA",
+      "h1_template": "Elementos dos signos",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/modalidades-dos-signos",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "modalidades dos signos",
+      "secondary_queries": [
+        "signos cardinais",
+        "signos fixos",
+        "signos mutáveis"
+      ],
+      "title_template": "Modalidades dos signos: guia e contexto | ATVNA",
+      "h1_template": "Modalidades dos signos",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/venus-no-mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "vênus no mapa astral",
+      "secondary_queries": [
+        "significado de vênus na astrologia",
+        "vênus e relacionamentos",
+        "o que representa vênus no mapa"
+      ],
+      "title_template": "Vênus no mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Vênus no mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/marte-no-mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "marte no mapa astral",
+      "secondary_queries": [
+        "significado de marte na astrologia",
+        "marte e iniciativa",
+        "o que representa marte no mapa"
+      ],
+      "title_template": "Marte no mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Marte no mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/casas-astrologicas",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "casas astrológicas",
+      "secondary_queries": [
+        "as 12 casas do mapa astral",
+        "significado das casas astrológicas",
+        "o que são casas astrológicas"
+      ],
+      "title_template": "Casas astrológicas: guia e contexto | ATVNA",
+      "h1_template": "Casas astrológicas",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/transitos-astrologicos",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "trânsitos astrológicos",
+      "secondary_queries": [
+        "o que são trânsitos astrológicos",
+        "como ler trânsitos astrológicos",
+        "diferença entre trânsito e mapa natal"
+      ],
+      "title_template": "Trânsitos astrológicos: guia e contexto | ATVNA",
+      "h1_template": "Trânsitos astrológicos",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/sol-no-mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "PROPOSED",
+      "primary_query": "sol no mapa astral",
+      "secondary_queries": [
+        "significado do sol na astrologia",
+        "signo solar",
+        "diferença entre signo solar e lunar"
+      ],
+      "title_template": "Sol no mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Sol no mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/meio-do-ceu",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "LOCAL_ROUTE",
+      "primary_query": "meio do céu",
+      "secondary_queries": [
+        "o que é meio do céu",
+        "significado do meio do céu",
+        "meio do céu e vocação"
+      ],
+      "title_template": "Meio do Céu: guia e contexto | ATVNA",
+      "h1_template": "Meio do Céu",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/casa-10",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL",
+      "primary_query": "casa 10",
+      "secondary_queries": [
+        "casa 10 no mapa astral",
+        "significado da casa 10",
+        "casa 10 e carreira"
+      ],
+      "title_template": "Casa 10: guia e contexto | ATVNA",
+      "h1_template": "Casa 10",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/vocacao-no-mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL",
+      "primary_query": "vocação no mapa astral",
+      "secondary_queries": [
+        "como identificar vocação no mapa",
+        "astrologia e vocação",
+        "mapa astral vocacional"
+      ],
+      "title_template": "Vocação no mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Vocação no mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    },
+    {
+      "path": "/carreira-no-mapa-astral",
+      "content_kind": "EVERGREEN_GUIDE",
+      "implementation_phase": "SEO4",
+      "observed_route_state": "LOCAL_EDITORIAL_SHELL",
+      "primary_query": "carreira no mapa astral",
+      "secondary_queries": [
+        "astrologia e carreira",
+        "orientação de carreira pela astrologia",
+        "mapa astral profissional"
+      ],
+      "title_template": "Carreira no mapa astral: guia e contexto | ATVNA",
+      "h1_template": "Carreira no mapa astral",
+      "contextual_links": [
+        "/metodo",
+        "/caderno",
+        "/signos"
+      ]
+    }
+  ],
+  "pair_policy": {
+    "canonical_order": "sign_order, índice menor primeiro, incluindo pares do mesmo signo",
+    "potential_pair_count": 78,
+    "batch_publication": false,
+    "reverse_redirect": "301 somente quando o destino canônico estiver publicado; caso contrário 404",
+    "secondary_query_order_does_not_create_a_new_page": true
+  },
+  "temporal_query_templates": [
+    {
+      "kind": "DATED_HOROSCOPE_COLUMN",
+      "path_template": "/noticias/horoscopo/{ano}/{mes}/{dia}/{slug}",
+      "query_templates": [
+        "horóscopo de {data_por_extenso}",
+        "horóscopo de {signo} em {data_por_extenso}"
+      ],
+      "generic_query_owner": "/horoscopo ou /horoscopo/{signo_slug}",
+      "structured_data": "Article por padrão; NewsArticle apenas para material jornalístico atual devidamente aprovado",
+      "news_sitemap_allowed": "somente se o item satisfizer a política de notícia; não pelo diretório ou pela data"
+    },
+    {
+      "kind": "DATED_EVENT_REPORT",
+      "path_template": "/noticias/{ano}/{mes}/{slug}",
+      "query_templates": [
+        "{evento} em {mes_por_extenso} de {ano}",
+        "{evento} de {data_por_extenso}"
+      ],
+      "generic_query_owner": "guia permanente correspondente ou /calendario-astral",
+      "structured_data": "NewsArticle quando houver apuração, atualidade e revisão",
+      "requires_calculation_evidence": true
+    }
+  ],
+  "content_specs_reference": "MAPA_MESTRE_SEO_ATVNA_2026-10-05.md",
+  "sources": [
+    "https://developers.google.com/search/docs/crawling-indexing/sitemaps/news-sitemap",
+    "https://developers.google.com/search/docs/appearance/structured-data/article",
+    "https://support.google.com/news/publisher-center/answer/14859160?hl=en",
+    "https://developers.google.com/search/docs/appearance/google-discover",
+    "https://support.google.com/news/publisher-center/answer/6204050?hl=en",
+    "https://developers.google.com/search/docs/essentials/spam-policies",
+    "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+    "https://support.google.com/trends/answer/4365533?hl=en",
+    "https://support.google.com/trends/answer/4355000?hl=pt-BR",
+    "https://support.google.com/trends/answer/3076011?hl=pt-BR"
+  ],
+  "counts": {
+    "concrete_pages": 125,
+    "concrete_candidate_queries": 835,
+    "sign_profiles": 12,
+    "sign_horoscopes": 12,
+    "potential_pair_pages": 78,
+    "temporal_templates": 2
+  }
+}

@@ -1,13 +1,19 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
+	import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 	let { data } = $props();
 </script>
 
 <svelte:head>
+	{#if !data.document && data.page}
 	<title>{data.page.title} — A Tua Vida nos Astros</title>
 	<meta name="description" content={data.page.description} />
 	<link rel="canonical" href={`https://atuavidanosastros.com.br/${data.slug}`} />
+{/if}
 </svelte:head>
+{#if data.document}
+<EditorialArticle document={data.document} />
+{:else if data.page}
 <section class="section">
 	<div class="reading">
 		<p class="eyebrow">{data.page.eyebrow}</p>
@@ -58,6 +64,7 @@
 	</div>
 </section>
 
+{/if}
 <style>
 	.topic-section {
 		margin-block: 2rem;

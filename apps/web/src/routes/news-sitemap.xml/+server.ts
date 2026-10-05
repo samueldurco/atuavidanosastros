@@ -1,7 +1,7 @@
 import { publishedEditorial } from '$lib/server/editorial-registry';
-import { sitemapIndex, xmlResponse } from '$lib/server/editorial-feeds';
+import { newsChunks, newsSitemap, xmlResponse } from '$lib/server/editorial-feeds';
 import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async () => {
 	const now = new Date();
-	return xmlResponse(sitemapIndex(await publishedEditorial(now), now));
+	return xmlResponse(newsSitemap(newsChunks(await publishedEditorial(now), now)[0]));
 };
