@@ -44,12 +44,12 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm --dir apps/web exec playwright install --with-deps chromium
-      - name: Public accessibility and keyboard regression
-        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts gate-b.e2e.ts --workers=1
+      - name: Public and synthetic private accessibility with keyboard regression
+        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts private-accessibility.e2e.ts gate-b.e2e.ts --workers=1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: public-accessibility-results
+          name: accessibility-results
           path: apps/web/test-results/
           retention-days: 7
 

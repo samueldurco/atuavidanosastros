@@ -1,26 +1,11 @@
-import AxeBuilder from '@axe-core/playwright';
-import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { writeFile } from 'node:fs/promises';
+import { expect, test } from '@playwright/test';
+import { scanAccessibility as scan } from './fixtures/accessibility';
 
 const surfaces = ['/', '/entrar', '/bussola-de-carreira', '/meu-ceu', '/loja', '/metodo'];
 const viewports = [
 	{ name: 'desktop', width: 1440, height: 1000 },
 	{ name: 'mobile', width: 390, height: 844 }
 ];
-
-async function scan(page: Page, testInfo: TestInfo) {
-	await page.evaluate(() => document.fonts.ready);
-	const result = await new AxeBuilder({ page })
-		.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-		.analyze();
-	const path = testInfo.outputPath('axe-results.json');
-	await writeFile(path, JSON.stringify(result, null, 2));
-	await testInfo.attach('axe-results', {
-		path,
-		contentType: 'application/json'
-	});
-	expect(result.violations).toEqual([]);
-}
 
 for (const viewport of viewports) {
 	for (const path of surfaces) {
