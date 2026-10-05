@@ -10,7 +10,19 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter()
+			adapter: adapter({
+				routes: {
+					// Group public brand assets so they do not exhaust Pages' 100-rule limit.
+					exclude: [
+						'<build>',
+						'/brand/*',
+						'/manifest.webmanifest',
+						'/google15945b45fa79e7d3.html',
+						'<prerendered>',
+						'<redirects>'
+					]
+				}
+			})
 		})
 	],
 	test: {
