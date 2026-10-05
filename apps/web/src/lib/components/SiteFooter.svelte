@@ -11,7 +11,9 @@
 		<nav aria-label="Rodapé">
 			<a href="/metodo">Nosso método</a><a href="/caderno">Caderno</a><a href="/loja"
 				>Loja dos Signos</a
-			><a href="/privacidade">Privacidade</a><a href="/suporte">Suporte</a>
+			><a href="/termos">Termos de uso</a><a href="/privacidade">Privacidade</a><a href="/suporte"
+				>Suporte</a
+			>
 		</nav>
 	</div>
 	<div class="container fineprint">

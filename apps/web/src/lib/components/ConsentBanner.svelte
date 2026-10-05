@@ -16,7 +16,7 @@
 				Usamos armazenamento essencial para o site funcionar. Analytics só é carregado se você
 				aceitar; não enviamos dados natais ou informações pessoais ao GA4.
 			</p>
-			<a href="/cookies">Conheça a política de cookies</a>
+			<a href="/privacidade">Privacidade e cookies</a>
 		</div>
 		<div class="actions">
 			<button class="secondary" onclick={() => choose('denied')}>Recusar analytics</button><button

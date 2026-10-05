@@ -1,0 +1,10 @@
+# Valores reais ficam apenas no ambiente local ou nos secrets do Cloudflare.
+ADMIN_EMAIL_ALLOWLIST=
+SUPABASE_SERVICE_ROLE_KEY=
+TIKTOK_CLIENT_KEY=
+TIKTOK_CLIENT_SECRET=
+TIKTOK_REDIRECT_URI=https://atuavidanosastros.com.br/api/integrations/tiktok/callback
+# 32 bytes aleatórios em base64 (ex.: openssl rand -base64 32).
+TIKTOK_TOKEN_ENCRYPTION_KEY=
+
+PUBLIC_SUPABASE_ANON_KEY=
