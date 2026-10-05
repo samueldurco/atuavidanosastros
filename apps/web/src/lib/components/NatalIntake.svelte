@@ -817,11 +817,11 @@
 								Escolha quatro áreas distintas da sua vida. Estes nomes são suas escolhas, não
 								conclusões do mapa. Cada campo aceita até 120 caracteres.
 							</p>
-							{#each atlasPriorities as _, index (index)}
+							{#each atlasPriorities as priority, index (index)}
 								<Field
 									id={'atlas-priority-' + index}
 									label={'Prioridade ' + (index + 1)}
-									error={atlasPriorities[index] && !atlasValid
+									error={priority && !atlasValid
 										? 'Informe quatro prioridades distintas e válidas.'
 										: undefined}
 								>
@@ -835,7 +835,7 @@
 											bind:value={atlasPriorities[index]}
 											oninput={resetConsents}
 											aria-describedby={describedBy}
-											aria-invalid={!atlasValid && atlasPriorities[index] !== ''}
+											aria-invalid={!atlasValid && priority !== ''}
 										/>
 									{/snippet}
 								</Field>
