@@ -1,0 +1,374 @@
+{
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "checkedOn": "2026-10-06",
+  "policy": "Fontes abertas não são domínio público. Não copiar textos, traduções, imagens, exercícios ou leitura de terceiros.",
+  "originalSourceCorpus": "preparacao/05-fontes-direitos.json",
+  "originalSha256": "a5994b08dfa56b14c9d07686c0b29d1d005bc28207937c9bdaeb81c2341b4f7e",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://www.fisarte.ufscar.br/pt-br/conceitos/lua",
+      "title": "Lua — FisArte/UFSCar",
+      "type": "primary-science",
+      "read": "corpo 18–28",
+      "claims": [
+        "Fases dependem da geometria Sol–Terra–Lua.",
+        "Lua reflete luz solar."
+      ],
+      "rights": "Paráfrase factual com atribuição; nenhuma imagem ou trecho copiado.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S02",
+      "url": "https://cdaweb.gsfc.nasa.gov/pub/documents/archived_websites/pwg.gsfc.nasa.gov/stargaze/Splanets.htm",
+      "title": "The Planets — NASA/Goddard, arquivo educacional",
+      "type": "primary-science",
+      "read": "corpo 25–36",
+      "claims": [
+        "Movimento retrógrado é aparente em relação às estrelas de fundo."
+      ],
+      "rights": "Paráfrase factual com atribuição; não reproduzir diagramas.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S03",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636",
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "type": "astrological-tradition",
+      "read": "corpo 60–110",
+      "claims": [
+        "Nesta tradição, Sol, Lua e Ascendente cumprem papéis simbólicos diferentes.",
+        "Horário e local importam na identificação do Ascendente."
+      ],
+      "rights": "Texto protegido; apenas síntese de conceitos, sem copiar estrutura, imagem ou leitura.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S04",
+      "url": "https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria",
+      "title": "Combinação dos signos e sinastria — Horóscopo Virtual",
+      "type": "astrological-tradition",
+      "read": "corpo 180–203",
+      "claims": [
+        "Sinastria compara mapas; combinação solar é um recorte limitado."
+      ],
+      "rights": "Texto protegido; paráfrase breve. Rejeitar estereótipos de gênero e inferências sobre fertilidade.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S05",
+      "url": "https://www.astrolink.com.br/artigo/diferenca-entre-o-tarot-de-marselha-e-rider-waite",
+      "title": "Tarot de Marselha e Rider-Waite — Astrolink",
+      "type": "tarot-tradition",
+      "read": "corpo 21–98",
+      "claims": [
+        "Os dois modelos têm diferenças de representação dos arcanos menores.",
+        "Numeração de Justiça e Força pode variar."
+      ],
+      "rights": "Texto e imagens protegidos; nenhuma carta reproduzida. Alegações históricas controversas não serão usadas sem museu.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S06",
+      "url": "https://controle.joaobidu.com.br/tarot/arcanos-maiores-e-menores-entenda-o-que-as-cartas-do-tarot-diz-para-voce.phtml",
+      "title": "Arcanos maiores e menores — João Bidu",
+      "type": "tarot-tradition",
+      "read": "corpo 70–167",
+      "claims": [
+        "Estrutura contemporânea comum: 22 maiores e 56 menores.",
+        "Leitura simbólica depende de contexto; não tratar como previsão garantida."
+      ],
+      "rights": "Texto protegido; nenhuma sequência de significados ou imagem será transcrita.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S07",
+      "url": "https://cafeastrology.com/ascendant.html",
+      "title": "Ascendant — Cafe Astrology",
+      "type": "astrological-tradition",
+      "read": "corpo 9–32",
+      "claims": [
+        "Ascendente é o signo e grau que ascende no horizonte oriental para horário e lugar.",
+        "Integra os quatro ângulos tradicionais do mapa."
+      ],
+      "rights": "Texto protegido. Não traduzir artigo; somente definição atribuída, sem alegações de saúde.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S08",
+      "url": "https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos",
+      "title": "Como manter um diário de sonhos — Sonheiro",
+      "type": "competitor-practice",
+      "read": "corpo 11–44, 53–106",
+      "claims": [
+        "Exemplo de registro de cena, emoção e contexto em diário."
+      ],
+      "rights": "Texto protegido; elaborar modelo próprio. Não reproduzir alegações de memória, prazo de hábito ou números de sorte.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S09",
+      "url": "https://www.metmuseum.org/perspectives/tarot-2",
+      "title": "Before Fortune-Telling: The History and Structure of Tarot Cards — The Met",
+      "type": "primary-museum",
+      "read": "corpo 1–16",
+      "claims": [
+        "Referências históricas do tarot no norte da Itália em meados do século XV.",
+        "Estrutura histórica com 56 cartas de naipes, 21 trunfos e o Louco."
+      ],
+      "rights": "Paráfrase com atribuição; direitos das fotografias e dos acervos são separados. Não usar imagens.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S10",
+      "url": "https://www.personare.com.br/conteudo/meio-do-ceu-astrologia-m2247",
+      "title": "Meio do Céu no Mapa Astral — Personare",
+      "type": "astrological-tradition",
+      "read": "corpo 60–109, trechos 120–162",
+      "claims": [
+        "O MC tem associação simbólica com projeção pública e carreira na tradição consultada."
+      ],
+      "rights": "Texto protegido; nenhuma tabela de carreiras por signo será copiada. Não equiparar MC à Casa 10 em todos os sistemas.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S11",
+      "url": "https://cafeastrology.com/articles/how-to-read-natal-chart-report.html",
+      "title": "Understanding the Free Natal Chart Report — Cafe Astrology",
+      "type": "primary-practitioner-technical-explanation",
+      "read": "corpo 15–29",
+      "claims": [
+        "O relatório distingue tabelas de posições e suas interpretações.",
+        "O exemplo de mapa organiza referências por signo e grau."
+      ],
+      "rights": "Paráfrase de definição técnica; sem copiar exemplos, dados, imagens ou interpretação do relatório.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    }
+  ],
+  "dossiers": [
+    {
+      "briefId": "P01",
+      "documentId": "guide-ascendente",
+      "revision": 1,
+      "sourceIds": [
+        "S03",
+        "S07"
+      ],
+      "sections": 5,
+      "paragraphs": 16,
+      "originalContribution": [
+        "sections[1] e sections[3]; exemplo explicitamente hipotético."
+      ],
+      "sha256": "05ec9653adbfe4016a5bb5e74b4c84a33cc60b8a85ec77a1b7d2af0d307ef488"
+    },
+    {
+      "briefId": "P02",
+      "documentId": "guide-sol-lua-ascendente",
+      "revision": 1,
+      "sourceIds": [
+        "S03",
+        "S07"
+      ],
+      "sections": 5,
+      "paragraphs": 16,
+      "originalContribution": [
+        "sections[2] e sections[3]; nenhum cálculo ou depoimento pessoal."
+      ],
+      "sha256": "03fe2e50ddc9fecc9041584982092a6fae0d5f53118ee64227573b9157f02b33"
+    },
+    {
+      "briefId": "P03",
+      "documentId": "guide-mapa-astral",
+      "revision": 1,
+      "sourceIds": [
+        "S03",
+        "S07",
+        "S11"
+      ],
+      "sections": 5,
+      "paragraphs": 16,
+      "originalContribution": [
+        "sections[2] e sections[3]."
+      ],
+      "sha256": "51f773c9a01c7970002ecbfbfc4659aebabe5e1345bfab961522ad77086491e5"
+    },
+    {
+      "briefId": "P04",
+      "documentId": "guide-horario-nascimento",
+      "revision": 1,
+      "sourceIds": [
+        "S07",
+        "S03"
+      ],
+      "sections": 5,
+      "paragraphs": 17,
+      "originalContribution": [
+        "sections[1] a sections[4]; exemplos sem dados reais."
+      ],
+      "sha256": "589729e3b8cc37652326d4bd1ea1b4e5d931b27b9806a7ad3c674dcb5d609100"
+    },
+    {
+      "briefId": "P05",
+      "documentId": "guide-mercurio-retrogrado",
+      "revision": 1,
+      "sourceIds": [
+        "S02"
+      ],
+      "sections": 5,
+      "paragraphs": 17,
+      "originalContribution": [
+        "sections[1] e sections[3]; analogia marcada como não calculadora."
+      ],
+      "sha256": "68263120a5c3122b681b8c9817a8fdf358faa88ea82b9cf361fce2847b714129"
+    },
+    {
+      "briefId": "P06",
+      "documentId": "guide-fases-lua",
+      "revision": 2,
+      "sourceIds": [
+        "S01"
+      ],
+      "sections": 5,
+      "paragraphs": 17,
+      "originalContribution": [
+        "sections[1] a sections[4]; não anuncia dados calculados."
+      ],
+      "sha256": "b01f8741168ab353c52d54147f25edb7b8aa0896e8ca37b6d02d75fb1a1b25ac"
+    },
+    {
+      "briefId": "P07",
+      "documentId": "guide-sinastria-limites",
+      "revision": 1,
+      "sourceIds": [
+        "S04",
+        "S03"
+      ],
+      "sections": 5,
+      "paragraphs": 18,
+      "originalContribution": [
+        "sections[2] e sections[3]; exemplos hipotéticos."
+      ],
+      "sha256": "56297bd6b975eb78eb39b7bd2ead22eff87d895ec212b960147f122653e43126"
+    },
+    {
+      "briefId": "P08",
+      "documentId": "guide-sinastria-consentimento",
+      "revision": 1,
+      "sourceIds": [
+        "S04",
+        "S07"
+      ],
+      "sections": 5,
+      "paragraphs": 18,
+      "originalContribution": [
+        "sections[1] a sections[4]; recomendações editoriais, sem parecer jurídico."
+      ],
+      "sha256": "fe7ae0ed8b2a194597ed3150435260c765684dac48928ec0f6733fac66ddf2b3"
+    },
+    {
+      "briefId": "P09",
+      "documentId": "guide-arcanos-maiores-menores",
+      "revision": 1,
+      "sourceIds": [
+        "S09",
+        "S06",
+        "S05"
+      ],
+      "sections": 5,
+      "paragraphs": 17,
+      "originalContribution": [
+        "sections[2] e sections[3]."
+      ],
+      "sha256": "3a23642a51c4621fb073bbd92661922083f3d203de4c3063d577058da34288d8"
+    },
+    {
+      "briefId": "P10",
+      "documentId": "guide-perguntas-tarot",
+      "revision": 1,
+      "sourceIds": [
+        "S06",
+        "S05"
+      ],
+      "sections": 5,
+      "paragraphs": 19,
+      "originalContribution": [
+        "sections[1] a sections[3]; nenhuma carta ou resultado gerado."
+      ],
+      "sha256": "8db94469893843842304183b52b94c204564d0d468916c2b1ee6d3d905ae4641"
+    },
+    {
+      "briefId": "P12",
+      "documentId": "guide-diario-sonhos",
+      "revision": 1,
+      "sourceIds": [
+        "S08"
+      ],
+      "sections": 5,
+      "paragraphs": 18,
+      "originalContribution": [
+        "sections[1] a sections[4]; sonho declarado fictício."
+      ],
+      "sha256": "aa3a190e657c89e05ef5f2ec76e37bb803e3d6da3fb3ad4ef3974a522be562c2"
+    },
+    {
+      "briefId": "P11",
+      "documentId": "guide-meio-ceu-reflexao",
+      "revision": 1,
+      "sourceIds": [
+        "S10",
+        "S07"
+      ],
+      "sections": 5,
+      "paragraphs": 18,
+      "originalContribution": [
+        "sections[1] a sections[4]; exemplo fictício, sem renda ou decisão de carreira prescrita."
+      ],
+      "sha256": "af6cf0242fc3ba0ee790e81eb626ba3a3933f73c56d40c309c8013a49932972f"
+    }
+  ],
+  "authorityStatus": "PENDING_EXTERNAL_AUTHORIZATION"
+}

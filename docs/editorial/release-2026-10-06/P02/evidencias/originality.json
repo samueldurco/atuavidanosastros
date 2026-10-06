@@ -1,0 +1,84 @@
+{
+  "checkedAt": "2026-10-06T13:07:59.668Z",
+  "scope": [
+    "12 rascunhos desta preparação",
+    "Registro editorial público atual: documents/approvals vazios",
+    "Páginas efetivamente consultadas listadas em 03-concorrencia.json e 05-fontes-direitos.json"
+  ],
+  "limitations": [
+    "A comparação mecânica entre rascunhos não é detector universal de plágio.",
+    "As páginas concorrentes foram confrontadas qualitativamente; não foi copiado um corpus integral protegido.",
+    "Livros e materiais de pesquisa do repositório não foram tratados como artigos públicos."
+  ],
+  "registry": {
+    "path": "E:/ATVNA/app/apps/web/src/lib/server/editorial-registry.ts",
+    "fileSha256": "19ccc8d6adfb802fe6e38f335b3017033dbb5af0eee553819ab62428eb7fa9a7",
+    "emptyDocuments": true,
+    "emptyApprovals": true
+  },
+  "exactDuplicateParagraphs": [],
+  "topOverlapPairs": [],
+  "method": "Igualdade de parágrafos e sobreposição de sequências de oito palavras entre corpos; sem nota de SEO ou inferência de plágio.",
+  "documentDigests": [
+    {
+      "briefId": "P01",
+      "revision": 1,
+      "digest": "55649250d477bb864edb42588204de23a9a35f38d7b3d7c2287d805352c2a961"
+    },
+    {
+      "briefId": "P02",
+      "revision": 1,
+      "digest": "019d7225e5316b179ea7fb3914a563ac299fecc25e08a2e6ffa042f16b00dd5b"
+    },
+    {
+      "briefId": "P03",
+      "revision": 1,
+      "digest": "9db2b393d00663d31238fd5b77ce6a398d17aa67c220e97b26fb096a8c5959c1"
+    },
+    {
+      "briefId": "P04",
+      "revision": 1,
+      "digest": "a44a638fab34eb9c5d69cf0d823672c8faac72d600fb194b56ae35bf0db5a5d0"
+    },
+    {
+      "briefId": "P05",
+      "revision": 1,
+      "digest": "3ec66a972f51dd44bb3ad952cc87eb17e0aa1318b94936863d982a87529b297b"
+    },
+    {
+      "briefId": "P06",
+      "revision": 2,
+      "digest": "365aef9c8072d2165e1daa90a810e6631a43387f7bade22b2f9bf1a09479b07b"
+    },
+    {
+      "briefId": "P07",
+      "revision": 1,
+      "digest": "a286b834b282b24343d808afc303087c4c7006173daa44d8ec731caa0cdceaa4"
+    },
+    {
+      "briefId": "P08",
+      "revision": 1,
+      "digest": "5363d8455516e5e88530b3d20dd67af7c3bd707d4ee61ee2accbe44420b5c95a"
+    },
+    {
+      "briefId": "P09",
+      "revision": 1,
+      "digest": "dde7bf26d041c8399e03c587ef2929bfc1265577fa6a78c31a86c9b5d378307c"
+    },
+    {
+      "briefId": "P10",
+      "revision": 1,
+      "digest": "c14f136a1dec373f30667d7df441a4b49ebb8022314573d68d4a09017f61c2f2"
+    },
+    {
+      "briefId": "P11",
+      "revision": 1,
+      "digest": "68fae55e2b82b3b613b50293b8f51eeaabe708e6fd3c6a795327873b9db1f183"
+    },
+    {
+      "briefId": "P12",
+      "revision": 1,
+      "digest": "2c1d146853e5cfad4d657c833a8d66c3908df810ed36164645f89a833f597f34"
+    }
+  ]
+}

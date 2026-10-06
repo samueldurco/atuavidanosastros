@@ -10,3 +10,4 @@ packages/astrology/fixtures/coverage/*.txt text eol=lf whitespace=-blank-at-eol
 packages/astrology/fixtures/coverage/*.json text eol=lf
 # Frozen editorial evidence hashes bind UTF-8 LF bytes on every platform.
 docs/editorial/pilot-2026-10-06/** text eol=lf
+docs/editorial/release-2026-10-06/** text eol=lf

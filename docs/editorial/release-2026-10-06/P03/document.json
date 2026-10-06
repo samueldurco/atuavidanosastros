@@ -1,0 +1,79 @@
+{
+  "id": "guide-mapa-astral",
+  "revision": 3,
+  "state": "PUBLISHED",
+  "path": "/mapa-astral",
+  "kind": "guide",
+  "title": "Mapa astral: como começar a ler sem tirar conclusões",
+  "description": "Comece a ler um mapa astral separando dados, referências e interpretações, com uma ficha prática e limites para conclusões pessoais.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": "2026-10-06T16:08:48.728Z",
+  "modifiedAt": "2026-10-06T16:08:48.728Z",
+  "sections": [
+    {
+      "heading": "Antes de interpretar, entenda o que está lendo",
+      "paragraphs": [
+        "Um mapa astral é um diagrama usado pela astrologia para organizar referências celestes de um momento e interpretá-las simbolicamente. Para uma primeira leitura de nascimento, vale separar os dados informados, as referências identificadas e o texto que atribui significado a elas.",
+        "Essa separação evita um salto comum: tratar uma descrição de identidade como resultado comprovado do cálculo. Identificar uma referência e interpretar sua relação com a vida de alguém são tarefas diferentes.",
+        "Neste roteiro, o ponto de partida são Sol, Lua e Ascendente. Personare apresenta suas associações simbólicas; Cafe Astrology distingue tabelas de posições e suas interpretações, além de descrever o Ascendente. O guia não substitui uma documentação completa de cálculo nem oferece uma interpretação de todas as partes de um mapa."
+      ]
+    },
+    {
+      "heading": "Leia a ficha antes do desenho",
+      "paragraphs": [
+        "Confira data, horário e local de nascimento no resultado que você pretende ler. Compare essas informações com o registro que forneceu. Se um dado foi aproximado, procure uma indicação explícita dessa limitação.",
+        "Em seguida, identifique a origem do cálculo e da interpretação. Um texto pode citar uma tradição e ainda assim não informar como o resultado foi produzido. Se essa informação faltar, anote a dúvida em vez de assumir que qualquer resultado personalizado é preciso.",
+        "Não é necessário compartilhar um documento pessoal para organizar a ficha. Use somente os campos necessários e confira como o serviço trata os dados antes de decidir enviá-los. Este roteiro não pede informações de nascimento nem executa cálculo."
+      ]
+    },
+    {
+      "heading": "Uma ficha de leitura em quatro campos",
+      "paragraphs": [
+        "Monte quatro campos: referência; definição apresentada; interpretação atribuída; pergunta que isso sugere. Para o Ascendente, por exemplo, a definição pode citar o horizonte leste; a interpretação pode falar sobre apresentação; a pergunta pode ser 'como inicio conversas em contextos diferentes?'.",
+        "Essa ficha é um recurso criado para o guia. Ela não valida uma escola astrológica nem mede personalidade. Sua função é tornar visível a passagem entre uma definição e uma leitura simbólica.",
+        "Acrescente um quinto campo se desejar: o que não combina com minha experiência. Isso ajuda a conservar exemplos que uma leitura atraente poderia fazer você ignorar.",
+        "Quando encontrar um termo desconhecido, reserve uma linha para ele. Não preencha a lacuna com uma conclusão sobre saúde, renda ou relacionamentos. Uma dúvida de vocabulário pode permanecer aberta até haver uma fonte específica."
+      ]
+    },
+    {
+      "heading": "Exemplo de primeira leitura",
+      "paragraphs": [
+        "Imagine um resultado hipotético com a expressão 'Ascendente associado a abertura para novas situações'. Na ficha, copie apenas o termo essencial e registre a origem da interpretação. Você ainda não tem uma prova de que a pessoa se comporta dessa forma.",
+        "Uma pergunta mais concreta seria: 'em que situações tento algo novo, e em quais prefiro preparação?'. A resposta pode incluir uma experiência de estudo e outra de trabalho. O contexto oferece mais informação do que aceitar um adjetivo geral.",
+        "Depois, escolha uma prática útil por si: preparar um assunto para uma conversa, listar algo que deseja aprender ou verificar uma informação que ficou incerta. A prática não precisa ser apresentada como correção de um mapa."
+      ]
+    },
+    {
+      "heading": "O que fica fora deste roteiro",
+      "paragraphs": [
+        "Este é um começo de leitura, não um curso completo de astrologia. Casas, aspectos, técnicas de previsão e diferenças entre sistemas precisam de explicações e fontes próprias. A quantidade de termos em uma página não comprova profundidade.",
+        "Um mapa pode ser lido como linguagem simbólica sem substituir decisões fundamentadas em fatos e contexto. Não use este roteiro para diagnosticar condições, escolher tratamentos ou prometer resultados financeiros.",
+        "Para terminar, você deve conseguir dizer quais dados foram usados, quais termos entendeu e quais interpretações ainda quer questionar. Essa clareza é uma entrega concreta, mesmo sem comprar uma análise."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
+    },
+    {
+      "title": "Ascendant — Cafe Astrology",
+      "url": "https://cafeastrology.com/ascendant.html"
+    },
+    {
+      "title": "Understanding the Free Natal Chart Report — Cafe Astrology",
+      "url": "https://cafeastrology.com/articles/how-to-read-natal-chart-report.html"
+    }
+  ]
+}

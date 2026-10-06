@@ -1,0 +1,72 @@
+{
+  "briefId": "P01",
+  "documentId": "guide-ascendente",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "publisher": {
+    "name": "ATVNA",
+    "role": "publicador responsável pela eventual liberação"
+  },
+  "sourceIds": [
+    "S03",
+    "S07"
+  ],
+  "sources": [
+    {
+      "id": "S03",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636",
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "type": "astrological-tradition",
+      "read": "corpo 60–110",
+      "claims": [
+        "Nesta tradição, Sol, Lua e Ascendente cumprem papéis simbólicos diferentes.",
+        "Horário e local importam na identificação do Ascendente."
+      ],
+      "rights": "Texto protegido; apenas síntese de conceitos, sem copiar estrutura, imagem ou leitura.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S07",
+      "url": "https://cafeastrology.com/ascendant.html",
+      "title": "Ascendant — Cafe Astrology",
+      "type": "astrological-tradition",
+      "read": "corpo 9–32",
+      "claims": [
+        "Ascendente é o signo e grau que ascende no horizonte oriental para horário e lugar.",
+        "Integra os quatro ângulos tradicionais do mapa."
+      ],
+      "rights": "Texto protegido. Não traduzir artigo; somente definição atribuída, sem alegações de saúde.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    }
+  ],
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução ou excerto de artigo.",
+    "images": "Nenhuma imagem reproduzida.",
+    "quotes": "Nenhuma citação literal usada."
+  },
+  "bookExcerptsUsed": false,
+  "thirdPartyImagesUsed": false,
+  "humanReview": false,
+  "personalExperienceClaimed": false,
+  "serviceAuthority": {
+    "status": "PENDING_EXTERNAL_AUTHORIZATION",
+    "authorIsNotAuthority": true
+  },
+  "limitations": [
+    "Acesso público não transfere direitos.",
+    "Paráfrase factual e tradicional atribuída; nenhum texto, imagem ou leitura de terceiros reproduzido.",
+    "Nenhum livro foi usado como corpus publicável."
+  ]
+}

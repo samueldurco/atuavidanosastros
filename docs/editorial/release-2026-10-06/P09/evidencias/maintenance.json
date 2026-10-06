@@ -1,0 +1,8 @@
+{
+  "owner": "ATVNA",
+  "reviewTriggers": [
+    "Alteração de fonte central ou correção factual.",
+    "Mudança de ferramenta, CTA, autoria, metadados ou contrato.",
+    "Revisão final na liberação, sem atribuir data de atualização fictícia."
+  ]
+}

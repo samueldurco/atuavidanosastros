@@ -1,0 +1,20 @@
+{
+  "github-actions-editorial-20261006-01": {
+    "identityType": "automated-service",
+    "reviewerId": "atvna-editorial-service",
+    "publicKey": "UIsFxnw6Kf41ESiBxFg0eIeE5k3hDMLyBkFTucnIl+0=",
+    "enabled": true,
+    "revokedAt": null,
+    "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+    "allowedKinds": [
+      "guide"
+    ],
+    "risk": "low-educational-evergreen",
+    "validFrom": "2026-10-06T16:00:39.930Z",
+    "validUntil": "2027-01-04T16:00:39.930Z",
+    "provisioningEvidence": {
+      "id": "github-actions:samueldurco/atuavidanosastros:37492236722",
+      "digest": "a6424cd6f40c1595200d36e32bc9915157f62c4e56d225750e4eda9e0e63f86d"
+    }
+  }
+}

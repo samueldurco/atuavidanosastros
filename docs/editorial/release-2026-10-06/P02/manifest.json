@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-sol-lua-ascendente",
+  "revision": 3,
+  "documentDigest": "209226a7da7c332ff0e03c4bbe8376f4389d59690788ba1cf2f3380510508ee5",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "380b75b50b40e3d0a30e9066e4b46b0771e26e9a81034fcebca4d71abd0d82d9"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "05c07f7584b4db92c2db98d7dd7f399b7c1b46a6c38ecb2b12e043339259ae1e"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "479b4d2c5960ffcabbbf784260f4a86fb74e96c4c542074aa9978edade9818d7"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "9b82010ad6e6dc0e614eb8f46bdd1d4e3a03c232c030c9fa554155536b07e01f"
+    },
+    {
+      "path": "evidencias/authority-provisioning.json",
+      "sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
+    },
+    {
+      "path": "evidencias/owner-authorization.json",
+      "sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "documentId": "guide-sinastria-limites",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Sinastria compara mapas; combinação solar é recorte restrito.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S04"
+      ]
+    },
+    {
+      "claim": "Nenhuma nota de compatibilidade ou resultado de relação é calculado ou prometido.",
+      "type": "scope-limitation",
+      "sources": [],
+      "evidence": "sections[0] e sections[4]."
+    },
+    {
+      "claim": "Perguntas e exercício de três campos.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[2] e sections[3]; exemplos hipotéticos."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; nenhuma tradução ou reprodução de artigo.",
+    "images": "Nenhuma imagem usada.",
+    "quotes": "Nenhuma citação literal."
+  },
+  "originalContribution": [
+    "sections[2] e sections[3]; exemplos hipotéticos."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "d75e817cbdd4909b2ac3364bbf3590d6066c0fabfe9e439c41aaacf8303e435b"
+}

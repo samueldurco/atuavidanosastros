@@ -1,0 +1,52 @@
+{
+  "briefId": "P12",
+  "documentId": "guide-diario-sonhos",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "publisher": {
+    "name": "ATVNA",
+    "role": "publicador responsável pela eventual liberação"
+  },
+  "sourceIds": [
+    "S08"
+  ],
+  "sources": [
+    {
+      "id": "S08",
+      "url": "https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos",
+      "title": "Como manter um diário de sonhos — Sonheiro",
+      "type": "competitor-practice",
+      "read": "corpo 11–44, 53–106",
+      "claims": [
+        "Exemplo de registro de cena, emoção e contexto em diário."
+      ],
+      "rights": "Texto protegido; elaborar modelo próprio. Não reproduzir alegações de memória, prazo de hábito ou números de sorte.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    }
+  ],
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "bookExcerptsUsed": false,
+  "thirdPartyImagesUsed": false,
+  "humanReview": false,
+  "personalExperienceClaimed": false,
+  "serviceAuthority": {
+    "status": "PENDING_EXTERNAL_AUTHORIZATION",
+    "authorIsNotAuthority": true
+  },
+  "limitations": [
+    "Acesso público não transfere direitos.",
+    "Paráfrase factual e tradicional atribuída; nenhum texto, imagem ou leitura de terceiros reproduzido.",
+    "Nenhum livro foi usado como corpus publicável."
+  ]
+}
