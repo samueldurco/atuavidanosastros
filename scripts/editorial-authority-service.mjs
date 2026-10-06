@@ -202,9 +202,10 @@ if (request.operation === "provision") {
       expiresAt: new Date(Date.parse(approvedAt) + 86400000).toISOString(),
       signature: "",
     };
+    const { signature: unusedSignature, ...unsigned } = attestation;
     attestation.signature = sign(
       null,
-      Buffer.from(canonicalJson(attestationPayload(attestation))),
+      Buffer.from(attestationPayload(unsigned)),
       privateKey,
     ).toString("base64");
     const verified = await verifyAutomatedApproval({
