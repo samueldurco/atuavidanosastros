@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-sinastria-consentimento",
+  "revision": 3,
+  "digest": "f560995157d6a5f357d7a0c72f18ebfbd48c302bf7ab60511a40bb9117141dfa",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "a19fdb5bd77b50605005c83f07057a008adc726885a141b1ea440d1a7a62529e",
+  "evidenceManifestDigest": "e77f6628a040620f24aac377aaccb8b470cc95c4540ce2ec7f8bae892230a096",
+  "approvedAt": "2026-10-06T16:10:44.857Z",
+  "expiresAt": "2026-10-07T16:10:44.857Z",
+  "signature": "c2iKTZxIaAnq6Dlw8oLtU/mGN7mCYy9cTJsoMI6H37AeTcMuqIZxddLGmmJBvwSLnszsQWHf2z5K7oqEv1ZDCQ=="
+}

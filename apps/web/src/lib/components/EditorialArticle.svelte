@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { EditorialDocument } from '$lib/server/editorial';
-	let { document }: { document: EditorialDocument } = $props();
+	let {
+		document,
+		related = []
+	}: { document: EditorialDocument; related?: { path: string; title: string }[] } = $props();
 	function date(value: string): string {
 		return new Intl.DateTimeFormat('pt-BR', {
 			dateStyle: 'long',
@@ -80,6 +83,14 @@
 					</li>{/each}
 			</ul>
 		</section>
+		{#if related.length}
+			<nav aria-label="Guias relacionados">
+				<h2>Continue a leitura</h2>
+				<ul>
+					{#each related as guide}<li><a href={guide.path}>{guide.title}</a></li>{/each}
+				</ul>
+			</nav>
+		{/if}
 		<p><a href="/metodo">Método e limites</a> · <a href="/suporte">Solicitar uma correção</a></p>
 	</div>
 </article>

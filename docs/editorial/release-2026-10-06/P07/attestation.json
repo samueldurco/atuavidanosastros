@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-sinastria-limites",
+  "revision": 3,
+  "digest": "e308941277e4e9c1740dde06235d0c999701ba1de159e74afa96f8f6fd4a9e3d",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "0aed7bce148c411e7d5e0f0c39c0a2c24767f8aa074b314dbb0a286e4fdf9922",
+  "evidenceManifestDigest": "e74a9d07917ba67c9767dfab48807c6ec1a0b7abfaa0d72c3ea9f4e3541b1933",
+  "approvedAt": "2026-10-06T16:10:44.853Z",
+  "expiresAt": "2026-10-07T16:10:44.853Z",
+  "signature": "Ouse2r0mJJ2EUFkDAbu7P5R8IDV0dXffUKjbMabmYSdDJ6xOQ+UxdDj+KgyNjtH/rcWi90CmM8n47Zn4Owg+DQ=="
+}

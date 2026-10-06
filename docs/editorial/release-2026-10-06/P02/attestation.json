@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-sol-lua-ascendente",
+  "revision": 3,
+  "digest": "209226a7da7c332ff0e03c4bbe8376f4389d59690788ba1cf2f3380510508ee5",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "29bf77e4c188f56b91d2b6d4f5249c4db7e71ec89f0136552d59a333449d5d4a",
+  "evidenceManifestDigest": "305b972b34140f9f0cddd3a10a6a56c145e854d9cb32757f8fe791becd7c0079",
+  "approvedAt": "2026-10-06T16:10:44.833Z",
+  "expiresAt": "2026-10-07T16:10:44.833Z",
+  "signature": "2cQblciQoEppx3jRuegCGgO6Hx2iKRiIyBxYiTfFFu/C881qkJMiq/cpY5s/vlpr6xX8JKL5IYUW4R0VoBTzBQ=="
+}

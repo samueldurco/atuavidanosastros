@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-horario-nascimento",
+  "revision": 3,
+  "digest": "1cd98b263e4707c4d1abba55166f44828e45509f899ee420c471cd48bebb802e",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "4385eb32c27e426b7f9ab63657c39f913671f969803c6dd9edd1a7ceea335e02",
+  "evidenceManifestDigest": "1ffc2b4030dc5878ae4078517ab02b8e6353f48e8e4a899630bfdaa08c23bce6",
+  "approvedAt": "2026-10-06T16:10:44.839Z",
+  "expiresAt": "2026-10-07T16:10:44.839Z",
+  "signature": "66qvklzCLXYrFj8bSNhH6dqPFH35w5rSUL1vnqilsuP3SyX4LERDzMdc2iYHIjwxJldtbrohTVEcRtqOsHzCAg=="
+}

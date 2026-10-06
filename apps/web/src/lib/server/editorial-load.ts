@@ -14,5 +14,26 @@ export async function loadEditorialDocument(path: string) {
 	const document = documents.find((entry) => entry.path === canonical);
 	if (!document) error(404, 'Esta leitura ainda não está publicada.');
 	if (canonical !== path) redirect(301, document.path);
-	return { document, seo: articleSeo(document) };
+	const groups = [
+		[
+			'/ascendente',
+			'/noticias/2026/10/sol-lua-ascendente',
+			'/mapa-astral',
+			'/noticias/2026/10/horario-nascimento-mapa-astral',
+			'/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira'
+		],
+		['/mercurio-retrogrado', '/noticias/2026/10/fases-da-lua'],
+		[
+			'/noticias/2026/10/sinastria-e-combinacao-de-signos',
+			'/noticias/2026/10/sinastria-dados-e-consentimento'
+		],
+		['/noticias/2026/10/arcanos-maiores-e-menores', '/noticias/2026/10/perguntas-para-o-tarot'],
+		['/noticias/2026/10/diario-de-sonhos']
+	];
+	const group = groups.find((paths) => paths.includes(document.path)) ?? [];
+	const related = documents
+		.filter((entry) => entry.id !== document.id && group.includes(entry.path))
+		.slice(0, 3)
+		.map(({ path, title }) => ({ path, title }));
+	return { document, related, seo: articleSeo(document) };
 }

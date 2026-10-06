@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-meio-ceu-reflexao",
+  "revision": 3,
+  "digest": "6875afdede4d37cd631291847d92a85865ae814dee5c565d9b9dda71ca030129",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "888ddeea757414f07607bf125030da524b8cc649d0e589fbaa84f589eadd7c70",
+  "evidenceManifestDigest": "76d9eba49fdb2f13bbb21083bbf334e58eefc3bed7611806424b7fe13c18572e",
+  "approvedAt": "2026-10-06T16:10:44.868Z",
+  "expiresAt": "2026-10-07T16:10:44.868Z",
+  "signature": "3Rm0i6NkcJ9jgYucFz5Dw8RNSkjSxMUMIryJGf3Jz35Hc26xpHuygVD7PwLDXgdyNwsLt5/kY8iHjVnllAosAg=="
+}
