@@ -20,7 +20,15 @@ Uma consulta posterior comprovou as duas funções, revisão, consentimentos e r
 - Integração do cadastro verifica salvamento/recuperação, consentimento, conflito de revisão, validação temporal, RLS e o forward-fix que revoga a escrita preservando dados e leitura.
 - Check: zero erros e zero avisos. Lint/Prettier: aprovado.
 - 14 cenários E2E locais aprovados após corrigir o retorno do login e o título da fixture: índice anônimo, catálogo dos 25 produtos com acesso gratuito, Biblioteca/ATV+, acessibilidade móvel e nove cenários privados existentes. A seleção de acessibilidade no CI inclui `trial-access.e2e.ts`.
-- CI37483425307 em `741d0ba`: quality/accessibility/secrets/sbom PASS; 1739 testes web, 69 cenários de acessibilidade e quatro cenários legais aprovados. O ajuste visual posterior passa novamente pelos gates antes da publicação.
+- CI37484436173 em `4313fd4`: quality/accessibility/secrets/sbom e Cloudflare PASS; 1739 testes web, 69 cenários de acessibilidade e quatro cenários legais aprovados. QA móvel local final de catálogo, Biblioteca e índice revisada; PR13 integrado em `c46fa6e`.
+
+## Dependência detectada na publicação
+
+O CI37485219596 de `c46fa6e` detectou GHSA-wq5f-xc86-pv6w na auditoria após os gates do PR13 terem passado. O aviso entrou na base do GitHub em 06/10/2026. Cloudflare, acessibilidade, secrets e SBOM passaram; o gate de quality permanece bloqueado até corrigir a dependência.
+
+O override existente `miniflare>sharp` passa de 0.35.4 para a versão corrigida 0.35.5 e seu lockfile é regenerado. Referência do mantenedor: https://github.com/lovell/sharp/security/advisories/GHSA-wq5f-xc86-pv6w. Auditoria e CI completo continuam obrigatórios; essa correção não dispensa nenhum gate.
+
+Instalação congelada, auditoria sem vulnerabilidades conhecidas e build local completo aprovados. Logs `sharp-install.txt`, `sharp-audit.txt` e `sharp-build.txt` no diretório externo de evidências. CI e confirmação hospedada da correção ficam registrados no log canônico de publicação.
 
 Logs e consultas administrativas fora do Git: `E:/ATVNA/.worktrees/trial-access-evidence/`, `E:/ATVNA/.worktrees/onboarding-access-*`. O diretório local de saída do Playwright é substituído a cada execução; artefatos do CI consolidam a prova desta revisão. Fixture de renderização limitada a localhost; não concede acesso, não persiste nem representa aprovação humana.
 
