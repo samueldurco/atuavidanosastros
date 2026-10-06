@@ -9,6 +9,7 @@
 		<h1 class="h1">
 			{data.selected ? `Artigos e guias: ${data.topics[0].label}` : 'Artigos e guias'}
 		</h1>
+		<p class="lead">Escolha um assunto e encontre os guias completos para continuar sua leitura.</p>
 		<nav class="topics" aria-label="Assuntos dos artigos">
 			<a href="/caderno" aria-current={!data.selected ? 'page' : undefined}>Todos os temas</a>
 			{#each interestNavigation as item (item.id)}<a
@@ -19,6 +20,15 @@
 		{#each data.topics as topic (topic.id)}
 			<section class="topic" aria-labelledby={`topic-${topic.id}`}>
 				<h2 id={`topic-${topic.id}`}>{topic.label}</h2>
+				<div class="article-list">
+					{#each topic.articles as article (article.id)}
+						<article class="card published-guide">
+							<p class="eyebrow">Guia</p>
+							<h3><a href={article.path}>{article.title}</a></h3>
+							<p>{article.description}</p>
+						</article>
+					{/each}
+				</div>
 				{#each topic.sections as section (section.title)}
 					<article>
 						<h3>{section.title}</h3>
@@ -64,6 +74,18 @@
 	.topic {
 		padding-block: 1.5rem;
 		border-top: 1px solid var(--atv-border);
+	}
+	.article-list {
+		display: grid;
+		gap: 1rem;
+		margin-block: 1.5rem;
+	}
+	.published-guide {
+		padding: 1.5rem;
+	}
+	.published-guide a {
+		display: block;
+		min-height: 44px;
 	}
 	h2 {
 		font: 500 2rem/1.2 var(--atv-font-display);

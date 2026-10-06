@@ -1,9 +1,14 @@
 <script lang="ts">
 	import type { EditorialDocument } from '$lib/server/editorial';
+	import { editorialTopic } from '$lib/data/editorial-topics';
+	import { interestNavigation } from '$lib/data/public-navigation';
 	let {
 		document,
 		related = []
 	}: { document: EditorialDocument; related?: { path: string; title: string }[] } = $props();
+	const topic = $derived(
+		interestNavigation.find((item) => item.id === editorialTopic(document.path))
+	);
 	function date(value: string): string {
 		return new Intl.DateTimeFormat('pt-BR', {
 			dateStyle: 'long',
@@ -15,6 +20,13 @@
 
 <article class="section">
 	<div class="reading">
+		<nav class="breadcrumb" aria-label="Caminho do artigo">
+			<a href="/">Início</a><span aria-hidden="true"> / </span>
+			<a href="/caderno">Artigos</a>
+			{#if topic}<span aria-hidden="true"> / </span><a href={`/caderno?tema=${topic.id}`}
+					>{topic.label}</a
+				>{/if}
+		</nav>
 		<p class="eyebrow">
 			{document.kind === 'reporting'
 				? 'Reportagem'
@@ -93,11 +105,27 @@
 				</ul>
 			</nav>
 		{/if}
+		<p>
+			<a href="/caderno">Ver todos os artigos</a>{#if topic}
+				· <a href={`/caderno?tema=${topic.id}`}>Mais sobre {topic.label.toLowerCase()}</a>{/if}
+		</p>
 		<p><a href="/metodo">Método e limites</a> · <a href="/suporte">Solicitar uma correção</a></p>
 	</div>
 </article>
 
 <style>
+	.breadcrumb {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1.5rem;
+	}
+	.breadcrumb a {
+		min-height: 44px;
+		display: inline-flex;
+		align-items: center;
+	}
 	.card {
 		padding: 1.5rem;
 		margin-block: 1.5rem;
