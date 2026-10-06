@@ -5,11 +5,17 @@
 	import { navigation } from '$lib/data/site';
 	let { children }: { children: Snippet } = $props();
 	let expanded = $state(false);
-	const primary = [
+	const primary = $derived([
 		{ href: '/dashboard', label: 'Visão geral' },
 		{ href: '/biblioteca', label: 'Biblioteca' },
-		{ href: '/conta/nascimento', label: 'Dados de nascimento' }
-	];
+		{ href: '/conta/nascimento', label: 'Dados de nascimento' },
+		...(page.data.trialAccess
+			? [
+					{ href: '/testar-produtos', label: 'Testes gratuitos' },
+					{ href: '/testar-produtos/atv-plus', label: 'ATV+ gratuito' }
+				]
+			: [])
+	]);
 </script>
 
 <div class="member-shell" data-stitch="SH-02">

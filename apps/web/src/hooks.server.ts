@@ -21,6 +21,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 	response.headers.set('x-content-type-options', 'nosniff');
 	if (!response.headers.has('referrer-policy'))
 		response.headers.set('referrer-policy', 'strict-origin-when-cross-origin');
+	// Catalog pages also contain server-derived, account-specific trial availability.
+	if (event.cookies.getAll().some(({ name }) => /^sb-.*-auth-token(?:\.\d+)?$/.test(name)))
+		response.headers.set('cache-control', 'private, no-store');
 	if (
 		[
 			'/biblioteca',
