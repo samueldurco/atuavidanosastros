@@ -1,0 +1,38 @@
+{
+  "documentId": "guide-ascendente",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Definição de Ascendente: signo e grau no horizonte leste, com horário e local.",
+      "type": "technical-definition-in-astrological-tradition",
+      "sources": [
+        "S07"
+      ]
+    },
+    {
+      "claim": "Ascendente e signo solar têm funções simbólicas distintas na tradição consultada.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S03"
+      ]
+    },
+    {
+      "claim": "Ficha de dados e exercício de três colunas.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] e sections[3]; exemplo explicitamente hipotético."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução ou excerto de artigo.",
+    "images": "Nenhuma imagem reproduzida.",
+    "quotes": "Nenhuma citação literal usada."
+  },
+  "originalContribution": [
+    "sections[1] e sections[3]; exemplo explicitamente hipotético."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "d82f8423af993b7274ead18891e38e7b08b1be9d46c942db43832cfabb08ac54"
+}

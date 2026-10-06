@@ -1,0 +1,45 @@
+{
+  "documentId": "guide-arcanos-maiores-menores",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Estrutura contemporânea comum de 78 cartas, com 22 maiores e 56 menores.",
+      "type": "deck-structure",
+      "sources": [
+        "S06"
+      ],
+      "limitation": "Não universaliza todos os oráculos."
+    },
+    {
+      "claim": "Registros históricos no norte da Itália em meados do século XV.",
+      "type": "historical-fact",
+      "sources": [
+        "S09"
+      ]
+    },
+    {
+      "claim": "Modelos têm diferenças de representação dos menores.",
+      "type": "deck-comparison",
+      "sources": [
+        "S05"
+      ]
+    },
+    {
+      "claim": "Ficha de observação sem sorteio ou reprodução de imagens.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[2] e sections[3]."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "originalContribution": [
+    "sections[2] e sections[3]."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "0b17d0f150c5f5dfb733130109e57fdf2ef020ee903aabeec768bedeee777872"
+}

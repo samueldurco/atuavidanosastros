@@ -1,14 +1,23 @@
 import { expect, test } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import type { EditorialDocument } from '../src/lib/server/editorial';
+import { scanAccessibility } from './fixtures/accessibility';
 
-test('empty editorial hubs have SSR content, one canonical and no indexing', async ({
-	page,
-	request
-}) => {
+const release = JSON.parse(
+	readFileSync(resolve('src/lib/server/editorial-release/registry.json'), 'utf8')
+) as { packages: { document: EditorialDocument }[] };
+const published = release.packages.map((entry) => entry.document);
+const news = published.filter((document) => document.path.startsWith('/noticias/'));
+
+test('editorial hubs reflect admitted content with one canonical', async ({ page, request }) => {
 	for (const path of ['/noticias', '/signos', '/horoscopo', '/compatibilidade']) {
 		const response = await request.get(path, { headers: { accept: 'text/html' } });
 		expect(response.status()).toBe(200);
 		const html = await response.text();
-		expect(html).toContain('Nenhum artigo publicado ainda');
+		if (path === '/noticias' && news.length > 0) {
+			for (const document of news) expect(html).toContain(document.title);
+		} else expect(html).toContain('Nenhum artigo publicado ainda');
 		expect(html).not.toContain('application/ld+json');
 		await page.goto(path);
 		await expect(page.locator('h1')).toHaveCount(1);
@@ -35,7 +44,9 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 		'/compatibilidade/touro-aries',
 		'/noticias/2026/10/nao-publicado',
 		'/pessoas/autor-sintetico',
-		'/mercurio-retrogrado',
+		...(!published.some((document) => document.path === '/mercurio-retrogrado')
+			? ['/mercurio-retrogrado']
+			: []),
 		'/calendario-astral',
 		'/toString'
 	]) {
@@ -63,8 +74,14 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 		const body = await response.text();
 		expect(body).not.toContain('/signos/aries');
 		expect(body).not.toContain('/dashboard');
-		if (path === '/sitemap-pages.xml') expect(body.match(/<url>/g)).toHaveLength(14);
-		else expect(body).not.toContain('<url>');
+		if (path === '/sitemap-pages.xml')
+			expect(body.match(/<url>/g)).toHaveLength(14 + (news.length > 0 ? 1 : 0));
+		else if (path === '/sitemap-editorial.xml') {
+			expect(body.match(/<url>/g) ?? []).toHaveLength(
+				published.length + (published.length ? 1 : 0)
+			);
+			for (const document of published) expect(body).toContain(document.path);
+		} else expect(body).not.toContain('<url>');
 	}
 	expect((await request.get('/news-sitemap/2.xml')).status()).toBe(404);
 });
@@ -72,13 +89,54 @@ test('RSS and robots expose no synthetic content or staging sitemap', async ({ r
 	const rss = await request.get('/noticias/feed.xml');
 	expect(rss.status()).toBe(200);
 	expect(rss.headers()['content-type']).toContain('application/rss+xml');
-	expect(await rss.text()).not.toContain('<item>');
+	expect((await rss.text()).match(/<item>/g) ?? []).toHaveLength(news.length);
 	const robots = await request.get('/robots.txt');
 	const body = await robots.text();
 	expect(body).toContain('Disallow: /admin');
 	expect(body).toContain('Disallow: /conta');
 	expect(body).not.toContain('Sitemap:');
 });
+
+for (const width of [1440, 390]) {
+	test(`admitted guides have complete SSR, metadata and accessibility at ${width}px`, async ({
+		page,
+		request
+	}, testInfo) => {
+		test.setTimeout(240_000);
+		await page.setViewportSize({ width, height: 1000 });
+		for (const document of published) {
+			const response = await request.get(document.path);
+			expect(response.status(), document.path).toBe(200);
+			const html = await response.text();
+			expect(html).toContain(document.title);
+			expect(html).toContain('application/ld+json');
+			expect(html).not.toContain('NewsArticle');
+			await page.goto(document.path);
+			await expect(page.locator('h1')).toHaveText(document.title);
+			await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+			await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+				'href',
+				`https://atuavidanosastros.com.br${document.path}`
+			);
+			await expect(page.getByRole('heading', { name: 'Fontes e referências' })).toBeVisible();
+			const article = JSON.parse(
+				await page.locator('script[type="application/ld+json"]').innerText()
+			);
+			expect(article['@type']).toBe('Article');
+			expect(article.author['@type']).toBe('Organization');
+			expect(article.datePublished).toBe(document.publishedAt);
+			expect(article.dateModified).toBe(document.modifiedAt);
+			expect(
+				await page.evaluate(() => window.document.documentElement.scrollWidth <= window.innerWidth)
+			).toBe(true);
+			await scanAccessibility(page, testInfo);
+			await page.screenshot({
+				path: testInfo.outputPath(`${document.id}-${width}.png`),
+				fullPage: true
+			});
+		}
+	});
+}
 test('legacy home and private pages keep a single, safe robots tag', async ({ page }) => {
 	await page.goto('/?utm_source=synthetic');
 	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(

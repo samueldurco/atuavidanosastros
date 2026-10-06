@@ -12,7 +12,7 @@
 	{/if}
 </svelte:head>
 {#if data.document}
-	<EditorialArticle document={data.document} />
+	<EditorialArticle document={data.document} related={data.related} />
 {:else if data.page}
 	<section class="section">
 		<div class="reading">

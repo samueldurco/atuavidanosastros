@@ -1,5 +1,6 @@
 import { SITE, signs } from '$lib/data/site';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
+import { verifyAdmittedApproval, type AutomatedRegistry } from './editorial-automation';
 import {
 	editorialHubs,
 	evergreenGuidePaths,
@@ -18,7 +19,12 @@ export interface EditorialDocument {
 	kind: EditorialKind;
 	title: string;
 	description: string;
-	author: { id: string; name: string; bio: string };
+	author: { id: string; name: string; bio: string; type?: 'Person' | 'Organization' };
+	automationDisclosure?: {
+		generatedWithAI: true;
+		humanReview: false;
+		reviewMode: 'separate-pass';
+	};
 	publishedAt: string;
 	modifiedAt: string;
 	sections: { heading: string; paragraphs: string[] }[];
@@ -161,6 +167,8 @@ export function validDocument(document: EditorialDocument, now: Date): boolean {
 			!document.author.bio.trim()
 		)
 			return false;
+		if (document.author.type && !['Person', 'Organization'].includes(document.author.type))
+			return false;
 		if (
 			!Number.isFinite(published) ||
 			!Number.isFinite(modified) ||
@@ -235,7 +243,8 @@ export async function approvedDocuments(
 	documents: readonly EditorialDocument[],
 	approvals: readonly EditorialApproval[],
 	authorities: Readonly<Record<string, EditorialAuthority>>,
-	now: Date
+	now: Date,
+	automated?: AutomatedRegistry
 ): Promise<EditorialDocument[]> {
 	const published: EditorialDocument[] = [];
 	for (const document of documents) {
@@ -254,6 +263,19 @@ export async function approvedDocuments(
 			)
 		)
 			continue;
+		if (document.automationDisclosure) {
+			const packages = automated?.packages.filter((item) => item.document.id === document.id);
+			if (packages?.length === 1) {
+				const item = packages[0];
+				if (
+					canonicalJson(item.document) === canonicalJson(document) &&
+					(await verifyAdmittedApproval({ ...item, authorities: automated!.authorities, now }))
+						.approved
+				)
+					published.push(document);
+			}
+			continue; // Automated packages never fall back to the human v1 protocol.
+		}
 		const digest = await documentDigest(document);
 		for (const approval of approvals) {
 			const authority = authorities[approval.keyId];
@@ -351,7 +373,7 @@ export function articleSeo(document: EditorialDocument): PageSeo {
 			dateModified: document.modifiedAt,
 			inLanguage: 'pt-BR',
 			author: {
-				'@type': 'Person',
+				'@type': document.author.type ?? 'Person',
 				name: document.author.name,
 				url: `${SITE.url}/pessoas/${document.author.id}`
 			},

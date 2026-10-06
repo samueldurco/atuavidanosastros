@@ -1,0 +1,71 @@
+{
+  "briefId": "P07",
+  "documentId": "guide-sinastria-limites",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "publisher": {
+    "name": "ATVNA",
+    "role": "publicador responsável pela eventual liberação"
+  },
+  "sourceIds": [
+    "S04",
+    "S03"
+  ],
+  "sources": [
+    {
+      "id": "S03",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636",
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "type": "astrological-tradition",
+      "read": "corpo 60–110",
+      "claims": [
+        "Nesta tradição, Sol, Lua e Ascendente cumprem papéis simbólicos diferentes.",
+        "Horário e local importam na identificação do Ascendente."
+      ],
+      "rights": "Texto protegido; apenas síntese de conceitos, sem copiar estrutura, imagem ou leitura.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S04",
+      "url": "https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria",
+      "title": "Combinação dos signos e sinastria — Horóscopo Virtual",
+      "type": "astrological-tradition",
+      "read": "corpo 180–203",
+      "claims": [
+        "Sinastria compara mapas; combinação solar é um recorte limitado."
+      ],
+      "rights": "Texto protegido; paráfrase breve. Rejeitar estereótipos de gênero e inferências sobre fertilidade.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    }
+  ],
+  "rights": {
+    "text": "Redação original nesta sessão; nenhuma tradução ou reprodução de artigo.",
+    "images": "Nenhuma imagem usada.",
+    "quotes": "Nenhuma citação literal."
+  },
+  "bookExcerptsUsed": false,
+  "thirdPartyImagesUsed": false,
+  "humanReview": false,
+  "personalExperienceClaimed": false,
+  "serviceAuthority": {
+    "status": "PENDING_EXTERNAL_AUTHORIZATION",
+    "authorIsNotAuthority": true
+  },
+  "limitations": [
+    "Acesso público não transfere direitos.",
+    "Paráfrase factual e tradicional atribuída; nenhum texto, imagem ou leitura de terceiros reproduzido.",
+    "Nenhum livro foi usado como corpus publicável."
+  ]
+}

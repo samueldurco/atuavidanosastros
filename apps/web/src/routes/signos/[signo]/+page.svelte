@@ -3,4 +3,4 @@
 	let { data } = $props();
 </script>
 
-<EditorialArticle document={data.document} />
+<EditorialArticle document={data.document} related={data.related} />

@@ -1,0 +1,3891 @@
+{
+  "createdAt": "2026-10-06T12:30:15Z",
+  "status": "BRIEFS_VALIDATED_CONDITIONAL_RELEASE",
+  "RUN_ID": "ATV-20260902-170644Z-01A0630F",
+  "weights": {
+    "demand": 25,
+    "value": 25,
+    "productFit": 20,
+    "temporalOpportunity": 10,
+    "feasibility": 10,
+    "cluster": 10
+  },
+  "selectionRationale": "12 perguntas distintas, fontes abertas e resposta educativa autossuficiente; 18 reservas com pesquisa delimitada. Pontuação parcial cobre 75% dos pesos e não mede demanda. Diversidade dos seis universos e viabilidade do texto justificam a escolha.",
+  "pilotDistribution": [
+    {
+      "universe": "Meu Céu",
+      "count": 4
+    },
+    {
+      "universe": "Ciclos e Tempo",
+      "count": 2
+    },
+    {
+      "universe": "Amor e Relações",
+      "count": 2
+    },
+    {
+      "universe": "Tarot e Arcanos",
+      "count": 2
+    },
+    {
+      "universe": "Propósito e Prosperidade",
+      "count": 1
+    },
+    {
+      "universe": "Sonhos e Símbolos",
+      "count": 1
+    }
+  ],
+  "count": 30,
+  "pilotCount": 12,
+  "briefs": [
+    {
+      "id": "P01",
+      "slug": "ascendente",
+      "universe": "Meu Céu",
+      "canonicalPath": "/ascendente",
+      "title": "Ascendente: o que é e por que o horário importa",
+      "publicQuestion": "Como o Ascendente é identificado e quais dados preciso conferir?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Definição, checklist de dados e exercício para separar cálculo e interpretação.",
+      "sourceIds": [
+        "S03",
+        "S07"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Definição, checklist de dados e exercício para separar cálculo e interpretação.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q01"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definição, checklist de dados e exercício para separar cálculo e interpretação.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 1,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q01"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 71,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P02",
+      "slug": "sol-lua-ascendente",
+      "universe": "Meu Céu",
+      "canonicalPath": "/noticias/2026/10/sol-lua-ascendente",
+      "title": "Sol, Lua e Ascendente: três leituras diferentes",
+      "publicQuestion": "Por que três pontos do mesmo mapa não significam a mesma coisa?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Tabela própria de perguntas de reflexão com exemplo fictício sem traços impostos.",
+      "sourceIds": [
+        "S03",
+        "S07"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Tabela própria de perguntas de reflexão com exemplo fictício sem traços impostos.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q02"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Tabela própria de perguntas de reflexão com exemplo fictício sem traços impostos.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 2,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q02"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 71,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P03",
+      "slug": "mapa-astral",
+      "universe": "Meu Céu",
+      "canonicalPath": "/mapa-astral",
+      "title": "Mapa astral: como começar a ler sem tirar conclusões",
+      "publicQuestion": "Como organizar uma primeira leitura de um mapa que já tenho?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Roteiro de leitura em camadas: dado, tradição, contexto e escolha; não calcular posições.",
+      "sourceIds": [
+        "S03",
+        "S07",
+        "S11"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Roteiro de leitura em camadas: dado, tradição, contexto e escolha; não calcular posições.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q01",
+            "Q02",
+            "Q03"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Roteiro de leitura em camadas: dado, tradição, contexto e escolha; não calcular posições.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 3,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q01",
+        "Q02",
+        "Q03"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 71,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P04",
+      "slug": "horario-nascimento",
+      "universe": "Meu Céu",
+      "canonicalPath": "/noticias/2026/10/horario-nascimento-mapa-astral",
+      "title": "Horário de nascimento: como conferir os dados do mapa",
+      "publicQuestion": "O que posso conferir quando o horário de nascimento é incerto?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Ficha de procedência e incerteza; não fazer retificação ou inventar horário.",
+      "sourceIds": [
+        "S07",
+        "S03"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Ficha de procedência e incerteza; não fazer retificação ou inventar horário.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q01",
+            "Q25",
+            "Q26"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Ficha de procedência e incerteza; não fazer retificação ou inventar horário.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 4,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q01",
+        "Q25",
+        "Q26"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P05",
+      "slug": "mercurio-retrogrado",
+      "universe": "Ciclos e Tempo",
+      "canonicalPath": "/mercurio-retrogrado",
+      "title": "Mercúrio retrógrado: movimento aparente e simbolismo",
+      "publicQuestion": "Mercúrio realmente muda de direção?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Explicação astronômica, separação de crença e um checklist comum de revisão.",
+      "sourceIds": [
+        "S02"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Explicação astronômica, separação de crença e um checklist comum de revisão.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q11"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Explicação astronômica, separação de crença e um checklist comum de revisão.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 5,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q11"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/fases-da-lua"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P06",
+      "slug": "fases-lua",
+      "universe": "Ciclos e Tempo",
+      "canonicalPath": "/noticias/2026/10/fases-da-lua",
+      "title": "Fases da Lua: o que muda e como observar",
+      "publicQuestion": "Por que a parte iluminada da Lua parece mudar?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Observação simples com registro de horário, lugar e desenho próprio; sem calendário inventado.",
+      "sourceIds": [
+        "S01"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Observação simples com registro de horário, lugar e desenho próprio; sem calendário inventado.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q09",
+            "Q10"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Observação simples com registro de horário, lugar e desenho próprio; sem calendário inventado.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 6,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q09",
+        "Q10"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/mercurio-retrogrado"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P07",
+      "slug": "sinastria-limites",
+      "universe": "Amor e Relações",
+      "canonicalPath": "/noticias/2026/10/sinastria-e-combinacao-de-signos",
+      "title": "Sinastria e combinação de signos: entenda a diferença",
+      "publicQuestion": "Uma combinação de signos equivale a comparar dois mapas?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Comparação de escopos, exemplo de conversa e limites; sem nota de compatibilidade.",
+      "sourceIds": [
+        "S04",
+        "S03"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Sinastria / Dossiê do Casal",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Comparação de escopos, exemplo de conversa e limites; sem nota de compatibilidade.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q05",
+            "Q07"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Comparação de escopos, exemplo de conversa e limites; sem nota de compatibilidade.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Sinastria / Dossiê do Casal",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 7,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q05",
+        "Q07"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/sinastria-dados-e-consentimento"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Sinastria / Dossiê do Casal",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P08",
+      "slug": "sinastria-consentimento",
+      "universe": "Amor e Relações",
+      "canonicalPath": "/noticias/2026/10/sinastria-dados-e-consentimento",
+      "title": "Sinastria: dados, consentimento e limites da leitura",
+      "publicQuestion": "Como convidar alguém a comparar mapas sem usar seus dados sem acordo?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Modelo próprio de convite e minimização; conselho prático de privacidade, sem parecer jurídico.",
+      "sourceIds": [
+        "S04",
+        "S07"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Sinastria / Dossiê do Casal",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Modelo próprio de convite e minimização; conselho prático de privacidade, sem parecer jurídico.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q33",
+            "Q34"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Modelo próprio de convite e minimização; conselho prático de privacidade, sem parecer jurídico.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Sinastria / Dossiê do Casal",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 8,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q33",
+        "Q34"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/sinastria-e-combinacao-de-signos"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Sinastria / Dossiê do Casal",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P09",
+      "slug": "arcanos-maiores-menores",
+      "universe": "Tarot e Arcanos",
+      "canonicalPath": "/noticias/2026/10/arcanos-maiores-e-menores",
+      "title": "Arcanos maiores e menores: como o tarot se organiza",
+      "publicQuestion": "Qual a diferença entre os dois grupos de cartas?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Estrutura comum, contexto histórico museológico e exemplo criado sem reproduzir cartas.",
+      "sourceIds": [
+        "S09",
+        "S06",
+        "S05"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Jornada Tarot",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Estrutura comum, contexto histórico museológico e exemplo criado sem reproduzir cartas.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q13",
+            "Q16"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Estrutura comum, contexto histórico museológico e exemplo criado sem reproduzir cartas.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Jornada Tarot",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 9,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q13",
+        "Q16"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/perguntas-para-o-tarot"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Jornada Tarot",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P10",
+      "slug": "perguntas-tarot",
+      "universe": "Tarot e Arcanos",
+      "canonicalPath": "/noticias/2026/10/perguntas-para-o-tarot",
+      "title": "Perguntas para o tarot: um roteiro de reflexão",
+      "publicQuestion": "Como formular uma pergunta que ajude a refletir sobre escolhas?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Transformar perguntas fechadas em alternativas observáveis; exemplos próprios e limites.",
+      "sourceIds": [
+        "S06",
+        "S05"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Jornada Tarot",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Transformar perguntas fechadas em alternativas observáveis; exemplos próprios e limites.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q14",
+            "Q15",
+            "Q32"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Transformar perguntas fechadas em alternativas observáveis; exemplos próprios e limites.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Jornada Tarot",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 10,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q14",
+        "Q15",
+        "Q32"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/arcanos-maiores-e-menores"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Jornada Tarot",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P12",
+      "slug": "diario-sonhos",
+      "universe": "Sonhos e Símbolos",
+      "canonicalPath": "/noticias/2026/10/diario-de-sonhos",
+      "title": "Diário de sonhos: um modelo simples de registro",
+      "publicQuestion": "Como registrar um sonho sem inventar detalhes ou impor significados?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Modelo próprio de lembrança, associação e hipótese; privacidade e exemplo fictício.",
+      "sourceIds": [
+        "S08"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Dossiê / Atlas de Sonhos",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Modelo próprio de lembrança, associação e hipótese; privacidade e exemplo fictício.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q21",
+            "Q22",
+            "Q23",
+            "Q24"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Modelo próprio de lembrança, associação e hipótese; privacidade e exemplo fictício.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Dossiê / Atlas de Sonhos",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 11,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q21",
+        "Q22",
+        "Q23",
+        "Q24"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 69,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [],
+      "possibleCommercialDestination": {
+        "productContext": "Dossiê / Atlas de Sonhos",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P11",
+      "slug": "meio-ceu-reflexao",
+      "universe": "Propósito e Prosperidade",
+      "canonicalPath": "/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira",
+      "title": "Meio do Céu: reflexão sobre carreira sem destino fixo",
+      "publicQuestion": "Como usar o símbolo do MC sem escolher uma profissão por signo?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Inventário de atividades e experimento curto; não teste vocacional nem indicação financeira.",
+      "sourceIds": [
+        "S10",
+        "S07"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": true,
+      "relatedProductContext": "Bússola de Carreira / Mapa de Propósito e Carreira",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Inventário de atividades e experimento curto; não teste vocacional nem indicação financeira.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q17",
+            "Q19",
+            "Q20",
+            "Q35"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Inventário de atividades e experimento curto; não teste vocacional nem indicação financeira.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Bússola de Carreira / Mapa de Propósito e Carreira",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Fontes indicadas; lacunas descritas no ângulo precisam ser resolvidas quando houver.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 12,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q17",
+        "Q19",
+        "Q20",
+        "Q35"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Confirmar encaixe no contrato e URL canônica antes da integração.",
+        "Revalidar fontes e datas na liberação.",
+        "Aprovação de pacote final e autoridade externa ainda pendentes."
+      ],
+      "partialScore": 67,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [],
+      "possibleCommercialDestination": {
+        "productContext": "Bússola de Carreira / Mapa de Propósito e Carreira",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Selecionado por escopo educativo estudado, pergunta distinta e valor gratuito no próprio texto; conjunto cobre seis universos. Não selecionado por volume estimado."
+    },
+    {
+      "id": "P27",
+      "slug": "tarot-diario",
+      "universe": "Tarot e Arcanos",
+      "canonicalPath": "/noticias/2026/10/diario-de-leituras-tarot",
+      "title": "Diário de tarot: registrar a pergunta e a reflexão",
+      "publicQuestion": "Como acompanhar uma leitura sem encaixar qualquer acontecimento nela?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Criar ficha própria de pergunta, observação e reflexão; não inventar tiragem, sorteio ou eficácia.",
+      "sourceIds": [
+        "S05",
+        "S06"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Jornada Tarot",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Criar ficha própria de pergunta, observação e reflexão; não inventar tiragem, sorteio ou eficácia.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q31"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Criar ficha própria de pergunta, observação e reflexão; não inventar tiragem, sorteio ou eficácia.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Jornada Tarot",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 13,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q31"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 67,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/arcanos-maiores-e-menores",
+        "/noticias/2026/10/perguntas-para-o-tarot"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Jornada Tarot",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P29",
+      "slug": "simbolos-pessoais",
+      "universe": "Sonhos e Símbolos",
+      "canonicalPath": "/noticias/2026/10/simbolos-pessoais-nos-sonhos",
+      "title": "Símbolos nos sonhos: comece pela sua associação",
+      "publicQuestion": "Um símbolo precisa ter o mesmo significado para todo mundo?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Organizar associações pessoais numa ficha própria; não declarar sentido universal ou diagnóstico de símbolos.",
+      "sourceIds": [
+        "S08"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Dossiê / Atlas de Sonhos",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Organizar associações pessoais numa ficha própria; não declarar sentido universal ou diagnóstico de símbolos.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q22",
+            "Q36"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Organizar associações pessoais numa ficha própria; não declarar sentido universal ou diagnóstico de símbolos.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Dossiê / Atlas de Sonhos",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 14,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q22",
+        "Q36"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 67,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/diario-de-sonhos"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Dossiê / Atlas de Sonhos",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P30",
+      "slug": "sonhos-recorrentes",
+      "universe": "Sonhos e Símbolos",
+      "canonicalPath": "/noticias/2026/10/registro-de-sonhos-recorrentes",
+      "title": "Sonhos recorrentes: como comparar seus registros",
+      "publicQuestion": "Como notar semelhanças sem transformar repetição em diagnóstico?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Comparar cenas e diferenças entre registros por uma matriz própria; sem explicação clínica ou previsão.",
+      "sourceIds": [
+        "S08"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Dossiê / Atlas de Sonhos",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Comparar cenas e diferenças entre registros por uma matriz própria; sem explicação clínica ou previsão.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q24"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Comparar cenas e diferenças entre registros por uma matriz própria; sem explicação clínica ou previsão.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Dossiê / Atlas de Sonhos",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 15,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q24"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 67,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/diario-de-sonhos"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Dossiê / Atlas de Sonhos",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P22",
+      "slug": "horoscopo-como-ler",
+      "universe": "Ciclos e Tempo",
+      "canonicalPath": "/noticias/2026/10/como-ler-horoscopo",
+      "title": "Como ler um horóscopo e entender o seu recorte",
+      "publicQuestion": "O texto fala de um signo inteiro ou de uma pessoa?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Identificar se a leitura usa recorte solar geral ou posições do momento relacionadas ao mapa natal; não prometer eficácia.",
+      "sourceIds": [
+        "S23"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Identificar se a leitura usa recorte solar geral ou posições do momento relacionadas ao mapa natal; não prometer eficácia.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q29"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Identificar se a leitura usa recorte solar geral ou posições do momento relacionadas ao mapa natal; não prometer eficácia.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 16,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q29"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 65,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/mercurio-retrogrado",
+        "/noticias/2026/10/fases-da-lua"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P17",
+      "slug": "zodiaco-tropical-sideral",
+      "universe": "Meu Céu",
+      "canonicalPath": "/noticias/2026/10/zodiaco-tropical-e-sideral",
+      "title": "Zodíaco tropical e sideral: referências diferentes",
+      "publicQuestion": "Por que duas ferramentas podem mostrar signos diferentes?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Conferir o zodíaco e o ayanamsa configurados quando resultados diferirem, sem propor correção fixa.",
+      "sourceIds": [
+        "S16"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Conferir o zodíaco e o ayanamsa configurados quando resultados diferirem, sem propor correção fixa.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q27"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conferir o zodíaco e o ayanamsa configurados quando resultados diferirem, sem propor correção fixa.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 17,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q27"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Abrir fonte adicional sobre equinócio, precessão e referência sideral antes de ampliar a explicação dos fundamentos.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 63,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P25",
+      "slug": "eclipses",
+      "universe": "Ciclos e Tempo",
+      "canonicalPath": "/eclipses",
+      "title": "Eclipses: geometria e condições de observação",
+      "publicQuestion": "Por que não há eclipse em toda Lua nova ou cheia?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Explicar a geometria do alinhamento sem roteiro de observação solar ou promessa de efeito pessoal.",
+      "sourceIds": [
+        "S01",
+        "S13"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Explicar a geometria do alinhamento sem roteiro de observação solar ou promessa de efeito pessoal.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q09"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Explicar a geometria do alinhamento sem roteiro de observação solar ou promessa de efeito pessoal.",
+          "weight": 25,
+          "weightedPoints": 25,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 18,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q09"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Caso sejam adicionadas instruções de observação, abrir diretriz oficial específica e exigir revisão de segurança própria.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 63,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/mercurio-retrogrado",
+        "/noticias/2026/10/fases-da-lua"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P18",
+      "slug": "lua-mapa",
+      "universe": "Meu Céu",
+      "canonicalPath": "/lua-no-mapa-astral",
+      "title": "Lua no mapa: símbolo, contexto e leitura responsável",
+      "publicQuestion": "Como ler o símbolo da Lua sem diagnosticar emoções?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Usar a associação simbólica com hábitos como ponto de partida para perguntas próprias, sem explicação clínica.",
+      "sourceIds": [
+        "S21"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Usar a associação simbólica com hábitos como ponto de partida para perguntas próprias, sem explicação clínica.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q02"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Usar a associação simbólica com hábitos como ponto de partida para perguntas próprias, sem explicação clínica.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 3,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 6,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 19,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q02"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 62,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P26",
+      "slug": "tarot-marselha-rws",
+      "universe": "Tarot e Arcanos",
+      "canonicalPath": "/noticias/2026/10/tarot-marselha-rider-waite-smith",
+      "title": "Marselha e Rider-Waite-Smith: como comparar baralhos",
+      "publicQuestion": "O que muda na representação das cartas?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Comparar diferenças visuais descritas em texto, sem reproduzir cartas protegidas; contextualização histórica limitada à fonte museológica.",
+      "sourceIds": [
+        "S05",
+        "S09"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Jornada Tarot",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Comparar diferenças visuais descritas em texto, sem reproduzir cartas protegidas; contextualização histórica limitada à fonte museológica.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q16"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Comparar diferenças visuais descritas em texto, sem reproduzir cartas protegidas; contextualização histórica limitada à fonte museológica.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Jornada Tarot",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 20,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q16"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 62,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/arcanos-maiores-e-menores",
+        "/noticias/2026/10/perguntas-para-o-tarot"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Jornada Tarot",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P13",
+      "slug": "casas-astrologicas",
+      "universe": "Meu Céu",
+      "canonicalPath": "/casas-astrologicas",
+      "title": "Casas astrológicas: perguntas para ler os setores",
+      "publicQuestion": "Como distinguir planeta, signo e casa em uma leitura inicial?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Distinguir setores, signos e planetas; conferir o sistema de casas antes de relacionar cúspides e ângulos.",
+      "sourceIds": [
+        "S12",
+        "S22"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Distinguir setores, signos e planetas; conferir o sistema de casas antes de relacionar cúspides e ângulos.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q03"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Distinguir setores, signos e planetas; conferir o sistema de casas antes de relacionar cúspides e ângulos.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 21,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q03"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Conferir qualquer diagrama e eventual comparação numérica de sistemas antes da redação.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 60,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P15",
+      "slug": "elementos-signos",
+      "universe": "Meu Céu",
+      "canonicalPath": "/elementos-dos-signos",
+      "title": "Elementos dos signos: um vocabulário simbólico",
+      "publicQuestion": "Como fogo, terra, ar e água são usados na astrologia?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Apresentar fogo, terra, ar e água como classificação simbólica, com perguntas próprias e sem tipologia psicológica.",
+      "sourceIds": [
+        "S18"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Apresentar fogo, terra, ar e água como classificação simbólica, com perguntas próprias e sem tipologia psicológica.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q28"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Apresentar fogo, terra, ar e água como classificação simbólica, com perguntas próprias e sem tipologia psicológica.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 3,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 6,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 22,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q28"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 60,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P16",
+      "slug": "modalidades-signos",
+      "universe": "Meu Céu",
+      "canonicalPath": "/modalidades-dos-signos",
+      "title": "Modalidades dos signos: como ler a classificação",
+      "publicQuestion": "O que cardinal, fixo e mutável querem dizer na tradição?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Apresentar as modalidades como classificação da tradição, sem usar rótulos como causa de comportamento.",
+      "sourceIds": [
+        "S19"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Apresentar as modalidades como classificação da tradição, sem usar rótulos como causa de comportamento.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q28"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Apresentar as modalidades como classificação da tradição, sem usar rótulos como causa de comportamento.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 3,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 6,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 23,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q28"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 60,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P19",
+      "slug": "venus-mapa",
+      "universe": "Amor e Relações",
+      "canonicalPath": "/venus-no-mapa-astral",
+      "title": "Vênus no mapa: perguntas sobre preferências e valores",
+      "publicQuestion": "Como explorar o simbolismo de Vênus sem ditar o parceiro ideal?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Usar o símbolo de preferências como convite à observação e ao diálogo, sem prometer compatibilidade ou prosperidade.",
+      "sourceIds": [
+        "S14"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Sinastria / Dossiê do Casal",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Usar o símbolo de preferências como convite à observação e ao diálogo, sem prometer compatibilidade ou prosperidade.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q08"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Usar o símbolo de preferências como convite à observação e ao diálogo, sem prometer compatibilidade ou prosperidade.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Sinastria / Dossiê do Casal",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 3,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 6,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 24,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q08"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 60,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/sinastria-e-combinacao-de-signos",
+        "/noticias/2026/10/sinastria-dados-e-consentimento"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Sinastria / Dossiê do Casal",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P20",
+      "slug": "marte-mapa",
+      "universe": "Amor e Relações",
+      "canonicalPath": "/marte-no-mapa-astral",
+      "title": "Marte no mapa: ação e limites da interpretação",
+      "publicQuestion": "Como distinguir simbolismo de ação de previsão de conflitos?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Usar o símbolo de ação para um exercício próprio de iniciativa, sem estereótipos sexuais ou causalidade.",
+      "sourceIds": [
+        "S15"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Sinastria / Dossiê do Casal",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Usar o símbolo de ação para um exercício próprio de iniciativa, sem estereótipos sexuais ou causalidade.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q08"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Usar o símbolo de ação para um exercício próprio de iniciativa, sem estereótipos sexuais ou causalidade.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Sinastria / Dossiê do Casal",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 3,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 6,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 25,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q08"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 60,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/sinastria-e-combinacao-de-signos",
+        "/noticias/2026/10/sinastria-dados-e-consentimento"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Sinastria / Dossiê do Casal",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P14",
+      "slug": "aspectos-astrologicos",
+      "universe": "Meu Céu",
+      "canonicalPath": "/noticias/2026/10/aspectos-astrologicos",
+      "title": "Aspectos astrológicos: ângulos e interpretação",
+      "publicQuestion": "O que significa dizer que dois planetas formam um aspecto?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Explicar relação angular e vocabulário; separar ângulo nominal de interpretação simbólica.",
+      "sourceIds": [
+        "S24"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Explicar relação angular e vocabulário; separar ângulo nominal de interpretação simbólica.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q04"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Explicar relação angular e vocabulário; separar ângulo nominal de interpretação simbólica.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Mapa Astral / Três Pilares / Atlas da Vida",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 26,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q04"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Abrir documentação da regra de orbe adotada se o texto incluir tolerâncias.",
+        "Validar qualquer exemplo angular com código determinístico e entradas explícitas.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 58,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/ascendente",
+        "/noticias/2026/10/sol-lua-ascendente",
+        "/mapa-astral",
+        "/noticias/2026/10/horario-nascimento-mapa-astral"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Mapa Astral / Três Pilares / Atlas da Vida",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P21",
+      "slug": "sinastria-composto",
+      "universe": "Amor e Relações",
+      "canonicalPath": "/noticias/2026/10/sinastria-e-mapa-composto",
+      "title": "Sinastria e mapa composto: métodos diferentes",
+      "publicQuestion": "Que perguntas cada método procura organizar?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Distinguir comparação entre mapas da construção por pontos médios, sem misturar os métodos ou prever relação.",
+      "sourceIds": [
+        "S04",
+        "S17"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Sinastria / Dossiê do Casal",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Distinguir comparação entre mapas da construção por pontos médios, sem misturar os métodos ou prever relação.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q06"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Distinguir comparação entre mapas da construção por pontos médios, sem misturar os métodos ou prever relação.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Sinastria / Dossiê do Casal",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 27,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q06"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Qualquer exemplo de ponto médio precisa de cálculo determinístico verificado; consentimento para dados pessoais continua obrigatório.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 58,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/sinastria-e-combinacao-de-signos",
+        "/noticias/2026/10/sinastria-dados-e-consentimento"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Sinastria / Dossiê do Casal",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P28",
+      "slug": "carreira-casas",
+      "universe": "Propósito e Prosperidade",
+      "canonicalPath": "/noticias/2026/10/casas-2-6-10-reflexao-carreira",
+      "title": "Casas 2, 6 e 10: recortes de uma reflexão de carreira",
+      "publicQuestion": "Como separar recursos, rotina e projeção na tradição consultada?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Relacionar recursos, rotina e atuação pública a experiências reais, respeitando o sistema de casas e sem orientar investimentos.",
+      "sourceIds": [
+        "S10",
+        "S12",
+        "S22"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Bússola de Carreira / Mapa de Propósito e Carreira",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Relacionar recursos, rotina e atuação pública a experiências reais, respeitando o sistema de casas e sem orientar investimentos.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q18",
+            "Q35"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Relacionar recursos, rotina e atuação pública a experiências reais, respeitando o sistema de casas e sem orientar investimentos.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Bússola de Carreira / Mapa de Propósito e Carreira",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 5,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 10,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 28,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q18",
+        "Q35"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 58,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Bússola de Carreira / Mapa de Propósito e Carreira",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P23",
+      "slug": "transitos-astrologicos",
+      "universe": "Ciclos e Tempo",
+      "canonicalPath": "/transitos-astrologicos",
+      "title": "Trânsitos e mapa natal: posição atual e referência",
+      "publicQuestion": "Qual a diferença entre um mapa de nascimento e um trânsito?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Distinguir posições referentes ao nascimento das posições em outro momento; explicitar data sem prever efeitos pessoais.",
+      "sourceIds": [
+        "S23",
+        "S11"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Distinguir posições referentes ao nascimento das posições em outro momento; explicitar data sem prever efeitos pessoais.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q12"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Distinguir posições referentes ao nascimento das posições em outro momento; explicitar data sem prever efeitos pessoais.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 29,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q12"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Abrir documentação do motor e dos parâmetros antes de incluir um exemplo calculado ou trânsito datado.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 56,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/mercurio-retrogrado",
+        "/noticias/2026/10/fases-da-lua"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    },
+    {
+      "id": "P24",
+      "slug": "revolucao-solar",
+      "universe": "Ciclos e Tempo",
+      "canonicalPath": "/noticias/2026/10/revolucao-solar-metodo",
+      "title": "Revolução solar: método, dados e limites",
+      "publicQuestion": "O que uma leitura de revolução solar calcula?",
+      "intent": "informacional educativo",
+      "format": "guide / Article",
+      "angle": "Definir o retorno à posição solar natal e explicar por que não corresponde simplesmente à meia-noite do aniversário.",
+      "sourceIds": [
+        "S20"
+      ],
+      "sourceReadiness": "OPENED_REFERENCES_WITH_BOUNDED_SCOPE",
+      "selectedForPilot": false,
+      "relatedProductContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+      "productRelease": "PRIVATE_PRODUCT_RELEASE_NOT_FREE_PUBLIC_TOOL_PROOF",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "usefulBeforeCta": "Definir o retorno à posição solar natal e explicar por que não corresponde simplesmente à meia-noite do aniversário.",
+      "scores": {
+        "demand": {
+          "points": null,
+          "weight": 25,
+          "weightedPoints": null,
+          "evidence": [
+            "Q30"
+          ],
+          "confidence": "insuficiente para frequência",
+          "reason": "Não há medida de volume, tendência ou frequência observada."
+        },
+        "value": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definir o retorno à posição solar natal e explicar por que não corresponde simplesmente à meia-noite do aniversário.",
+          "weight": 25,
+          "weightedPoints": 20,
+          "confidence": "estimativa editorial moderada"
+        },
+        "productFit": {
+          "points": 4,
+          "weight": 20,
+          "weightedPoints": 16,
+          "evidence": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+          "confidence": "estimativa editorial moderada",
+          "reason": "A dúvida tem vínculo temático com o catálogo indicado; aderência não afirma disponibilidade gratuita, autorização de oferta ou prontidão hospedada."
+        },
+        "temporalOpportunity": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Guia de método durável; não há sinal datado de pico de buscas.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        },
+        "feasibility": {
+          "points": 2,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Definições centrais do recorte foram lidas; exemplos, redação e pacote final exigem validação.",
+          "weight": 10,
+          "weightedPoints": 4,
+          "confidence": "moderada para o escopo educativo, limitada ao conteúdo efetivamente estudado"
+        },
+        "cluster": {
+          "points": 4,
+          "status": "EDITORIAL_ESTIMATE",
+          "reason": "Conecta uma dúvida distinta ao universo e aos demais guias, sem multiplicar variações de signo.",
+          "weight": 10,
+          "weightedPoints": 8,
+          "confidence": "estimativa editorial moderada"
+        }
+      },
+      "totalScore": null,
+      "scoreLimitation": "Pontuação parcial em 75 dos 100 pontos; demanda desconhecida não recebe zero e os pesos não são renormalizados. Comparação qualitativa, sem precisão de ranking.",
+      "risk": "low-educational-evergreen",
+      "imagePolicy": "Sem imagens de terceiros; diagrama próprio só após verificação.",
+      "reviewPolicy": "atvna-editorial-policy-2026-10-06-v1",
+      "releasePrerequisites": [
+        "Posse exclusiva da escrita compartilhada",
+        "Fontes específicas e texto final",
+        "Revisão sobre digest exato",
+        "Protocolo/identidade autorizados",
+        "Gates CI/staging/prod",
+        "Verificação HTTP/SSR pública"
+      ],
+      "priority": 30,
+      "internalLinks": [
+        "/"
+      ],
+      "demandQueryIds": [
+        "Q30"
+      ],
+      "internalLinkStatus": "Raiz existente; links entre artigos candidatos só ficam ativos após ambas as revisões aprovadas.",
+      "metrics": {
+        "volume": null,
+        "difficulty": null,
+        "rank": null,
+        "trend": null
+      },
+      "openQuestions": [
+        "Conferir parâmetros de local, fuso, referencial e motor antes de incluí-los no artigo; sem data individual não calculada.",
+        "Reavaliar demanda e prontidão das ferramentas quando houver prova acessível.",
+        "Aplicar revisão sobre o pacote final caso esta pauta entre em produção."
+      ],
+      "sourceResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+      "partialScore": 56,
+      "scoreCoverageWeight": 75,
+      "relatedArticlePaths": [
+        "/mercurio-retrogrado",
+        "/noticias/2026/10/fases-da-lua"
+      ],
+      "possibleCommercialDestination": {
+        "productContext": "Horóscopo / Semana / Calendário Pessoal / Revolução Solar",
+        "href": null,
+        "condition": "Somente oferta e autorização comprovadas no momento da publicação; nenhuma promessa ou CTA pago ativo neste brief."
+      },
+      "acceptance": [
+        "Responder à pergunta principal com exercício próprio e limites claros.",
+        "Fontes acessadas sustentam as alegações exatas; direitos e identidade são verdadeiros.",
+        "Revisão final sobre digest exato, atestação legítima, CI e SSR/HTTP verificáveis.",
+        "Não depender de ferramenta/compra para entregar a resposta educativa."
+      ],
+      "selectionReason": "Reserva; dúvida distinta com fontes abertas e pesquisa limitada, sem rascunho ou aprovação presumidos."
+    }
+  ],
+  "reserveResearchUpdatedAt": "2026-10-06T13:29:02.243Z",
+  "adoptedAt": "2026-10-06T14:18:12.617Z",
+  "inputSha256": "222aa7f73de3b92e62257e9dcf28f47815d02dfcc35ee4229b4d5511b5692273",
+  "cannibalization": {
+    "method": "Uma pergunta principal por URL; variantes de signo/dia/gênero não recebem páginas adicionais.",
+    "groups": [
+      {
+        "ids": [
+          "P01",
+          "P02",
+          "P04"
+        ],
+        "distinction": "Definição do Ascendente; comparação entre pilares; conferência da incerteza do horário."
+      },
+      {
+        "ids": [
+          "P07",
+          "P08",
+          "P21"
+        ],
+        "distinction": "Recorte solar versus sinastria; consentimento e dados; diferença para mapa composto."
+      },
+      {
+        "ids": [
+          "P09",
+          "P10",
+          "P26",
+          "P27"
+        ],
+        "distinction": "Estrutura do tarot; formulação de perguntas; comparação de baralhos; registro de leituras."
+      },
+      {
+        "ids": [
+          "P11",
+          "P28"
+        ],
+        "distinction": "MC e contribuição pública; recortes das casas 2/6/10."
+      },
+      {
+        "ids": [
+          "P12",
+          "P29",
+          "P30"
+        ],
+        "distinction": "Modelo de registro; associação pessoal; comparação de recorrências."
+      }
+    ],
+    "keywordOverlap": "Vocabulário compartilhado não equivale a conteúdo ou intenção duplicados; verificar novamente após qualquer expansão."
+  },
+  "calendar": {
+    "responsible": "Esta sessão executora, revisão automática identificada e serviço externo legitimamente autorizado.",
+    "activeSchedule": false,
+    "datePolicy": "A data original será o instante real da liberação aprovada. Não backdatear ou alegar cron ativo.",
+    "cadence": "Três sublotes de quatro; publicar o próximo após QA do anterior e todos os gates. Recomendação editorial de 3–5/semana não força espera nem indica benefício de ranking.",
+    "batches": [
+      {
+        "order": 1,
+        "ids": [
+          "P01",
+          "P02",
+          "P03",
+          "P04"
+        ],
+        "readyAt": null,
+        "publishedAt": null,
+        "condition": "Autoridade legítima, pacote final aprovado, CI/staging e acesso de release"
+      },
+      {
+        "order": 2,
+        "ids": [
+          "P05",
+          "P06",
+          "P07",
+          "P08"
+        ],
+        "readyAt": null,
+        "publishedAt": null,
+        "condition": "QA hospedado do sublote anterior e gates individuais válidos"
+      },
+      {
+        "order": 3,
+        "ids": [
+          "P09",
+          "P10",
+          "P11",
+          "P12"
+        ],
+        "readyAt": null,
+        "publishedAt": null,
+        "condition": "QA hospedado do sublote anterior e gates individuais válidos"
+      }
+    ]
+  }
+}

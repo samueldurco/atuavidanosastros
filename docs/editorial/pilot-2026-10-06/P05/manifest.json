@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-mercurio-retrogrado",
+  "revision": 2,
+  "documentDigest": "56230aa61b844f5da83939c734fea87e9cac8c6ef93878963896d249dd0bc06e",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "f12b15b1955a7aa508dad1497434cc8d78a7ed9a31d893ce0774e36671150cc8"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "f6ac3e48cc269f697de65b1e2117011bcc7457615ad80f3dc36de782a9a0521e"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "636ae9679f7f9932af9a4ac0ef8d7e91b666ce0c98597ab7834eca34b8083e9e"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "02562f6269aedde71b23e9d2fa41371b249c53ca6e1fd2fbd47ed2c48291d543"
+    }
+  ]
+}

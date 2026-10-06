@@ -1,0 +1,72 @@
+{
+  "id": "guide-mercurio-retrogrado",
+  "revision": 3,
+  "state": "PUBLISHED",
+  "path": "/mercurio-retrogrado",
+  "kind": "guide",
+  "title": "Mercúrio retrógrado: movimento aparente e simbolismo",
+  "description": "Entenda o movimento retrógrado aparente e separe a explicação astronômica das interpretações astrológicas sobre Mercúrio.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": "2026-10-06T16:08:48.728Z",
+  "modifiedAt": "2026-10-06T16:08:48.728Z",
+  "sections": [
+    {
+      "heading": "O que significa retrógrado",
+      "paragraphs": [
+        "Em astronomia, movimento retrógrado aparente descreve uma mudança temporária na direção em que um planeta parece se deslocar em relação às estrelas de fundo, visto da Terra. A explicação educacional da NASA relaciona essa aparência ao movimento relativo dos planetas.",
+        "Isso não significa que o planeta interrompa sua órbita e comece a percorrê-la no sentido contrário. A palavra 'aparente' indica a perspectiva do observador. Já os significados atribuídos a Mercúrio retrógrado em horóscopos pertencem à interpretação astrológica.",
+        "Este guia explica a diferença entre essas duas camadas. Não anuncia um período atual de retrogradação nem oferece uma efeméride. Para afirmar datas e posições de um período concreto, seria necessário consultar uma fonte de cálculo apropriada e conferir o intervalo."
+      ]
+    },
+    {
+      "heading": "Uma analogia para entender a perspectiva",
+      "paragraphs": [
+        "Imagine dois objetos que se deslocam por trajetórias diferentes e um observador que acompanha um deles. A direção aparente do outro em relação a um fundo distante pode mudar conforme mudam as posições dos dois. Essa é uma analogia de perspectiva, não uma simulação das órbitas.",
+        "A analogia ajuda a evitar a imagem de um planeta 'dando marcha à ré'. Ela não permite calcular datas de Mercúrio, duração de um período ou efeitos sobre acontecimentos humanos.",
+        "Quando um texto passa da descrição do movimento a uma previsão sobre mensagens, contratos ou relacionamentos, ele mudou de assunto: está oferecendo uma interpretação. Essa passagem precisa ficar explícita para o leitor."
+      ]
+    },
+    {
+      "heading": "O que uma afirmação permite concluir",
+      "paragraphs": [
+        "Separe frases em três grupos. O primeiro descreve um fenômeno observável, como o movimento aparente em relação às estrelas. O segundo atribui um significado simbólico. O terceiro prevê um resultado concreto na vida de alguém.",
+        "Uma explicação do primeiro grupo não comprova as frases dos demais. A existência de um fenômeno astronômico não demonstra, por si, que uma mensagem será perdida ou que uma decisão terá determinado resultado.",
+        "Evite usar o termo para explicar qualquer imprevisto depois que ele aconteceu. Uma explicação útil precisa de critérios claros e de informações sobre o caso, e não apenas de uma coincidência com uma expressão conhecida.",
+        "Se você se interessa pela leitura simbólica, pode tratá-la como convite para refletir sobre um tema. Mantenha suas decisões ligadas às informações reais da situação."
+      ]
+    },
+    {
+      "heading": "Roteiro de revisão que funciona em qualquer data",
+      "paragraphs": [
+        "Escolha uma tarefa concreta de comunicação. Antes de enviar uma mensagem, confira destinatário, anexo, informação principal e ação esperada. Para um compromisso, confirme horário e local. São práticas de organização, sem promessa astrológica.",
+        "Em um exemplo hipotético, alguém precisa combinar uma reunião. A anotação pode ser: 'confirmar o fuso do participante; escrever o horário por extenso; pedir confirmação'. O exercício termina quando os dados da reunião estão claros.",
+        "Se você deseja usar uma leitura simbólica como lembrete, registre isso: 'escolhi revisar minha comunicação'. Evite escrever 'o planeta causou o problema' quando essa relação não foi demonstrada.",
+        "Uma lista curta permite avaliar o que foi feito e o que continua pendente. Ela oferece uma entrega prática sem exigir um calendário astrológico nem uma compra."
+      ]
+    },
+    {
+      "heading": "Dúvidas frequentes",
+      "paragraphs": [
+        "Mercúrio muda o sentido de sua órbita? A expressão tratada aqui se refere ao movimento aparente observado da Terra, não à inversão física da órbita.",
+        "Este texto informa as datas de Mercúrio retrógrado? Não. Ele é um guia conceitual. Datas atuais exigem consulta e verificação próprias.",
+        "É preciso adiar decisões por causa do termo? Este guia não prescreve adiamentos. Avalie informações, prazos e consequências reais; a interpretação simbólica não substitui essa análise."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "The Planets — NASA/Goddard, arquivo educacional",
+      "url": "https://cdaweb.gsfc.nasa.gov/pub/documents/archived_websites/pwg.gsfc.nasa.gov/stargaze/Splanets.htm"
+    }
+  ]
+}

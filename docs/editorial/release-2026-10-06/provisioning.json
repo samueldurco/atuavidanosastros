@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "atvna-editorial-provisioning-v1",
+  "requestId": "ATV-20260902-170644Z-01A0630F-EDITORIAL-PROVISION-20261006",
+  "ownerDecisionDigest": "30bc3453a3c673cbfa930680a204b0a375ce1c7df5202ef55ba8cf628b360974",
+  "repository": "samueldurco/atuavidanosastros",
+  "ref": "refs/heads/codex/editorial-seo-piloto-20261006",
+  "commit": "09558f808716c2b23508f84e812d33c18a892ada",
+  "runId": "37492236722",
+  "runAttempt": "1",
+  "workflowRef": "samueldurco/atuavidanosastros/.github/workflows/editorial-authority.yml@refs/heads/codex/editorial-seo-piloto-20261006",
+  "generatedAt": "2026-10-06T16:00:39.930Z",
+  "keyId": "github-actions-editorial-20261006-01",
+  "publicKey": "UIsFxnw6Kf41ESiBxFg0eIeE5k3hDMLyBkFTucnIl+0=",
+  "keyAlgorithm": "Ed25519",
+  "custody": "GitHub environment secret ATVNA_EDITORIAL_SIGNING_KEY",
+  "scope": [
+    "P01",
+    "P02",
+    "P03",
+    "P04",
+    "P05",
+    "P06",
+    "P07",
+    "P08",
+    "P09",
+    "P10",
+    "P11",
+    "P12"
+  ],
+  "privateKeyExportedToApp": false,
+  "privateKeyLogged": false,
+  "costBRL": 0
+}

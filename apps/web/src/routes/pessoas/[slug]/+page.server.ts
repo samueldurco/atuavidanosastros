@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ params }) => {
 			'@context': 'https://schema.org',
 			'@type': 'ProfilePage',
 			mainEntity: {
-				'@type': 'Person',
+				'@type': author.type ?? 'Person',
 				name: author.name,
 				description: author.bio,
 				url: SITE.url + path

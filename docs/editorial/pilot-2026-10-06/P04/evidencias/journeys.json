@@ -1,0 +1,146 @@
+{
+  "checkedAt": "2026-10-06T14:25:10.670Z",
+  "accessEvidence": "01-probes-api-http.json",
+  "eligibleFreeToolCtas": 0,
+  "eligiblePaidCtas": 0,
+  "observed": [
+    {
+      "path": "/ascendente",
+      "status": 404
+    },
+    {
+      "path": "/sinastria",
+      "status": 404
+    },
+    {
+      "path": "/horoscopo",
+      "status": 200,
+      "noindex": true,
+      "completedFreeJourneyVerified": false
+    }
+  ],
+  "decision": "Omitir chamadas de ferramenta e comerciais nos 12 guias; exercícios educativos completos no texto.",
+  "analytics": "Nenhum destino/evento novo instalado. Métricas atuais desconhecidas; zero não representa medição.",
+  "articles": [
+    {
+      "briefId": "P01",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] e sections[3]; exemplo explicitamente hipotético."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P02",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[2] e sections[3]; nenhum cálculo ou depoimento pessoal."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P03",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[2] e sections[3]."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P04",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] a sections[4]; exemplos sem dados reais."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P05",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] e sections[3]; analogia marcada como não calculadora."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P06",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] a sections[4]; não anuncia dados calculados."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P07",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[2] e sections[3]; exemplos hipotéticos."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P08",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] a sections[4]; recomendações editoriais, sem parecer jurídico."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P09",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[2] e sections[3]."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P10",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] a sections[3]; nenhuma carta ou resultado gerado."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P12",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] a sections[4]; sonho declarado fictício."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    },
+    {
+      "briefId": "P11",
+      "ctaStatus": "OMITTED",
+      "freeToolCta": null,
+      "paidOfferCta": null,
+      "value": [
+        "sections[1] a sections[4]; exemplo fictício, sem renda ou decisão de carreira prescrita."
+      ],
+      "relatedLinks": "Só ativar links de artigos cuja publicação/aprovação for comprovada."
+    }
+  ]
+}

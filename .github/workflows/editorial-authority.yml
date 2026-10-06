@@ -1,0 +1,35 @@
+name: ATVNA editorial authority
+on:
+  push:
+    branches: [codex/editorial-seo-piloto-20261006]
+    paths: [docs/editorial/authority-request.json]
+permissions:
+  contents: read
+concurrency:
+  group: atvna-editorial-authority
+  cancel-in-progress: false
+jobs:
+  authority:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: atvna-editorial-signing
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .nvmrc
+      - name: Provision or sign exact approved packages
+        env:
+          GH_TOKEN: ${{ secrets.ATVNA_EDITORIAL_BOOTSTRAP_TOKEN }}
+          ATVNA_EDITORIAL_SIGNING_KEY: ${{ secrets.ATVNA_EDITORIAL_SIGNING_KEY }}
+        run: node --experimental-strip-types scripts/editorial-authority-service.mjs
+      - name: Remove temporary provisioning credential
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.ATVNA_EDITORIAL_BOOTSTRAP_TOKEN }}
+        run: |
+          if [ -n "$GH_TOKEN" ]; then
+            gh secret delete ATVNA_EDITORIAL_BOOTSTRAP_TOKEN --repo "$GITHUB_REPOSITORY" --env atvna-editorial-signing
+          fi

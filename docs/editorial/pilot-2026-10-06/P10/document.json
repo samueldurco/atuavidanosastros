@@ -1,0 +1,78 @@
+{
+  "id": "guide-perguntas-tarot",
+  "revision": 2,
+  "state": "DRAFT",
+  "path": "/noticias/2026/10/perguntas-para-o-tarot",
+  "kind": "guide",
+  "title": "Perguntas para o tarot: um roteiro de reflexão",
+  "description": "Transforme perguntas de tarot em reflexão clara, com exemplos de reformulação que preservam escolhas e não prometem prever pessoas ou resultados.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "Uma pergunta que abre espaço para refletir",
+      "paragraphs": [
+        "Em uma leitura simbólica de tarot, a pergunta ajuda a definir o tema da conversa. Uma formulação cuidadosa conserva sua possibilidade de escolher, em vez de entregar uma decisão a uma carta.",
+        "A fonte de João Bidu apresenta a leitura em relação ao contexto. Neste roteiro, usamos esse limite para propor perguntas de reflexão, sem prometer previsão ou resultado pessoal.",
+        "Você pode fazer o exercício com papel e caneta. Ele não executa tiragem, não sorteia cartas e não interpreta um baralho por você. Sua entrega é uma pergunta mais clara."
+      ]
+    },
+    {
+      "heading": "Troque certeza por contexto",
+      "paragraphs": [
+        "Comece por uma situação concreta. 'Quero entender como organizar uma tarefa' é um tema mais delimitado que 'quero saber tudo que vai acontecer'. Depois, identifique o que depende de você e o que ainda precisa ser conhecido.",
+        "Uma pergunta aberta não precisa ser vaga. Ela pode mencionar uma tarefa, uma informação pendente ou uma preferência que você deseja observar. Evite palavras que já imponham a resposta.",
+        "Também não use a pergunta para afirmar o que outra pessoa pensa. 'O que preciso perguntar diretamente?' preserva a possibilidade de conversa; 'o que ela esconde de mim?' pressupõe algo que você não demonstrou.",
+        "Reformular não torna a leitura cientificamente validada. Apenas organiza um uso simbólico mais cuidadoso e torna visível o limite entre reflexão e afirmação sobre fatos."
+      ]
+    },
+    {
+      "heading": "Quatro exemplos de reformulação",
+      "paragraphs": [
+        "Em vez de 'vai dar tudo certo no meu projeto?', tente 'quais informações ainda preciso reunir para preparar o projeto?'. Ao terminar, procure essas informações no contexto real da tarefa.",
+        "Em vez de 'essa pessoa está mentindo?', tente 'qual dúvida preciso esclarecer numa conversa?'. A resposta da pessoa e os fatos disponíveis importam; uma carta não comprova uma acusação.",
+        "Em vez de 'qual é o meu destino?', tente 'qual assunto quero explorar e por quê?'. Você pode identificar um interesse sem exigir uma definição total da vida.",
+        "Em vez de 'o que devo comprar para afastar um problema?', tente 'qual problema concreto estou descrevendo e o que posso verificar?'. Este roteiro não associa medo a uma compra.",
+        "Esses exemplos foram criados para o guia. Não são interpretações de cartas específicas nem falas de pessoas reais."
+      ]
+    },
+    {
+      "heading": "Exercício em cinco passos",
+      "paragraphs": [
+        "Primeiro, escreva a pergunta original sem tentar melhorá-la. Segundo, circule a parte que pede certeza, previsão ou acesso às intenções de alguém. Terceiro, descreva o contexto que você realmente conhece.",
+        "Quarto, formule uma pergunta sobre observação, esclarecimento ou uma ação pequena ao seu alcance. Quinto, anote como você poderá verificar o que fizer. Se não houver verificação possível, mantenha a resposta como reflexão, não como fato.",
+        "Exemplo hipotético: 'como será minha apresentação?' pode virar 'o que ainda preciso ensaiar para explicar a ideia com clareza?'. A verificação é realizar o ensaio e identificar os pontos que ficaram confusos.",
+        "Você pode encerrar a atividade nessa etapa. Não é preciso enviar dados pessoais, contratar uma consulta ou gerar uma resposta automática para obter a ficha."
+      ]
+    },
+    {
+      "heading": "O que manter fora da tiragem",
+      "paragraphs": [
+        "Não use o exercício para decidir diagnóstico, tratamento, investimento, gravidez, morte ou uma situação de risco numa relação. O tarot não é a fonte usada por este guia para resolver essas decisões.",
+        "Se desejar estudar as imagens de um baralho, consulte a edição e diferencie o que observa do que o manual interpreta. Modelos podem apresentar diferenças visuais, como mostra a comparação de Astrolink.",
+        "Ao concluir, sua pergunta deve poder ser lida sem pressionar você ou outra pessoa. Ela pode abrir uma conversa ou organizar uma anotação; não precisa produzir uma sentença sobre o futuro."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Arcanos maiores e menores — João Bidu",
+      "url": "https://controle.joaobidu.com.br/tarot/arcanos-maiores-e-menores-entenda-o-que-as-cartas-do-tarot-diz-para-voce.phtml"
+    },
+    {
+      "title": "Tarot de Marselha e Rider-Waite — Astrolink",
+      "url": "https://www.astrolink.com.br/artigo/diferenca-entre-o-tarot-de-marselha-e-rider-waite"
+    }
+  ]
+}

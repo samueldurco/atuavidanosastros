@@ -1,0 +1,38 @@
+{
+  "documentId": "guide-sol-lua-ascendente",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Associações simbólicas de Sol, Lua e Ascendente na fonte consultada.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S03"
+      ]
+    },
+    {
+      "claim": "Definição do Ascendente depende de horário e lugar.",
+      "type": "technical-definition-in-astrological-tradition",
+      "sources": [
+        "S07"
+      ]
+    },
+    {
+      "claim": "Personagem, ficha e perguntas de observação.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[2] e sections[3]; nenhum cálculo ou depoimento pessoal."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução ou excerto de artigo.",
+    "images": "Nenhuma imagem reproduzida.",
+    "quotes": "Nenhuma citação literal usada."
+  },
+  "originalContribution": [
+    "sections[2] e sections[3]; nenhum cálculo ou depoimento pessoal."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "882466e4f079072267e389415988ee20e9299b6b22b56294361e28f39c50529d"
+}

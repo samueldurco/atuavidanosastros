@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "atvna-public-draft-separate-pass-v1",
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "reviewedAt": "2026-10-06T14:42:36.397Z",
+  "reviewerKind": "same-agent-separate-pass",
+  "humanReview": false,
+  "independentReviewer": false,
+  "originalDocumentDigest": "68fae55e2b82b3b613b50293b8f51eeaabe708e6fd3c6a795327873b9db1f183",
+  "runtimeDraftDigest": "ff8930f90b8f47b831be68bab0ee53be88a79bdc5f37a2e128d2643187290d04",
+  "comparedFields": [
+    "sections",
+    "title",
+    "description",
+    "path",
+    "sources",
+    "author"
+  ],
+  "unchangedComparedFields": true,
+  "observations": [
+    {
+      "id": "scope",
+      "priorStatus": "PASS",
+      "reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível."
+    },
+    {
+      "id": "claims",
+      "priorStatus": "PASS",
+      "reason": "MC apresentado como associação tradicional a carreira/projeção, sem equivalência universal com casa 10; inventário e personagem fictícia baseados em atividades, sem destino profissional ou renda. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova."
+    },
+    {
+      "id": "rights",
+      "priorStatus": "PASS",
+      "reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web."
+    },
+    {
+      "id": "identity",
+      "priorStatus": "PASS",
+      "reason": "Identificação explícita de produção automatizada e publicador ATVNA; sem especialista, experiência pessoal, revisão humana ou independência fictícios. Autoria é proposta para o pacote de preparação."
+    },
+    {
+      "id": "safety",
+      "priorStatus": "PASS",
+      "reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto."
+    },
+    {
+      "id": "originality",
+      "priorStatus": "PASS",
+      "reason": "Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio."
+    },
+    {
+      "id": "tools",
+      "priorStatus": "PASS",
+      "reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação."
+    },
+    {
+      "id": "integrity",
+      "priorStatus": "UNKNOWN",
+      "reason": "Digest, revisão e mapa de afirmações conferidos para este rascunho. O documento permanece DRAFT em schema de preparação, com publishedAt null; integração final, autoria no runtime, atestação externa e pacote de liberação ainda não existem. Não é possível aprovar o pacote final de publicação."
+    }
+  ],
+  "currentMetadataReview": {
+    "authorType": "Organization",
+    "disclosureVisibleInImplementedTemplate": true,
+    "publishedAt": null,
+    "noImages": true,
+    "noActiveToolOrPaidCta": true,
+    "noInventedPublicationDate": true,
+    "scope": "guide",
+    "structuredData": "Article"
+  },
+  "limits": [
+    "A passagem original leu os 12 corpos e fontes; esta passagem conferiu cada conversão e seus metadados com o corpo congelado idêntico.",
+    "Sem revisão humana independente, atestação de serviço ou liberação hospedada. A integração e o release exigem gates próprios."
+  ]
+}

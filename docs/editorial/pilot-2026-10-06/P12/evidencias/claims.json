@@ -1,0 +1,37 @@
+{
+  "documentId": "guide-diario-sonhos",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Modelo de registro com cena, emoção e contexto.",
+      "type": "source-example-not-clinical-evidence",
+      "sources": [
+        "S08"
+      ],
+      "limitation": "Não reproduz alegações de memória, terapia, hábitos ou previsão."
+    },
+    {
+      "claim": "Ficha, sonho fictício e comparação de páginas.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] a sections[4]; sonho declarado fictício."
+    },
+    {
+      "claim": "Sem significado universal, promessa clínica ou números de aposta.",
+      "type": "scope-limitation",
+      "sources": [],
+      "evidence": "sections[0], sections[3] e sections[4]."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "originalContribution": [
+    "sections[1] a sections[4]; sonho declarado fictício."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "bb2bc71c893ece8f22b62ce224f8aa3060c2081c5879044e1c34c24e6853b669"
+}

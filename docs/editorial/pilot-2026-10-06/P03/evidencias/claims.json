@@ -1,0 +1,46 @@
+{
+  "documentId": "guide-mapa-astral",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Mapa/relatório organiza posições e distingue referências da interpretação.",
+      "type": "technical-description-in-astrological-tradition",
+      "sources": [
+        "S11"
+      ]
+    },
+    {
+      "claim": "Escopo introdutório do mapa organizado por Sol, Lua e Ascendente.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S03"
+      ],
+      "limitation": "Não descreve nem valida motor de cálculo, casas ou aspectos."
+    },
+    {
+      "claim": "Definição técnica restrita do Ascendente.",
+      "type": "technical-definition-in-astrological-tradition",
+      "sources": [
+        "S07"
+      ]
+    },
+    {
+      "claim": "Ficha de quatro campos e exemplo hipotético.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[2] e sections[3]."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução ou excerto de artigo.",
+    "images": "Nenhuma imagem reproduzida.",
+    "quotes": "Nenhuma citação literal usada."
+  },
+  "originalContribution": [
+    "sections[2] e sections[3]."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "203e3ee5f64e6aae708beadd3f6252ce2ad0fe29a7daff80344d7dc2946adc92"
+}

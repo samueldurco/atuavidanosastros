@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-ascendente",
+  "revision": 3,
+  "digest": "ced5a5ad72b4418f81377a46cb9b1ad893cd56ec1fb76b552120dc301d852ee3",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "91f56a0f9c170193f9e983de384f74207ae06caf8140426ca2bf6e959bc953e7",
+  "evidenceManifestDigest": "9e99b741e8ad8a313befeb93d471953d0c66bb2457dd481fa7d0c71d2bc0a296",
+  "approvedAt": "2026-10-06T16:10:44.828Z",
+  "expiresAt": "2026-10-07T16:10:44.828Z",
+  "signature": "mQwOpposrpnp9eUENfJPkNFGUf8Ov+7/A54VkcvTYzNTGnmugOtNScgFK+P14qYwPur1+zee4S+YO5Hq9nxLCg=="
+}

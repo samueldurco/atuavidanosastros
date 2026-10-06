@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-perguntas-tarot",
+  "revision": 3,
+  "documentDigest": "c44f5684eb20e6b53cf480e86a400415da7b9642f914c287da5b1951a2341c65",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "a722073b8656eda5d456e4d71ecf19aa73286fae518b0dbadc54f0da442228b5"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "168a3aa641921c21714a3ca9cd1a52f37a20bddc60900e9339ecd5df3b5fc3a6"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "7de68cfd0bba1242521169e464f7f43c4bba9f8e63cd0b7614fe42f473c9d572"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "43c81e493e2271f26ef6ed987429bb770eb03b6a22a73694901e548ece075f2f"
+    },
+    {
+      "path": "evidencias/authority-provisioning.json",
+      "sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
+    },
+    {
+      "path": "evidencias/owner-authorization.json",
+      "sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+    }
+  ]
+}

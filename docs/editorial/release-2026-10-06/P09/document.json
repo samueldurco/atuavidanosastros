@@ -1,0 +1,80 @@
+{
+  "id": "guide-arcanos-maiores-menores",
+  "revision": 3,
+  "state": "PUBLISHED",
+  "path": "/noticias/2026/10/arcanos-maiores-e-menores",
+  "kind": "guide",
+  "title": "Arcanos maiores e menores: como o tarot se organiza",
+  "description": "Conheça a estrutura comum do tarot, compare arcanos maiores e menores e monte uma ficha de leitura sem previsão garantida.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": "2026-10-06T16:08:48.728Z",
+  "modifiedAt": "2026-10-06T16:08:48.728Z",
+  "sections": [
+    {
+      "heading": "Uma estrutura comum, com variações",
+      "paragraphs": [
+        "Um modelo contemporâneo comum de tarot reúne 78 cartas: 22 arcanos maiores e 56 menores. A fonte de João Bidu apresenta essa divisão. É um ponto de partida para reconhecer o baralho, não uma regra para qualquer conjunto de cartas chamado de oráculo.",
+        "Os maiores e os menores pertencem à mesma leitura, mas usam conjuntos distintos de imagens e organização. Para estudar um baralho específico, confira seu manual e seus nomes, em vez de assumir que todas as edições são iguais.",
+        "O uso simbólico das cartas não comprova que elas revelem acontecimentos futuros. Neste guia, a leitura serve para estudar linguagem visual e formular perguntas; não para emitir diagnósticos ou decisões sobre a vida de alguém."
+      ]
+    },
+    {
+      "heading": "O que a história ajuda a esclarecer",
+      "paragraphs": [
+        "O Metropolitan Museum of Art apresenta registros históricos do tarot no norte da Itália em meados do século XV. Esse contexto é útil para evitar histórias de origem apresentadas como certeza sem referência.",
+        "Conhecer um contexto histórico não exige reproduzir cartas antigas. Imagens de acervos, traduções e edições podem ter condições próprias de uso. Aqui, não usamos imagens de terceiros nem tratamos uma página pública como licença de reprodução.",
+        "A história de um jogo de cartas e seus usos simbólicos posteriores são perguntas diferentes. Um registro histórico não comprova uma promessa de adivinhação."
+      ]
+    },
+    {
+      "heading": "Maiores e menores na sua ficha de estudo",
+      "paragraphs": [
+        "Crie uma ficha com quatro campos: nome da carta; conjunto a que pertence; elementos visuais que você observa; interpretação que o manual atribui. Separe a descrição da imagem da interpretação escrita.",
+        "Nos menores, identifique também o naipe conforme a edição. Não use apenas uma palavra-chave encontrada na internet para concluir o significado de toda carta ou de uma situação pessoal.",
+        "Astrolink descreve diferenças de representação entre modelos como Marselha e Rider-Waite. Assim, uma explicação feita para determinada imagem pode precisar de contexto quando você observa outro baralho.",
+        "Em vez de procurar uma lista definitiva de significados, registre onde a interpretação foi consultada e quais detalhes da imagem ela destaca. O objetivo é aprender a ler com atribuição, sem inventar uma tradição uniforme."
+      ]
+    },
+    {
+      "heading": "Exercício: descrição antes de interpretação",
+      "paragraphs": [
+        "Escolha uma carta do seu próprio baralho ou de um manual que você possa consultar legitimamente. Sem reproduzir a imagem, anote três detalhes que consegue descrever: objeto, posição, cor ou relação entre figuras.",
+        "Depois, consulte o texto da edição e escreva uma associação que a fonte apresenta. Identifique a diferença entre 'vejo uma figura segurando um objeto' e 'o manual associa esse detalhe a determinada ideia'.",
+        "Por fim, formule uma pergunta sobre uma tarefa cotidiana. Exemplo criado para este roteiro: 'o que preciso esclarecer antes de organizar meu projeto?'. A pergunta vem do exercício; não é uma mensagem descoberta no baralho.",
+        "Não é necessário sortear cartas nem comprar uma leitura. Você termina com uma ficha de observação e uma fonte identificada, que podem ser revisadas depois."
+      ]
+    },
+    {
+      "heading": "Limites para uma leitura educativa",
+      "paragraphs": [
+        "Evite transformar uma carta em sentença sobre doença, dinheiro, morte, gravidez, fidelidade ou destino. Esses temas não podem ser resolvidos por uma descrição simbólica.",
+        "Uma carta difícil ou uma imagem dramática não exige uma compra para afastar um suposto perigo. Este guia não apresenta ameaças nem soluções mágicas.",
+        "Para conferir seu estudo, faça três perguntas: identifiquei a edição? Distingui o que vejo do que a fonte interpreta? Minha conclusão conserva a liberdade de decisão? Se sim, a ficha já cumpre seu propósito educativo."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Before Fortune-Telling: The History and Structure of Tarot Cards — The Met",
+      "url": "https://www.metmuseum.org/perspectives/tarot-2"
+    },
+    {
+      "title": "Arcanos maiores e menores — João Bidu",
+      "url": "https://controle.joaobidu.com.br/tarot/arcanos-maiores-e-menores-entenda-o-que-as-cartas-do-tarot-diz-para-voce.phtml"
+    },
+    {
+      "title": "Tarot de Marselha e Rider-Waite — Astrolink",
+      "url": "https://www.astrolink.com.br/artigo/diferenca-entre-o-tarot-de-marselha-e-rider-waite"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "id": "guide-diario-sonhos",
+  "revision": 2,
+  "state": "DRAFT",
+  "path": "/noticias/2026/10/diario-de-sonhos",
+  "kind": "guide",
+  "title": "Diário de sonhos: um modelo simples de registro",
+  "description": "Monte um diário de sonhos com cena, lembrança e contexto, sem dicionário universal de símbolos nem previsão do futuro.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "Um registro antes de um significado",
+      "paragraphs": [
+        "Um diário de sonhos pode começar como uma anotação do que você lembra. O exemplo de Sonheiro organiza o registro com cena, emoção e contexto. Neste guia, usamos esses campos como ponto de partida, sem prometer benefício clínico ou capacidade de prever acontecimentos.",
+        "Você não precisa interpretar cada imagem para que a página fique completa. Separar lembrança, associação e pergunta já torna o registro mais claro.",
+        "Este roteiro não explica a causa de um sonho, não diagnostica condições e não oferece um significado universal para qualquer símbolo. Sua entrega é um modelo de anotação."
+      ]
+    },
+    {
+      "heading": "A primeira página",
+      "paragraphs": [
+        "Use os campos: data da anotação; trecho de que se lembra; emoção que percebe ao recordar; contexto que deseja registrar; dúvida ou associação pessoal. Não complete partes esquecidas só para tornar a história mais bonita.",
+        "Você pode escrever 'não lembro do começo' ou 'a ordem das cenas está incerta'. Essas frases ajudam a distinguir uma lembrança parcial de uma narrativa reconstruída.",
+        "Se houver outras pessoas na cena, use descrições ou nomes fictícios ao compartilhar a anotação. Não publique detalhes íntimos de terceiros para obter uma interpretação.",
+        "Uma frase curta pode bastar. A frequência e o tamanho do registro são escolhas deste exercício, sem metas de desempenho ou promessa de resultado."
+      ]
+    },
+    {
+      "heading": "Exemplo de anotação",
+      "paragraphs": [
+        "Exemplo inteiramente criado para este guia: 'lembro de procurar uma porta num corredor; não sei o que veio antes; ao recordar, percebo curiosidade; ontem pensei numa tarefa que ainda não organizei'.",
+        "Na coluna de associação, a pessoa poderia escrever 'o corredor me lembrou a sensação de procurar uma forma de começar'. Essa associação é pessoal. O guia não afirma que corredores tenham esse significado para todos.",
+        "Na coluna de pergunta, ela poderia anotar 'qual é a primeira etapa da tarefa?'. A pergunta se refere ao contexto descrito e pode ser respondida com uma lista concreta.",
+        "Nenhuma dessas frases comprova uma previsão. O exemplo mostra apenas como registrar uma cena e conservar a distinção entre memória, associação e ação cotidiana."
+      ]
+    },
+    {
+      "heading": "Como comparar páginas sem criar um dicionário",
+      "paragraphs": [
+        "Depois de algumas anotações, escolha dois registros e observe o que se repete no texto: uma palavra, um lugar descrito ou uma pergunta. Anote também diferenças e trechos incompletos.",
+        "Não atribua automaticamente um significado fixo à repetição. Você pode escrever 'essa imagem apareceu nas minhas anotações' sem concluir que ela explica uma condição ou anuncia um acontecimento.",
+        "Se consultar uma interpretação externa, identifique a fonte e mantenha a leitura separada do relato. Uma interpretação não deve substituir o que você efetivamente anotou.",
+        "Evite copiar longos textos de dicionários de sonhos ou usar imagens sem licença. Seu diário pode conter descrições e desenhos próprios, guardados como registros pessoais."
+      ]
+    },
+    {
+      "heading": "Uma conclusão simples",
+      "paragraphs": [
+        "Escolha uma pergunta que o registro despertou e diga se ela trata de algo observável. 'Que tarefa quero organizar?' pode levar a uma pequena lista. 'O que vai acontecer amanhã?' continua sendo uma pergunta de previsão que este roteiro não responde.",
+        "Não use a anotação para gerar números de aposta, acusar alguém ou decidir sobre saúde, dinheiro ou destino. Esses usos ultrapassam a atividade educativa proposta.",
+        "Você pode encerrar a página com 'não quero interpretar agora'. O diário não precisa produzir uma resposta em toda anotação, nem depender de uma ferramenta ou de uma compra para ter utilidade."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Como manter um diário de sonhos — Sonheiro",
+      "url": "https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos"
+    }
+  ]
+}

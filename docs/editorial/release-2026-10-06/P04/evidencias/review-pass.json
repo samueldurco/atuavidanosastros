@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "atvna-public-final-separate-pass-v1",
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "reviewedAt": "2026-10-06T16:08:49.121Z",
+  "reviewerKind": "same-agent-separate-pass",
+  "humanReview": false,
+  "independentReviewer": false,
+  "ownerEditorialAuthorization": true,
+  "priorDigest": "7ee391e4e5cc4c7c176704da0d77379ec04fac5169e3e124db6d9b5b836263ad",
+  "documentDigest": "1cd98b263e4707c4d1abba55166f44828e45509f899ee420c471cd48bebb802e",
+  "revision": 3,
+  "bodyUnchanged": true,
+  "completeBodyRead": true,
+  "sourceEvidence": "Trechos e direitos do corpus efetivamente consultado; não se alega nova consulta dos sites nesta passagem.",
+  "observations": [
+    {
+      "id": "scope",
+      "status": "PASS",
+      "reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
+      "evidence": [
+        "document.json#kind",
+        "evidencias/claims.json",
+        "evidencias/review-pass.json"
+      ]
+    },
+    {
+      "id": "claims",
+      "status": "PASS",
+      "reason": "Organiza origem e incerteza do horário; exemplos declarados fictícios; evita intervalo universal ou retificação pelo comportamento. S03 consta como contexto adicional, sem nova afirmação dependente dela. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/claims.json",
+        "evidencias/sources-rights.json"
+      ]
+    },
+    {
+      "id": "rights",
+      "status": "PASS",
+      "reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
+      "evidence": [
+        "evidencias/identity-rights.json",
+        "evidencias/sources-rights.json"
+      ]
+    },
+    {
+      "id": "identity",
+      "status": "PASS",
+      "reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
+      "evidence": [
+        "document.json#author",
+        "document.json#automationDisclosure",
+        "evidencias/review-pass.json"
+      ]
+    },
+    {
+      "id": "safety",
+      "status": "PASS",
+      "reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/claims.json"
+      ]
+    },
+    {
+      "id": "originality",
+      "status": "PASS",
+      "reason": "Há contribuição prática própria: sections[1], sections[2], sections[4]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/originality.json",
+        "evidencias/competition.json",
+        "evidencias/claims.json"
+      ]
+    },
+    {
+      "id": "tools",
+      "status": "PASS",
+      "reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
+      "evidence": [
+        "evidencias/journeys.json",
+        "document.json#sections"
+      ]
+    },
+    {
+      "id": "integrity",
+      "status": "PASS",
+      "reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
+      "evidence": [
+        "document.json",
+        "evidencias/review-pass.json",
+        "evidencias/authority-provisioning.json",
+        "evidencias/owner-authorization.json"
+      ]
+    }
+  ],
+  "currentMetadataReview": {
+    "authorType": "Organization",
+    "publishedAt": "2026-10-06T16:08:48.728Z",
+    "modifiedAt": "2026-10-06T16:08:48.728Z",
+    "noImages": true,
+    "structuredData": "Article",
+    "automationDisclosure": {
+      "generatedWithAI": true,
+      "humanReview": false,
+      "reviewMode": "separate-pass"
+    }
+  },
+  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+}

@@ -1,0 +1,169 @@
+{
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "documentId": "guide-perguntas-tarot",
+  "revision": 2,
+  "digest": "48421a3ab113decd7965212e63db0f076fcc2d74e3b1c5363e8534da55fa3a98",
+  "reviewedAt": "2026-10-06T14:42:36.397Z",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "checks": [
+    {
+      "id": "scope",
+      "status": "PASS",
+      "reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
+      "evidence": [
+        "document.json#kind",
+        "evidencias/claims.json",
+        "evidencias/review-pass.json"
+      ]
+    },
+    {
+      "id": "claims",
+      "status": "PASS",
+      "reason": "Reformulações originais e cinco passos verificáveis; contexto simbólico atribuído; não sorteia cartas, acusa terceiros ou promete previsão. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/claims.json",
+        "evidencias/sources-rights.json"
+      ]
+    },
+    {
+      "id": "rights",
+      "status": "PASS",
+      "reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
+      "evidence": [
+        "evidencias/identity-rights.json",
+        "evidencias/sources-rights.json"
+      ]
+    },
+    {
+      "id": "identity",
+      "status": "PASS",
+      "reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
+      "evidence": [
+        "document.json#author",
+        "document.json#automationDisclosure",
+        "evidencias/review-pass.json"
+      ]
+    },
+    {
+      "id": "safety",
+      "status": "PASS",
+      "reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/claims.json"
+      ]
+    },
+    {
+      "id": "originality",
+      "status": "PASS",
+      "reason": "Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/originality.json",
+        "evidencias/competition.json",
+        "evidencias/claims.json"
+      ]
+    },
+    {
+      "id": "tools",
+      "status": "PASS",
+      "reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
+      "evidence": [
+        "evidencias/journeys.json",
+        "document.json#sections"
+      ]
+    },
+    {
+      "id": "integrity",
+      "status": "UNKNOWN",
+      "reason": "Conversão, corpo idêntico, revisão e digest atuais conferidos. O pacote continua DRAFT, publishedAt null. Metadados finais de liberação, autoridade legítima, atestação e provas hospedadas estão ausentes; UNKNOWN bloqueia aprovação final.",
+      "evidence": [
+        "document.json",
+        "evidencias/review-pass.json"
+      ]
+    }
+  ],
+  "scores": [
+    {
+      "id": "intent",
+      "points": 19,
+      "reason": "Título e escopo respondem à intenção conceitual; observação específica: Reformulações originais e cinco passos verificáveis; contexto simbólico atribuído; não sorteia cartas, acusa terceiros ou promete previsão.",
+      "evidence": [
+        "document.json#title",
+        "document.json#sections",
+        "evidencias/briefs.json"
+      ]
+    },
+    {
+      "id": "value",
+      "points": 19,
+      "reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/claims.json"
+      ]
+    },
+    {
+      "id": "accuracy",
+      "points": 14,
+      "reason": "Afirmações centrais limitadas ao apoio das fontes S05,S06; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
+      "evidence": [
+        "evidencias/claims.json",
+        "evidencias/sources-rights.json"
+      ]
+    },
+    {
+      "id": "trust",
+      "points": 9,
+      "reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
+      "evidence": [
+        "document.json#author",
+        "document.json#sources",
+        "document.json#automationDisclosure"
+      ]
+    },
+    {
+      "id": "language",
+      "points": 8,
+      "reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
+      "evidence": [
+        "document.json#sections"
+      ]
+    },
+    {
+      "id": "journey",
+      "points": 9,
+      "reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
+      "evidence": [
+        "document.json#sections",
+        "evidencias/journeys.json"
+      ]
+    },
+    {
+      "id": "metadata",
+      "points": 5,
+      "reason": "Título, descrição e caminho definidos como Article; autoria Organization e declaração implementadas localmente. Datas, canonical hospedado e navegação publicada ainda não comprovados.",
+      "evidence": [
+        "document.json",
+        "evidencias/review-pass.json"
+      ]
+    },
+    {
+      "id": "maintenance",
+      "points": 4,
+      "reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
+      "evidence": [
+        "evidencias/maintenance.json"
+      ]
+    }
+  ],
+  "decision": "BLOQUEADO",
+  "corrections": [
+    "Congelar metadados e datas reais na liberação e repetir a revisão completa sobre o digest final; qualquer alteração invalida este relatório.",
+    "Provisionar externamente uma autoridade de serviço legítima somente com autorização específica; emitir atestação exata, sem chaves de produção criadas pelo chat.",
+    "Concluir os gates de integração/CI/Gate B/release e verificar o piloto hospedado antes de admitir publicação e descoberta."
+  ],
+  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+}

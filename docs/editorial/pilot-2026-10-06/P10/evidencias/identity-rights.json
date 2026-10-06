@@ -1,0 +1,71 @@
+{
+  "briefId": "P10",
+  "documentId": "guide-perguntas-tarot",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "publisher": {
+    "name": "ATVNA",
+    "role": "publicador responsável pela eventual liberação"
+  },
+  "sourceIds": [
+    "S06",
+    "S05"
+  ],
+  "sources": [
+    {
+      "id": "S05",
+      "url": "https://www.astrolink.com.br/artigo/diferenca-entre-o-tarot-de-marselha-e-rider-waite",
+      "title": "Tarot de Marselha e Rider-Waite — Astrolink",
+      "type": "tarot-tradition",
+      "read": "corpo 21–98",
+      "claims": [
+        "Os dois modelos têm diferenças de representação dos arcanos menores.",
+        "Numeração de Justiça e Força pode variar."
+      ],
+      "rights": "Texto e imagens protegidos; nenhuma carta reproduzida. Alegações históricas controversas não serão usadas sem museu.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S06",
+      "url": "https://controle.joaobidu.com.br/tarot/arcanos-maiores-e-menores-entenda-o-que-as-cartas-do-tarot-diz-para-voce.phtml",
+      "title": "Arcanos maiores e menores — João Bidu",
+      "type": "tarot-tradition",
+      "read": "corpo 70–167",
+      "claims": [
+        "Estrutura contemporânea comum: 22 maiores e 56 menores.",
+        "Leitura simbólica depende de contexto; não tratar como previsão garantida."
+      ],
+      "rights": "Texto protegido; nenhuma sequência de significados ou imagem será transcrita.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    }
+  ],
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "bookExcerptsUsed": false,
+  "thirdPartyImagesUsed": false,
+  "humanReview": false,
+  "personalExperienceClaimed": false,
+  "serviceAuthority": {
+    "status": "PENDING_EXTERNAL_AUTHORIZATION",
+    "authorIsNotAuthority": true
+  },
+  "limitations": [
+    "Acesso público não transfere direitos.",
+    "Paráfrase factual e tradicional atribuída; nenhum texto, imagem ou leitura de terceiros reproduzido.",
+    "Nenhum livro foi usado como corpus publicável."
+  ]
+}

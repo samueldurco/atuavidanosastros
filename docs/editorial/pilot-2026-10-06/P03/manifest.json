@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-mapa-astral",
+  "revision": 2,
+  "documentDigest": "4fb95e181ff3cb9e5ababff1bca614f64c1488d7cda2e81b6b43eec1e8c55019",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "06c60019d5246e3ca98fc48f54c0e1037c1aa7c7129cc2c1f513e4ebdbf4af56"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "f7ec2d31558ff8b3b64976086c7ae22c75d3a4a716c87c43c1509446a84207cb"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "e2ad46300ce56daa953d27b9bcb155eeb433c819e9ee5778d5b4a425f382dd61"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "1962c966654ccf9e9a6dffacb87e29e9db30dd04628478d86362e242b0da663f"
+    }
+  ]
+}

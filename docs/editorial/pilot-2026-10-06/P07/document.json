@@ -1,0 +1,77 @@
+{
+  "id": "guide-sinastria-limites",
+  "revision": 2,
+  "state": "DRAFT",
+  "path": "/noticias/2026/10/sinastria-e-combinacao-de-signos",
+  "kind": "guide",
+  "title": "Sinastria e combinação de signos: entenda a diferença",
+  "description": "Entenda a diferença entre combinação de signos solares e sinastria, com limites para interpretar relações e um exercício de conversa.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "Um recorte e uma comparação",
+      "paragraphs": [
+        "Na tradição astrológica consultada no Horóscopo Virtual, sinastria é a comparação de mapas. A combinação de signos solares usa um recorte mais estreito. A diferença ajuda a entender o que um texto está comparando; não transforma a leitura em previsão do resultado de uma relação.",
+        "Uma combinação solar pode servir como introdução ao vocabulário. Ela não descreve todas as referências consideradas em uma comparação de mapas e não explica a história de duas pessoas.",
+        "Mesmo uma leitura com mais detalhes continua sendo interpretativa. Quantidade de símbolos não equivale a comprovação de compatibilidade, fidelidade ou futuro do casal. Este guia não atribui uma porcentagem nem realiza cálculo."
+      ]
+    },
+    {
+      "heading": "Como reconhecer o alcance de um resultado",
+      "paragraphs": [
+        "Antes de ler a conclusão, confira quais informações o serviço usou. Compare a entrega anunciada com o resultado: combinação de signos solares, comparação de algumas referências ou uma análise descrita de outra forma.",
+        "Um nome amplo pode esconder um recorte limitado. Se o serviço não explicar o método ou a cobertura, mantenha a dúvida aberta. Não chame uma comparação parcial de 'análise completa' por causa de um título atraente.",
+        "Procure também a distinção entre cálculo e interpretação. Dados de nascimento podem entrar em um cálculo, mas o texto sobre dinâmica de relacionamento acrescenta significados da tradição.",
+        "Não forneça informações de outra pessoa sem combinar o uso com ela. O interesse em uma leitura não autoriza concluir o que alguém sente ou pretende."
+      ]
+    },
+    {
+      "heading": "Troque vereditos por perguntas",
+      "paragraphs": [
+        "Uma descrição pode mencionar ritmos diferentes, formas de demonstrar afeto ou preferências de conversa. Se desejar usar a leitura, converta o tema em uma pergunta que permita à outra pessoa responder por si.",
+        "Em um exemplo hipotético, a frase 'vocês têm ritmos diferentes' vira 'como cada um prefere combinar um compromisso?'. A resposta pode abordar antecedência, horários e mudanças de plano. Esses detalhes vêm da conversa, não do mapa.",
+        "Outro exemplo: em vez de perguntar 'qual signo é mais fiel?', pergunte 'quais acordos consideramos importantes?'. A leitura simbólica não permite afirmar a fidelidade de ninguém.",
+        "Se a outra pessoa não quiser participar, respeite essa decisão. Você pode refletir sobre suas próprias preferências sem calcular ou divulgar dados de terceiros."
+      ]
+    },
+    {
+      "heading": "Exercício: uma conversa com três campos",
+      "paragraphs": [
+        "Escolha um tema cotidiano de baixo impacto, como organizar um passeio. Cada pessoa preenche: o que prefere; o que pode flexibilizar; o que precisa ser combinado.",
+        "Leiam os campos e escolham um acordo simples, como definir um horário com antecedência. Depois do passeio, avaliem se o acordo funcionou. Essa avaliação se apoia no que aconteceu, não em uma nota de compatibilidade.",
+        "O exercício é uma proposta original deste guia. Não é terapia, diagnóstico de relação nem método para resolver situações de risco. Sua entrega é tornar uma combinação cotidiana mais explícita.",
+        "Vocês podem realizá-lo sem nenhuma leitura astrológica. Se uma descrição simbólica inspirou o tema, indiquem essa origem e mantenham o acordo fundamentado na conversa."
+      ]
+    },
+    {
+      "heading": "O que uma leitura não decide",
+      "paragraphs": [
+        "Um texto de compatibilidade não determina se uma relação deve começar, continuar ou terminar. Contexto, consentimento, respeito e acordos reais não cabem em um veredito de signos.",
+        "Este guia não recomenda usar sinastria para avaliar candidatos a emprego, descobrir intenções ocultas ou julgar pessoas ausentes. A comparação simbólica tem limites, e a outra pessoa conserva o direito de falar sobre si.",
+        "Para concluir, identifique o recorte da leitura e escreva uma pergunta que possa ser respondida numa conversa real. Essa é uma utilização mais clara do conteúdo do que buscar uma sentença sobre a relação."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Combinação dos signos e sinastria — Horóscopo Virtual",
+      "url": "https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria"
+    },
+    {
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-fases-lua",
+  "revision": 4,
+  "digest": "4a15bc21991f88eadc1dab4e8453e85ba4e78e4ecfe0ec0c142bc1d6174edb30",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "b4f35dc662797e446969a4621da8a53f520a38e20bd115f40cd1b3ba0c5d0f6f",
+  "evidenceManifestDigest": "8edefa2c514c8f24729e92d726f46245480b45f3c9cb5c78807ec475867a8204",
+  "approvedAt": "2026-10-06T16:10:44.846Z",
+  "expiresAt": "2026-10-07T16:10:44.846Z",
+  "signature": "ytoW5kqyFIUdJJCDaL7iv6aqR1pzgNFfVdqHDJGfhyiuW4Wcg/pG/PMJIclfTx/8Qk8b43nC1K8nWNqXfZWGBA=="
+}

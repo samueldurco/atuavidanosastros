@@ -1,0 +1,17 @@
+{
+  "protocol": "atv-editorial-automation-v2",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "documentId": "guide-diario-sonhos",
+  "revision": 3,
+  "digest": "fbf7a530d2614fb2c25e2f4f6520e3efe9ea1a0545ae285dd1a976b632784dfb",
+  "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
+  "decision": "APROVADO_AUTOMATICAMENTE",
+  "reviewMode": "separate-pass",
+  "risk": "low-educational-evergreen",
+  "reportDigest": "746f845c9d18b1ee748b7f97fb2ed04af9d4ad9a9be8cf73df934c766a7c48c4",
+  "evidenceManifestDigest": "78a7e50fa52ae5a90c4f9ee634a80a28e8f5b7616ecb6f1937590491c6359a71",
+  "approvedAt": "2026-10-06T16:10:44.870Z",
+  "expiresAt": "2026-10-07T16:10:44.870Z",
+  "signature": "VE7qwxB+IHuxxfLPSh80mFeP4QidokYxMSb5pxMls50SMQwmlu87INBOP+BzHV5hkiuNgT62gZWerjpSg5+ICw=="
+}
