@@ -33,15 +33,21 @@
 						{#each data.products as product (product.id)}
 							<article class="card product-card">
 								<p class="eyebrow">
-									{product.state === 'ACTIVE'
-										? 'Disponível'
-										: product.state === 'PAUSED'
-											? 'Indisponível no momento'
-											: 'Em preparação'}
+									{data.trialAccess
+										? 'Teste gratuito disponível'
+										: product.state === 'ACTIVE'
+											? 'Disponível'
+											: product.state === 'PAUSED'
+												? 'Indisponível no momento'
+												: 'Em preparação'}
 								</p>
 								<h3>{product.name}</h3>
 								<p>{product.summary}</p>
-								<Button href={product.href} variant="secondary">{product.cta}</Button>
+								<Button
+									href={data.trialAccess ? `/testar-produtos/${product.id}` : product.href}
+									variant="secondary"
+									>{data.trialAccess ? `Testar ${product.name} grátis` : product.cta}</Button
+								>
 							</article>
 						{/each}
 					</div>

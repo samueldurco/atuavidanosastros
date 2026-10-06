@@ -45,7 +45,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --dir apps/web exec playwright install --with-deps chromium
       - name: Public and synthetic private accessibility with keyboard regression
-        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts public-menu.e2e.ts private-accessibility.e2e.ts gate-b.e2e.ts consent-reflow.e2e.ts city-location.e2e.ts product-test-index.e2e.ts private-trials.e2e.ts --workers=1
+        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts public-menu.e2e.ts private-accessibility.e2e.ts gate-b.e2e.ts consent-reflow.e2e.ts city-location.e2e.ts product-test-index.e2e.ts private-trials.e2e.ts trial-access.e2e.ts --workers=1
       - name: Legal documents and TikTok endpoint isolation
         run: pnpm --dir apps/web exec playwright test --config=playwright.social.config.ts
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

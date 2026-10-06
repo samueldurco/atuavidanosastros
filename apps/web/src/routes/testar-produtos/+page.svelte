@@ -2,6 +2,7 @@
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
+	import { loginHref } from '$lib/auth-return';
 	let { data } = $props();
 </script>
 
@@ -83,40 +84,48 @@
 			</ul>
 		</section>
 	{:else}
-		<Card title="Comece pelo cálculo da Bússola de Carreira" variant="attention">
+		<Card
+			title={data.user
+				? 'Esta conta não tem acesso aos testes privados'
+				: 'Entre para acessar seus testes gratuitos'}
+			variant="attention"
+		>
 			<p>
-				Você já pode informar cidade, data e hora para experimentar o cálculo do Meio do Céu. A base
-				é experimental; a interpretação completa ainda está em preparação.
+				O acesso aos 25 produtos e ao ATV+ é liberado por conta. Use a mesma conta Google autorizada
+				para seus testes.
 			</p>
 			<p>
-				<a href="/bussola-de-carreira">Calcular meu Meio do Céu</a> ·
-				<a href="/meio-do-ceu">Ver Meio do Céu</a>
+				<a href={loginHref('/testar-produtos')}>Entrar com Google para testar</a>
 			</p>
 		</Card>
 		<section aria-labelledby="entradas-title">
-			<h2 id="entradas-title">Entradas dos 25 produtos</h2>
+			<h2 id="entradas-title">Os 25 produtos para teste privado</h2>
 			<p>
-				<a href="/entrar">Entre com Google</a> antes de abrir as entradas abaixo. Você pode conferir os
-				formulários e os estados disponíveis. Os pedidos de novas leituras continuam bloqueados enquanto
-				os produtos estão em preparação.
-			</p>
-			<p>
-				Resultados completos, salvamento e formatos finais ainda dependem da liberação de cada
-				produto.
+				Ao entrar com a conta autorizada, você poderá gerar, salvar e avaliar cada leitura
+				gratuitamente.
 			</p>
 			<div class="products">
 				{#each data.products.filter((product) => product.universe !== 'global') as product (product.id)}
-					<Card title={product.name} eyebrow="Leitura em preparação" variant="product">
-						<a href={`/biblioteca/nova/${product.id}`}>Abrir formulário de {product.name}</a>
+					<Card title={product.name} eyebrow="Teste privado" variant="product">
+						<a href={`/testar-produtos/${product.id}`}>Testar {product.name}</a>
 					</Card>
 				{/each}
 			</div>
 		</section>
 	{/if}
-	<Card title="A Tua Vida nos Astros+" eyebrow="Em preparação">
+	<Card
+		title="A Tua Vida nos Astros+"
+		eyebrow={data.trialAccess ? 'Teste gratuito disponível' : 'Teste privado'}
+	>
 		<p>
-			Os planos e benefícios ainda estão em definição. A assinatura não está disponível para teste
-			ou compra.
+			{data.trialAccess
+				? 'Seu clube de teste está liberado gratuitamente. Explore os produtos e registre sua avaliação do ATV+.'
+				: 'Entre com a conta autorizada para testar o clube gratuitamente.'}
+		</p>
+		<p>
+			<a href="/testar-produtos/atv-plus"
+				>{data.trialAccess ? 'Testar ATV+ grátis' : 'Acessar teste do ATV+'}</a
+			>
 		</p>
 	</Card>
 	<p><a href="/biblioteca">Abrir a Biblioteca</a> · <a href="/dashboard">Abrir minha conta</a></p>

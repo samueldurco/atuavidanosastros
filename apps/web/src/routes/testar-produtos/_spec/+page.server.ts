@@ -3,6 +3,8 @@ import { productCatalog, workflowFor, type WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '$lib/server/trial-calculation';
 import { approveTrialReading, composeTrialReading } from '$lib/trials/reading';
 import type { PageServerLoad } from './$types';
+import { customerProducts } from '$lib/data/product-copy';
+import { productDetails } from '$lib/data/product-details';
 
 // Local rendering evidence. Never grants access or persists a reading/approval.
 export const load: PageServerLoad = async ({ url, setHeaders }) => {
@@ -12,7 +14,12 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	const view = url.searchParams.get('view') ?? 'result';
 	const workflow = workflowFor(productId),
 		product = productCatalog.find((p) => p.id === productId);
-	if (!workflow || !product || !['result', 'intake', 'club'].includes(view)) error(404);
+	if (
+		!workflow ||
+		!product ||
+		!['result', 'intake', 'club', 'catalog', 'index', 'library'].includes(view)
+	)
+		error(404);
 	const birth = {
 		localDateTime: '2000-01-01T12:00:00',
 		utcInstant: '2000-01-01T12:00:00Z',
@@ -72,6 +79,23 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	};
 	return {
 		view,
+		trialAccess: true,
+		catalog: {
+			product: customerProducts.find((p) => p.id === productId)!,
+			details: productDetails[productId as keyof typeof productDetails],
+			seo: {
+				title: product.name,
+				description: 'Prova local sintética.',
+				path: '/testar-produtos/_spec',
+				indexable: false,
+				managePrimary: true
+			}
+		},
+		index: { products: productCatalog, readings: [], feedback: [], libraryUnavailable: false },
+		library: {
+			readings: [{ id, product_id: 'career-compass', created_at: saved.created_at }],
+			unavailable: false
+		},
 		intake: { product: workflow, dreams: [] },
 		result: { saved, product, feedback: null, notes: [] },
 		club: {
