@@ -5,6 +5,7 @@ import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { articleSeo, validDocument, type EditorialDocument } from './editorial';
 import { editorialSitemap, newsSitemap, recentNews } from './editorial-feeds';
+import { publishedEditorial } from './editorial-registry';
 import {
 	verifyAutomatedApproval,
 	type AutomatedAttestation,
@@ -22,6 +23,14 @@ const codes = readdirSync(root)
 	.sort();
 
 describe('externally signed finite editorial release', () => {
+	it('exposes only the exact currently admitted paths in the runtime registry', async () => {
+		const release = json<{ packages: { document: EditorialDocument }[] }>(
+			resolve('src/lib/server/editorial-release/registry.json')
+		);
+		expect((await publishedEditorial()).map((document) => document.path).sort()).toEqual(
+			release.packages.map((entry) => entry.document.path).sort()
+		);
+	});
 	it('validates all twelve exact packages and renders their full bodies and Article metadata', async () => {
 		const documents: EditorialDocument[] = [];
 		for (const code of codes) {

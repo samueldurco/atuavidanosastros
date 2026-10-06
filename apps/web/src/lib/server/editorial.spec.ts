@@ -103,7 +103,7 @@ describe('independent editorial authority', () => {
 			)
 		).toBe(false);
 	});
-	it('keeps the live registry empty without approved authors, content and keys', async () => {
+	it('rejects release packages before their admission instant', async () => {
 		expect(await publishedEditorial(now)).toEqual([]);
 	});
 	it('accepts a signed, exact published revision', async () => {
