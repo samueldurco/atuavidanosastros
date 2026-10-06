@@ -22,9 +22,16 @@ export const handle: Handle = async ({ event, resolve }) => {
 	if (!response.headers.has('referrer-policy'))
 		response.headers.set('referrer-policy', 'strict-origin-when-cross-origin');
 	if (
-		['/biblioteca', '/dashboard', '/conta', '/admin', '/api/workflows', '/api/integrations'].some(
-			(path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`)
-		)
+		[
+			'/biblioteca',
+			'/dashboard',
+			'/conta',
+			'/admin',
+			'/api/workflows',
+			'/api/integrations',
+			'/api/private-trials',
+			'/testar-produtos'
+		].some((path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`))
 	) {
 		response.headers.set('cache-control', 'private, no-store');
 		response.headers.set('referrer-policy', 'no-referrer');
