@@ -1,0 +1,38 @@
+{
+  "run_id": "ATV-20260902-170644Z-01A0630F",
+  "work_unit": "SHOP-INTERFACE-PUBLICATION-20261006",
+  "authorization": "Proprietário solicitou publicar a interface; artes e cadastro de produtos ficam para depois.",
+  "release_scope": {
+    "route": "/loja",
+    "conceptual_collections": 19,
+    "filters": ["busca", "coleção", "formato em estudo", "técnica em estudo", "público", "signo"],
+    "pagination": "6 direções por página",
+    "sign_navigation": 12,
+    "real_products": 0,
+    "new_artworks": 0,
+    "checkout": false,
+    "orders": false,
+    "provider_changes": false,
+    "database_changes": false,
+    "automatic_spend_brl": 0
+  },
+  "isolation": "Branch codex/loja-interface-publica, worktree isolada de origin/main 66bbc3767df1aeefef7f5680a24ef406494163e2. Alterações paralelas e arquivos de coleções originais preservados.",
+  "local_verification": {
+    "unit_tests": "5 PASS: conceitos únicos, opções válidas, filtros combinados, acentos, signo e ausência de ofertas",
+    "e2e_suite": "8 cenários: filtros/detalhes/vazio, rotas por signo, quatro viewports, teclado e axe",
+    "viewports_px": [1440, 820, 390, 320],
+    "visual_review": "Capturas desktop/mobile inspecionadas, sem overflow ou imagens comerciais",
+    "check_before_keyed_lists": "PASS, 0 erros e 0 avisos",
+    "build_before_keyed_lists": "PASS, adapter Cloudflare",
+    "lint_correction": "Seis loops receberam chaves estáveis; nenhuma regra desligada",
+    "runtime_logs": ["shop-unit.log", "shop-e2e.log", "check-shop.log", "build-shop.log", "lint-shop.log"],
+    "screenshots": "test-results/gate-b/loja-*.png, artefatos locais não versionados"
+  },
+  "release_gates": "Merge somente após quality, accessibility, secrets, sbom e Cloudflare Pages concluídos com sucesso no SHA da PR. Publicação deve ser comprovada por deployment canônico e HTTP no domínio oficial.",
+  "limitations": [
+    "São direções conceituais, não produtos cadastrados nem promessa de disponibilidade de fornecedor.",
+    "Artes, materiais, mockups, variantes, fornecedores, preços, frete, checkout e fulfillment exigem etapa posterior.",
+    "Filtrar por signo seleciona propostas zodiacais; não comprova que uma arte específica já exista."
+  ],
+  "rollback": "Reverter somente o commit desta interface via nova PR e repetir os gates; nenhum dado comercial ou arte foi alterado."
+}
