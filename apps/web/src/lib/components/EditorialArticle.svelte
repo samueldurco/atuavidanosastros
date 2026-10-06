@@ -87,7 +87,7 @@
 			<nav aria-label="Guias relacionados">
 				<h2>Continue a leitura</h2>
 				<ul>
-					{#each related as guide}<li><a href={guide.path}>{guide.title}</a></li>{/each}
+					{#each related as guide (guide.path)}<li><a href={guide.path}>{guide.title}</a></li>{/each}
 				</ul>
 			</nav>
 		{/if}
