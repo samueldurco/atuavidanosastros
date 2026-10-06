@@ -1,0 +1,328 @@
+{
+  "createdAt": "2026-10-06T12:30:15Z",
+  "scope": "7 páginas de 6 domínios; amostra qualitativa, sem declarar maiores concorrentes nem ranking.",
+  "comparisons": [
+    {
+      "id": "C01",
+      "site": "Personare",
+      "sourceId": "S03",
+      "observed": "Resposta por pilares, navegação temática e CTA para mapa; atualização visível 16/04/2026.",
+      "gapHypothesis": "Diferenciar dado calculado de simbolismo; oferecer roteiro próprio e limites do horário.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 60–110",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Entender Sol/Lua/Ascendente",
+        "depth": {
+          "observation": "Resposta por pilares, navegação temática e CTA para mapa; atualização visível 16/04/2026.",
+          "comparativeMeasurement": null
+        },
+        "authorship": null,
+        "sources": {
+          "observation": null,
+          "auditComplete": false
+        },
+        "update": "16/04/2026",
+        "freeExperience": {
+          "offerObserved": null,
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": "Mapa astral",
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": "Links temáticos/relacionados observados",
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Diferenciar dado calculado de simbolismo; oferecer roteiro próprio e limites do horário.",
+          "verifiedMarketGap": false
+        }
+      }
+    },
+    {
+      "id": "C02",
+      "site": "Personare",
+      "sourceId": "S10",
+      "observed": "MC associado a carreiras por signo e CTA para mapa profissional; atualização 16/04/2026.",
+      "gapHypothesis": "Trocar prescrição de profissão por reflexão verificável sobre atividades, restrições e experimentos.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://www.personare.com.br/conteudo/meio-do-ceu-astrologia-m2247",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 60–109, trechos 120–162",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Relacionar MC e carreira",
+        "depth": {
+          "observation": "MC associado a carreiras por signo e CTA para mapa profissional; atualização 16/04/2026.",
+          "comparativeMeasurement": null
+        },
+        "authorship": null,
+        "sources": {
+          "observation": null,
+          "auditComplete": false
+        },
+        "update": "16/04/2026",
+        "freeExperience": {
+          "offerObserved": null,
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": "Mapa profissional",
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": null,
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Trocar prescrição de profissão por reflexão verificável sobre atividades, restrições e experimentos.",
+          "verifiedMarketGap": false
+        }
+      }
+    },
+    {
+      "id": "C03",
+      "site": "Horóscopo Virtual",
+      "sourceId": "S04",
+      "observed": "Byline de equipe; publicação 13/04/2016 e atualização 17/09/2025; CTA de mapa.",
+      "gapHypothesis": "Explicitar recorte solar, consentimento de outra pessoa e limites sem estereótipos de gênero.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 180–203",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Comparar signos e sinastria",
+        "depth": {
+          "observation": "Byline de equipe; publicação 13/04/2016 e atualização 17/09/2025; CTA de mapa.",
+          "comparativeMeasurement": null
+        },
+        "authorship": "Equipe identificada no trecho lido",
+        "sources": {
+          "observation": null,
+          "auditComplete": false
+        },
+        "update": "17/09/2025",
+        "freeExperience": {
+          "offerObserved": null,
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": "Mapa astral",
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": null,
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Explicitar recorte solar, consentimento de outra pessoa e limites sem estereótipos de gênero.",
+          "verifiedMarketGap": false
+        }
+      }
+    },
+    {
+      "id": "C04",
+      "site": "Astrolink",
+      "sourceId": "S05",
+      "observed": "Especialista identificada e FAQ entre modelos de tarot; CTA de consulta.",
+      "gapHypothesis": "Separar fonte museológica de narrativa esotérica; observar desenho sem copiar cartas.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://www.astrolink.com.br/artigo/diferenca-entre-o-tarot-de-marselha-e-rider-waite",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 21–98",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Comparar modelos de tarot",
+        "depth": {
+          "observation": "Especialista identificada e FAQ entre modelos de tarot; CTA de consulta.",
+          "comparativeMeasurement": null
+        },
+        "authorship": "Especialista identificada no trecho lido",
+        "sources": {
+          "observation": null,
+          "auditComplete": false
+        },
+        "update": null,
+        "freeExperience": {
+          "offerObserved": null,
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": "Consulta",
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": null,
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Separar fonte museológica de narrativa esotérica; observar desenho sem copiar cartas.",
+          "verifiedMarketGap": false
+        }
+      }
+    },
+    {
+      "id": "C05",
+      "site": "João Bidu",
+      "sourceId": "S06",
+      "observed": "Texto didático de arcanos, bio de autora e links relacionados; contexto simbólico explícito.",
+      "gapHypothesis": "Adicionar exemplo próprio da mesma carta em perguntas distintas, sem catálogo rígido de significados.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://controle.joaobidu.com.br/tarot/arcanos-maiores-e-menores-entenda-o-que-as-cartas-do-tarot-diz-para-voce.phtml",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 70–167",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Entender arcanos",
+        "depth": {
+          "observation": "Texto didático de arcanos, bio de autora e links relacionados; contexto simbólico explícito.",
+          "comparativeMeasurement": null
+        },
+        "authorship": "Autora e biografia visíveis no trecho lido",
+        "sources": {
+          "observation": null,
+          "auditComplete": false
+        },
+        "update": null,
+        "freeExperience": {
+          "offerObserved": null,
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": null,
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": "Links temáticos/relacionados observados",
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Adicionar exemplo próprio da mesma carta em perguntas distintas, sem catálogo rígido de significados.",
+          "verifiedMarketGap": false
+        }
+      }
+    },
+    {
+      "id": "C06",
+      "site": "Cafe Astrology",
+      "sourceId": "S07",
+      "observed": "Definição curta, calculadora de Ascendente e links a relatórios; responsável do site identificado.",
+      "gapHypothesis": "Explicar por que o horário é necessário e o que fazer quando não se conhece, sem adivinhar.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://cafeastrology.com/ascendant.html",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 9–32",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Entender e calcular Ascendente",
+        "depth": {
+          "observation": "Definição curta, calculadora de Ascendente e links a relatórios; responsável do site identificado.",
+          "comparativeMeasurement": null
+        },
+        "authorship": "Responsável do site identificado",
+        "sources": {
+          "observation": null,
+          "auditComplete": false
+        },
+        "update": null,
+        "freeExperience": {
+          "offerObserved": "Calculadora de Ascendente e relatórios",
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": "Calculadora de Ascendente e relatórios",
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": "Links temáticos/relacionados observados",
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Explicar por que o horário é necessário e o que fazer quando não se conhece, sem adivinhar.",
+          "verifiedMarketGap": false
+        }
+      }
+    },
+    {
+      "id": "C07",
+      "site": "Sonheiro",
+      "sourceId": "S08",
+      "observed": "Modelo de registro, byline e referências; CTA gratuito para interpretação com números de sorte.",
+      "gapHypothesis": "Modelo privado e sem inferência de aposta; separar lembrança, associação e hipótese; evitar prazo universal de hábito.",
+      "scope": "Página/trechos abertos, não auditoria de todo o domínio.",
+      "ranking": null,
+      "traffic": null,
+      "confidence": "moderada na observação; baixa em demanda de mercado",
+      "url": "https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos",
+      "checkedOn": "2026-10-06",
+      "readScope": "corpo 11–44, 53–106",
+      "selectionReason": "Página encontrada na pesquisa exploratória atual e pertinente à dúvida do piloto.",
+      "dimensions": {
+        "intent": "Registrar sonhos",
+        "depth": {
+          "observation": "Modelo de registro, byline e referências; CTA gratuito para interpretação com números de sorte.",
+          "comparativeMeasurement": null
+        },
+        "authorship": "Byline identificada no trecho lido",
+        "sources": {
+          "observation": "Referências observadas",
+          "auditComplete": false
+        },
+        "update": null,
+        "freeExperience": {
+          "offerObserved": "Interpretação gratuita com números de sorte",
+          "flowTested": false
+        },
+        "commercialCall": {
+          "offerObserved": "Interpretação gratuita com números de sorte",
+          "price": null,
+          "paidStatusVerified": false
+        },
+        "internalLinks": {
+          "observation": null,
+          "crawlComplete": false
+        },
+        "opportunity": {
+          "hypothesis": "Modelo privado e sem inferência de aposta; separar lembrança, associação e hipótese; evitar prazo universal de hábito.",
+          "verifiedMarketGap": false
+        }
+      }
+    }
+  ],
+  "adoptedAt": "2026-10-06T14:16:31.337Z",
+  "inputSha256": "fa68ccfa73a490bd2c269f9e23d3c387ac8b1d26bcd416ae01f4136053130af6",
+  "limitations": [
+    "7 páginas de 6 domínios; profundidade/autoria/fontes/fluxos são limitados aos trechos realmente lidos.",
+    "Campo null representa observação não disponível, não defeito ou ausência no concorrente.",
+    "Oportunidades são hipóteses editoriais, sem promessa de ranking, liderança ou superioridade."
+  ]
+}

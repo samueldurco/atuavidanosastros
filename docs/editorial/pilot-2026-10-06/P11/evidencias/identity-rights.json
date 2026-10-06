@@ -1,0 +1,70 @@
+{
+  "briefId": "P11",
+  "documentId": "guide-meio-ceu-reflexao",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "publisher": {
+    "name": "ATVNA",
+    "role": "publicador responsável pela eventual liberação"
+  },
+  "sourceIds": [
+    "S10",
+    "S07"
+  ],
+  "sources": [
+    {
+      "id": "S07",
+      "url": "https://cafeastrology.com/ascendant.html",
+      "title": "Ascendant — Cafe Astrology",
+      "type": "astrological-tradition",
+      "read": "corpo 9–32",
+      "claims": [
+        "Ascendente é o signo e grau que ascende no horizonte oriental para horário e lugar.",
+        "Integra os quatro ângulos tradicionais do mapa."
+      ],
+      "rights": "Texto protegido. Não traduzir artigo; somente definição atribuída, sem alegações de saúde.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    },
+    {
+      "id": "S10",
+      "url": "https://www.personare.com.br/conteudo/meio-do-ceu-astrologia-m2247",
+      "title": "Meio do Céu no Mapa Astral — Personare",
+      "type": "astrological-tradition",
+      "read": "corpo 60–109, trechos 120–162",
+      "claims": [
+        "O MC tem associação simbólica com projeção pública e carreira na tradição consultada."
+      ],
+      "rights": "Texto protegido; nenhuma tabela de carreiras por signo será copiada. Não equiparar MC à Casa 10 em todos os sistemas.",
+      "checkedOn": "2026-10-06",
+      "opened": true,
+      "access": "HTTP público via web",
+      "usedImages": false,
+      "usedQuotes": false
+    }
+  ],
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "bookExcerptsUsed": false,
+  "thirdPartyImagesUsed": false,
+  "humanReview": false,
+  "personalExperienceClaimed": false,
+  "serviceAuthority": {
+    "status": "PENDING_EXTERNAL_AUTHORIZATION",
+    "authorIsNotAuthority": true
+  },
+  "limitations": [
+    "Acesso público não transfere direitos.",
+    "Paráfrase factual e tradicional atribuída; nenhum texto, imagem ou leitura de terceiros reproduzido.",
+    "Nenhum livro foi usado como corpus publicável."
+  ]
+}

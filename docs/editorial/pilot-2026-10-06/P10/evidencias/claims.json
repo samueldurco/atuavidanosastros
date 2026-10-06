@@ -1,0 +1,37 @@
+{
+  "documentId": "guide-perguntas-tarot",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Leitura simbólica contextualizada nas fontes consultadas.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S06"
+      ]
+    },
+    {
+      "claim": "Modelos de tarot apresentam diferenças visuais.",
+      "type": "deck-comparison",
+      "sources": [
+        "S05"
+      ]
+    },
+    {
+      "claim": "Reformulações, exemplos e exercício de cinco passos.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] a sections[3]; nenhuma carta ou resultado gerado."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "originalContribution": [
+    "sections[1] a sections[3]; nenhuma carta ou resultado gerado."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "c32cd19e491afbc0cc96c5e7b66edca59eb0d42680af6f2b7b2e48e1ba734743"
+}

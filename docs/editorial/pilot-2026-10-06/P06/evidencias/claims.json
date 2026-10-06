@@ -1,0 +1,37 @@
+{
+  "documentId": "guide-fases-lua",
+  "revision": 2,
+  "claims": [
+    {
+      "claim": "Lua reflete luz solar; fases dependem da geometria Sol–Terra–Lua.",
+      "type": "astronomy-fact",
+      "sources": [
+        "S01"
+      ]
+    },
+    {
+      "claim": "Diário, desenho próprio e perguntas de observação.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] a sections[4]; não anuncia dados calculados."
+    },
+    {
+      "claim": "Associações pessoais são escolhas do exercício original, opcionais e sem atribuição a uma tradição documentada ou a efeitos da fase.",
+      "type": "scope-limitation",
+      "sources": [],
+      "evidence": "sections[0] e sections[3]."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; nenhuma tradução ou reprodução de artigo.",
+    "images": "Nenhuma imagem usada.",
+    "quotes": "Nenhuma citação literal."
+  },
+  "originalContribution": [
+    "sections[1] a sections[4]; não anuncia dados calculados."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "a32e325eb6c6c20150b7f4cd7fd6888fccc0077aa9fe920d74b936fb40bbda73"
+}

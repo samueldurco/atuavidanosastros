@@ -24,6 +24,12 @@
 		<h1 class="h1">{document.title}</h1>
 		<p class="lead">{document.description}</p>
 		<p>Por <a href={`/pessoas/${document.author.id}`}>{document.author.name}</a></p>
+		{#if document.automationDisclosure}
+			<p>
+				Produzido com auxílio de inteligência artificial e avaliado em uma passagem automatizada
+				separada. Sem revisão humana independente.
+			</p>
+		{/if}
 		<p>
 			Publicado em <time datetime={document.publishedAt}>{date(document.publishedAt)}</time> (horário
 			de Brasília).

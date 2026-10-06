@@ -1,0 +1,72 @@
+{
+  "id": "guide-fases-lua",
+  "revision": 3,
+  "state": "DRAFT",
+  "path": "/noticias/2026/10/fases-da-lua",
+  "kind": "guide",
+  "title": "Fases da Lua: o que muda e como observar",
+  "description": "Veja por que a Lua muda de aparência e use um diário de observação que separa fatos astronômicos de associações pessoais.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "Por que vemos fases",
+      "paragraphs": [
+        "A Lua reflete a luz do Sol. As fases correspondem às diferentes partes da região iluminada que vemos conforme muda a geometria entre Sol, Terra e Lua. A explicação da UFSCar descreve esse processo e o ciclo das fases.",
+        "Nova, crescente, cheia e minguante são referências conhecidas para acompanhar esse ciclo. Uma fotografia mostra a aparência observada em determinadas condições; não é, sozinha, um calendário para outro local ou data.",
+        "Neste roteiro, palavras como 'começo', 'expansão' e 'encerramento' são escolhas opcionais do exercício para organizar uma reflexão. Não são efeitos pessoais demonstrados pela iluminação da Lua nem uma tradição que este guia documenta."
+      ]
+    },
+    {
+      "heading": "Uma observação, duas anotações diferentes",
+      "paragraphs": [
+        "Em um diário, reserve um campo para o que viu e outro para o que associou à observação. No primeiro, descreva a aparência e as condições do céu. No segundo, anote uma ideia ou intenção pessoal, identificando-a como sua interpretação.",
+        "Exemplo criado para o guia: 'vi parte do disco iluminado entre nuvens'; 'essa imagem me lembrou uma tarefa que estou começando'. A primeira frase descreve uma observação. A segunda conta uma associação, sem transformá-la em regra da natureza.",
+        "Se não conseguiu observar a Lua, escreva isso. Não preencha o diário com uma fase inventada. Você pode consultar uma fonte astronômica para outra finalidade, mas deve distinguir o que observou do que leu."
+      ]
+    },
+    {
+      "heading": "Monte um diário simples",
+      "paragraphs": [
+        "Use os campos: data e horário da observação; local descrito de forma geral; condições do céu; aparência percebida; fonte consultada, se houver; associação pessoal opcional. Não publique seu endereço para tornar a anotação útil.",
+        "Faça um pequeno desenho próprio da aparência que viu. Ele funciona como registro da observação, sem precisar reproduzir fotografias de terceiros. Identifique o desenho como seu registro, não como ilustração técnica de uma fase calculada.",
+        "Compare anotações de dias diferentes. Procure mudanças na aparência descrita e também mudanças nas condições de observação. Um céu encoberto, por exemplo, limita o que você pode registrar visualmente.",
+        "Se usar um calendário externo, anote a data e a origem da consulta. Este guia não oferece fases calculadas para hoje nem transforma o diário em previsão."
+      ]
+    },
+    {
+      "heading": "Como usar a camada simbólica",
+      "paragraphs": [
+        "Escolha um tema cotidiano e uma pergunta. Para uma tarefa em andamento, você pode perguntar 'o que já comecei?' ou 'o que preciso revisar?'. A pergunta é uma sugestão de reflexão criada para este roteiro, válida mesmo sem observar a Lua.",
+        "Defina uma ação pequena que dependa de você, como revisar uma lista ou reservar tempo para um projeto. Verifique seu resultado pelos fatos da tarefa, sem atribuí-lo à fase.",
+        "Evite converter associações em afirmações sobre saúde, fertilidade, dinheiro ou destino. Este diário não permite concluir o que acontecerá com uma pessoa nem substituir orientação específica para uma situação sensível.",
+        "A camada simbólica é opcional. Você pode manter apenas o registro de observação e ainda assim terminar com uma atividade completa."
+      ]
+    },
+    {
+      "heading": "Perguntas para conferir o diário",
+      "paragraphs": [
+        "Eu registrei algo visto ou algo lido? Identificar a origem torna a anotação mais clara.",
+        "Minha frase descreve a aparência da Lua ou prevê um acontecimento? Se prevê, ela vai além do objetivo deste guia.",
+        "Preciso preencher todos os dias? Não há frequência obrigatória neste roteiro. Prefira uma anotação honesta a uma sequência preenchida com dados que você não observou."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Lua — FisArte/UFSCar",
+      "url": "https://www.fisarte.ufscar.br/pt-br/conceitos/lua"
+    }
+  ]
+}

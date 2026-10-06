@@ -1,0 +1,38 @@
+{
+  "documentId": "guide-sinastria-consentimento",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Sinastria como comparação de mapas.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S04"
+      ]
+    },
+    {
+      "claim": "Horário integra a definição do Ascendente.",
+      "type": "technical-definition-in-astrological-tradition",
+      "sources": [
+        "S07"
+      ]
+    },
+    {
+      "claim": "Checklist, consentimento e roteiro sem dados.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] a sections[4]; recomendações editoriais, sem parecer jurídico."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; nenhuma tradução ou reprodução de artigo.",
+    "images": "Nenhuma imagem usada.",
+    "quotes": "Nenhuma citação literal."
+  },
+  "originalContribution": [
+    "sections[1] a sections[4]; recomendações editoriais, sem parecer jurídico."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "4f982d7e0af982bcc2cf989fc71da8a33fb5d9d5be4cbdab316837b0e31c487c"
+}

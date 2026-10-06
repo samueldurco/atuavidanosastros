@@ -1,0 +1,37 @@
+{
+  "documentId": "guide-mercurio-retrogrado",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "Movimento retrógrado aparente e perspectiva relacionada ao movimento relativo dos planetas.",
+      "type": "astronomy-fact",
+      "sources": [
+        "S02"
+      ]
+    },
+    {
+      "claim": "Analogias e roteiro de revisão de comunicação.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] e sections[3]; analogia marcada como não calculadora."
+    },
+    {
+      "claim": "Nenhum período atual ou efeito causal sobre acontecimentos humanos é afirmado.",
+      "type": "scope-limitation",
+      "sources": [],
+      "evidence": "sections[0], sections[2] e sections[4]."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; nenhuma tradução ou reprodução de artigo.",
+    "images": "Nenhuma imagem usada.",
+    "quotes": "Nenhuma citação literal."
+  },
+  "originalContribution": [
+    "sections[1] e sections[3]; analogia marcada como não calculadora."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "c71131a0c154853a7b96353a4cfc364d7ffb1c639e6102a6b0757c781f725bc1"
+}

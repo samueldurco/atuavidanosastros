@@ -4,6 +4,7 @@ import {
 	type EditorialApproval,
 	type EditorialAuthority
 } from './editorial';
+import type { AutomatedRegistry } from './editorial-automation';
 
 // No approved public author, content, or independent signing authority has been supplied.
 // Do not import fixtures, accept HTTP approvals, or install a signing key in this app.
@@ -12,7 +13,9 @@ import {
 const documents: readonly EditorialDocument[] = [];
 const approvals: readonly EditorialApproval[] = [];
 const authorities: Readonly<Record<string, EditorialAuthority>> = {};
+// Prepared guides are private. No service identity, package or admission is provisioned.
+const automated: AutomatedRegistry = { packages: [], authorities: {} };
 
 export function publishedEditorial(now = new Date()): Promise<EditorialDocument[]> {
-	return approvedDocuments(documents, approvals, authorities, now);
+	return approvedDocuments(documents, approvals, authorities, now, automated);
 }

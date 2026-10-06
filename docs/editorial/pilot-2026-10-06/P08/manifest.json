@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-sinastria-consentimento",
+  "revision": 2,
+  "documentDigest": "b7b4639233d7e3e16ceb5b3276014b1e1ab379db81310c5b1df20a1939e33c74",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "0ffb420fdebe9a0a329f3869f313772257f49bfebb851c4d43fa897772ded93a"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "3318e20315633c7565d3dea6b8dc763213407e2d728f1da7ad38a8b89438f88e"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "0dbdf0f5ea7e931f1ce33d496d9294a590da2130477dd4bdf7b06c93c4ec5824"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "37d0944fef739139db972baf4f0f9d1a8e515eb1bdf9f062da78e89f1a92e1f8"
+    }
+  ]
+}

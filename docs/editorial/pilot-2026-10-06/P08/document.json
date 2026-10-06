@@ -1,0 +1,77 @@
+{
+  "id": "guide-sinastria-consentimento",
+  "revision": 2,
+  "state": "DRAFT",
+  "path": "/noticias/2026/10/sinastria-dados-e-consentimento",
+  "kind": "guide",
+  "title": "Sinastria: dados, consentimento e limites da leitura",
+  "description": "Organize o uso de dados em uma leitura de sinastria com consentimento, finalidade clara e um checklist que não exige compartilhar documentos.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "A leitura começa por um acordo",
+      "paragraphs": [
+        "Sinastria, na tradição descrita pelo Horóscopo Virtual, compara mapas. Quando essa atividade envolve informações de duas pessoas, vale combinar previamente qual leitura será feita e como os dados serão usados.",
+        "Este guia propõe uma prática de cuidado e clareza. Não é uma análise jurídica de proteção de dados nem uma autorização para compartilhar informações de alguém. Também não interpreta mapas ou sentimentos de terceiros.",
+        "Uma leitura simbólica pode ser opcional para cada participante. A pessoa pode querer conversar sobre o tema sem enviar dados, ou pode preferir não participar."
+      ]
+    },
+    {
+      "heading": "Separe finalidade e curiosidade",
+      "paragraphs": [
+        "Antes de pedir qualquer dado, explique a finalidade: estudar um conceito, experimentar um serviço ou conversar sobre uma leitura. Diga qual serviço seria usado e quem teria acesso ao resultado.",
+        "Pergunte se a pessoa quer participar dessa atividade específica. Não substitua essa resposta pela ideia de que vocês se conhecem bem ou de que as informações já circularam numa conversa anterior.",
+        "Evite pedir imagens de documentos quando você só precisa compreender o vocabulário de uma leitura. Também não inclua dados de nascimento em comentários públicos para obter interpretações de desconhecidos.",
+        "Se quiser guardar uma anotação, combine o que será registrado e quando poderá ser apagado. Essa conversa não garante a segurança de um serviço; ela apenas torna o acordo entre vocês mais claro."
+      ]
+    },
+    {
+      "heading": "Checklist antes de preencher um serviço",
+      "paragraphs": [
+        "Confira a entrega anunciada e os campos solicitados. Uma comparação solar tem um recorte diferente de uma comparação de mapas, e o serviço deve explicar o que realmente oferece.",
+        "Leia as informações disponíveis sobre uso, armazenamento e compartilhamento dos dados. Se não conseguir entender o destino da informação, registre a dúvida e evite preencher apenas para chegar rapidamente ao resultado.",
+        "Confira se há uma forma de interromper a atividade e se ambos querem receber ou compartilhar a leitura. Não transforme uma interpretação em publicação sobre a outra pessoa sem combinar isso.",
+        "Para referências que dependem do horário, como o Ascendente definido por Cafe Astrology, não preencha uma lembrança aproximada como se fosse exata. Mantenha a incerteza visível."
+      ]
+    },
+    {
+      "heading": "Um roteiro sem dados de nascimento",
+      "paragraphs": [
+        "Vocês podem começar por três perguntas: qual tema queremos conversar? O que cada pessoa aceita compartilhar? O que ficará fora da atividade? Anotem o acordo em linguagem simples.",
+        "Exemplo hipotético: duas pessoas decidem conversar sobre organização de encontros. Elas compartilham preferências de horário e antecedência, mas não enviam documentos nem dados de nascimento. Ao final, escolhem um acordo para o próximo encontro.",
+        "Esse exercício já entrega uma conversa concreta. Ele não é uma sinastria calculada, e não deve ser anunciado como tal. O resultado é o acordo expresso pelas pessoas.",
+        "Se depois escolherem experimentar uma leitura, retomem as três perguntas com o serviço específico. Um acordo para conversar não autoriza automaticamente um novo compartilhamento."
+      ]
+    },
+    {
+      "heading": "Quando interromper a atividade",
+      "paragraphs": [
+        "Interrompa o preenchimento se houver dúvida sobre o que será entregue ou se uma pessoa deixar de querer participar. Não é necessário obter um resultado a qualquer custo.",
+        "Se a leitura apresentar certezas sobre fidelidade, destino ou intenções ocultas, isso ultrapassa o uso educativo proposto aqui. Não use essas afirmações como prova contra alguém.",
+        "Ao terminar, mantenha apenas o registro que foi combinado. O cuidado central é simples: cada participante sabe a finalidade e pode decidir sobre sua participação, sem pressão por uma leitura ou compra."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Combinação dos signos e sinastria — Horóscopo Virtual",
+      "url": "https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria"
+    },
+    {
+      "title": "Ascendant — Cafe Astrology",
+      "url": "https://cafeastrology.com/ascendant.html"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "id": "guide-sol-lua-ascendente",
+  "revision": 2,
+  "state": "DRAFT",
+  "path": "/noticias/2026/10/sol-lua-ascendente",
+  "kind": "guide",
+  "title": "Sol, Lua e Ascendente: três leituras diferentes",
+  "description": "Compare Sol, Lua e Ascendente na linguagem astrológica e faça uma leitura em três perguntas, sem transformar símbolos em destino.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "Três referências, três perguntas",
+      "paragraphs": [
+        "Na tradição astrológica apresentada por Personare, o Sol, a Lua e o Ascendente recebem papéis simbólicos diferentes. O Sol costuma ser associado à identidade; a Lua, ao campo emocional; o Ascendente, à forma de se apresentar. Essa divisão é uma linguagem interpretativa, não uma explicação científica da personalidade.",
+        "Uma maneira cuidadosa de começar é transformar os símbolos em perguntas: como descrevo meus interesses? O que percebo quando algo me afeta? Como me apresento em um ambiente novo? As respostas vêm da sua observação. Os símbolos apenas organizam a reflexão.",
+        "A definição técnica do Ascendente depende de horário e lugar, conforme Cafe Astrology. Já atribuir um comportamento a essa referência é outro passo. Um cálculo correto não torna uma interpretação de comportamento automaticamente verdadeira."
+      ]
+    },
+    {
+      "heading": "O que a comparação evita",
+      "paragraphs": [
+        "Quando uma leitura usa apenas o signo solar para resumir tudo, deixa de lado outras referências da própria astrologia. Ampliar a leitura pode tornar o vocabulário mais variado, mas não dá licença para concluir que três descrições explicam uma pessoa inteira.",
+        "Também não existe necessidade de resolver toda diferença como conflito interno. Uma descrição sobre apresentação pode divergir de uma reflexão sobre emoções porque aborda outra pergunta. Se o texto não ajuda a reconhecer situações concretas, você pode deixá-lo de lado.",
+        "Não use combinações para declarar que alguém é frio, instável ou incapaz de se relacionar. São rótulos sobre pessoas reais, não conclusões demonstradas pela comparação de símbolos."
+      ]
+    },
+    {
+      "heading": "Um exemplo com contexto",
+      "paragraphs": [
+        "Considere uma personagem fictícia que gosta de organizar projetos, fica apreensiva quando uma conversa muda de rumo e leva tempo para se apresentar em grupos novos. Essas três observações já podem existir sem qualquer mapa.",
+        "Na leitura simbólica, ela poderia colocar cada observação ao lado de uma pergunta ligada a Sol, Lua ou Ascendente. Isso serve como organização do diário; não demonstra que cada observação foi causada por um astro.",
+        "A etapa mais útil é acrescentar contexto: organizar projetos no trabalho difere de planejar um encontro; apreensão pode variar conforme a importância da conversa; apresentar-se muda entre amigos e desconhecidos. Esse detalhe evita frases universais que parecem explicar tudo."
+      ]
+    },
+    {
+      "heading": "Faça sua ficha de três perguntas",
+      "paragraphs": [
+        "Divida uma página em identidade, emoções percebidas e apresentação. Em cada campo, anote uma situação recente, uma resposta que você observou e uma dúvida. Evite preencher com adjetivos soltos como 'intenso' ou 'forte'.",
+        "Em identidade, registre algo que você decidiu aprender ou fazer. Em emoções, descreva o que percebeu em uma situação, sem tentar diagnosticar sua origem. Em apresentação, anote como iniciou uma conversa e se isso mudou com o ambiente.",
+        "Depois, leia uma interpretação astrológica e destaque apenas as frases que ajudam a formular perguntas mais específicas. Escreva 'a fonte associa' em vez de 'o mapa provou'. Preserve exemplos que não encaixam na descrição.",
+        "Conclua com uma pergunta para observar durante a semana, como 'em quais ambientes peço mais tempo antes de responder?'. Não é preciso alterar uma decisão importante para completar o exercício."
+      ]
+    },
+    {
+      "heading": "Como conferir uma leitura",
+      "paragraphs": [
+        "Uma leitura cuidadosa identifica a fonte, explica quais dados foram usados e separa referências do mapa de suas interpretações. Desconfie de textos que prometem descobrir toda a personalidade ou um destino inevitável a partir de poucas informações.",
+        "Não sei meu horário: posso preencher os três campos? Você pode fazer o exercício de observação, mas este guia não atribui um Ascendente nem fabrica precisão. A incerteza do dado deve acompanhar qualquer uso futuro.",
+        "Preciso gostar das três descrições? Não. Uma linguagem simbólica pode ser interessante sem servir como retrato pessoal. Você conserva a liberdade de discordar e de decidir quanto espaço deseja dar à leitura."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
+    },
+    {
+      "title": "Ascendant — Cafe Astrology",
+      "url": "https://cafeastrology.com/ascendant.html"
+    }
+  ]
+}

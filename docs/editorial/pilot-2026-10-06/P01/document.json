@@ -1,0 +1,75 @@
+{
+  "id": "guide-ascendente",
+  "revision": 2,
+  "state": "DRAFT",
+  "path": "/ascendente",
+  "kind": "guide",
+  "title": "Ascendente: o que é e por que o horário importa",
+  "description": "Entenda o Ascendente na tradição astrológica, confira horário e local de nascimento e use um roteiro para ler interpretações com limites.",
+  "author": {
+    "id": "atvna-redacao-automatizada",
+    "type": "Organization",
+    "name": "ATVNA — produção editorial automatizada",
+    "bio": "Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente."
+  },
+  "automationDisclosure": {
+    "generatedWithAI": true,
+    "humanReview": false,
+    "reviewMode": "separate-pass"
+  },
+  "publishedAt": null,
+  "modifiedAt": "2026-10-06T14:42:36.397Z",
+  "sections": [
+    {
+      "heading": "O que o termo significa",
+      "paragraphs": [
+        "Na astrologia, o Ascendente identifica o signo e o grau que estão surgindo no horizonte leste para um horário e um lugar. É uma referência do mapa; não é outro nome para o signo solar. Cafe Astrology descreve essa definição, enquanto Personare apresenta o papel simbólico atribuído ao Ascendente na leitura da personalidade.",
+        "Essas são duas perguntas diferentes: onde fica uma referência no mapa e que significado uma tradição dá a ela. A interpretação de identidade ou comportamento pertence à astrologia. Ela não comprova que o céu determine como uma pessoa deve agir.",
+        "Você pode entender essa distinção antes de calcular qualquer coisa: um dado de entrada permite localizar uma referência; uma interpretação propõe uma leitura simbólica. Misturar as duas etapas cria uma certeza que o cálculo, por si, não oferece."
+      ]
+    },
+    {
+      "heading": "Um checklist para os dados de nascimento",
+      "paragraphs": [
+        "Reúna a data, a cidade e o horário de nascimento, indicando de onde veio cada informação. Anote se o horário consta em um registro ou se é uma lembrança aproximada. Para a cidade, evite substituir o lugar de nascimento pelo lugar onde você mora hoje.",
+        "Use uma ficha simples: dado informado; origem; nível de certeza; dúvida que ainda precisa ser conferida. Um horário lembrado por um familiar pode ser útil para começar a pesquisa, mas não deve aparecer no formulário como precisão documental.",
+        "Se houver duas versões do horário, preserve as duas e procure o registro original. Não escolha a que produz uma descrição de personalidade mais agradável. Essa escolha confirmaria uma preferência do leitor, sem resolver a dúvida sobre o nascimento.",
+        "Este guia não calcula o Ascendente nem escolhe um signo quando os dados são incertos. Também não promete reconstruir um horário desconhecido a partir de traços pessoais."
+      ]
+    },
+    {
+      "heading": "Como ler uma descrição sem virar um rótulo",
+      "paragraphs": [
+        "Depois de obter um resultado por um cálculo validado, leia uma frase por vez. Pergunte: isso é uma definição técnica, uma associação da tradição ou uma afirmação sobre mim? A diferença ajuda a avaliar o que o texto realmente sustenta.",
+        "Em um exemplo hipotético, uma descrição associa determinado Ascendente a iniciativa. Em vez de concluir 'sou assim em qualquer situação', compare contextos: iniciar uma conversa, conduzir um projeto ou chegar a um ambiente desconhecido. O objetivo é formular perguntas, não provar a descrição.",
+        "Registre também situações que não combinam com o texto. Uma interpretação que só admite confirmações deixa pouco espaço para a sua experiência real. Pessoas mudam de postura conforme ambiente, história e escolhas; um parágrafo astrológico não substitui a observação desse contexto."
+      ]
+    },
+    {
+      "heading": "Exercício: três colunas para uma leitura cuidadosa",
+      "paragraphs": [
+        "Escolha uma frase curta de uma interpretação e divida a anotação em três colunas: o que a fonte diz; uma situação concreta que você lembra; o que permanece incerto. Mantenha a frase atribuída à fonte, sem apresentá-la como diagnóstico.",
+        "Exemplo criado para este roteiro: 'a leitura menciona disposição para começar'; 'na reunião de ontem, propus a primeira tarefa'; 'não sei se isso se repete em outros ambientes'. Acrescente uma situação em que você preferiu esperar. O contraste torna a reflexão mais específica.",
+        "Finalize com uma ação cotidiana pequena, como preparar uma pergunta antes de uma reunião. Escolha a ação por sua utilidade prática, sem depender de uma previsão. Você pode fazer o exercício sem informar dados de nascimento a terceiros."
+      ]
+    },
+    {
+      "heading": "Dúvidas frequentes",
+      "paragraphs": [
+        "Ascendente e signo solar são a mesma coisa? Não na estrutura astrológica consultada: são referências diferentes. O guia sobre Sol, Lua e Ascendente aprofunda essa comparação quando estiver publicado.",
+        "Um horário aproximado pode ser tratado como exato? Não. Declare a aproximação e confira sua origem antes de apresentar um resultado como preciso.",
+        "Um texto de Ascendente define meu futuro? Este guia trata a leitura como interpretação simbólica. Não usa o resultado para prever destino, saúde ou decisões de relacionamento."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
+      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
+    },
+    {
+      "title": "Ascendant — Cafe Astrology",
+      "url": "https://cafeastrology.com/ascendant.html"
+    }
+  ]
+}

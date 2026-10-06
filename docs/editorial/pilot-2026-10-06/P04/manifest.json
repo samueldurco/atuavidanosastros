@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-horario-nascimento",
+  "revision": 2,
+  "documentDigest": "7ee391e4e5cc4c7c176704da0d77379ec04fac5169e3e124db6d9b5b836263ad",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "a28f2fa10f67fab2c1c0de3c4b955d3a68bcd656bd2e1b97da6ea4f097b312cf"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "eb0cead42960f377b04da1a15748af4637a08a453b31762a5bbdd2bd0bb69af0"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "b23fde7527ef68f525e9af99309819b0b05dce07da32ebe61a1c2256ac244dde"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "46cf41768fa0ddc8a90a361b9720015e6cde85f701f1f47e9f2f64a32f6d3c54"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "atv-editorial-evidence-manifest-v1",
+  "documentId": "guide-diario-sonhos",
+  "revision": 2,
+  "documentDigest": "4976b895ce7e13635483a20e34792c84d8416a594c13565b5a925f27e8a3d596",
+  "files": [
+    {
+      "path": "document.json",
+      "sha256": "38eb9c959415aca0c2bffc6d1dd2f02fce16372657752e77c8a30f520007f193"
+    },
+    {
+      "path": "evidencias/sources-rights.json",
+      "sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
+    },
+    {
+      "path": "evidencias/journeys.json",
+      "sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
+    },
+    {
+      "path": "evidencias/originality.json",
+      "sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
+    },
+    {
+      "path": "evidencias/competition.json",
+      "sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
+    },
+    {
+      "path": "evidencias/briefs.json",
+      "sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
+    },
+    {
+      "path": "evidencias/claims.json",
+      "sha256": "f44a174dadcca957aa73bf3e2954c0b1b092c936028c89e043826e47c30bd638"
+    },
+    {
+      "path": "evidencias/identity-rights.json",
+      "sha256": "55453ee6c0dec6f6aed88a22a72f403057948d056919ee3a3b3b66d595d8d3b0"
+    },
+    {
+      "path": "evidencias/maintenance.json",
+      "sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
+    },
+    {
+      "path": "evidencias/review-pass.json",
+      "sha256": "a3cc88afebb2bf884e6f219e1cdd57317b72e0f4cbc62b33613b0b87e0ae9e7c"
+    }
+  ]
+}

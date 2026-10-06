@@ -1,0 +1,32 @@
+{
+  "documentId": "guide-meio-ceu-reflexao",
+  "revision": 1,
+  "claims": [
+    {
+      "claim": "MC é um ângulo tradicional; associação simbólica com projeção pública e carreira.",
+      "type": "tradition-interpretation",
+      "sources": [
+        "S07",
+        "S10"
+      ],
+      "limitation": "Não universaliza MC como cúspide da casa 10 nem prediz profissão."
+    },
+    {
+      "claim": "Inventário de atividades e experimento de baixo impacto.",
+      "type": "original-editorial-exercise",
+      "sources": [],
+      "evidence": "sections[1] a sections[4]; exemplo fictício, sem renda ou decisão de carreira prescrita."
+    }
+  ],
+  "sourceEvidence": "../../05-fontes-direitos.json",
+  "rights": {
+    "text": "Redação original nesta sessão; sem tradução, excerto ou citação literal.",
+    "images": "Nenhuma imagem usada."
+  },
+  "originalContribution": [
+    "sections[1] a sections[4]; exemplo fictício, sem renda ou decisão de carreira prescrita."
+  ],
+  "ctaEvidence": "../../01-probes-api-http.json",
+  "adoptedAt": "2026-10-06T14:25:10.670Z",
+  "inputSha256": "9beb0d89e24ab0ee6bff795bc2ae032bdef559f6d89201c6afa892c39cdd72ee"
+}
