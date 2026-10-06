@@ -124,16 +124,18 @@
 <section class="section editorial-entry">
 	<div class="container entry-grid">
 		<div>
-			<p class="eyebrow">Artigos de astrologia</p>
-			<h2 class="h2">Entenda seu mapa astral.</h2>
+			<p class="eyebrow">Artigos e guias</p>
+			<h2 class="h2">Escolha um assunto para explorar.</h2>
 			<p class="lead">
-				Conheça os temas dos nossos guias sobre signos, casas, planetas e relacionamentos.
+				Leia os guias sobre mapa astral, ciclos, relacionamentos, Tarot, carreira e sonhos.
 			</p>
 			<a href="/caderno">Conhecer os artigos →</a>
 		</div>
 		<div class="editorial-links">
-			<a href="/meio-do-ceu"><span>Carreira no mapa</span><strong>O que é o Meio do Céu</strong></a
-			><a href="/metodo"><span>Como lemos</span><strong>Como fazemos as leituras</strong></a>
+			<a href="/ascendente"><span>Mapa astral</span><strong>Entenda seu ascendente</strong></a><a
+				href="/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira"
+				><span>Carreira e propósito</span><strong>Meio do Céu e reflexão de carreira</strong></a
+			>
 		</div>
 	</div>
 </section>
