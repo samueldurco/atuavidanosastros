@@ -18,7 +18,7 @@
 			{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
 		</ul>
 		{#if data.trialAccess}
-			<div class="card status">
+			<div class="card trial-status">
 				<h2>Teste gratuito disponível</h2>
 				<p>Seu acesso está ativo. Gere a leitura, salve o resultado e registre sua avaliação.</p>
 				<Button href={`/testar-produtos/${data.product.id}`}
@@ -53,12 +53,24 @@
 	h2 {
 		margin-top: 2rem;
 	}
-	.status {
+	.status,
+	.trial-status {
 		padding: 1.5rem;
 		margin-block: 2rem;
 	}
-	.status h2 {
+	.status h2,
+	.trial-status h2 {
 		margin-top: 0;
+	}
+	.trial-status {
+		display: grid;
+		gap: 1rem;
+	}
+	.trial-status p {
+		margin: 0;
+	}
+	.trial-status :global(.button) {
+		justify-self: start;
 	}
 	.back {
 		margin-top: 2rem;
