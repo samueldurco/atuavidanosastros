@@ -1,8 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
+import { loginHref } from '$lib/auth-return';
 import { workflows } from '@atv/domain';
 import { trialIdentity } from '$lib/server/private-trials';
 import type { PageServerLoad } from './$types';
-export const load: PageServerLoad = async ({ locals, params }) => {
+export const load: PageServerLoad = async ({ locals, params, parent }) => {
+	if (!(await parent()).user) redirect(303, loginHref(`/testar-produtos/${params.productId}`));
 	const identity = (await trialIdentity(locals))!;
 	const product = workflows.find((p) => p.id === params.productId);
 	if (!product) error(404, 'Produto não encontrado.');

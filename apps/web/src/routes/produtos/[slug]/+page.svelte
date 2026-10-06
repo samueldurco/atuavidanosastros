@@ -17,7 +17,15 @@
 		<ul>
 			{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
 		</ul>
-		{#if data.product.state === 'ACTIVE' && data.product.personalized}
+		{#if data.trialAccess}
+			<div class="card status">
+				<h2>Teste gratuito disponível</h2>
+				<p>Seu acesso está ativo. Gere a leitura, salve o resultado e registre sua avaliação.</p>
+				<Button href={`/testar-produtos/${data.product.id}`}
+					>Testar {data.product.name} grátis</Button
+				>
+			</div>
+		{:else if data.product.state === 'ACTIVE' && data.product.personalized}
 			<Button href={`/biblioteca/nova/${data.product.id}`}>{data.product.action}</Button>
 		{:else}
 			<div class="card status" role="status">
@@ -28,6 +36,9 @@
 						: 'Esta leitura ainda não está disponível. O conteúdo, o preço e os formatos finais serão apresentados quando ela for liberada.'}
 				</p>
 			</div>
+		{/if}
+		{#if !data.trialAccess}
+			<p><a href="/testar-produtos">Acessar testes gratuitos com minha conta</a></p>
 		{/if}
 		{#if data.product.id === 'career-compass'}
 			<Button href="/bussola-de-carreira">Calcular meu Meio do Céu grátis</Button>

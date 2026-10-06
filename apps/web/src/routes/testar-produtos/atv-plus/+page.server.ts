@@ -1,8 +1,10 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
+import { loginHref } from '$lib/auth-return';
 import { productCatalog } from '@atv/domain';
 import { trialIdentity } from '$lib/server/private-trials';
 import type { PageServerLoad } from './$types';
-export const load: PageServerLoad = async ({ locals }) => {
+export const load: PageServerLoad = async ({ locals, parent }) => {
+	if (!(await parent()).user) redirect(303, loginHref('/testar-produtos/atv-plus'));
 	const identity = (await trialIdentity(locals))!;
 	const [readings, feedback] = await Promise.all([
 		identity.supabase
