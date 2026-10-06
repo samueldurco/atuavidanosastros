@@ -3,7 +3,7 @@ import { trialWriter } from '$lib/server/private-trials';
 
 // Deployment probe: no account, key, record or provider error is exposed.
 export async function GET() {
-	let available = false;
+	let available: boolean;
 	try {
 		const result = await trialWriter()
 			.from('atv_trial_grants')
