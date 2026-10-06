@@ -13,7 +13,7 @@ onlyBuiltDependencies:
 # Security fixes for transitives pinned by the current upstream packages.
 overrides:
   '@sveltejs/kit>cookie': 0.7.2
-  'miniflare>sharp': 0.35.4
+  'miniflare>sharp': 0.35.5
   'miniflare>undici': 7.29.1
   source-map-js: 1.2.2
   postcss-selector-parser: 7.1.6
