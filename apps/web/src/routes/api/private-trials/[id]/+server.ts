@@ -25,19 +25,17 @@ export const POST: RequestHandler = async (event) => {
 			v.toString(16).padStart(2, '0')
 		).join('');
 		const expiresAt = new Date(Date.now() + 7 * 86400000).toISOString();
-		const result = await identity.supabase
-			.from('atv_trial_shares')
-			.upsert(
-				{
-					owner_id: identity.ownerId,
-					reading_id: saved.id,
-					token_hash: await shareTokenHash(token),
-					expires_at: expiresAt,
-					revoked_at: null,
-					created_at: new Date().toISOString()
-				},
-				{ onConflict: 'owner_id,reading_id' }
-			);
+		const result = await identity.supabase.from('atv_trial_shares').upsert(
+			{
+				owner_id: identity.ownerId,
+				reading_id: saved.id,
+				token_hash: await shareTokenHash(token),
+				expires_at: expiresAt,
+				revoked_at: null,
+				created_at: new Date().toISOString()
+			},
+			{ onConflict: 'owner_id,reading_id' }
+		);
 		if (result.error) error(503, 'Não foi possível criar o link.');
 		return json(
 			{ url: `${event.url.origin}/compartilhar/leitura/${token}`, expiresAt },
