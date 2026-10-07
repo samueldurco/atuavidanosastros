@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { render } from 'svelte/server';
@@ -23,6 +23,30 @@ const codes = readdirSync(root)
 	.sort();
 
 describe('externally signed finite editorial release', () => {
+	it('hashes shared evidence once per read and rechecks all signatures on every read', async () => {
+		const release = json<{ evidenceByDigest: Record<string, string>; packages: unknown[] }>(
+			resolve('src/lib/server/editorial-release/registry.json')
+		);
+		const largestEvidence = Math.max(
+			...Object.values(release.evidenceByDigest).map(
+				(value) => new TextEncoder().encode(value).length
+			)
+		);
+		const hashes = vi.spyOn(crypto.subtle, 'digest');
+		const signatures = vi.spyOn(crypto.subtle, 'verify');
+		try {
+			for (let read = 1; read <= 2; read++) {
+				expect(await publishedEditorial()).toHaveLength(release.packages.length);
+				expect(
+					hashes.mock.calls.filter(([, value]) => value.byteLength === largestEvidence)
+				).toHaveLength(read);
+				expect(signatures).toHaveBeenCalledTimes(read * release.packages.length);
+			}
+		} finally {
+			hashes.mockRestore();
+			signatures.mockRestore();
+		}
+	});
 	it('exposes only the exact currently admitted paths in the runtime registry', async () => {
 		const release = json<{ packages: { document: EditorialDocument }[] }>(
 			resolve('src/lib/server/editorial-release/registry.json')

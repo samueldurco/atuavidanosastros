@@ -178,6 +178,19 @@ describe('automated public guide integration', () => {
 		registry.authorities['synthetic-service-key'].revokedAt = '2026-11-06T12:00:00Z';
 		expect(await approvedDocuments([document], [], {}, later, registry)).toEqual([]);
 	});
+	it('rechecks changed evidence bytes and signatures after a successful read', async () => {
+		for (const change of ['evidence', 'signature']) {
+			const { document, registry } = await fixture();
+			expect(await approvedDocuments([document], [], {}, now, registry)).toEqual([document]);
+			const item = registry.packages[0];
+			if (change === 'evidence') item.evidenceFiles.get('fixture.json')![0] ^= 1;
+			else {
+				item.attestation!.signature = 'A'.repeat(88);
+				item.admission.attestationDigest = await digest(item.attestation);
+			}
+			expect(await approvedDocuments([document], [], {}, now, registry)).toEqual([]);
+		}
+	});
 	it('rejects changed body, mismatched revision, duplicate packages and missing authority', async () => {
 		const { document, registry } = await fixture();
 		const changed = {

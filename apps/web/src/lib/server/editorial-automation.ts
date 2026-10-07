@@ -149,6 +149,23 @@ export async function byteDigest(value: Uint8Array) {
 export const digest = (value: unknown) => byteDigest(bytes(value));
 export const attestationPayload = (value: unknown) => bytes(value);
 
+// One read only: shared evidence is hashed once, then discarded. A later read
+// rechecks every byte and signature, including changes to revocation or packages.
+function verificationDigests() {
+	const evidence = new WeakMap<Uint8Array, Promise<string>>();
+	return {
+		bytes(value: Uint8Array) {
+			let result = evidence.get(value);
+			if (!result) {
+				result = byteDigest(value);
+				evidence.set(value, result);
+			}
+			return result;
+		}
+	};
+}
+type VerificationDigests = ReturnType<typeof verificationDigests>;
+
 function instant(value: unknown): number {
 	if (typeof value !== 'string') return NaN;
 	const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{3})?(Z|[+-]\d{2}:\d{2})$/.exec(
@@ -184,6 +201,15 @@ export async function assessReport(
 	report: EditorialReviewReport | null,
 	now: Date
 ) {
+	return assessReportDigest(document, report, now, await digest(document));
+}
+
+function assessReportDigest(
+	document: EditorialDocument,
+	report: EditorialReviewReport | null,
+	now: Date,
+	documentDigest: string
+) {
 	const errors = [];
 	if (!report || typeof report !== 'object' || Array.isArray(report))
 		return { valid: false, decision: 'BLOQUEADO', errors: ['Relatório ausente'] };
@@ -191,7 +217,7 @@ export async function assessReport(
 	if (
 		report.documentId !== document.id ||
 		report.revision !== document.revision ||
-		report.digest !== (await digest(document))
+		report.digest !== documentDigest
 	)
 		errors.push('Documento/revisão/digest divergentes');
 	if (!Number.isFinite(instant(report.reviewedAt)) || instant(report.reviewedAt) > now.getTime())
@@ -244,6 +270,13 @@ export async function assessReport(
  * evidenceFiles é Map<caminho, Uint8Array> de bytes efetivamente carregados.
  */
 export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
+	return verifyAutomatedApprovalWithDigests(input, verificationDigests());
+}
+
+async function verifyAutomatedApprovalWithDigests(
+	input: AutomatedApprovalInput,
+	digests: VerificationDigests
+) {
 	const reject = (reason: string) => ({ approved: false, reason, publicationGate: GATE });
 	try {
 		const {
@@ -335,7 +368,7 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 			a.evidenceManifestDigest !== (await digest(e))
 		)
 			return reject('BINDING');
-		const assessment = await assessReport(d, r, now);
+		const assessment = assessReportDigest(d, r, now, documentDigest);
 		if (!assessment.valid || assessment.decision !== 'APROVADO_AUTOMATICAMENTE')
 			return reject('REPORT');
 		if (
@@ -353,7 +386,7 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 			if (!path(f.path) || !hex(f.sha256) || files.has(f.path)) return reject('EVIDENCE_MANIFEST');
 			files.add(f.path);
 			const content = evidenceFiles.get(f.path);
-			if (!(content instanceof Uint8Array) || (await byteDigest(content)) !== f.sha256)
+			if (!(content instanceof Uint8Array) || (await digests.bytes(content)) !== f.sha256)
 				return reject('EVIDENCE_BYTES');
 		}
 		// Referências da rubrica precisam resolver a arquivos incluídos e íntegros.
@@ -395,6 +428,27 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 export async function verifyAdmittedApproval(
 	input: AutomatedApprovalInput & { admission: EditorialAdmission }
 ) {
+	return verifyAdmittedApprovalWithDigests(input, verificationDigests());
+}
+
+/** Batch immutable server-owned packages without retaining trust across reads. */
+export async function verifyAdmittedApprovals(registry: AutomatedRegistry, now: Date) {
+	const digests = verificationDigests();
+	const results = new Map<AutomatedPublication, boolean>();
+	for (const item of registry.packages) {
+		const result = await verifyAdmittedApprovalWithDigests(
+			{ ...item, authorities: registry.authorities, now },
+			digests
+		);
+		results.set(item, result.approved);
+	}
+	return results;
+}
+
+async function verifyAdmittedApprovalWithDigests(
+	input: AutomatedApprovalInput & { admission: EditorialAdmission },
+	digests: VerificationDigests
+) {
 	try {
 		const { admission, now, attestation } = input;
 		const accepted = instant(admission?.acceptedAt);
@@ -407,7 +461,7 @@ export async function verifyAdmittedApproval(
 			admission.attestationDigest !== (await digest(attestation))
 		)
 			return { approved: false, reason: 'ADMISSION', publicationGate: GATE };
-		return verifyAutomatedApproval({ ...input, now: new Date(accepted) });
+		return verifyAutomatedApprovalWithDigests({ ...input, now: new Date(accepted) }, digests);
 	} catch {
 		return { approved: false, reason: 'ADMISSION', publicationGate: GATE };
 	}
