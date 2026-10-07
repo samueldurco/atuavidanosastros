@@ -26,7 +26,8 @@ export const legacyPublicPaths = [
 	'/vocacao-no-mapa-astral',
 	'/carreira-no-mapa-astral',
 	'/casa-10',
-	'/loja'
+	'/loja',
+	'/leituras'
 ] as const;
 export const editorialHubs = {
 	'/noticias': {
@@ -95,6 +96,11 @@ export function legacySeo(path: string): PageSeo | null {
 			title: 'Mapa de Propósito & Carreira — em preparação',
 			description:
 				'Conheça a leitura de carreira, trabalho e dinheiro no mapa astral. Produto em preparação.'
+		},
+		'/leituras': {
+			title: 'Leituras e experiências',
+			description:
+				'Explore os produtos digitais da ATVNA: mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos. Confira o conteúdo e a disponibilidade de cada leitura.'
 		},
 		'/loja': {
 			title: 'Loja dos signos — em preparação',

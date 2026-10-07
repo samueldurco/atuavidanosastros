@@ -1,99 +1,137 @@
 <script lang="ts">
 	import { SITE, universes } from '$lib/data/site';
-	import OrbitalPlate from '$lib/components/OrbitalPlate.svelte';
+	let { data } = $props();
 </script>
 
-<svelte:head
-	><title>{SITE.name} — {SITE.tagline}</title><meta
-		name="description"
-		content={SITE.description}
-	/><link rel="canonical" href={SITE.url} /></svelte:head
->
+<svelte:head>
+	<title>{SITE.name} — {SITE.tagline}</title>
+	<meta name="description" content={SITE.description} />
+	<link rel="canonical" href={SITE.url} />
+</svelte:head>
 <section class="hero" data-stitch="PUB-01">
 	<div class="container hero-grid">
 		<div>
 			<p class="eyebrow">Astrologia e autoconhecimento</p>
 			<h1 class="display">Conheça seu mapa. Explore seu momento.</h1>
 			<p class="lead">
-				Mapa astral, previsões, amor e carreira. Conheça as leituras de astrologia, consulte o Tarot
-				e explore seus sonhos.
+				Explore mapa astral, previsões, amor, carreira, Tarot e sonhos. Comece com uma ferramenta
+				gratuita ou encontre um assunto para conhecer melhor.
 			</p>
 			<div class="hero-actions">
-				<a class="button" href="/meu-ceu">Conhecer meu mapa astral</a><a
-					class="button secondary"
-					href="#universos">Ver todos os temas</a
-				>
+				<a class="button" href="#comece-gratuitamente">Começar gratuitamente</a>
+				<a class="button secondary" href="/leituras">Conhecer as leituras</a>
 			</div>
 		</div>
-		<OrbitalPlate />
+		<div class="hero-art" aria-hidden="true"></div>
 	</div>
 </section>
-<section class="trust" aria-label="Temas de astrologia">
-	<div class="container trust-grid">
-		<p>O que você quer descobrir?</p>
-		<ul>
-			<li>Mapa astral</li>
-			<li>Previsões</li>
-			<li>Amor e carreira</li>
-		</ul>
-	</div>
-</section>
-<section id="universos" class="section">
-	<div class="container">
-		<p class="eyebrow">Escolha um tema</p>
-		<h2 class="h2">Astrologia para os assuntos da sua vida.</h2>
-		<div class="grid grid-3 universe-grid">
-			{#each universes as universe (universe.slug)}<article class="card universe">
-					<span class="universe-rule" aria-hidden="true"></span>
-					<span>{universe.eyebrow}</span>
-					<h3>{universe.title}</h3>
-					<p>{universe.description}</p>
-					<a href={`/${universe.slug}`}>{universe.cta} <span aria-hidden="true">→</span></a>
-				</article>{/each}
-		</div>
-	</div>
-</section>
-<section class="tool-entry section">
+<section id="comece-gratuitamente" class="tool-entry section" aria-labelledby="free-heading">
 	<div class="container entry-grid">
 		<div>
-			<p class="eyebrow">Bússola de Carreira · cálculo gratuito</p>
-			<h2 class="h2">Descubra seu Meio do Céu.</h2>
+			<p class="eyebrow">Sem custo · sem cadastro para calcular</p>
+			<h2 class="h2" id="free-heading">Comece gratuitamente</h2>
+			<h3>Bússola de Carreira</h3>
 			<p class="lead">
-				Veja o signo do seu Meio do Céu, um dos pontos do mapa associados à vida profissional. O
-				cálculo está disponível sem cadastro.
+				Descubra o signo e o grau do seu Meio do Céu, um dos pontos do mapa associados à vida
+				profissional. Informe sua data, hora e cidade de nascimento.
 			</p>
-			<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu</a>
+			<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu grátis</a>
 		</div>
-		<ol>
+		<ol class="tool-steps">
 			<li>
 				<span>01</span>
 				<div>
-					<strong>Traga seus dados de nascimento</strong>
-					<p>Data, hora e cidade. A localização é calculada automaticamente.</p>
+					<strong>Informe seus dados de nascimento</strong>
+					<p>Data, hora e cidade. Confira a localização antes de calcular.</p>
 				</div>
 			</li>
 			<li>
 				<span>02</span>
 				<div>
 					<strong>Conheça seu Meio do Céu</strong>
-					<p>Veja o signo, o grau e o método do cálculo.</p>
+					<p>Veja o signo, o grau, o método e os limites do cálculo.</p>
 				</div>
 			</li>
 			<li>
 				<span>03</span>
 				<div>
-					<strong>Escolha como continuar</strong>
-					<p>Leia o resultado e salve na sua Biblioteca.</p>
+					<strong>Guarde se quiser</strong>
+					<p>Com sua conta, você pode salvar o resultado na Biblioteca.</p>
 				</div>
 			</li>
 		</ol>
 	</div>
 </section>
+<section id="universos" class="section" aria-labelledby="readings-heading">
+	<div class="container">
+		<div class="section-intro">
+			<div>
+				<p class="eyebrow">Produtos digitais</p>
+				<h2 class="h2" id="readings-heading">Leituras e experiências</h2>
+			</div>
+			<a href="/leituras">Ver todas as leituras →</a>
+		</div>
+		<p class="lead">
+			Escolha um tema para conhecer os produtos digitais. Confira o conteúdo e a disponibilidade de
+			cada leitura.
+		</p>
+		<div class="grid grid-3 universe-grid">
+			{#each universes as universe (universe.slug)}
+				<article class="card universe">
+					<span class="universe-rule" aria-hidden="true"></span><span>{universe.eyebrow}</span>
+					<h3>{universe.title}</h3>
+					<p>{universe.description}</p>
+					<a href={`/leituras?tema=${universe.slug}`}
+						>{universe.cta} <span aria-hidden="true">→</span></a
+					>
+				</article>
+			{/each}
+		</div>
+	</div>
+</section>
+<section class="section editorial-entry" aria-labelledby="magazine-heading">
+	<div class="container">
+		<div class="section-intro">
+			<div>
+				<p class="eyebrow">Artigos e guias</p>
+				<h2 class="h2" id="magazine-heading">Revista ATVNA</h2>
+			</div>
+			<a href="/caderno">Explorar a Revista ATVNA →</a>
+		</div>
+		<p class="lead">
+			Entenda seu mapa astral, acompanhe os temas dos ciclos e explore relacionamentos, carreira,
+			Tarot e sonhos.
+		</p>
+		<div class="grid grid-3">
+			{#each data.articles as article (article.id)}
+				<article class="card editorial-card">
+					<p class="eyebrow">Guia</p>
+					<h3><a href={article.path}>{article.title}</a></h3>
+					<p>{article.description}</p>
+				</article>
+			{/each}
+		</div>
+	</div>
+</section>
+<section class="section shop-entry" aria-labelledby="shop-heading">
+	<div class="container entry-grid">
+		<div>
+			<p class="eyebrow">Produtos físicos</p>
+			<h2 class="h2" id="shop-heading">Loja dos Signos</h2>
+			<p class="lead">Um espaço para levar os símbolos dos signos para o seu dia a dia.</p>
+			<a class="button secondary" href="/loja">Conhecer a Loja dos Signos</a>
+		</div>
+		<div class="shop-note">
+			<strong>A coleção está em preparação.</strong>
+			<p>As novidades em produtos físicos serão apresentadas aqui quando estiverem disponíveis.</p>
+		</div>
+	</div>
+</section>
 <section class="method section">
 	<div class="container entry-grid">
 		<div>
-			<p class="eyebrow">Como funciona</p>
-			<h2 class="h2">Como funciona.</h2>
+			<p class="eyebrow">Nosso método</p>
+			<h2 class="h2">Entenda suas leituras.</h2>
 			<p class="lead">
 				As leituras usam os dados que você informa. Você pode consultar os fatores do mapa e
 				entender como cada resultado foi produzido.
@@ -121,26 +159,15 @@
 	</div>
 </section>
 
-<section class="section editorial-entry">
-	<div class="container entry-grid">
-		<div>
-			<p class="eyebrow">Artigos e guias</p>
-			<h2 class="h2">Escolha um assunto para explorar.</h2>
-			<p class="lead">
-				Leia os guias sobre mapa astral, ciclos, relacionamentos, Tarot, carreira e sonhos.
-			</p>
-			<a href="/caderno">Conhecer os artigos →</a>
-		</div>
-		<div class="editorial-links">
-			<a href="/ascendente"><span>Mapa astral</span><strong>Entenda seu ascendente</strong></a><a
-				href="/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira"
-				><span>Carreira e propósito</span><strong>Meio do Céu e reflexão de carreira</strong></a
-			>
-		</div>
-	</div>
-</section>
-
 <style>
+	.hero-art {
+		width: min(100%, 30rem);
+		aspect-ratio: 1;
+		justify-self: center;
+		background: url('/brand/illustrations/atvna-temas.png') left top / 300% 200% no-repeat;
+		mix-blend-mode: multiply;
+	}
+
 	.entry-grid {
 		display: grid;
 		grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
@@ -151,22 +178,22 @@
 		background: var(--atv-surface-muted);
 		border-block: 1px solid var(--atv-border);
 	}
-	ol {
+	.tool-steps {
 		list-style: none;
 		margin: 0;
 		padding: 0;
 	}
-	li {
+	.tool-steps li {
 		display: flex;
 		gap: 1.5rem;
 		padding-block: 1.5rem;
 		border-bottom: 1px solid var(--atv-border);
 	}
-	ol li > span {
+	.tool-steps li > span {
 		color: var(--atv-text-accent);
 		font: 500 1.75rem var(--atv-font-display);
 	}
-	ol p {
+	.tool-steps p {
 		margin: 0.5rem 0 0;
 		color: var(--atv-text-secondary);
 	}
@@ -191,25 +218,6 @@
 		margin: 0;
 		font-size: 0.875rem;
 		color: var(--atv-text-secondary);
-	}
-	.editorial-links {
-		display: grid;
-		gap: 1.5rem;
-	}
-	.editorial-links a {
-		padding-block: 1.5rem;
-		border-bottom: 1px solid var(--atv-border);
-		text-decoration: none;
-	}
-	.editorial-links span {
-		display: block;
-		color: var(--atv-text-accent);
-		font-size: 0.75rem;
-		margin-bottom: 0.75rem;
-	}
-	.editorial-links strong {
-		color: var(--atv-text-primary);
-		font: 500 1.75rem/1.2 var(--atv-font-display);
 	}
 	@media (max-width: 767px) {
 		.entry-grid {
@@ -237,36 +245,6 @@
 		flex-wrap: wrap;
 		gap: 0.85rem;
 		margin-top: 2rem;
-	}
-	.trust {
-		border-block: 1px solid var(--atv-border);
-		background: var(--atv-surface-card);
-	}
-	.trust-grid {
-		display: grid;
-		grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-		gap: 2rem;
-		align-items: center;
-		padding-block: 1.4rem;
-	}
-	.trust p {
-		margin: 0;
-		font: 500 1.2rem/1.2 var(--atv-font-editorial);
-	}
-	.trust ul {
-		display: flex;
-		justify-content: flex-end;
-		gap: 1.1rem;
-		padding: 0;
-		margin: 0;
-		list-style: none;
-		font: 600 0.72rem var(--atv-font-ui);
-		color: var(--atv-text-secondary);
-	}
-	.trust li::before {
-		content: '✦';
-		margin-right: 0.4rem;
-		color: var(--atv-gold-500);
 	}
 	.universe-grid {
 		margin-top: 3rem;
@@ -321,17 +299,43 @@
 			grid-template-columns: 1fr;
 			gap: 3rem;
 		}
-		.trust-grid {
-			grid-template-columns: 1fr;
-		}
-		.trust ul {
-			justify-content: flex-start;
-			flex-wrap: wrap;
-		}
 	}
 	@media (max-width: 520px) {
 		.hero-actions {
 			flex-direction: column;
 		}
+	}
+
+	.section-intro {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: end;
+		gap: 1.5rem;
+		margin-bottom: 2rem;
+	}
+	.section-intro .h2 {
+		margin-bottom: 0;
+	}
+	.editorial-card {
+		padding: 1.6rem;
+	}
+	.editorial-card h3 {
+		font: 500 1.7rem/1.2 var(--atv-font-display);
+	}
+	.editorial-card p:not(.eyebrow) {
+		color: var(--atv-text-secondary);
+	}
+	.shop-entry {
+		background: var(--atv-surface-muted);
+		border-block: 1px solid var(--atv-border);
+	}
+	.shop-note {
+		padding: 2rem;
+		border: 1px solid var(--atv-border);
+		background: var(--atv-surface-card);
+	}
+	.shop-note strong {
+		font: 500 2rem/1.2 var(--atv-font-display);
 	}
 </style>
