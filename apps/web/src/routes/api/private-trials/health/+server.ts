@@ -6,7 +6,9 @@ import { trialWriter } from '$lib/server/private-trials';
 // Deployment probe: no account, key, record or provider error is exposed.
 export async function GET() {
 	const configurationReady = Boolean(
-		publicEnv.PUBLIC_SUPABASE_URL && privateEnv.SUPABASE_SERVICE_ROLE_KEY
+		publicEnv.PUBLIC_SUPABASE_URL &&
+		privateEnv.SUPABASE_SERVICE_ROLE_KEY &&
+		privateEnv.ATV_TRIAL_RUNTIME_KEY
 	);
 	let available: boolean;
 	try {
@@ -15,7 +17,7 @@ export async function GET() {
 			.select('owner_id')
 			.limit(0)
 			.abortSignal(AbortSignal.timeout(5000));
-		available = !result.error;
+		available = configurationReady && !result.error;
 	} catch {
 		available = false;
 	}
@@ -24,7 +26,7 @@ export async function GET() {
 			available,
 			configurationReady,
 			scope: 'private-free-test',
-			version: 'atv-private-trial-approval/1.0.0'
+			version: 'atv-private-trial-approval/2.0.0'
 		},
 		{ status: available ? 200 : 503, headers: { 'cache-control': 'private, no-store' } }
 	);
