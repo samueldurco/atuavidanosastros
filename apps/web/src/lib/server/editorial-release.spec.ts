@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import * as nodeCrypto from 'node:crypto';
 import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { articleSeo, validDocument, type EditorialDocument } from './editorial';
@@ -13,6 +14,8 @@ import {
 	type EditorialEvidenceManifest,
 	type AutomatedAuthority
 } from './editorial-automation';
+
+vi.mock('node:crypto', { spy: true });
 
 // Real, externally signed release candidates. These tests never admit a publication.
 const root = resolve('../../docs/editorial/release-2026-10-06');
@@ -32,14 +35,16 @@ describe('externally signed finite editorial release', () => {
 				(value) => new TextEncoder().encode(value).length
 			)
 		);
-		const hashes = vi.spyOn(crypto.subtle, 'digest');
+		const hashes = vi.spyOn(nodeCrypto, 'hash');
 		const signatures = vi.spyOn(crypto.subtle, 'verify');
 		const keys = vi.spyOn(crypto.subtle, 'importKey');
 		try {
 			for (let read = 1; read <= 2; read++) {
 				expect(await publishedEditorial()).toHaveLength(release.packages.length);
 				expect(
-					hashes.mock.calls.filter(([, value]) => value.byteLength === largestEvidence)
+					hashes.mock.calls.filter(
+						([, value]) => value instanceof Uint8Array && value.byteLength === largestEvidence
+					)
 				).toHaveLength(read);
 				expect(signatures).toHaveBeenCalledTimes(read * release.packages.length);
 				expect(keys).toHaveBeenCalledTimes(read);

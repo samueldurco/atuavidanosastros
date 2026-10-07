@@ -1,4 +1,5 @@
 // Public evergreen guide admission only. No authority is provisioned by this module.
+import { hash } from 'node:crypto';
 import type { EditorialDocument } from './editorial';
 export interface EvidenceRow {
 	id: string;
@@ -176,12 +177,10 @@ export function canonicalJson(value: unknown): string {
 const bytes = (value: unknown) =>
 	(value !== null && typeof value === 'object' ? immutableBytes.get(value) : undefined) ??
 	new TextEncoder().encode(canonicalJson(value));
-const hexBytes = Array.from({ length: 256 }, (_, value) => value.toString(16).padStart(2, '0'));
 export async function byteDigest(value: Uint8Array) {
-	const hash = await crypto.subtle.digest('SHA-256', new Uint8Array(value));
-	let result = '';
-	for (const byte of new Uint8Array(hash)) result += hexBytes[byte];
-	return result;
+	// Native one-shot SHA-256 avoids buffer copies and JS hex conversion. Every
+	// invocation still hashes the actual bytes; no digest survives a registry read.
+	return hash('sha256', value, 'hex');
 }
 export const digest = (value: unknown) => byteDigest(bytes(value));
 export const attestationPayload = (value: unknown) => new Uint8Array(bytes(value));
