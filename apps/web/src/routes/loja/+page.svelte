@@ -7,7 +7,7 @@
 	<title>Loja dos Signos — em preparação</title>
 	<meta
 		name="description"
-		content="A futura curadoria da Loja dos Signos está em preparação. Nenhum produto, preço ou estoque foi publicado."
+		content="Conheça as prévias dos pôsteres Ciclo Zodiacal e Simbolismo Lunar e as demais coleções em preparação."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
 </svelte:head>
@@ -18,8 +18,8 @@
 			<p class="eyebrow">Uma curadoria em construção</p>
 			<h1 class="display">Loja dos Signos</h1>
 			<p class="lead">
-				Roupas, objetos e edições para levar um pouco do céu ao cotidiano. Ainda não há produtos,
-				preços, estoque, prazo ou avaliações publicados.
+				Roupas, objetos e edições para levar um pouco do céu ao cotidiano. Conheça as prévias dos
+				dois primeiros pôsteres astrológicos e as demais coleções em preparação.
 			</p>
 			<a class="button" href="#colecoes">Explorar as coleções</a>
 		</div>
@@ -29,9 +29,21 @@
 			<p class="note-title">Antes da primeira oferta</p>
 			<p>
 				Cada item precisa de fornecedor identificado, descrição verificada e condições de compra
-				claras. A curadoria ainda não foi publicada.
+				claras. A disponibilidade de compra é informada na página de cada edição.
 			</p>
 		</aside>
+	</div>
+</section>
+
+<section class="section" aria-labelledby="p04-title">
+	<div class="container">
+		<p class="eyebrow">Duas edições fixas · 30 × 40 cm</p>
+		<h2 class="h2" id="p04-title">Ciclo Zodiacal e Simbolismo Lunar</h2>
+		<p>
+			Conheça Percurso dos doze e Ciclo lunar: pôsteres astrológicos impressos sob demanda, sem
+			moldura.
+		</p>
+		<a class="button" href="/loja/ciclo-zodiacal-lunar">Conhecer os pôsteres</a>
 	</div>
 </section>
 
