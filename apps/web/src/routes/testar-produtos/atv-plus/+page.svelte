@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { trialResponse } from '$lib/trials/response';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	let { data } = $props();
@@ -28,7 +29,7 @@
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ decision, comment })
 			});
-			const body = (await response.json()) as { message?: string };
+			const body = await trialResponse<{ message?: string }>(response);
 			if (!response.ok) throw Error(body.message ?? 'Não foi possível salvar.');
 			await invalidateAll();
 			message = 'Sua avaliação do ATV+ foi salva.';

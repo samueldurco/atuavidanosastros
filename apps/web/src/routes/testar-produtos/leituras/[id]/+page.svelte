@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { trialResponse } from '$lib/trials/response';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	let { data } = $props();
@@ -22,6 +23,25 @@
 				: [0]
 	);
 	const reading = $derived(data.saved.reading);
+	let refreshKey = '';
+	async function refreshEdition() {
+		busy = true;
+		status = '';
+		refreshKey ||= crypto.randomUUID();
+		try {
+			const response = await fetch(`/api/private-trials/${data.saved.id}/refresh`, {
+				method: 'POST',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify({ requestKey: refreshKey })
+			});
+			const value = await trialResponse<{ id: string; message?: string }>(response);
+			await goto(`/testar-produtos/leituras/${value.id}`);
+		} catch (e) {
+			status = e instanceof Error ? e.message : 'Não foi possível atualizar a edição.';
+		} finally {
+			busy = false;
+		}
+	}
 	$effect(() => {
 		if (!data.saved.id) return;
 		return () => {
@@ -37,7 +57,7 @@
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify(body)
 			});
-			const value = (await result.json()) as { message?: string };
+			const value = await trialResponse<{ message?: string }>(result);
 			if (!result.ok) throw Error(value.message ?? 'Não foi possível salvar.');
 			status = 'Salvo na sua biblioteca privada.';
 			await invalidateAll();
@@ -108,6 +128,18 @@
 			})}. Sua avaliação do produto ainda pode ser feita abaixo.
 		</p>
 	</div>
+	{#if reading.version === 'atv-ai-editorial-trials/1.0.0'}
+		<div class="seal">
+			<strong>Há uma nova edição desta leitura</strong>
+			<p>
+				A revisão organiza a síntese, os capítulos e o PDF. Ela usa os mesmos dados e cálculos; suas
+				cartas, anotações e parecer anterior são preservados na leitura original.
+			</p>
+			<button disabled={!ready || busy} onclick={refreshEdition}
+				>Criar edição revisada gratuita</button
+			>
+		</div>
+	{/if}
 	<nav class="downloads" aria-label="Formatos da leitura">
 		{#if data.product.delivery.includes('pdf')}<a
 				href={`/api/private-trials/${data.saved.id}/download?format=pdf`}>Baixar PDF completo</a

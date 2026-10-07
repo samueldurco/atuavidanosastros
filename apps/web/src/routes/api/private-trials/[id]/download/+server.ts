@@ -1,29 +1,22 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { productCatalog } from '@atv/domain';
 import { privateTrial } from '$lib/server/private-trials';
-import { trialPdf, trialSvg, trialText } from '$lib/server/trial-exports';
-import { approveTrialReading } from '$lib/trials/reading';
+import { trialSvg, trialText } from '$lib/server/trial-exports';
+import { reviewTrial } from '$lib/server/trial-runtime';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async (event) => {
 	const saved = await privateTrial(event.locals, event.params.id);
-	const seal = await approveTrialReading(saved.input, saved.calculation, saved.reading);
-	if (!seal || seal.digest !== saved.approval.digest)
+	if (!(await reviewTrial(event, saved)))
 		error(409, 'A revisão desta versão precisa ser conferida antes do download.');
 	const product = productCatalog.find((p) => p.id === saved.product_id)!;
 	const format = event.url.searchParams.get('format') ?? 'txt';
 	if (format !== 'txt' && !product.delivery.some((d) => d === format))
 		error(400, 'Formato indisponível neste produto.');
+	if (format === 'pdf') redirect(303, `/testar-produtos/leituras/${saved.id}/baixar`);
 	let body: BodyInit, type: string;
 	try {
-		if (format === 'pdf') {
-			const bytes = await trialPdf(saved);
-			body = bytes.buffer.slice(
-				bytes.byteOffset,
-				bytes.byteOffset + bytes.byteLength
-			) as ArrayBuffer;
-			type = 'application/pdf';
-		} else if (format === 'svg') {
+		if (format === 'svg') {
 			body = trialSvg(saved);
 			type = 'image/svg+xml; charset=utf-8';
 		} else if (format === 'txt') {

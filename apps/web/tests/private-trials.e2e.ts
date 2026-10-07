@@ -1,5 +1,7 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { readFile } from 'node:fs/promises';
+import { PDFDocument } from 'pdf-lib';
 
 test('career complete reading, provenance, personal approval and recoverable note failure', async ({
 	page
@@ -126,7 +128,8 @@ test('private routes and API require an authenticated trial grant', async ({ req
 	for (const path of [
 		'/testar-produtos/career-compass',
 		'/testar-produtos/atv-plus',
-		'/testar-produtos/leituras/00000000-0000-4000-8000-000000000031'
+		'/testar-produtos/leituras/00000000-0000-4000-8000-000000000031',
+		'/testar-produtos/leituras/00000000-0000-4000-8000-000000000031/baixar'
 	]) {
 		const response = await request.get(path, { maxRedirects: 0 });
 		expect([303, 401, 403, 503]).toContain(response.status());
@@ -134,4 +137,73 @@ test('private routes and API require an authenticated trial grant', async ({ req
 	}
 	const response = await request.post('/api/private-trials', { data: {} });
 	expect([401, 503]).toContain(response.status());
+});
+
+test('Atlas da Vida offers distinct priorities rather than an unexplained text field', async ({
+	page
+}) => {
+	await page.goto('/testar-produtos/_spec?view=intake&product=life-atlas');
+	await expect(page.getByRole('combobox', { name: 'Prioridade 1', exact: true })).toHaveValue(
+		'Autocuidado'
+	);
+	await expect(
+		page
+			.getByRole('combobox', { name: 'Prioridade 2', exact: true })
+			.locator('option[value="Autocuidado"]')
+	).toHaveJSProperty('disabled', true);
+	await page.getByRole('combobox', { name: 'Prioridade 1', exact: true }).selectOption('Família');
+	await expect(
+		page
+			.getByRole('combobox', { name: 'Prioridade 2', exact: true })
+			.locator('option[value="Autocuidado"]')
+	).toHaveJSProperty('disabled', false);
+	await expect(
+		page
+			.getByRole('combobox', { name: 'Prioridade 2', exact: true })
+			.locator('option[value="Família"]')
+	).toHaveJSProperty('disabled', true);
+});
+
+test('an HTML resource-limit response preserves the form and has a useful retry message', async ({
+	page
+}) => {
+	await page.goto('/testar-produtos/_spec?view=intake&product=dream-reading');
+	await page
+		.getByLabel('Seu relato', { exact: true })
+		.fill('Sonhei com uma ponte e senti curiosidade.');
+	await page.getByLabel(/Autorizo salvar/).check();
+	const requests: unknown[] = [];
+	await page.route('**/api/private-trials', async (route) => {
+		requests.push(route.request().postDataJSON());
+		await route.fulfill({
+			status: 503,
+			contentType: 'text/html',
+			body: '<!DOCTYPE html><h1>Error 1102</h1>'
+		});
+	});
+	await page.getByRole('button', { name: 'Gerar leitura gratuita' }).click();
+	await expect(page.getByRole('alert')).toContainText('Seus dados preenchidos foram mantidos');
+	await expect(page.getByLabel('Seu relato', { exact: true })).toHaveValue(
+		'Sonhei com uma ponte e senti curiosidade.'
+	);
+	await page.getByRole('button', { name: 'Gerar leitura gratuita' }).click();
+	await expect.poll(() => requests.length).toBe(2);
+	expect(requests[0]).toEqual(requests[1]);
+});
+
+test('the browser produces and downloads the full private PDF', async ({ page }) => {
+	const downloadPromise = page.waitForEvent('download', { timeout: 45000 });
+	await page.goto('/testar-produtos/_spec?view=download&product=birth-chart');
+	const download = await downloadPromise;
+	expect(download.suggestedFilename()).toMatch(/^birth-chart-.*\.pdf$/);
+	const path = await download.path();
+	expect(path).not.toBeNull();
+	const bytes = await readFile(path!);
+	expect(bytes.subarray(0, 5).toString()).toBe('%PDF-');
+	expect((await PDFDocument.load(bytes)).getPageCount()).toBeGreaterThan(5);
+	await expect(page.getByRole('status')).toContainText('PDF pronto');
+	await expect(page.getByRole('link', { name: 'Baixar PDF completo' })).toHaveAttribute(
+		'href',
+		/^blob:/
+	);
 });

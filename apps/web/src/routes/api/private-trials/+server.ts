@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import { parseWorkflowInput } from '@atv/domain';
-import { calculateTrial } from '$lib/server/trial-calculation';
+import { computeTrial } from '$lib/server/trial-runtime';
 import {
 	trialDreamSources,
 	trialIdentity,
@@ -8,12 +8,7 @@ import {
 	trialWriter,
 	validTrialId
 } from '$lib/server/private-trials';
-import {
-	approveTrialReading,
-	canonical,
-	composeTrialReading,
-	type SavedTrial
-} from '$lib/trials/reading';
+import { canonical, type SavedTrial } from '$lib/trials/reading';
 import type { RequestHandler } from './$types';
 
 async function saveDiary(saved: SavedTrial, ownerId: string) {
@@ -71,20 +66,9 @@ export const POST: RequestHandler = async (event) => {
 		return json({ id: saved.id }, { headers: { 'cache-control': 'private, no-store' } });
 	}
 	const id = crypto.randomUUID();
-	let calculation;
-	try {
-		calculation = await calculateTrial(input, id, sources);
-	} catch (e) {
-		const message =
-			e instanceof Error && /^(Confira|Salve|Autorize|Produto sem)/.test(e.message)
-				? e.message
-				: 'Não foi possível calcular esta leitura. Confira data, hora, cidade e tente novamente.';
-		error(422, message);
-	}
-	const reading = composeTrialReading(input, calculation);
-	const approval = await approveTrialReading(input, calculation, reading);
-	if (!approval)
-		error(422, 'Esta leitura não passou nos critérios automáticos e não foi liberada.');
+	const result = await computeTrial(event, input, id, sources);
+	if (!result) error(422, 'Esta leitura não passou nos critérios automáticos e não foi liberada.');
+	const { calculation, reading, approval } = result;
 	// Recheck revocation after calculation. The DB trigger also enforces the grant atomically.
 	await trialIdentity(event.locals);
 	const row = {
