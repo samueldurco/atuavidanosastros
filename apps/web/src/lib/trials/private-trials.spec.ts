@@ -8,8 +8,10 @@ import {
 } from '@atv/domain';
 import { calculateTrial } from '../server/trial-calculation';
 import { approveTrialReading, canonical, composeTrialReading, type SavedTrial } from './reading';
-import { trialPdf, trialSvg, trialText } from '../server/trial-exports';
+import { trialSvg, trialText } from './exports';
+import { trialPdf } from './pdf';
 import { PDFDocument } from 'pdf-lib';
+import { composeLegacyTrialReading } from './legacy-reading';
 
 // Synthetic local evidence only. No user identities, commercial releases or provider calls.
 const id = '00000000-0000-4000-8000-000000000031';
@@ -101,13 +103,14 @@ describe('private free testing of the real 25 calculations and original AI/edito
 	for (const product of cases)
 		it(`${product.id}: complete fact-bound reading receives private approval`, async () => {
 			const input = inputFor(product.id),
-				start = Date.now();
+				start = Date.now(),
+				cpuStart = process.cpuUsage();
 			const calculation = await calculateTrial(input, id, sources);
 			const reading = composeTrialReading(input, calculation),
 				approval = await approveTrialReading(input, calculation, reading);
 			expect(approval?.scope).toBe('private-free-test');
 			expect(approval?.digest).toMatch(/^[a-f0-9]{64}$/);
-			expect(reading.sections.length).toBeGreaterThanOrEqual(calculation.facts.length);
+			expect(reading.sections.length).toBeLessThan(60);
 			expect(reading.questions).toHaveLength(3);
 			expect(
 				calculation.facts.every((f) => reading.sections.some((s) => s.factIds.includes(f.id)))
@@ -121,15 +124,36 @@ describe('private free testing of the real 25 calculations and original AI/edito
 				reading,
 				approval: approval!
 			});
+			await mkdir('.trial-qa', { recursive: true });
+			await writeFile(
+				`.trial-qa/${product.id}.json`,
+				JSON.stringify(saved.get(product.id), null, 2)
+			);
 			measurements.push({
 				product: product.id,
 				facts: calculation.facts.length,
 				sections: reading.sections.length,
 				characters: canonical({ input, calculation, reading }).length,
 				milliseconds: Date.now() - start,
+				cpuMilliseconds:
+					(process.cpuUsage(cpuStart).user + process.cpuUsage(cpuStart).system) / 1000,
 				scope: approval!.scope
 			});
 		}, 30000);
+	it('historical readings remain verifiable, while a new edition preserves every calculation fact', async () => {
+		for (const s of saved.values()) {
+			const historical = composeLegacyTrialReading(s.input, s.calculation);
+			expect((await approveTrialReading(s.input, s.calculation, historical))?.policy).toBe(
+				'atv-private-trial-approval/1.0.0'
+			);
+			expect(s.reading.sections.some((section) => /nenhum aspecto/i.test(section.title))).toBe(
+				false
+			);
+			expect(new Set(s.reading.sections.map((section) => section.text)).size).toBe(
+				s.reading.sections.length
+			);
+		}
+	});
 	it('rejects modified content, invented facts, missing consent and wrong product', async () => {
 		const s = saved.get('career-compass')!;
 		const changed = structuredClone(s.reading);
@@ -182,7 +206,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			trialText({ ...saved.get('dream-reading')!, input, calculation: calc, reading })
 		).toContain(input.dream!.narrative);
 		expect((await approveTrialReading(input, calc, reading))?.policy).toBe(
-			'atv-private-trial-approval/1.0.0'
+			'atv-private-trial-approval/2.0.0'
 		);
 	});
 	it('PDF and TXT preserve the full saved reading; SVG contains only saved valid geometry', async () => {
@@ -219,6 +243,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			const pdf = await trialPdf(saved.get(product.id)!);
 			expect((await PDFDocument.load(pdf)).getPageCount()).toBeGreaterThan(0);
 			expect(pdf.length).toBeGreaterThan(10000);
+			await writeFile(`.trial-qa/${product.id}.pdf`, pdf);
 		}, 30000);
 });
 afterAll(async () => {

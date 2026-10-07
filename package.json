@@ -8,6 +8,7 @@
     "node": ">=22 <25"
   },
   "scripts": {
+    "build:trial-runtime": "node scripts/build-trial-runtime.mjs",
     "dev": "pnpm --filter @atv/web dev",
     "build": "pnpm -r build",
     "check": "pnpm -r check",
@@ -24,6 +25,7 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.8",
+    "esbuild": "0.28.1",
     "supabase": "^2.56.1",
     "typescript": "^6.0.3"
   }

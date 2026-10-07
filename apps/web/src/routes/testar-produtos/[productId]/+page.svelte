@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { WORKFLOW_VERSION, type WorkflowInput } from '@atv/domain';
+	import { trialResponse } from '$lib/trials/response';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import TrialBirthFields from '$lib/components/TrialBirthFields.svelte';
@@ -37,6 +38,18 @@
 		goal = $state(''),
 		startDate = $state(new Date().toISOString().slice(0, 10));
 	let priorities = $state(['Autocuidado', 'Vínculos', 'Trabalho', 'Aprendizado']);
+	const priorityOptions = [
+		'Autocuidado',
+		'Vínculos',
+		'Trabalho',
+		'Aprendizado',
+		'Família',
+		'Criatividade',
+		'Organização financeira',
+		'Vida cotidiana',
+		'Propósito',
+		'Descanso'
+	];
 	let narrative = $state(''),
 		emotions = $state(''),
 		associations = $state(''),
@@ -98,8 +111,10 @@
 			}
 			if (data.product.id === 'direction-journey') input.journey = { goal, startDate };
 			if (data.product.id === 'tarot-journey') input.tarotJourney = { goal };
-			if (data.product.id === 'life-atlas')
+			if (data.product.id === 'life-atlas') {
+				if (new Set(priorities).size !== 4) throw Error('Escolha quatro prioridades diferentes.');
 				input.atlas = { priorities: priorities as [string, string, string, string] };
+			}
 			if (data.product.id === 'dream-atlas') input.dreamAtlas = { startDate };
 			if (data.product.kind === 'tarot')
 				input.questions =
@@ -135,8 +150,7 @@
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({ input, sourceIds, requestKey })
 			});
-			const value = (await result.json()) as { message?: string; id?: string };
-			if (!result.ok) throw Error(value.message ?? 'Não foi possível gerar. Tente novamente.');
+			const value = await trialResponse<{ message?: string; id?: string }>(result);
 			if (!value.id) throw Error('Não foi possível recuperar a leitura salva.');
 			await goto(`/testar-produtos/leituras/${value.id}`);
 		} catch (e) {
@@ -226,11 +240,13 @@
 					<legend>Suas quatro prioridades, em ordem</legend>
 					<p>Escolha temas distintos. Essa ordem é sua, e pode ser revista.</p>
 					{#each [0, 1, 2, 3] as i (i)}<label
-							>Prioridade {i + 1}<input
-								maxlength="120"
-								required
-								bind:value={priorities[i]}
-							/></label
+							>Prioridade {i + 1}<select required bind:value={priorities[i]}>
+								{#each priorityOptions as option (option)}<option
+										value={option}
+										disabled={priorities.some((v, index) => index !== i && v === option)}
+										>{option}</option
+									>{/each}
+							</select></label
 						>{/each}
 				</fieldset>
 			{/if}

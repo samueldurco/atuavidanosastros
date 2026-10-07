@@ -17,7 +17,7 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	if (
 		!workflow ||
 		!product ||
-		!['result', 'intake', 'club', 'catalog', 'index', 'library'].includes(view)
+		!['result', 'download', 'intake', 'club', 'catalog', 'index', 'library'].includes(view)
 	)
 		error(404);
 	const birth = {
@@ -60,10 +60,9 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	if (productId === 'tarot-journey') input.tarotJourney = { goal: 'Organizar um projeto pessoal.' };
 	const id = '00000000-0000-4000-8000-000000000031';
 	// Intakes do not need a result; use an actual MC calculation for the shared result shape.
-	const calcInput: WorkflowInput =
-		view === 'result'
-			? input
-			: { version: input.version, productId: 'career-compass', birth, consent: input.consent };
+	const calcInput: WorkflowInput = ['result', 'download'].includes(view)
+		? input
+		: { version: input.version, productId: 'career-compass', birth, consent: input.consent };
 	const calculation = await calculateTrial(calcInput, id);
 	const reading = composeTrialReading(calcInput, calculation),
 		approval = await approveTrialReading(calcInput, calculation, reading);
@@ -98,6 +97,7 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		},
 		intake: { product: workflow, dreams: [] },
 		result: { saved, product, feedback: null, notes: [] },
+		download: { saved },
 		club: {
 			products: productCatalog.filter((p) => p.id !== 'atv-plus'),
 			readings: [{ id, product_id: 'career-compass', created_at: saved.created_at }],

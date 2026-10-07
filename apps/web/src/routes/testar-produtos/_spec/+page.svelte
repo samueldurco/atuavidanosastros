@@ -5,6 +5,7 @@
 	import Catalog from '../../produtos/[slug]/+page.svelte';
 	import Index from '../+page.svelte';
 	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
+	import Download from '../leituras/[id]/baixar/+page.svelte';
 	let { data } = $props();
 </script>
 
@@ -16,6 +17,7 @@
 {#if data.view === 'catalog'}<Catalog data={{ ...data, ...data.catalog }} />
 {:else if data.view === 'index'}<Index data={{ ...data, ...data.index }} />
 {:else if data.view === 'library'}<TrialLibrary library={data.library} />
+{:else if data.view === 'download'}<Download data={{ ...data, ...data.download }} />
 {:else if data.view === 'intake'}<Intake
 		data={{ ...data, ...data.intake }}
 	/>{:else if data.view === 'club'}<Club data={{ ...data, ...data.club }} />{:else}<Result
