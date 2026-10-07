@@ -15,7 +15,7 @@ for (const width of [390, 1440]) {
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
 		await page
 			.getByRole('navigation', { name: 'Navegação principal' })
-			.getByRole('link', { name: 'Artigos', exact: true })
+			.getByRole('link', { name: 'Revista ATVNA', exact: true })
 			.click();
 		await expect(page).toHaveURL(/\/caderno$/);
 		await expect(page.locator('.published-guide')).toHaveCount(12);
@@ -32,7 +32,7 @@ for (const width of [390, 1440]) {
 				.click();
 			await expect(page).toHaveURL(new RegExp(`/caderno\\?tema=${item.id}$`));
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-				`Artigos e guias: ${item.label}`
+				`Revista ATVNA: ${item.label}`
 			);
 			const cards = page.locator('.published-guide');
 			await expect(cards).toHaveCount(editorialTopicPaths[item.id].length);

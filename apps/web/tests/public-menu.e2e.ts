@@ -75,7 +75,7 @@ test('artigos filtram o assunto e mantêm o catálogo comercial fora da navegaç
 	for (const item of interestNavigation) {
 		await page.goto(`/caderno?tema=${item.id}`);
 		await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-			`Artigos e guias: ${item.label}`
+			`Revista ATVNA: ${item.label}`
 		);
 		await expect(page.locator('main section.topic')).toHaveCount(1);
 		await expect(page.locator('main a[href^="/produtos/"]')).toHaveCount(0);

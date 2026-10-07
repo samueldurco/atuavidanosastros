@@ -350,9 +350,10 @@ describe('public content integrity', () => {
 	});
 });
 describe('feeds and search surfaces', () => {
-	it('keeps exactly the 14 previous sitemap pages, excluding candidate and empty hubs', () => {
+	it('keeps the 15 public sitemap pages, including readings and excluding candidate and empty hubs', () => {
 		const body = pagesSitemap([]);
-		expect(body.match(/<url>/g)).toHaveLength(14);
+		expect(body.match(/<url>/g)).toHaveLength(15);
+		expect(body).toContain('https://atuavidanosastros.com.br/leituras');
 		expect(body).not.toContain('/signos');
 		expect(body).not.toContain('/noticias');
 	});

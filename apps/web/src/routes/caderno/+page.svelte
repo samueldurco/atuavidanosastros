@@ -7,7 +7,7 @@
 	<div class="reading">
 		<p class="eyebrow">Para entender e explorar</p>
 		<h1 class="h1">
-			{data.selected ? `Artigos e guias: ${data.topics[0].label}` : 'Artigos e guias'}
+			{data.selected ? `Revista ATVNA: ${data.topics[0].label}` : 'Revista ATVNA'}
 		</h1>
 		<p class="lead">Escolha um assunto e encontre os guias completos para continuar sua leitura.</p>
 		<nav class="topics" aria-label="Assuntos dos artigos">

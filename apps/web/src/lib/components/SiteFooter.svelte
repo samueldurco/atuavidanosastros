@@ -9,9 +9,11 @@
 			<p>Astrologia para conhecer você.</p>
 		</div>
 		<nav aria-label="Rodapé">
-			<a href="/metodo">Nosso método</a><a href="/caderno">Artigos</a><a href="/loja"
-				>Loja dos Signos</a
-			><a href="/termos">Termos de uso</a><a href="/privacidade">Privacidade</a><button
+			<a href="/leituras">Leituras e experiências</a><a href="/metodo">Nosso método</a><a
+				href="/caderno">Revista ATVNA</a
+			><a href="/loja">Loja dos Signos</a><a href="/termos">Termos de uso</a><a href="/privacidade"
+				>Privacidade</a
+			><button
 				type="button"
 				onclick={() => window.dispatchEvent(new Event('atv-cookie-preferences'))}
 				>Preferências de cookies</button

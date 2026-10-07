@@ -69,7 +69,7 @@
 					><path d="M3 11l9-8 9 8M5 10v11h14V10M10 21v-7h4v7" /></svg
 				>Início
 			</a>
-			<a class="direct" href="/caderno" onclick={dismiss}>Artigos</a>
+			<a class="direct" href="/caderno" onclick={dismiss}>Revista ATVNA</a>
 			{#each interestNavigation as item (item.id)}
 				<details open={expanded === item.id}>
 					<summary

@@ -20,14 +20,14 @@ export const load: PageServerLoad = async ({ url }) => {
 		topics,
 		seo: {
 			...legacySeo('/caderno')!,
-			title: 'Artigos e guias — A Tua Vida nos Astros',
+			title: 'Revista ATVNA — A Tua Vida nos Astros',
 			description:
 				'Encontre guias sobre mapa astral, ciclos, relacionamentos, Tarot, carreira e sonhos. Escolha um assunto e continue a leitura.',
 			managePrimary: true,
 			jsonLd: safeJsonLd({
 				'@context': 'https://schema.org',
 				'@type': 'CollectionPage',
-				name: 'Artigos e guias',
+				name: 'Revista ATVNA',
 				url: `${SITE.url}/caderno`,
 				mainEntity: {
 					'@type': 'ItemList',
