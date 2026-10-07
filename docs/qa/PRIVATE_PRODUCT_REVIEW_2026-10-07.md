@@ -32,6 +32,7 @@ Também foi corrigida a validação das fontes do histórico dos sonhos: os seis
 - A função hospedada passou em 29 casos sintéticos: geração dos 25 produtos, verificação das três leituras de casal e recusa de acesso anônimo. Evidência: `E:/ATVNA/.worktrees/trials-edge-smoke.json`, de 07/10/2026 12:54 UTC. Esse teste não escreve no banco e não representa uso autenticado pelo proprietário.
 - PDFs sintéticos foram abertos e renderizados para inspeção de capa, mandala, corpo e páginas finais: `E:/ATVNA/.worktrees/product-review-synthetic/`. A medição e a revisão usam dados sintéticos, sem transcrever anexos pessoais.
 - A inspeção encontrou uma página isolada com o último item do sumário do Atlas. O espaçamento entre itens foi corrigido, preservando o tamanho das fontes. Os 24 capítulos cabem na mesma página de índice, e o texto começa na página seguinte. Os 45 testes de composição e exportação passaram novamente: `trials-review-index-tests.log`.
+- A paginação também mantém as perguntas junto da prática e as fontes junto do registro da revisão, calculando o espaço a partir das linhas reais. O apêndice usa espaçamento compacto sem reduzir as fontes. Os 45 testes passaram após esse ajuste (`trials-review-pagination-tests-final.log`), e os dez PDFs previstos no catálogo foram regenerados e inspecionados.
 
 A função de processamento está publicada. A liberação do frontend depende dos gates do PR e do deploy Pages correspondente. A aprovação ou rejeição do proprietário, com sua própria conta, continua pendente. Preços e Hotmart permanecem fora desta liberação.
 

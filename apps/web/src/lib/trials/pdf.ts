@@ -54,7 +54,7 @@ export async function trialPdf(saved: SavedTrial) {
 		page.drawText(value, { x: margin, y, font, size, color: ink });
 		y -= size * 1.5;
 	};
-	const paragraph = (value: string, font = body, size = 12, after = 9) => {
+	const wrap = (value: string, font: PDFFont, size: number) => {
 		const lines: string[] = [];
 		const measure = (value: string) => {
 			const key = `${size}:${value}`,
@@ -99,7 +99,14 @@ export async function trialPdf(saved: SavedTrial) {
 			}
 			lines.push(current);
 		}
-		const needed = lines.reduce((n, l) => n + (l ? size * 1.5 : size * 0.8), after);
+		return lines;
+	};
+	const paragraphHeight = (value: string, font = body, size = 12, after = 9) =>
+		wrap(value, font, size).reduce((n, l) => n + (l ? size * 1.5 : size * 0.8), after);
+	const headingHeight = (value: string, size = 17) => 8 + paragraphHeight(value, label, size);
+	const paragraph = (value: string, font = body, size = 12, after = 9) => {
+		const lines = wrap(value, font, size);
+		const needed = paragraphHeight(value, font, size, after);
 		// Keep short paragraphs together and avoid a single line across a page turn.
 		if (lines.length <= 7 && needed > y - 70) newPage();
 		for (let i = 0; i < lines.length; i++) {
@@ -258,10 +265,16 @@ export async function trialPdf(saved: SavedTrial) {
 	heading(
 		'Perguntas para refletir',
 		17,
-		Math.min(450, 130 + r.questions.join(' ').length * 0.19 + r.practice.length * 0.2)
+		Math.min(
+			height - 148,
+			headingHeight('Perguntas para refletir') +
+				r.questions.reduce((sum, q, i) => sum + paragraphHeight(`${i + 1}. ${q}`), 0) +
+				headingHeight('Experimento prático') +
+				paragraphHeight(r.practice)
+		)
 	);
 	r.questions.forEach((q, i) => paragraph(`${i + 1}. ${q}`));
-	heading('Experimento prático');
+	heading('Experimento prático', 17, 0);
 	paragraph(r.practice);
 	newPage();
 	heading('Apêndice · método e limites', 23);
@@ -273,7 +286,7 @@ export async function trialPdf(saved: SavedTrial) {
 			!/nenhum aspecto/i.test(f.display) &&
 			f.display.length <= 650
 	);
-	compact.forEach((f) => paragraph(`${f.id} · ${f.display}`, label, 8));
+	compact.forEach((f) => paragraph(`${f.id} · ${f.display}`, label, 8, 4));
 	const omitted = saved.calculation.facts.length - compact.length;
 	if (omitted)
 		paragraph(
@@ -281,15 +294,20 @@ export async function trialPdf(saved: SavedTrial) {
 			label,
 			9
 		);
-	heading('Fontes e registro da revisão', 15);
-	[...new Set(saved.calculation.facts.map((f) => f.source))].forEach((source) =>
-		paragraph(source, label, 8)
+	const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
+	const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
+	heading(
+		'Fontes e registro da revisão',
+		15,
+		Math.min(
+			height - 148,
+			headingHeight('Fontes e registro da revisão', 15) +
+				sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
+				paragraphHeight(record, label, 8)
+		)
 	);
-	paragraph(
-		`Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`,
-		label,
-		8
-	);
+	sources.forEach((source) => paragraph(source, label, 8, 4));
+	paragraph(record, label, 8);
 	for (const [i, p] of doc.getPages().entries()) {
 		p.drawLine({
 			start: { x: margin, y: 48 },
