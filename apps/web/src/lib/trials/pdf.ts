@@ -6,6 +6,8 @@ import { experienceFor } from './experience';
 import { trialGeometry, bodyNames, bodyGlyphs, signNames, nominalDegree } from './cartography';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
+import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
+import coverArt from '../data/visual-v3-pdf.generated.json';
 
 /** Local book export. This module is dynamically imported only by the download page. */
 export async function trialPdf(saved: SavedTrial) {
@@ -14,8 +16,11 @@ export async function trialPdf(saved: SavedTrial) {
 	const doc = await PDFDocument.create();
 	doc.registerFontkit(fontkit);
 	const body = await doc.embedFont(bodyData, { subset: true }),
-		label = await doc.embedFont(labelData, { subset: true });
+		label = await doc.embedFont(labelData, { subset: true }),
+		display = await doc.embedFont(displayData, { subset: true });
 	const r = saved.reading;
+	const theme = coverArt.products[saved.product_id as keyof typeof coverArt.products] ?? 'B01';
+	const engraving = await doc.embedPng(coverArt.themes[theme as keyof typeof coverArt.themes]);
 	const format = experienceFor(saved.product_id).format;
 	const book = format === 'book';
 	const chapters = r.sections.filter((s) => s.title !== 'Referências desta leitura');
@@ -28,14 +33,14 @@ export async function trialPdf(saved: SavedTrial) {
 		height = 841.89,
 		margin = 54,
 		available = width - 2 * margin;
-	const ink = rgb(0.07, 0.12, 0.21),
-		muted = rgb(0.34, 0.39, 0.46),
-		gold = rgb(0.61, 0.46, 0.25),
-		cream = rgb(0.985, 0.975, 0.955);
+	const ink = rgb(0.063, 0.169, 0.227),
+		muted = rgb(0.298, 0.337, 0.345),
+		gold = rgb(0.475, 0.357, 0.192),
+		cream = rgb(0.969, 0.949, 0.906);
 	let page = doc.addPage([width, height]),
 		y = height - 78;
-	const charsets = new Map([body, label].map((f) => [f, new Set(f.getCharacterSet())]));
-	const widths = new Map([body, label].map((f) => [f, new Map<string, number>()]));
+	const charsets = new Map([body, label, display].map((f) => [f, new Set(f.getCharacterSet())]));
+	const widths = new Map([body, label, display].map((f) => [f, new Map<string, number>()]));
 	const safe = (value: string, font: PDFFont) =>
 		Array.from(value.normalize('NFC'))
 			.map((c) =>
@@ -126,6 +131,7 @@ export async function trialPdf(saved: SavedTrial) {
 		paragraph(value, label, size);
 	};
 	// Cover: no app navigation, evaluation form or browser-print chrome.
+	page.drawImage(engraving, { x: width - margin - 92, y: height - 168, width: 92, height: 92 });
 	page.drawRectangle({ x: margin, y: height - 115, width: 44, height: 2, color: gold });
 	page.drawText('A TUA VIDA NOS ASTROS', {
 		x: margin,
@@ -134,8 +140,8 @@ export async function trialPdf(saved: SavedTrial) {
 		size: 10,
 		color: muted
 	});
-	y = height - (book ? 205 : 145);
-	paragraph(r.title, body, book ? 34 : 25);
+	y = height - 205;
+	paragraph(r.title, display, book ? 34 : 25);
 	y -= 18;
 	paragraph(r.opening, body, book ? 17 : 12);
 	if (saved.input.presentation?.name) paragraph(saved.input.presentation.name, body, 20);

@@ -1,0 +1,41 @@
+{
+  "files": [
+    {
+      "board": "B01",
+      "source": "03_UNIVERSOS/B01/EXPORTS/ATVNA_V3_B01_FIG_01_ESCURO_V001.png",
+      "bytes": 76776,
+      "sha256": "f8576a9ac6191345b07137cfe643b9f6f8d2ef0e32257d1b6613cf24c03ab221"
+    },
+    {
+      "board": "B02",
+      "source": "03_UNIVERSOS/B02/EXPORTS/ATVNA_V3_B02_FIG_01_ESCURO_V001.png",
+      "bytes": 21459,
+      "sha256": "04fb093dedd6ac3516ec6fcfdde3ca7ee3e6a781cf9bbc660f330d7421f2c2c7"
+    },
+    {
+      "board": "B03",
+      "source": "03_UNIVERSOS/B03/EXPORTS/ATVNA_V3_B03_FIG_01_ESCURO_V001.png",
+      "bytes": 79224,
+      "sha256": "58bcdea8835ec1f2ee4860a8cb8470a804b377fb4ad3ad7a3629e4da77c8e5a4"
+    },
+    {
+      "board": "B04",
+      "source": "03_UNIVERSOS/B04/EXPORTS/ATVNA_V3_B04_FIG_01_ESCURO_V001.png",
+      "bytes": 97737,
+      "sha256": "f86cb3ca6baa657c9a09c1b80989e484c3aeb7cc81c9313593154bb52617cbab"
+    },
+    {
+      "board": "B05",
+      "source": "03_UNIVERSOS/B05/EXPORTS/ATVNA_V3_B05_FIG_01_ESCURO_V001.png",
+      "bytes": 52625,
+      "sha256": "23fd3cb8b27bf1973cda3b04d5decb360d9ac4b385a13618e1491db7d2407da5"
+    },
+    {
+      "board": "B06",
+      "source": "03_UNIVERSOS/B06/EXPORTS/ATVNA_V3_B06_FIG_01_ESCURO_V001.png",
+      "bytes": 135253,
+      "sha256": "ef8f718911423fb7aa09219cea87a3c05b58a5e35b43c1fc74c0e16b4250054c"
+    }
+  ],
+  "totalBytes": 463074
+}

@@ -70,7 +70,7 @@ export function trialSvg(saved: SavedTrial) {
 			point = longitudePoint(p.longitude, radius);
 		lines.push(radial(p.longitude, radius + 12, 268, '#bbc3cc'));
 		lines.push(
-			`<g data-body="${p.body}" data-longitude="${p.longitude}" transform="translate(${point.x} ${point.y})"><title>${bodyNames[p.body]}: ${nominalDegree(p.longitude)}</title><circle r="13" fill="#faf7f2"/><path d="${bodyGlyphs[p.body]}" fill="none" stroke="#122237" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>`
+			`<g data-body="${p.body}" data-longitude="${p.longitude}" transform="translate(${point.x} ${point.y})"><title>${bodyNames[p.body]}: ${nominalDegree(p.longitude)}</title><circle r="13" fill="#f7f2e7"/><path d="${bodyGlyphs[p.body]}" fill="none" stroke="#102b3a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>`
 		);
 		legend.push(text(65, 815 + i * 25, `${bodyNames[p.body]}: ${nominalDegree(p.longitude)}`));
 	});
@@ -79,7 +79,7 @@ export function trialSvg(saved: SavedTrial) {
 		lines.push(radial(a, 65, 307, '#967340'));
 		const p = longitudePoint(a, 70);
 		lines.push(
-			`<rect x="${p.x - 17}" y="${p.y - 21}" width="34" height="17" fill="#faf7f2"/><text x="${p.x}" y="${p.y - 8}" text-anchor="middle" font-size="13">${name === 'ascendant' ? 'ASC' : 'MC'}</text>`
+			`<rect x="${p.x - 17}" y="${p.y - 21}" width="34" height="17" fill="#f7f2e7"/><text x="${p.x}" y="${p.y - 8}" text-anchor="middle" font-size="13">${name === 'ascendant' ? 'ASC' : 'MC'}</text>`
 		);
 		legend.push(
 			text(
@@ -99,5 +99,5 @@ export function trialSvg(saved: SavedTrial) {
 			)
 		)
 	);
-	return `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1410" viewBox="0 0 1000 1410" role="img" aria-labelledby="title desc" lang="pt-BR"><title id="title">${xml(saved.reading.title)} - cartografia</title><desc id="desc">Projeção dos valores salvos; zero de Áries à esquerda, longitudes no sentido anti-horário. Glifos planetários, casas disponíveis e aspectos maiores salvos. Precisão experimental.</desc><rect width="1000" height="1410" fill="#faf7f2"/><g font-family="Georgia,serif" fill="#122237">${text(65, 62, saved.reading.title, 27)}${text(65, 95, 'Geometria salva · zodíaco tropical · precisão experimental', 15)}<circle cx="500" cy="430" r="290" fill="none" stroke="#122237"/>${lines.join('')}${legend.join('')}${text(65, 1305, houses.cusps.length ? 'Casas Placidus conforme cálculo salvo.' : 'Casas não disponíveis neste cálculo; nenhuma casa foi inventada.', 14)}${text(65, 1335, 'Linhas azuis: sextil/trígono; terracota: quadratura/oposição; ouro: conjunção.', 14)}${text(65, 1365, `Leitura ${saved.id}`, 12)}</g></svg>`;
+	return `<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1410" viewBox="0 0 1000 1410" role="img" aria-labelledby="title desc" lang="pt-BR"><title id="title">${xml(saved.reading.title)} - cartografia</title><desc id="desc">Projeção dos valores salvos; zero de Áries à esquerda, longitudes no sentido anti-horário. Glifos planetários, casas disponíveis e aspectos maiores salvos. Precisão experimental.</desc><rect width="1000" height="1410" fill="#f7f2e7"/><g font-family="Georgia,serif" fill="#102b3a">${text(65, 62, saved.reading.title, 27)}${text(65, 95, 'Geometria salva · zodíaco tropical · precisão experimental', 15)}<circle cx="500" cy="430" r="290" fill="none" stroke="#102b3a"/>${lines.join('')}${legend.join('')}${text(65, 1305, houses.cusps.length ? 'Casas Placidus conforme cálculo salvo.' : 'Casas não disponíveis neste cálculo; nenhuma casa foi inventada.', 14)}${text(65, 1335, 'Linhas azuis: sextil/trígono; terracota: quadratura/oposição; ouro: conjunção.', 14)}${text(65, 1365, `Leitura ${saved.id}`, 12)}</g></svg>`;
 }

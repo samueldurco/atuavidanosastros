@@ -1,0 +1,704 @@
+{
+  "version": 3,
+  "boards": 50,
+  "productBoards": 26,
+  "source": "MATRIZ_COBERTURA_V3.json",
+  "rows": [
+    {
+      "board": "A01",
+      "title": "DNA artístico e composição mestra",
+      "productId": null,
+      "routeOrState": "Todas as rotas",
+      "implementation": [
+        "lib/styles/visual-v3.css",
+        "lib/components/VisualHeading.svelte",
+        "lib/components/VisualMotif.svelte",
+        "routes/+layout.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "A02",
+      "title": "Papel, tinta, paleta e biblioteca de matéria",
+      "productId": null,
+      "routeOrState": "Todas as rotas",
+      "implementation": ["lib/styles/visual-v3.css", "../static/brand/v3"],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "A03",
+      "title": "Tipografia, grade e ritmo editorial",
+      "productId": null,
+      "routeOrState": "Todas as rotas",
+      "implementation": ["../app.css", "lib/components/VisualHeading.svelte"],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "A04",
+      "title": "Componentes, interação e acessibilidade",
+      "productId": null,
+      "routeOrState": "Formulários, controles e estados existentes",
+      "implementation": [
+        "lib/styles/visual-v3.css",
+        "lib/components/ui/PageIntro.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "B01",
+      "title": "Mapa astral",
+      "productId": null,
+      "routeOrState": "/meu-ceu; /leituras?tema=meu-ceu",
+      "implementation": [
+        "routes/[slug]/+page.svelte",
+        "routes/leituras/+page.svelte",
+        "lib/data/visual-v3.generated.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "B02",
+      "title": "Previsões",
+      "productId": null,
+      "routeOrState": "/ciclos; /leituras?tema=ciclos",
+      "implementation": [
+        "routes/[slug]/+page.svelte",
+        "routes/leituras/+page.svelte",
+        "lib/data/visual-v3.generated.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "B03",
+      "title": "Amor e relacionamentos",
+      "productId": null,
+      "routeOrState": "/amor; /leituras?tema=amor",
+      "implementation": [
+        "routes/[slug]/+page.svelte",
+        "routes/leituras/+page.svelte",
+        "lib/data/visual-v3.generated.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "B04",
+      "title": "Carreira e dinheiro",
+      "productId": null,
+      "routeOrState": "/proposito; /leituras?tema=proposito",
+      "implementation": [
+        "routes/[slug]/+page.svelte",
+        "routes/leituras/+page.svelte",
+        "lib/data/visual-v3.generated.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "B05",
+      "title": "Tarot",
+      "productId": null,
+      "routeOrState": "/tarot; /leituras?tema=tarot",
+      "implementation": [
+        "routes/[slug]/+page.svelte",
+        "routes/leituras/+page.svelte",
+        "lib/data/visual-v3.generated.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "B06",
+      "title": "Sonhos",
+      "productId": null,
+      "routeOrState": "/sonhos; /leituras?tema=sonhos",
+      "implementation": [
+        "routes/[slug]/+page.svelte",
+        "routes/leituras/+page.svelte",
+        "lib/data/visual-v3.generated.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C01",
+      "title": "Mapa Astral",
+      "productId": "birth-chart",
+      "routeOrState": "/produtos/mapa-astral; /testar-produtos/birth-chart; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C02",
+      "title": "Sol, Lua e Ascendente",
+      "productId": "three-pillars",
+      "routeOrState": "/produtos/tres-pilares; /testar-produtos/three-pillars; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C03",
+      "title": "Ascendente",
+      "productId": "ascendant",
+      "routeOrState": "/produtos/ascendente; /testar-produtos/ascendant; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C04",
+      "title": "Mapa Astral 360",
+      "productId": "life-atlas",
+      "routeOrState": "/produtos/atlas-da-vida-360; /testar-produtos/life-atlas; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C05",
+      "title": "Horóscopo",
+      "productId": "horoscope",
+      "routeOrState": "/produtos/horoscopo; /testar-produtos/horoscope; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C06",
+      "title": "Previsões para uma Data",
+      "productId": "date-reading",
+      "routeOrState": "/produtos/leitura-da-data; /testar-produtos/date-reading; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C07",
+      "title": "Previsões da Semana",
+      "productId": "week-reading",
+      "routeOrState": "/produtos/semana; /testar-produtos/week-reading; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C08",
+      "title": "Calendário pessoal",
+      "productId": "personal-calendar",
+      "routeOrState": "/produtos/calendario-pessoal; /testar-produtos/personal-calendar; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C09",
+      "title": "Revolução Solar",
+      "productId": "solar-return",
+      "routeOrState": "/produtos/revolucao-solar; /testar-produtos/solar-return; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C10",
+      "title": "Sinastria",
+      "productId": "synastry",
+      "routeOrState": "/produtos/sinastria; /testar-produtos/synastry; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C11",
+      "title": "Combinação do Casal",
+      "productId": "pair-preview",
+      "routeOrState": "/produtos/preview-do-par; /testar-produtos/pair-preview; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C12",
+      "title": "Dossiê do Casal",
+      "productId": "couple-dossier",
+      "routeOrState": "/produtos/dossie-do-casal; /testar-produtos/couple-dossier; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C13",
+      "title": "Carta do Dia",
+      "productId": "daily-card",
+      "routeOrState": "/produtos/carta-do-dia; /testar-produtos/daily-card; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C14",
+      "title": "Tarot Sim ou Não",
+      "productId": "tarot-yes-no",
+      "routeOrState": "/produtos/sim-nao-responsavel; /testar-produtos/tarot-yes-no; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C15",
+      "title": "Três Perguntas",
+      "productId": "three-questions",
+      "routeOrState": "/produtos/tres-perguntas; /testar-produtos/three-questions; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C16",
+      "title": "Jornada de Tarot",
+      "productId": "tarot-journey",
+      "routeOrState": "/produtos/jornada-tarot; /testar-produtos/tarot-journey; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C17",
+      "title": "Foco Agora",
+      "productId": "tarot-focus",
+      "routeOrState": "/produtos/foco-agora; /testar-produtos/tarot-focus; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C18",
+      "title": "Mapa de Carreira",
+      "productId": "purpose-career",
+      "routeOrState": "/produtos/mapa-proposito-carreira; /testar-produtos/purpose-career; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C19",
+      "title": "Meio do Céu",
+      "productId": "midheaven",
+      "routeOrState": "/produtos/meio-do-ceu; /testar-produtos/midheaven; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C20",
+      "title": "Bússola de Carreira",
+      "productId": "career-compass",
+      "routeOrState": "/produtos/bussola-de-carreira; /testar-produtos/career-compass; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C21",
+      "title": "Jornada de Carreira",
+      "productId": "direction-journey",
+      "routeOrState": "/produtos/jornada-direcao; /testar-produtos/direction-journey; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C22",
+      "title": "Interpretação de Sonhos",
+      "productId": "dream-reading",
+      "routeOrState": "/produtos/leitura-essencial-sonhos; /testar-produtos/dream-reading; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C23",
+      "title": "Registro de sonho",
+      "productId": "dream-journal",
+      "routeOrState": "/produtos/registro-de-sonho; /testar-produtos/dream-journal; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C24",
+      "title": "Leitura Aprofundada do Sonho",
+      "productId": "dream-dossier",
+      "routeOrState": "/produtos/dossie-do-sonho; /testar-produtos/dream-dossier; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C25",
+      "title": "Diário de Sonhos 30 Dias",
+      "productId": "dream-atlas",
+      "routeOrState": "/produtos/atlas-dos-sonhos; /testar-produtos/dream-atlas; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "C26",
+      "title": "ATV+",
+      "productId": "atv-plus",
+      "routeOrState": "/produtos/atv-plus; /testar-produtos/atv-plus; leitor privado",
+      "implementation": [
+        "routes/produtos/[slug]/+page.svelte",
+        "lib/components/NatalIntake.svelte",
+        "lib/components/ReadingExperience.svelte",
+        "lib/components/ProductRunReader.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D01",
+      "title": "Home, menu e rodapé completos",
+      "productId": null,
+      "routeOrState": "/; menu e rodapé",
+      "implementation": [
+        "routes/+page.svelte",
+        "lib/components/shells/PublicShell.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D02",
+      "title": "Ferramentas gratuitas e descoberta",
+      "productId": null,
+      "routeOrState": "/bussola-de-carreira; /leituras",
+      "implementation": [
+        "routes/bussola-de-carreira/+page.svelte",
+        "lib/components/NatalIntake.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D03",
+      "title": "Caderno e leitura editorial",
+      "productId": null,
+      "routeOrState": "/caderno; artigos publicados",
+      "implementation": ["lib/components/EditorialArticle.svelte"],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D04",
+      "title": "Páginas de descoberta e acervo",
+      "productId": null,
+      "routeOrState": "/caderno; /[slug]",
+      "implementation": ["routes/[slug]/+page.svelte"],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D05",
+      "title": "Entrar, conta e painel",
+      "productId": null,
+      "routeOrState": "/entrar; /conta; /dashboard",
+      "implementation": ["lib/components/shells/AuthenticatedShell.svelte"],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D06",
+      "title": "Biblioteca e leitor privado",
+      "productId": null,
+      "routeOrState": "/biblioteca; /biblioteca/[id]; /testar-produtos/leituras/[id]",
+      "implementation": [
+        "lib/components/ProductRunReader.svelte",
+        "lib/components/ReadingExperience.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D07",
+      "title": "Loja e coleções",
+      "productId": null,
+      "routeOrState": "/loja; coleções existentes",
+      "implementation": [
+        "lib/styles/visual-v3.css",
+        "routes/[slug]/+page.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D08",
+      "title": "Método, ajuda e informação essencial",
+      "productId": null,
+      "routeOrState": "/metodo; /suporte; /termos; /privacidade",
+      "implementation": [
+        "lib/components/ui/PageIntro.svelte",
+        "routes/[slug]/+page.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D09",
+      "title": "Compra, acesso e recuperação comercial",
+      "productId": null,
+      "routeOrState": "Acesso, recuperação e disponibilidade comercial existentes",
+      "implementation": [
+        "lib/components/shells/PublicShell.svelte",
+        "lib/styles/visual-v3.css"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "D10",
+      "title": "Testes privados e operação interna",
+      "productId": null,
+      "routeOrState": "/testar-produtos; /testar-produtos/[productId]; /admin",
+      "implementation": [
+        "lib/components/NatalIntake.svelte",
+        "lib/styles/visual-v3.css"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "E01",
+      "title": "PDF e diagramas SVG",
+      "productId": null,
+      "routeOrState": "PDF privado completo e SVG calculado",
+      "implementation": [
+        "lib/trials/pdf.ts",
+        "lib/server/product-pdf.ts",
+        "lib/trials/exports.ts"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "E02",
+      "title": "Áudio e comunicações transacionais",
+      "productId": null,
+      "routeOrState": "Estado de áudio e solicitação/recibo transacional existentes",
+      "implementation": [
+        "lib/components/ProductRunReader.svelte",
+        "lib/server/product-email-message.ts"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "E03",
+      "title": "Desdobramentos editoriais e sociais",
+      "productId": null,
+      "routeOrState": "Revista, leitor e exportação PNG calculada",
+      "implementation": [
+        "lib/components/EditorialArticle.svelte",
+        "lib/components/ReadingExperience.svelte"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    },
+    {
+      "board": "F01",
+      "title": "Universo visual completo e revisão final",
+      "productId": null,
+      "routeOrState": "Referência interna e QA; sem galeria demonstrativa pública",
+      "implementation": [
+        "tests/visual-v3.e2e.ts",
+        "docs/design/visual-v3-coverage.json"
+      ],
+      "visualStatus": "INTEGRATED",
+      "functionalGate": "EXISTING_GATES_PRESERVED",
+      "proof": "apps/web/tests/visual-v3.e2e.ts; existing public/private accessibility and private-trials suites"
+    }
+  ]
+}

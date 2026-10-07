@@ -1,4 +1,5 @@
 <script lang="ts">
+	import VisualMotif from './VisualMotif.svelte';
 	import type { EditorialDocument } from '$lib/server/editorial';
 	import { editorialTopic } from '$lib/data/editorial-topics';
 	import { interestNavigation } from '$lib/data/public-navigation';
@@ -37,6 +38,7 @@
 						: 'Guia'}
 		</p>
 		<h1 class="h1">{document.title}</h1>
+		{#if topic}<VisualMotif identity={topic.id} />{/if}
 		<p class="lead">{document.description}</p>
 		<p>Por <a href={`/pessoas/${document.author.id}`}>{document.author.name}</a></p>
 		{#if document.automationDisclosure}

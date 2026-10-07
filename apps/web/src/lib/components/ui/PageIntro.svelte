@@ -1,4 +1,5 @@
 <script lang="ts">
+	import VisualHeading from '../VisualHeading.svelte';
 	import type { Snippet } from 'svelte';
 	let {
 		eyebrow,
@@ -11,7 +12,7 @@
 <header class="page-intro">
 	<div>
 		<p class="eyebrow">{eyebrow}</p>
-		<h1>{title}</h1>
+		<VisualHeading {title} />
 		{#if description}<p class="intro-description">{description}</p>{/if}
 	</div>
 	{#if actions}<div class="intro-actions">{@render actions()}</div>{/if}
@@ -31,11 +32,6 @@
 	.page-intro > div:first-child {
 		flex: 1 1 24rem;
 		min-width: 0;
-	}
-	h1 {
-		margin: 0;
-		font: 500 clamp(2.25rem, 4vw, 3.75rem)/1.1 var(--atv-font-display);
-		letter-spacing: -0.025em;
 	}
 	.intro-description {
 		margin: 1rem 0 0;

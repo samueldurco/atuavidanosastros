@@ -7,6 +7,7 @@ import { weekTemporalFacts } from '../week-temporal-facts';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
+import coverArt from '../data/visual-v3-pdf.generated.json';
 
 export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.3.0';
 export const PDF_LIMITS = Object.freeze({
@@ -44,9 +45,9 @@ export async function renderProductPdf(value: unknown) {
 		const display = await doc.embedFont(displayData, { subset: true });
 		const body = await doc.embedFont(bodyData, { subset: true });
 		const label = await doc.embedFont(labelData, { subset: true });
-		const ink = rgb(0.08, 0.13, 0.22),
-			muted = rgb(0.28, 0.32, 0.39),
-			gold = rgb(0.56, 0.43, 0.25);
+		const ink = rgb(0.063, 0.169, 0.227),
+			muted = rgb(0.298, 0.337, 0.345),
+			gold = rgb(0.475, 0.357, 0.192);
 		const width = 595.28,
 			height = 841.89,
 			margin = 54,
@@ -71,6 +72,7 @@ export async function renderProductPdf(value: unknown) {
 		let page = doc.addPage([width, height]);
 		let y = height - 86;
 		const decorate = () => {
+			page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(0.969, 0.949, 0.906) });
 			page.drawText('A Tua Vida nos Astros', {
 				x: margin,
 				y: height - 43,
@@ -86,6 +88,15 @@ export async function renderProductPdf(value: unknown) {
 			});
 		};
 		decorate();
+		const theme = coverArt.products[product.id as keyof typeof coverArt.products] ?? 'B01';
+		const engraving = await doc.embedPng(coverArt.themes[theme as keyof typeof coverArt.themes]);
+		page.drawImage(engraving, {
+			x: width - margin - 30,
+			y: height - 49,
+			width: 30,
+			height: 30,
+			opacity: 0.8
+		});
 		const ensure = (space: number) => {
 			checkTime();
 			if (y - space >= 66) return;

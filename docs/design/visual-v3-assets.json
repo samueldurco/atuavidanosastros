@@ -1,0 +1,922 @@
+{
+  "version": 3,
+  "source": "DESING SITE/SITE atvna desing/V3/MANIFEST_PRODUCAO_V3.json",
+  "sourceManifestSha256": "ba782d96ad0389b16d0f7e3c088a883c104597d46c0e61671e341280e97ce909",
+  "policy": "Somente arquivos produzidos; variantes não contam como novas matrizes. Aprovação, integração e hospedagem exigem prova própria.",
+  "totalBytes": 3479763,
+  "files": [
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_B01_TITULO_V001.png",
+      "sourceSha256": "32949a0749438fbca1c9659ab331a4815d14e9065af4ff083be5dbdb5b266127",
+      "output": "/brand/v3/B01-title.webp",
+      "sha256": "2cb506fdb66f58106d718afe591041fec217b920361d6dc34c1dbe793f09168f",
+      "bytes": 71508,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "03_UNIVERSOS/B01/EXPORTS/ATVNA_V3_B01_FIG_01_ESCURO_V001.png",
+      "sourceSha256": "3a5258160a808ab1b9756c7750c787554c3cb7c44c623049e87d1b1a9e8d5b97",
+      "output": "/brand/v3/B01-figure-1.webp",
+      "sha256": "f208ecef49229da1bc49d37716b31ffdee56a2f993bcd13d25b868985a1c7803",
+      "bytes": 67836,
+      "width": 520,
+      "height": 780
+    },
+    {
+      "source": "03_UNIVERSOS/B01/EXPORTS/ATVNA_V3_B01_FIG_02_ESCURO_V001.png",
+      "sourceSha256": "8bee3ada8f97932212b5bf56a7ee04d887ba7d86982310fceb3e9ef1909cb4ce",
+      "output": "/brand/v3/B01-figure-2.webp",
+      "sha256": "89d8c82a02640d6bb30d97f1a9c79fbaf553e4c991ac32a8562e2821125dfaab",
+      "bytes": 79374,
+      "width": 520,
+      "height": 520
+    },
+    {
+      "source": "03_UNIVERSOS/B01/EXPORTS/ATVNA_V3_B01_FIG_03_ESCURO_V001.png",
+      "sourceSha256": "64500481903aec481692d2bf10c4d7865e6e06ec4f274aca6fa92d8c921a5b42",
+      "output": "/brand/v3/B01-figure-3.webp",
+      "sha256": "da468a8337b0a2f52a1ed5f0a37379da0663cf1da5f8276b1d1dbc89abef16d7",
+      "bytes": 53716,
+      "width": 520,
+      "height": 347
+    },
+    {
+      "source": "03_UNIVERSOS/B01/LATERAIS/ATVNA_V3_B01_LATERAL_DESKTOP_ESQUERDA_V001.png",
+      "sourceSha256": "a888f5d47c6c41d8ec57d78e5b47e8c348b9369a19325781fc52ab0f8cb6638a",
+      "output": "/brand/v3/B01-left.webp",
+      "sha256": "0debe38268bcbf58bc3feba4c9fbfc48f9f564dfa0d84633e1e90450be2a067a",
+      "bytes": 18524,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B01/LATERAIS/ATVNA_V3_B01_LATERAL_DESKTOP_DIREITA_V001.png",
+      "sourceSha256": "7173858c22f258e0322d1d88026fc97895d5cf15150e3030be759e25bbdaaa47",
+      "output": "/brand/v3/B01-right.webp",
+      "sha256": "9443f3adb43895c6c933712178617d3802de76d8d5702bc94ae6d63c51ca2ece",
+      "bytes": 16790,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B01/LATERAIS/ATVNA_V3_B01_LATERAL_MOBILE_TOPO_V001.png",
+      "sourceSha256": "9c4ad2de878abf4650d2035bd96d31bbe5db1135065cef2bfd04f03484f908fe",
+      "output": "/brand/v3/B01-top.webp",
+      "sha256": "6eb2969abf025b8bf8268c7aea6aa1861aa7a3558a042fd64abc63b43b16d284",
+      "bytes": 17984,
+      "width": 480,
+      "height": 192
+    },
+    {
+      "source": "03_UNIVERSOS/B01/LATERAIS/ATVNA_V3_B01_LATERAL_MOBILE_BASE_V001.png",
+      "sourceSha256": "4d1529b126afb778c5a91d0c7cb718ad8c7e9bac7d5a19e8ce587cdf8a0ffba3",
+      "output": "/brand/v3/B01-bottom.webp",
+      "sha256": "f97ef54c47b5b36c9bd96c251b89d2d912098a3d6bdab4ef2835bcf65cfee5eb",
+      "bytes": 24290,
+      "width": 480,
+      "height": 192
+    },
+    {
+      "source": "03_UNIVERSOS/B01/EXPORTS/ATVNA_V3_B01_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "4b63030c32dc83ef8935ddc708715c93b3862493bd1f179438d1c3ea32644400",
+      "output": "/brand/v3/B01-divider.svg",
+      "sha256": "4b63030c32dc83ef8935ddc708715c93b3862493bd1f179438d1c3ea32644400",
+      "bytes": 519
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_B02_TITULO_V001.png",
+      "sourceSha256": "3a35328a4305206df30e4859d0cdb6e8a5705ef8f6dafd01e1f850e27a5488e9",
+      "output": "/brand/v3/B02-title.webp",
+      "sha256": "d1ea0fa11229e2e9e3ebe9a61bd5e08d10a2d3660c5ebb9f90decc611bc1fd26",
+      "bytes": 33788,
+      "width": 720,
+      "height": 300
+    },
+    {
+      "source": "03_UNIVERSOS/B02/EXPORTS/ATVNA_V3_B02_FIG_01_ESCURO_V001.png",
+      "sourceSha256": "a8b0ee05802463cbe43813497b3885d1f85ceea9482b8c8b5e99da0c41262972",
+      "output": "/brand/v3/B02-figure-1.webp",
+      "sha256": "e3f6e0720f9dd4fd4e00f8e516ff41cc1ec27cb00b13cd9e027a2af6e7a6f0a4",
+      "bytes": 26324,
+      "width": 520,
+      "height": 195
+    },
+    {
+      "source": "03_UNIVERSOS/B02/EXPORTS/ATVNA_V3_B02_FIG_02_ESCURO_V001.png",
+      "sourceSha256": "17b11d7d4545f431b1cd5882e4d5d773dae76ceb6d14ee7ec3090766787dc6eb",
+      "output": "/brand/v3/B02-figure-2.webp",
+      "sha256": "7b23b58e0035b6484dfcd4557358f4ff8b5272f344d7c21d1cbb1481aff7a126",
+      "bytes": 34476,
+      "width": 520,
+      "height": 260
+    },
+    {
+      "source": "03_UNIVERSOS/B02/EXPORTS/ATVNA_V3_B02_FIG_03_ESCURO_V001.png",
+      "sourceSha256": "62dd3c55d1d1a1ed2a5fb2ca839b82ada849facb12bea37dc8cfdc259f8a5e64",
+      "output": "/brand/v3/B02-figure-3.webp",
+      "sha256": "c5e0a4efa67ef3008f333bdeb570e6f9313e60eadd0d07a27b6c581119eef690",
+      "bytes": 83812,
+      "width": 520,
+      "height": 780
+    },
+    {
+      "source": "03_UNIVERSOS/B02/LATERAIS/ATVNA_V3_B02_LATERAL_DESKTOP_ESQUERDA_V001.png",
+      "sourceSha256": "32faa3201b1876463cce76715da9dd40cb3ffc28c37662748c21cb4fbd05c138",
+      "output": "/brand/v3/B02-left.webp",
+      "sha256": "57dfe7de9cb4c9926f122ef557ee870574f575f993de243ff3329f6e297f79cb",
+      "bytes": 13110,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B02/LATERAIS/ATVNA_V3_B02_LATERAL_DESKTOP_DIREITA_V001.png",
+      "sourceSha256": "393cb4deb8762a78d900a1bb9642df9021081e2eb5d017b2eb1ac26554bb7780",
+      "output": "/brand/v3/B02-right.webp",
+      "sha256": "3cc8fc05f455b7b1098fb138e9504d66980d2c8adc9ea60c3b338025a4ac6f8a",
+      "bytes": 16330,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B02/LATERAIS/ATVNA_V3_B02_LATERAL_MOBILE_TOPO_V001.png",
+      "sourceSha256": "31487ba53f58abc48f6565ca39581472f5057e14d4d1126a6e7dc38ba6e3271d",
+      "output": "/brand/v3/B02-top.webp",
+      "sha256": "7c324b373c08c8e27b20c02dcc1142e7d6eab3a07caa3af55a46f96789ba3041",
+      "bytes": 17820,
+      "width": 480,
+      "height": 160
+    },
+    {
+      "source": "03_UNIVERSOS/B02/LATERAIS/ATVNA_V3_B02_LATERAL_MOBILE_BASE_V001.png",
+      "sourceSha256": "13980eba9c28d00a8d4cce8fbdd1749f1a078c67bdc6ec713b3430192663545d",
+      "output": "/brand/v3/B02-bottom.webp",
+      "sha256": "37200a51151c62ba32250010a6000553715d0623b0d87ae18a594569da8a1d8c",
+      "bytes": 19050,
+      "width": 480,
+      "height": 160
+    },
+    {
+      "source": "03_UNIVERSOS/B02/EXPORTS/ATVNA_V3_B02_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "e3cff40c80acc63c17a223fd6ef0adce13f09bf9622c59a270f98b8a78ced90d",
+      "output": "/brand/v3/B02-divider.svg",
+      "sha256": "e3cff40c80acc63c17a223fd6ef0adce13f09bf9622c59a270f98b8a78ced90d",
+      "bytes": 1666
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_B03_TITULO_V001.png",
+      "sourceSha256": "55cde639237eed9e9218433f34899354abdfc4f2bad7a26f7a9cc248875bcafb",
+      "output": "/brand/v3/B03-title.webp",
+      "sha256": "e059c5a8691f8512b5dff495035d91899f48cfae57aa785f5b935b9a7f4da980",
+      "bytes": 44284,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "03_UNIVERSOS/B03/EXPORTS/ATVNA_V3_B03_FIG_01_ESCURO_V001.png",
+      "sourceSha256": "bfcfc3144bc56064d0cea30897e7dc4b611b085aa8d8606e0e3ea6dec0a8a6a5",
+      "output": "/brand/v3/B03-figure-1.webp",
+      "sha256": "7907b95decccf96568fe48b045f9a6fb45051ced3e10db4e5f993e581e0a8df2",
+      "bytes": 64774,
+      "width": 520,
+      "height": 650
+    },
+    {
+      "source": "03_UNIVERSOS/B03/EXPORTS/ATVNA_V3_B03_FIG_02_ESCURO_V001.png",
+      "sourceSha256": "76f856f60eabe2e5cbc1ae1f6de49c449ccae6bfc25289773841c2790843cd71",
+      "output": "/brand/v3/B03-figure-2.webp",
+      "sha256": "0c61203b988e4f64ef3c55e8a10e7c06befefcfa41c04be654cad89973e1b85d",
+      "bytes": 72842,
+      "width": 520,
+      "height": 520
+    },
+    {
+      "source": "03_UNIVERSOS/B03/EXPORTS/ATVNA_V3_B03_FIG_03_ESCURO_V001.png",
+      "sourceSha256": "755ca533ff76b088598ac13503b7939ed8e45d2636689e5718f2ffc80adf2c9b",
+      "output": "/brand/v3/B03-figure-3.webp",
+      "sha256": "64fd8ee1e7184851493e5bf9ca3eccf9044519e56378729993d62229fa2114a6",
+      "bytes": 20560,
+      "width": 520,
+      "height": 260
+    },
+    {
+      "source": "03_UNIVERSOS/B03/LATERAIS/ATVNA_V3_B03_LATERAL_DESKTOP_ESQUERDA_V001.png",
+      "sourceSha256": "df6c38c7e4d07bb9ab283e643d985fa38c25fb96c3fed9a9660a424dd4dac306",
+      "output": "/brand/v3/B03-left.webp",
+      "sha256": "0fb93d04c290fafeae65eece477e300abee9128fc211594ed4bdc43c7e475112",
+      "bytes": 15726,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B03/LATERAIS/ATVNA_V3_B03_LATERAL_DESKTOP_DIREITA_V001.png",
+      "sourceSha256": "c0cc1594c73a55494b98b10d04ca3c1e4408ab36784da5b330289e0b11183f00",
+      "output": "/brand/v3/B03-right.webp",
+      "sha256": "43f87eaa909829a8f20f38a3d2d2dcba3f05e929b437255d66ee600be53addc3",
+      "bytes": 14998,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B03/LATERAIS/ATVNA_V3_B03_LATERAL_MOBILE_TOPO_V001.png",
+      "sourceSha256": "4964970c7bf0509cafff95b25d36741e03de9e985af1ec0a902f1f3948b18dd0",
+      "output": "/brand/v3/B03-top.webp",
+      "sha256": "edd338b5b29d28fe741399c442a956d58636d0eacd922cf6b66af7fa86f9d852",
+      "bytes": 19300,
+      "width": 480,
+      "height": 160
+    },
+    {
+      "source": "03_UNIVERSOS/B03/LATERAIS/ATVNA_V3_B03_LATERAL_MOBILE_BASE_V001.png",
+      "sourceSha256": "eb529bd530cbc60f62a2be325ff2ca895ae78f2a9491b95596134ea9f5234a9a",
+      "output": "/brand/v3/B03-bottom.webp",
+      "sha256": "a2e5f0b31015fd6d760a13e5f27f4767bf2da6c1bc7ac5e757fba55b9a140cc9",
+      "bytes": 20160,
+      "width": 480,
+      "height": 160
+    },
+    {
+      "source": "03_UNIVERSOS/B03/EXPORTS/ATVNA_V3_B03_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "dfd1c360cc4bd599694d8ac808addeb5160d5558ebee8aeeca23946e31e5815f",
+      "output": "/brand/v3/B03-divider.svg",
+      "sha256": "dfd1c360cc4bd599694d8ac808addeb5160d5558ebee8aeeca23946e31e5815f",
+      "bytes": 1173
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_B04_TITULO_V001.png",
+      "sourceSha256": "00ab06635243d5342e5a602d58bbb3fff696f1b24bcb31c0b34c9074aab61fe1",
+      "output": "/brand/v3/B04-title.webp",
+      "sha256": "8adc92b1dc4763074c7b9a218918fec7506855ec3d4a9857c08de77a6a2355f0",
+      "bytes": 52372,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "03_UNIVERSOS/B04/EXPORTS/ATVNA_V3_B04_FIG_01_ESCURO_V001.png",
+      "sourceSha256": "9f93aefcb52fc3435a4b66952e2383d0d0712d345712aa77cea0e432b2b17ded",
+      "output": "/brand/v3/B04-figure-1.webp",
+      "sha256": "74509ed34ac780b2feb0f08cec6b814b8f24a3607f39f36061e9b1961b9f2012",
+      "bytes": 106796,
+      "width": 520,
+      "height": 561
+    },
+    {
+      "source": "03_UNIVERSOS/B04/EXPORTS/ATVNA_V3_B04_FIG_02_ESCURO_V001.png",
+      "sourceSha256": "d9402b25a4d2c9b2f3056407879c9a3009d0ea21a3238a8c3bcc6889ce360cb0",
+      "output": "/brand/v3/B04-figure-2.webp",
+      "sha256": "71d2a6c9632a6eb4926183c6192cfbc329c11067fd3277967276b6ca4b5fa4e6",
+      "bytes": 44368,
+      "width": 520,
+      "height": 347
+    },
+    {
+      "source": "03_UNIVERSOS/B04/EXPORTS/ATVNA_V3_B04_FIG_03_ESCURO_V001.png",
+      "sourceSha256": "c323c8eaffc7481dd1290e4fb9166c7150eebf568e11f4f527aea942383649c4",
+      "output": "/brand/v3/B04-figure-3.webp",
+      "sha256": "5d2a2cebc81368a2b398335d31595dec12a4847e49077c765ef4ed0113b19f87",
+      "bytes": 73194,
+      "width": 520,
+      "height": 520
+    },
+    {
+      "source": "03_UNIVERSOS/B04/LATERAIS/ATVNA_V3_B04_LATERAL_DESKTOP_ESQUERDA_V001.png",
+      "sourceSha256": "0298e8de54889028baf7e2ebbb9965cde9917732e29242fcc08b7e42cacca168",
+      "output": "/brand/v3/B04-left.webp",
+      "sha256": "c4ddf7ec4ace5eb123fce1fbb9e4711f71e31db12d2a8d92e282ce664920313b",
+      "bytes": 19100,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B04/LATERAIS/ATVNA_V3_B04_LATERAL_DESKTOP_DIREITA_V001.png",
+      "sourceSha256": "7c711342dd80d57fade58d7ab9f52b8bde56ca1689f06334ca1afb8728aef158",
+      "output": "/brand/v3/B04-right.webp",
+      "sha256": "0d91761d0278b9d7cca46bd71ef4312b4afb7c2bd06b0724dd0907e5347e1609",
+      "bytes": 16338,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B04/LATERAIS/ATVNA_V3_B04_LATERAL_MOBILE_SUPERIOR_V001.png",
+      "sourceSha256": "430d19c2900ff7cb39f71bfdd029f067fe0c3fa375552ad9af76abc8f9963264",
+      "output": "/brand/v3/B04-top.webp",
+      "sha256": "7bca8cfae443b7873bfa2a7ed7d24da0850c4b3b1a6745175ec23d812ae72406",
+      "bytes": 21002,
+      "width": 480,
+      "height": 176
+    },
+    {
+      "source": "03_UNIVERSOS/B04/LATERAIS/ATVNA_V3_B04_LATERAL_MOBILE_INFERIOR_V001.png",
+      "sourceSha256": "d2fab67a69f1be2afed0bf9049f53486265fb5ed0e3174dbab11174ac49da41a",
+      "output": "/brand/v3/B04-bottom.webp",
+      "sha256": "12fd86da5687d9a65c96cd58326bc76eed7b5f12af2777d90fdac0d854daa81c",
+      "bytes": 19840,
+      "width": 480,
+      "height": 209
+    },
+    {
+      "source": "03_UNIVERSOS/B04/EXPORTS/ATVNA_V3_B04_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "46f139827424355116ddd45242fc755017fc48351d1cfb8aae5184c26d39ec90",
+      "output": "/brand/v3/B04-divider.svg",
+      "sha256": "46f139827424355116ddd45242fc755017fc48351d1cfb8aae5184c26d39ec90",
+      "bytes": 558
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_B05_TITULO_V001.png",
+      "sourceSha256": "c052ecabe65488aea1a1adc4bced31d1b57590ac74dea5a6c78b0eb94db6eba3",
+      "output": "/brand/v3/B05-title.webp",
+      "sha256": "106140ce9ecbc061ad27a726f19e3fe23f5c2b014b5c428296b4111eaf231955",
+      "bytes": 37396,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "03_UNIVERSOS/B05/EXPORTS/ATVNA_V3_B05_FIG_01_ESCURO_V001.png",
+      "sourceSha256": "694c3bc32da76b78ed381de345bfe9a31ee965e203f0ea818bc471394fd2ae2a",
+      "output": "/brand/v3/B05-figure-1.webp",
+      "sha256": "acf9579d3d9265cfe527e42a0db2eb74fa80d02f1f0470728be09be8d8c754f9",
+      "bytes": 46280,
+      "width": 520,
+      "height": 780
+    },
+    {
+      "source": "03_UNIVERSOS/B05/EXPORTS/ATVNA_V3_B05_FIG_02_ESCURO_V001.png",
+      "sourceSha256": "2bf6dc34c9a5819ef42871f89caec72e183dc14e071a2c65db13deef70c63410",
+      "output": "/brand/v3/B05-figure-2.webp",
+      "sha256": "cda58a7147b9b049382ca6c35f546cc570342f1e4850b27eb8d644b2ba5fa0b5",
+      "bytes": 110904,
+      "width": 520,
+      "height": 780
+    },
+    {
+      "source": "03_UNIVERSOS/B05/EXPORTS/ATVNA_V3_B05_FIG_03_ESCURO_V001.png",
+      "sourceSha256": "2d2f1dc07f656261057e90e601e7552a1bfb8982c652072eaccf7eb64232e359",
+      "output": "/brand/v3/B05-figure-3.webp",
+      "sha256": "c73c679bc1b368a3ad51eec13092d1a1bc0ebaa95366fd6dd5446c1cecc743c3",
+      "bytes": 39362,
+      "width": 520,
+      "height": 347
+    },
+    {
+      "source": "03_UNIVERSOS/B05/LATERAIS/ATVNA_V3_B05_LATERAL_DESKTOP_ESQUERDA_V001.png",
+      "sourceSha256": "c469d46f36dd71e77f1ce3c30b5d658a8c48eac661e46953791215d6bd1c6b41",
+      "output": "/brand/v3/B05-left.webp",
+      "sha256": "9b225fcaed3927eff5662592cc2ced28ab46105da7244c7fb7553de0c0626488",
+      "bytes": 17126,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B05/LATERAIS/ATVNA_V3_B05_LATERAL_DESKTOP_DIREITA_V001.png",
+      "sourceSha256": "462beaf70d6f84ade4cbb07bfee817fb98320778674ddf2caa32cc42595f062d",
+      "output": "/brand/v3/B05-right.webp",
+      "sha256": "0c0b7fcbaafa0efdd089de8f0576075bed5b2a0303fa2f8889f8a16e180d1a0c",
+      "bytes": 12446,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B05/LATERAIS/ATVNA_V3_B05_LATERAL_MOBILE_TOPO_V001.png",
+      "sourceSha256": "dc001faab604ccf0f5d60329b4a8ad2c0afc82fee0c035cd8257537039b200c1",
+      "output": "/brand/v3/B05-top.webp",
+      "sha256": "d27dfa1a8a2c1ac635eb876d1158b9043a996e052f71766690d0e8bd0f0a1c68",
+      "bytes": 20236,
+      "width": 480,
+      "height": 320
+    },
+    {
+      "source": "03_UNIVERSOS/B05/LATERAIS/ATVNA_V3_B05_LATERAL_MOBILE_BASE_V001.png",
+      "sourceSha256": "d3da260954cd2f5ba72b9bc65a1a6f6fc9733efe0a6db62cb08ebaf5d29bc25d",
+      "output": "/brand/v3/B05-bottom.webp",
+      "sha256": "4d5af255f70ed4583d16783b57ba7e7b2fc3604df8185daed1ebefbfefb50ccf",
+      "bytes": 21302,
+      "width": 480,
+      "height": 320
+    },
+    {
+      "source": "03_UNIVERSOS/B05/EXPORTS/ATVNA_V3_B05_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "7df4b159934e13522841a433727ff2c6696ea94d08314bdfbeb4c373493e3263",
+      "output": "/brand/v3/B05-divider.svg",
+      "sha256": "7df4b159934e13522841a433727ff2c6696ea94d08314bdfbeb4c373493e3263",
+      "bytes": 787
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_B06_TITULO_V001.png",
+      "sourceSha256": "2acdd20f7c50b03a92f87f956f668afd297a64226e3fd71beaba3455a6e0e0c6",
+      "output": "/brand/v3/B06-title.webp",
+      "sha256": "ee96a87bbf92f8cb272296eae6131a10a58e522d0c0473a0abc671ec27738d12",
+      "bytes": 30026,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "03_UNIVERSOS/B06/EXPORTS/ATVNA_V3_B06_FIG_01_ESCURO_V001.png",
+      "sourceSha256": "73adb64e35e3da158466507bb0705f960b688a54ebe2132db7c0744f2294a2eb",
+      "output": "/brand/v3/B06-figure-1.webp",
+      "sha256": "0500f68e57ab3da6ed6cb6b9b2d402281d46ddf49f9df60102f0837e12240a22",
+      "bytes": 103312,
+      "width": 520,
+      "height": 780
+    },
+    {
+      "source": "03_UNIVERSOS/B06/EXPORTS/ATVNA_V3_B06_FIG_02_ESCURO_V001.png",
+      "sourceSha256": "ef7635b330bd57481dc7ae95c93489f181eb0fc60fc77a140e2f56bd9a09e0b8",
+      "output": "/brand/v3/B06-figure-2.webp",
+      "sha256": "31010a509cea3d6d70e23bc7c6646fbe74c015e13dffa08df240ec24c1a69d14",
+      "bytes": 56722,
+      "width": 520,
+      "height": 347
+    },
+    {
+      "source": "03_UNIVERSOS/B06/EXPORTS/ATVNA_V3_B06_FIG_03_ESCURO_V001.png",
+      "sourceSha256": "2d850dccb29aaf9134a0742b5cf8134c884810846c4742b6d601083602165287",
+      "output": "/brand/v3/B06-figure-3.webp",
+      "sha256": "56265a052d0feda11ab220aa3e7c0a19bd8be6da9d8e3e4a0fb6e1b9d5e61b76",
+      "bytes": 106750,
+      "width": 520,
+      "height": 780
+    },
+    {
+      "source": "03_UNIVERSOS/B06/LATERAIS/ATVNA_V3_B06_LATERAL_DESKTOP_ESQUERDA_V001.png",
+      "sourceSha256": "cf17bcbd57cd09e6c02a762b10acfa11c2658b7b85e7d2b20d7eb7436de072b4",
+      "output": "/brand/v3/B06-left.webp",
+      "sha256": "9bcb34367155cf4a3a619082612df65d7803bd9547935f80f92648f8cf8f77d4",
+      "bytes": 16818,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B06/LATERAIS/ATVNA_V3_B06_LATERAL_DESKTOP_DIREITA_V001.png",
+      "sourceSha256": "8f69f22bb0a99dafed4a9c9459d50a3912befe5fd75ad74975bfd2ab2bfe48e3",
+      "output": "/brand/v3/B06-right.webp",
+      "sha256": "88a266c635b428873f3938f010f12308f767ffab1c01915111f7568b910a4963",
+      "bytes": 17396,
+      "width": 220,
+      "height": 330
+    },
+    {
+      "source": "03_UNIVERSOS/B06/LATERAIS/ATVNA_V3_B06_LATERAL_MOBILE_TOPO_V001.png",
+      "sourceSha256": "111d0cfa58e31428305a6975c301515f8730dd68f85a14bf93304224c226c062",
+      "output": "/brand/v3/B06-top.webp",
+      "sha256": "60ec5954335ffed58e8a0bf4c694566d527c7590d0adfbac069fd599796520ef",
+      "bytes": 25088,
+      "width": 480,
+      "height": 320
+    },
+    {
+      "source": "03_UNIVERSOS/B06/LATERAIS/ATVNA_V3_B06_LATERAL_MOBILE_BASE_V001.png",
+      "sourceSha256": "107f5b451c717a1076d3fd9be6720219b257324b30385b74a33784bc78e0e9a0",
+      "output": "/brand/v3/B06-bottom.webp",
+      "sha256": "2aea414dd557df09cf7feec0b14530d9c749a72135f124ba0a97f7d3ecea1448",
+      "bytes": 35726,
+      "width": 480,
+      "height": 320
+    },
+    {
+      "source": "03_UNIVERSOS/B06/EXPORTS/ATVNA_V3_B06_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "726dfa8d004539c4e81039a13e2868ccd6da4c2f47bd7ec946b9262dc5308da1",
+      "output": "/brand/v3/B06-divider.svg",
+      "sha256": "726dfa8d004539c4e81039a13e2868ccd6da4c2f47bd7ec946b9262dc5308da1",
+      "bytes": 722
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C01_TITULO_V001.png",
+      "sourceSha256": "b1e3a0a951591619556f4339e0267175185cada8836e224950fe8c7a63e2ba6d",
+      "output": "/brand/v3/C01-title.webp",
+      "sha256": "cff003c9a7a4f59b9be5e2e0083e91654b599e28148f65c8fd30853fef5ea491",
+      "bytes": 63846,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C01/vinheta.svg",
+      "sourceSha256": "4a4d74616aca077f799ed319fb43437687b8015208a996995a1d129884bfa46b",
+      "output": "/brand/v3/C01-vignette.svg",
+      "sha256": "4a4d74616aca077f799ed319fb43437687b8015208a996995a1d129884bfa46b",
+      "bytes": 423
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C02_TITULO_V001.png",
+      "sourceSha256": "273d40c8fa9ae15a043a62a32d61471ea7a1b5253760d3ada6acd662c27da68f",
+      "output": "/brand/v3/C02-title.webp",
+      "sha256": "746c0a1a3b6f5bcdfea7da61108facfed6acaab695d276f7a2ea965fa757a664",
+      "bytes": 46620,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C02/vinheta.svg",
+      "sourceSha256": "a3a17e40176e4d14a34a0b88b245016b5241ce0336784ce941715c180ebced21",
+      "output": "/brand/v3/C02-vignette.svg",
+      "sha256": "a3a17e40176e4d14a34a0b88b245016b5241ce0336784ce941715c180ebced21",
+      "bytes": 509
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C03_TITULO_V001.png",
+      "sourceSha256": "80d6c8477f86afd1b168b53a2a425098fd809b7f7fd4a9e5986e44850b377c10",
+      "output": "/brand/v3/C03-title.webp",
+      "sha256": "50b55ad4ebeceb3dd48d1aaac691d89a02b2c256b373214d41b6b36c03a4a407",
+      "bytes": 35312,
+      "width": 720,
+      "height": 270
+    },
+    {
+      "source": "04_PRODUTOS/C03/vinheta.svg",
+      "sourceSha256": "80301c6490d6c0f2a747e64e90b1ba57db2fde94ef6536cb64ebeae22b76eaf0",
+      "output": "/brand/v3/C03-vignette.svg",
+      "sha256": "80301c6490d6c0f2a747e64e90b1ba57db2fde94ef6536cb64ebeae22b76eaf0",
+      "bytes": 328
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C04_TITULO_V001.png",
+      "sourceSha256": "b6e984c295701c6d1e552453c12acecbb66b9d100b12d398642550a96ec02f62",
+      "output": "/brand/v3/C04-title.webp",
+      "sha256": "46d248eb1ff68e2d0d394404e7cdf352f00ac5ab9595f89346040f2d5f7f94bd",
+      "bytes": 53444,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C04/vinheta.svg",
+      "sourceSha256": "347364be68b8e88e26271bff6bfa059401e052fda91c7f9e00ebd28ef571ce6c",
+      "output": "/brand/v3/C04-vignette.svg",
+      "sha256": "347364be68b8e88e26271bff6bfa059401e052fda91c7f9e00ebd28ef571ce6c",
+      "bytes": 389
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C05_TITULO_V001.png",
+      "sourceSha256": "c03ee6172ecf0b3db369d3fbcac8ad1a1d147a32db55a71c2c8c6144710dbd7c",
+      "output": "/brand/v3/C05-title.webp",
+      "sha256": "cd7d9d02172eefab6904e89a3700dca183711b81cefd6a16346f9afea3f88514",
+      "bytes": 30314,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C05/vinheta.svg",
+      "sourceSha256": "33ff6aa2f89e610a94e97c4b1d9aa91978735477800f644fc8fdb0975ae7b9fd",
+      "output": "/brand/v3/C05-vignette.svg",
+      "sha256": "33ff6aa2f89e610a94e97c4b1d9aa91978735477800f644fc8fdb0975ae7b9fd",
+      "bytes": 403
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C06_TITULO_V001.png",
+      "sourceSha256": "3ec989df2aa7399f9c3c827ba1ad5632d8fd851203f3e5395ac3b973c7455ea1",
+      "output": "/brand/v3/C06-title.webp",
+      "sha256": "f404a844f489c289d52a1276da9f6677139715f3830b4bd0c3baa17dd17119ec",
+      "bytes": 57344,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C06/vinheta.svg",
+      "sourceSha256": "e55b0de137dbc64416b25f8433904044bed7fcdbdbb3362d5064367421f9fafe",
+      "output": "/brand/v3/C06-vignette.svg",
+      "sha256": "e55b0de137dbc64416b25f8433904044bed7fcdbdbb3362d5064367421f9fafe",
+      "bytes": 422
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C07_TITULO_V001.png",
+      "sourceSha256": "9be3b83c6d6f4238c791c8317fc890c7caddbb84cf80b1754fd47ecbcdef9e60",
+      "output": "/brand/v3/C07-title.webp",
+      "sha256": "e445c231c092a431b3861d2d54fe45dc8e4d42e76fe735f0a02b3c8152fb52c7",
+      "bytes": 34722,
+      "width": 720,
+      "height": 260
+    },
+    {
+      "source": "04_PRODUTOS/C07/vinheta.svg",
+      "sourceSha256": "ff62df1ea21cccefac389d4c200450089809461021302781562b72f16bfbbea9",
+      "output": "/brand/v3/C07-vignette.svg",
+      "sha256": "ff62df1ea21cccefac389d4c200450089809461021302781562b72f16bfbbea9",
+      "bytes": 475
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C08_TITULO_V001.png",
+      "sourceSha256": "6f25dbcd47c6321378417014624ef36d97071db0aafaa273032e4b43b673f13f",
+      "output": "/brand/v3/C08-title.webp",
+      "sha256": "be80590f866c25d0870e1851733dbeda9b8c1bc829f7266c8e4edbdb9ec73bd3",
+      "bytes": 58828,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C08/vinheta.svg",
+      "sourceSha256": "1f4991d3388180fad042d134ab7e158a77617dd6f04a3a290159c7a84da1d541",
+      "output": "/brand/v3/C08-vignette.svg",
+      "sha256": "1f4991d3388180fad042d134ab7e158a77617dd6f04a3a290159c7a84da1d541",
+      "bytes": 326
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C09_TITULO_V001.png",
+      "sourceSha256": "a5106cee2a3fc91f65366a211f63639133ef052a23da7871363ba7fea1ee2e1c",
+      "output": "/brand/v3/C09-title.webp",
+      "sha256": "54374f6e2c8b6100acd68519d176fcf1dca396ff1af8fa45c1840e24245dbace",
+      "bytes": 61184,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C09/vinheta.svg",
+      "sourceSha256": "8e08cc1d535ec89bebbda951a2f224251af798e91ca34f98b40638467689d7aa",
+      "output": "/brand/v3/C09-vignette.svg",
+      "sha256": "8e08cc1d535ec89bebbda951a2f224251af798e91ca34f98b40638467689d7aa",
+      "bytes": 360
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C10_TITULO_V001.png",
+      "sourceSha256": "cccd4f2ae8e6e1fef713429939237f5a6a32b491a9371853db125f2a1b63fe6f",
+      "output": "/brand/v3/C10-title.webp",
+      "sha256": "7d43769f5c057c5e6e2fc36383354abf726e5537ea0a0de51feb40c1ddbe51f2",
+      "bytes": 28268,
+      "width": 720,
+      "height": 240
+    },
+    {
+      "source": "04_PRODUTOS/C10/vinheta.svg",
+      "sourceSha256": "067d74eff6cce8492458a843c8ea124856966fec1e36e71af1e06ba66c089761",
+      "output": "/brand/v3/C10-vignette.svg",
+      "sha256": "067d74eff6cce8492458a843c8ea124856966fec1e36e71af1e06ba66c089761",
+      "bytes": 443
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C11_TITULO_V001.png",
+      "sourceSha256": "1aaa3d828257fe612ce785d0914f0eccef5a1dbefed55b7884d01f0b5a1ea5e9",
+      "output": "/brand/v3/C11-title.webp",
+      "sha256": "055a893705e6c290d36259e6b50acdf94b3004ca68c8bf6bbb7ce4c2c495a3b2",
+      "bytes": 45806,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C11/vinheta.svg",
+      "sourceSha256": "536dc360a641a7f6487a724664a5a5c4d9b8451a37ff972b361604498e5d24fc",
+      "output": "/brand/v3/C11-vignette.svg",
+      "sha256": "536dc360a641a7f6487a724664a5a5c4d9b8451a37ff972b361604498e5d24fc",
+      "bytes": 546
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C12_TITULO_V001.png",
+      "sourceSha256": "1f48e3a0c348ad28c1b6318f9799b580ec81ce5fa53451966807b02cadd6abcb",
+      "output": "/brand/v3/C12-title.webp",
+      "sha256": "bd41cbf448f2e55e717e659c342b57f5fc7f48cf64f80b650b41e9714eb8e98a",
+      "bytes": 47600,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C12/vinheta.svg",
+      "sourceSha256": "429c940c53df3f135ce7a484a9b4dc938d60144ceec69a8707f0911fb9b504d3",
+      "output": "/brand/v3/C12-vignette.svg",
+      "sha256": "429c940c53df3f135ce7a484a9b4dc938d60144ceec69a8707f0911fb9b504d3",
+      "bytes": 593
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C13_TITULO_V001.png",
+      "sourceSha256": "319df58749cc53a12684605a3bfe04de5f0831b59cb68b6ce87e50cd568b4c15",
+      "output": "/brand/v3/C13-title.webp",
+      "sha256": "0d7e8868715e93d2ede99634a9797347079a32b9a163a0eaf4c80ced1ad307ed",
+      "bytes": 55866,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C13/vinheta.svg",
+      "sourceSha256": "c40f949c9ac38decf1365416c6e2eaafeb1be45c8b8bea96a941dccf415498f0",
+      "output": "/brand/v3/C13-vignette.svg",
+      "sha256": "c40f949c9ac38decf1365416c6e2eaafeb1be45c8b8bea96a941dccf415498f0",
+      "bytes": 446
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C14_TITULO_V001.png",
+      "sourceSha256": "74ef63486b749321485d70290ba2e8e0d460797e5d5b7996e3ed01b9edee20a0",
+      "output": "/brand/v3/C14-title.webp",
+      "sha256": "604b73e81d0f33135fb0ee394195d9d41a6b5732b95c31b161efb10bc13dbb3c",
+      "bytes": 55230,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C14/vinheta.svg",
+      "sourceSha256": "c9e0e901dd744abbe0402acfee7f4f96a15e378a6d82250286f36513e8038521",
+      "output": "/brand/v3/C14-vignette.svg",
+      "sha256": "c9e0e901dd744abbe0402acfee7f4f96a15e378a6d82250286f36513e8038521",
+      "bytes": 502
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C15_TITULO_V001.png",
+      "sourceSha256": "b30722ea700c5655eccb8acfec07c2f3196276f7c79dbc213429d23242d8515c",
+      "output": "/brand/v3/C15-title.webp",
+      "sha256": "4dcf3724817b390154fd9a8977a1b88860f925ebfc6e2f72b94a4295241201a4",
+      "bytes": 43472,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C15/vinheta.svg",
+      "sourceSha256": "4f3564c70986d5a69187df7735c9fdb95196a274f30f889b17df0343e323969e",
+      "output": "/brand/v3/C15-vignette.svg",
+      "sha256": "4f3564c70986d5a69187df7735c9fdb95196a274f30f889b17df0343e323969e",
+      "bytes": 479
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C16_TITULO_V001.png",
+      "sourceSha256": "56848f75d6d9fd70bdacbcdcdeae2b0d7c4d9d5c47ad9f4de26542da9c53508f",
+      "output": "/brand/v3/C16-title.webp",
+      "sha256": "37aa62f0a664c3d0ff788193019e06763a5b6b5fd9607e0ce858f0cffcedb168",
+      "bytes": 51990,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C16/vinheta.svg",
+      "sourceSha256": "f452ea00c1b504ecf638c60b45f754a0ed229de3c9a80c8b304b901cc923b6f4",
+      "output": "/brand/v3/C16-vignette.svg",
+      "sha256": "f452ea00c1b504ecf638c60b45f754a0ed229de3c9a80c8b304b901cc923b6f4",
+      "bytes": 391
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C17_TITULO_V001.png",
+      "sourceSha256": "d2da07ba5d6f8391ce261f7d857c0ed4317ea7844fcb2af90e9d93ba863f630a",
+      "output": "/brand/v3/C17-title.webp",
+      "sha256": "fa56c18bec2f9c05cfef4181c1ce082c19d5236210d310d6ba35bacd54c0a87b",
+      "bytes": 53250,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C17/vinheta.svg",
+      "sourceSha256": "9cf85041f7d3f46db682979a0c704f47b5eced8bfc2c6dfba35443261d26298e",
+      "output": "/brand/v3/C17-vignette.svg",
+      "sha256": "9cf85041f7d3f46db682979a0c704f47b5eced8bfc2c6dfba35443261d26298e",
+      "bytes": 430
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C18_TITULO_V001.png",
+      "sourceSha256": "5d51fd79ebb96623214273739967301a5ad910b10b69a97e5b99a12db6f563dc",
+      "output": "/brand/v3/C18-title.webp",
+      "sha256": "c18650f61ad0ac4d471a99dabb8339e166fcc65f83f307f7e090c370094f0d51",
+      "bytes": 74736,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C18/vinheta.svg",
+      "sourceSha256": "4d501a953d80a6216e02230553d15e7a9928084cbac821798efe46620a1388a9",
+      "output": "/brand/v3/C18-vignette.svg",
+      "sha256": "4d501a953d80a6216e02230553d15e7a9928084cbac821798efe46620a1388a9",
+      "bytes": 369
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C19_TITULO_V001.png",
+      "sourceSha256": "b70b96458a9084afcf7fdb4a60fc5efe4974f16e8832f5e39486367ebf7c2122",
+      "output": "/brand/v3/C19-title.webp",
+      "sha256": "1b9b72734039a8db518a7b420e789196b0034095fd19440c01733a5bb53f7132",
+      "bytes": 59452,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C19/vinheta.svg",
+      "sourceSha256": "778a178ca44f8895310771809254fbaa4d2ffcf94a5c96c5254f3c4a51f56280",
+      "output": "/brand/v3/C19-vignette.svg",
+      "sha256": "778a178ca44f8895310771809254fbaa4d2ffcf94a5c96c5254f3c4a51f56280",
+      "bytes": 352
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C20_TITULO_V001.png",
+      "sourceSha256": "a237c401189d54062466fd8a51563186bb00f440f547eacdcefa1bb955b6528f",
+      "output": "/brand/v3/C20-title.webp",
+      "sha256": "debeba910c7a34caa9ddd4f542f0bc1913a218c16f70d98878f8c9bb8f5cbfb1",
+      "bytes": 40770,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C20/vinheta.svg",
+      "sourceSha256": "adc50a5f92d1274a05748dbc8b3e1ae4577d6c840b5bd17fa716339fb1962c46",
+      "output": "/brand/v3/C20-vignette.svg",
+      "sha256": "adc50a5f92d1274a05748dbc8b3e1ae4577d6c840b5bd17fa716339fb1962c46",
+      "bytes": 603
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C21_TITULO_V001.png",
+      "sourceSha256": "8619e0ae8d72d2612ca03ab7a0cb68f4b5499f52eb98ef48ad4e5e2f32914558",
+      "output": "/brand/v3/C21-title.webp",
+      "sha256": "2a73eae09aced7c8a8e4fc97b37bf7e8dfc44f60907221bc64ffa25d25e5ddcf",
+      "bytes": 45972,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C21/vinheta.svg",
+      "sourceSha256": "bdca16c9cd1b4e3acf54ec00d9545180c04486da9cca6c82ea44a89a44c89e05",
+      "output": "/brand/v3/C21-vignette.svg",
+      "sha256": "bdca16c9cd1b4e3acf54ec00d9545180c04486da9cca6c82ea44a89a44c89e05",
+      "bytes": 406
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C22_TITULO_V001.png",
+      "sourceSha256": "e773c19b7a67a72a09603d0665412c4a70676d2933499e5eda8225cf59c98646",
+      "output": "/brand/v3/C22-title.webp",
+      "sha256": "99d47744430f0b5c96d466d4375ee5334ba66b7727279c1e3d17659931ae8eb1",
+      "bytes": 72302,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C22/vinheta.svg",
+      "sourceSha256": "ec4bb7543e6b1757531954b9cc6f223220e42ddbe84f1cf0e1c213f49d647fb2",
+      "output": "/brand/v3/C22-vignette.svg",
+      "sha256": "ec4bb7543e6b1757531954b9cc6f223220e42ddbe84f1cf0e1c213f49d647fb2",
+      "bytes": 466
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C23_TITULO_V001.png",
+      "sourceSha256": "d6c4aa5a61853aac82bac84cfa8ea5c1944147e90dc14299e4098a34e91bee75",
+      "output": "/brand/v3/C23-title.webp",
+      "sha256": "e1744c4ba992931610505ce38e1c36ac3be940df8dcf82cbde2979cc287c3ec2",
+      "bytes": 58592,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C23/vinheta.svg",
+      "sourceSha256": "495e416c30cc429fd2d9de2c7f153e8fbb8ca4d27732bb3b1a6e975821e16d5c",
+      "output": "/brand/v3/C23-vignette.svg",
+      "sha256": "495e416c30cc429fd2d9de2c7f153e8fbb8ca4d27732bb3b1a6e975821e16d5c",
+      "bytes": 348
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C24_TITULO_V001.png",
+      "sourceSha256": "6e0acc4bd9aefa5a96cd0465ffcaaaafc44dcc836d04d18efd9439b70eb99e6d",
+      "output": "/brand/v3/C24-title.webp",
+      "sha256": "a5951c41a4cdd221ff246b2f0f181cc79cb0d957b8f7498f333aef6a67394c13",
+      "bytes": 48974,
+      "width": 720,
+      "height": 480
+    },
+    {
+      "source": "04_PRODUTOS/C24/vinheta.svg",
+      "sourceSha256": "a1bdb97a377133fd581b3a352763a5c3b86d7f7b809c0cbebfb5594d12876b70",
+      "output": "/brand/v3/C24-vignette.svg",
+      "sha256": "a1bdb97a377133fd581b3a352763a5c3b86d7f7b809c0cbebfb5594d12876b70",
+      "bytes": 549
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C25_TITULO_V001.png",
+      "sourceSha256": "3eb540ce6a566cc4437ef81db7a752f22b63fbc7d53e653d5ba9d85cb014afed",
+      "output": "/brand/v3/C25-title.webp",
+      "sha256": "cb93fe363e8f4595e43579d632a096957180a06e9f382ff80cdc9411707f1c96",
+      "bytes": 55818,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C25/vinheta.svg",
+      "sourceSha256": "dc848002b7d8a59cb5cbcea20cb7a99c6b4a6362bd90df371eac7cc5b864d5ac",
+      "output": "/brand/v3/C25-vignette.svg",
+      "sha256": "dc848002b7d8a59cb5cbcea20cb7a99c6b4a6362bd90df371eac7cc5b864d5ac",
+      "bytes": 429
+    },
+    {
+      "source": "04_LETTERING/MATRIZES/ATVNA_V3_C26_TITULO_V001.png",
+      "sourceSha256": "454f2f13c43b1156e5ccd4240138187866d4539f44ea807ff3101b24d7018de4",
+      "output": "/brand/v3/C26-title.webp",
+      "sha256": "224e6545f664ca162c10fe3a7e1ef2af852ddccf6f6d6e92683f27202557bc84",
+      "bytes": 30900,
+      "width": 720,
+      "height": 360
+    },
+    {
+      "source": "04_PRODUTOS/C26/vinheta.svg",
+      "sourceSha256": "cd526f9e1599c55be9ed75fca486dd395c7aea1f35d057504264829bdea386fe",
+      "output": "/brand/v3/C26-vignette.svg",
+      "sha256": "cd526f9e1599c55be9ed75fca486dd395c7aea1f35d057504264829bdea386fe",
+      "bytes": 507
+    },
+    {
+      "source": "05_JORNADAS/D01/gravura-oficial.png",
+      "sourceSha256": "1c86e4bc1217e1265ed9ccd8a72f22dfa0225be7245f13aba82b3ec13112293f",
+      "output": "/brand/v3/home-engraving.webp",
+      "sha256": "2c1169b30a213f294965bede19f34bf82faa622bc26a9e4a4a242bafdb7a1189",
+      "bytes": 232576,
+      "width": 760,
+      "height": 507
+    },
+    {
+      "source": "02_BIBLIOTECA_GLOBAL/EXPORTS/ATVNA_V3_GLOBAL_DIV_01_ESCURO_V001.svg",
+      "sourceSha256": "4f7ea766108edb1d06ff51a2e63553909de65c94006d595be8ad7006b1dec1ad",
+      "output": "/brand/v3/divider.svg",
+      "sha256": "4f7ea766108edb1d06ff51a2e63553909de65c94006d595be8ad7006b1dec1ad",
+      "bytes": 1203
+    },
+    {
+      "source": "02_BIBLIOTECA_GLOBAL/EXPORTS/ATVNA_V3_GLOBAL_CANTO_01_ESCURO_V001.svg",
+      "sourceSha256": "f9bb55ced8f3543eaa6e6dd64023b746c6a987da8d5f14438e6865bfa248f5d1",
+      "output": "/brand/v3/corner.svg",
+      "sha256": "f9bb55ced8f3543eaa6e6dd64023b746c6a987da8d5f14438e6865bfa248f5d1",
+      "bytes": 1177
+    }
+  ]
+}
