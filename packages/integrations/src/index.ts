@@ -57,3 +57,5 @@ export type {
   TikTokVideo,
   TikTokVideoPage
 } from './tiktok.ts';
+export { readP06HotmartSale, reconcileP06Inbox, P06ReconciliationError } from './p06-reconciliation.ts';
+export type { P06VerifiedSale, P06SaleExpectation, P06ReconciliationPort, P06InboxRecord } from './p06-reconciliation.ts';
