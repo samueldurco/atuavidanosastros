@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { env as publicEnv } from '$env/dynamic/public';
 import { env as privateEnv } from '$env/dynamic/private';
 import { trialWriter } from '$lib/server/private-trials';
+import { POLICY_VERSION } from '$lib/trials/versions';
 
 // Deployment probe: no account, key, record or provider error is exposed.
 export async function GET() {
@@ -26,7 +27,7 @@ export async function GET() {
 			available,
 			configurationReady,
 			scope: 'private-free-test',
-			version: 'atv-private-trial-approval/2.0.0'
+			version: POLICY_VERSION
 		},
 		{ status: available ? 200 : 503, headers: { 'cache-control': 'private, no-store' } }
 	);
