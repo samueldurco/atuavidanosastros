@@ -1,0 +1,132 @@
+{
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "wu": "V3-APP-02-VALIDACAO",
+  "codeSha": "91446aad19d140c06542e123d813ddd35cf001cd",
+  "status": "PASS",
+  "ci": {
+    "id": 37693966344,
+    "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/37693966344",
+    "jobs": ["quality", "accessibility", "secrets", "sbom"],
+    "accessibility": 99,
+    "editorialSeo": 14,
+    "signedEditorialCandidates": 4,
+    "legalIsolation": 4
+  },
+  "coverage": {
+    "boards": 50,
+    "universes": 6,
+    "products": 25,
+    "atvPlus": true,
+    "widths": [320, 390, 768, 1024, 1440],
+    "publicAssets": 109,
+    "publicAssetBytes": 3479763
+  },
+  "local": {
+    "frozenInstall": "PASS",
+    "audit": "PASS",
+    "check": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "lint": "PASS",
+    "webUnitFiles": 94,
+    "webUnitTests": 1791,
+    "workerUnitTests": 355,
+    "databaseTests": 114,
+    "build": "PASS",
+    "runtimeBytes": 602337,
+    "contrast": "PASS",
+    "pdf": {
+      "birthChart": {
+        "pages": 13,
+        "bytes": 120998
+      },
+      "careerCompass": {
+        "pages": 9,
+        "bytes": 126089
+      }
+    }
+  },
+  "performance": {
+    "environment": "Local built files via Node static server + unchanged Wrangler SSR; desktop Chromium 390px; no throttling; not field data",
+    "limitation": "Controlled local measurements; original Windows Wrangler static serving delayed tiny files. Same built files served by Node, same SSR worker. Not field data or compressed transfer sizes.",
+    "results": [
+      {
+        "path": "/",
+        "lcp": 276,
+        "cls": 0.001331660541640102,
+        "ttfb": 62.799999952316284,
+        "decodedBytes": 1122747,
+        "overflow": false
+      },
+      {
+        "path": "/produtos/bussola-de-carreira",
+        "lcp": 788,
+        "cls": 0.0005467745270310353,
+        "ttfb": 603,
+        "decodedBytes": 729024,
+        "overflow": false
+      },
+      {
+        "path": "/biblioteca/_spec/fluxo?state=ready&product=career-compass",
+        "lcp": 624,
+        "cls": 0.010685994741245704,
+        "ttfb": 292.39999997615814,
+        "decodedBytes": 713865,
+        "overflow": false
+      }
+    ]
+  },
+  "logs": [
+    {
+      "path": "test-results/visual-v3-clean-check.log",
+      "bytes": 1402,
+      "sha256": "4cccd21261afa18b5f75083d10cb36630852b6344eac387e6686ca4b5c6b76d4"
+    },
+    {
+      "path": "test-results/visual-v3-clean-lint.log",
+      "bytes": 1079,
+      "sha256": "18bbb595fc3fa75b5f5bb8d3ecb801d6e6deaf133bf83adc606f01d77522242b"
+    },
+    {
+      "path": "test-results/visual-v3-clean-unit.log",
+      "bytes": 83239,
+      "sha256": "0f48068a44e4df4041afe0aac7a1d24651e9c6d1b2bfd1863c9d94bee28407bc"
+    },
+    {
+      "path": "test-results/visual-v3-clean-db.log",
+      "bytes": 12963,
+      "sha256": "07601e457d071035cb8b1fcc6761385b16e10327ed1b12e7ac858512c3e87c2a"
+    },
+    {
+      "path": "test-results/visual-v3-clean-packages-build.log",
+      "bytes": 641,
+      "sha256": "d1cbe9ea11ce710df727681cec5914924c460ed905199daf63e03188f446ece9"
+    },
+    {
+      "path": "test-results/visual-v3-clean-runtime.log",
+      "bytes": 76,
+      "sha256": "e18055b424daa2617a2070258cf8f0fdcd5eec84311d3dfa157c1e8df35e784c"
+    },
+    {
+      "path": "test-results/visual-v3-ci-accessibility-current.log",
+      "bytes": 52540,
+      "sha256": "11714fbda931fc5ccb085e4454689b98b5bec8cd1a7ca2e757f79b1cba48e70e"
+    }
+  ],
+  "preserved": [
+    "calculations",
+    "auth",
+    "persistence",
+    "permissions",
+    "entitlements",
+    "availability",
+    "commercial flags",
+    "editorial and interpretation gates",
+    "source V3 and V2"
+  ],
+  "pending": [
+    "Publication and hosted HTTP/API verification in V3-APP-03",
+    "Owner individual E5 approvals remain separate"
+  ]
+}
