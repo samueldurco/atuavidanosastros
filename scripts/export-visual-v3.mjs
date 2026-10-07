@@ -187,6 +187,21 @@ await fs.writeFile(
     2,
   ) + "\n",
 );
+// Match the web app's formatter so regeneration stays compatible with its release gate.
+const webRequire = createRequire(path.resolve("apps/web/package.json"));
+const prettier = webRequire("prettier");
+for (const file of [
+  "apps/web/src/lib/data/visual-v3.generated.json",
+  "apps/web/src/lib/data/visual-v3-pdf.generated.json",
+]) {
+  await fs.writeFile(
+    file,
+    await prettier.format(await fs.readFile(file, "utf8"), {
+      ...(await prettier.resolveConfig(file)),
+      filepath: file,
+    }),
+  );
+}
 console.log(
   JSON.stringify({
     assets: files.length,

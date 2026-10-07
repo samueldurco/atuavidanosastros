@@ -1,248 +1,248 @@
 {
-  "version": 3,
-  "hero": "/brand/v3/home-engraving.webp",
-  "themes": {
-    "B01": {
-      "board": "B01",
-      "title": "/brand/v3/B01-title.webp",
-      "figures": [
-        "/brand/v3/B01-figure-1.webp",
-        "/brand/v3/B01-figure-2.webp",
-        "/brand/v3/B01-figure-3.webp"
-      ],
-      "left": "/brand/v3/B01-left.webp",
-      "right": "/brand/v3/B01-right.webp",
-      "top": "/brand/v3/B01-top.webp",
-      "bottom": "/brand/v3/B01-bottom.webp",
-      "divider": "/brand/v3/B01-divider.svg"
-    },
-    "B02": {
-      "board": "B02",
-      "title": "/brand/v3/B02-title.webp",
-      "figures": [
-        "/brand/v3/B02-figure-1.webp",
-        "/brand/v3/B02-figure-2.webp",
-        "/brand/v3/B02-figure-3.webp"
-      ],
-      "left": "/brand/v3/B02-left.webp",
-      "right": "/brand/v3/B02-right.webp",
-      "top": "/brand/v3/B02-top.webp",
-      "bottom": "/brand/v3/B02-bottom.webp",
-      "divider": "/brand/v3/B02-divider.svg"
-    },
-    "B03": {
-      "board": "B03",
-      "title": "/brand/v3/B03-title.webp",
-      "figures": [
-        "/brand/v3/B03-figure-1.webp",
-        "/brand/v3/B03-figure-2.webp",
-        "/brand/v3/B03-figure-3.webp"
-      ],
-      "left": "/brand/v3/B03-left.webp",
-      "right": "/brand/v3/B03-right.webp",
-      "top": "/brand/v3/B03-top.webp",
-      "bottom": "/brand/v3/B03-bottom.webp",
-      "divider": "/brand/v3/B03-divider.svg"
-    },
-    "B04": {
-      "board": "B04",
-      "title": "/brand/v3/B04-title.webp",
-      "figures": [
-        "/brand/v3/B04-figure-1.webp",
-        "/brand/v3/B04-figure-2.webp",
-        "/brand/v3/B04-figure-3.webp"
-      ],
-      "left": "/brand/v3/B04-left.webp",
-      "right": "/brand/v3/B04-right.webp",
-      "top": "/brand/v3/B04-top.webp",
-      "bottom": "/brand/v3/B04-bottom.webp",
-      "divider": "/brand/v3/B04-divider.svg"
-    },
-    "B05": {
-      "board": "B05",
-      "title": "/brand/v3/B05-title.webp",
-      "figures": [
-        "/brand/v3/B05-figure-1.webp",
-        "/brand/v3/B05-figure-2.webp",
-        "/brand/v3/B05-figure-3.webp"
-      ],
-      "left": "/brand/v3/B05-left.webp",
-      "right": "/brand/v3/B05-right.webp",
-      "top": "/brand/v3/B05-top.webp",
-      "bottom": "/brand/v3/B05-bottom.webp",
-      "divider": "/brand/v3/B05-divider.svg"
-    },
-    "B06": {
-      "board": "B06",
-      "title": "/brand/v3/B06-title.webp",
-      "figures": [
-        "/brand/v3/B06-figure-1.webp",
-        "/brand/v3/B06-figure-2.webp",
-        "/brand/v3/B06-figure-3.webp"
-      ],
-      "left": "/brand/v3/B06-left.webp",
-      "right": "/brand/v3/B06-right.webp",
-      "top": "/brand/v3/B06-top.webp",
-      "bottom": "/brand/v3/B06-bottom.webp",
-      "divider": "/brand/v3/B06-divider.svg"
-    }
-  },
-  "products": {
-    "birth-chart": {
-      "board": "C01",
-      "universe": "B01",
-      "title": "/brand/v3/C01-title.webp",
-      "vignette": "/brand/v3/C01-vignette.svg"
-    },
-    "three-pillars": {
-      "board": "C02",
-      "universe": "B01",
-      "title": "/brand/v3/C02-title.webp",
-      "vignette": "/brand/v3/C02-vignette.svg"
-    },
-    "ascendant": {
-      "board": "C03",
-      "universe": "B01",
-      "title": "/brand/v3/C03-title.webp",
-      "vignette": "/brand/v3/C03-vignette.svg"
-    },
-    "life-atlas": {
-      "board": "C04",
-      "universe": "B01",
-      "title": "/brand/v3/C04-title.webp",
-      "vignette": "/brand/v3/C04-vignette.svg"
-    },
-    "horoscope": {
-      "board": "C05",
-      "universe": "B02",
-      "title": "/brand/v3/C05-title.webp",
-      "vignette": "/brand/v3/C05-vignette.svg"
-    },
-    "date-reading": {
-      "board": "C06",
-      "universe": "B02",
-      "title": "/brand/v3/C06-title.webp",
-      "vignette": "/brand/v3/C06-vignette.svg"
-    },
-    "week-reading": {
-      "board": "C07",
-      "universe": "B02",
-      "title": "/brand/v3/C07-title.webp",
-      "vignette": "/brand/v3/C07-vignette.svg"
-    },
-    "personal-calendar": {
-      "board": "C08",
-      "universe": "B02",
-      "title": "/brand/v3/C08-title.webp",
-      "vignette": "/brand/v3/C08-vignette.svg"
-    },
-    "solar-return": {
-      "board": "C09",
-      "universe": "B02",
-      "title": "/brand/v3/C09-title.webp",
-      "vignette": "/brand/v3/C09-vignette.svg"
-    },
-    "synastry": {
-      "board": "C10",
-      "universe": "B03",
-      "title": "/brand/v3/C10-title.webp",
-      "vignette": "/brand/v3/C10-vignette.svg"
-    },
-    "pair-preview": {
-      "board": "C11",
-      "universe": "B03",
-      "title": "/brand/v3/C11-title.webp",
-      "vignette": "/brand/v3/C11-vignette.svg"
-    },
-    "couple-dossier": {
-      "board": "C12",
-      "universe": "B03",
-      "title": "/brand/v3/C12-title.webp",
-      "vignette": "/brand/v3/C12-vignette.svg"
-    },
-    "daily-card": {
-      "board": "C13",
-      "universe": "B05",
-      "title": "/brand/v3/C13-title.webp",
-      "vignette": "/brand/v3/C13-vignette.svg"
-    },
-    "tarot-yes-no": {
-      "board": "C14",
-      "universe": "B05",
-      "title": "/brand/v3/C14-title.webp",
-      "vignette": "/brand/v3/C14-vignette.svg"
-    },
-    "three-questions": {
-      "board": "C15",
-      "universe": "B05",
-      "title": "/brand/v3/C15-title.webp",
-      "vignette": "/brand/v3/C15-vignette.svg"
-    },
-    "tarot-journey": {
-      "board": "C16",
-      "universe": "B05",
-      "title": "/brand/v3/C16-title.webp",
-      "vignette": "/brand/v3/C16-vignette.svg"
-    },
-    "tarot-focus": {
-      "board": "C17",
-      "universe": "B05",
-      "title": "/brand/v3/C17-title.webp",
-      "vignette": "/brand/v3/C17-vignette.svg"
-    },
-    "purpose-career": {
-      "board": "C18",
-      "universe": "B04",
-      "title": "/brand/v3/C18-title.webp",
-      "vignette": "/brand/v3/C18-vignette.svg"
-    },
-    "midheaven": {
-      "board": "C19",
-      "universe": "B04",
-      "title": "/brand/v3/C19-title.webp",
-      "vignette": "/brand/v3/C19-vignette.svg"
-    },
-    "career-compass": {
-      "board": "C20",
-      "universe": "B04",
-      "title": "/brand/v3/C20-title.webp",
-      "vignette": "/brand/v3/C20-vignette.svg"
-    },
-    "direction-journey": {
-      "board": "C21",
-      "universe": "B04",
-      "title": "/brand/v3/C21-title.webp",
-      "vignette": "/brand/v3/C21-vignette.svg"
-    },
-    "dream-reading": {
-      "board": "C22",
-      "universe": "B06",
-      "title": "/brand/v3/C22-title.webp",
-      "vignette": "/brand/v3/C22-vignette.svg"
-    },
-    "dream-journal": {
-      "board": "C23",
-      "universe": "B06",
-      "title": "/brand/v3/C23-title.webp",
-      "vignette": "/brand/v3/C23-vignette.svg"
-    },
-    "dream-dossier": {
-      "board": "C24",
-      "universe": "B06",
-      "title": "/brand/v3/C24-title.webp",
-      "vignette": "/brand/v3/C24-vignette.svg"
-    },
-    "dream-atlas": {
-      "board": "C25",
-      "universe": "B06",
-      "title": "/brand/v3/C25-title.webp",
-      "vignette": "/brand/v3/C25-vignette.svg"
-    },
-    "atv-plus": {
-      "board": "C26",
-      "universe": "B01",
-      "title": "/brand/v3/C26-title.webp",
-      "vignette": "/brand/v3/C26-vignette.svg"
-    }
-  }
+	"version": 3,
+	"hero": "/brand/v3/home-engraving.webp",
+	"themes": {
+		"B01": {
+			"board": "B01",
+			"title": "/brand/v3/B01-title.webp",
+			"figures": [
+				"/brand/v3/B01-figure-1.webp",
+				"/brand/v3/B01-figure-2.webp",
+				"/brand/v3/B01-figure-3.webp"
+			],
+			"left": "/brand/v3/B01-left.webp",
+			"right": "/brand/v3/B01-right.webp",
+			"top": "/brand/v3/B01-top.webp",
+			"bottom": "/brand/v3/B01-bottom.webp",
+			"divider": "/brand/v3/B01-divider.svg"
+		},
+		"B02": {
+			"board": "B02",
+			"title": "/brand/v3/B02-title.webp",
+			"figures": [
+				"/brand/v3/B02-figure-1.webp",
+				"/brand/v3/B02-figure-2.webp",
+				"/brand/v3/B02-figure-3.webp"
+			],
+			"left": "/brand/v3/B02-left.webp",
+			"right": "/brand/v3/B02-right.webp",
+			"top": "/brand/v3/B02-top.webp",
+			"bottom": "/brand/v3/B02-bottom.webp",
+			"divider": "/brand/v3/B02-divider.svg"
+		},
+		"B03": {
+			"board": "B03",
+			"title": "/brand/v3/B03-title.webp",
+			"figures": [
+				"/brand/v3/B03-figure-1.webp",
+				"/brand/v3/B03-figure-2.webp",
+				"/brand/v3/B03-figure-3.webp"
+			],
+			"left": "/brand/v3/B03-left.webp",
+			"right": "/brand/v3/B03-right.webp",
+			"top": "/brand/v3/B03-top.webp",
+			"bottom": "/brand/v3/B03-bottom.webp",
+			"divider": "/brand/v3/B03-divider.svg"
+		},
+		"B04": {
+			"board": "B04",
+			"title": "/brand/v3/B04-title.webp",
+			"figures": [
+				"/brand/v3/B04-figure-1.webp",
+				"/brand/v3/B04-figure-2.webp",
+				"/brand/v3/B04-figure-3.webp"
+			],
+			"left": "/brand/v3/B04-left.webp",
+			"right": "/brand/v3/B04-right.webp",
+			"top": "/brand/v3/B04-top.webp",
+			"bottom": "/brand/v3/B04-bottom.webp",
+			"divider": "/brand/v3/B04-divider.svg"
+		},
+		"B05": {
+			"board": "B05",
+			"title": "/brand/v3/B05-title.webp",
+			"figures": [
+				"/brand/v3/B05-figure-1.webp",
+				"/brand/v3/B05-figure-2.webp",
+				"/brand/v3/B05-figure-3.webp"
+			],
+			"left": "/brand/v3/B05-left.webp",
+			"right": "/brand/v3/B05-right.webp",
+			"top": "/brand/v3/B05-top.webp",
+			"bottom": "/brand/v3/B05-bottom.webp",
+			"divider": "/brand/v3/B05-divider.svg"
+		},
+		"B06": {
+			"board": "B06",
+			"title": "/brand/v3/B06-title.webp",
+			"figures": [
+				"/brand/v3/B06-figure-1.webp",
+				"/brand/v3/B06-figure-2.webp",
+				"/brand/v3/B06-figure-3.webp"
+			],
+			"left": "/brand/v3/B06-left.webp",
+			"right": "/brand/v3/B06-right.webp",
+			"top": "/brand/v3/B06-top.webp",
+			"bottom": "/brand/v3/B06-bottom.webp",
+			"divider": "/brand/v3/B06-divider.svg"
+		}
+	},
+	"products": {
+		"birth-chart": {
+			"board": "C01",
+			"universe": "B01",
+			"title": "/brand/v3/C01-title.webp",
+			"vignette": "/brand/v3/C01-vignette.svg"
+		},
+		"three-pillars": {
+			"board": "C02",
+			"universe": "B01",
+			"title": "/brand/v3/C02-title.webp",
+			"vignette": "/brand/v3/C02-vignette.svg"
+		},
+		"ascendant": {
+			"board": "C03",
+			"universe": "B01",
+			"title": "/brand/v3/C03-title.webp",
+			"vignette": "/brand/v3/C03-vignette.svg"
+		},
+		"life-atlas": {
+			"board": "C04",
+			"universe": "B01",
+			"title": "/brand/v3/C04-title.webp",
+			"vignette": "/brand/v3/C04-vignette.svg"
+		},
+		"horoscope": {
+			"board": "C05",
+			"universe": "B02",
+			"title": "/brand/v3/C05-title.webp",
+			"vignette": "/brand/v3/C05-vignette.svg"
+		},
+		"date-reading": {
+			"board": "C06",
+			"universe": "B02",
+			"title": "/brand/v3/C06-title.webp",
+			"vignette": "/brand/v3/C06-vignette.svg"
+		},
+		"week-reading": {
+			"board": "C07",
+			"universe": "B02",
+			"title": "/brand/v3/C07-title.webp",
+			"vignette": "/brand/v3/C07-vignette.svg"
+		},
+		"personal-calendar": {
+			"board": "C08",
+			"universe": "B02",
+			"title": "/brand/v3/C08-title.webp",
+			"vignette": "/brand/v3/C08-vignette.svg"
+		},
+		"solar-return": {
+			"board": "C09",
+			"universe": "B02",
+			"title": "/brand/v3/C09-title.webp",
+			"vignette": "/brand/v3/C09-vignette.svg"
+		},
+		"synastry": {
+			"board": "C10",
+			"universe": "B03",
+			"title": "/brand/v3/C10-title.webp",
+			"vignette": "/brand/v3/C10-vignette.svg"
+		},
+		"pair-preview": {
+			"board": "C11",
+			"universe": "B03",
+			"title": "/brand/v3/C11-title.webp",
+			"vignette": "/brand/v3/C11-vignette.svg"
+		},
+		"couple-dossier": {
+			"board": "C12",
+			"universe": "B03",
+			"title": "/brand/v3/C12-title.webp",
+			"vignette": "/brand/v3/C12-vignette.svg"
+		},
+		"daily-card": {
+			"board": "C13",
+			"universe": "B05",
+			"title": "/brand/v3/C13-title.webp",
+			"vignette": "/brand/v3/C13-vignette.svg"
+		},
+		"tarot-yes-no": {
+			"board": "C14",
+			"universe": "B05",
+			"title": "/brand/v3/C14-title.webp",
+			"vignette": "/brand/v3/C14-vignette.svg"
+		},
+		"three-questions": {
+			"board": "C15",
+			"universe": "B05",
+			"title": "/brand/v3/C15-title.webp",
+			"vignette": "/brand/v3/C15-vignette.svg"
+		},
+		"tarot-journey": {
+			"board": "C16",
+			"universe": "B05",
+			"title": "/brand/v3/C16-title.webp",
+			"vignette": "/brand/v3/C16-vignette.svg"
+		},
+		"tarot-focus": {
+			"board": "C17",
+			"universe": "B05",
+			"title": "/brand/v3/C17-title.webp",
+			"vignette": "/brand/v3/C17-vignette.svg"
+		},
+		"purpose-career": {
+			"board": "C18",
+			"universe": "B04",
+			"title": "/brand/v3/C18-title.webp",
+			"vignette": "/brand/v3/C18-vignette.svg"
+		},
+		"midheaven": {
+			"board": "C19",
+			"universe": "B04",
+			"title": "/brand/v3/C19-title.webp",
+			"vignette": "/brand/v3/C19-vignette.svg"
+		},
+		"career-compass": {
+			"board": "C20",
+			"universe": "B04",
+			"title": "/brand/v3/C20-title.webp",
+			"vignette": "/brand/v3/C20-vignette.svg"
+		},
+		"direction-journey": {
+			"board": "C21",
+			"universe": "B04",
+			"title": "/brand/v3/C21-title.webp",
+			"vignette": "/brand/v3/C21-vignette.svg"
+		},
+		"dream-reading": {
+			"board": "C22",
+			"universe": "B06",
+			"title": "/brand/v3/C22-title.webp",
+			"vignette": "/brand/v3/C22-vignette.svg"
+		},
+		"dream-journal": {
+			"board": "C23",
+			"universe": "B06",
+			"title": "/brand/v3/C23-title.webp",
+			"vignette": "/brand/v3/C23-vignette.svg"
+		},
+		"dream-dossier": {
+			"board": "C24",
+			"universe": "B06",
+			"title": "/brand/v3/C24-title.webp",
+			"vignette": "/brand/v3/C24-vignette.svg"
+		},
+		"dream-atlas": {
+			"board": "C25",
+			"universe": "B06",
+			"title": "/brand/v3/C25-title.webp",
+			"vignette": "/brand/v3/C25-vignette.svg"
+		},
+		"atv-plus": {
+			"board": "C26",
+			"universe": "B01",
+			"title": "/brand/v3/C26-title.webp",
+			"vignette": "/brand/v3/C26-vignette.svg"
+		}
+	}
 }
