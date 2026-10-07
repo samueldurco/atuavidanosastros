@@ -14,6 +14,7 @@
 		"FEATURE_AI": "false",
 		"FEATURE_HOTMART_LIVE": "false",
 		"FEATURE_MAGIC_LINK": "false",
-		"FEATURE_PHYSICAL_CHECKOUT": "false"
+		"FEATURE_PHYSICAL_CHECKOUT": "false",
+		"FEATURE_P06_CATALOG": "false"
 	}
 }

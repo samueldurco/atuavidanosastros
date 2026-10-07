@@ -1,13 +1,17 @@
 <script lang="ts">
 	import { signs, signNames } from '$lib/data/site';
 	import ShopPreparation from '$lib/components/ShopPreparation.svelte';
+	import type { PageData } from './$types';
+	let { data }: { data: PageData } = $props();
 </script>
 
 <svelte:head>
-	<title>Loja dos Signos — em preparação</title>
+	<title>{data.p06Available ? 'Loja dos Signos — ATVNA' : 'Loja dos Signos — em preparação'}</title>
 	<meta
 		name="description"
-		content="A futura curadoria da Loja dos Signos está em preparação. Nenhum produto, preço ou estoque foi publicado."
+		content={data.p06Available
+			? 'Conheça Mitos e Emblemas do Zodíaco. Composições autorais do ATVNA, com condições de compra e entrega na Hotmart.'
+			: 'A futura curadoria da Loja dos Signos está em preparação. Nenhum produto, preço ou estoque foi publicado.'}
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
 </svelte:head>
@@ -15,27 +19,41 @@
 <section class="shop-hero section" data-stitch="FUT-01">
 	<div class="container hero-grid">
 		<div class="hero-copy">
-			<p class="eyebrow">Uma curadoria em construção</p>
+			<p class="eyebrow">
+				{data.p06Available ? 'Composições autorais · ATVNA' : 'Uma curadoria em construção'}
+			</p>
 			<h1 class="display">Loja dos Signos</h1>
 			<p class="lead">
-				Roupas, objetos e edições para levar um pouco do céu ao cotidiano. Ainda não há produtos,
-				preços, estoque, prazo ou avaliações publicados.
+				{#if data.p06Available}Roupas e edições inspiradas em narrativas do céu. Conheça a coleção
+					Mitos e Emblemas do Zodíaco e confira as condições de cada item.
+				{:else}Roupas, objetos e edições para levar um pouco do céu ao cotidiano. Ainda não há
+					produtos, preços, estoque, prazo ou avaliações publicados.{/if}
 			</p>
-			<a class="button" href="#colecoes">Explorar as coleções</a>
+			<a class="button" href={data.p06Available ? '/loja/mitos-emblemas' : '#colecoes'}
+				>Explorar as coleções</a
+			>
 		</div>
-		<aside class="preparation-note" aria-label="Estado da loja">
-			<span class="status">Em preparação</span>
-			<div class="note-rule" aria-hidden="true"></div>
-			<p class="note-title">Antes da primeira oferta</p>
-			<p>
-				Cada item precisa de fornecedor identificado, descrição verificada e condições de compra
-				claras. A curadoria ainda não foi publicada.
-			</p>
-		</aside>
+		{#if !data.p06Available}<aside class="preparation-note" aria-label="Estado da loja">
+				<span class="status">Em preparação</span>
+				<div class="note-rule" aria-hidden="true"></div>
+				<p class="note-title">Antes da primeira oferta</p>
+				<p>
+					Cada item precisa de fornecedor identificado, descrição verificada e condições de compra
+					claras. A curadoria ainda não foi publicada.
+				</p>
+			</aside>{/if}
 	</div>
 </section>
 
-<ShopPreparation />
+{#if data.p06Available}
+	<section class="section">
+		<div class="container">
+			<h2 class="h2">Mitos e Emblemas do Zodíaco</h2>
+			<p>O arco, a curva e o fluxo em composições autorais.</p>
+			<a class="button" href="/loja/mitos-emblemas">Conhecer os produtos</a>
+		</div>
+	</section>
+{:else}<ShopPreparation />{/if}
 
 <section class="shop-index section" id="signos" aria-labelledby="signos-title">
 	<div class="container">
