@@ -31,6 +31,7 @@ export interface CalendarMarksInput {
 export interface WorkflowInput {
   version: typeof WORKFLOW_VERSION;
   productId: string;
+  presentation?: { version: 'atv-reading-identity/1'; name?: string; city?: string; partnerName?: string; partnerCity?: string };
   consent: { storage: true; policyVersion: 'atv-input-consent/1'; partner: boolean; continuity: boolean };
   birth?: BirthInput;
   partner?: BirthInput;
@@ -111,7 +112,15 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (!product || !object(v.consent) || !keysOnly(v.consent, ['storage', 'policyVersion', 'partner', 'continuity']) ||
       v.consent.storage !== true || v.consent.policyVersion !== 'atv-input-consent/1' ||
       typeof v.consent.partner !== 'boolean' || typeof v.consent.continuity !== 'boolean') return null;
-  const fields = ['version', 'productId', 'consent', 'context'];
+  const fields = ['version', 'productId', 'consent', 'context', 'presentation'];
+  if (v.presentation !== undefined && (!object(v.presentation) ||
+      !keysOnly(v.presentation, ['version', 'name', 'city', 'partnerName', 'partnerCity']) ||
+      v.presentation.version !== 'atv-reading-identity/1' ||
+      !['name', 'city', 'partnerName', 'partnerCity'].every((key) => v.presentation &&
+        ((v.presentation as Record<string, unknown>)[key] === undefined ||
+          (text((v.presentation as Record<string, unknown>)[key], key.endsWith('ity') ? 160 : 80) &&
+           !/[\u007f-\u009f]/.test(String((v.presentation as Record<string, unknown>)[key]))))) ||
+      (product.kind !== 'relationship' && ('partnerName' in v.presentation || 'partnerCity' in v.presentation)))) return null;
   if (['natal', 'cycles', 'relationship', 'purpose'].includes(product.kind) && product.id !== 'direction-journey') fields.push('birth');
   if (product.id === 'direction-journey') fields.push('journey');
   if (product.id === 'tarot-journey') fields.push('tarotJourney');

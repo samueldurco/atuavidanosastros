@@ -1,4 +1,5 @@
 <script lang="ts">
+	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
@@ -66,23 +67,9 @@
 				{/each}
 			</div>
 		</section>
-		<section aria-labelledby="trial-library">
-			<h2 id="trial-library">Sua biblioteca de testes</h2>
-			{#if !data.readings.length}<p>
-					Suas leituras aparecerão aqui depois de serem geradas e salvas.
-				</p>{/if}
-			<ul>
-				{#each data.readings as reading (reading.id)}<li>
-						<a href={`/testar-produtos/leituras/${reading.id}`}
-							>{data.products.find((p) => p.id === reading.product_id)?.name ??
-								reading.product_id}</a
-						>
-						— {new Date(reading.created_at).toLocaleDateString('pt-BR', {
-							timeZone: 'America/Sao_Paulo'
-						})}
-					</li>{/each}
-			</ul>
-		</section>
+		<TrialLibrary
+			library={{ readings: data.readings, unavailable: Boolean(data.libraryUnavailable) }}
+		/>
 	{:else}
 		<Card
 			title={data.user

@@ -1,4 +1,4 @@
 export type TrialLibraryData = {
-	readings: { id: string; product_id: string; created_at: string }[];
+	readings: { id: string; product_id: string; created_at: string; version?: string }[];
 	unavailable: boolean;
 };

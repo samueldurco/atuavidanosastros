@@ -10,7 +10,12 @@ test('career complete reading, provenance, personal approval and recoverable not
 	await expect(
 		page.getByRole('heading', { name: 'Bússola de Carreira', exact: true })
 	).toBeVisible();
-	await expect(page.getByRole('heading', { name: 'Ambientes e modos de trabalho' })).toBeVisible();
+	await page
+		.getByRole('button', { name: 'Ambientes em que vale fazer um teste', exact: true })
+		.click();
+	await expect(
+		page.getByRole('heading', { name: 'Ambientes em que vale fazer um teste' })
+	).toBeVisible();
 	await page.getByText('Origem e versão', { exact: true }).click();
 	await expect(page.locator('details ul li').first()).toBeVisible();
 	let body: Record<string, unknown> = {};
@@ -46,7 +51,10 @@ for (const product of [
 	'birth-chart',
 	'dream-reading',
 	'direction-journey',
-	'purpose-career'
+	'purpose-career',
+	'couple-dossier',
+	'three-pillars',
+	'horoscope'
 ])
 	test(`${product}: accessible full result at 320px`, async ({ page }) => {
 		await page.setViewportSize({ width: 320, height: 812 });
@@ -61,10 +69,9 @@ for (const product of [
 		if (product === 'dream-reading')
 			expect(await page.evaluate(() => Reflect.get(window, 'pwned'))).toBeUndefined();
 		if (product === 'birth-chart') {
-			await expect(page.getByRole('link', { name: 'Baixar PDF completo' })).toHaveAttribute(
-				'href',
-				/format=pdf$/
-			);
+			await expect(
+				page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })
+			).toHaveAttribute('href', /format=pdf$/);
 			await expect(page.getByRole('link', { name: 'Baixar cartografia SVG' })).toHaveAttribute(
 				'href',
 				/format=svg$/
@@ -107,6 +114,87 @@ test('intake consent and stable retry key for a dream, escaped as data', async (
 	await page.getByRole('button', { name: 'Gerar leitura gratuita' }).click();
 	await expect.poll(() => requests.length).toBe(2);
 	expect(requests[0]).toEqual(requests[1]);
+});
+
+test('chapter changes and bookmarks persist without blocking reading on a failed save', async ({
+	page
+}) => {
+	const updates: Record<string, unknown>[] = [];
+	await page.route('**/api/private-trials/*', async (route) => {
+		updates.push(route.request().postDataJSON());
+		await route.fulfill({ status: 200, json: { saved: true } });
+	});
+	await page.goto('/testar-produtos/_spec');
+	await page.getByRole('button', { name: 'Sua página de decisão', exact: true }).click();
+	await expect(
+		page.getByRole('heading', { name: 'Sua página de decisão', exact: true })
+	).toBeVisible();
+	await page.getByRole('button', { name: '☆ Marcar capítulo', exact: true }).click();
+	await expect(page.getByRole('button', { name: '★ Marcado', exact: true })).toHaveAttribute(
+		'aria-pressed',
+		'true'
+	);
+	await expect.poll(() => updates.at(-1)?.bookmarks).toEqual([7]);
+	await page.route('**/api/private-trials/*', (route) =>
+		route.fulfill({ status: 503, json: { message: 'Não foi possível salvar agora.' } })
+	);
+	await page.getByRole('button', { name: 'Sua direção em cinco minutos', exact: true }).click();
+	await expect(
+		page.getByRole('heading', { name: 'Sua direção em cinco minutos', exact: true })
+	).toBeVisible();
+	await expect(
+		page.getByRole('status').filter({ hasText: 'Não foi possível salvar agora.' })
+	).toBeVisible();
+});
+
+test('couple charts and sharing require explicit consent and recover from HTML failures', async ({
+	page
+}) => {
+	await page.goto('/testar-produtos/_spec?product=couple-dossier');
+	await expect(page.locator('svg[role="img"]')).toHaveCount(2);
+	const share = page.getByRole('button', { name: 'Criar link por sete dias', exact: true });
+	await expect(share).toBeDisabled();
+	await page.getByLabel(/Tenho autorização da outra pessoa e quero compartilhar/).check();
+	await page.route('**/api/private-trials/*', (route) =>
+		route.fulfill({
+			status: 503,
+			contentType: 'text/html',
+			body: '<!doctype html><title>1102</title>'
+		})
+	);
+	await share.click();
+	await expect(page.getByRole('status').filter({ hasText: /Tente novamente/ })).toBeVisible();
+	await expect(page.getByText('Unexpected token')).toHaveCount(0);
+});
+
+test('three pillars have distinct navigation and horoscope remains a web reading', async ({
+	page
+}) => {
+	await page.route('**/api/private-trials/*', (route) =>
+		route.fulfill({ status: 200, json: { saved: true } })
+	);
+	await page.goto('/testar-produtos/_spec?product=three-pillars');
+	await page.getByRole('button', { name: /Lua · necessidades/ }).click();
+	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText('Lua');
+	await page.goto('/testar-produtos/_spec?product=horoscope');
+	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
+		0
+	);
+});
+
+test('pair preview displays both calculated three-factor charts and the desire chapter', async ({
+	page
+}) => {
+	await page.route('**/api/private-trials/*', (route) =>
+		route.fulfill({ status: 200, json: { saved: true } })
+	);
+	await page.goto('/testar-produtos/_spec?product=pair-preview');
+	await expect(page.locator('svg[role="img"]')).toHaveCount(2);
+	await expect(page.locator('svg[role="img"] [data-body]')).toHaveCount(6);
+	await page.getByRole('button', { name: 'Desejo, iniciativa e limites', exact: true }).click();
+	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText(
+		'não calcula aspectos entre os mapas'
+	);
 });
 
 test('ATV+ has all six universes, 25 products, notes library and personal approval', async ({

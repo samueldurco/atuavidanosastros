@@ -4,6 +4,7 @@ import { privateTrial } from '$lib/server/private-trials';
 import { trialSvg, trialText } from '$lib/server/trial-exports';
 import { reviewTrial } from '$lib/server/trial-runtime';
 import type { RequestHandler } from './$types';
+import { privateFormats } from '$lib/trials/experience';
 
 export const GET: RequestHandler = async (event) => {
 	const saved = await privateTrial(event.locals, event.params.id);
@@ -11,7 +12,7 @@ export const GET: RequestHandler = async (event) => {
 		error(409, 'A revisão desta versão precisa ser conferida antes do download.');
 	const product = productCatalog.find((p) => p.id === saved.product_id)!;
 	const format = event.url.searchParams.get('format') ?? 'txt';
-	if (format !== 'txt' && !product.delivery.some((d) => d === format))
+	if (!privateFormats(saved.product_id, product.delivery).includes(format))
 		error(400, 'Formato indisponível neste produto.');
 	if (format === 'pdf') redirect(303, `/testar-produtos/leituras/${saved.id}/baixar`);
 	let body: BodyInit, type: string;

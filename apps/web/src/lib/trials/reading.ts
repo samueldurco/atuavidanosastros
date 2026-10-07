@@ -1,6 +1,11 @@
 import { composeLegacyTrialReading } from './legacy-reading';
-import { composeTrialReading, CONTENT_VERSION, POLICY_VERSION } from './editorial-reading';
-export { composeTrialReading } from './editorial-reading';
+import {
+	composeTrialReading as composeV2,
+	CONTENT_VERSION as V2,
+	POLICY_VERSION as POLICY_V2
+} from './editorial-reading';
+import { composeTrialReading, CONTENT_VERSION, POLICY_VERSION } from './experience-reading';
+export { composeTrialReading } from './experience-reading';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { trialProfiles, TRIAL_CONTENT_VERSION, TRIAL_POLICY_VERSION } from './content';
 
@@ -81,10 +86,13 @@ export async function approveTrialReading(
 		ids.add(fact.id);
 	}
 	const legacy = candidate.version === TRIAL_CONTENT_VERSION;
-	if (!legacy && candidate.version !== CONTENT_VERSION) return null;
+	const previous = candidate.version === V2;
+	if (!legacy && !previous && candidate.version !== CONTENT_VERSION) return null;
 	const expected = legacy
 		? composeLegacyTrialReading(input, calculation)
-		: composeTrialReading(input, calculation);
+		: previous
+			? composeV2(input, calculation)
+			: composeTrialReading(input, calculation);
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		!legacy &&
@@ -100,7 +108,7 @@ export async function approveTrialReading(
 			!candidate.source.trim())
 	)
 		return null;
-	const policy = legacy ? TRIAL_POLICY_VERSION : POLICY_VERSION;
+	const policy = legacy ? TRIAL_POLICY_VERSION : previous ? POLICY_V2 : POLICY_VERSION;
 	if (candidate.sections.some((s) => !s.text.trim() || s.factIds.some((id) => !ids.has(id))))
 		return null;
 	const covered = new Set(candidate.sections.flatMap((s) => s.factIds));

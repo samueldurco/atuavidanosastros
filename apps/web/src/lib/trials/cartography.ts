@@ -43,19 +43,32 @@ export const bodyGlyphs: Record<string, string> = {
 };
 const angle = (n: unknown): n is number =>
 	typeof n === 'number' && Number.isFinite(n) && n >= 0 && n < 360;
-export function trialGeometry(saved: SavedTrial) {
-	const root = saved.calculation.data;
-	const data =
-		saved.product_id === 'life-atlas'
+export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
+	const root =
+		saved.product_id === 'couple-dossier'
+			? (saved.calculation.data.base as { data: Record<string, unknown> }).data
+			: saved.calculation.data;
+	const data = person
+		? (root[person] as Record<string, unknown>)
+		: saved.product_id === 'life-atlas'
 			? (root.natal as { data?: Record<string, unknown> } | undefined)?.data
 			: root;
 	if (!data) throw Error('geometry_missing');
 	const positions = (data.positions ?? []) as { body: string; longitude: number }[];
-	const angles = data.angles as { ascendant: number | null; midheaven: number | null };
-	const houses = data.houses as { status: string; cusps: number[] };
+	const angles = (person ? { ascendant: null, midheaven: null } : data.angles) as {
+		ascendant: number | null;
+		midheaven: number | null;
+	};
+	const houses = (person ? { status: 'not-calculated', cusps: [] } : data.houses) as {
+		status: string;
+		cusps: number[];
+	};
 	if (
 		!Array.isArray(positions) ||
-		positions.length !== (saved.product_id === 'ascendant' ? 0 : 10) ||
+		positions.length !==
+			(saved.product_id === 'ascendant' ? 0 : saved.product_id === 'pair-preview' ? 3 : 10) ||
+		(saved.product_id === 'pair-preview' &&
+			positions.some((p) => !['moon', 'venus', 'mars'].includes(p.body))) ||
 		positions.some((p) => !bodyNames[p.body] || !angle(p.longitude)) ||
 		new Set(positions.map((p) => p.body)).size !== positions.length ||
 		!angles ||
@@ -67,11 +80,12 @@ export function trialGeometry(saved: SavedTrial) {
 		houses.cusps.some((c) => !angle(c))
 	)
 		throw Error('geometry_invalid');
-	const raw =
-		(
-			root.privateAspects as
-				{ aspects?: { first: string; second: string; kind: string }[] } | undefined
-		)?.aspects ?? [];
+	const raw = person
+		? []
+		: ((
+				root.privateAspects as
+					{ aspects?: { first: string; second: string; kind: string }[] } | undefined
+			)?.aspects ?? []);
 	if (
 		!Array.isArray(raw) ||
 		raw.some(

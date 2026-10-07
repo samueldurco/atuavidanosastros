@@ -14,6 +14,7 @@
 		ready = true;
 	});
 	const blankBirth = () => ({
+		name: '',
 		date: '',
 		time: '',
 		location: '',
@@ -58,6 +59,61 @@
 		message = $state(''),
 		requestKey = $state(''),
 		lastPayload = '';
+	let birthConfirmed = $state(false);
+	$effect(() => {
+		JSON.stringify(birth);
+		JSON.stringify(partner);
+		birthConfirmed = false;
+	});
+	onMount(() => {
+		const old = data.previous?.input;
+		if (!old) return;
+		const prefill = (value: WorkflowInput['birth'], name?: string, city?: string) =>
+			value
+				? {
+						...blankBirth(),
+						name: name ?? '',
+						date: value.localDateTime.slice(0, 10),
+						time: value.localDateTime.slice(11, 16),
+						location: city ?? 'Local da leitura anterior',
+						latitude: String(value.latitude),
+						longitude: String(value.longitude),
+						timezone: value.timezone,
+						source: value.locationSource
+					}
+				: blankBirth();
+		birth = prefill(old.birth, old.presentation?.name, old.presentation?.city);
+		partner = prefill(old.partner, old.presentation?.partnerName, old.presentation?.partnerCity);
+		context = old.context ?? '';
+		if (old.atlas) priorities = [...old.atlas.priorities];
+		if (old.targetDate) {
+			targetDate = old.targetDate;
+			month = old.targetDate.slice(0, 7);
+		}
+		if (old.returnYear) returnYear = old.returnYear;
+		if (old.returnLocation)
+			returnCity = {
+				...blankBirth(),
+				location: old.returnLocation.city,
+				timezone: old.returnLocation.timezone,
+				latitude: String(old.returnLocation.latitude),
+				longitude: String(old.returnLocation.longitude),
+				source: old.returnLocation.locationSource
+			};
+		if (old.questions) questions = [...old.questions, '', ''].slice(0, 3);
+		if (old.journey) {
+			goal = old.journey.goal;
+			startDate = old.journey.startDate;
+		}
+		if (old.tarotJourney) goal = old.tarotJourney.goal;
+		if (old.dreamAtlas) startDate = old.dreamAtlas.startDate;
+		if (old.dream) {
+			targetDate = old.dream.date;
+			narrative = old.dream.narrative;
+			emotions = old.dream.emotions.join(', ');
+			associations = old.dream.associations.join(', ');
+		}
+	});
 	const needsBirth = $derived(
 		['natal', 'cycles', 'relationship', 'purpose'].includes(data.product.kind) &&
 			data.product.id !== 'direction-journey'
@@ -74,6 +130,16 @@
 			longitude: Number(form.longitude),
 			locationSource: form.source
 		};
+	}
+	function reviewBirth(form: ReturnType<typeof blankBirth>) {
+		if (!form.date || !form.time || !form.timezone)
+			return 'Preencha data, hora e selecione a cidade para conferir.';
+		try {
+			const instant = birthValue(form).utcInstant;
+			return `${form.name || 'Nascimento'} · ${form.date.split('-').reverse().join('/')} às ${form.time} · ${form.location}. Fuso local: ${form.timezone}. Corresponde a ${instant.replace('T', ' ').replace('.000Z', ' UTC')}.`;
+		} catch {
+			return 'Confira a cidade e escolha a ocorrência da hora, quando solicitada.';
+		}
 	}
 	async function generate(event: SubmitEvent) {
 		event.preventDefault();
@@ -93,6 +159,20 @@
 			};
 			if (needsBirth) input.birth = birthValue(birth);
 			if (data.product.kind === 'relationship') input.partner = birthValue(partner);
+			if (needsBirth) {
+				if (!birthConfirmed) throw Error('Confira os dados e confirme antes de gerar.');
+				input.presentation = {
+					version: 'atv-reading-identity/1',
+					city: birth.location,
+					...(birth.name.trim() ? { name: birth.name.trim() } : {}),
+					...(data.product.kind === 'relationship'
+						? {
+								partnerCity: partner.location,
+								...(partner.name.trim() ? { partnerName: partner.name.trim() } : {})
+							}
+						: {})
+				};
+			}
 			if (data.product.kind === 'cycles')
 				input.targetDate = data.product.id === 'personal-calendar' ? month + '-01' : targetDate;
 			if (data.product.id === 'solar-return') {
@@ -176,6 +256,10 @@
 	/>
 	<form onsubmit={generate} aria-busy={busy}>
 		<fieldset class="intake-fields" disabled={!ready || busy}>
+			{#if data.previous}<p>
+					Correção da leitura anterior: confira e ajuste os dados abaixo. A nova leitura será salva
+					separadamente; a anterior continuará na biblioteca.
+				</p>{/if}
 			{#if needsBirth}<TrialBirthFields id="birth" label="Seu nascimento" bind:form={birth} />{/if}
 			{#if data.product.kind === 'relationship'}
 				<TrialBirthFields id="partner" label="Nascimento da outra pessoa" bind:form={partner} />
@@ -306,6 +390,16 @@
 						><input type="checkbox" bind:checked={historyConsent} />Autorizo usar os registros
 						selecionados nesta síntese.</label
 					>{/if}
+			{/if}
+			{#if needsBirth}
+				<aside aria-label="Confira os dados usados no cálculo">
+					<h2>Confira antes de gerar</h2>
+					<p>{reviewBirth(birth)}</p>
+					{#if data.product.kind === 'relationship'}<p>{reviewBirth(partner)}</p>{/if}<label
+						><input type="checkbox" required bind:checked={birthConfirmed} />Conferi a cidade, a
+						data e a hora de cada pessoa.</label
+					>
+				</aside>
 			{/if}
 			<label
 				>Contexto que deseja trazer (opcional)<textarea

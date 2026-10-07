@@ -12,6 +12,13 @@ import { trialSvg, trialText } from './exports';
 import { trialPdf } from './pdf';
 import { PDFDocument } from 'pdf-lib';
 import { composeLegacyTrialReading } from './legacy-reading';
+import { composeTrialReading as composeV2 } from './editorial-reading';
+import { parseReaderState } from './reader-state';
+import { canShareReading, sharedReading, shareTokenHash, validShareToken } from './sharing';
+import { trialGeometry } from './cartography';
+import { privateFormats } from './experience';
+import { positionInterpretation } from './position-interpretation';
+import { signEditorial } from './content';
 
 // Synthetic local evidence only. No user identities, commercial releases or provider calls.
 const id = '00000000-0000-4000-8000-000000000031';
@@ -108,6 +115,13 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			const calculation = await calculateTrial(input, id, sources);
 			const reading = composeTrialReading(input, calculation),
 				approval = await approveTrialReading(input, calculation, reading);
+			if (!approval) {
+				await mkdir('.trial-qa', { recursive: true });
+				await writeFile(
+					`.trial-qa/${product.id}-rejected.json`,
+					JSON.stringify({ input, calculation, reading }, null, 2)
+				);
+			}
 			expect(approval?.scope).toBe('private-free-test');
 			expect(approval?.digest).toMatch(/^[a-f0-9]{64}$/);
 			expect(reading.sections.length).toBeLessThan(60);
@@ -140,6 +154,26 @@ describe('private free testing of the real 25 calculations and original AI/edito
 				scope: approval!.scope
 			});
 		}, 30000);
+	it('same-sign personal functions have distinct interpretations in every sign', () => {
+		for (const sign of Object.keys(signEditorial)) {
+			const texts = ['Sol', 'Lua', 'Mercúrio', 'Vênus', 'Marte'].map((body) =>
+				positionInterpretation(body, sign)!
+			);
+			expect(texts.every(Boolean)).toBe(true);
+			expect(new Set(texts).size).toBe(5);
+			const sentences = texts.flatMap((text) =>
+				text
+					.split(/[.!?]/)
+					.map((s) => s.trim())
+					.filter(Boolean)
+			);
+			expect(new Set(sentences).size).toBe(sentences.length);
+		}
+		const solar = saved.get('solar-return')!;
+		for (const section of solar.reading.sections) {
+			expect(section.text).not.toContain('a leitura propõe');
+		}
+	});
 	it('historical readings remain verifiable, while a new edition preserves every calculation fact', async () => {
 		for (const s of saved.values()) {
 			const historical = composeLegacyTrialReading(s.input, s.calculation);
@@ -173,12 +207,112 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		) as typeof s.calculation;
 		expect(await approveTrialReading(s.input, reordered, s.reading)).toEqual(s.approval);
 	});
-	it('career covers only MC and reported context, without adding geometrical factors', () => {
+	it('V2 remains authentic; V3 cannot borrow its approval or accept a changed civil identity', async () => {
+		const s = saved.get('birth-chart')!;
+		const v2 = composeV2(s.input, s.calculation);
+		expect((await approveTrialReading(s.input, s.calculation, v2))?.policy).toBe(
+			'atv-private-trial-approval/2.0.0'
+		);
+		expect(v2).not.toEqual(s.reading);
+		const input = {
+			...s.input,
+			presentation: {
+				version: 'atv-reading-identity/1' as const,
+				name: 'Pessoa sintética',
+				city: 'Cidade sintética'
+			}
+		};
+		const reading = composeTrialReading(input, s.calculation);
+		const approved = await approveTrialReading(input, s.calculation, reading);
+		expect(approved?.digest).not.toEqual(s.approval.digest);
+	});
+	it('reader positions reject invalid chapters and duplicate bookmarks', () => {
+		expect(parseReaderState({ chapter: 2, bookmarks: [2, 0] }, 3)).toEqual({
+			chapter: 2,
+			bookmarks: [0, 2]
+		});
+		for (const value of [
+			{ chapter: 3, bookmarks: [] },
+			{ chapter: -1, bookmarks: [] },
+			{ chapter: 0, bookmarks: [0, 0] },
+			{ chapter: 0, bookmarks: [3] }
+		])
+			expect(parseReaderState(value, 3)).toBeNull();
+	});
+	it('couple sharing projects content without private input, facts or account metadata', async () => {
+		const s = saved.get('synastry')!;
+		const share = sharedReading(s)!;
+		expect(Object.keys(share).sort()).toEqual([
+			'names',
+			'opening',
+			'practice',
+			'questions',
+			'sections',
+			'title'
+		]);
+		expect(
+			share.sections.every((section) => Object.keys(section).sort().join(',') === 'text,title')
+		).toBe(true);
+		expect(sharedReading(saved.get('career-compass')!)).toBeNull();
+		expect(canShareReading('pair-preview')).toBe(true);
+		expect(validShareToken('a'.repeat(64))).toBe(true);
+		expect(validShareToken('../secret')).toBe(false);
+		expect(await shareTokenHash('a'.repeat(64))).toHaveLength(64);
+		expect(await shareTokenHash('a'.repeat(64))).not.toBe('a'.repeat(64));
+	});
+	it('each couple chart uses its own saved positions without invented angles or houses', () => {
+		const s = saved.get('synastry')!,
+			first = trialGeometry(s, 'first'),
+			second = trialGeometry(s, 'second');
+		expect(first.positions).toHaveLength(10);
+		expect(second.positions).toHaveLength(10);
+		expect(first.positions).not.toEqual(second.positions);
+		expect(first.houses.cusps).toEqual([]);
+		expect(first.angles).toEqual({ ascendant: null, midheaven: null });
+	});
+	it('short daily products do not offer a long PDF', () => {
+		for (const product of ['horoscope', 'daily-card', 'atv-plus'])
+			expect(privateFormats(product, ['web', 'pdf'])).not.toContain('pdf');
+	});
+	it('pair preview interprets all six calculated positions and renders both three-factor charts', () => {
+		const s = saved.get('pair-preview')!;
+		for (const person of ['first', 'second'] as const) {
+			const geometry = trialGeometry(s, person);
+			expect(geometry.positions.map((p) => p.body).sort()).toEqual(['mars', 'moon', 'venus']);
+			expect(geometry.houses.cusps).toEqual([]);
+		}
+		const chapters = s.reading.sections.slice(0, 3);
+		expect(chapters.map((s) => s.title)).toEqual([
+			'Afeto e aproximação',
+			'Necessidades emocionais',
+			'Desejo, iniciativa e limites'
+		]);
+		expect(new Set(chapters.flatMap((s) => s.factIds)).size).toBe(6);
+		expect(chapters.every((s) => s.text.includes('não calcula aspectos entre os mapas'))).toBe(
+			true
+		);
+	});
+	it('career uses saved natal geometry, traditional rulership and an actionable decision page', () => {
 		const s = saved.get('career-compass')!;
-		expect(s.calculation.facts.map((f) => f.id)).toEqual(['angle-midheaven', 'personal-context']);
+		expect(s.calculation.facts.map((f) => f.id)).toEqual(
+			expect.arrayContaining([
+				'angle-midheaven',
+				'career-mc-ruler',
+				'position-sun',
+				'position-mercury',
+				'position-mars',
+				'position-jupiter',
+				'position-saturn',
+				'house-2',
+				'house-6',
+				'house-10'
+			])
+		);
 		expect(s.reading.sections.some((s) => s.text.includes('contribuição pública'))).toBe(true);
 		expect(trialText(s)).toContain(s.input.context);
-		expect(s.calculation.data.positions).toEqual([]);
+		expect(s.calculation.data.positions).toHaveLength(10);
+		expect(s.reading.sections.some((s) => s.title === 'Sua página de decisão')).toBe(true);
+		expect(s.reading.sections.some((s) => s.title === 'Um experimento de trinta dias')).toBe(true);
 	});
 	it('calendar calculates one daily sample for all 31 days within the approval size bound', () => {
 		const s = saved.get('personal-calendar')!;
@@ -186,6 +320,16 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		expect(s.calculation.facts.filter((f) => f.id.startsWith('day-'))).toHaveLength(31);
 		expect(s.calculation.limits.some((l) => l.includes('12h UTC'))).toBe(true);
 		expect(s.calculation.limits.some((l) => l.includes('Nenhum trânsito diário'))).toBe(false);
+		const days = s.reading.sections.filter((s) =>
+			s.factIds.some((id) => /^day-\d+-aspects$/.test(id))
+		);
+		expect(days).toHaveLength(31);
+		expect(
+			days.every((s) => s.text.includes('Tema central:') || s.text.includes('não encontrou'))
+		).toBe(true);
+		expect(
+			new Set(days.map((s) => s.text.split('Tema central:')[1]?.split('\n\n')[0])).size
+		).toBeGreaterThan(5);
 	});
 	it('tarot retries with the same run id retain the drawn cards; no replacement or binary prophecy', async () => {
 		const s = saved.get('tarot-journey')!,
@@ -206,7 +350,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			trialText({ ...saved.get('dream-reading')!, input, calculation: calc, reading })
 		).toContain(input.dream!.narrative);
 		expect((await approveTrialReading(input, calc, reading))?.policy).toBe(
-			'atv-private-trial-approval/2.0.0'
+			'atv-private-trial-approval/3.0.0'
 		);
 	});
 	it('PDF and TXT preserve the full saved reading; SVG contains only saved valid geometry', async () => {
@@ -238,7 +382,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			expect(svg.match(/data-body=/g) ?? []).toHaveLength(product.id === 'ascendant' ? 0 : 10);
 			expect(svg).not.toContain('undefined');
 		});
-	for (const product of cases.filter((p) => p.delivery.includes('pdf')))
+	for (const product of cases.filter((p) => privateFormats(p.id, p.delivery).includes('pdf')))
 		it(`${product.id}: complete catalog PDF can be reopened`, async () => {
 			const pdf = await trialPdf(saved.get(product.id)!);
 			expect((await PDFDocument.load(pdf)).getPageCount()).toBeGreaterThan(0);

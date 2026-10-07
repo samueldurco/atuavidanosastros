@@ -2,6 +2,7 @@ import { PDFDocument, rgb, type PDFFont } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import type { SavedTrial } from './reading';
 import { trialText } from './exports';
+import { experienceFor } from './experience';
 import { trialGeometry, bodyNames, bodyGlyphs, signNames, nominalDegree } from './cartography';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
@@ -15,11 +16,14 @@ export async function trialPdf(saved: SavedTrial) {
 	const body = await doc.embedFont(bodyData, { subset: true }),
 		label = await doc.embedFont(labelData, { subset: true });
 	const r = saved.reading;
+	const format = experienceFor(saved.product_id).format;
+	const book = format === 'book';
+	const chapters = r.sections.filter((s) => s.title !== 'Referências desta leitura');
 	doc.setTitle(r.title);
 	doc.setAuthor('A Tua Vida nos Astros');
 	doc.setLanguage('pt-BR');
 	doc.setCreationDate(new Date(saved.created_at));
-	doc.setCreator('atv-private-trial-pdf/2');
+	doc.setCreator('atv-reading-pdf/3');
 	const width = 595.28,
 		height = 841.89,
 		margin = 54,
@@ -130,30 +134,50 @@ export async function trialPdf(saved: SavedTrial) {
 		size: 10,
 		color: muted
 	});
-	y = height - 205;
-	paragraph(r.title, body, 34);
+	y = height - (book ? 205 : 145);
+	paragraph(r.title, body, book ? 34 : 25);
 	y -= 18;
-	paragraph(r.opening, body, 17);
-	y = Math.min(y - 30, 310);
-	paragraph('Sua leitura para observar, refletir e experimentar.', label, 12);
-	paragraph(
-		'Teste privado gratuito · sua avaliação é independente da revisão automática.',
-		label,
-		10
-	);
+	paragraph(r.opening, body, book ? 17 : 12);
+	if (saved.input.presentation?.name) paragraph(saved.input.presentation.name, body, 20);
+	if (saved.input.presentation?.partnerName)
+		paragraph(`Com ${saved.input.presentation.partnerName}`, body, 17);
+	if (saved.input.birth) {
+		const b = saved.input.birth;
+		paragraph(
+			`${b.localDateTime.replace('T', ' · ')} · ${saved.input.presentation?.city ?? 'Local informado'} · ${b.timezone}`,
+			label,
+			10
+		);
+	}
+	if (book) y = Math.min(y - 30, 310);
 	paragraph(
 		`Salva em ${new Date(saved.created_at).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' })}`,
 		label,
 		10
 	);
-	newPage();
+	if (book) newPage();
 	// Geometry is read from the saved calculation, never inferred from prose.
-	if (['birth-chart', 'life-atlas', 'ascendant'].includes(saved.product_id)) {
-		const g = trialGeometry(saved),
+	const chartPeople: ('first' | 'second' | undefined)[] = [
+		'synastry',
+		'pair-preview',
+		'couple-dossier'
+	].includes(saved.product_id)
+		? ['first', 'second']
+		: ['birth-chart', 'life-atlas', 'ascendant'].includes(saved.product_id)
+			? [undefined]
+			: [];
+	if (!book && chartPeople.length) newPage();
+	for (const person of chartPeople) {
+		const g = trialGeometry(saved, person),
 			cx = width / 2,
 			cy = height - 300,
 			scale = 0.68;
-		heading('Seu mapa em uma imagem', 23);
+		heading(
+			person
+				? `Fatores natais · ${person === 'first' ? (saved.input.presentation?.name ?? 'Pessoa A') : (saved.input.presentation?.partnerName ?? 'Pessoa B')}`
+				: 'Seu mapa em uma imagem',
+			23
+		);
 		const point = (a: number, rad: number) => ({
 			x: cx - rad * scale * Math.cos((a * Math.PI) / 180),
 			y: cy - rad * scale * Math.sin((a * Math.PI) / 180)
@@ -237,7 +261,9 @@ export async function trialPdf(saved: SavedTrial) {
 				9
 			);
 		paragraph(
-			'Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Glifos identificam os planetas; números identificam as casas disponíveis. Linhas azuis: sextil/trígono; terracota: quadratura/oposição; ouro: conjunção.',
+			person
+				? `Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Este recorte contém posições planetárias, sem casas ou ângulos. ${saved.product_id === 'pair-preview' ? 'Lua, Vênus e Marte são referências individuais; aspectos entre mapas não foram calculados.' : 'Os contatos entre as duas pessoas estão nos capítulos.'}`
+				: 'Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Glifos identificam os planetas; números identificam as casas disponíveis. Linhas azuis: sextil/trígono; terracota: quadratura/oposição; ouro: conjunção.',
 			label,
 			8
 		);
@@ -248,19 +274,40 @@ export async function trialPdf(saved: SavedTrial) {
 		);
 		newPage();
 	}
-	heading('Como percorrer sua leitura', 23);
-	paragraph(
-		'Comece pela síntese. Leia os capítulos como hipóteses, compare com uma situação concreta e termine com o experimento proposto. Você pode discordar da interpretação.'
-	);
-	paragraph(r.source, label, 9);
-	r.sections.forEach((s, i) =>
-		paragraph(`${String(i + 1).padStart(2, '0')} · ${s.title}`, label, 10, 4)
-	);
-	newPage();
-	for (const [i, s] of r.sections.entries()) {
+	const contents: { page: typeof page; y: number; index: number }[] = [];
+	if (book) {
+		heading('Índice da sua leitura', 23);
+		paragraph(
+			'Comece pela síntese e aprofunde os temas que deseja investigar. Compare os capítulos com uma situação concreta; suas observações podem confirmar ou contrariar a interpretação.'
+		);
+		chapters.forEach((s, index) => {
+			if (y < 105) newPage();
+			contents.push({ page, y, index });
+			paragraph(`${String(index + 1).padStart(2, '0')} · ${s.title}`, label, 10, 5);
+		});
+		newPage();
+	}
+	const chapterPages: number[] = [];
+	for (const [i, s] of chapters.entries()) {
+		if (
+			book &&
+			i > 0 &&
+			(s.text.length > 900 ||
+				(saved.product_id === 'career-compass' && s.title === 'Sua página de decisão'))
+		)
+			newPage();
 		heading(`${String(i + 1).padStart(2, '0')} · ${s.title}`);
+		chapterPages.push(doc.getPageCount());
 		paragraph(s.text);
 	}
+	for (const item of contents)
+		item.page.drawText(String(chapterPages[item.index]), {
+			x: width - margin - 14,
+			y: item.y,
+			font: label,
+			size: 10,
+			color: muted
+		});
 	// Keep the brief reflection/practice closing together; avoid a page with only two lines.
 	heading(
 		'Perguntas para refletir',
@@ -276,38 +323,41 @@ export async function trialPdf(saved: SavedTrial) {
 	r.questions.forEach((q, i) => paragraph(`${i + 1}. ${q}`));
 	heading('Experimento prático', 17, 0);
 	paragraph(r.practice);
-	newPage();
-	heading('Apêndice · método e limites', 23);
+	if (book) newPage();
+	heading(book ? 'Apêndice · método e limites' : 'Método e limites', book ? 23 : 15);
+	paragraph(r.source, label, 9);
 	r.limits.forEach((l) => paragraph(l, label, 9));
-	heading('Dados para conferir', 15);
-	const compact = saved.calculation.facts.filter(
-		(f) =>
-			!/^day-\d+-|series$/.test(f.id) &&
-			!/nenhum aspecto/i.test(f.display) &&
-			f.display.length <= 650
-	);
-	compact.forEach((f) => paragraph(`${f.id} · ${f.display}`, label, 8, 4));
-	const omitted = saved.calculation.facts.length - compact.length;
-	if (omitted)
-		paragraph(
-			`${omitted} registros extensos, amostras diárias ou pares sem aspecto não foram repetidos neste apêndice. A cópia TXT da mesma leitura preserva todos os fatos completos e suas fontes.`,
-			label,
-			9
+	if (book) {
+		heading('Dados para conferir', 15);
+		const compact = saved.calculation.facts.filter(
+			(f) =>
+				!/^day-\d+-|series$/.test(f.id) &&
+				!/nenhum aspecto/i.test(f.display) &&
+				f.display.length <= 650
 		);
-	const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
-	const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
-	heading(
-		'Fontes e registro da revisão',
-		15,
-		Math.min(
-			height - 148,
-			headingHeight('Fontes e registro da revisão', 15) +
-				sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
-				paragraphHeight(record, label, 8)
-		)
-	);
-	sources.forEach((source) => paragraph(source, label, 8, 4));
-	paragraph(record, label, 8);
+		compact.forEach((f) => paragraph(`${f.id} · ${f.display}`, label, 8, 4));
+		const omitted = saved.calculation.facts.length - compact.length;
+		if (omitted)
+			paragraph(
+				`${omitted} registros extensos, amostras diárias ou pares sem aspecto não foram repetidos neste apêndice. A cópia TXT da mesma leitura preserva todos os fatos completos e suas fontes.`,
+				label,
+				9
+			);
+		const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
+		const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
+		heading(
+			'Fontes e registro da revisão',
+			15,
+			Math.min(
+				height - 148,
+				headingHeight('Fontes e registro da revisão', 15) +
+					sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
+					paragraphHeight(record, label, 8)
+			)
+		);
+		sources.forEach((source) => paragraph(source, label, 8, 4));
+		paragraph(record, label, 8);
+	}
 	for (const [i, p] of doc.getPages().entries()) {
 		p.drawLine({
 			start: { x: margin, y: 48 },
@@ -315,7 +365,7 @@ export async function trialPdf(saved: SavedTrial) {
 			color: gold,
 			thickness: 0.5
 		});
-		p.drawText('A Tua Vida nos Astros · teste privado gratuito', {
+		p.drawText('A Tua Vida nos Astros', {
 			x: margin,
 			y: 32,
 			font: label,
