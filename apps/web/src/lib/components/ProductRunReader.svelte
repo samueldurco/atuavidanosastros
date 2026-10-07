@@ -7,6 +7,7 @@
 	import SolarReturnCalendar from '$lib/components/SolarReturnCalendar.svelte';
 	import PersonalCalendarGrid from '$lib/components/PersonalCalendarGrid.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
+	import { visualProduct } from '$lib/data/visual-v3';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import ProductArtifacts from '$lib/components/ProductArtifacts.svelte';
@@ -271,6 +272,14 @@
 		]}
 	>
 		{#snippet heading()}
+			<img
+				class="v3-product-mark"
+				src={visualProduct(data.run.productId)?.vignette}
+				alt=""
+				aria-hidden="true"
+				width="80"
+				height="40"
+			/>
 			<nav aria-label="Caminho do resultado">
 				<a href={backHref}>Biblioteca</a> / <span aria-current="page">Seu registro</span>
 			</nav>

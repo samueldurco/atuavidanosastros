@@ -122,15 +122,16 @@ test('reduced motion e contraste dos papéis de texto', async ({ page }) => {
 	await page.goto('/design-system');
 	const values = await page.evaluate(() => {
 		const styles = getComputedStyle(document.documentElement);
+		const token = (name: string) => styles.getPropertyValue(`--atv-${name}`).trim();
 		return {
-			motion: styles.getPropertyValue('--atv-motion-base').trim(),
-			text: styles.getPropertyValue('--atv-text-secondary').trim(),
-			focus: styles.getPropertyValue('--atv-focus').trim()
+			motion: token('motion-base'),
+			inks: ['text-primary', 'text-secondary', 'text-accent', 'action', 'action-hover'].map(token),
+			papers: ['surface-page', 'surface-card', 'surface-muted'].map(token),
+			focus: token('focus'),
+			controlBorder: token('control-border')
 		};
 	});
 	expect(parseFloat(values.motion)).toBe(0);
-	expect(values.text.toLowerCase()).toBe('#526079');
-	expect(values.focus.toLowerCase()).toBe('#3176c2');
 	function luminance(hex: string) {
 		return hex
 			.match(/[a-f\d]{2}/gi)!
@@ -138,12 +139,21 @@ test('reduced motion e contraste dos papéis de texto', async ({ page }) => {
 			.map((channel) => (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4))
 			.reduce((total, channel, i) => total + channel * [0.2126, 0.7152, 0.0722][i], 0);
 	}
-	for (const ink of ['#0b1635', '#526079', '#073f87', '#8c6330']) {
-		for (const paper of ['#fcfbf8', '#ffffff', '#f7f9fc']) {
+	for (const ink of values.inks) {
+		expect(ink).toMatch(/^#[a-f\d]{6}$/i);
+		for (const paper of values.papers) {
 			expect(
 				(luminance(paper) + 0.05) / (luminance(ink) + 0.05),
 				`${ink} sobre ${paper}`
 			).toBeGreaterThanOrEqual(4.5);
+		}
+	}
+	for (const ink of [values.focus, values.controlBorder]) {
+		for (const paper of values.papers) {
+			expect(
+				(luminance(paper) + 0.05) / (luminance(ink) + 0.05),
+				`Indicador ${ink} sobre ${paper}`
+			).toBeGreaterThanOrEqual(3);
 		}
 	}
 });

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { visualProduct } from '$lib/data/visual-v3';
 	import { untrack } from 'svelte';
 	import type { SavedTrial } from '$lib/trials/reading';
 	import type { ReaderState } from '$lib/trials/reader-state';
@@ -88,7 +89,7 @@
 			canvas.height = 4230;
 			const ctx = canvas.getContext('2d');
 			if (!ctx) throw Error('Este navegador não conseguiu preparar a imagem.');
-			ctx.fillStyle = '#fcfaf6';
+			ctx.fillStyle = '#f7f2e7';
 			ctx.fillRect(0, 0, 3000, 4230);
 			ctx.drawImage(image, 0, 0, 3000, 4230);
 			const blob = await new Promise<Blob>((resolve, reject) =>
@@ -113,6 +114,13 @@
 </script>
 
 <section class="experience" aria-label="Percorra sua leitura">
+	<img
+		class="v3-product-mark"
+		src={visualProduct(saved.product_id)?.vignette}
+		alt=""
+		width="80"
+		height="40"
+	/>
 	{#if saved.input.presentation?.name || saved.input.birth}
 		<div class="identity">
 			{#if saved.input.presentation?.name}<p>
@@ -235,7 +243,7 @@
 		padding: 1.25rem;
 		border: 1px solid #ded6c8;
 		border-radius: 1rem;
-		background: #fcfaf6;
+		background: #f7f2e7;
 		text-align: left;
 	}
 	.pillars span {
@@ -358,7 +366,7 @@
 		border-radius: 1rem;
 		padding: 1rem 1.25rem;
 		margin: 1.5rem 0;
-		background: #fcfaf6;
+		background: #f7f2e7;
 	}
 	.map img {
 		display: block;

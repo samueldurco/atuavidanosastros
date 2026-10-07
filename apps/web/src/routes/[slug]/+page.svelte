@@ -1,5 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
+	import VisualHeading from '$lib/components/VisualHeading.svelte';
+	import VisualMotif from '$lib/components/VisualMotif.svelte';
+	import { visualProduct } from '$lib/data/visual-v3';
 	import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 	let { data } = $props();
 </script>
@@ -17,7 +20,12 @@
 	<section class="section">
 		<div class="reading">
 			<p class="eyebrow">{data.page.eyebrow}</p>
-			<h1 class="h1">{data.page.title}</h1>
+			{#if data.products.length}<VisualMotif identity={data.slug} eager />{/if}
+			<VisualHeading
+				title={data.page.title}
+				identity={data.slug}
+				theme={data.products.length > 0}
+			/>
 			<p class="lead">{data.page.description}</p>
 			{#each data.sections as section (section.title)}
 				<section class="topic-section">
@@ -32,6 +40,14 @@
 					<div class="product-grid">
 						{#each data.products as product (product.id)}
 							<article class="card product-card">
+								<img
+									class="v3-product-mark"
+									src={visualProduct(product.id)?.vignette}
+									alt=""
+									width="80"
+									height="40"
+									loading="lazy"
+								/>
 								<p class="eyebrow">
 									{data.trialAccess
 										? 'Teste gratuito disponível'

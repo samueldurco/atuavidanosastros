@@ -1,4 +1,5 @@
 <script lang="ts">
+	import VisualHeading from './VisualHeading.svelte';
 	import { customerProduct } from '$lib/data/product-copy';
 	import { onMount, tick } from 'svelte';
 	import { validAtlasPriorities, validDate, workflowFor } from '@atv/domain';
@@ -407,7 +408,7 @@
 							? 'Carreira e dinheiro'
 							: 'Mapa astral'} · novo pedido
 		</p>
-		<h1 id="natal-product-title">{product?.name}</h1>
+		<VisualHeading id="natal-product-title" title={product?.name ?? ''} identity={productId} />
 		<p class="lead">
 			{customerProduct(productId)?.summary}
 		</p>
@@ -909,12 +910,6 @@
 		border-bottom: 1px solid var(--atv-border);
 		padding-bottom: 2rem;
 		margin-bottom: 2rem;
-	}
-	h1 {
-		font-family: var(--atv-font-display);
-		font-size: clamp(2rem, 4vw, 3.5rem);
-		line-height: 1.12;
-		margin: 0.7rem 0 1rem;
 	}
 	h2,
 	legend {

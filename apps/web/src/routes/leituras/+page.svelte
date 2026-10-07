@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { SITE, universes } from '$lib/data/site';
+	import VisualHeading from '$lib/components/VisualHeading.svelte';
+	import VisualMotif from '$lib/components/VisualMotif.svelte';
+	import { visualProduct, visualUniverse } from '$lib/data/visual-v3';
 	let { data } = $props();
 </script>
 
@@ -30,11 +33,30 @@
 			{/each}
 		</nav>
 		{#each data.groups as group (group.slug)}
-			<section class="product-group" aria-labelledby={`group-${group.slug}`}>
-				<h2 class="h2" id={`group-${group.slug}`}>{group.title}</h2>
+			<section
+				class="product-group"
+				data-v3-theme={visualUniverse(group.slug)}
+				aria-labelledby={`group-${group.slug}`}
+			>
+				<VisualMotif identity={group.slug} />
+				<VisualHeading
+					title={group.title}
+					identity={group.slug}
+					theme
+					level={2}
+					id={`group-${group.slug}`}
+				/>
 				<div class="grid grid-3">
 					{#each group.products as product (product.id)}
 						<article class="card product-card">
+							<img
+								class="v3-product-mark"
+								src={visualProduct(product.id)?.vignette}
+								alt=""
+								width="80"
+								height="40"
+								loading="lazy"
+							/>
 							<p class="eyebrow">
 								{data.trialAccess
 									? 'Teste gratuito disponível'

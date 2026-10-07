@@ -4,6 +4,7 @@
 	import { resolvedCivilInstant } from '$lib/city-location';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
+	import VisualMotif from '$lib/components/VisualMotif.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
@@ -119,6 +120,7 @@
 				aria-current="page">Bússola de Carreira</span
 			>
 		</nav>
+		<VisualMotif identity="career-compass" eager />
 		<PageIntro
 			eyebrow="Cálculo gratuito · carreira"
 			title="Bússola de Carreira"

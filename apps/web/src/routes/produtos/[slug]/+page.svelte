@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
+	import VisualHeading from '$lib/components/VisualHeading.svelte';
+	import VisualMotif from '$lib/components/VisualMotif.svelte';
 	import { formatLabels } from '$lib/data/product-details';
 	let { data } = $props();
 </script>
@@ -7,7 +9,8 @@
 <section class="section">
 	<div class="reading">
 		<p class="eyebrow">Conheça a leitura</p>
-		<h1 class="h1">{data.product.name}</h1>
+		<VisualMotif identity={data.product.id} eager />
+		<VisualHeading title={data.product.name} identity={data.product.id} />
 		<p class="lead">{data.product.summary}</p>
 		<h2>O que a leitura aborda</h2>
 		<p>{data.details.scope}</p>

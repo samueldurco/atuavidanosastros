@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { SITE, universes } from '$lib/data/site';
+	import VisualMotif from '$lib/components/VisualMotif.svelte';
+	import { visualV3, visualUniverse } from '$lib/data/visual-v3';
 	let { data } = $props();
 </script>
 
@@ -22,13 +24,16 @@
 				<a class="button secondary" href="/leituras">Conhecer as leituras</a>
 			</div>
 		</div>
-		<div class="hero-art" aria-hidden="true"></div>
+		<div class="hero-art" aria-hidden="true">
+			<img src={visualV3.hero} alt="" width="760" height="760" fetchpriority="high" />
+		</div>
 	</div>
 </section>
 <section id="comece-gratuitamente" class="tool-entry section" aria-labelledby="free-heading">
 	<div class="container entry-grid">
 		<div>
 			<p class="eyebrow">Sem custo · sem cadastro para calcular</p>
+			<VisualMotif identity="career-compass" />
 			<h2 class="h2" id="free-heading">Comece gratuitamente</h2>
 			<h3>Bússola de Carreira</h3>
 			<p class="lead">
@@ -77,7 +82,8 @@
 		</p>
 		<div class="grid grid-3 universe-grid">
 			{#each universes as universe (universe.slug)}
-				<article class="card universe">
+				<article class="card universe" data-v3-theme={visualUniverse(universe.slug)}>
+					<VisualMotif identity={universe.slug} />
 					<span class="universe-rule" aria-hidden="true"></span><span>{universe.eyebrow}</span>
 					<h3>{universe.title}</h3>
 					<p>{universe.description}</p>
@@ -164,7 +170,6 @@
 		width: min(100%, 30rem);
 		aspect-ratio: 1;
 		justify-self: center;
-		background: url('/brand/illustrations/atvna-temas.png') left top / 300% 200% no-repeat;
 		mix-blend-mode: multiply;
 	}
 
