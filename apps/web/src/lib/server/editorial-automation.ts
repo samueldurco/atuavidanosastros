@@ -176,9 +176,12 @@ export function canonicalJson(value: unknown): string {
 const bytes = (value: unknown) =>
 	(value !== null && typeof value === 'object' ? immutableBytes.get(value) : undefined) ??
 	new TextEncoder().encode(canonicalJson(value));
+const hexBytes = Array.from({ length: 256 }, (_, value) => value.toString(16).padStart(2, '0'));
 export async function byteDigest(value: Uint8Array) {
 	const hash = await crypto.subtle.digest('SHA-256', new Uint8Array(value));
-	return [...new Uint8Array(hash)].map((x) => x.toString(16).padStart(2, '0')).join('');
+	let result = '';
+	for (const byte of new Uint8Array(hash)) result += hexBytes[byte];
+	return result;
 }
 export const digest = (value: unknown) => byteDigest(bytes(value));
 export const attestationPayload = (value: unknown) => new Uint8Array(bytes(value));
@@ -211,8 +214,16 @@ function verificationDigests() {
 }
 type VerificationDigests = ReturnType<typeof verificationDigests>;
 
+const parsedInstants = new Map<string, number>();
 function instant(value: unknown): number {
 	if (typeof value !== 'string') return NaN;
+	const cached = parsedInstants.get(value);
+	if (cached !== undefined) return cached;
+	const result = parseInstant(value);
+	if (parsedInstants.size < 256) parsedInstants.set(value, result);
+	return result;
+}
+function parseInstant(value: string): number {
 	const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{3})?(Z|[+-]\d{2}:\d{2})$/.exec(
 		value
 	);

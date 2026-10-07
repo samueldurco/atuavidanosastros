@@ -22,6 +22,7 @@ type StoredRelease = {
 const stored = release as unknown as StoredRelease;
 for (const entry of stored.packages) {
 	freezeEditorialJson(entry.document);
+	freezeEditorialJson(entry.document.author);
 	if (entry.report) freezeEditorialJson(entry.report);
 	if (entry.evidenceManifest) freezeEditorialJson(entry.evidenceManifest);
 	if (entry.attestation) freezeEditorialJson(entry.attestation);
