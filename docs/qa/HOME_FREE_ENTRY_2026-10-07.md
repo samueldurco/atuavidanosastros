@@ -26,10 +26,13 @@ A implementação apresenta, nesta ordem, Comece gratuitamente, Leituras e exper
 - `pnpm lint`: PASS. Os dois arquivos ajustados após essa execução passaram por nova formatação e ESLint focal.
 - Playwright: **31 PASS**, cobrindo navegação pública, descoberta dos 12 artigos, teclado, acessibilidade e páginas públicas, incluindo `/leituras` e `/caderno`.
 - Playwright final: **5 PASS**, cobrindo acessibilidade da home em desktop e mobile, ordem das quatro seções, catálogo com 25 produtos, filtro Amor, canonical, reflow em 320/1440 px e cálculo público de Meio do Céu com dados sintéticos.
+- SEO após inclusão do catálogo: **8 PASS** no Playwright e **37 PASS** na suíte editorial unitária. As duas verificações de quantidade do sitemap agora exigem `/leituras`, preservando a exclusão de conteúdo não publicado.
 - `git diff --check`: PASS.
 - Conferência visual das capturas de 320 e 1440 px: PASS; hierarquia, arte oficial, seções e acessos presentes. Sem rolagem horizontal nos testes.
 
 Logs completos locais, fora do commit: `E:/ATVNA/.worktrees/home-e2e.log`, `home-e2e-final.log`, `home-check-final.log`, `home-lint.log` e `home-lint-final.log`. Capturas em `apps/web/test-results/` do worktree isolado.
+
+Verificações finais de sitemap: `E:/ATVNA/.worktrees/home-seo-final.log` e `E:/ATVNA/.worktrees/home-editorial-unit-final.log`.
 
 ## Publicação
 

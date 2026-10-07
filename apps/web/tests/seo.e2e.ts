@@ -74,9 +74,10 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 		const body = await response.text();
 		expect(body).not.toContain('/signos/aries');
 		expect(body).not.toContain('/dashboard');
-		if (path === '/sitemap-pages.xml')
-			expect(body.match(/<url>/g)).toHaveLength(14 + (news.length > 0 ? 1 : 0));
-		else if (path === '/sitemap-editorial.xml') {
+		if (path === '/sitemap-pages.xml') {
+			expect(body).toContain('https://atuavidanosastros.com.br/leituras');
+			expect(body.match(/<url>/g)).toHaveLength(15 + (news.length > 0 ? 1 : 0));
+		} else if (path === '/sitemap-editorial.xml') {
 			expect(body.match(/<url>/g) ?? []).toHaveLength(
 				published.length + (published.length ? 1 : 0)
 			);
