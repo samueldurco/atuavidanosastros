@@ -1,10 +1,15 @@
 import {
 	approvedDocuments,
+	validDocument,
 	type EditorialDocument,
 	type EditorialApproval,
 	type EditorialAuthority
 } from './editorial';
-import type { AutomatedPublication, AutomatedRegistry } from './editorial-automation';
+import {
+	freezeEditorialJson,
+	type AutomatedPublication,
+	type AutomatedRegistry
+} from './editorial-automation';
 import release from './editorial-release/registry.json';
 
 // Server-owned, immutable packages admitted by the release process. Public keys only.
@@ -15,6 +20,15 @@ type StoredRelease = {
 	evidenceByDigest: Record<string, string>;
 };
 const stored = release as unknown as StoredRelease;
+for (const entry of stored.packages) {
+	freezeEditorialJson(entry.document);
+	if (entry.report) freezeEditorialJson(entry.report);
+	if (entry.evidenceManifest) freezeEditorialJson(entry.evidenceManifest);
+	if (entry.attestation) freezeEditorialJson(entry.attestation);
+	// Prepare immutable content at Worker initialization, outside request handling.
+	// Signatures, evidence bytes, revocation and publication dates stay per-read checks.
+	validDocument(entry.document, new Date(8640000000000000));
+}
 const encoder = new TextEncoder();
 const bytes = new Map(
 	Object.entries(stored.evidenceByDigest).map(([digest, value]) => [digest, encoder.encode(value)])

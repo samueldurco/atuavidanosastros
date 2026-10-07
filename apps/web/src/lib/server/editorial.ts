@@ -1,6 +1,10 @@
 import { SITE, signs } from '$lib/data/site';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
-import { verifyAdmittedApprovals, type AutomatedRegistry } from './editorial-automation';
+import {
+	isImmutableEditorialJson,
+	verifyAdmittedApprovals,
+	type AutomatedRegistry
+} from './editorial-automation';
 import {
 	editorialHubs,
 	evergreenGuidePaths,
@@ -144,7 +148,22 @@ function validPath(document: EditorialDocument): boolean {
 		Number.isFinite(timestamp(`${news[1]}-${news[2]}-01T00:00:00Z`))
 	);
 }
+const immutableDocumentContent = new WeakMap<EditorialDocument, boolean>();
+
 export function validDocument(document: EditorialDocument, now: Date): boolean {
+	if (document && isImmutableEditorialJson(document)) {
+		let valid = immutableDocumentContent.get(document);
+		if (valid === undefined) {
+			valid = inspectDocument(document, new Date(8640000000000000));
+			immutableDocumentContent.set(document, valid);
+		}
+		// Content cannot change; publication timing is still checked for this read.
+		return valid && timestamp(document.modifiedAt) <= now.getTime();
+	}
+	return inspectDocument(document, now);
+}
+
+function inspectDocument(document: EditorialDocument, now: Date): boolean {
 	try {
 		const published = timestamp(document.publishedAt),
 			modified = timestamp(document.modifiedAt);

@@ -34,6 +34,7 @@ describe('externally signed finite editorial release', () => {
 		);
 		const hashes = vi.spyOn(crypto.subtle, 'digest');
 		const signatures = vi.spyOn(crypto.subtle, 'verify');
+		const keys = vi.spyOn(crypto.subtle, 'importKey');
 		try {
 			for (let read = 1; read <= 2; read++) {
 				expect(await publishedEditorial()).toHaveLength(release.packages.length);
@@ -41,10 +42,12 @@ describe('externally signed finite editorial release', () => {
 					hashes.mock.calls.filter(([, value]) => value.byteLength === largestEvidence)
 				).toHaveLength(read);
 				expect(signatures).toHaveBeenCalledTimes(read * release.packages.length);
+				expect(keys).toHaveBeenCalledTimes(read);
 			}
 		} finally {
 			hashes.mockRestore();
 			signatures.mockRestore();
+			keys.mockRestore();
 		}
 	});
 	it('exposes only the exact currently admitted paths in the runtime registry', async () => {

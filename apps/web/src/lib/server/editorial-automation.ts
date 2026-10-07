@@ -121,7 +121,39 @@ const evidenceRow = (r: EvidenceRow) =>
 	r.evidence.length > 0 &&
 	r.evidence.every(nonempty);
 
+const immutableCanonical = new WeakMap<object, string>();
+const immutableBytes = new WeakMap<object, Uint8Array<ArrayBuffer>>();
+
+/** Pre-encode server-owned JSON only after making every nested value immutable. */
+export function freezeEditorialJson<T extends object>(value: T): T {
+	const freeze = (item: unknown) => {
+		if (item === null || typeof item !== 'object') return;
+		const prototype = Object.getPrototypeOf(item);
+		if (
+			(Array.isArray(item) && prototype !== Array.prototype) ||
+			(!Array.isArray(item) && prototype !== Object.prototype && prototype !== null)
+		)
+			throw Error('JSON não simples');
+		for (const descriptor of Object.values(Object.getOwnPropertyDescriptors(item))) {
+			if (descriptor.get || descriptor.set) throw Error('JSON com accessor');
+			freeze(descriptor.value);
+		}
+		Object.freeze(item);
+	};
+	freeze(value);
+	const canonical = canonicalJson(value);
+	immutableCanonical.set(value, canonical);
+	immutableBytes.set(value, new TextEncoder().encode(canonical));
+	return value;
+}
+
+export const isImmutableEditorialJson = (value: object) => immutableCanonical.has(value);
+
 export function canonicalJson(value: unknown): string {
+	if (value !== null && typeof value === 'object') {
+		const cached = immutableCanonical.get(value);
+		if (cached !== undefined) return cached;
+	}
 	if (Array.isArray(value)) return '[' + value.map(canonicalJson).join(',') + ']';
 	if (value !== null && typeof value === 'object') {
 		if (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null)
@@ -141,19 +173,32 @@ export function canonicalJson(value: unknown): string {
 	if (s === undefined) throw Error('Valor fora de JSON');
 	return s;
 }
-const bytes = (value: unknown) => new TextEncoder().encode(canonicalJson(value));
+const bytes = (value: unknown) =>
+	(value !== null && typeof value === 'object' ? immutableBytes.get(value) : undefined) ??
+	new TextEncoder().encode(canonicalJson(value));
 export async function byteDigest(value: Uint8Array) {
 	const hash = await crypto.subtle.digest('SHA-256', new Uint8Array(value));
 	return [...new Uint8Array(hash)].map((x) => x.toString(16).padStart(2, '0')).join('');
 }
 export const digest = (value: unknown) => byteDigest(bytes(value));
-export const attestationPayload = (value: unknown) => bytes(value);
+export const attestationPayload = (value: unknown) => new Uint8Array(bytes(value));
 
 // One read only: shared evidence is hashed once, then discarded. A later read
 // rechecks every byte and signature, including changes to revocation or packages.
 function verificationDigests() {
 	const evidence = new WeakMap<Uint8Array, Promise<string>>();
+	const keys = new Map<string, Promise<CryptoKey>>();
 	return {
+		key(publicKey: string) {
+			let key = keys.get(publicKey);
+			if (!key) {
+				key = crypto.subtle.importKey('raw', base64(publicKey), { name: 'Ed25519' }, false, [
+					'verify'
+				]);
+				keys.set(publicKey, key);
+			}
+			return key;
+		},
 		bytes(value: Uint8Array) {
 			let result = evidence.get(value);
 			if (!result) {
@@ -404,9 +449,7 @@ async function verifyAutomatedApprovalWithDigests(
 		const rawKey = base64(authority.publicKey),
 			signature = base64(a.signature);
 		if (rawKey.length !== 32 || signature.length !== 64) return reject('SIGNATURE_FORMAT');
-		const key = await crypto.subtle.importKey('raw', rawKey, { name: 'Ed25519' }, false, [
-			'verify'
-		]);
+		const key = await digests.key(authority.publicKey);
 		const payload = { ...a };
 		delete (payload as Partial<AutomatedAttestation>).signature;
 		if (!(await crypto.subtle.verify('Ed25519', key, signature, attestationPayload(payload))))
