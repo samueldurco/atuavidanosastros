@@ -54,7 +54,7 @@ export async function trialPdf(saved: SavedTrial) {
 		page.drawText(value, { x: margin, y, font, size, color: ink });
 		y -= size * 1.5;
 	};
-	const paragraph = (value: string, font = body, size = 12) => {
+	const paragraph = (value: string, font = body, size = 12, after = 9) => {
 		const lines: string[] = [];
 		const measure = (value: string) => {
 			const key = `${size}:${value}`,
@@ -99,7 +99,7 @@ export async function trialPdf(saved: SavedTrial) {
 			}
 			lines.push(current);
 		}
-		const needed = lines.reduce((n, l) => n + (l ? size * 1.5 : size * 0.8), 9);
+		const needed = lines.reduce((n, l) => n + (l ? size * 1.5 : size * 0.8), after);
 		// Keep short paragraphs together and avoid a single line across a page turn.
 		if (lines.length <= 7 && needed > y - 70) newPage();
 		for (let i = 0; i < lines.length; i++) {
@@ -107,7 +107,7 @@ export async function trialPdf(saved: SavedTrial) {
 			if (lines[i]) line(lines[i], font, size);
 			else y -= size * 0.8;
 		}
-		y -= 9;
+		y -= after;
 	};
 	const heading = (value: string, size = 17, reserve = 120) => {
 		if (y < 70 + reserve) newPage();
@@ -247,7 +247,7 @@ export async function trialPdf(saved: SavedTrial) {
 	);
 	paragraph(r.source, label, 9);
 	r.sections.forEach((s, i) =>
-		paragraph(`${String(i + 1).padStart(2, '0')} · ${s.title}`, label, 10)
+		paragraph(`${String(i + 1).padStart(2, '0')} · ${s.title}`, label, 10, 4)
 	);
 	newPage();
 	for (const [i, s] of r.sections.entries()) {
