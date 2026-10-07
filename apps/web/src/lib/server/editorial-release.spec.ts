@@ -1,6 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import * as nodeCrypto from 'node:crypto';
 import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { articleSeo, validDocument, type EditorialDocument } from './editorial';
@@ -14,6 +15,8 @@ import {
 	type AutomatedAuthority
 } from './editorial-automation';
 
+vi.mock('node:crypto', { spy: true });
+
 // Real, externally signed release candidates. These tests never admit a publication.
 const root = resolve('../../docs/editorial/release-2026-10-06');
 const json = <T>(file: string): T => JSON.parse(readFileSync(file, 'utf8'));
@@ -23,6 +26,35 @@ const codes = readdirSync(root)
 	.sort();
 
 describe('externally signed finite editorial release', () => {
+	it('hashes shared evidence once per read and rechecks all signatures on every read', async () => {
+		const release = json<{ evidenceByDigest: Record<string, string>; packages: unknown[] }>(
+			resolve('src/lib/server/editorial-release/registry.json')
+		);
+		const largestEvidence = Math.max(
+			...Object.values(release.evidenceByDigest).map(
+				(value) => new TextEncoder().encode(value).length
+			)
+		);
+		const hashes = vi.spyOn(nodeCrypto, 'hash');
+		const signatures = vi.spyOn(crypto.subtle, 'verify');
+		const keys = vi.spyOn(crypto.subtle, 'importKey');
+		try {
+			for (let read = 1; read <= 2; read++) {
+				expect(await publishedEditorial()).toHaveLength(release.packages.length);
+				expect(
+					hashes.mock.calls.filter(
+						([, value]) => value instanceof Uint8Array && value.byteLength === largestEvidence
+					)
+				).toHaveLength(read);
+				expect(signatures).toHaveBeenCalledTimes(read * release.packages.length);
+				expect(keys).toHaveBeenCalledTimes(read);
+			}
+		} finally {
+			hashes.mockRestore();
+			signatures.mockRestore();
+			keys.mockRestore();
+		}
+	});
 	it('exposes only the exact currently admitted paths in the runtime registry', async () => {
 		const release = json<{ packages: { document: EditorialDocument }[] }>(
 			resolve('src/lib/server/editorial-release/registry.json')

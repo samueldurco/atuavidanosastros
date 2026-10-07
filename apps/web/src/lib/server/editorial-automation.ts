@@ -1,4 +1,5 @@
 // Public evergreen guide admission only. No authority is provisioned by this module.
+import { hash } from 'node:crypto';
 import type { EditorialDocument } from './editorial';
 export interface EvidenceRow {
 	id: string;
@@ -121,7 +122,39 @@ const evidenceRow = (r: EvidenceRow) =>
 	r.evidence.length > 0 &&
 	r.evidence.every(nonempty);
 
+const immutableCanonical = new WeakMap<object, string>();
+const immutableBytes = new WeakMap<object, Uint8Array<ArrayBuffer>>();
+
+/** Pre-encode server-owned JSON only after making every nested value immutable. */
+export function freezeEditorialJson<T extends object>(value: T): T {
+	const freeze = (item: unknown) => {
+		if (item === null || typeof item !== 'object') return;
+		const prototype = Object.getPrototypeOf(item);
+		if (
+			(Array.isArray(item) && prototype !== Array.prototype) ||
+			(!Array.isArray(item) && prototype !== Object.prototype && prototype !== null)
+		)
+			throw Error('JSON não simples');
+		for (const descriptor of Object.values(Object.getOwnPropertyDescriptors(item))) {
+			if (descriptor.get || descriptor.set) throw Error('JSON com accessor');
+			freeze(descriptor.value);
+		}
+		Object.freeze(item);
+	};
+	freeze(value);
+	const canonical = canonicalJson(value);
+	immutableCanonical.set(value, canonical);
+	immutableBytes.set(value, new TextEncoder().encode(canonical));
+	return value;
+}
+
+export const isImmutableEditorialJson = (value: object) => immutableCanonical.has(value);
+
 export function canonicalJson(value: unknown): string {
+	if (value !== null && typeof value === 'object') {
+		const cached = immutableCanonical.get(value);
+		if (cached !== undefined) return cached;
+	}
 	if (Array.isArray(value)) return '[' + value.map(canonicalJson).join(',') + ']';
 	if (value !== null && typeof value === 'object') {
 		if (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null)
@@ -141,16 +174,55 @@ export function canonicalJson(value: unknown): string {
 	if (s === undefined) throw Error('Valor fora de JSON');
 	return s;
 }
-const bytes = (value: unknown) => new TextEncoder().encode(canonicalJson(value));
+const bytes = (value: unknown) =>
+	(value !== null && typeof value === 'object' ? immutableBytes.get(value) : undefined) ??
+	new TextEncoder().encode(canonicalJson(value));
 export async function byteDigest(value: Uint8Array) {
-	const hash = await crypto.subtle.digest('SHA-256', new Uint8Array(value));
-	return [...new Uint8Array(hash)].map((x) => x.toString(16).padStart(2, '0')).join('');
+	// Native one-shot SHA-256 avoids buffer copies and JS hex conversion. Every
+	// invocation still hashes the actual bytes; no digest survives a registry read.
+	return hash('sha256', value, 'hex');
 }
 export const digest = (value: unknown) => byteDigest(bytes(value));
-export const attestationPayload = (value: unknown) => bytes(value);
+export const attestationPayload = (value: unknown) => new Uint8Array(bytes(value));
 
+// One read only: shared evidence is hashed once, then discarded. A later read
+// rechecks every byte and signature, including changes to revocation or packages.
+function verificationDigests() {
+	const evidence = new WeakMap<Uint8Array, Promise<string>>();
+	const keys = new Map<string, Promise<CryptoKey>>();
+	return {
+		key(publicKey: string) {
+			let key = keys.get(publicKey);
+			if (!key) {
+				key = crypto.subtle.importKey('raw', base64(publicKey), { name: 'Ed25519' }, false, [
+					'verify'
+				]);
+				keys.set(publicKey, key);
+			}
+			return key;
+		},
+		bytes(value: Uint8Array) {
+			let result = evidence.get(value);
+			if (!result) {
+				result = byteDigest(value);
+				evidence.set(value, result);
+			}
+			return result;
+		}
+	};
+}
+type VerificationDigests = ReturnType<typeof verificationDigests>;
+
+const parsedInstants = new Map<string, number>();
 function instant(value: unknown): number {
 	if (typeof value !== 'string') return NaN;
+	const cached = parsedInstants.get(value);
+	if (cached !== undefined) return cached;
+	const result = parseInstant(value);
+	if (parsedInstants.size < 256) parsedInstants.set(value, result);
+	return result;
+}
+function parseInstant(value: string): number {
 	const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{3})?(Z|[+-]\d{2}:\d{2})$/.exec(
 		value
 	);
@@ -184,6 +256,15 @@ export async function assessReport(
 	report: EditorialReviewReport | null,
 	now: Date
 ) {
+	return assessReportDigest(document, report, now, await digest(document));
+}
+
+function assessReportDigest(
+	document: EditorialDocument,
+	report: EditorialReviewReport | null,
+	now: Date,
+	documentDigest: string
+) {
 	const errors = [];
 	if (!report || typeof report !== 'object' || Array.isArray(report))
 		return { valid: false, decision: 'BLOQUEADO', errors: ['Relatório ausente'] };
@@ -191,7 +272,7 @@ export async function assessReport(
 	if (
 		report.documentId !== document.id ||
 		report.revision !== document.revision ||
-		report.digest !== (await digest(document))
+		report.digest !== documentDigest
 	)
 		errors.push('Documento/revisão/digest divergentes');
 	if (!Number.isFinite(instant(report.reviewedAt)) || instant(report.reviewedAt) > now.getTime())
@@ -244,6 +325,13 @@ export async function assessReport(
  * evidenceFiles é Map<caminho, Uint8Array> de bytes efetivamente carregados.
  */
 export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
+	return verifyAutomatedApprovalWithDigests(input, verificationDigests());
+}
+
+async function verifyAutomatedApprovalWithDigests(
+	input: AutomatedApprovalInput,
+	digests: VerificationDigests
+) {
 	const reject = (reason: string) => ({ approved: false, reason, publicationGate: GATE });
 	try {
 		const {
@@ -335,7 +423,7 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 			a.evidenceManifestDigest !== (await digest(e))
 		)
 			return reject('BINDING');
-		const assessment = await assessReport(d, r, now);
+		const assessment = assessReportDigest(d, r, now, documentDigest);
 		if (!assessment.valid || assessment.decision !== 'APROVADO_AUTOMATICAMENTE')
 			return reject('REPORT');
 		if (
@@ -353,7 +441,7 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 			if (!path(f.path) || !hex(f.sha256) || files.has(f.path)) return reject('EVIDENCE_MANIFEST');
 			files.add(f.path);
 			const content = evidenceFiles.get(f.path);
-			if (!(content instanceof Uint8Array) || (await byteDigest(content)) !== f.sha256)
+			if (!(content instanceof Uint8Array) || (await digests.bytes(content)) !== f.sha256)
 				return reject('EVIDENCE_BYTES');
 		}
 		// Referências da rubrica precisam resolver a arquivos incluídos e íntegros.
@@ -371,9 +459,7 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 		const rawKey = base64(authority.publicKey),
 			signature = base64(a.signature);
 		if (rawKey.length !== 32 || signature.length !== 64) return reject('SIGNATURE_FORMAT');
-		const key = await crypto.subtle.importKey('raw', rawKey, { name: 'Ed25519' }, false, [
-			'verify'
-		]);
+		const key = await digests.key(authority.publicKey);
 		const payload = { ...a };
 		delete (payload as Partial<AutomatedAttestation>).signature;
 		if (!(await crypto.subtle.verify('Ed25519', key, signature, attestationPayload(payload))))
@@ -395,6 +481,27 @@ export async function verifyAutomatedApproval(input: AutomatedApprovalInput) {
 export async function verifyAdmittedApproval(
 	input: AutomatedApprovalInput & { admission: EditorialAdmission }
 ) {
+	return verifyAdmittedApprovalWithDigests(input, verificationDigests());
+}
+
+/** Batch immutable server-owned packages without retaining trust across reads. */
+export async function verifyAdmittedApprovals(registry: AutomatedRegistry, now: Date) {
+	const digests = verificationDigests();
+	const results = new Map<AutomatedPublication, boolean>();
+	for (const item of registry.packages) {
+		const result = await verifyAdmittedApprovalWithDigests(
+			{ ...item, authorities: registry.authorities, now },
+			digests
+		);
+		results.set(item, result.approved);
+	}
+	return results;
+}
+
+async function verifyAdmittedApprovalWithDigests(
+	input: AutomatedApprovalInput & { admission: EditorialAdmission },
+	digests: VerificationDigests
+) {
 	try {
 		const { admission, now, attestation } = input;
 		const accepted = instant(admission?.acceptedAt);
@@ -407,7 +514,7 @@ export async function verifyAdmittedApproval(
 			admission.attestationDigest !== (await digest(attestation))
 		)
 			return { approved: false, reason: 'ADMISSION', publicationGate: GATE };
-		return verifyAutomatedApproval({ ...input, now: new Date(accepted) });
+		return verifyAutomatedApprovalWithDigests({ ...input, now: new Date(accepted) }, digests);
 	} catch {
 		return { approved: false, reason: 'ADMISSION', publicationGate: GATE };
 	}

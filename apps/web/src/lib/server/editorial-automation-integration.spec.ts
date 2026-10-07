@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
-import { approvedDocuments, articleSeo, type EditorialDocument } from './editorial';
+import { approvedDocuments, articleSeo, validDocument, type EditorialDocument } from './editorial';
 import { editorialSitemap, newsSitemap, recentNews } from './editorial-feeds';
 import {
 	attestationPayload,
 	byteDigest,
 	digest,
+	freezeEditorialJson,
 	GATE,
 	POLICY,
 	PROTOCOL,
@@ -157,6 +158,29 @@ async function fixture() {
 }
 
 describe('automated public guide integration', () => {
+	it('prepares only immutable plain JSON and keeps publication dates live', async () => {
+		const { document, registry } = await fixture();
+		const expectedDigest = await digest(document);
+		freezeEditorialJson(document);
+		expect(Object.isFrozen(document.sections[0].paragraphs)).toBe(true);
+		expect(() => document.sections[0].paragraphs.push('Alteração')).toThrow();
+		const exposedBytes = attestationPayload(document);
+		exposedBytes[0] ^= 1;
+		expect(await digest(document)).toBe(expectedDigest);
+		expect(validDocument(document, now)).toBe(true);
+		expect(validDocument(document, new Date('2026-10-06T11:00:00Z'))).toBe(false);
+		expect(await approvedDocuments([document], [], {}, now, registry)).toEqual([document]);
+		registry.authorities['synthetic-service-key'].revokedAt = '2026-10-06T12:30:00Z';
+		expect(await approvedDocuments([document], [], {}, now, registry)).toEqual([]);
+		expect(() =>
+			freezeEditorialJson({
+				get value() {
+					return Math.random();
+				}
+			})
+		).toThrow();
+		expect(() => freezeEditorialJson({ value: new Date() })).toThrow();
+	});
 	it('admits an exact package and renders truthful organization/automation metadata', async () => {
 		const { document, registry } = await fixture();
 		const docs = await approvedDocuments([document], [], {}, now, registry);
@@ -177,6 +201,19 @@ describe('automated public guide integration', () => {
 		expect(await approvedDocuments([document], [], {}, later, registry)).toEqual([document]);
 		registry.authorities['synthetic-service-key'].revokedAt = '2026-11-06T12:00:00Z';
 		expect(await approvedDocuments([document], [], {}, later, registry)).toEqual([]);
+	});
+	it('rechecks changed evidence bytes and signatures after a successful read', async () => {
+		for (const change of ['evidence', 'signature']) {
+			const { document, registry } = await fixture();
+			expect(await approvedDocuments([document], [], {}, now, registry)).toEqual([document]);
+			const item = registry.packages[0];
+			if (change === 'evidence') item.evidenceFiles.get('fixture.json')![0] ^= 1;
+			else {
+				item.attestation!.signature = 'A'.repeat(88);
+				item.admission.attestationDigest = await digest(item.attestation);
+			}
+			expect(await approvedDocuments([document], [], {}, now, registry)).toEqual([]);
+		}
 	});
 	it('rejects changed body, mismatched revision, duplicate packages and missing authority', async () => {
 		const { document, registry } = await fixture();

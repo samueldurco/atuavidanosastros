@@ -1,6 +1,10 @@
 import { SITE, signs } from '$lib/data/site';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
-import { verifyAdmittedApproval, type AutomatedRegistry } from './editorial-automation';
+import {
+	isImmutableEditorialJson,
+	verifyAdmittedApprovals,
+	type AutomatedRegistry
+} from './editorial-automation';
 import {
 	editorialHubs,
 	evergreenGuidePaths,
@@ -144,7 +148,22 @@ function validPath(document: EditorialDocument): boolean {
 		Number.isFinite(timestamp(`${news[1]}-${news[2]}-01T00:00:00Z`))
 	);
 }
+const immutableDocumentContent = new WeakMap<EditorialDocument, boolean>();
+
 export function validDocument(document: EditorialDocument, now: Date): boolean {
+	if (document && isImmutableEditorialJson(document)) {
+		let valid = immutableDocumentContent.get(document);
+		if (valid === undefined) {
+			valid = inspectDocument(document, new Date(8640000000000000));
+			immutableDocumentContent.set(document, valid);
+		}
+		// Content cannot change; publication timing is still checked for this read.
+		return valid && timestamp(document.modifiedAt) <= now.getTime();
+	}
+	return inspectDocument(document, now);
+}
+
+function inspectDocument(document: EditorialDocument, now: Date): boolean {
 	try {
 		const published = timestamp(document.publishedAt),
 			modified = timestamp(document.modifiedAt);
@@ -247,6 +266,16 @@ export async function approvedDocuments(
 	automated?: AutomatedRegistry
 ): Promise<EditorialDocument[]> {
 	const published: EditorialDocument[] = [];
+	const authorSignatures = new Map<EditorialDocument, string>();
+	const authorSignature = (document: EditorialDocument) => {
+		let signature = authorSignatures.get(document);
+		if (signature === undefined) {
+			signature = canonicalJson(document.author);
+			authorSignatures.set(document, signature);
+		}
+		return signature;
+	};
+	let automatedResults: Awaited<ReturnType<typeof verifyAdmittedApprovals>> | undefined;
 	for (const document of documents) {
 		if (!validDocument(document, now)) continue;
 		// Ambiguous identity/path or conflicting author biographies fails closed.
@@ -259,7 +288,7 @@ export async function approvedDocuments(
 			documents.some(
 				(other) =>
 					other.author.id === document.author.id &&
-					canonicalJson(other.author) !== canonicalJson(document.author)
+					authorSignature(other) !== authorSignature(document)
 			)
 		)
 			continue;
@@ -267,10 +296,11 @@ export async function approvedDocuments(
 			const packages = automated?.packages.filter((item) => item.document.id === document.id);
 			if (packages?.length === 1) {
 				const item = packages[0];
+				automatedResults ??= await verifyAdmittedApprovals(automated!, now);
 				if (
-					canonicalJson(item.document) === canonicalJson(document) &&
-					(await verifyAdmittedApproval({ ...item, authorities: automated!.authorities, now }))
-						.approved
+					(item.document === document ||
+						canonicalJson(item.document) === canonicalJson(document)) &&
+					automatedResults.get(item)
 				)
 					published.push(document);
 			}
