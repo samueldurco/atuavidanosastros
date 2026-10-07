@@ -38,7 +38,7 @@ describe('P02 gated collection review', () => {
 		await load({
 			setHeaders,
 			url: new URL(
-				'https://codex-p02-catalogo-revisao-v1.atuavidanosastros.pages.dev/loja/_revisao/p02'
+				'https://codex-p02-catalogo-revisao-v.atuavidanosastros.pages.dev/loja/_revisao/p02'
 			)
 		} as never);
 		expect(setHeaders).toHaveBeenCalledWith({
@@ -51,8 +51,8 @@ describe('P02 gated collection review', () => {
 		'https://atuavidanosastros.com.br',
 		'https://atuavidanosastros.pages.dev',
 		'https://another.atuavidanosastros.pages.dev',
-		'https://codex-p02-catalogo-revisao-v1.atuavidanosastros.pages.dev.evil.example',
-		'http://codex-p02-catalogo-revisao-v1.atuavidanosastros.pages.dev'
+		'https://codex-p02-catalogo-revisao-v.atuavidanosastros.pages.dev.evil.example',
+		'http://codex-p02-catalogo-revisao-v.atuavidanosastros.pages.dev'
 	])('does not expose the pending catalog at %s', async (origin) => {
 		await expect(
 			load({ setHeaders: vi.fn(), url: new URL(origin) } as never)
