@@ -1,0 +1,18 @@
+{
+  "project": "P02-universo-mapa-astral",
+  "purpose": "Approved print source files; no personal charts; no orders or checkout",
+  "files": [
+    {
+      "external_id": "ATV-P02-A001-POS01-PF-12X16",
+      "path": "P02-A001-atlas-simbolos-v2-12x16-print.png",
+      "sha256": "2825f70b34b8bafc96cc4e7ef5d77a77b96caa2a3c9eefe0ee9ddde7e3976db9",
+      "bytes": 3909639
+    },
+    {
+      "external_id": "ATV-P02-A003-POS01-PF-12X16",
+      "path": "P02-A003-campos-experiencia-v2-12x16-print.png",
+      "sha256": "bbfb1ad8314b194aa68ac575785174082e66200c35950e6191530facddc78b86",
+      "bytes": 6777772
+    }
+  ]
+}
