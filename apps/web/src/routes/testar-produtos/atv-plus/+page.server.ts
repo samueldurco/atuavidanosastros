@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ locals, parent }) => {
 	const [readings, feedback] = await Promise.all([
 		identity.supabase
 			.from('atv_trial_readings')
-			.select('id,product_id,created_at')
+			.select('id,product_id,created_at,version:reading->>version')
 			.eq('owner_id', identity.ownerId)
 			.order('created_at', { ascending: false })
 			.limit(100),

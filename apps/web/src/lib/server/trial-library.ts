@@ -12,7 +12,7 @@ export async function readTrialLibrary(
 		const result = await withRpcDeadline((signal) =>
 			client
 				.from('atv_trial_readings')
-				.select('id,product_id,created_at')
+				.select('id,product_id,created_at,version:reading->>version')
 				.eq('owner_id', owner)
 				.order('created_at', { ascending: false })
 				.limit(100)

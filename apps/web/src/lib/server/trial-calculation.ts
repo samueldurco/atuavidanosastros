@@ -64,6 +64,68 @@ export async function calculateTrial(
 	if (!input) throw new Error('Confira os dados e consentimentos antes de gerar.');
 	const signal = AbortSignal.timeout(25000);
 	const context = { runId, signal };
+	if (['career-compass', 'purpose-career'].includes(input.productId)) {
+		// Private edition 3 expands the MC-only prototype. The canonical product gate stays closed.
+		const natal = (await calculators['birth-chart']!(
+			{ ...input, productId: 'birth-chart' },
+			context
+		)) as CalculationSnapshot;
+		const positions = natal.data.positions as AspectPosition[];
+		const aspects = calculateAspects(positions, trialAspectPolicy);
+		const mc = natal.data.angles as { midheaven: number };
+		const rulers = [
+			'mars',
+			'venus',
+			'mercury',
+			'moon',
+			'sun',
+			'mercury',
+			'venus',
+			'mars',
+			'jupiter',
+			'saturn',
+			'saturn',
+			'jupiter'
+		];
+		const ruler = rulers[Math.floor(mc.midheaven / 30)];
+		return {
+			...natal,
+			version: 'atv-private-career-synthesis/3.0.0',
+			kind: 'purpose',
+			facts: [
+				...natal.facts,
+				{
+					id: 'career-mc-ruler',
+					kind: 'calculated',
+					display: `Regente tradicional do Meio do Céu: ${labels[ruler]}`,
+					source: 'atv-traditional-sign-rulership/1.0.0; natal.angles.midheaven'
+				},
+				...aspects.aspects.map((a, i) => ({
+					id: `private-natal-aspect-${i}`,
+					kind: 'calculated' as const,
+					display: `${labels[a.first]} — ${labels[a.second]}: ${aspectLabels[a.kind]}; orbe ${a.orbDegrees.toFixed(3)}°`,
+					source: `${aspects.algorithmVersion};${trialAspectPolicy.id}@${trialAspectPolicy.version}`
+				}))
+			],
+			data: {
+				...natal.data,
+				productId: input.productId,
+				privateAspects: aspects,
+				career: {
+					version: '3.0.0',
+					mcRuler: ruler,
+					rulership: 'traditional',
+					houses: [2, 6, 10],
+					factors: ['sun', 'mercury', 'mars', 'jupiter', 'saturn']
+				}
+			},
+			limits: [
+				...natal.limits,
+				'Regência tradicional explícita; síntese simbólica de MC, regente, casas disponíveis e cinco fatores natais. Não determina profissão nem renda.',
+				'Aspectos maiores nominais com orbes de teste; sem certificação de aplicação/separação.'
+			]
+		};
+	}
 	if (input.productId === 'tarot-journey') {
 		const goal = input.tarotJourney!.goal;
 		const questions = [

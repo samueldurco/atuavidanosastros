@@ -2,6 +2,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
+	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	let { data } = $props();
@@ -88,22 +89,7 @@
 					</li>{/each}
 			</ul>
 		</section>{/each}
-	<section aria-labelledby="library">
-		<h2 id="library">Sua biblioteca no clube</h2>
-		{#if data.readings.length}<ul>
-				{#each data.readings as saved (saved.id)}<li>
-						<a href={`/testar-produtos/leituras/${saved.id}`}
-							>{data.products.find((p) => p.id === saved.product_id)?.name ?? saved.product_id}</a
-						>
-						· {new Date(saved.created_at).toLocaleDateString('pt-BR', {
-							timeZone: 'America/Sao_Paulo'
-						})}
-					</li>{/each}
-			</ul>{:else}<p>
-				Quando você salvar uma leitura, ela aparecerá aqui. Anotações e decisões ficam vinculadas à
-				leitura que você abriu.
-			</p>{/if}
-	</section>
+	<TrialLibrary library={{ readings: data.readings, unavailable: false }} />
 	<section aria-labelledby="decision">
 		<h2 id="decision">Sua avaliação do ATV+</h2>
 		{#if data.feedback}<p>

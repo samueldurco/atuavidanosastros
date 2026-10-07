@@ -33,7 +33,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			'/api/workflows',
 			'/api/integrations',
 			'/api/private-trials',
-			'/testar-produtos'
+			'/testar-produtos',
+			'/compartilhar/leitura'
 		].some((path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`))
 	) {
 		response.headers.set('cache-control', 'private, no-store');

@@ -2,6 +2,11 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
+	import { privateFormats } from '$lib/trials/experience';
+	import { CONTENT_VERSION } from '$lib/trials/versions';
+	import ReadingExperience from '$lib/components/ReadingExperience.svelte';
+	import ReadingShare from '$lib/components/ReadingShare.svelte';
+	import { canShareReading } from '$lib/trials/sharing';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	let { data } = $props();
@@ -23,6 +28,7 @@
 				: [0]
 	);
 	const reading = $derived(data.saved.reading);
+	const formats = $derived(privateFormats(data.saved.product_id, data.product.delivery));
 	let refreshKey = '';
 	async function refreshEdition() {
 		busy = true;
@@ -80,7 +86,9 @@
 		const lines = [
 			reading.title,
 			reading.opening,
-			...reading.sections.flatMap((s) => [s.title, s.text]),
+			...reading.sections
+				.filter((s) => s.title !== 'Referências desta leitura')
+				.flatMap((s) => [s.title, s.text]),
 			'Perguntas para refletir',
 			...reading.questions,
 			reading.practice,
@@ -113,22 +121,17 @@
 	<nav aria-label="Leitura de teste">
 		<a href="/testar-produtos">← Produtos e biblioteca</a> ·
 		<a href={`/testar-produtos/${data.saved.product_id}`}>Gerar outra leitura</a>
+		·
+		<a href={`/testar-produtos/${data.saved.product_id}?from=${data.saved.id}`}
+			>Conferir ou corrigir dados</a
+		>
 	</nav>
 	<PageIntro
 		eyebrow="Leitura privada · teste gratuito"
 		title={reading.title}
 		description={reading.opening}
 	/>
-	<div class="seal">
-		<strong>Revisão automática aprovada para teste</strong>
-		<p>{reading.source}</p>
-		<p>
-			Salva em {new Date(data.saved.created_at).toLocaleString('pt-BR', {
-				timeZone: 'America/Sao_Paulo'
-			})}. Sua avaliação do produto ainda pode ser feita abaixo.
-		</p>
-	</div>
-	{#if reading.version === 'atv-ai-editorial-trials/1.0.0'}
+	{#if reading.version !== CONTENT_VERSION}
 		<div class="seal">
 			<strong>Há uma nova edição desta leitura</strong>
 			<p>
@@ -141,10 +144,10 @@
 		</div>
 	{/if}
 	<nav class="downloads" aria-label="Formatos da leitura">
-		{#if data.product.delivery.includes('pdf')}<a
-				href={`/api/private-trials/${data.saved.id}/download?format=pdf`}>Baixar PDF completo</a
+		{#if formats.includes('pdf')}<a
+				href={`/api/private-trials/${data.saved.id}/download?format=pdf`}>Guardar leitura em PDF</a
 			>{/if}
-		{#if data.product.delivery.includes('svg')}<a
+		{#if formats.includes('svg')}<a
 				href={`/api/private-trials/${data.saved.id}/download?format=svg`}>Baixar cartografia SVG</a
 			>{/if}
 		<a href={`/api/private-trials/${data.saved.id}/download?format=txt`}
@@ -157,13 +160,11 @@
 				A voz é a síntese local do seu navegador. Mantenha esta página aberta durante a reprodução.
 			</p>{/if}
 	</nav>
+	{#key data.saved.id}
+		<ReadingExperience saved={data.saved} initial={data.readerState} />
+		{#if canShareReading(data.saved.product_id)}<ReadingShare id={data.saved.id} />{/if}
+	{/key}
 	<article aria-label="Sua leitura completa">
-		{#each reading.sections as section, i (i)}
-			<section class="chapter">
-				<h2>{section.title}</h2>
-				<p class="prose">{section.text}</p>
-			</section>
-		{/each}
 		<section class="chapter">
 			<h2>Três perguntas para levar com você</h2>
 			<ol>

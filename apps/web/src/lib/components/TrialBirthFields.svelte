@@ -8,6 +8,7 @@
 		id: string;
 		label: string;
 		form: {
+			name?: string;
 			date: string;
 			time: string;
 			location: string;
@@ -23,6 +24,14 @@
 
 <fieldset>
 	<legend>{label}</legend>
+	<label for={`${id}-name`}
+		>Nome para identificar esta leitura (opcional)<input
+			id={`${id}-name`}
+			maxlength="80"
+			autocomplete="off"
+			bind:value={form.name}
+		/></label
+	>
 	<div class="dates">
 		<label for={`${id}-date`}
 			>Data de nascimento<input

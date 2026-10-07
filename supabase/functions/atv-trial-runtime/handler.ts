@@ -10,10 +10,12 @@ async function matches(actual: string, expected: string) {
  return difference === 0;
 }
 /** Only the trusted web server can call this service. User/anon JWTs grant no access. */
-export function trialRuntimeHandler(runtimeKey: string | undefined) {
+export function trialRuntimeHandler(runtimeKey: string | undefined, nextRuntimeKey?: string) {
  return async (request: Request): Promise<Response> => {
   if (request.method !== 'POST') return json({ error: 'Método indisponível.' }, 405);
-  if (!runtimeKey || !(await matches(request.headers.get('x-atv-runtime-key') ?? '', runtimeKey))) return json({ error: 'Acesso indisponível.' }, 401);
+  const suppliedKey = request.headers.get('x-atv-runtime-key') ?? '';
+  const acceptedKeys = [runtimeKey, nextRuntimeKey].filter((key): key is string => Boolean(key));
+  if (!(await Promise.all(acceptedKeys.map(key => matches(suppliedKey, key)))).some(Boolean)) return json({ error: 'Acesso indisponível.' }, 401);
   if (!request.headers.get('content-type')?.startsWith('application/json')) return json({ error: 'Solicitação inválida.' }, 400);
   if (Number(request.headers.get('content-length')) > 2000000) return json({ error: 'Solicitação muito extensa.' }, 413);
   try {

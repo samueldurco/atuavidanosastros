@@ -33,13 +33,31 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		productId,
 		consent: {
 			storage: true,
-			partner: false,
+			partner: workflow.kind === 'relationship',
 			continuity: false,
 			policyVersion: 'atv-input-consent/1'
 		}
 	};
-	if (['natal', 'purpose'].includes(workflow.kind) && productId !== 'direction-journey')
+	if (
+		['natal', 'cycles', 'relationship', 'purpose'].includes(workflow.kind) &&
+		productId !== 'direction-journey'
+	)
 		input.birth = birth;
+	if (workflow.kind === 'relationship') {
+		input.partner = {
+			...birth,
+			localDateTime: '2001-01-01T12:00:00',
+			utcInstant: '2001-01-01T12:00:00Z'
+		};
+		input.presentation = {
+			version: 'atv-reading-identity/1',
+			name: 'Pessoa sintética A',
+			partnerName: 'Pessoa sintética B',
+			city: 'Cidade sintética A',
+			partnerCity: 'Cidade sintética B'
+		};
+	}
+	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
 	if (productId === 'career-compass')
 		input.context = 'Quero comparar uma atividade atual com um projeto pessoal.';
 	if (productId === 'direction-journey')
@@ -92,15 +110,35 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		},
 		index: { products: productCatalog, readings: [], feedback: [], libraryUnavailable: false },
 		library: {
-			readings: [{ id, product_id: 'career-compass', created_at: saved.created_at }],
+			readings: [
+				{
+					id,
+					product_id: 'career-compass',
+					created_at: saved.created_at,
+					version: saved.reading.version
+				}
+			],
 			unavailable: false
 		},
-		intake: { product: workflow, dreams: [] },
-		result: { saved, product, feedback: null, notes: [] },
+		intake: { product: workflow, dreams: [], previous: null },
+		result: {
+			saved,
+			product,
+			feedback: null,
+			notes: [],
+			readerState: { chapter: 0, bookmarks: [] }
+		},
 		download: { saved },
 		club: {
 			products: productCatalog.filter((p) => p.id !== 'atv-plus'),
-			readings: [{ id, product_id: 'career-compass', created_at: saved.created_at }],
+			readings: [
+				{
+					id,
+					product_id: 'career-compass',
+					created_at: saved.created_at,
+					version: saved.reading.version
+				}
+			],
 			feedback: null
 		}
 	};
