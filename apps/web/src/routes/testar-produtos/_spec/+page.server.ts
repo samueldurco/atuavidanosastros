@@ -80,7 +80,12 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	// Intakes do not need a result; use an actual MC calculation for the shared result shape.
 	const calcInput: WorkflowInput = ['result', 'download'].includes(view)
 		? input
-		: { version: input.version, productId: 'career-compass', birth, consent: input.consent };
+		: {
+				version: input.version,
+				productId: 'career-compass',
+				birth,
+				consent: { ...input.consent, partner: false, continuity: false }
+			};
 	const calculation = await calculateTrial(calcInput, id);
 	const reading = composeTrialReading(calcInput, calculation),
 		approval = await approveTrialReading(calcInput, calculation, reading);

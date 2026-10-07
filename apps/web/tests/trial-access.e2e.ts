@@ -19,12 +19,16 @@ test('the authorized test index and library expose products, ATV+ and saved read
 }) => {
 	await page.goto('/testar-produtos/_spec?view=index');
 	await expect(page.locator('.products').getByRole('link', { name: /^Testar / })).toHaveCount(25);
-	await expect(page.getByRole('link', { name: 'Entrar no ATV+ gratuito' })).toHaveAttribute(
-		'href',
-		'/testar-produtos/atv-plus'
-	);
+	await expect(
+		page
+			.getByRole('region', { name: 'Suas leituras de teste' })
+			.getByRole('link', { name: 'Entrar no ATV+ gratuito' })
+	).toHaveAttribute('href', '/testar-produtos/atv-plus');
 	await page.goto('/testar-produtos/_spec?view=library');
-	await expect(page.getByRole('link', { name: 'Bússola de Carreira' })).toHaveAttribute(
+	const edition = page
+		.getByRole('article')
+		.filter({ has: page.getByRole('heading', { name: 'Bússola de Carreira' }) });
+	await expect(edition.getByRole('link', { name: 'Continuar leitura' })).toHaveAttribute(
 		'href',
 		/\/testar-produtos\/leituras\//
 	);
