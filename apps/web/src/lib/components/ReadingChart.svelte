@@ -10,6 +10,7 @@
 		message = $state('');
 	let panel: HTMLDivElement;
 	let weekDay = $state(0);
+	let solarView = $state<ChartOptions['solarView']>('return');
 	const weekDays = $derived(
 		saved.calculation.version === 'atv-private-week-synthesis/4.0.0'
 			? (saved.calculation.data.days as { date: string }[])
@@ -22,7 +23,8 @@
 				degrees,
 				aspects,
 				selectedFactId: selected,
-				weekDay
+				weekDay,
+				solarView
 			});
 			return { svg: chartSceneSvg(scene), width: scene.width, height: scene.height, error: '' };
 		} catch {
@@ -36,17 +38,30 @@
 		}
 	});
 	const factors = $derived(
-		saved.calculation.facts.filter(
-			(f) =>
+		saved.calculation.facts.filter((f) => {
+			if (saved.calculation.version === 'atv-private-solar-synthesis/4.0.0')
+				return solarView === 'return'
+					? /^return-(sun|moon|mercury|venus|mars|jupiter|saturn|uranus|neptune|pluto|ascendant|midheaven)$/.test(
+							f.id
+						)
+					: f.id.startsWith('position-') || ['angle-ascendant', 'angle-midheaven'].includes(f.id);
+			return (
 				f.id.startsWith('position-') ||
 				f.id.startsWith('sample-') ||
 				f.id.startsWith('date-transit-') ||
+				f.id.startsWith('return-') ||
 				/^person-[ab]-(position-|angle-)/.test(f.id) ||
 				(f.id.startsWith('cross-') &&
 					saved.reading.sections.slice(0, -1).some((s) => s.factIds.includes(f.id))) ||
 				['angle-ascendant', 'angle-midheaven'].includes(f.id)
-		)
+			);
+		})
 	);
+	function factorDisplay(display: string) {
+		return saved.calculation.version === 'atv-private-solar-synthesis/4.0.0'
+			? display.replace(/(\d+\.\d{2})\d+(?=°)/g, '$1').replace(/ da candidata\b/g, '')
+			: display;
+	}
 	async function fullscreen() {
 		try {
 			await panel.requestFullscreen();
@@ -96,6 +111,15 @@
 </script>
 
 <div class="chart-panel" bind:this={panel}>
+	{#if saved.calculation.version === 'atv-private-solar-synthesis/4.0.0'}
+		<label
+			>Carta apresentada <select bind:value={solarView}
+				><option value="return">Revolução Solar · carta anual</option><option value="natal"
+					>Mapa natal · referência do ciclo</option
+				></select
+			></label
+		>
+	{/if}
 	{#if weekDays.length}
 		<label
 			>Data do céu da semana <select
@@ -141,7 +165,7 @@
 				onclick={() => {
 					selected = fact.id;
 					onselect(fact.id);
-				}}>{fact.display}</button
+				}}>{factorDisplay(fact.display)}</button
 			>{/each}
 	</div>
 	{#if chart.svg}<div class="actions">
@@ -159,12 +183,14 @@
 		padding: 1rem;
 		border-radius: 1rem;
 		max-width: 100%;
+		min-width: 0;
 	}
 	.chart-panel:fullscreen {
 		overflow: auto;
 		padding: 1.5rem;
 	}
 	fieldset {
+		min-width: 0;
 		border: 1px solid #967536;
 		border-radius: 0.65rem;
 		display: flex;
@@ -178,6 +204,7 @@
 	}
 	label {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		gap: 0.4rem;
 		font-size: 0.9rem;
@@ -194,6 +221,10 @@
 	}
 	button {
 		cursor: pointer;
+	}
+	select {
+		min-width: 0;
+		max-width: 100%;
 	}
 	button[aria-pressed='true'] {
 		border: 2px solid #24374b;

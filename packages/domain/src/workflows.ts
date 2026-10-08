@@ -160,7 +160,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
        new Set(v.questions.map((q) => q.trim().normalize('NFKC').toLocaleLowerCase('pt-BR'))).size !== v.questions.length)) return null;
   if (product.kind !== 'relationship' && v.consent.partner) return null;
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
-      (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2099 ||
+      (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2098 ||
         !returnLocation(v.returnLocation) || String(v.targetDate).slice(0, 4) !== String(v.returnYear))))) return null;
   // A calendar request names one complete civil month, never an implicit rolling interval.
   if (product.id === 'personal-calendar' && String(v.targetDate).slice(8) !== '01') return null;

@@ -279,7 +279,7 @@
 						>Ano da revolução solar<input
 							type="number"
 							min="1901"
-							max="2099"
+							max="2098"
 							required
 							bind:value={returnYear}
 						/></label

@@ -18,6 +18,8 @@ import { projectDossier } from '../trials/reconstruction/dossier-facts';
 import { projectPairPreview } from '../trials/reconstruction/pair-facts';
 import { projectHoroscopeReading } from '../trials/reconstruction/horoscope-facts';
 import { projectWeekReading, weekAspectPolicy } from '../trials/reconstruction/week-facts';
+import { projectSolarReading } from '../trials/reconstruction/solar-facts';
+import { calculateSolarYearSamples } from '../../../../worker/src/solar-year-samples';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -346,6 +348,25 @@ export async function calculateTrial(
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
+	if (input.productId === 'solar-return') {
+		const natal = (await calculators['birth-chart']!(
+			{
+				version: input.version,
+				productId: 'birth-chart',
+				birth: input.birth,
+				consent: input.consent,
+				context: input.context
+			},
+			context
+		)) as CalculationSnapshot;
+		const calendar = base.data.calendarScaffold as { startDate: string; endDateExclusive: string };
+		const samples = await calculateSolarYearSamples(
+			calendar.startDate,
+			calendar.endDateExclusive,
+			signal
+		);
+		return projectSolarReading(input, base, natal, samples);
+	}
 	if (input.productId === 'week-reading') {
 		const natal = (await calculators['birth-chart']!(
 			{

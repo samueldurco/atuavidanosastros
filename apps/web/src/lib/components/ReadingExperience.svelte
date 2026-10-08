@@ -41,7 +41,8 @@
 			'midheaven',
 			'date-reading',
 			'horoscope',
-			'week-reading'
+			'week-reading',
+			'solar-return'
 		].includes(saved.product_id) ||
 			[
 				'atv-private-synastry-synthesis/4.0.0',

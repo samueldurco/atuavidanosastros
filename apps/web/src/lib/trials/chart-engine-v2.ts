@@ -44,6 +44,7 @@ export type ChartOptions = {
 	selectedFactId?: string;
 	mode?: 'natal' | 'cross';
 	weekDay?: number;
+	solarView?: 'return' | 'natal';
 };
 export const chartColors = {
 	paper: '#faf6ed',
@@ -133,6 +134,50 @@ export function placeChartMarkers(
 }
 
 export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): ChartScene {
+	if (saved.calculation.version === 'atv-private-solar-synthesis/4.0.0') {
+		const natalView = options.solarView === 'natal' || options.person === 'second';
+		const data = saved.calculation.data;
+		const houses = data.returnHouses as { ascendant: number | null; midheaven: number | null };
+		const native = {
+			...saved,
+			product_id: 'birth-chart',
+			calculation: natalView
+				? (data.natal as SavedTrial['calculation'])
+				: {
+						...saved.calculation,
+						version: 'atv-solar-chart/1.0.0',
+						data: {
+							positions: data.returnPositions,
+							houses: data.returnHouses,
+							angles: { ascendant: houses.ascendant, midheaven: houses.midheaven },
+							privateAspects: data.annualGeometry
+						}
+					}
+		};
+		const mapFact = (id: string) =>
+			natalView ? id : id.replace(/^position-/, 'return-').replace(/^angle-/, 'return-');
+		const selectedFactId = natalView
+			? options.selectedFactId
+			: options.selectedFactId
+					?.replace(/^return-(ascendant|midheaven)$/, 'angle-$1')
+					.replace(/^return-/, 'position-');
+		const scene = buildChartScene(native, {
+			...options,
+			person: undefined,
+			selectedFactId,
+			mode: 'natal'
+		});
+		scene.title = natalView ? 'Mapa natal · referência do ciclo' : 'Revolução Solar · carta anual';
+		for (const node of scene.nodes) {
+			if (node.factId) node.factId = mapFact(node.factId);
+			if (node.type === 'text' && node.layer === 'heading') {
+				if (node.size === 24) node.text = scene.title;
+				else if (!natalView)
+					node.text = `Retorno em ${String(data.returnInstant).replace('T', ' ').replace('Z', ' UTC')}`;
+			}
+		}
+		return scene;
+	}
 	const synastry = [
 		'atv-private-synastry-synthesis/4.0.0',
 		'atv-private-couple-dossier-synthesis/4.0.0'

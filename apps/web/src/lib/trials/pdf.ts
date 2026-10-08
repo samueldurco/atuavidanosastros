@@ -11,6 +11,7 @@ import { PAIR_VERSION } from './reconstruction/pair-facts';
 import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
 import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
 import { WEEK_VERSION } from './reconstruction/week-facts';
+import { SOLAR_VERSION } from './reconstruction/solar-facts';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -175,22 +176,24 @@ export async function trialPdf(saved: SavedTrial) {
 		DOSSIER_VERSION
 	].includes(saved.calculation.version)
 		? [undefined, 'first', 'second']
-		: ['synastry', 'couple-dossier'].includes(saved.product_id) ||
-			  (saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)
-			? ['first', 'second']
-			: [
-						'three-pillars',
-						'birth-chart',
-						'life-atlas',
-						'ascendant',
-						'career-compass',
-						'purpose-career',
-						'midheaven',
-						'date-reading',
-						'week-reading'
-				  ].includes(saved.product_id)
-				? [undefined]
-				: [];
+		: saved.calculation.version === SOLAR_VERSION
+			? [undefined, 'second']
+			: ['synastry', 'couple-dossier'].includes(saved.product_id) ||
+				  (saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)
+				? ['first', 'second']
+				: [
+							'three-pillars',
+							'birth-chart',
+							'life-atlas',
+							'ascendant',
+							'career-compass',
+							'purpose-career',
+							'midheaven',
+							'date-reading',
+							'week-reading'
+					  ].includes(saved.product_id)
+					? [undefined]
+					: [];
 	if (!book && chartPeople.length) newPage();
 	for (const person of chartPeople) {
 		const scene = buildChartScene(saved, { person });
@@ -309,7 +312,7 @@ export async function trialPdf(saved: SavedTrial) {
 		r.limits.slice(-6).forEach((limit) => paragraph(limit, label, 9));
 	} else if (saved.calculation.version === PAIR_VERSION) {
 		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
-	} else if (saved.calculation.version === WEEK_VERSION) {
+	} else if ([WEEK_VERSION, SOLAR_VERSION].includes(saved.calculation.version)) {
 		r.limits.forEach((limit) => paragraph(limit, label, 9));
 	} else if (reconstructed) {
 		paragraph(
@@ -327,6 +330,10 @@ export async function trialPdf(saved: SavedTrial) {
 		heading('Dados para conferir', 15);
 		const compact = saved.calculation.facts.filter(
 			(f) =>
+				(saved.calculation.version !== SOLAR_VERSION ||
+					r.sections
+						.filter((s) => s.title !== 'Referências desta leitura')
+						.some((s) => s.factIds.includes(f.id))) &&
 				!/^day-\d+-|series$/.test(f.id) &&
 				!/nenhum aspecto/i.test(f.display) &&
 				f.display.length <= 650

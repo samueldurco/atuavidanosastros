@@ -46,3 +46,11 @@ O parser do leitor confere versão, doze fronteiras exatas, teto de três datas,
 O critério de evidência e recusa para os doze capítulos está em [solar-return-monthly-evidence.md](solar-return-monthly-evidence.md). A grade 1.1 falha deliberadamente o requisito de interpretação mensal: seus intervalos são civis e a carta é de um único instante.
 
 O motor ainda depende de gauntlet independente, licença e homologação. A base não produz interpretação, previsões, mandala editorial, linha interpretativa de doze meses, áudios, check-ins, web/PDF final, renovação ou alertas. E1 permanece parcial até validar entrada real autorizada e o motor; E2–E5 mantêm gates próprios.
+
+## Reconstrução privada de 08/10/2026
+
+A versão privada `atv-private-solar-synthesis/4.0.0` preserva esta base nativa e acrescenta o natal completo, relações anuais e observações diárias durante o ciclo. O snapshot nativo conserva também `natalInput` e `returnInput`, vinculando data, fuso e coordenadas aos cálculos utilizados. A versão privada rejeita divergências entre esses dados e o intake.
+
+O ano de retorno aceito no intake e no parser é 1901–2098: é necessário calcular o ano completo seguinte dentro do domínio do motor. A política mensal própria do ATVNA usa uma observação às 12h UTC por data, dez corpos e cinco aspectos maiores com orbe de 2°. Contagens e mínimos valem somente para a grade observada; não certificam contatos entre amostras ou horários exatos. A carta anual usa seu instante astronômico e a cidade do retorno; a referência natal e os meses civis permanecem separados.
+
+As fontes, interpretação autoral, revisão automática autorizada, web/PDF e provas desta extensão constam em `../intelligence/reconstruction/SOURCES_2026-10-08.md` e `../intelligence/reconstruction/RECON_10_LOCAL_2026-10-08.md`. Ela não promove automaticamente a base legada 1.1, não altera os gates hospedados e não representa homologação independente de precisão nem aceite pessoal E5.

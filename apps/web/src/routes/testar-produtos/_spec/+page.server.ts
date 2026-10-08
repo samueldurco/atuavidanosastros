@@ -58,6 +58,18 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		};
 	}
 	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
+	if (productId === 'solar-return') {
+		input.targetDate = '2026-01-01';
+		input.returnYear = 2026;
+		input.returnLocation = {
+			city: 'São Paulo',
+			timezone: 'America/Sao_Paulo',
+			latitude: -23.55,
+			longitude: -46.63,
+			locationSource: 'synthetic-reconstruction'
+		};
+		input.context = 'Quero negociar responsabilidades de trabalho e reservar tempo para estudar.';
+	}
 	if (productId === 'week-reading')
 		input.context =
 			'Fuso atual declarado: America/Sao_Paulo (não usado para calcular dias locais).\nTema escolhido: Organização e prioridades.\n\nContexto declarado: Quero rever o excesso de tarefas sem abandonar meu projeto.';
