@@ -107,7 +107,7 @@ test("Week corpus is opt-in, synthetic and separate from default runtime and fro
   assert.equal(corpus.editorialReview, "not-reviewed");
   assert.equal(corpus.promotionEligible, false);
   assert.ok(corpus.unavailableProducts.includes("week-reading"));
-  assert.equal(corpus.unavailableProducts.length, 12);
+  assert.equal(corpus.unavailableProducts.length, 17);
   assert.equal(createProductCalculators()["week-reading"], undefined);
   assert.equal(
     productCalculationCoverage().find(

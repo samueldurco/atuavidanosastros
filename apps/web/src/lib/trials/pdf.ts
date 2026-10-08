@@ -179,7 +179,8 @@ export async function trialPdf(saved: SavedTrial) {
 					'ascendant',
 					'career-compass',
 					'purpose-career',
-					'midheaven'
+					'midheaven',
+					'date-reading'
 			  ].includes(saved.product_id)
 			? [undefined]
 			: [];

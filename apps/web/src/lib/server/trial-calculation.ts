@@ -12,6 +12,7 @@ import {
 } from '@atv/domain';
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
 import { modernRulers } from '../trials/reconstruction/canon';
+import { projectDateReading } from '../trials/reconstruction/date-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -317,6 +318,19 @@ export async function calculateTrial(
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
+	if (input.productId === 'date-reading') {
+		const natal = await calculators['birth-chart']!(
+			{
+				version: input.version,
+				productId: 'birth-chart',
+				birth: input.birth,
+				consent: input.consent,
+				context: input.context
+			},
+			context
+		);
+		return projectDateReading(input, base, natal as CalculationSnapshot);
+	}
 	if (input.productId === 'personal-calendar') {
 		const count = new Date(
 			Date.UTC(Number(input.targetDate!.slice(0, 4)), Number(input.targetDate!.slice(5, 7)), 0)

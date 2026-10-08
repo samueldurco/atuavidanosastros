@@ -35,11 +35,11 @@ function sample(item = first, repetition = 1) {
     costEvidence: { basis: 'owner-confirmed-free-tier', reference: 'synthetic-test-not-a-receipt' } };
 }
 
-test('manifest preserves corpus identity, 102 prepared cases, three blocked polar cases and 12 unavailable products', async () => {
+test('manifest preserves corpus identity, 102 prepared cases, three blocked polar cases and 17 active products without default calculators', async () => {
   assert.equal(manifest.corpusFingerprint, '9f1683af58ad8d0eff61d48ebc8624e473f89ce9f7fd653eb5565140e7ab5a77');
   assert.equal(manifest.cases.length, 105);
   assert.equal(prepared.length, 102);
-  assert.equal(manifest.unavailableProducts.length, 12);
+  assert.equal(manifest.unavailableProducts.length, 17);
   assert.equal(manifest.cases.find(item => item.caseId === 'ascendant-boundary').requestDigest, null);
   assert.ok(prepared.every(item => /^[a-f0-9]{64}$/.test(item.promptDigest)));
   assert.deepEqual(productBenchmarkManifest(await buildProductLabCorpus()), manifest);
@@ -84,7 +84,7 @@ test('full mechanically passing fixture batch still cannot promote, publish or r
   assert.equal(report.summary.unreviewedPreparedCases, 102);
   assert.equal(report.summary.unreviewedSamples, 306);
   assert.equal(report.summary.blockedCases, 3);
-  assert.equal(report.unavailableProducts.length, 12);
+  assert.equal(report.unavailableProducts.length, 17);
   assert.equal(report.promotionEligible, false);
   assert.equal(report.publication, 'blocked');
   assert.equal(report.provenance, 'declared-not-authenticated');

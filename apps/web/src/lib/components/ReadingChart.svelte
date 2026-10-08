@@ -12,10 +12,12 @@
 	const chart = $derived.by(() => {
 		try {
 			const scene = buildChartScene(saved, { houses, degrees, aspects, selectedFactId: selected });
-			return { svg: chartSceneSvg(scene), error: '' };
+			return { svg: chartSceneSvg(scene), width: scene.width, height: scene.height, error: '' };
 		} catch {
 			return {
 				svg: '',
+				width: 900,
+				height: 1100,
 				error:
 					'Não foi possível apresentar o gráfico desta versão. Os fatos calculados continuam disponíveis abaixo.'
 			};
@@ -23,7 +25,11 @@
 	});
 	const factors = $derived(
 		saved.calculation.facts.filter(
-			(f) => f.id.startsWith('position-') || ['angle-ascendant', 'angle-midheaven'].includes(f.id)
+			(f) =>
+				f.id.startsWith('position-') ||
+				f.id.startsWith('sample-') ||
+				f.id.startsWith('date-transit-') ||
+				['angle-ascendant', 'angle-midheaven'].includes(f.id)
 		)
 	);
 	async function fullscreen() {
@@ -48,7 +54,7 @@
 				await image.decode();
 				const canvas = document.createElement('canvas');
 				canvas.width = 2700;
-				canvas.height = 3300;
+				canvas.height = Math.round((2700 * chart.height) / chart.width);
 				const ctx = canvas.getContext('2d');
 				if (!ctx) throw Error('Não foi possível preparar a imagem.');
 				ctx.drawImage(image, 0, 0, canvas.width, canvas.height);

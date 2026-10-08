@@ -1,6 +1,7 @@
 import { longitudePoint } from '../product-cartography';
 import { bodyGlyphs, bodyNames, signNames, trialGeometry } from './cartography';
 import type { SavedTrial } from './reading';
+import type { CrossAspectCalculation } from '@atv/astrology';
 
 export const CHART_ENGINE_VERSION = 'AstroChartEngineV2/2.0.0';
 type Style = { stroke?: string; fill?: string; width?: number; dash?: number[]; opacity?: number };
@@ -35,6 +36,7 @@ export type ChartOptions = {
 	aspects?: 'all' | 'major' | 'harmonious' | 'tensions' | 'none';
 	person?: 'first' | 'second';
 	selectedFactId?: string;
+	mode?: 'natal' | 'cross';
 };
 export const chartColors = {
 	paper: '#faf6ed',
@@ -81,7 +83,8 @@ export const boxesOverlap = (a: Box, b: Box) =>
 /** Layout never changes a longitude. A leader connects every displaced label to its true point. */
 export function placeChartMarkers(
 	positions: { body: string; longitude: number }[],
-	protectedBoxes: Box[] = []
+	protectedBoxes: Box[] = [],
+	radii: number[] = [225, 160, 95, 30]
 ) {
 	const placed: ChartScene['markers'] = [];
 	for (const p of [...positions].sort(
@@ -89,12 +92,16 @@ export function placeChartMarkers(
 	)) {
 		let chosen: ChartScene['markers'][number] | undefined;
 		const candidates: { radius: number; offset: number; cost: number }[] = [];
-		for (const radius of [225, 160, 95, 30]) {
+		for (const radius of radii) {
 			for (const offset of [
 				0,
 				...Array.from({ length: 9 }, (_, i) => (i + 1) * 20).flatMap((a) => [a, -a])
 			])
-				candidates.push({ radius, offset, cost: Math.abs(offset) * 3 + (225 - radius) });
+				candidates.push({
+					radius,
+					offset,
+					cost: Math.abs(offset) * 3 + Math.abs(radii[0] - radius)
+				});
 		}
 		for (const candidate of candidates.sort((a, b) => a.cost - b.cost)) {
 			const { x, y } = longitudePoint(
@@ -119,6 +126,13 @@ export function placeChartMarkers(
 }
 
 export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): ChartScene {
+	if (
+		saved.product_id === 'date-reading' &&
+		saved.calculation.version === 'atv-private-date-synthesis/4.0.0' &&
+		options.mode !== 'natal' &&
+		!options.person
+	)
+		return buildDateChartScene(saved, options);
 	const g = trialGeometry(saved, options.person);
 	const { paper, ink, gold, muted, blue, red } = chartColors;
 	const career = ['career-compass', 'purpose-career', 'midheaven', 'direction-journey'].includes(
@@ -371,6 +385,194 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		1068,
 		'Graus arredondados só na apresentação. Precisão do cálculo ainda experimental.',
 		10,
+		'legend',
+		muted
+	);
+	return scene;
+}
+
+/** Directed contacts use each source's actual longitude; houses belong only to the natal map. */
+function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartScene {
+	const geometry = saved.calculation.data.transitGeometry as CrossAspectCalculation;
+	if (
+		!geometry ||
+		geometry.pairsEvaluated !== 100 ||
+		geometry.inputPositions.first.length !== 10 ||
+		geometry.inputPositions.second.length !== 10
+	)
+		throw Error('date_chart_geometry_invalid');
+	const scene = buildChartScene(saved, { ...options, mode: 'natal', aspects: 'none' });
+	scene.title = 'Céu da data e mapa natal';
+	scene.height = 1280;
+	scene.nodes = scene.nodes.filter(
+		(n) => !['heading', 'positions', 'markers', 'leaders', 'legend'].includes(n.layer)
+	);
+	const paper = scene.nodes.find((n) => n.type === 'rect' && n.layer === 'paper');
+	if (paper?.type === 'rect') paper.h = 1244;
+	const { ink, gold, muted, blue, red } = chartColors;
+	const add = (n: ChartNode) => scene.nodes.push(n);
+	const text = (
+		x: number,
+		y: number,
+		value: string,
+		size = 13,
+		layer = 'legend',
+		fill = ink,
+		anchor: 'middle' | 'start' = 'middle'
+	) => add({ type: 'text', x, y, text: value, size, layer, fill, anchor });
+	text(450, 61, scene.title, 24, 'heading');
+	text(450, 85, `${saved.input.targetDate} · amostra às 12h UTC`, 13, 'heading', muted);
+	for (const [r, stroke] of [
+		[230, blue],
+		[274, gold]
+	] as const)
+		add({
+			type: 'circle',
+			x: 450,
+			y: 450,
+			r,
+			stroke,
+			width: 1,
+			fill: 'none',
+			layer: 'comparison-rings'
+		});
+	const selected = new Set(saved.reading.editorial?.selection.map((s) => s.factId) ?? []);
+	geometry.aspects.forEach((a, i) => {
+		const filter = options.aspects ?? 'major';
+		const tense = ['square', 'opposition'].includes(a.kind);
+		if (
+			filter === 'none' ||
+			(filter === 'major' && selected.size && !selected.has(`date-transit-${i}`)) ||
+			(filter === 'tensions' && !tense) ||
+			(filter === 'harmonious' && !['sextile', 'trine'].includes(a.kind))
+		)
+			return;
+		const from = geometry.inputPositions.first.find((p) => p.body === a.first)!;
+		const to = geometry.inputPositions.second.find((p) => p.body === a.second)!;
+		const p = longitudePoint(from.longitude, 274, 450, 450),
+			q = longitudePoint(to.longitude, 230, 450, 450);
+		add({
+			type: 'line',
+			...p,
+			x2: q.x,
+			y2: q.y,
+			stroke: tense ? red : a.kind === 'conjunction' ? gold : blue,
+			width: 1.5,
+			dash: tense ? [5, 4] : undefined,
+			opacity: 0.8,
+			layer: 'aspects',
+			factId: `date-transit-${i}`
+		});
+	});
+	const protectedBoxes: Box[] = [
+		{ x: 150, y: 31, w: 600, h: 65 },
+		{ x: 40, y: 842, w: 820, h: 50 }
+	];
+	const natal = placeChartMarkers(
+		geometry.inputPositions.second.map((p) => ({ ...p, body: `natal:${p.body}` })),
+		[],
+		[190, 130, 70]
+	);
+	const sample = placeChartMarkers(
+		geometry.inputPositions.first.map((p) => ({ ...p, body: `sample:${p.body}` })),
+		protectedBoxes,
+		[392, 410]
+	);
+	scene.markers = [...natal, ...sample];
+	for (const marker of scene.markers) {
+		const [role, body] = marker.body.split(':');
+		const isNatal = role === 'natal',
+			color = isNatal ? blue : gold,
+			factId = `${isNatal ? 'position' : 'sample'}-${body}`;
+		const p = longitudePoint(marker.longitude, isNatal ? 230 : 274, 450, 450);
+		add({
+			type: 'line',
+			...p,
+			x2: marker.x,
+			y2: marker.y,
+			stroke: color,
+			width: 0.8,
+			layer: 'leaders',
+			factId
+		});
+		add({ type: 'circle', ...p, r: 3, fill: color, layer: 'positions', factId });
+		add({
+			type: 'rect',
+			...marker.box,
+			rx: 9,
+			fill: chartColors.paper,
+			stroke: color,
+			width: options.selectedFactId === factId ? 2 : 0.65,
+			layer: 'markers',
+			factId
+		});
+		add({
+			type: 'path',
+			x: marker.x,
+			y: marker.y,
+			d: bodyGlyphs[body],
+			scale: 0.8,
+			stroke: color,
+			width: 1.6,
+			layer: 'markers',
+			factId
+		});
+		text(
+			marker.x,
+			marker.y + 22,
+			`${bodyNames[body]} · ${isNatal ? 'natal' : 'data'}`,
+			10,
+			'markers',
+			color
+		);
+		if (options.degrees !== false) {
+			const d = displayDegree(marker.longitude);
+			text(
+				marker.x,
+				marker.y + 36,
+				`${d.degree}°${String(d.minute).padStart(2, '0')}′`,
+				10,
+				'markers',
+				muted
+			);
+		}
+	}
+	text(450, 865, 'Azul: mapa natal · ouro: céu da data', 16);
+	text(
+		450,
+		887,
+		'Casas e eixos pertencem ao natal; a amostra da data não calcula casas próprias.',
+		11,
+		'legend',
+		muted
+	);
+	text(80, 925, 'MAPA NATAL', 12, 'legend', blue, 'start');
+	text(470, 925, 'CÉU DA DATA', 12, 'legend', gold, 'start');
+	for (const [j, list] of [geometry.inputPositions.second, geometry.inputPositions.first].entries())
+		list.forEach((p, i) =>
+			text(
+				j ? 470 : 80,
+				950 + i * 24,
+				`${bodyNames[p.body]} · ${chartDegree(p.longitude)}`,
+				12,
+				'legend',
+				ink,
+				'start'
+			)
+		);
+	text(
+		450,
+		1215,
+		'Contatos principais: seleção da leitura · demais filtros: contatos do cálculo salvo.',
+		11,
+		'legend',
+		muted
+	);
+	text(
+		450,
+		1236,
+		'Traços-guia preservam as posições; graus arredondados só na apresentação.',
+		11,
 		'legend',
 		muted
 	);

@@ -37,7 +37,8 @@
 			'ascendant',
 			'career-compass',
 			'purpose-career',
-			'midheaven'
+			'midheaven',
+			'date-reading'
 		].includes(saved.product_id)
 	);
 

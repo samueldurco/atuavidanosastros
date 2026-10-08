@@ -34,8 +34,8 @@ export const interestNavigation = [
 	{
 		id: 'tarot',
 		label: 'Tarot',
-		href: '/produtos/carta-do-dia',
-		action: 'Tirar a carta do dia',
+		href: '/produtos/carta-unica',
+		action: 'Tirar uma carta',
 		note: 'Um convite à reflexão',
 		editorial: 'Conhecer o Tarot',
 		available: false,

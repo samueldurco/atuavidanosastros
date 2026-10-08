@@ -104,7 +104,7 @@ test("Dossier corpus is explicit, synthetic and separate from the frozen default
   assert.equal(corpus.editorialReview, "not-reviewed");
   assert.equal(corpus.promotionEligible, false);
   assert.ok(corpus.unavailableProducts.includes("couple-dossier"));
-  assert.equal(corpus.unavailableProducts.length, 12);
+  assert.equal(corpus.unavailableProducts.length, 17);
   assert.equal(createProductCalculators()["couple-dossier"], undefined);
   assert.equal(
     productCalculationCoverage().find(

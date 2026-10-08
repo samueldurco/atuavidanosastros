@@ -15,7 +15,8 @@ for (const productId of [
 	'three-pillars',
 	'birth-chart',
 	'ascendant',
-	'midheaven'
+	'midheaven',
+	'date-reading'
 ] as const) {
 	it.skipIf(!directory)(
 		`exports complete ${productId} for visual inspection`,
@@ -40,6 +41,7 @@ for (const productId of [
 				}
 			};
 			const id = '00000000-0000-4000-8000-000000000084';
+			if (productId === 'date-reading') input.targetDate = '2026-10-08';
 			const calculation = await calculateTrial(input, id);
 			const reading = composeTrialReading(input, calculation);
 			const approval = await approveTrialReading(input, calculation, reading);
