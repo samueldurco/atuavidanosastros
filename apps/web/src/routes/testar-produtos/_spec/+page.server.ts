@@ -58,6 +58,14 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		};
 	}
 	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
+	if (productId === 'personal-calendar') {
+		input.targetDate = '2026-01-01';
+		input.context = 'Quero negociar responsabilidades de trabalho e reservar tempo para estudar.';
+		input.calendarMarks = {
+			authorization: 'atv-personal-calendar-marks/1',
+			entries: [{ date: '2026-01-15', label: 'Revisão de prioridades com a equipe' }]
+		};
+	}
 	if (productId === 'solar-return') {
 		input.targetDate = '2026-01-01';
 		input.returnYear = 2026;

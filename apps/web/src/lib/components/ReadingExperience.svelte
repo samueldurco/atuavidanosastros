@@ -9,6 +9,7 @@
 	import ReadingPairCharts from './ReadingPairCharts.svelte';
 	import ReadingChart from './ReadingChart.svelte';
 	import ReadingTarot from './ReadingTarot.svelte';
+	import ReadingCalendar from './ReadingCalendar.svelte';
 	import { tarotMethodFor } from '@atv/domain';
 	let { saved, initial }: { saved: SavedTrial; initial: ReaderState } = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
@@ -29,6 +30,19 @@
 	const current = $derived(chapters.find((s) => s.index === chapter) ?? chapters[0]);
 	const currentIndex = $derived(chapters.findIndex((s) => s.index === current.index));
 	const contract = $derived(experienceFor(saved.product_id));
+	const minutes = $derived(
+		saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0'
+			? Math.max(
+					1,
+					Math.ceil(
+						sections
+							.map((s) => s.text)
+							.join(' ')
+							.split(/\s+/).length / 200
+					)
+				)
+			: contract.minutes
+	);
 	const references = $derived(sections.find((s) => s.title === 'Referências desta leitura'));
 	const hasChart = $derived(
 		[
@@ -42,7 +56,8 @@
 			'date-reading',
 			'horoscope',
 			'week-reading',
-			'solar-return'
+			'solar-return',
+			'personal-calendar'
 		].includes(saved.product_id) ||
 			[
 				'atv-private-synastry-synthesis/4.0.0',
@@ -155,12 +170,15 @@
 		</nav>
 	{/if}
 	<div class="reading-meta">
-		<span>{contract.minutes} min de leitura · {chapters.length} capítulos</span><span
+		<span>{minutes} min de leitura · {chapters.length} capítulos</span><span
 			>Capítulo {currentIndex + 1} de {chapters.length}</span
 		>
 	</div>
 	<progress value={currentIndex + 1} max={chapters.length} aria-label="Posição na leitura"
 	></progress>
+	{#if saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0'}
+		<ReadingCalendar {saved} chapter={current.index} {interactive} onopen={open} />
+	{/if}
 	{#if hasChart}
 		<details class="map">
 			<summary>Explore seu mapa e os capítulos relacionados</summary>
@@ -311,6 +329,7 @@
 	}
 	.reader-grid {
 		display: grid;
+		align-items: start;
 		grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
 		gap: 2rem;
 	}

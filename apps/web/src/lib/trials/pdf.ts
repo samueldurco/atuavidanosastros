@@ -12,6 +12,7 @@ import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
 import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
 import { WEEK_VERSION } from './reconstruction/week-facts';
 import { SOLAR_VERSION } from './reconstruction/solar-facts';
+import { CALENDAR_VERSION, type CalendarData } from './reconstruction/calendar-facts';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -30,7 +31,8 @@ export async function trialPdf(saved: SavedTrial) {
 	const theme = coverArt.products[saved.product_id as keyof typeof coverArt.products] ?? 'B01';
 	const engraving = await doc.embedPng(coverArt.themes[theme as keyof typeof coverArt.themes]);
 	const format = experienceFor(saved.product_id).format;
-	const book = format === 'book';
+	const calendar = saved.calculation.version === CALENDAR_VERSION;
+	const book = format === 'book' || calendar;
 	const chapters = r.sections.filter((s) => s.title !== 'Referências desta leitura');
 	doc.setTitle(r.title);
 	doc.setAuthor('A Tua Vida nos Astros');
@@ -170,6 +172,65 @@ export async function trialPdf(saved: SavedTrial) {
 		10
 	);
 	if (book) newPage();
+	if (calendar) {
+		const data = saved.calculation.data as unknown as CalendarData;
+		heading('Seu mês, data por data', 23);
+		paragraph(
+			'Dias e horários usam UTC. Os números indicam mudanças selecionadas. O ponto assinala um marco informado por você. Abra o capítulo da data para acompanhar a leitura.'
+		);
+		const top = y - 20,
+			cell = available / 7,
+			offset = (new Date(data.days[0].startInstant).getUTCDay() + 6) % 7;
+		['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'].forEach((name, i) =>
+			page.drawText(name, {
+				x: margin + i * cell + 12,
+				y: top,
+				size: 10,
+				font: label,
+				color: muted
+			})
+		);
+		data.days.forEach((day, index) => {
+			const slot = offset + index,
+				x = margin + (slot % 7) * cell,
+				topY = top - 20 - Math.floor(slot / 7) * 72;
+			page.drawRectangle({
+				x,
+				y: topY - 65,
+				width: cell - 4,
+				height: 65,
+				color: rgb(0.995, 0.986, 0.96),
+				borderColor: gold,
+				borderWidth: 0.5
+			});
+			page.drawText(String(index + 1), {
+				x: x + 9,
+				y: topY - 20,
+				size: 16,
+				font: display,
+				color: ink
+			});
+			const count = saved.reading.editorial!.selection.filter((s) =>
+				data.events.some((e) => e.id === s.factId && e.date === day.date)
+			).length;
+			page.drawText(`${count} ${count === 1 ? 'sinal' : 'sinais'}`, {
+				x: x + 6,
+				y: topY - 42,
+				size: 8,
+				font: label,
+				color: muted
+			});
+			if (saved.input.calendarMarks?.entries.some((m) => m.date === day.date))
+				page.drawCircle({ x: x + cell - 15, y: topY - 14, size: 3, color: gold });
+		});
+		y = top - 20 - Math.ceil((offset + data.days.length) / 7) * 72 - 20;
+		paragraph(
+			'Zero sinais não descreve a qualidade do dia. Registre também experiências que contrariaram uma hipótese. As observações ocorrem a cada seis horas; picos não certificam o instante exato.',
+			label,
+			10
+		);
+		newPage();
+	}
 	// Geometry is read from the saved calculation, never inferred from prose.
 	const chartPeople: ('first' | 'second' | undefined)[] = [
 		SYNASTRY_VERSION,
@@ -190,7 +251,8 @@ export async function trialPdf(saved: SavedTrial) {
 							'purpose-career',
 							'midheaven',
 							'date-reading',
-							'week-reading'
+							'week-reading',
+							'personal-calendar'
 					  ].includes(saved.product_id)
 					? [undefined]
 					: [];
@@ -312,7 +374,7 @@ export async function trialPdf(saved: SavedTrial) {
 		r.limits.slice(-6).forEach((limit) => paragraph(limit, label, 9));
 	} else if (saved.calculation.version === PAIR_VERSION) {
 		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
-	} else if ([WEEK_VERSION, SOLAR_VERSION].includes(saved.calculation.version)) {
+	} else if ([WEEK_VERSION, SOLAR_VERSION, CALENDAR_VERSION].includes(saved.calculation.version)) {
 		r.limits.forEach((limit) => paragraph(limit, label, 9));
 	} else if (reconstructed) {
 		paragraph(
@@ -330,6 +392,10 @@ export async function trialPdf(saved: SavedTrial) {
 		heading('Dados para conferir', 15);
 		const compact = saved.calculation.facts.filter(
 			(f) =>
+				(!calendar ||
+					(!f.id.startsWith('calendar-window-') &&
+						!f.id.startsWith('calendar-position-') &&
+						!f.id.startsWith('calendar-day-'))) &&
 				(saved.calculation.version !== SOLAR_VERSION ||
 					r.sections
 						.filter((s) => s.title !== 'Referências desta leitura')

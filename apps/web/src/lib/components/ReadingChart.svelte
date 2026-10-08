@@ -12,7 +12,9 @@
 	let weekDay = $state(0);
 	let solarView = $state<ChartOptions['solarView']>('return');
 	const weekDays = $derived(
-		saved.calculation.version === 'atv-private-week-synthesis/4.0.0'
+		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0'].includes(
+			saved.calculation.version
+		)
 			? (saved.calculation.data.days as { date: string }[])
 			: []
 	);
@@ -46,6 +48,7 @@
 						)
 					: f.id.startsWith('position-') || ['angle-ascendant', 'angle-midheaven'].includes(f.id);
 			return (
+				f.id.startsWith(`calendar-position-${weekDays[weekDay]?.date}-`) ||
 				f.id.startsWith('position-') ||
 				f.id.startsWith('sample-') ||
 				f.id.startsWith('date-transit-') ||
@@ -122,9 +125,14 @@
 	{/if}
 	{#if weekDays.length}
 		<label
-			>Data do céu da semana <select
+			>Data do céu apresentado <select
 				bind:value={weekDay}
-				onchange={() => onselect(`week-day-${weekDay + 1}`)}
+				onchange={() =>
+					onselect(
+						saved.product_id === 'personal-calendar'
+							? `calendar-day-${weekDays[weekDay].date}`
+							: `week-day-${weekDay + 1}`
+					)}
 				>{#each weekDays as day, i (day.date)}<option value={i}>{day.date} · 12h UTC</option
 					>{/each}</select
 			></label

@@ -20,6 +20,8 @@ import { projectHoroscopeReading } from '../trials/reconstruction/horoscope-fact
 import { projectWeekReading, weekAspectPolicy } from '../trials/reconstruction/week-facts';
 import { projectSolarReading } from '../trials/reconstruction/solar-facts';
 import { calculateSolarYearSamples } from '../../../../worker/src/solar-year-samples';
+import { calculateCalendarSamples } from '../../../../worker/src/personal-calendar-samples';
+import { projectCalendarReading } from '../trials/reconstruction/calendar-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -62,9 +64,6 @@ const aspectLabels: Record<string, string> = {
 	trine: 'trígono',
 	opposition: 'oposição'
 };
-const dateAt = (date: string, days: number) =>
-	new Date(Date.parse(date + 'T12:00:00Z') + days * 86400000).toISOString().slice(0, 10);
-
 /** Angle policy is deterministic; unavailable angles produce no contacts. */
 export function calculateTrialAngleContacts(
 	positions: AspectPosition[],
@@ -396,75 +395,20 @@ export async function calculateTrial(
 			: projectDateReading(input, base, natal as CalculationSnapshot);
 	}
 	if (input.productId === 'personal-calendar') {
-		const count = new Date(
-			Date.UTC(Number(input.targetDate!.slice(0, 4)), Number(input.targetDate!.slice(5, 7)), 0)
-		).getUTCDate();
-		const days = [];
-		for (let day = 0; day < count; day++) {
-			signal.throwIfAborted();
-			const date = dateAt(input.targetDate!, day);
-			const sample = (await calculators.horoscope!(
-				{
-					version: input.version,
-					productId: 'horoscope',
-					consent: input.consent,
-					birth: input.birth,
-					targetDate: date
-				},
-				context
-			)) as CalculationSnapshot;
-			const geometry = (
-				sample.data.crossAspectStability as {
-					calculation: {
-						aspects: { first: string; second: string; kind: string; orbDegrees: number }[];
-						algorithmVersion: string;
-					};
-				}
-			).calculation;
-			const data = sample.data.base as CalculationSnapshot;
-			const summary = geometry.aspects
-				.map(
-					(a) =>
-						`${labels[a.first]} em trânsito / ${labels[a.second]} natal: ${aspectLabels[a.kind]}, orbe ${a.orbDegrees.toFixed(3)}°`
-				)
-				.join('; ');
-			base.facts.push({
-				id: `day-${day + 1}-aspects`,
-				kind: 'calculated',
-				display: `${date} — ${summary || 'Nenhum aspecto maior dentro dos orbes desta política.'}`,
-				source: `${geometry.algorithmVersion};${trialAspectPolicy.id}@${trialAspectPolicy.version};12:00UTC`
-			});
-			days.push({
-				date,
-				positions: (data.data.second as { positions: AspectPosition[] }).positions,
-				aspects: geometry.aspects
-			});
-		}
-		const natal = (await calculators['date-reading']!(
+		const natal = (await calculators['birth-chart']!(
 			{
 				version: input.version,
-				productId: 'date-reading',
+				productId: 'birth-chart',
 				consent: input.consent,
 				birth: input.birth,
-				targetDate: input.targetDate
+				context: input.context
 			},
 			context
 		)) as CalculationSnapshot;
-		base.version = 'atv-private-personal-calendar/1.0.0';
-		base.data = {
-			...base.data,
-			days,
-			natalPositions: (natal.data.first as { positions: AspectPosition[] }).positions,
-			aspectPolicy: trialAspectPolicy,
-			dailyEvents: 'nominal-aspect-samples'
-		};
-		base.limits = [
-			...base.limits.filter(
-				(l) => !l.includes('apenas dias civis') && !l.includes('Nenhum trânsito diário')
-			),
-			'Uma amostra às 12h UTC por dia com aspectos nominais entre longitudes tropicais de datas distintas; precisão não certificada. Não indica eventos exatos, horas locais favoráveis ou estações.'
-		];
+		const samples = await calculateCalendarSamples(input.targetDate!, signal);
+		return projectCalendarReading(input, base, natal, samples);
 	}
+
 	const natalData =
 		input.productId === 'life-atlas' ? (base.data.natal as CalculationSnapshot).data : base.data;
 	if (

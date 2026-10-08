@@ -8,6 +8,7 @@ import {
 	type CrossAspectCalculation
 } from '@atv/astrology';
 import type { WeekContact, WeekDay } from './reconstruction/week-facts';
+import type { CalendarDay, CalendarWindow, CalendarEvent } from './reconstruction/calendar-facts';
 
 export const CHART_ENGINE_VERSION = 'AstroChartEngineV2/2.0.0';
 type Style = { stroke?: string; fill?: string; width?: number; dash?: number[]; opacity?: number };
@@ -209,19 +210,36 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	)
 		return buildDateChartScene(saved, options);
 	if (
-		saved.calculation.version === 'atv-private-week-synthesis/4.0.0' &&
+		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0'].includes(
+			saved.calculation.version
+		) &&
 		options.mode !== 'natal'
 	) {
 		const days = saved.calculation.data.days as WeekDay[];
 		const index = options.weekDay ?? 0;
 		if (!Number.isInteger(index) || !days[index]) throw Error('week_chart_day_invalid');
 		const base = saved.calculation.data.base as SavedTrial['calculation'];
+		const calendar = saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0';
+		const policy: AspectPolicy = calendar
+			? {
+					id: 'atv-calendar-observed-major-aspects',
+					version: '1.0.0',
+					aspects: (['conjunction', 'sextile', 'square', 'trine', 'opposition'] as const).map(
+						(kind) => ({ kind, orbDegrees: 2 })
+					)
+				}
+			: (base.data.policy as AspectPolicy);
 		const geometry = calculateCrossAspects(
 			days[index].positions,
 			saved.calculation.data.positions as AspectPosition[],
-			base.data.policy as AspectPolicy
+			policy
 		);
-		return buildDateChartScene(saved, options, false, { geometry, day: days[index], index });
+		return buildDateChartScene(saved, options, false, {
+			geometry,
+			day: days[index],
+			index,
+			calendar
+		});
 	}
 	const g = trialGeometry(saved, options.person);
 	const { paper, ink, gold, muted, blue, red } = chartColors;
@@ -486,7 +504,12 @@ function buildDateChartScene(
 	saved: SavedTrial,
 	options: ChartOptions,
 	relationship = false,
-	week?: { geometry: CrossAspectCalculation; day: WeekDay; index: number }
+	week?: {
+		geometry: CrossAspectCalculation;
+		day: WeekDay | CalendarDay;
+		index: number;
+		calendar?: boolean;
+	}
 ): ChartScene {
 	const geometry =
 		week?.geometry ??
@@ -507,7 +530,9 @@ function buildDateChartScene(
 		person: relationship ? 'second' : undefined
 	});
 	scene.title = week
-		? 'Sua semana · céu da data e mapa natal'
+		? week.calendar
+			? 'Seu calendário · céu da data e mapa natal'
+			: 'Sua semana · céu da data e mapa natal'
 		: relationship
 			? `${saved.product_id === 'couple-dossier' ? 'Dossiê do Casal' : 'Sinastria'} · mapas em relação`
 			: saved.product_id === 'horoscope'
@@ -535,7 +560,7 @@ function buildDateChartScene(
 		450,
 		85,
 		week
-			? `${week.day.date} · amostra às 12h UTC · sete datas preservadas`
+			? `${week.day.date} · amostra às 12h UTC · ${week.calendar ? 'grade de seis horas na leitura' : 'sete datas preservadas'}`
 			: relationship
 				? 'Pessoa A no anel externo · pessoa B no anel interno'
 				: `${saved.input.targetDate} · amostra às 12h UTC`,
@@ -558,19 +583,34 @@ function buildDateChartScene(
 			layer: 'comparison-rings'
 		});
 	const selected = new Set(saved.reading.editorial?.selection.map((s) => s.factId) ?? []);
+	if (week?.calendar) {
+		const eventIds = new Set(selected);
+		selected.clear();
+		for (const event of saved.calculation.data.events as CalendarEvent[])
+			if (event.date === week.day.date && eventIds.has(event.id)) selected.add(event.windowId);
+	}
 	geometry.aspects.forEach((a, i) => {
-		const aspectFactId = week
-			? ((saved.calculation.data.contacts as WeekContact[]).find(
-					(c) => c.transit === a.first && c.natal === a.second && c.aspect === a.kind
-				)?.id ?? `week-day-${week.index + 1}`)
-			: relationship
-				? `cross-${a.first}-${a.second}`
-				: `${saved.product_id === 'horoscope' ? 'horoscope' : 'date'}-transit-${i}`;
+		const aspectFactId = week?.calendar
+			? ((saved.calculation.data.windows as CalendarWindow[]).find(
+					(w) =>
+						w.transit === a.first &&
+						w.natal === a.second &&
+						w.aspect === a.kind &&
+						w.firstInstant <= week.day.sampleInstant &&
+						w.lastInstant >= week.day.sampleInstant
+				)?.id ?? `calendar-day-${week.day.date}`)
+			: week
+				? ((saved.calculation.data.contacts as WeekContact[]).find(
+						(c) => c.transit === a.first && c.natal === a.second && c.aspect === a.kind
+					)?.id ?? `week-day-${week.index + 1}`)
+				: relationship
+					? `cross-${a.first}-${a.second}`
+					: `${saved.product_id === 'horoscope' ? 'horoscope' : 'date'}-transit-${i}`;
 		const filter = options.aspects ?? 'major';
 		const tense = ['square', 'opposition'].includes(a.kind);
 		if (
 			filter === 'none' ||
-			(filter === 'major' && selected.size && !selected.has(aspectFactId)) ||
+			(filter === 'major' && (week?.calendar || selected.size) && !selected.has(aspectFactId)) ||
 			(filter === 'tensions' && !tense) ||
 			(filter === 'harmonious' && !['sextile', 'trine'].includes(a.kind))
 		)
@@ -614,7 +654,9 @@ function buildDateChartScene(
 			factId = week
 				? isNatal
 					? `position-${body}`
-					: `week-day-${week.index + 1}`
+					: week.calendar
+						? `calendar-position-${week.day.date}-${body}`
+						: `week-day-${week.index + 1}`
 				: relationship
 					? `person-${isNatal ? 'b' : 'a'}-position-${body}`
 					: `${isNatal ? 'position' : 'sample'}-${body}`;

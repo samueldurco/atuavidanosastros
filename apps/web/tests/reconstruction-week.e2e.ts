@@ -33,7 +33,7 @@ for (const width of [390, 1440]) {
 				.locator('text[data-layer="heading"]')
 				.filter({ hasText: 'Sua semana · céu da data e mapa natal' })
 		).toBeVisible();
-		const picker = page.getByRole('combobox', { name: 'Data do céu da semana', exact: true });
+		const picker = page.getByRole('combobox', { name: 'Data do céu apresentado', exact: true });
 		await expect(picker.locator('option')).toHaveCount(7);
 		const firstGeometry = await svg
 			.locator('[data-layer="positions"]')

@@ -176,9 +176,21 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		}
 	});
 	it('historical readings remain verifiable, while a new edition preserves every calculation fact', async () => {
+		const historicalCalculators = createProductCalculators({
+			experimentalSolarReturnBase: true,
+			experimentalPersonalCalendarBase: true
+		});
 		for (const s of saved.values()) {
-			const historical = composeLegacyTrialReading(s.input, s.calculation);
-			expect((await approveTrialReading(s.input, s.calculation, historical))?.policy).toBe(
+			// Historical rendering applies to its original compact calculation schema.
+			// New daily evidence is deliberately not converted to thousands of legacy chapters.
+			const historicalCalculation = ['solar-return', 'personal-calendar'].includes(s.product_id)
+				? ((await historicalCalculators[s.product_id]!(s.input, {
+						runId: id,
+						signal: AbortSignal.timeout(25000)
+					})) as CalculationSnapshot)
+				: s.calculation;
+			const historical = composeLegacyTrialReading(s.input, historicalCalculation);
+			expect((await approveTrialReading(s.input, historicalCalculation, historical))?.policy).toBe(
 				'atv-private-trial-approval/1.0.0'
 			);
 			expect(s.reading.sections.some((section) => /nenhum aspecto/i.test(section.title))).toBe(
@@ -314,22 +326,22 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		expect(s.reading.editorial?.plan.some((s) => s.role === 'context-bound-decision')).toBe(true);
 		expect(s.reading.editorial?.plan.some((s) => s.role === 'context-bound-experiment')).toBe(true);
 	});
-	it('calendar calculates one daily sample for all 31 days within the approval size bound', () => {
+	it('calendar preserves every date and four observations per day within the approval size bound', () => {
 		const s = saved.get('personal-calendar')!;
 		expect(s.calculation.data.days).toHaveLength(31);
-		expect(s.calculation.facts.filter((f) => f.id.startsWith('day-'))).toHaveLength(31);
-		expect(s.calculation.limits.some((l) => l.includes('12h UTC'))).toBe(true);
-		expect(s.calculation.limits.some((l) => l.includes('Nenhum trânsito diário'))).toBe(false);
-		const days = s.reading.sections.filter((s) =>
-			s.factIds.some((id) => /^day-\d+-aspects$/.test(id))
-		);
+		expect(
+			s.calculation.facts.filter((f) => /^calendar-day-\d{4}-\d{2}-\d{2}$/.test(f.id))
+		).toHaveLength(31);
+		expect((s.calculation.data.samples as { rows: number[][] }).rows).toHaveLength(124);
+		const days = s.reading.editorial!.plan.filter((p) => p.role.startsWith('calendar-day-'));
 		expect(days).toHaveLength(31);
-		expect(
-			days.every((s) => s.text.includes('Tema central:') || s.text.includes('não encontrou'))
-		).toBe(true);
-		expect(
-			new Set(days.map((s) => s.text.split('Tema central:')[1]?.split('\n\n')[0])).size
-		).toBeGreaterThan(5);
+		for (const day of days) {
+			expect(day.factIds).toContain(day.role);
+			expect(
+				day.factIds.filter((id) => s.reading.editorial!.selection.some((x) => x.factId === id))
+					.length
+			).toBeLessThanOrEqual(3);
+		}
 	});
 	it('tarot retries with the same run id retain the drawn cards; no replacement or binary prophecy', async () => {
 		const s = saved.get('tarot-peladan-cross')!,

@@ -1,4 +1,4 @@
-# Calendário pessoal — base experimental 1.1
+# Calendário pessoal — base experimental 1.1 e reconstrução privada 4
 
 `personal-calendar` conserva a entrega de catálogo web/PDF e o release bloqueado. Este contrato cobre uma base local de E1 e a coleta privada de marcos pessoais; não aprova método temporal, leitura ou liberação.
 
@@ -25,3 +25,17 @@ O cliente confirma a continuidade dos dias, o limite do mês, os fatos de cada d
 E1 permanece parcial até haver fonte, método e autorização de conteúdo temporal por data. E2 exige evidência identificável por período, proveniência, regra de atualização e revisão editorial; E3–E5 exigem seus gates próprios. Dados sintéticos, marcos relatados e grade civil não aprovam motor nem liberação hospedada.
 
 A matriz de cobertura, proveniência e recusa diária está em [personal-calendar-daily-evidence.md](personal-calendar-daily-evidence.md). O preparo editorial atual já recusa este snapshot com `insufficient_facts`.
+
+## Reconstrução privada autorizada em 08/10/2026
+
+As seções anteriores continuam descrevendo a base nativa 1.1 e seus gates. A autorização integral de 08/10 acrescenta um caminho privado separado: `atv-private-calendar-synthesis/4.0.0`, política `atv-calendar-observed-major-aspects/1.0.0`. Não promover nem reinterpretar snapshots históricos como esta versão. A execução mantém sessão, consentimento, grants privados e revisão canônica; não libera o workflow público legado.
+
+O servidor calcula o natal completo e conserva o input natal validado na base. Confere igualdade dos dados de nascimento, contexto, mês, marcos, proveniência e Sol natal antes de projetar a leitura. Observações `atv-personal-calendar-six-hour-samples/1.0.0` usam dez corpos, longitudes geocêntricas tropicais, UTC, a cada seis horas entre início inclusivo e fim exclusivo do mês. A grade contém 112–124 instantes; nenhum instante fora do domínio 1900–2099 é calculado. A fonte é Caelus 0.24.1/MIT, com versão, algoritmo, manifest/contrato e horário real de cada observação. Coordenadas 0/0 são uma referência explícita para as longitudes geocêntricas; não geram casas locais diárias.
+
+Os cinco aspectos maiores dirigidos trânsito–natal usam afastamento de até 2°. Uma janela é uma sequência de observações dentro desse limite. Entrada é a primeira observação dentro; saída é a primeira fora, com referência à última dentro; pico é o mínimo amostrado estritamente menor que os vizinhos. Limites do mês não inventam entradas, saídas ou picos. Janelas presentes em todas as observações são panorama mensal. Esta resolução não certifica a hora exata nem exclui contatos breves entre observações.
+
+Cada uma das 28–31 datas conserva seus dez corpos observados ao meio-dia, fatos e capítulo próprios. Seleção contextual determinística admite zero a três mudanças distintas por data, com critério registrado. Movimentos persistentes têm capítulo separado; um mesmo movimento é interpretado uma vez, e suas retomadas referenciam essa leitura com perguntas da etapa atual. Datas sem seleção oferecem registro livre, sem fabricar trânsitos ou repetir uma interpretação genérica. Os marcos permanecem relatos consentidos, separados da hipótese simbólica e sem alterar a geometria.
+
+O calendário acessível abre o capítulo da data. O mapa usa as posições reais do meio-dia selecionado e aspectos da política mensal; não rotula o céu diário como natal. PDF e TXT preservam a leitura completa, grade, datas, contexto, revisão e limites; o TXT conserva também todos os fatos e suas fontes. O apêndice PDF informa os registros extensos omitidos, evitando repetir centenas de linhas técnicas.
+
+Qualquer amostra ausente, hora/origem divergente, input alterado, fato injetado ou falha do provider impede gerar o mês inteiro. Cancelamento interrompe o cálculo. Alterar nascimento, mês, fuso, contexto ou marcos exige nova execução; não sobrescrever leitura salva ou aprovação histórica. Composição e aprovação revalidam a projeção e comparam o conteúdo canônico. E1/E2/E4 privados possuem prova local em `docs/intelligence/reconstruction/RECON_11_LOCAL_2026-10-08.md`; E3 hospedado e E5 pessoal permanecem separados.

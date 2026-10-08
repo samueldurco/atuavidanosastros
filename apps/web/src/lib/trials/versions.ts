@@ -15,6 +15,7 @@ export const latestReadingVersion = (productId: string) =>
 		'horoscope',
 		'week-reading',
 		'solar-return',
+		'personal-calendar',
 		'pair-preview',
 		'synastry',
 		'couple-dossier'
