@@ -16,6 +16,7 @@ import { projectDateReading } from '../trials/reconstruction/date-facts';
 import { projectSynastry } from '../trials/reconstruction/synastry-facts';
 import { projectDossier } from '../trials/reconstruction/dossier-facts';
 import { projectPairPreview } from '../trials/reconstruction/pair-facts';
+import { projectHoroscopeReading } from '../trials/reconstruction/horoscope-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -344,7 +345,7 @@ export async function calculateTrial(
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
-	if (input.productId === 'date-reading') {
+	if (input.productId === 'date-reading' || input.productId === 'horoscope') {
 		const natal = await calculators['birth-chart']!(
 			{
 				version: input.version,
@@ -355,7 +356,9 @@ export async function calculateTrial(
 			},
 			context
 		);
-		return projectDateReading(input, base, natal as CalculationSnapshot);
+		return input.productId === 'horoscope'
+			? projectHoroscopeReading(input, base, natal as CalculationSnapshot)
+			: projectDateReading(input, base, natal as CalculationSnapshot);
 	}
 	if (input.productId === 'personal-calendar') {
 		const count = new Date(

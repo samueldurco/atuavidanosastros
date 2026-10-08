@@ -12,6 +12,7 @@ export const latestReadingVersion = (productId: string) =>
 		'ascendant',
 		'midheaven',
 		'date-reading',
+		'horoscope',
 		'pair-preview',
 		'synastry',
 		'couple-dossier'

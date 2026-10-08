@@ -58,6 +58,9 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		};
 	}
 	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
+	if (productId === 'horoscope')
+		input.context =
+			'Quero negociar as prioridades de trabalho sem assumir mais compromissos do que consigo cumprir.';
 	if (productId === 'career-compass')
 		input.context = 'Quero comparar uma atividade atual com um projeto pessoal.';
 	if (productId === 'couple-dossier') {

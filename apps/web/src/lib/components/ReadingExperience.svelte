@@ -39,7 +39,8 @@
 			'career-compass',
 			'purpose-career',
 			'midheaven',
-			'date-reading'
+			'date-reading',
+			'horoscope'
 		].includes(saved.product_id) ||
 			[
 				'atv-private-synastry-synthesis/4.0.0',

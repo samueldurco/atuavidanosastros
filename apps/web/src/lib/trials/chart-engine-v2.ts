@@ -149,8 +149,9 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		return scene;
 	}
 	if (
-		saved.product_id === 'date-reading' &&
-		saved.calculation.version === 'atv-private-date-synthesis/4.0.0' &&
+		['atv-private-date-synthesis/4.0.0', 'atv-private-horoscope-synthesis/4.0.0'].includes(
+			saved.calculation.version
+		) &&
 		options.mode !== 'natal' &&
 		!options.person
 	)
@@ -437,7 +438,9 @@ function buildDateChartScene(
 	});
 	scene.title = relationship
 		? `${saved.product_id === 'couple-dossier' ? 'Dossiê do Casal' : 'Sinastria'} · mapas em relação`
-		: 'Céu da data e mapa natal';
+		: saved.product_id === 'horoscope'
+			? 'Seu horóscopo · céu da data e mapa natal'
+			: 'Céu da data e mapa natal';
 	scene.height = 1280;
 	scene.nodes = scene.nodes.filter(
 		(n) => !['heading', 'positions', 'markers', 'leaders', 'legend'].includes(n.layer)
@@ -482,7 +485,9 @@ function buildDateChartScene(
 		});
 	const selected = new Set(saved.reading.editorial?.selection.map((s) => s.factId) ?? []);
 	geometry.aspects.forEach((a, i) => {
-		const aspectFactId = relationship ? `cross-${a.first}-${a.second}` : `date-transit-${i}`;
+		const aspectFactId = relationship
+			? `cross-${a.first}-${a.second}`
+			: `${saved.product_id === 'horoscope' ? 'horoscope' : 'date'}-transit-${i}`;
 		const filter = options.aspects ?? 'major';
 		const tense = ['square', 'opposition'].includes(a.kind);
 		if (

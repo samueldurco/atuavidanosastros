@@ -155,7 +155,9 @@ test('couple charts and sharing require explicit consent and recover from HTML f
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?product=couple-dossier');
-	await expect(page.locator('svg[role="img"]')).toHaveCount(2);
+	await expect(
+		page.getByRole('region', { name: 'Fatores natais das duas pessoas' }).locator('svg[role="img"]')
+	).toHaveCount(2);
 	const share = page.getByRole('button', { name: 'Criar link por sete dias', exact: true });
 	await expect(share).toBeDisabled();
 	await page.getByLabel(/Tenho autorização da outra pessoa e quero compartilhar/).check();
