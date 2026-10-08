@@ -390,12 +390,12 @@ test("invalid input and pre-aborted calculations cause zero provider calls; canc
   assert.equal(calls, 1);
 });
 
-test("independent opt-ins preserve thirteen defaults, legacy base and publication gates; ambiguous configuration fails", async () => {
+test("independent opt-ins preserve historical defaults, legacy base and publication gates; ambiguous configuration fails", async () => {
   assert.equal(createProductCalculators()["week-reading"], undefined);
   assert.equal(
     productCalculationCoverage().filter((p) => p.calculation === "partial-base")
       .length,
-    13,
+    9,
   );
   assert.ok(
     productCalculationCoverage().every((p) => p.publication === "blocked"),
