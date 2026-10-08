@@ -1,3 +1,4 @@
+export * from './p06-commerce.ts';
 export interface WebhookEnvelope<T = unknown> { provider: 'hotmart'; externalEventId: string; receivedAt: string; signatureVerified: boolean; payload: T; }
 export interface LocationCandidate { label: string; countryCode: string; region?: string; latitude: number; longitude: number; timezone: string; source: string; }
 export interface LocationProvider { search(query: string, locale: 'pt-BR'): Promise<readonly LocationCandidate[]>; }
@@ -56,3 +57,5 @@ export type {
   TikTokVideo,
   TikTokVideoPage
 } from './tiktok.ts';
+export { readP06HotmartSale, reconcileP06Inbox, P06ReconciliationError } from './p06-reconciliation.ts';
+export type { P06VerifiedSale, P06SaleExpectation, P06ReconciliationPort, P06InboxRecord } from './p06-reconciliation.ts';
