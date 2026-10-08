@@ -22,6 +22,7 @@ import { projectSolarReading } from '../trials/reconstruction/solar-facts';
 import { calculateSolarYearSamples } from '../../../../worker/src/solar-year-samples';
 import { calculateCalendarSamples } from '../../../../worker/src/personal-calendar-samples';
 import { projectCalendarReading } from '../trials/reconstruction/calendar-facts';
+import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -126,15 +127,17 @@ export async function calculateTrial(
 					: projectPairPreview
 		)(input, sources as [CalculationSnapshot, CalculationSnapshot], [...birthInputs]);
 	}
+	if (input.productId === 'purpose-career') {
+		const natal = (await calculators['birth-chart']!(
+			{ ...input, productId: 'birth-chart' },
+			context
+		)) as CalculationSnapshot;
+		return projectPurposeReading(input, natal);
+	}
 	if (
-		[
-			'career-compass',
-			'purpose-career',
-			'three-pillars',
-			'birth-chart',
-			'ascendant',
-			'midheaven'
-		].includes(input.productId)
+		['career-compass', 'three-pillars', 'birth-chart', 'ascendant', 'midheaven'].includes(
+			input.productId
+		)
 	) {
 		// Modern, tropical private edition. Stored older calculations stay immutable.
 		const natal = (await calculators['birth-chart']!(
@@ -143,7 +146,7 @@ export async function calculateTrial(
 		)) as CalculationSnapshot;
 		const positions = natal.data.positions as AspectPosition[];
 		const aspects = calculateAspects(positions, trialAspectPolicy);
-		const isCareer = ['career-compass', 'purpose-career'].includes(input.productId);
+		const isCareer = input.productId === 'career-compass';
 		const mc = natal.data.angles as { midheaven: number | null; ascendant: number | null };
 		const ruler = mc.midheaven === null ? null : modernRulers[Math.floor(mc.midheaven / 30)];
 		const ascRuler = mc.ascendant === null ? null : modernRulers[Math.floor(mc.ascendant / 30)];

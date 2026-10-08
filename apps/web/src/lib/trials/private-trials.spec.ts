@@ -126,7 +126,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			expect(approval?.scope).toBe('private-free-test');
 			expect(approval?.digest).toMatch(/^[a-f0-9]{64}$/);
 			expect(reading.sections.length).toBeLessThan(60);
-			expect(reading.questions).toHaveLength(3);
+			expect(reading.questions.length).toBeGreaterThanOrEqual(3);
 			expect(
 				calculation.facts.every((f) => reading.sections.some((s) => s.factIds.includes(f.id)))
 			).toBe(true);

@@ -86,6 +86,9 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			'Quero negociar as prioridades de trabalho sem assumir mais compromissos do que consigo cumprir.';
 	if (productId === 'career-compass')
 		input.context = 'Quero comparar uma atividade atual com um projeto pessoal.';
+	if (productId === 'purpose-career')
+		input.context =
+			'Quero mudar de área e testar uma contribuição sem comprometer meus recursos e descanso.';
 	if (productId === 'couple-dossier') {
 		input.context =
 			'Estamos em cidades diferentes e queremos combinar presença e espaço individual.';

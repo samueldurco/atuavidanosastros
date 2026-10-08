@@ -166,7 +166,7 @@
 	{/key}
 	<article aria-label="Sua leitura completa">
 		<section class="chapter">
-			<h2>Três perguntas para levar com você</h2>
+			<h2>Perguntas para levar com você</h2>
 			<ol>
 				{#each reading.questions as question (question)}<li>{question}</li>{/each}
 			</ol>
