@@ -9,9 +9,21 @@
 		selected = $state(''),
 		message = $state('');
 	let panel: HTMLDivElement;
+	let weekDay = $state(0);
+	const weekDays = $derived(
+		saved.calculation.version === 'atv-private-week-synthesis/4.0.0'
+			? (saved.calculation.data.days as { date: string }[])
+			: []
+	);
 	const chart = $derived.by(() => {
 		try {
-			const scene = buildChartScene(saved, { houses, degrees, aspects, selectedFactId: selected });
+			const scene = buildChartScene(saved, {
+				houses,
+				degrees,
+				aspects,
+				selectedFactId: selected,
+				weekDay
+			});
 			return { svg: chartSceneSvg(scene), width: scene.width, height: scene.height, error: '' };
 		} catch {
 			return {
@@ -84,6 +96,16 @@
 </script>
 
 <div class="chart-panel" bind:this={panel}>
+	{#if weekDays.length}
+		<label
+			>Data do céu da semana <select
+				bind:value={weekDay}
+				onchange={() => onselect(`week-day-${weekDay + 1}`)}
+				>{#each weekDays as day, i (day.date)}<option value={i}>{day.date} · 12h UTC</option
+					>{/each}</select
+			></label
+		>
+	{/if}
 	<fieldset>
 		<legend>Explore o seu mapa</legend>
 		<label><input type="checkbox" bind:checked={houses} /> Casas disponíveis</label>

@@ -169,7 +169,7 @@
 		calendarMarksAuthorized = false;
 	}
 	const dateValid = $derived(
-		!isTemporal || (validDate(targetDate) && (!isWeek || targetDate <= '2099-12-25'))
+		!isTemporal || (validDate(targetDate) && (!isWeek || targetDate <= '2099-12-24'))
 	);
 	const canEnter = $derived(
 		access === 'AVAILABLE' &&
@@ -503,7 +503,7 @@
 									type="date"
 									required
 									min="1900-01-01"
-									max={isWeek ? '2099-12-25' : '2099-12-31'}
+									max={isWeek ? '2099-12-24' : '2099-12-31'}
 									autocomplete="off"
 									bind:value={targetDate}
 									oninput={() => {

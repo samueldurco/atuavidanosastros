@@ -1,7 +1,13 @@
 import { longitudePoint } from '../product-cartography';
 import { bodyGlyphs, bodyNames, signNames, trialGeometry } from './cartography';
 import type { SavedTrial } from './reading';
-import type { CrossAspectCalculation } from '@atv/astrology';
+import {
+	calculateCrossAspects,
+	type AspectPolicy,
+	type AspectPosition,
+	type CrossAspectCalculation
+} from '@atv/astrology';
+import type { WeekContact, WeekDay } from './reconstruction/week-facts';
 
 export const CHART_ENGINE_VERSION = 'AstroChartEngineV2/2.0.0';
 type Style = { stroke?: string; fill?: string; width?: number; dash?: number[]; opacity?: number };
@@ -37,6 +43,7 @@ export type ChartOptions = {
 	person?: 'first' | 'second';
 	selectedFactId?: string;
 	mode?: 'natal' | 'cross';
+	weekDay?: number;
 };
 export const chartColors = {
 	paper: '#faf6ed',
@@ -156,6 +163,21 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		!options.person
 	)
 		return buildDateChartScene(saved, options);
+	if (
+		saved.calculation.version === 'atv-private-week-synthesis/4.0.0' &&
+		options.mode !== 'natal'
+	) {
+		const days = saved.calculation.data.days as WeekDay[];
+		const index = options.weekDay ?? 0;
+		if (!Number.isInteger(index) || !days[index]) throw Error('week_chart_day_invalid');
+		const base = saved.calculation.data.base as SavedTrial['calculation'];
+		const geometry = calculateCrossAspects(
+			days[index].positions,
+			saved.calculation.data.positions as AspectPosition[],
+			base.data.policy as AspectPolicy
+		);
+		return buildDateChartScene(saved, options, false, { geometry, day: days[index], index });
+	}
 	const g = trialGeometry(saved, options.person);
 	const { paper, ink, gold, muted, blue, red } = chartColors;
 	const career = ['career-compass', 'purpose-career', 'midheaven', 'direction-journey'].includes(
@@ -418,11 +440,14 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 function buildDateChartScene(
 	saved: SavedTrial,
 	options: ChartOptions,
-	relationship = false
+	relationship = false,
+	week?: { geometry: CrossAspectCalculation; day: WeekDay; index: number }
 ): ChartScene {
-	const geometry = saved.calculation.data[
-		relationship ? 'relationshipGeometry' : 'transitGeometry'
-	] as CrossAspectCalculation;
+	const geometry =
+		week?.geometry ??
+		(saved.calculation.data[
+			relationship ? 'relationshipGeometry' : 'transitGeometry'
+		] as CrossAspectCalculation);
 	if (
 		!geometry ||
 		geometry.pairsEvaluated !== 100 ||
@@ -436,11 +461,13 @@ function buildDateChartScene(
 		aspects: 'none',
 		person: relationship ? 'second' : undefined
 	});
-	scene.title = relationship
-		? `${saved.product_id === 'couple-dossier' ? 'Dossiê do Casal' : 'Sinastria'} · mapas em relação`
-		: saved.product_id === 'horoscope'
-			? 'Seu horóscopo · céu da data e mapa natal'
-			: 'Céu da data e mapa natal';
+	scene.title = week
+		? 'Sua semana · céu da data e mapa natal'
+		: relationship
+			? `${saved.product_id === 'couple-dossier' ? 'Dossiê do Casal' : 'Sinastria'} · mapas em relação`
+			: saved.product_id === 'horoscope'
+				? 'Seu horóscopo · céu da data e mapa natal'
+				: 'Céu da data e mapa natal';
 	scene.height = 1280;
 	scene.nodes = scene.nodes.filter(
 		(n) => !['heading', 'positions', 'markers', 'leaders', 'legend'].includes(n.layer)
@@ -462,9 +489,11 @@ function buildDateChartScene(
 	text(
 		450,
 		85,
-		relationship
-			? 'Pessoa A no anel externo · pessoa B no anel interno'
-			: `${saved.input.targetDate} · amostra às 12h UTC`,
+		week
+			? `${week.day.date} · amostra às 12h UTC · sete datas preservadas`
+			: relationship
+				? 'Pessoa A no anel externo · pessoa B no anel interno'
+				: `${saved.input.targetDate} · amostra às 12h UTC`,
 		13,
 		'heading',
 		muted
@@ -485,9 +514,13 @@ function buildDateChartScene(
 		});
 	const selected = new Set(saved.reading.editorial?.selection.map((s) => s.factId) ?? []);
 	geometry.aspects.forEach((a, i) => {
-		const aspectFactId = relationship
-			? `cross-${a.first}-${a.second}`
-			: `${saved.product_id === 'horoscope' ? 'horoscope' : 'date'}-transit-${i}`;
+		const aspectFactId = week
+			? ((saved.calculation.data.contacts as WeekContact[]).find(
+					(c) => c.transit === a.first && c.natal === a.second && c.aspect === a.kind
+				)?.id ?? `week-day-${week.index + 1}`)
+			: relationship
+				? `cross-${a.first}-${a.second}`
+				: `${saved.product_id === 'horoscope' ? 'horoscope' : 'date'}-transit-${i}`;
 		const filter = options.aspects ?? 'major';
 		const tense = ['square', 'opposition'].includes(a.kind);
 		if (
@@ -533,9 +566,13 @@ function buildDateChartScene(
 		const [role, body] = marker.body.split(':');
 		const isNatal = role === 'natal',
 			color = isNatal ? blue : gold,
-			factId = relationship
-				? `person-${isNatal ? 'b' : 'a'}-position-${body}`
-				: `${isNatal ? 'position' : 'sample'}-${body}`;
+			factId = week
+				? isNatal
+					? `position-${body}`
+					: `week-day-${week.index + 1}`
+				: relationship
+					? `person-${isNatal ? 'b' : 'a'}-position-${body}`
+					: `${isNatal ? 'position' : 'sample'}-${body}`;
 		const p = longitudePoint(marker.longitude, isNatal ? 230 : 274, 450, 450);
 		add({
 			type: 'line',

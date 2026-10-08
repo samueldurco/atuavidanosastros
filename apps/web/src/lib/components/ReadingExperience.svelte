@@ -40,7 +40,8 @@
 			'purpose-career',
 			'midheaven',
 			'date-reading',
-			'horoscope'
+			'horoscope',
+			'week-reading'
 		].includes(saved.product_id) ||
 			[
 				'atv-private-synastry-synthesis/4.0.0',
@@ -137,6 +138,21 @@
 			{/each}
 		</div>
 	{/if}
+	{#if saved.calculation.version === 'atv-private-week-synthesis/4.0.0'}
+		<nav class="week-timeline" aria-label="Linha do tempo da semana">
+			<p>Sete datas · destaques e continuidade em UTC</p>
+			<div>
+				{#each saved.reading.editorial?.plan.filter( (p) => p.role.startsWith('week-day-') ) ?? [] as day (day.role)}
+					{@const index = sections.findIndex((s) => s.title === day.title)}
+					<button
+						disabled={!interactive}
+						aria-current={current.index === index ? 'date' : undefined}
+						onclick={() => open(index)}>{day.title}</button
+					>
+				{/each}
+			</div>
+		</nav>
+	{/if}
 	<div class="reading-meta">
 		<span>{contract.minutes} min de leitura · {chapters.length} capítulos</span><span
 			>Capítulo {currentIndex + 1} de {chapters.length}</span
@@ -213,6 +229,34 @@
 </section>
 
 <style>
+	.week-timeline {
+		padding: 1rem;
+		border: 1px solid #ad884c;
+		border-radius: 1rem;
+		margin: 1rem 0;
+	}
+	.week-timeline p {
+		font-weight: 600;
+		margin: 0 0 0.75rem;
+	}
+	.week-timeline div {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+	.week-timeline button {
+		flex: 1 1 160px;
+		text-align: left;
+		border: 1px solid #ad884c;
+		border-radius: 0.5rem;
+		padding: 0.75rem;
+		background: #faf6ed;
+		color: #24374b;
+	}
+	.week-timeline button[aria-current] {
+		background: #24374b;
+		color: #faf6ed;
+	}
 	.identity {
 		border-left: 3px solid #ad884c;
 		padding: 0.25rem 1rem;

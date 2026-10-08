@@ -10,6 +10,7 @@ import { buildTarotScene } from './tarot-diagram';
 import { PAIR_VERSION } from './reconstruction/pair-facts';
 import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
 import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
+import { WEEK_VERSION } from './reconstruction/week-facts';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -185,7 +186,8 @@ export async function trialPdf(saved: SavedTrial) {
 						'career-compass',
 						'purpose-career',
 						'midheaven',
-						'date-reading'
+						'date-reading',
+						'week-reading'
 				  ].includes(saved.product_id)
 				? [undefined]
 				: [];
@@ -242,9 +244,10 @@ export async function trialPdf(saved: SavedTrial) {
 				(saved.product_id === 'career-compass' && s.title === 'Sua página de decisão'))
 		)
 			newPage();
-		heading(
-			tarotMethodFor(saved.product_id) ? s.title : `${String(i + 1).padStart(2, '0')} · ${s.title}`
-		);
+		const chapterTitle = tarotMethodFor(saved.product_id)
+			? s.title
+			: `${String(i + 1).padStart(2, '0')} · ${s.title}`;
+		heading(chapterTitle, 17, headingHeight(chapterTitle) + Math.min(paragraphHeight(s.text), 108));
 		chapterPages.push(doc.getPageCount());
 		paragraph(s.text);
 	}
@@ -306,6 +309,8 @@ export async function trialPdf(saved: SavedTrial) {
 		r.limits.slice(-6).forEach((limit) => paragraph(limit, label, 9));
 	} else if (saved.calculation.version === PAIR_VERSION) {
 		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
+	} else if (saved.calculation.version === WEEK_VERSION) {
+		r.limits.forEach((limit) => paragraph(limit, label, 9));
 	} else if (reconstructed) {
 		paragraph(
 			'A abordagem é tropical, psicológica e humanista, com regências modernas. O mapa organiza hipóteses de reflexão; não determina acontecimentos, profissão ou comportamento. Compare a leitura com sua experiência e com as condições concretas da situação.',

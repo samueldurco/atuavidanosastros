@@ -58,6 +58,9 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		};
 	}
 	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
+	if (productId === 'week-reading')
+		input.context =
+			'Fuso atual declarado: America/Sao_Paulo (não usado para calcular dias locais).\nTema escolhido: Organização e prioridades.\n\nContexto declarado: Quero rever o excesso de tarefas sem abandonar meu projeto.';
 	if (productId === 'horoscope')
 		input.context =
 			'Quero negociar as prioridades de trabalho sem assumir mais compromissos do que consigo cumprir.';

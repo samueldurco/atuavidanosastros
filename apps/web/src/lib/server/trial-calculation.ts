@@ -17,6 +17,7 @@ import { projectSynastry } from '../trials/reconstruction/synastry-facts';
 import { projectDossier } from '../trials/reconstruction/dossier-facts';
 import { projectPairPreview } from '../trials/reconstruction/pair-facts';
 import { projectHoroscopeReading } from '../trials/reconstruction/horoscope-facts';
+import { projectWeekReading, weekAspectPolicy } from '../trials/reconstruction/week-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -33,7 +34,7 @@ const calculators = createProductCalculators({
 	experimentalSynastryPolicy: trialAspectPolicy,
 	experimentalCoupleDossierPolicy: trialAspectPolicy,
 	experimentalHoroscopePolicy: trialAspectPolicy,
-	experimentalWeekTransitPolicy: trialAspectPolicy,
+	experimentalWeekTemporalPolicy: weekAspectPolicy,
 	experimentalSolarReturnBase: true,
 	experimentalPersonalCalendarBase: true,
 	experimentalPurposeCareerBase: true,
@@ -345,6 +346,19 @@ export async function calculateTrial(
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
+	if (input.productId === 'week-reading') {
+		const natal = (await calculators['birth-chart']!(
+			{
+				version: input.version,
+				productId: 'birth-chart',
+				birth: input.birth,
+				consent: input.consent,
+				context: input.context
+			},
+			context
+		)) as CalculationSnapshot;
+		return projectWeekReading(input, base, natal);
+	}
 	if (input.productId === 'date-reading' || input.productId === 'horoscope') {
 		const natal = await calculators['birth-chart']!(
 			{

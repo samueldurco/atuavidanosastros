@@ -137,7 +137,8 @@ beforeAll(async () => {
 		'20260925140000_product_request_access.sql',
 		'20260925160000_natal_product_requests.sql',
 		'20260929120000_week_reading_product_requests.sql',
-		'20260929140000_week_reading_preferences.sql'
+		'20260929140000_week_reading_preferences.sql',
+		'20261008180000_week_period_closing_bound.sql'
 	])
 		await db.exec(await file('supabase/migrations/' + name));
 }, 20000);
@@ -168,7 +169,7 @@ it('reports only Week eligibility and keeps creation gated independently', async
 	expect(await counts()).toEqual({ runs: 0, receipts: 0, events: 0, items: 0 });
 });
 
-it.each(['1900-01-01', '2000-02-29', '2028-02-29', '2099-12-25'])(
+it.each(['1900-01-01', '2000-02-29', '2028-02-29', '2099-12-24'])(
 	'preserves explicit date %s and only the current six-field birth snapshot',
 	async (targetDate) => {
 		await save();
@@ -230,6 +231,7 @@ it('rejects impossible, normalized, absent or out-of-range dates in HTTP and dir
 		'0000-01-01',
 		'1899-12-31',
 		'2100-01-01',
+		'2099-12-25',
 		'2099-12-26',
 		'2099-12-31',
 		'2026-9-25',

@@ -13,6 +13,7 @@ export const latestReadingVersion = (productId: string) =>
 		'midheaven',
 		'date-reading',
 		'horoscope',
+		'week-reading',
 		'pair-preview',
 		'synastry',
 		'couple-dossier'
