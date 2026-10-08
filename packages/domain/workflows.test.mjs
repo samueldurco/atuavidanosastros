@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { workflows, parseWorkflowInput, transitionRun, WORKFLOW_VERSION, validDate } from './src/workflows.ts';
+import { workflows, workflowFor, parseWorkflowInput, transitionRun, WORKFLOW_VERSION, validDate } from './src/workflows.ts';
 
 const birth = { localDateTime:'2000-01-01T12:00:00', utcInstant:'2000-01-01T15:00:00Z', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic' };
 const consent = { storage:true, policyVersion:'atv-input-consent/1', partner:false, continuity:false };
@@ -13,13 +13,15 @@ export function inputFor(p) {
   if (p.kind==='relationship') { value.partner={...birth}; value.consent.partner=true; }
   if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
   if (p.id==='solar-return') { value.returnYear=2026; value.returnLocation={city:'São Paulo', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic'}; }
-  if (p.kind==='tarot') value.questions=Array.from({length:p.id==='three-questions'?3:1},(_,i)=>`Questão sintética ${i+1}`);
+  if (['daily-card','tarot-focus','tarot-yes-no','three-questions','tarot-journey'].includes(p.id)) value.questions=Array.from({length:p.id==='three-questions'?3:1},(_,i)=>`Questão sintética ${i+1}`);
   if (p.id==='dream-atlas') value.dreamAtlas={startDate:'2026-09-09'};
   else if (p.kind==='dream') value.dream={date:'2026-09-09', narrative:'Uma porta azul em um jardim.',associations:['calma'],emotions:['curiosidade']};
   return value;
 }
-test('all 25 products cover six universes, with gated, typed input',()=>{
-  assert.equal(workflows.length,25);
+test('26 active products cover six universes, with six Tarot methods and gated, typed input',()=>{
+  assert.equal(workflows.length,26);
+  assert.equal(workflows.filter(p=>p.kind==='tarot').length,6);
+  for (const id of ['daily-card','tarot-focus','tarot-yes-no','three-questions','tarot-journey']) assert.equal(workflows.some(p=>p.id===id),false,id);
   assert.equal(new Set(workflows.map(p=>p.kind)).size,6);
   for (const p of workflows) {
     assert.equal(p.release,'blocked');
@@ -60,14 +62,14 @@ test('direction journey requires its own declared goal and complete 30-day civil
   assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='purpose-career')),journey:value.journey}),null);
 });
 test('tarot journey requires a separate, bounded declared goal without accepting forged stages',()=>{
-  const value=inputFor(workflows.find(p=>p.id==='tarot-journey'));
+  const value=inputFor(workflowFor('tarot-journey'));
   assert.deepEqual(parseWorkflowInput(value)?.tarotJourney,value.tarotJourney);
   for (const tarotJourney of [undefined,{goal:''},{goal:'x'.repeat(401)},
     {goal:'Uma decisão\u007f'},{goal:'Questão',stage:21}])
     assert.equal(parseWorkflowInput({...value,tarotJourney}),null);
   assert.equal(parseWorkflowInput({...value,questions:[]}),null);
   assert.equal(parseWorkflowInput({...value,questions:['Uma','Duas']}),null);
-  assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id==='tarot-focus')),tarotJourney:value.tarotJourney}),null);
+  assert.equal(parseWorkflowInput({...inputFor(workflowFor('tarot-focus')),tarotJourney:value.tarotJourney}),null);
 });
 test('life atlas requires four distinct priorities declared by the person',()=>{
   const value=inputFor(workflows.find(p=>p.id==='life-atlas'));
@@ -113,7 +115,7 @@ test('contracts reject invalid scopes, dates, excess input and third-party data 
   assert.equal(validDate('2025-02-29'),false); assert.equal(validDate('2024-02-29'),true);
   assert.equal(validDate('2100-01-01'),false);
   for (const [id,patch] of [['synastry',{partner:null}],['daily-card',{questions:[]}],['three-questions',{questions:['one']}],['dream-reading',{dream:{date:'2026-09-09',narrative:'x'.repeat(6001),emotions:[],associations:[]}}],['solar-return',{returnYear:3000}],['ascendant',{birth:{...birth,latitude:NaN}}]]) {
-    assert.equal(parseWorkflowInput({...inputFor(workflows.find(p=>p.id===id)),...patch}),null,id);
+    assert.equal(parseWorkflowInput({...inputFor(workflowFor(id)),...patch}),null,id);
   }
 });
 const at='2026-09-09T20:00:00.000Z';
