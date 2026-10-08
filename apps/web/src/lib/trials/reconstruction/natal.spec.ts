@@ -19,7 +19,7 @@ const duplicates = (reading: ReturnType<typeof composeTrialReading>) => {
 	return sentences.filter((s, i) => sentences.indexOf(s) !== i).join('\n');
 };
 const input = (
-	productId = 'three-pillars',
+	productId = 'birth-chart',
 	context = 'Quero compreender meus acordos no relacionamento.'
 ): WorkflowInput => ({
 	version: 'atv-workflow/1.0.0',
@@ -41,7 +41,7 @@ const input = (
 	context
 });
 describe('integrated natal editions', () => {
-	for (const productId of ['three-pillars', 'birth-chart', 'ascendant', 'midheaven']) {
+	for (const productId of ['birth-chart', 'ascendant', 'midheaven']) {
 		it(`${productId} binds its own plan, genuine geometry and complete reading`, async () => {
 			const value = input(productId),
 				calculation = await calculateTrial(value, runId),

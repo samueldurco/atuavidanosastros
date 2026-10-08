@@ -92,6 +92,11 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 				: url.searchParams.get('compassContext') === 'workload'
 					? 'Estou com sobrecarga e preciso preservar descanso.'
 					: 'Quero comparar uma atividade atual com um projeto pessoal.';
+	if (productId === 'three-pillars')
+		input.context =
+			url.searchParams.get('pillarsContext') === 'workload'
+				? 'Estou com sobrecarga e preciso preservar descanso.'
+				: 'Quero observar como inicio uma conversa e apresento minhas necessidades.';
 	if (productId === 'purpose-career')
 		input.context =
 			'Quero mudar de área e testar uma contribuição sem comprometer meus recursos e descanso.';

@@ -187,6 +187,9 @@ test('three pillars have distinct navigation and horoscope remains a web reading
 	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText(
 		'Afinidades'
 	);
+	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
+		0
+	);
 	await page.goto('/testar-produtos/_spec?product=horoscope');
 	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
 		0

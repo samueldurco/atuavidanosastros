@@ -30,8 +30,9 @@ export const experiences: Record<string, Experience> = {
 	),
 	'three-pillars': contract(
 		'Relacione o que você expressa, o que precisa e como inicia uma experiência.',
-		5,
-		'brief'
+		10,
+		'book',
+		false
 	),
 	ascendant: contract(
 		'Observe seu primeiro contato com pessoas e situações e experimente uma resposta diferente.',
