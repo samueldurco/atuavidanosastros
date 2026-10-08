@@ -105,7 +105,22 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			startDate: '2026-10-06'
 		};
 	if (productId === 'life-atlas')
-		input.atlas = { priorities: ['cuidado', 'vínculos', 'trabalho', 'aprendizado'] };
+		input.atlas = {
+			priorities:
+				url.searchParams.get('atlasSet') === 'other'
+					? [
+							'Recursos e autonomia',
+							'Casa e pertencimento',
+							'Identidade e escolhas',
+							'Redes e projetos'
+						]
+					: [
+							'Autocuidado e rotina',
+							'Vínculos e acordos',
+							'Trabalho e contribuição',
+							'Aprendizado e expressão'
+						]
+		};
 	if (workflow.kind === 'dream')
 		input.dream = {
 			date: '2026-10-06',
@@ -188,7 +203,13 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 								decision: step === 30 ? 'adjust' : 'undecided'
 							})
 						}))
-					: [],
+					: productId === 'life-atlas' && url.searchParams.get('atlasNotes') === 'complete'
+						? [0, 7, 14, 21, 30].map((step) => ({
+								step,
+								updated_at: '2026-11-10T12:00:00Z',
+								text: `Dia ${step}: observei uma tarefa, preservei meu limite e registrei uma evidência contrária.`
+							}))
+						: [],
 			readerState: { chapter: 0, bookmarks: [] }
 		},
 		download: { saved },

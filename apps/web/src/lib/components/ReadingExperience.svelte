@@ -32,6 +32,7 @@
 	const contract = $derived(experienceFor(saved.product_id));
 	const minutes = $derived(
 		[
+			'atv-private-life-atlas/4.0.0',
 			'atv-private-direction-journey/4.0.0',
 			'atv-private-calendar-synthesis/4.0.0',
 			'atv-private-purpose-synthesis/4.0.0'

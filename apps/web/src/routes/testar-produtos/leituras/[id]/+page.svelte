@@ -23,11 +23,13 @@
 		busy = $state(false),
 		speaking = $state(false);
 	const checkIns = $derived(
-		data.saved.product_id === 'direction-journey'
-			? [0, 7, 14, 30]
-			: data.saved.product_id === 'tarot-journey'
-				? [0, 1, 7, 14]
-				: [0]
+		data.saved.calculation.version === 'atv-private-life-atlas/4.0.0'
+			? [0, 7, 14, 21, 30]
+			: data.saved.product_id === 'direction-journey'
+				? [0, 7, 14, 30]
+				: data.saved.product_id === 'tarot-journey'
+					? [0, 1, 7, 14]
+					: [0]
 	);
 	const reading = $derived(data.saved.reading);
 	const formats = $derived(privateFormats(data.saved.product_id, data.product.delivery));

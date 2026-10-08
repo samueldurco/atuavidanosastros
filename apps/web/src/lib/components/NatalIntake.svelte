@@ -2,7 +2,11 @@
 	import VisualHeading from './VisualHeading.svelte';
 	import { customerProduct } from '$lib/data/product-copy';
 	import { onMount, tick } from 'svelte';
-	import { validAtlasPriorities, validDate, workflowFor } from '@atv/domain';
+	import { validDate, workflowFor } from '@atv/domain';
+	import {
+		atlasPriorities as atlasPriorityOptions,
+		validAtlasChoices
+	} from '$lib/atlas-priorities';
 	import Button from '$lib/components/ui/Button.svelte';
 	import Field from '$lib/components/ui/Field.svelte';
 	import {
@@ -119,7 +123,7 @@
 						? 'atlas-context'
 						: 'career-context'
 	);
-	const atlasValid = $derived(!isLifeAtlas || validAtlasPriorities(atlasPriorities));
+	const atlasValid = $derived(!isLifeAtlas || validAtlasChoices(atlasPriorities));
 	const contextValid = $derived(
 		!acceptsContext ||
 			reportedContext === '' ||
@@ -716,29 +720,36 @@
 						<fieldset class="extra-fields">
 							<legend>Quatro prioridades para este pedido</legend>
 							<p class="privacy">
-								Escolha quatro áreas distintas da sua vida. Estes nomes são suas escolhas, não
-								conclusões do mapa. Cada campo aceita até 120 caracteres.
+								Escolha quatro áreas distintas. A ordem orienta os capítulos, a seleção de fatores
+								do mapa e o percurso de trinta dias. Estas prioridades são escolhas suas.
 							</p>
 							{#each atlasPriorities as priority, index (index)}
 								<Field
 									id={'atlas-priority-' + index}
 									label={'Prioridade ' + (index + 1)}
 									error={priority && !atlasValid
-										? 'Informe quatro prioridades distintas e válidas.'
+										? 'Escolha quatro áreas distintas entre as opções.'
 										: undefined}
 								>
 									{#snippet children(describedBy)}
-										<input
+										<select
 											id={'atlas-priority-' + index}
-											type="text"
 											required
-											maxlength="120"
-											autocomplete="off"
 											bind:value={atlasPriorities[index]}
-											oninput={resetConsents}
+											onchange={resetConsents}
 											aria-describedby={describedBy}
 											aria-invalid={!atlasValid && priority !== ''}
-										/>
+										>
+											<option value="">Escolha uma área</option>
+											{#each atlasPriorityOptions as choice (choice.id)}
+												<option
+													value={choice.label}
+													disabled={atlasPriorities.some(
+														(value, other) => other !== index && value === choice.label
+													)}>{choice.label}</option
+												>
+											{/each}
+										</select>
 									{/snippet}
 								</Field>
 							{/each}

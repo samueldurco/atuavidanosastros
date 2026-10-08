@@ -8,6 +8,7 @@ export const latestReadingVersion = (productId: string) =>
 		'career-compass',
 		'purpose-career',
 		'direction-journey',
+		'life-atlas',
 		'three-pillars',
 		'birth-chart',
 		'ascendant',

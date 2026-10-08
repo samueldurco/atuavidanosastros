@@ -8,6 +8,7 @@
 	import TrialBirthFields from '$lib/components/TrialBirthFields.svelte';
 	import BirthCityFields from '$lib/components/BirthCityFields.svelte';
 	import { resolvedCivilInstant } from '$lib/city-location';
+	import { atlasPriorities, atlasPriorityFor, validAtlasChoices } from '$lib/atlas-priorities';
 	let { data } = $props();
 	let ready = $state(false);
 	onMount(() => {
@@ -40,19 +41,7 @@
 	let focus = $state(''),
 		goal = $state(''),
 		startDate = $state(new Date().toISOString().slice(0, 10));
-	let priorities = $state(['Autocuidado', 'Vínculos', 'Trabalho', 'Aprendizado']);
-	const priorityOptions = [
-		'Autocuidado',
-		'Vínculos',
-		'Trabalho',
-		'Aprendizado',
-		'Família',
-		'Criatividade',
-		'Organização financeira',
-		'Vida cotidiana',
-		'Propósito',
-		'Descanso'
-	];
+	let priorities = $state(['', '', '', '']);
 	let narrative = $state(''),
 		emotions = $state(''),
 		associations = $state(''),
@@ -88,7 +77,8 @@
 		partner = prefill(old.partner, old.presentation?.partnerName, old.presentation?.partnerCity);
 		context = old.context ?? '';
 		dossierQuestions = [...(old.questions ?? []), '', '', ''].slice(0, 3);
-		if (old.atlas) priorities = [...old.atlas.priorities];
+		if (old.atlas)
+			priorities = old.atlas.priorities.map((label) => atlasPriorityFor(label)?.label ?? '');
 		if (old.targetDate) {
 			targetDate = old.targetDate;
 			month = old.targetDate.slice(0, 7);
@@ -195,7 +185,8 @@
 			if (data.product.id === 'direction-journey') input.journey = { goal, startDate };
 			if (data.product.id === 'tarot-journey') input.tarotJourney = { goal };
 			if (data.product.id === 'life-atlas') {
-				if (new Set(priorities).size !== 4) throw Error('Escolha quatro prioridades diferentes.');
+				if (!validAtlasChoices(priorities))
+					throw Error('Escolha quatro áreas distintas entre as opções do Atlas.');
 				input.atlas = { priorities: priorities as [string, string, string, string] };
 			}
 			if (data.product.id === 'dream-atlas') input.dreamAtlas = { startDate };
@@ -318,14 +309,18 @@
 				>{/if}
 			{#if data.product.id === 'life-atlas'}
 				<fieldset>
-					<legend>Suas quatro prioridades, em ordem</legend>
-					<p>Escolha temas distintos. Essa ordem é sua, e pode ser revista.</p>
+					<legend>Quatro prioridades para este pedido</legend>
+					<p>
+						Escolha quatro áreas distintas. A ordem orienta os capítulos, a seleção de fatores do
+						mapa e o percurso de trinta dias. Estas prioridades são escolhas suas.
+					</p>
 					{#each [0, 1, 2, 3] as i (i)}<label
 							>Prioridade {i + 1}<select required bind:value={priorities[i]}>
-								{#each priorityOptions as option (option)}<option
-										value={option}
-										disabled={priorities.some((v, index) => index !== i && v === option)}
-										>{option}</option
+								<option value="">Escolha uma área</option>
+								{#each atlasPriorities as option (option.id)}<option
+										value={option.label}
+										disabled={priorities.some((v, index) => index !== i && v === option.label)}
+										>{option.label}</option
 									>{/each}
 							</select></label
 						>{/each}

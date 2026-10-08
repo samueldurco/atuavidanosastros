@@ -23,6 +23,7 @@ import { calculateSolarYearSamples } from '../../../../worker/src/solar-year-sam
 import { calculateCalendarSamples } from '../../../../worker/src/personal-calendar-samples';
 import { projectCalendarReading } from '../trials/reconstruction/calendar-facts';
 import { projectDirectionReading } from '../trials/reconstruction/direction-facts';
+import { projectAtlasReading } from '../trials/reconstruction/atlas-facts';
 import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
@@ -414,10 +415,10 @@ export async function calculateTrial(
 		return projectCalendarReading(input, base, natal, samples);
 	}
 
-	const natalData =
-		input.productId === 'life-atlas' ? (base.data.natal as CalculationSnapshot).data : base.data;
+	if (input.productId === 'life-atlas') return projectAtlasReading(input, base);
+	const natalData = base.data;
 	if (
-		['birth-chart', 'life-atlas'].includes(input.productId) &&
+		input.productId === 'birth-chart' &&
 		Array.isArray(natalData.positions) &&
 		natalData.positions.length === 10
 	) {

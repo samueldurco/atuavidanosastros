@@ -91,7 +91,14 @@ function inputFor(productId: string): WorkflowInput {
 			startDate: '2026-10-06'
 		};
 	if (productId === 'life-atlas')
-		input.atlas = { priorities: ['relações', 'trabalho', 'cuidado', 'criatividade'] };
+		input.atlas = {
+			priorities: [
+				'Vínculos e acordos',
+				'Trabalho e contribuição',
+				'Autocuidado e rotina',
+				'Aprendizado e expressão'
+			]
+		};
 	if (kind === 'tarot') input.focus = 'O que posso observar na minha escolha?';
 	if (kind === 'dream' && productId !== 'dream-atlas')
 		input.dream = {
