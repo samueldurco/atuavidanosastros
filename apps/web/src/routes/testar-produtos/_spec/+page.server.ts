@@ -74,7 +74,6 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			emotions: ['curiosidade'],
 			associations: ['travessia']
 		};
-	if (workflow.kind === 'tarot') input.questions = ['O que posso observar nesta escolha?'];
 	if (productId === 'tarot-journey') input.tarotJourney = { goal: 'Organizar um projeto pessoal.' };
 	const id = '00000000-0000-4000-8000-000000000031';
 	// Intakes do not need a result; use an actual MC calculation for the shared result shape.

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { WORKFLOW_VERSION, type WorkflowInput } from '@atv/domain';
+	import { WORKFLOW_VERSION, tarotMethodFor, type WorkflowInput } from '@atv/domain';
 	import { trialResponse } from '$lib/trials/response';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
@@ -35,7 +35,8 @@
 	let targetDate = $state(new Date().toISOString().slice(0, 10)),
 		month = $state(new Date().toISOString().slice(0, 7));
 	let returnYear = $state(new Date().getFullYear());
-	let questions = $state(['', '', '']),
+	const tarotMethod = $derived(tarotMethodFor(data.product.id));
+	let focus = $state(''),
 		goal = $state(''),
 		startDate = $state(new Date().toISOString().slice(0, 10));
 	let priorities = $state(['Autocuidado', 'Vínculos', 'Trabalho', 'Aprendizado']);
@@ -100,7 +101,7 @@
 				longitude: String(old.returnLocation.longitude),
 				source: old.returnLocation.locationSource
 			};
-		if (old.questions) questions = [...old.questions, '', ''].slice(0, 3);
+		focus = old.focus ?? '';
 		if (old.journey) {
 			goal = old.journey.goal;
 			startDate = old.journey.startDate;
@@ -196,15 +197,7 @@
 				input.atlas = { priorities: priorities as [string, string, string, string] };
 			}
 			if (data.product.id === 'dream-atlas') input.dreamAtlas = { startDate };
-			if (data.product.kind === 'tarot')
-				input.questions =
-					data.product.id === 'three-questions'
-						? questions
-						: data.product.id === 'daily-card'
-							? ['O que posso observar hoje?']
-							: data.product.id === 'tarot-journey'
-								? [goal]
-								: [questions[0]];
+			if (tarotMethod && focus.trim()) input.focus = focus.trim();
 			if (data.product.kind === 'dream' && data.product.id !== 'dream-atlas')
 				input.dream = {
 					date: targetDate,
@@ -334,16 +327,23 @@
 						>{/each}
 				</fieldset>
 			{/if}
-			{#if data.product.kind === 'tarot' && !['daily-card', 'tarot-journey'].includes(data.product.id)}
-				{#each data.product.id === 'three-questions' ? [0, 1, 2] : [0] as i (i)}<label
-						>Pergunta {data.product.id === 'three-questions' ? i + 1 : ''}<textarea
-							maxlength="400"
-							required
-							bind:value={questions[i]}></textarea></label
-					>{/each}
-				{#if data.product.id === 'tarot-yes-no'}<p>
-						A leitura ajuda a examinar condições e escolhas; ela não entrega uma ordem binária.
-					</p>{/if}
+			{#if tarotMethod}
+				<p>
+					{tarotMethod.description} São {tarotMethod.positions.length}
+					{tarotMethod.positions.length === 1
+						? 'carta, com uma posição definida'
+						: 'cartas, cada uma com uma função definida'}.
+				</p>
+				<label
+					>Foco da consulta (opcional)<textarea
+						maxlength="400"
+						bind:value={focus}
+						aria-describedby="tarot-focus-help"></textarea></label
+				>
+				<p id="tarot-focus-help">
+					Você pode indicar uma situação ou assunto. Se deixar em branco, receberá a leitura
+					completa conforme as posições deste método.
+				</p>
 			{/if}
 			{#if data.product.kind === 'dream' && data.product.id !== 'dream-atlas'}
 				<label

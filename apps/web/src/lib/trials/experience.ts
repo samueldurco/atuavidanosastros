@@ -1,4 +1,5 @@
 /** Private, free-test experience contracts. These do not enable sales or override catalog gates. */
+import { tarotMethods } from '@atv/domain';
 export type Experience = {
 	benefit: string;
 	minutes: number;
@@ -12,6 +13,16 @@ const contract = (
 	pdf = true
 ): Experience => ({ benefit, minutes, format, pdf });
 export const experiences: Record<string, Experience> = {
+	...Object.fromEntries(
+		tarotMethods.map((method) => [
+			method.id,
+			contract(
+				method.description,
+				Math.max(4, method.positions.length * 2),
+				method.positions.length > 5 ? 'book' : 'brief'
+			)
+		])
+	),
 	'birth-chart': contract(
 		'Conheça cinco referências do seu mapa e aprofunde os temas que fazem sentido na sua vida.',
 		20,

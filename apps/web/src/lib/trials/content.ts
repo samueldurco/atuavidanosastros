@@ -1,5 +1,6 @@
 /** Original library written with Codex assistance and editorial revision, 06/10/2026.
  * No personal data, external model call, third-party excerpts or model-certified accuracy. */
+import { tarotMethods } from '@atv/domain';
 export const TRIAL_CONTENT_VERSION = 'atv-ai-editorial-trials/1.0.0';
 export const TRIAL_POLICY_VERSION = 'atv-private-trial-approval/1.0.0';
 export const sourceNotice =
@@ -171,6 +172,21 @@ const profile = (
 	chapters: readonly string[]
 ): TrialProfile => ({ opening, questions, practice, chapters });
 export const trialProfiles: Record<string, TrialProfile> = {
+	...Object.fromEntries(
+		tarotMethods.map((method) => [
+			method.id,
+			profile(
+				method.description,
+				[
+					'O que você pode observar diretamente?',
+					'Que ajuste cabe nas condições atuais?',
+					'O que faria você rever esta leitura?'
+				],
+				'Escolha uma aplicação concreta, experimente um ajuste e compare o resultado com a hipótese da tiragem.',
+				['O fio desta tiragem', ...method.positions.map((p) => p.name), 'Aplicação e revisão']
+			)
+		])
+	),
 	'career-compass': profile(
 		'A Bússola usa o Meio do Céu como referência simbólica para investigar contribuição, ambiente de trabalho e experimentos. Ela não escolhe uma profissão por você.',
 		[

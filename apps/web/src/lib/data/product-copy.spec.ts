@@ -37,8 +37,8 @@ describe('customer language across the complete catalog', () => {
 			].includes(product.id);
 		expect(Boolean(supported)).toBe(true);
 	});
-	it('covers the 25 readings and ATV+ without introducing a product or format', () => {
-		expect(customerProducts).toHaveLength(26);
-		expect(customerProducts.filter((product) => product.personalized)).toHaveLength(25);
+	it('covers the 26 readings and ATV+ after replacing five old Tarot products with six methods', () => {
+		expect(customerProducts).toHaveLength(27);
+		expect(customerProducts.filter((product) => product.personalized)).toHaveLength(26);
 	});
 });

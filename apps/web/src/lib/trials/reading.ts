@@ -19,6 +19,7 @@ import {
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { trialProfiles, TRIAL_CONTENT_VERSION, TRIAL_POLICY_VERSION } from './content';
 import { composeReconstructedNatal, reviewReconstructedNatal } from './reconstruction/natal';
+import { composeReconstructedTarot, reviewReconstructedTarot } from './reconstruction/tarot';
 
 export type TrialReading = {
 	version: string;
@@ -59,6 +60,8 @@ export function composeTrialReading(
 	input: WorkflowInput,
 	calculation: CalculationSnapshot
 ): TrialReading {
+	if (calculation.version === 'atv-tarot-method-calculation/2.0.0')
+		return composeReconstructedTarot(input, calculation);
 	if (calculation.version === 'atv-private-natal-synthesis/4.0.0')
 		return composeReconstructedNatal(input, calculation);
 	return ['career-compass', 'purpose-career'].includes(input.productId) &&
@@ -124,9 +127,11 @@ export async function approveTrialReading(
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		reconstructed &&
-		(calculation.version === 'atv-private-natal-synthesis/4.0.0'
-			? reviewReconstructedNatal(input, calculation, candidate)
-			: reviewReconstructedCareer(input, calculation, candidate)
+		(calculation.version === 'atv-tarot-method-calculation/2.0.0'
+			? reviewReconstructedTarot(input, calculation, candidate)
+			: calculation.version === 'atv-private-natal-synthesis/4.0.0'
+				? reviewReconstructedNatal(input, calculation, candidate)
+				: reviewReconstructedCareer(input, calculation, candidate)
 		).length
 	)
 		return null;

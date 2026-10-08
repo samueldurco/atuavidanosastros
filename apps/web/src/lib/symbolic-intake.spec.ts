@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { parseSymbolicForm, symbolicProduct, symbolicProducts } from './symbolic-intake';
-function form(product = 'daily-card') {
+function form(product = 'tarot-single-card') {
 	const data = new FormData();
 	data.set('storage', 'on');
 	if (product === 'dream-atlas') {
@@ -8,13 +8,8 @@ function form(product = 'daily-card') {
 	} else if (product.startsWith('dream')) {
 		data.set('date', '2024-02-29');
 		data.set('narrative', 'Relato sintético.');
-	} else {
-		data.set('question1', 'Que possibilidade explorar?');
-		if (product === 'three-questions') {
-			data.set('question2', 'O que observar?');
-			data.set('question3', 'Como agir?');
-		}
 	}
+
 	return data;
 }
 it.each(symbolicProducts)('parses explicit consent and inputs for %s', (id) => {
@@ -26,13 +21,20 @@ it.each(symbolicProducts)('parses explicit consent and inputs for %s', (id) => {
 		consent: { storage: true, continuity: false, partner: false }
 	});
 });
-it('keeps the Tarot Journey initial question and declared goal separate', () => {
-	const data = form('tarot-journey');
-	data.set('goal', 'Explorar como retomar um hábito criativo.');
-	const { input, errors } = parseSymbolicForm('tarot-journey', data);
-	expect(errors).toEqual({});
-	expect(input?.questions).toEqual(['Que possibilidade explorar?']);
-	expect(input?.tarotJourney).toEqual({ goal: 'Explorar como retomar um hábito criativo.' });
+it.each(['daily-card', 'tarot-focus', 'tarot-yes-no', 'three-questions', 'tarot-journey'])(
+	'rejects retired intake %s',
+	(id) => {
+		expect(symbolicProduct(id)).toBeUndefined();
+		expect(parseSymbolicForm(id, form()).input).toBeNull();
+	}
+);
+it('keeps focus optional and trims it without creating questions', () => {
+	const data = form();
+	expect(parseSymbolicForm('tarot-single-card', data).input?.focus).toBeUndefined();
+	data.set('focus', '  Uma escolha de trabalho  ');
+	const input = parseSymbolicForm('tarot-single-card', data).input;
+	expect(input?.focus).toBe('Uma escolha de trabalho');
+	expect(input?.questions).toBeUndefined();
 });
 it('accepts only the principal dream for the unreleased Dream Dossier intake', () => {
 	const data = form('dream-dossier');
@@ -103,32 +105,10 @@ it.each(['priorRunId', 'priorDreams', 'history', 'recurrence'])(
 		expect(parseSymbolicForm('dream-dossier', data).input).toBeNull();
 	}
 );
-it.each([
-	['goal', ''],
-	['goal', '  '],
-	['goal', 'a'.repeat(401)],
-	['goal', 'bad\u0001'],
-	['goal', 'bad\u007f'],
-	['question2', 'Outra pergunta'],
-	['cards', 'client choice']
-])('rejects invalid or undeclared Tarot Journey field %s', (name, value) => {
-	const data = form('tarot-journey');
-	data.set('goal', 'Explorar um hábito.');
-	data.set(name, value);
-	expect(parseSymbolicForm('tarot-journey', data).input).toBeNull();
-});
-it('rejects duplicate or file goal for Tarot Journey', () => {
-	const data = form('tarot-journey');
-	data.set('goal', 'Explorar um hábito.');
-	data.append('goal', 'duplicate');
-	expect(parseSymbolicForm('tarot-journey', data).input).toBeNull();
-	data.set('goal', new Blob(['file']));
-	expect(parseSymbolicForm('tarot-journey', data).input).toBeNull();
-});
-it.each(['tarot-focus', 'tarot-yes-no'])(
-	'rejects client-chosen card and extra question for %s',
+it.each(['tarot-single-card', 'tarot-celtic-cross', 'tarot-astrological-mandala'])(
+	'rejects client chosen cards and undeclared questions for %s',
 	(id) => {
-		for (const field of ['question2', 'cards', 'binaryVerdict']) {
+		for (const field of ['question1', 'question2', 'cards', 'binaryVerdict', 'goal']) {
 			const data = form(id);
 			data.set(field, 'client choice');
 			expect(parseSymbolicForm(id, data).input).toBeNull();
@@ -142,7 +122,7 @@ it.each(['birth-chart', 'yes-no', '', '../daily-card'])('rejects unsupported pro
 it.each(['', 'true', 'off'])('never implies storage consent from %s', (consent) => {
 	const data = form();
 	data.set('storage', consent);
-	expect(parseSymbolicForm('daily-card', data).errors.storage).toBeTruthy();
+	expect(parseSymbolicForm('tarot-single-card', data).errors.storage).toBeTruthy();
 });
 it('keeps narrative, associations and optional continuity without inventing metadata', () => {
 	const data = form('dream-reading');
@@ -161,10 +141,8 @@ it('keeps narrative, associations and optional continuity without inventing meta
 	expect(input?.context).toBe('Contexto sintético');
 });
 it.each([
-	['question1', ''],
-	['question1', '  '],
-	['question1', 'a'.repeat(401)],
-	['question1', 'bad\u0000'],
+	['focus', 'a'.repeat(401)],
+	['focus', 'bad\u0000'],
 	['context', 'a'.repeat(1201)],
 	['context', 'bad\u000b'],
 	['continuity', 'on'],
@@ -173,7 +151,7 @@ it.each([
 ])('rejects unexpected/invalid tarot field %s', (name, value) => {
 	const data = form();
 	data.set(name, value);
-	expect(parseSymbolicForm('daily-card', data).input).toBeNull();
+	expect(parseSymbolicForm('tarot-single-card', data).input).toBeNull();
 });
 it.each([
 	['date', '2023-02-29'],
@@ -192,17 +170,13 @@ it.each([
 	data.set(name, value);
 	expect(parseSymbolicForm('dream-journal', data).errors[name]).toBeTruthy();
 });
-it('rejects missing second and third questions', () => {
-	const result = parseSymbolicForm('three-questions', form());
-	expect(result.errors.question2).toBeTruthy();
-	expect(result.errors.question3).toBeTruthy();
-});
 it('rejects duplicate fields and file payloads', () => {
 	const data = form();
-	data.append('question1', 'duplicate');
-	expect(parseSymbolicForm('daily-card', data).input).toBeNull();
-	data.set('question1', new Blob(['file']));
-	expect(parseSymbolicForm('daily-card', data).input).toBeNull();
+	data.set('focus', 'original');
+	data.append('focus', 'duplicate');
+	expect(parseSymbolicForm('tarot-single-card', data).input).toBeNull();
+	data.set('focus', new Blob(['file']));
+	expect(parseSymbolicForm('tarot-single-card', data).input).toBeNull();
 });
 it('accepts field boundaries but leaves the UTF-8 transport limit to the controller', () => {
 	const data = form('dream-reading');

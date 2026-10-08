@@ -2,7 +2,7 @@ import { dev } from '$app/environment';
 import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
 import { error, type RequestEvent } from '@sveltejs/kit';
-import type { WorkflowInput, DreamAtlasFactSource } from '@atv/domain';
+import type { WorkflowInput, DreamAtlasFactSource, CalculationSnapshot } from '@atv/domain';
 import type {
 	TrialEdition,
 	TrialReview,
@@ -74,10 +74,17 @@ export async function computeTrial(
 	event: RequestEvent,
 	input: WorkflowInput,
 	runId: string,
-	sources: DreamAtlasFactSource[]
+	sources: DreamAtlasFactSource[],
+	recordedCalculation?: CalculationSnapshot
 ) {
 	return edition(
-		await run(event, { operation: 'generate', input, runId, sources }),
+		await run(event, {
+			operation: 'generate',
+			input,
+			runId,
+			sources,
+			...(recordedCalculation ? { recordedCalculation } : {})
+		}),
 		input.productId
 	);
 }

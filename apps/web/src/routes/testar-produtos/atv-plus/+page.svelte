@@ -63,7 +63,7 @@
 			formular possibilidades; suas decisões continuam com você.
 		</p>
 		<ol>
-			<li><a href="/testar-produtos/daily-card">Hoje: uma carta e uma observação</a></li>
+			<li><a href="/testar-produtos/tarot-single-card">Carta Única: um tema para observar</a></li>
 			<li>
 				<a href="/testar-produtos/week-reading"
 					>Nesta semana: uma leitura e um registro do cotidiano</a

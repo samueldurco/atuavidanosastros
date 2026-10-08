@@ -7,3 +7,6 @@ export * from './artifacts.ts';
 export * from './continuity.ts';
 export * from './dream-atlas.ts';
 export * from './dream-atlas-facts.ts';
+
+export * from './tarot-methods.ts';
+export * from './tarot-method-calculation.ts';

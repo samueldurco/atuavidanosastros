@@ -89,11 +89,12 @@ describe('nominal trial access in the normal app', () => {
 		const query = {
 			select: vi.fn(),
 			eq: vi.fn(),
+			is: vi.fn(),
 			order: vi.fn(),
 			limit: vi.fn(),
 			abortSignal: vi.fn(async () => ({ data: rows, error: null }))
 		};
-		for (const method of ['select', 'eq', 'order', 'limit'] as const)
+		for (const method of ['select', 'eq', 'is', 'order', 'limit'] as const)
 			query[method].mockReturnValue(query);
 		const from = vi.fn(() => query);
 		expect(await readTrialLibrary({ from } as unknown as SupabaseClient, owner)).toEqual({
@@ -103,6 +104,7 @@ describe('nominal trial access in the normal app', () => {
 		expect(from).toHaveBeenCalledWith('atv_trial_readings');
 		expect(query.eq).toHaveBeenCalledWith('owner_id', owner);
 		expect(query.limit).toHaveBeenCalledWith(100);
+		expect(query.is).toHaveBeenCalledWith('archived_at', null);
 		query.abortSignal.mockRejectedValue(new Error('private'));
 		expect(await readTrialLibrary({ from } as unknown as SupabaseClient, owner)).toEqual({
 			readings: [],

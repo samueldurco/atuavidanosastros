@@ -19,6 +19,10 @@ import { recoverWorkflowRequest } from './workflow-recovery';
 import { workflowArtifacts } from './workflow-artifacts';
 import { readLibraryResult } from './library-reader';
 
+// New Tarot runs use the durable private-draw pipeline, covered by private-tarot-draw
+// and private-trials. Their future paid workflow remains release-gated.
+const publishedSymbolicProducts = symbolicProducts.filter((id) => id.startsWith('dream'));
+
 // Real local SQL/RLS and runtime; synthetic claims and a single PGlite connection.
 // These fixtures never issue editorial promotions, receipts, models or READY output.
 let db: Awaited<ReturnType<typeof setupProductDatabase>>;
@@ -251,7 +255,7 @@ async function process(productId: string) {
 	expect(JSON.stringify(metrics)).not.toMatch(/privad|runId|owner|questions|narrative|token/);
 }
 
-it.each(symbolicProducts)(
+it.each(publishedSymbolicProducts)(
 	'%s: form → controller → SQL → calculation → pending Library without promotion',
 	async (productId) => {
 		await enable(productId);
@@ -305,7 +309,7 @@ it.each(symbolicProducts)(
 	}
 );
 
-it.each(symbolicProducts)(
+it.each(publishedSymbolicProducts)(
 	'%s: lost acknowledgement recovers after calculation and revocation without replay',
 	async (productId) => {
 		await enable(productId);
@@ -330,7 +334,7 @@ it.each(symbolicProducts)(
 	}
 );
 
-it.each(symbolicProducts)(
+it.each(publishedSymbolicProducts)(
 	'%s: owner isolation covers recovery, run, Library and pending downloads',
 	async (productId) => {
 		await enable(productId);
@@ -365,7 +369,7 @@ it.each(symbolicProducts)(
 	}
 );
 
-it.each(symbolicProducts)(
+it.each(publishedSymbolicProducts)(
 	'%s: current SQL release and entitlement policy refuse stale form submission before writing',
 	async (productId) => {
 		const input = formInput(productId),
@@ -386,7 +390,7 @@ it.each(symbolicProducts)(
 	}
 );
 
-it.each(symbolicProducts)(
+it.each(publishedSymbolicProducts)(
 	'%s: explicit reprocessing preserves input and Tarot draw; dream facts are recalculated',
 	async (productId) => {
 		await enable(productId);

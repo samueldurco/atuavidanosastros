@@ -1,4 +1,4 @@
-import { productCatalog } from './catalog.ts';
+import { productDefinitionFor } from './catalog.ts';
 
 export const artifactFormats = {
   web: { renderer: 'atv-web-export/1.2.0', mime: 'text/html; charset=utf-8', extension: 'html', maxBytes: 8388608 },
@@ -27,7 +27,7 @@ export const artifactUuid = (v: unknown): v is string => typeof v === 'string' &
 export const artifactDigest = (v: unknown): v is string => typeof v === 'string' && /^[a-f0-9]{64}$/.test(v);
 
 export function artifactEligible(productId: string, format: ArtifactFormat) {
-  const product=productCatalog.find(p=>p.id===productId);
+  const product=productDefinitionFor(productId);
   return !!product && product.personalized && (format==='card' ? product.delivery.includes('web')
     : format==='svg' ? ['birth-chart','ascendant'].includes(productId) && product.delivery.includes('svg') : product.delivery.includes(format));
 }

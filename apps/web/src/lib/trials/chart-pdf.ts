@@ -12,7 +12,7 @@ const color = (value?: string) =>
 /** Render the same scene used by SVG. Only page coordinates and font metrics differ. */
 export function drawChartScenePdf(
 	page: PDFPage,
-	scene: ChartScene,
+	scene: Pick<ChartScene, 'width' | 'height' | 'nodes'>,
 	font: PDFFont,
 	x: number,
 	top: number,

@@ -2,7 +2,7 @@ import { env as publicEnv } from '$env/dynamic/public';
 import { env as privateEnv } from '$env/dynamic/private';
 import { createClient } from '@supabase/supabase-js';
 import { error, type RequestEvent } from '@sveltejs/kit';
-import { parseDreamAtlasEntryInput, type DreamAtlasFactSource } from '@atv/domain';
+import { isRetiredTarot, parseDreamAtlasEntryInput, type DreamAtlasFactSource } from '@atv/domain';
 import type { SavedTrial } from '$lib/trials/reading';
 
 export async function trialIdentity(locals: App.Locals, required = true) {
@@ -44,6 +44,8 @@ export async function privateTrial(locals: App.Locals, id: string): Promise<Save
 		.maybeSingle();
 	if (result.error) error(503, 'Não foi possível abrir sua leitura. Tente novamente.');
 	if (!result.data) error(404, 'Leitura não encontrada.');
+	if (isRetiredTarot(result.data.product_id) || result.data.archived_at)
+		error(404, 'Esta leitura foi arquivada.');
 	return result.data as SavedTrial;
 }
 export async function trialDreamSources(

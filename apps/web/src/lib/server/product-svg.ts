@@ -1,4 +1,4 @@
-import { productCatalog } from '@atv/domain';
+import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun } from '../product-run';
 import type { CartographyBody } from '../product-cartography';
 import { longitudePoint } from '../product-cartography';
@@ -54,7 +54,7 @@ const text = (x: number, y: number, value: string, css = '', anchor = 'start') =
 /** Geometry is copied from the gated saved projection. No ephemeris, AI, house fallback or display-text parsing. */
 export function renderProductSvg(value: unknown) {
 	const run = parseProductRun(value),
-		product = productCatalog.find((p) => p.id === run?.productId);
+		product = productDefinitionFor(run?.productId ?? '');
 	const geo = run?.cartography;
 	if (
 		!run?.released ||

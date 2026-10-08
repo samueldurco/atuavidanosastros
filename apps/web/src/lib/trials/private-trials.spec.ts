@@ -88,12 +88,7 @@ function inputFor(productId: string): WorkflowInput {
 		};
 	if (productId === 'life-atlas')
 		input.atlas = { priorities: ['relações', 'trabalho', 'cuidado', 'criatividade'] };
-	if (productId === 'tarot-journey') input.tarotJourney = { goal: 'Organizar um projeto pessoal.' };
-	if (kind === 'tarot')
-		input.questions =
-			productId === 'three-questions'
-				? ['O que observar?', 'Que recurso experimentar?', 'Qual próximo passo?']
-				: ['O que posso observar na minha escolha?'];
+	if (kind === 'tarot') input.focus = 'O que posso observar na minha escolha?';
 	if (kind === 'dream' && productId !== 'dream-atlas')
 		input.dream = {
 			date: '2026-10-06',
@@ -338,12 +333,12 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		).toBeGreaterThan(5);
 	});
 	it('tarot retries with the same run id retain the drawn cards; no replacement or binary prophecy', async () => {
-		const s = saved.get('tarot-journey')!,
+		const s = saved.get('tarot-peladan-cross')!,
 			next = await calculateTrial(s.input, id);
 		expect(next.data.cards).toEqual(s.calculation.data.cards);
 		const cards = next.data.cards as { cardId: string }[];
-		expect(new Set(cards.map((c) => c.cardId)).size).toBe(3);
-		expect(saved.get('tarot-yes-no')!.reading.opening).toContain('condições');
+		expect(new Set(cards.map((c) => c.cardId)).size).toBe(5);
+		expect(s.reading.limits.join(' ')).toMatch(/tendência|previsão|simbólic/i);
 	});
 	it('dream dossiers require selected history; reported instructions never change the policy', async () => {
 		await expect(calculateTrial(inputFor('dream-dossier'), id, [])).rejects.toThrow();

@@ -2,6 +2,8 @@ import { calculateAspects, type AspectPolicy, type AspectPosition } from '@atv/a
 import {
 	calculateDreamRecord,
 	calculateTarot,
+	calculateTarotMethod,
+	tarotMethodFor,
 	parseWorkflowInput,
 	prepareDreamAtlasFacts,
 	type CalculationSnapshot,
@@ -92,6 +94,7 @@ export async function calculateTrial(
 	const input = parseWorkflowInput(value);
 	if (!input) throw new Error('Confira os dados e consentimentos antes de gerar.');
 	const signal = AbortSignal.timeout(25000);
+	if (tarotMethodFor(input.productId)) return calculateTarotMethod(input, runId, signal);
 	const context = { runId, signal };
 	if (
 		[

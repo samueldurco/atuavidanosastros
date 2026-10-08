@@ -7,6 +7,8 @@
 	import { trialResponse } from '$lib/trials/response';
 	import ReadingPairCharts from './ReadingPairCharts.svelte';
 	import ReadingChart from './ReadingChart.svelte';
+	import ReadingTarot from './ReadingTarot.svelte';
+	import { tarotMethodFor } from '@atv/domain';
 	let { saved, initial }: { saved: SavedTrial; initial: ReaderState } = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
@@ -17,6 +19,7 @@
 		interactive = true;
 	});
 	const sections = $derived(saved.reading.sections);
+	const tarotMethod = $derived(tarotMethodFor(saved.product_id));
 	const chapters = $derived(
 		sections
 			.map((s, i) => ({ ...s, index: i }))
@@ -145,6 +148,17 @@
 				}}
 			/>
 		</details>
+	{/if}
+	{#if tarotMethod}
+		<ReadingTarot
+			{saved}
+			{interactive}
+			onselect={(id) => {
+				const number = id.match(/^card-(\d+)$/)?.[1];
+				const target = chapters.find((s) => number && s.title.startsWith(`${number}. `));
+				if (target) open(target.index);
+			}}
+		/>
 	{/if}
 	<div class="reader-grid">
 		<nav aria-label="Capítulos da leitura">

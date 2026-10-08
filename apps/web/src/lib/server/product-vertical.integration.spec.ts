@@ -1,7 +1,12 @@
 import { randomUUID } from 'node:crypto';
 import { expect, it } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
-import { workflowFor, type WorkflowInput, type CalculationSnapshot } from '@atv/domain';
+import {
+	workflowFor,
+	retiredTarotProducts,
+	type WorkflowInput,
+	type CalculationSnapshot
+} from '@atv/domain';
 import { SCHEMA_VERSION } from '../../../../../packages/ai/src/contracts';
 import {
 	dimensions,
@@ -47,17 +52,14 @@ import { renderProductWebExport } from './product-export';
 import { workflowApi } from './workflow-api';
 import { workflowArtifacts } from './workflow-artifacts';
 
-// All thirteen existing partial bases, not a claim that all 25 products are finished/homologated.
+// Existing active partial bases. Retired Tarot cannot create new runs; historical
+// decoding remains covered by the artifact and recovery suites.
 const products = [
 	'birth-chart',
 	'three-pillars',
 	'ascendant',
 	'date-reading',
 	'pair-preview',
-	'daily-card',
-	'three-questions',
-	'tarot-focus',
-	'tarot-yes-no',
 	'midheaven',
 	'dream-reading',
 	'dream-journal',
@@ -344,8 +346,12 @@ async function fixture(productId: string) {
 	}
 }
 
-it('vertical integration explicitly covers every registered partial calculator', () => {
-	expect([...products].sort()).toEqual(Object.keys(createProductCalculators()).sort());
+it('vertical integration covers every active registered partial calculator', () => {
+	expect([...products].sort()).toEqual(
+		Object.keys(createProductCalculators())
+			.filter((id) => !retiredTarotProducts.some((product) => product.id === id))
+			.sort()
+	);
 });
 
 for (const productId of products)

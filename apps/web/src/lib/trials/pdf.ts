@@ -5,6 +5,8 @@ import { trialText } from './exports';
 import { experienceFor } from './experience';
 import { buildChartScene } from './chart-engine-v2';
 import { drawChartScenePdf } from './chart-pdf';
+import { tarotMethodFor } from '@atv/domain';
+import { buildTarotScene } from './tarot-diagram';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -188,6 +190,24 @@ export async function trialPdf(saved: SavedTrial) {
 		newPage();
 	}
 	const contents: { page: typeof page; y: number; index: number }[] = [];
+	if (tarotMethodFor(saved.product_id)) {
+		if (!book) newPage();
+		const scene = buildTarotScene(saved);
+		drawChartScenePdf(page, scene, label, margin, height - margin, available);
+		y = height - margin - (scene.height * available) / scene.width - 25;
+		paragraph(
+			scene.cards.length === 1
+				? 'A carta e sua função correspondem ao capítulo da posição. O diagrama preserva a tiragem salva.'
+				: 'A numeração corresponde aos capítulos das posições. A síntese relaciona as cartas; o diagrama preserva a tiragem salva.',
+			label,
+			11
+		);
+		if (scene.cards.length > 3) {
+			for (const card of scene.cards)
+				paragraph(`${card.position}. ${card.positionName}: ${card.name}`, label, 9.5, 0);
+		}
+		newPage();
+	}
 	if (book) {
 		heading('Índice da sua leitura', 23);
 		paragraph(
@@ -196,7 +216,14 @@ export async function trialPdf(saved: SavedTrial) {
 		chapters.forEach((s, index) => {
 			if (y < 105) newPage();
 			contents.push({ page, y, index });
-			paragraph(`${String(index + 1).padStart(2, '0')} · ${s.title}`, label, 10, 5);
+			paragraph(
+				tarotMethodFor(saved.product_id)
+					? s.title
+					: `${String(index + 1).padStart(2, '0')} · ${s.title}`,
+				label,
+				10,
+				5
+			);
 		});
 		newPage();
 	}
@@ -209,7 +236,9 @@ export async function trialPdf(saved: SavedTrial) {
 				(saved.product_id === 'career-compass' && s.title === 'Sua página de decisão'))
 		)
 			newPage();
-		heading(`${String(i + 1).padStart(2, '0')} · ${s.title}`);
+		heading(
+			tarotMethodFor(saved.product_id) ? s.title : `${String(i + 1).padStart(2, '0')} · ${s.title}`
+		);
 		chapterPages.push(doc.getPageCount());
 		paragraph(s.text);
 	}
@@ -247,7 +276,18 @@ export async function trialPdf(saved: SavedTrial) {
 		book ? 23 : 15
 	);
 	paragraph(r.source, label, 9);
-	if (reconstructed) {
+	if (reconstructed && tarotMethodFor(saved.product_id)) {
+		paragraph(
+			'As cartas e suas posições pertencem à tiragem registrada. Reabrir esta leitura ou baixar outro formato preserva a mesma tiragem. Uma nova leitura começa com um novo registro.',
+			label,
+			9
+		);
+		paragraph(
+			'A leitura combina os símbolos das cartas com a função de cada posição e, quando informado, o foco escolhido por você. Use essas relações para examinar possibilidades e atitudes; elas não comprovam acontecimentos futuros nem pensamentos ou intenções de outras pessoas.',
+			label,
+			9
+		);
+	} else if (reconstructed) {
 		paragraph(
 			'A abordagem é tropical, psicológica e humanista, com regências modernas. O mapa organiza hipóteses de reflexão; não determina acontecimentos, profissão ou comportamento. Compare a leitura com sua experiência e com as condições concretas da situação.',
 			label,
