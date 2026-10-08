@@ -1,4 +1,9 @@
 import { composeLegacyTrialReading } from './legacy-reading';
+import { DIRECTION_VERSION } from './reconstruction/direction-facts';
+import {
+	composeReconstructedDirection,
+	reviewReconstructedDirection
+} from './reconstruction/direction';
 import { PURPOSE_VERSION } from './reconstruction/purpose-facts';
 import { composeReconstructedPurpose, reviewReconstructedPurpose } from './reconstruction/purpose';
 import { CALENDAR_VERSION } from './reconstruction/calendar-facts';
@@ -87,6 +92,8 @@ export function composeTrialReading(
 	input: WorkflowInput,
 	calculation: CalculationSnapshot
 ): TrialReading {
+	if (calculation.version === DIRECTION_VERSION)
+		return composeReconstructedDirection(input, calculation);
 	if (calculation.version === PURPOSE_VERSION)
 		return composeReconstructedPurpose(input, calculation);
 	if (calculation.version === CALENDAR_VERSION)
@@ -168,29 +175,31 @@ export async function approveTrialReading(
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		reconstructed &&
-		(calculation.version === PURPOSE_VERSION
-			? reviewReconstructedPurpose(input, calculation, candidate)
-			: calculation.version === CALENDAR_VERSION
-				? reviewReconstructedCalendar(input, calculation, candidate)
-				: calculation.version === SOLAR_VERSION
-					? reviewReconstructedSolar(input, calculation, candidate)
-					: calculation.version === WEEK_VERSION
-						? reviewReconstructedWeek(input, calculation, candidate)
-						: calculation.version === HOROSCOPE_VERSION
-							? reviewReconstructedHoroscope(input, calculation, candidate)
-							: calculation.version === DOSSIER_VERSION
-								? reviewReconstructedDossier(input, calculation, candidate)
-								: calculation.version === SYNASTRY_VERSION
-									? reviewReconstructedSynastry(input, calculation, candidate)
-									: calculation.version === PAIR_VERSION
-										? reviewReconstructedPair(input, calculation, candidate)
-										: calculation.version === DATE_VERSION
-											? reviewReconstructedDate(input, calculation, candidate)
-											: calculation.version === 'atv-tarot-method-calculation/2.0.0'
-												? reviewReconstructedTarot(input, calculation, candidate)
-												: calculation.version === 'atv-private-natal-synthesis/4.0.0'
-													? reviewReconstructedNatal(input, calculation, candidate)
-													: reviewReconstructedCareer(input, calculation, candidate)
+		(calculation.version === DIRECTION_VERSION
+			? reviewReconstructedDirection(input, calculation, candidate)
+			: calculation.version === PURPOSE_VERSION
+				? reviewReconstructedPurpose(input, calculation, candidate)
+				: calculation.version === CALENDAR_VERSION
+					? reviewReconstructedCalendar(input, calculation, candidate)
+					: calculation.version === SOLAR_VERSION
+						? reviewReconstructedSolar(input, calculation, candidate)
+						: calculation.version === WEEK_VERSION
+							? reviewReconstructedWeek(input, calculation, candidate)
+							: calculation.version === HOROSCOPE_VERSION
+								? reviewReconstructedHoroscope(input, calculation, candidate)
+								: calculation.version === DOSSIER_VERSION
+									? reviewReconstructedDossier(input, calculation, candidate)
+									: calculation.version === SYNASTRY_VERSION
+										? reviewReconstructedSynastry(input, calculation, candidate)
+										: calculation.version === PAIR_VERSION
+											? reviewReconstructedPair(input, calculation, candidate)
+											: calculation.version === DATE_VERSION
+												? reviewReconstructedDate(input, calculation, candidate)
+												: calculation.version === 'atv-tarot-method-calculation/2.0.0'
+													? reviewReconstructedTarot(input, calculation, candidate)
+													: calculation.version === 'atv-private-natal-synthesis/4.0.0'
+														? reviewReconstructedNatal(input, calculation, candidate)
+														: reviewReconstructedCareer(input, calculation, candidate)
 		).length
 	)
 		return null;

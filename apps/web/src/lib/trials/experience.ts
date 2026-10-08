@@ -97,7 +97,8 @@ export const experiences: Record<string, Experience> = {
 	'direction-journey': contract(
 		'Acompanhe um objetivo com revisões nos dias 7, 14 e 30.',
 		10,
-		'journal'
+		'journal',
+		false
 	),
 	'life-atlas': contract(
 		'Cruze o mapa com suas quatro prioridades e escolha uma experiência por vez.',

@@ -22,6 +22,7 @@ import { projectSolarReading } from '../trials/reconstruction/solar-facts';
 import { calculateSolarYearSamples } from '../../../../worker/src/solar-year-samples';
 import { calculateCalendarSamples } from '../../../../worker/src/personal-calendar-samples';
 import { projectCalendarReading } from '../trials/reconstruction/calendar-facts';
+import { projectDirectionReading } from '../trials/reconstruction/direction-facts';
 import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
@@ -350,6 +351,7 @@ export async function calculateTrial(
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
+	if (input.productId === 'direction-journey') return projectDirectionReading(input, base);
 	if (input.productId === 'solar-return') {
 		const natal = (await calculators['birth-chart']!(
 			{

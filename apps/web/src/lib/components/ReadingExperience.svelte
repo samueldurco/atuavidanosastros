@@ -31,9 +31,11 @@
 	const currentIndex = $derived(chapters.findIndex((s) => s.index === current.index));
 	const contract = $derived(experienceFor(saved.product_id));
 	const minutes = $derived(
-		['atv-private-calendar-synthesis/4.0.0', 'atv-private-purpose-synthesis/4.0.0'].includes(
-			saved.calculation.version
-		)
+		[
+			'atv-private-direction-journey/4.0.0',
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-purpose-synthesis/4.0.0'
+		].includes(saved.calculation.version)
 			? Math.max(
 					1,
 					Math.ceil(

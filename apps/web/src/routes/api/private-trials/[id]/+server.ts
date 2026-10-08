@@ -1,3 +1,5 @@
+import { DIRECTION_VERSION } from '$lib/trials/reconstruction/direction-facts';
+import { parseDirectionNote } from '$lib/trials/reconstruction/direction-check-ins';
 import { error, json } from '@sveltejs/kit';
 import { privateTrial, trialIdentity, trialJson } from '$lib/server/private-trials';
 import type { RequestHandler } from './$types';
@@ -74,6 +76,11 @@ export const POST: RequestHandler = async (event) => {
 			body.text.length > 3000
 		)
 			error(400, 'Anotação inválida.');
+		if (
+			saved.calculation.version === DIRECTION_VERSION &&
+			!parseDirectionNote(body.text, body.step)
+		)
+			error(400, 'Preencha os quatro campos da etapa e a decisão do dia 30.');
 		const result = await identity.supabase.from('atv_trial_notes').upsert(
 			{
 				owner_id: identity.ownerId,

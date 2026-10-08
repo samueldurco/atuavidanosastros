@@ -1,3 +1,4 @@
+import { DIRECTION_NOTE_VERSION } from '$lib/trials/reconstruction/direction-check-ins';
 import { error } from '@sveltejs/kit';
 import { productCatalog, workflowFor, type WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '$lib/server/trial-calculation';
@@ -167,7 +168,27 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			saved,
 			product,
 			feedback: null,
-			notes: [],
+			notes:
+				productId === 'direction-journey' && url.searchParams.get('directionNotes') === 'complete'
+					? [0, 7, 14, 30].map((step) => ({
+							step,
+							updated_at: '2026-11-10T12:00:00Z',
+							text: JSON.stringify({
+								version: DIRECTION_NOTE_VERSION,
+								step,
+								observation:
+									step === 0
+										? 'Espero conhecer uma tarefa sem perder descanso.'
+										: step === 30
+											? 'Observei interesse, mas a tarefa inteira não coube no tempo.'
+											: `Fiz uma amostra no dia ${step}.`,
+								conditions: 'Vinte minutos disponíveis; sem despesa.',
+								counterevidence: 'A amostra não representa toda a atividade.',
+								next: 'Reduzir o escopo e rever a condição de tempo.',
+								decision: step === 30 ? 'adjust' : 'undecided'
+							})
+						}))
+					: [],
 			readerState: { chapter: 0, bookmarks: [] }
 		},
 		download: { saved },
