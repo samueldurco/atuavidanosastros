@@ -60,6 +60,15 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
 	if (productId === 'career-compass')
 		input.context = 'Quero comparar uma atividade atual com um projeto pessoal.';
+	if (productId === 'couple-dossier') {
+		input.context =
+			'Estamos em cidades diferentes e queremos combinar presença e espaço individual.';
+		input.questions = [
+			'Como manter presença à distância?',
+			'Como conversar quando discordamos?',
+			'Como combinar espaço individual?'
+		];
+	}
 	if (productId === 'direction-journey')
 		input.journey = {
 			goal: 'Experimentar uma atividade com horário de descanso.',

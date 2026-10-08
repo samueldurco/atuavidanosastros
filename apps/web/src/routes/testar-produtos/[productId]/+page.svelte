@@ -32,6 +32,7 @@
 		storage = $state(false),
 		partnerConsent = $state(false),
 		historyConsent = $state(false);
+	let dossierQuestions = $state(['', '', '']);
 	let targetDate = $state(new Date().toISOString().slice(0, 10)),
 		month = $state(new Date().toISOString().slice(0, 7));
 	let returnYear = $state(new Date().getFullYear());
@@ -86,6 +87,7 @@
 		birth = prefill(old.birth, old.presentation?.name, old.presentation?.city);
 		partner = prefill(old.partner, old.presentation?.partnerName, old.presentation?.partnerCity);
 		context = old.context ?? '';
+		dossierQuestions = [...(old.questions ?? []), '', '', ''].slice(0, 3);
 		if (old.atlas) priorities = [...old.atlas.priorities];
 		if (old.targetDate) {
 			targetDate = old.targetDate;
@@ -212,6 +214,8 @@
 						.filter(Boolean)
 				};
 			if (context.trim()) input.context = context.trim();
+			if (data.product.id === 'couple-dossier')
+				input.questions = dossierQuestions.map((q) => q.trim()).filter(Boolean);
 			const payload = JSON.stringify({ input, sourceIds });
 			if (payload !== lastPayload) {
 				requestKey = crypto.randomUUID();
@@ -402,11 +406,30 @@
 				</aside>
 			{/if}
 			<label
-				>Contexto que deseja trazer (opcional)<textarea
+				>Contexto que deseja trazer {data.product.id === 'couple-dossier'
+					? '(necessário para o Dossiê)'
+					: '(opcional)'}<textarea
+					required={data.product.id === 'couple-dossier'}
 					maxlength="1200"
 					rows="3"
 					bind:value={context}></textarea></label
 			>
+			{#if data.product.id === 'couple-dossier'}
+				<fieldset>
+					<legend>Perguntas para esta leitura</legend>
+					<p>
+						Traga de uma a três perguntas sobre a situação relatada. A leitura propõe caminhos para
+						conversar e agir; não revela sentimentos ocultos nem decide pela outra pessoa.
+					</p>
+					{#each [0, 1, 2] as i (i)}<label
+							>Pergunta {i + 1}{i === 0 ? ' (necessária)' : ' (opcional)'}<textarea
+								rows="2"
+								maxlength="400"
+								required={i === 0}
+								bind:value={dossierQuestions[i]}></textarea></label
+						>{/each}
+				</fieldset>
+			{/if}
 			<p>
 				Conteúdo original gerado com IA e revisado editorialmente, combinado com os fatos desta
 				leitura. Seus dados ficam na biblioteca privada; esta geração não envia seu relato a um

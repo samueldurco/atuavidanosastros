@@ -45,7 +45,8 @@ const angle = (n: unknown): n is number =>
 	typeof n === 'number' && Number.isFinite(n) && n >= 0 && n < 360;
 export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
 	const root =
-		saved.product_id === 'couple-dossier'
+		saved.product_id === 'couple-dossier' &&
+		saved.calculation.version !== 'atv-private-couple-dossier-synthesis/4.0.0'
 			? (saved.calculation.data.base as { data: Record<string, unknown> }).data
 			: saved.calculation.data;
 	const data = person

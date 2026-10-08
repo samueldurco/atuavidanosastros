@@ -41,7 +41,10 @@
 			'midheaven',
 			'date-reading'
 		].includes(saved.product_id) ||
-			saved.calculation.version === 'atv-private-synastry-synthesis/4.0.0'
+			[
+				'atv-private-synastry-synthesis/4.0.0',
+				'atv-private-couple-dossier-synthesis/4.0.0'
+			].includes(saved.calculation.version)
 	);
 
 	let pending: ReaderState | null = null;

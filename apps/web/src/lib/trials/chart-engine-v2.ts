@@ -126,7 +126,10 @@ export function placeChartMarkers(
 }
 
 export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): ChartScene {
-	const synastry = saved.calculation.version === 'atv-private-synastry-synthesis/4.0.0';
+	const synastry = [
+		'atv-private-synastry-synthesis/4.0.0',
+		'atv-private-couple-dossier-synthesis/4.0.0'
+	].includes(saved.calculation.version);
 	if (synastry && options.mode !== 'natal' && !options.person)
 		return buildDateChartScene(saved, options, true);
 	if (synastry && options.person) {
@@ -432,7 +435,9 @@ function buildDateChartScene(
 		aspects: 'none',
 		person: relationship ? 'second' : undefined
 	});
-	scene.title = relationship ? 'Sinastria · mapas em relação' : 'Céu da data e mapa natal';
+	scene.title = relationship
+		? `${saved.product_id === 'couple-dossier' ? 'Dossiê do Casal' : 'Sinastria'} · mapas em relação`
+		: 'Céu da data e mapa natal';
 	scene.height = 1280;
 	scene.nodes = scene.nodes.filter(
 		(n) => !['heading', 'positions', 'markers', 'leaders', 'legend'].includes(n.layer)

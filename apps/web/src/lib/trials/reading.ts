@@ -25,6 +25,8 @@ import { DATE_VERSION } from './reconstruction/date-facts';
 import { PAIR_VERSION } from './reconstruction/pair-facts';
 import { composeReconstructedPair, reviewReconstructedPair } from './reconstruction/pair';
 import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
+import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
+import { composeReconstructedDossier, reviewReconstructedDossier } from './reconstruction/dossier';
 import {
 	composeReconstructedSynastry,
 	reviewReconstructedSynastry
@@ -69,6 +71,8 @@ export function composeTrialReading(
 	input: WorkflowInput,
 	calculation: CalculationSnapshot
 ): TrialReading {
+	if (calculation.version === DOSSIER_VERSION)
+		return composeReconstructedDossier(input, calculation);
 	if (calculation.version === DATE_VERSION) return composeReconstructedDate(input, calculation);
 	if (calculation.version === PAIR_VERSION) return composeReconstructedPair(input, calculation);
 	if (calculation.version === SYNASTRY_VERSION)
@@ -140,17 +144,19 @@ export async function approveTrialReading(
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		reconstructed &&
-		(calculation.version === SYNASTRY_VERSION
-			? reviewReconstructedSynastry(input, calculation, candidate)
-			: calculation.version === PAIR_VERSION
-				? reviewReconstructedPair(input, calculation, candidate)
-				: calculation.version === DATE_VERSION
-					? reviewReconstructedDate(input, calculation, candidate)
-					: calculation.version === 'atv-tarot-method-calculation/2.0.0'
-						? reviewReconstructedTarot(input, calculation, candidate)
-						: calculation.version === 'atv-private-natal-synthesis/4.0.0'
-							? reviewReconstructedNatal(input, calculation, candidate)
-							: reviewReconstructedCareer(input, calculation, candidate)
+		(calculation.version === DOSSIER_VERSION
+			? reviewReconstructedDossier(input, calculation, candidate)
+			: calculation.version === SYNASTRY_VERSION
+				? reviewReconstructedSynastry(input, calculation, candidate)
+				: calculation.version === PAIR_VERSION
+					? reviewReconstructedPair(input, calculation, candidate)
+					: calculation.version === DATE_VERSION
+						? reviewReconstructedDate(input, calculation, candidate)
+						: calculation.version === 'atv-tarot-method-calculation/2.0.0'
+							? reviewReconstructedTarot(input, calculation, candidate)
+							: calculation.version === 'atv-private-natal-synthesis/4.0.0'
+								? reviewReconstructedNatal(input, calculation, candidate)
+								: reviewReconstructedCareer(input, calculation, candidate)
 		).length
 	)
 		return null;

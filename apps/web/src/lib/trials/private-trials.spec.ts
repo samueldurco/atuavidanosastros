@@ -68,6 +68,10 @@ function inputFor(productId: string): WorkflowInput {
 			localDateTime: '2001-01-01T12:00:00',
 			utcInstant: '2001-01-01T12:00:00Z'
 		};
+	if (productId === 'couple-dossier') {
+		input.context = 'Queremos melhorar a comunicação.';
+		input.questions = ['Como conversar quando discordamos?'];
+	}
 	if (kind === 'cycles')
 		input.targetDate = productId === 'personal-calendar' ? '2026-10-01' : '2026-10-06';
 	if (productId === 'solar-return') {

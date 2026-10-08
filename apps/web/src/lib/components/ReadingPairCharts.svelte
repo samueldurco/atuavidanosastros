@@ -2,6 +2,7 @@
 	import type { SavedTrial } from '$lib/trials/reading';
 	import { buildChartScene, chartSceneSvg } from '$lib/trials/chart-engine-v2';
 	import { SYNASTRY_VERSION } from '$lib/trials/reconstruction/synastry-facts';
+	import { DOSSIER_VERSION } from '$lib/trials/reconstruction/dossier-facts';
 	import {
 		trialGeometry,
 		bodyNames,
@@ -10,7 +11,9 @@
 		nominalDegree
 	} from '$lib/trials/cartography';
 	let { saved }: { saved: SavedTrial } = $props();
-	const reconstructed = $derived(saved.calculation.version === SYNASTRY_VERSION);
+	const reconstructed = $derived(
+		[SYNASTRY_VERSION, DOSSIER_VERSION].includes(saved.calculation.version)
+	);
 	const people = $derived([
 		{ key: 'first' as const, name: saved.input.presentation?.name ?? 'Pessoa A' },
 		{ key: 'second' as const, name: saved.input.presentation?.partnerName ?? 'Pessoa B' }

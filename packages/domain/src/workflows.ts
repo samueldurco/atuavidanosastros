@@ -132,6 +132,7 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.id === 'life-atlas') fields.push('atlas');
   if (product.id === 'dream-atlas') fields.push('dreamAtlas');
   if (product.kind === 'relationship') fields.push('partner');
+  if (product.id === 'couple-dossier') fields.push('questions');
   if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
   if (product.kind === 'tarot') fields.push(tarotMethodFor(product.id) ? 'focus' : 'questions');
   if (product.kind === 'dream' && product.id !== 'dream-atlas') fields.push('dream');
@@ -152,6 +153,11 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
        Object.keys(v.dreamAtlas).length !== 1 || !validDate(v.dreamAtlas.startDate) ||
        v.dreamAtlas.startDate > '2099-12-02' || v.consent.continuity)) return null;
   if (product.kind === 'relationship' && (!birth(v.partner) || !v.consent.partner)) return null;
+  // Historical dossiers may omit these; new private editions require them in their projection.
+  if (product.id === 'couple-dossier' && v.questions !== undefined &&
+      (!strings(v.questions, 3, 400) || v.questions.length < 1 ||
+       v.questions.some((q) => /[\u007f-\u009f]/.test(q)) ||
+       new Set(v.questions.map((q) => q.trim().normalize('NFKC').toLocaleLowerCase('pt-BR'))).size !== v.questions.length)) return null;
   if (product.kind !== 'relationship' && v.consent.partner) return null;
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
       (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2099 ||
