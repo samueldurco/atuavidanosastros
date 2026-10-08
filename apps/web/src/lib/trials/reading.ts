@@ -22,6 +22,8 @@ import { composeReconstructedNatal, reviewReconstructedNatal } from './reconstru
 import { composeReconstructedTarot, reviewReconstructedTarot } from './reconstruction/tarot';
 import { composeReconstructedDate, reviewReconstructedDate } from './reconstruction/date';
 import { DATE_VERSION } from './reconstruction/date-facts';
+import { PAIR_VERSION } from './reconstruction/pair-facts';
+import { composeReconstructedPair, reviewReconstructedPair } from './reconstruction/pair';
 
 export type TrialReading = {
 	version: string;
@@ -63,6 +65,7 @@ export function composeTrialReading(
 	calculation: CalculationSnapshot
 ): TrialReading {
 	if (calculation.version === DATE_VERSION) return composeReconstructedDate(input, calculation);
+	if (calculation.version === PAIR_VERSION) return composeReconstructedPair(input, calculation);
 	if (calculation.version === 'atv-tarot-method-calculation/2.0.0')
 		return composeReconstructedTarot(input, calculation);
 	if (calculation.version === 'atv-private-natal-synthesis/4.0.0')
@@ -130,13 +133,15 @@ export async function approveTrialReading(
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		reconstructed &&
-		(calculation.version === DATE_VERSION
-			? reviewReconstructedDate(input, calculation, candidate)
-			: calculation.version === 'atv-tarot-method-calculation/2.0.0'
-				? reviewReconstructedTarot(input, calculation, candidate)
-				: calculation.version === 'atv-private-natal-synthesis/4.0.0'
-					? reviewReconstructedNatal(input, calculation, candidate)
-					: reviewReconstructedCareer(input, calculation, candidate)
+		(calculation.version === PAIR_VERSION
+			? reviewReconstructedPair(input, calculation, candidate)
+			: calculation.version === DATE_VERSION
+				? reviewReconstructedDate(input, calculation, candidate)
+				: calculation.version === 'atv-tarot-method-calculation/2.0.0'
+					? reviewReconstructedTarot(input, calculation, candidate)
+					: calculation.version === 'atv-private-natal-synthesis/4.0.0'
+						? reviewReconstructedNatal(input, calculation, candidate)
+						: reviewReconstructedCareer(input, calculation, candidate)
 		).length
 	)
 		return null;

@@ -104,12 +104,14 @@ export async function executeTrialRuntime(value: unknown): Promise<TrialRuntimeR
 			'birth-chart',
 			'ascendant',
 			'midheaven',
-			'date-reading'
+			'date-reading',
+			'pair-preview'
 		].includes(saved.input.productId) &&
 		![
 			'atv-private-career-synthesis/4.0.0',
 			'atv-private-natal-synthesis/4.0.0',
-			'atv-private-date-synthesis/4.0.0'
+			'atv-private-date-synthesis/4.0.0',
+			'atv-private-pair-preview/4.0.0'
 		].includes(saved.calculation.version)
 			? await calculateTrial(saved.input, crypto.randomUUID())
 			: saved.calculation;

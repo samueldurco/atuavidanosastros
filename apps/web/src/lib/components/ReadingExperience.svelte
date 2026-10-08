@@ -5,6 +5,7 @@
 	import type { ReaderState } from '$lib/trials/reader-state';
 	import { experienceFor } from '$lib/trials/experience';
 	import { trialResponse } from '$lib/trials/response';
+	import { PAIR_VERSION } from '$lib/trials/reconstruction/pair-facts';
 	import ReadingPairCharts from './ReadingPairCharts.svelte';
 	import ReadingChart from './ReadingChart.svelte';
 	import ReadingTarot from './ReadingTarot.svelte';
@@ -109,7 +110,7 @@
 				</p>{/if}
 		</div>
 	{/if}
-	{#if ['synastry', 'pair-preview', 'couple-dossier'].includes(saved.product_id)}<ReadingPairCharts
+	{#if ['synastry', 'couple-dossier'].includes(saved.product_id) || (saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)}<ReadingPairCharts
 			{saved}
 		/>{/if}
 	{#if saved.product_id === 'three-pillars'}

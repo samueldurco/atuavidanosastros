@@ -13,6 +13,7 @@ import {
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
 import { modernRulers } from '../trials/reconstruction/canon';
 import { projectDateReading } from '../trials/reconstruction/date-facts';
+import { projectPairPreview } from '../trials/reconstruction/pair-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -97,6 +98,25 @@ export async function calculateTrial(
 	const signal = AbortSignal.timeout(25000);
 	if (tarotMethodFor(input.productId)) return calculateTarotMethod(input, runId, signal);
 	const context = { runId, signal };
+	if (input.productId === 'pair-preview') {
+		const birthInputs = [input.birth!, input.partner!] as const;
+		const sources = await Promise.all(
+			birthInputs.map((birth) =>
+				calculators['birth-chart']!(
+					{
+						version: input.version,
+						productId: 'birth-chart',
+						birth,
+						consent: { ...input.consent, partner: false }
+					},
+					context
+				)
+			)
+		);
+		return projectPairPreview(input, sources as [CalculationSnapshot, CalculationSnapshot], [
+			...birthInputs
+		]);
+	}
 	if (
 		[
 			'career-compass',

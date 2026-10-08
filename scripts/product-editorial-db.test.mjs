@@ -10,7 +10,7 @@ import { createProductPublisher } from '../apps/worker/src/product-publication.t
 const migration='supabase/migrations/20260923110000_product_editorial_publication.sql';
 const service=(db,sql,args=[])=>asRole(db,'service_role',null,()=>db.query(sql,args)).then(r=>r.rows[0]?.data);
 const read=(db,id,user=owner)=>asRole(db,'authenticated',user,()=>db.query('select read_product_run($1) as data',[id])).then(r=>r.rows[0].data);
-const claim=(db)=>service(db,"select claim_product_editorial(array['daily-card']) as data");
+const claim=(db)=>service(db,"select claim_product_editorial(array['dream-journal']) as data");
 const complete=(db,c)=>service(db,'select complete_product_editorial($1,$2,$3,$4) as data',[c.runId,c.receiptId,c.token,c.revision]);
 const expire=(db,c)=>db.query("update product_editorial_work set lease_until=clock_timestamp()-interval '1 second' where receipt_id=$1",[c.receiptId]);
 async function boot(t) {
@@ -19,9 +19,9 @@ async function boot(t) {
   await db.exec(await file(migration)); return db;
 }
 async function pending(db) {
-  await db.exec("update workflow_releases set enabled=true where product_id='daily-card'");
-  const input={version:'atv-workflow/1.0.0',productId:'daily-card',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},questions:['Qual aspecto posso observar?']};
-  const {rows:[{id}]}=await asRole(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as id',['daily-card',randomUUID(),input]));
+  await db.exec("update workflow_releases set enabled=true where product_id='dream-journal'");
+  const input={version:'atv-workflow/1.0.0',productId:'dream-journal',consent:{storage:true,policyVersion:'atv-input-consent/1',partner:false,continuity:false},dream:{date:'2026-10-08',narrative:'Relato sintético para verificar apenas a publicação SQL.',associations:[],emotions:[]}};
+  const {rows:[{id}]}=await asRole(db,'authenticated',owner,()=>db.query('select request_product_run($1,$2,$3) as id',['dream-journal',randomUUID(),input]));
   const repository=createWorkflowRepository(async(name,args,signal)=>{
     signal.throwIfAborted();
     return service(db,`select ${name}(${Object.keys(args).map((key,i)=>key+' => $'+(i+1)).join(',')}) as data`,Object.values(args));
@@ -54,7 +54,7 @@ const publicationRpc=db=>async(name,args,signal)=>{
 
 test('portable publisher integrates real SQL from waiting calculation to owned history without issuing approval',async t=>{
   const db=await boot(t),r=await pending(db),events=[];
-  const publisher=createProductPublisher(publicationRpc(db),{enabledProducts:['daily-card'],emit:e=>events.push(e)});
+  const publisher=createProductPublisher(publicationRpc(db),{enabledProducts:['dream-journal'],emit:e=>events.push(e)});
   assert.equal(await publisher.step(),'idle');await receipt(db,r);assert.equal(await publisher.step(),'idle');
   await enable(db);assert.equal(await publisher.step(),'published');assert.equal(await publisher.step(),'idle');
   const result=await read(db,r.id);assert.equal(result.released,true);assert.equal(result.history.at(-1).state,'READY');
@@ -68,7 +68,7 @@ test('lost completion response is uncertain although SQL committed, and next ste
   const publisher=createProductPublisher(async(name,args,signal)=>{
     calls.push(name);const result=await rpc(name,args,signal);
     if(name==='complete_product_editorial') throw Error('response lost after commit');return result;
-  },{enabledProducts:['daily-card']});
+  },{enabledProducts:['dream-journal']});
   assert.equal(await publisher.step(),'publication_uncertain');assert.deepEqual(calls,['claim_product_editorial','complete_product_editorial']);
   assert.equal((await read(db,r.id)).released,true);assert.equal(await publisher.step(),'idle');
   assert.equal((await db.query("select count(*)::int as n from product_run_events where run_id=$1 and state='READY'",[r.id])).rows[0].n,1);
@@ -80,7 +80,7 @@ test('SQL gate revoked between publisher RPCs leaves run waiting and service can
   const publisher=createProductPublisher(async(name,args,signal)=>{
     calls++;if(name==='complete_product_editorial')await db.exec('update product_editorial_receipts set revoked_at=now()');
     return rpc(name,args,signal);
-  },{enabledProducts:['daily-card']});
+  },{enabledProducts:['dream-journal']});
   assert.equal(await publisher.step(),'publication_uncertain');assert.equal(calls,2);
   assert.equal((await read(db,r.id)).state,'AWAITING_EDITORIAL');assert.equal(await publisher.step(),'idle');
 });
@@ -98,7 +98,7 @@ test('editorial authority is private and default-disabled; no service can fabric
     await assert.rejects(()=>asRole(db,role,owner,()=>db.query('select product_editorial_delivery_allowed($1)',[r.id])),/permission denied/);
   }
   for(const role of ['anon','authenticated']) {
-    await assert.rejects(()=>asRole(db,role,owner,()=>db.exec("select claim_product_editorial(array['daily-card'])")),/permission denied/);
+    await assert.rejects(()=>asRole(db,role,owner,()=>db.exec("select claim_product_editorial(array['dream-journal'])")),/permission denied/);
     await assert.rejects(()=>asRole(db,role,owner,()=>db.query('select complete_product_editorial($1,$2,$3,3)',[r.id,randomUUID(),randomUUID()])),/permission denied/);
   }
   await assert.rejects(()=>service(db,"select advance_product_run($1,$2,3,'READY')",[r.id,owner]),/permission denied/);
@@ -142,8 +142,8 @@ test('gates are checked again after claim and invalidation never partially commi
   const db=await boot(t);const r=await pending(db);const a=await receipt(db,r);await enable(db);const c=await claim(db);
   const cases=[
     ['update product_editorial_policy set enabled=false','update product_editorial_policy set enabled=true','editorial_disabled'],
-    ["update workflow_releases set enabled=false where product_id='daily-card'","update workflow_releases set enabled=true where product_id='daily-card'"],
-    ["update workflow_releases set contract_version='stale' where product_id='daily-card'","update workflow_releases set contract_version='atv-workflow/1.0.0' where product_id='daily-card'"],
+    ["update workflow_releases set enabled=false where product_id='dream-journal'","update workflow_releases set enabled=true where product_id='dream-journal'"],
+    ["update workflow_releases set contract_version='stale' where product_id='dream-journal'","update workflow_releases set contract_version='atv-workflow/1.0.0' where product_id='dream-journal'"],
     ['update editorial_promotions set revoked_at=now()','update editorial_promotions set revoked_at=null'],
     ["update editorial_promotions set evidence_digest=repeat('d',64)","update editorial_promotions set evidence_digest=repeat('b',64)"],
     ['update product_editorial_receipts set revoked_at=now()','update product_editorial_receipts set revoked_at=null'],
@@ -195,8 +195,8 @@ test('missing approval, mismatched snapshot and experimental engine gates leave 
   await db.query('update product_editorial_receipts set calculation=$1 where id=$2',[r.calculation,a.id]);
   await db.exec("update product_runs set calculation=jsonb_set(calculation,'{status}','\"experimental\"'); update product_editorial_receipts set calculation=jsonb_set(calculation,'{status}','\"experimental\"')");
   assert.equal(await claim(db),null);
-  await db.exec("update workflow_releases set engine_approved=true where product_id='daily-card'");const c=await claim(db);assert.ok(c);
-  await db.exec("update workflow_releases set engine_approved=false where product_id='daily-card'");
+  await db.exec("update workflow_releases set engine_approved=true where product_id='dream-journal'");const c=await claim(db);assert.ok(c);
+  await db.exec("update workflow_releases set engine_approved=false where product_id='dream-journal'");
   await assert.rejects(()=>complete(db,c),/release_evidence_required/);
   await assert.rejects(()=>service(db,'select claim_product_editorial($1)',[[]]),/invalid_claim/);
 });
