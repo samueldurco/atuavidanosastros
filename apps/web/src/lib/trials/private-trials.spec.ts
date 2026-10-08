@@ -275,23 +275,18 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		for (const product of ['horoscope', 'daily-card', 'atv-plus'])
 			expect(privateFormats(product, ['web', 'pdf'])).not.toContain('pdf');
 	});
-	it('pair preview interprets all six calculated positions and renders both three-factor charts', () => {
+	it('pair preview interprets six role-bound Sun, Moon and Ascendant factors', () => {
 		const s = saved.get('pair-preview')!;
 		for (const person of ['first', 'second'] as const) {
-			const geometry = trialGeometry(s, person);
-			expect(geometry.positions.map((p) => p.body).sort()).toEqual(['mars', 'moon', 'venus']);
-			expect(geometry.houses.cusps).toEqual([]);
+			const points = (s.calculation.data[person] as { points: { factor: string }[] }).points;
+			expect(points.map((p) => p.factor)).toEqual(['sun', 'moon', 'ascendant']);
 		}
-		const chapters = s.reading.sections.slice(0, 3);
-		expect(chapters.map((s) => s.title)).toEqual([
-			'Afeto e aproximação',
-			'Necessidades emocionais',
-			'Desejo, iniciativa e limites'
-		]);
-		expect(new Set(chapters.flatMap((s) => s.factIds)).size).toBe(6);
-		expect(chapters.every((s) => s.text.includes('não calcula aspectos entre os mapas'))).toBe(
-			true
+		expect(s.reading.sections.map((s) => s.title)).toContain(
+			'Direções que cada pessoa quer construir'
 		);
+		expect(s.calculation.facts.filter((f) => f.kind === 'calculated')).toHaveLength(6);
+		expect(s.calculation.data.aspects).toEqual([]);
+		expect(s.calculation.data.compatibilityScore).toBeNull();
 	});
 	it('career integrates saved natal geometry, modern rulership and context into a practical decision', () => {
 		const s = saved.get('career-compass')!;

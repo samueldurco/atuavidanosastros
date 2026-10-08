@@ -40,7 +40,8 @@
 			'purpose-career',
 			'midheaven',
 			'date-reading'
-		].includes(saved.product_id)
+		].includes(saved.product_id) ||
+			saved.calculation.version === 'atv-private-synastry-synthesis/4.0.0'
 	);
 
 	let pending: ReaderState | null = null;

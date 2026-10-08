@@ -126,6 +126,25 @@ export function placeChartMarkers(
 }
 
 export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): ChartScene {
+	const synastry = saved.calculation.version === 'atv-private-synastry-synthesis/4.0.0';
+	if (synastry && options.mode !== 'natal' && !options.person)
+		return buildDateChartScene(saved, options, true);
+	if (synastry && options.person) {
+		const i = options.person === 'first' ? 0 : 1;
+		const native = {
+			...saved,
+			product_id: 'birth-chart',
+			calculation: (saved.calculation.data.sources as SavedTrial['calculation'][])[i]
+		};
+		const scene = buildChartScene(native, { ...options, person: undefined, mode: 'natal' });
+		scene.title = `Mapa da pessoa ${i === 0 ? 'A' : 'B'}`;
+		for (const node of scene.nodes) {
+			if (node.factId) node.factId = `person-${i === 0 ? 'a' : 'b'}-${node.factId}`;
+			if (node.type === 'text' && node.layer === 'heading' && node.size === 24)
+				node.text = scene.title;
+		}
+		return scene;
+	}
 	if (
 		saved.product_id === 'date-reading' &&
 		saved.calculation.version === 'atv-private-date-synthesis/4.0.0' &&
@@ -392,8 +411,14 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 }
 
 /** Directed contacts use each source's actual longitude; houses belong only to the natal map. */
-function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartScene {
-	const geometry = saved.calculation.data.transitGeometry as CrossAspectCalculation;
+function buildDateChartScene(
+	saved: SavedTrial,
+	options: ChartOptions,
+	relationship = false
+): ChartScene {
+	const geometry = saved.calculation.data[
+		relationship ? 'relationshipGeometry' : 'transitGeometry'
+	] as CrossAspectCalculation;
 	if (
 		!geometry ||
 		geometry.pairsEvaluated !== 100 ||
@@ -401,8 +426,13 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 		geometry.inputPositions.second.length !== 10
 	)
 		throw Error('date_chart_geometry_invalid');
-	const scene = buildChartScene(saved, { ...options, mode: 'natal', aspects: 'none' });
-	scene.title = 'Céu da data e mapa natal';
+	const scene = buildChartScene(saved, {
+		...options,
+		mode: 'natal',
+		aspects: 'none',
+		person: relationship ? 'second' : undefined
+	});
+	scene.title = relationship ? 'Sinastria · mapas em relação' : 'Céu da data e mapa natal';
 	scene.height = 1280;
 	scene.nodes = scene.nodes.filter(
 		(n) => !['heading', 'positions', 'markers', 'leaders', 'legend'].includes(n.layer)
@@ -421,7 +451,16 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 		anchor: 'middle' | 'start' = 'middle'
 	) => add({ type: 'text', x, y, text: value, size, layer, fill, anchor });
 	text(450, 61, scene.title, 24, 'heading');
-	text(450, 85, `${saved.input.targetDate} · amostra às 12h UTC`, 13, 'heading', muted);
+	text(
+		450,
+		85,
+		relationship
+			? 'Pessoa A no anel externo · pessoa B no anel interno'
+			: `${saved.input.targetDate} · amostra às 12h UTC`,
+		13,
+		'heading',
+		muted
+	);
 	for (const [r, stroke] of [
 		[230, blue],
 		[274, gold]
@@ -438,11 +477,12 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 		});
 	const selected = new Set(saved.reading.editorial?.selection.map((s) => s.factId) ?? []);
 	geometry.aspects.forEach((a, i) => {
+		const aspectFactId = relationship ? `cross-${a.first}-${a.second}` : `date-transit-${i}`;
 		const filter = options.aspects ?? 'major';
 		const tense = ['square', 'opposition'].includes(a.kind);
 		if (
 			filter === 'none' ||
-			(filter === 'major' && selected.size && !selected.has(`date-transit-${i}`)) ||
+			(filter === 'major' && selected.size && !selected.has(aspectFactId)) ||
 			(filter === 'tensions' && !tense) ||
 			(filter === 'harmonious' && !['sextile', 'trine'].includes(a.kind))
 		)
@@ -461,7 +501,7 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 			dash: tense ? [5, 4] : undefined,
 			opacity: 0.8,
 			layer: 'aspects',
-			factId: `date-transit-${i}`
+			factId: aspectFactId
 		});
 	});
 	const protectedBoxes: Box[] = [
@@ -483,7 +523,9 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 		const [role, body] = marker.body.split(':');
 		const isNatal = role === 'natal',
 			color = isNatal ? blue : gold,
-			factId = `${isNatal ? 'position' : 'sample'}-${body}`;
+			factId = relationship
+				? `person-${isNatal ? 'b' : 'a'}-position-${body}`
+				: `${isNatal ? 'position' : 'sample'}-${body}`;
 		const p = longitudePoint(marker.longitude, isNatal ? 230 : 274, 450, 450);
 		add({
 			type: 'line',
@@ -520,7 +562,7 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 		text(
 			marker.x,
 			marker.y + 22,
-			`${bodyNames[body]} · ${isNatal ? 'natal' : 'data'}`,
+			`${bodyNames[body]} · ${relationship ? (isNatal ? 'B' : 'A') : isNatal ? 'natal' : 'data'}`,
 			10,
 			'markers',
 			color
@@ -537,17 +579,24 @@ function buildDateChartScene(saved: SavedTrial, options: ChartOptions): ChartSce
 			);
 		}
 	}
-	text(450, 865, 'Azul: mapa natal · ouro: céu da data', 16);
+	text(
+		450,
+		865,
+		relationship ? 'Azul: pessoa B · ouro: pessoa A' : 'Azul: mapa natal · ouro: céu da data',
+		16
+	);
 	text(
 		450,
 		887,
-		'Casas e eixos pertencem ao natal; a amostra da data não calcula casas próprias.',
+		relationship
+			? 'Casas e eixos desenhados pertencem à pessoa B, quando disponíveis.'
+			: 'Casas e eixos pertencem ao natal; a amostra da data não calcula casas próprias.',
 		11,
 		'legend',
 		muted
 	);
-	text(80, 925, 'MAPA NATAL', 12, 'legend', blue, 'start');
-	text(470, 925, 'CÉU DA DATA', 12, 'legend', gold, 'start');
+	text(80, 925, relationship ? 'PESSOA B' : 'MAPA NATAL', 12, 'legend', blue, 'start');
+	text(470, 925, relationship ? 'PESSOA A' : 'CÉU DA DATA', 12, 'legend', gold, 'start');
 	for (const [j, list] of [geometry.inputPositions.second, geometry.inputPositions.first].entries())
 		list.forEach((p, i) =>
 			text(

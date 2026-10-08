@@ -8,6 +8,7 @@ import { drawChartScenePdf } from './chart-pdf';
 import { tarotMethodFor } from '@atv/domain';
 import { buildTarotScene } from './tarot-diagram';
 import { PAIR_VERSION } from './reconstruction/pair-facts';
+import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -168,21 +169,23 @@ export async function trialPdf(saved: SavedTrial) {
 	if (book) newPage();
 	// Geometry is read from the saved calculation, never inferred from prose.
 	const chartPeople: ('first' | 'second' | undefined)[] =
-		['synastry', 'couple-dossier'].includes(saved.product_id) ||
-		(saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)
-			? ['first', 'second']
-			: [
-						'three-pillars',
-						'birth-chart',
-						'life-atlas',
-						'ascendant',
-						'career-compass',
-						'purpose-career',
-						'midheaven',
-						'date-reading'
-				  ].includes(saved.product_id)
-				? [undefined]
-				: [];
+		saved.calculation.version === SYNASTRY_VERSION
+			? [undefined, 'first', 'second']
+			: ['synastry', 'couple-dossier'].includes(saved.product_id) ||
+				  (saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)
+				? ['first', 'second']
+				: [
+							'three-pillars',
+							'birth-chart',
+							'life-atlas',
+							'ascendant',
+							'career-compass',
+							'purpose-career',
+							'midheaven',
+							'date-reading'
+					  ].includes(saved.product_id)
+					? [undefined]
+					: [];
 	if (!book && chartPeople.length) newPage();
 	for (const person of chartPeople) {
 		const scene = buildChartScene(saved, { person });
@@ -294,6 +297,8 @@ export async function trialPdf(saved: SavedTrial) {
 			label,
 			9
 		);
+	} else if (saved.calculation.version === SYNASTRY_VERSION) {
+		r.limits.slice(-6).forEach((limit) => paragraph(limit, label, 9));
 	} else if (saved.calculation.version === PAIR_VERSION) {
 		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
 	} else if (reconstructed) {

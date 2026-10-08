@@ -13,6 +13,7 @@ import {
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
 import { modernRulers } from '../trials/reconstruction/canon';
 import { projectDateReading } from '../trials/reconstruction/date-facts';
+import { projectSynastry } from '../trials/reconstruction/synastry-facts';
 import { projectPairPreview } from '../trials/reconstruction/pair-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
@@ -98,7 +99,7 @@ export async function calculateTrial(
 	const signal = AbortSignal.timeout(25000);
 	if (tarotMethodFor(input.productId)) return calculateTarotMethod(input, runId, signal);
 	const context = { runId, signal };
-	if (input.productId === 'pair-preview') {
+	if (input.productId === 'pair-preview' || input.productId === 'synastry') {
 		const birthInputs = [input.birth!, input.partner!] as const;
 		const sources = await Promise.all(
 			birthInputs.map((birth) =>
@@ -113,9 +114,11 @@ export async function calculateTrial(
 				)
 			)
 		);
-		return projectPairPreview(input, sources as [CalculationSnapshot, CalculationSnapshot], [
-			...birthInputs
-		]);
+		return (input.productId === 'synastry' ? projectSynastry : projectPairPreview)(
+			input,
+			sources as [CalculationSnapshot, CalculationSnapshot],
+			[...birthInputs]
+		);
 	}
 	if (
 		[

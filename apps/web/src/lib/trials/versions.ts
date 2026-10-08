@@ -12,7 +12,8 @@ export const latestReadingVersion = (productId: string) =>
 		'ascendant',
 		'midheaven',
 		'date-reading',
-		'pair-preview'
+		'pair-preview',
+		'synastry'
 	].includes(productId)
 		? 'atv-product-reconstruction/4.0.0'
 		: CONTENT_VERSION;

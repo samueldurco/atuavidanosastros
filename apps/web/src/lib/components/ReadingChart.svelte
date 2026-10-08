@@ -29,6 +29,9 @@
 				f.id.startsWith('position-') ||
 				f.id.startsWith('sample-') ||
 				f.id.startsWith('date-transit-') ||
+				/^person-[ab]-(position-|angle-)/.test(f.id) ||
+				(f.id.startsWith('cross-') &&
+					saved.reading.sections.slice(0, -1).some((s) => s.factIds.includes(f.id))) ||
 				['angle-ascendant', 'angle-midheaven'].includes(f.id)
 		)
 	);

@@ -188,19 +188,20 @@ test('three pillars have distinct navigation and horoscope remains a web reading
 	);
 });
 
-test('pair preview displays both calculated three-factor charts and the desire chapter', async ({
+test('pair preview displays both three-factor comparisons and the direction chapter', async ({
 	page
 }) => {
 	await page.route('**/api/private-trials/*', (route) =>
 		route.fulfill({ status: 200, json: { saved: true } })
 	);
 	await page.goto('/testar-produtos/_spec?product=pair-preview');
-	await expect(page.locator('svg[role="img"]')).toHaveCount(2);
-	await expect(page.locator('svg[role="img"] [data-body]')).toHaveCount(6);
-	await page.getByRole('button', { name: 'Desejo, iniciativa e limites', exact: true }).click();
-	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText(
-		'não calcula aspectos entre os mapas'
-	);
+	await page.getByText('Referências calculadas e informadas', { exact: true }).click();
+	await expect(page.getByText('Pessoa A · Sol:', { exact: false }).first()).toBeVisible();
+	await expect(page.getByText('Pessoa B · Ascendente:', { exact: false }).first()).toBeVisible();
+	await page
+		.getByRole('button', { name: 'Direções que cada pessoa quer construir', exact: true })
+		.click();
+	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText('Sol em');
 });
 
 test('ATV+ has all six universes, 25 products, notes library and personal approval', async ({
