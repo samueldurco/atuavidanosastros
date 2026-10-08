@@ -327,11 +327,11 @@ describe('private free testing of the real 25 calculations and original AI/edito
 				'house-10'
 			])
 		);
-		expect(s.reading.editorial?.plan.some((s) => s.role === 'integrated-synthesis')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'integrated-compass')).toBe(true);
 		expect(s.reading.editorial?.context.factId).toBe('personal-context');
 		expect(s.calculation.data.positions).toHaveLength(10);
-		expect(s.reading.editorial?.plan.some((s) => s.role === 'context-bound-decision')).toBe(true);
-		expect(s.reading.editorial?.plan.some((s) => s.role === 'context-bound-experiment')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'reported-context')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'reversible-experiment')).toBe(true);
 	});
 	it('calendar preserves every date and four observations per day within the approval size bound', () => {
 		const s = saved.get('personal-calendar')!;

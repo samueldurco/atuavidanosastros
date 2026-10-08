@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { calculateAspects, type AspectPosition } from '@atv/astrology';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import {
-	calculateTrial,
+	calculateTrial as calculateCurrentTrial,
 	calculateTrialAngleContacts,
 	trialAspectPolicy
 } from '../../server/trial-calculation';
@@ -14,6 +14,16 @@ import { composeReconstructedCareer, reviewReconstructedCareer } from './career'
 import { normalizeFactGraph } from './fact-graph';
 
 const runId = '00000000-0000-4000-8000-000000000084';
+// Preserve the historical 4.0 calculation contract while new revisions use Compass 5.0.
+async function calculateTrial(value: WorkflowInput, id: string): Promise<CalculationSnapshot> {
+	const natal = await calculateCurrentTrial({ ...value, productId: 'birth-chart' }, id);
+	return {
+		...natal,
+		version: 'atv-private-career-synthesis/4.0.0',
+		kind: 'purpose',
+		data: { ...natal.data, productId: 'career-compass' }
+	};
+}
 const input = (
 	context = 'Estou comparando a função atual com uma mudança de área.'
 ): WorkflowInput => ({
@@ -198,7 +208,7 @@ describe('reconstructed career: semantic dependence and durable editions', () =>
 		expect(await executeTrialRuntime({ operation: 'verify', saved })).toBe(true);
 		const revised = await executeTrialRuntime({ operation: 'revise', saved });
 		expect(revised && typeof revised === 'object' && revised.reading.version).toBe(
-			'atv-product-reconstruction/4.0.0'
+			'atv-career-compass-editorial/5.0.0'
 		);
 		expect(saved.reading.version).toBe('atv-ai-editorial-trials/3.0.0');
 		expect(saved.calculation.version).toBe('atv-private-career-synthesis/3.0.0');

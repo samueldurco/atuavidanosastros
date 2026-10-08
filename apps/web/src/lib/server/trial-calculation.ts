@@ -25,6 +25,7 @@ import { projectCalendarReading } from '../trials/reconstruction/calendar-facts'
 import { projectDirectionReading } from '../trials/reconstruction/direction-facts';
 import { projectAtlasReading } from '../trials/reconstruction/atlas-facts';
 import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
+import { projectCompassReading } from '../trials/reconstruction/compass-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -129,18 +130,17 @@ export async function calculateTrial(
 					: projectPairPreview
 		)(input, sources as [CalculationSnapshot, CalculationSnapshot], [...birthInputs]);
 	}
-	if (input.productId === 'purpose-career') {
+	if (input.productId === 'purpose-career' || input.productId === 'career-compass') {
 		const natal = (await calculators['birth-chart']!(
 			{ ...input, productId: 'birth-chart' },
 			context
 		)) as CalculationSnapshot;
-		return projectPurposeReading(input, natal);
+		return (input.productId === 'career-compass' ? projectCompassReading : projectPurposeReading)(
+			input,
+			natal
+		);
 	}
-	if (
-		['career-compass', 'three-pillars', 'birth-chart', 'ascendant', 'midheaven'].includes(
-			input.productId
-		)
-	) {
+	if (['three-pillars', 'birth-chart', 'ascendant', 'midheaven'].includes(input.productId)) {
 		// Modern, tropical private edition. Stored older calculations stay immutable.
 		const natal = (await calculators['birth-chart']!(
 			{ ...input, productId: 'birth-chart' },
@@ -148,7 +148,6 @@ export async function calculateTrial(
 		)) as CalculationSnapshot;
 		const positions = natal.data.positions as AspectPosition[];
 		const aspects = calculateAspects(positions, trialAspectPolicy);
-		const isCareer = input.productId === 'career-compass';
 		const mc = natal.data.angles as { midheaven: number | null; ascendant: number | null };
 		const ruler = mc.midheaven === null ? null : modernRulers[Math.floor(mc.midheaven / 30)];
 		const ascRuler = mc.ascendant === null ? null : modernRulers[Math.floor(mc.ascendant / 30)];
@@ -156,10 +155,7 @@ export async function calculateTrial(
 		const angleContacts = calculateTrialAngleContacts(positions, mc);
 		return {
 			...natal,
-			version: isCareer
-				? 'atv-private-career-synthesis/4.0.0'
-				: 'atv-private-natal-synthesis/4.0.0',
-			kind: isCareer ? 'purpose' : natal.kind,
+			version: 'atv-private-natal-synthesis/4.0.0',
 			facts: [
 				...natal.facts,
 				...(ascRuler

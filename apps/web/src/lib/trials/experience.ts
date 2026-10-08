@@ -85,9 +85,10 @@ export const experiences: Record<string, Experience> = {
 		'book'
 	),
 	'career-compass': contract(
-		'Compare ambientes de trabalho e teste uma direção profissional por trinta dias.',
+		'Compare contribuição, motivação e ambientes de trabalho num experimento curto e reversível.',
 		12,
-		'book'
+		'book',
+		false
 	),
 	'purpose-career': contract(
 		'Relacione contribuição, recursos e rotina antes de escolher um próximo passo.',
