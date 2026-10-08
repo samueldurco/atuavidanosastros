@@ -18,6 +18,7 @@ import {
 } from './reconstruction/career';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { trialProfiles, TRIAL_CONTENT_VERSION, TRIAL_POLICY_VERSION } from './content';
+import { composeReconstructedNatal, reviewReconstructedNatal } from './reconstruction/natal';
 
 export type TrialReading = {
 	version: string;
@@ -58,6 +59,8 @@ export function composeTrialReading(
 	input: WorkflowInput,
 	calculation: CalculationSnapshot
 ): TrialReading {
+	if (calculation.version === 'atv-private-natal-synthesis/4.0.0')
+		return composeReconstructedNatal(input, calculation);
 	return ['career-compass', 'purpose-career'].includes(input.productId) &&
 		calculation.version === 'atv-private-career-synthesis/4.0.0'
 		? composeReconstructedCareer(input, calculation)
@@ -119,7 +122,14 @@ export async function approveTrialReading(
 				? composeV3(input, calculation)
 				: composeTrialReading(input, calculation);
 	if (canonical(candidate) !== canonical(expected)) return null;
-	if (reconstructed && reviewReconstructedCareer(input, calculation, candidate).length) return null;
+	if (
+		reconstructed &&
+		(calculation.version === 'atv-private-natal-synthesis/4.0.0'
+			? reviewReconstructedNatal(input, calculation, candidate)
+			: reviewReconstructedCareer(input, calculation, candidate)
+		).length
+	)
+		return null;
 	if (
 		!legacy &&
 		(candidate.sections.length < 2 ||

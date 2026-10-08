@@ -55,6 +55,34 @@ const aspectLabels: Record<string, string> = {
 const dateAt = (date: string, days: number) =>
 	new Date(Date.parse(date + 'T12:00:00Z') + days * 86400000).toISOString().slice(0, 10);
 
+/** Angle policy is deterministic; unavailable angles produce no contacts. */
+export function calculateTrialAngleContacts(
+	positions: AspectPosition[],
+	angles: { ascendant: number | null; midheaven: number | null }
+) {
+	return positions.flatMap((p) =>
+		(['ascendant', 'midheaven'] as const).flatMap((angle) => {
+			const value = angles[angle];
+			if (typeof value !== 'number' || !Number.isFinite(value)) return [];
+			const distance = Math.abs(p.longitude - value),
+				separation = Math.min(distance, 360 - distance);
+			return (
+				[
+					['conjunction', 0],
+					['sextile', 60],
+					['square', 90],
+					['trine', 120],
+					['opposition', 180]
+				] as const
+			).flatMap(([kind, exact]) =>
+				Math.abs(separation - exact) <= 3
+					? [{ body: p.body, angle, kind, orb: Math.abs(separation - exact) }]
+					: []
+			);
+		})
+	);
+}
+
 /** Only server-owned, RLS-authorized diary sources enter this calculation. Never accepts client facts. */
 export async function calculateTrial(
 	value: unknown,
@@ -65,7 +93,16 @@ export async function calculateTrial(
 	if (!input) throw new Error('Confira os dados e consentimentos antes de gerar.');
 	const signal = AbortSignal.timeout(25000);
 	const context = { runId, signal };
-	if (['career-compass', 'purpose-career'].includes(input.productId)) {
+	if (
+		[
+			'career-compass',
+			'purpose-career',
+			'three-pillars',
+			'birth-chart',
+			'ascendant',
+			'midheaven'
+		].includes(input.productId)
+	) {
 		// Modern, tropical private edition. Stored older calculations stay immutable.
 		const natal = (await calculators['birth-chart']!(
 			{ ...input, productId: 'birth-chart' },
@@ -73,20 +110,46 @@ export async function calculateTrial(
 		)) as CalculationSnapshot;
 		const positions = natal.data.positions as AspectPosition[];
 		const aspects = calculateAspects(positions, trialAspectPolicy);
-		const mc = natal.data.angles as { midheaven: number };
-		const ruler = modernRulers[Math.floor(mc.midheaven / 30)];
+		const isCareer = ['career-compass', 'purpose-career'].includes(input.productId);
+		const mc = natal.data.angles as { midheaven: number | null; ascendant: number | null };
+		const ruler = mc.midheaven === null ? null : modernRulers[Math.floor(mc.midheaven / 30)];
+		const ascRuler = mc.ascendant === null ? null : modernRulers[Math.floor(mc.ascendant / 30)];
+		// Fixed three-degree angle policy. Geometry comes from the deterministic calculator.
+		const angleContacts = calculateTrialAngleContacts(positions, mc);
 		return {
 			...natal,
-			version: 'atv-private-career-synthesis/4.0.0',
-			kind: 'purpose',
+			version: isCareer
+				? 'atv-private-career-synthesis/4.0.0'
+				: 'atv-private-natal-synthesis/4.0.0',
+			kind: isCareer ? 'purpose' : natal.kind,
 			facts: [
 				...natal.facts,
-				{
-					id: 'career-mc-ruler',
-					kind: 'calculated',
-					display: `Regente moderno do Meio do Céu: ${labels[ruler]}`,
-					source: 'atv-humanistic-modern/1.0.0; natal.angles.midheaven'
-				},
+				...(ascRuler
+					? [
+							{
+								id: 'natal-asc-ruler',
+								kind: 'calculated' as const,
+								display: `Regente moderno do Ascendente: ${labels[ascRuler]}`,
+								source: 'atv-humanistic-modern/1.0.0; natal.angles.ascendant'
+							}
+						]
+					: []),
+				...(ruler
+					? [
+							{
+								id: 'career-mc-ruler',
+								kind: 'calculated' as const,
+								display: `Regente moderno do Meio do Céu: ${labels[ruler]}`,
+								source: 'atv-humanistic-modern/1.0.0; natal.angles.midheaven'
+							}
+						]
+					: []),
+				...angleContacts.map((a, i) => ({
+					id: `private-angle-contact-${i}`,
+					kind: 'calculated' as const,
+					display: `${labels[a.body]} — ${a.angle === 'ascendant' ? 'Ascendente' : 'Meio do Céu'}: ${aspectLabels[a.kind]}; orbe ${a.orb.toFixed(3)}°`,
+					source: 'atv-private-angle-contacts/1.0.0; nominal 3°'
+				})),
 				...aspects.aspects.map((a, i) => ({
 					id: `private-natal-aspect-${i}`,
 					kind: 'calculated' as const,
@@ -98,6 +161,8 @@ export async function calculateTrial(
 				...natal.data,
 				productId: input.productId,
 				privateAspects: aspects,
+				angleContacts,
+				natalSynthesis: { version: '4.0.0', ascRuler, rulership: 'modern', angleOrb: 3 },
 				career: {
 					version: '4.0.0',
 					mcRuler: ruler,

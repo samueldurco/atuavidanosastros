@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { visualProduct } from '$lib/data/visual-v3';
-	import { untrack } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import type { SavedTrial } from '$lib/trials/reading';
 	import type { ReaderState } from '$lib/trials/reader-state';
 	import { experienceFor } from '$lib/trials/experience';
@@ -12,6 +12,10 @@
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
 	let status = $state(''),
 		saving = $state(false);
+	let interactive = $state(false);
+	onMount(() => {
+		interactive = true;
+	});
 	const sections = $derived(saved.reading.sections);
 	const chapters = $derived(
 		sections
@@ -24,6 +28,7 @@
 	const references = $derived(sections.find((s) => s.title === 'Referências desta leitura'));
 	const hasChart = $derived(
 		[
+			'three-pillars',
 			'birth-chart',
 			'life-atlas',
 			'ascendant',
@@ -104,11 +109,19 @@
 			{saved}
 		/>{/if}
 	{#if saved.product_id === 'three-pillars'}
-		<div class="pillars" aria-label="Três funções do seu mapa">
+		<div class="pillars" role="group" aria-label="Três funções do seu mapa">
 			{#each [['position-sun', 'Sol · expressão'], ['position-moon', 'Lua · necessidades'], ['angle-ascendant', 'Ascendente · primeiro movimento']] as [id, label] (id)}
 				{@const fact = saved.calculation.facts.find((f) => f.id === id)}
-				{@const target = chapters.find((s) => s.factIds.length === 1 && s.factIds[0] === id)}
-				{#if fact && target}<button onclick={() => open(target.index)}
+				{@const preferredRole =
+					id === 'position-sun'
+						? 'integrated-trio'
+						: id === 'position-moon'
+							? 'trio-rhythm'
+							: 'asc-ruler'}
+				{@const target =
+					chapters.find((s) => saved.reading.editorial?.plan[s.index]?.role === preferredRole) ??
+					chapters.find((s) => s.factIds.includes(id))}
+				{#if fact && target}<button disabled={!interactive} onclick={() => open(target.index)}
 						><strong>{label}</strong><span>{fact.display}</span></button
 					>{/if}
 			{/each}
@@ -140,6 +153,7 @@
 				<ol>
 					{#each chapters as item (item.index)}<li>
 							<button
+								disabled={!interactive}
 								aria-current={item.index === current.index ? 'step' : undefined}
 								onclick={() => open(item.index)}
 								>{bookmarks.includes(item.index) ? '★ ' : ''}{item.title}</button

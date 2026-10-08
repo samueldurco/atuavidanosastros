@@ -2,6 +2,35 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
+	for (const [product, title] of [
+		['three-pillars', 'Três Pilares'],
+		['birth-chart', 'Mapa Astral'],
+		['ascendant', 'Ascendente'],
+		['midheaven', 'Meio do Céu']
+	]) {
+		test(`${product}: integrated reading and chart at ${width}px`, async ({ page }) => {
+			await page.setViewportSize({ width, height: 900 });
+			await page.goto(`/testar-produtos/_spec?product=${product}`);
+			await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
+			await page.getByText('Explore seu mapa e os capítulos relacionados', { exact: true }).click();
+			const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.0.0"]');
+			await expect(svg).toBeVisible();
+			await expect(svg.locator('[data-layer="positions"]')).toHaveCount(10);
+			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+				true
+			);
+			await page.getByRole('button', { name: /^Sol:/ }).click();
+			await expect(page.locator('article h2').first()).toBeVisible();
+			expect(
+				(await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
+					.violations
+			).toEqual([]);
+			await page.screenshot({
+				path: `test-results/reconstruction-${product}-${width}.png`,
+				fullPage: true
+			});
+		});
+	}
 	test(`career reconstruction: chart, chapter and downloads at ${width}px`, async ({ page }) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/testar-produtos/_spec?product=career-compass');

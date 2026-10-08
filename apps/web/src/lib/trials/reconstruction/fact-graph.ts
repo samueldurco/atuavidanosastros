@@ -27,6 +27,19 @@ export type FactGraph = Readonly<{
 	facts: readonly Fact[];
 	positions: readonly Position[];
 	aspects: readonly Aspect[];
+	angleContacts: readonly Readonly<{
+		body: string;
+		angle: 'ascendant' | 'midheaven';
+		kind: string;
+		orb: number;
+		factId: string;
+	}>[];
+	asc: Readonly<{
+		longitude: number;
+		sign: number;
+		ruler: string;
+		factIds: readonly string[];
+	}> | null;
 	mc: Readonly<{
 		longitude: number;
 		sign: number;
@@ -125,6 +138,19 @@ export function normalizeFactGraph(calculation: CalculationSnapshot): FactGraph 
 			];
 		});
 	const mcValue = record(data.angles).midheaven;
+	const ascValue = record(data.angles).ascendant;
+	const asc =
+		longitude(ascValue) && ids.has('angle-ascendant')
+			? Object.freeze({
+					longitude: ascValue,
+					sign: Math.floor(ascValue / 30),
+					ruler: modernRulers[Math.floor(ascValue / 30)],
+					factIds: Object.freeze([
+						'angle-ascendant',
+						...(ids.has('natal-asc-ruler') ? ['natal-asc-ruler'] : [])
+					])
+				})
+			: null;
 	const mc =
 		longitude(mcValue) && ids.has('angle-midheaven')
 			? Object.freeze({
@@ -142,7 +168,8 @@ export function normalizeFactGraph(calculation: CalculationSnapshot): FactGraph 
 	const geometricFacts = [
 		...positions.map((p) => ({ factId: p.factId, longitude: p.longitude, sign: p.sign })),
 		...houses,
-		...(mc ? [{ factId: 'angle-midheaven', longitude: mc.longitude, sign: mc.sign }] : [])
+		...(mc ? [{ factId: 'angle-midheaven', longitude: mc.longitude, sign: mc.sign }] : []),
+		...(asc ? [{ factId: 'angle-ascendant', longitude: asc.longitude, sign: asc.sign }] : [])
 	];
 	for (const p of geometricFacts) {
 		const display = ids.get(p.factId)!.display;
@@ -161,6 +188,37 @@ export function normalizeFactGraph(calculation: CalculationSnapshot): FactGraph 
 		trine: 120,
 		opposition: 180
 	};
+	const angleContacts = (Array.isArray(data.angleContacts) ? data.angleContacts : [])
+		.map(record)
+		.map((a, i) => {
+			const p = positions.find((p) => p.body === a.body);
+			const axis = a.angle === 'ascendant' ? asc : a.angle === 'midheaven' ? mc : null;
+			const factId = `private-angle-contact-${i}`;
+			if (
+				!p ||
+				!axis ||
+				typeof a.kind !== 'string' ||
+				!Object.hasOwn(aspectAngles, a.kind) ||
+				typeof a.orb !== 'number' ||
+				!Number.isFinite(a.orb) ||
+				a.orb < 0 ||
+				a.orb > 3 ||
+				!ids.has(factId)
+			)
+				throw new Error('Contato angular sem geometria e fato válidos.');
+			const distance = Math.abs(p.longitude - axis.longitude);
+			if (
+				Math.abs(Math.abs(Math.min(distance, 360 - distance) - aspectAngles[a.kind]) - a.orb) > 1e-8
+			)
+				throw new Error('Contato angular e geometria discordam.');
+			return Object.freeze({
+				body: p.body,
+				angle: a.angle as 'ascendant' | 'midheaven',
+				kind: a.kind,
+				orb: a.orb,
+				factId
+			});
+		});
 	for (const a of aspects) {
 		const first = positions.find((p) => p.body === a.first)!,
 			second = positions.find((p) => p.body === a.second)!;
@@ -174,6 +232,12 @@ export function normalizeFactGraph(calculation: CalculationSnapshot): FactGraph 
 		ids.get('career-mc-ruler')!.display !== `Regente moderno do Meio do Céu: ${bodyNames[mc.ruler]}`
 	)
 		throw new Error('Regência e Meio do Céu discordam.');
+	if (
+		asc &&
+		ids.has('natal-asc-ruler') &&
+		ids.get('natal-asc-ruler')!.display !== `Regente moderno do Ascendente: ${bodyNames[asc.ruler]}`
+	)
+		throw new Error('Regência e Ascendente discordam.');
 	return Object.freeze({
 		version: 'atv-normalized-fact-graph/1',
 		facts: Object.freeze(
@@ -188,6 +252,8 @@ export function normalizeFactGraph(calculation: CalculationSnapshot): FactGraph 
 		),
 		positions: Object.freeze(positions),
 		aspects: Object.freeze(aspects),
+		angleContacts: Object.freeze(angleContacts),
+		asc,
 		mc,
 		houses: Object.freeze(houses),
 		contextFactId: ids.has('personal-context') ? 'personal-context' : null,

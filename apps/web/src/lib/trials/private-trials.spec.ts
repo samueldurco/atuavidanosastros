@@ -3,6 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import {
 	productCatalog,
 	workflowFor,
+	type CalculationSnapshot,
 	type WorkflowInput,
 	type DreamAtlasFactSource
 } from '@atv/domain';
@@ -19,6 +20,7 @@ import { trialGeometry } from './cartography';
 import { privateFormats } from './experience';
 import { positionInterpretation } from './position-interpretation';
 import { signEditorial } from './content';
+import { createProductCalculators } from '../../../../worker/src/product-runtime';
 
 // Synthetic local evidence only. No user identities, commercial releases or provider calls.
 const id = '00000000-0000-4000-8000-000000000031';
@@ -209,8 +211,12 @@ describe('private free testing of the real 25 calculations and original AI/edito
 	});
 	it('V2 remains authentic; V3 cannot borrow its approval or accept a changed civil identity', async () => {
 		const s = saved.get('birth-chart')!;
-		const v2 = composeV2(s.input, s.calculation);
-		expect((await approveTrialReading(s.input, s.calculation, v2))?.policy).toBe(
+		const historical = (await createProductCalculators({})['birth-chart']!(s.input, {
+			runId: id,
+			signal: AbortSignal.timeout(25000)
+		})) as CalculationSnapshot;
+		const v2 = composeV2(s.input, historical);
+		expect((await approveTrialReading(s.input, historical, v2))?.policy).toBe(
 			'atv-private-trial-approval/2.0.0'
 		);
 		expect(v2).not.toEqual(s.reading);
@@ -380,7 +386,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			const svg = trialSvg(saved.get(product.id)!);
 			expect(svg).toContain('ASC');
 			expect(svg).toContain('AstroChartEngineV2/2.0.0');
-			expect(svg.includes('data-fact-id="position-sun"')).toBe(product.id !== 'ascendant');
+			expect(svg).toContain('data-fact-id="position-sun"');
 			expect(svg).not.toContain('undefined');
 		});
 	for (const product of cases.filter((p) => privateFormats(p.id, p.delivery).includes('pdf')))

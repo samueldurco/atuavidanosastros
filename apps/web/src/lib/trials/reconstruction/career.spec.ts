@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { calculateAspects, type AspectPosition } from '@atv/astrology';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
-import { calculateTrial, trialAspectPolicy } from '../../server/trial-calculation';
+import {
+	calculateTrial,
+	calculateTrialAngleContacts,
+	trialAspectPolicy
+} from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
 import { approveTrialReading, composeTrialReading, type TrialReading } from '../reading';
 import { composeTrialReading as composeV3 } from '../experience-reading';
@@ -84,6 +88,20 @@ describe('reconstructed career: semantic dependence and durable editions', () =>
 			`Sol: ${(sun.longitude % 30).toFixed(6)}° de ${signs[Math.floor(sun.longitude / 30)]}`;
 		const aspects = calculateAspects(positions, trialAspectPolicy);
 		changed.data.privateAspects = aspects;
+		const contacts = calculateTrialAngleContacts(
+			positions,
+			changed.data.angles as { ascendant: number; midheaven: number }
+		);
+		changed.data.angleContacts = contacts;
+		changed.facts = changed.facts.filter((f) => !f.id.startsWith('private-angle-contact-'));
+		changed.facts.push(
+			...contacts.map((a, i) => ({
+				id: `private-angle-contact-${i}`,
+				kind: 'calculated' as const,
+				display: `${a.body} / ${a.angle}: ${a.kind}; ${a.orb}°`,
+				source: 'counterfactual-recalculated-geometry'
+			}))
+		);
 		changed.facts = changed.facts.filter((f) => !f.id.startsWith('private-natal-aspect-'));
 		changed.facts.push(
 			...aspects.aspects.map((a, i) => ({

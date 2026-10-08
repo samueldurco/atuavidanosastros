@@ -171,6 +171,7 @@ export async function trialPdf(saved: SavedTrial) {
 	].includes(saved.product_id)
 		? ['first', 'second']
 		: [
+					'three-pillars',
 					'birth-chart',
 					'life-atlas',
 					'ascendant',
@@ -236,9 +237,28 @@ export async function trialPdf(saved: SavedTrial) {
 	heading('Experimento prático', 17, 0);
 	paragraph(r.practice);
 	if (book) newPage();
-	heading(book ? 'Apêndice · método e limites' : 'Método e limites', book ? 23 : 15);
+	const reconstructed = r.version === 'atv-product-reconstruction/4.0.0';
+	heading(
+		reconstructed
+			? 'Sobre esta leitura'
+			: book
+				? 'Apêndice · método e limites'
+				: 'Método e limites',
+		book ? 23 : 15
+	);
 	paragraph(r.source, label, 9);
-	r.limits.forEach((l) => paragraph(l, label, 9));
+	if (reconstructed) {
+		paragraph(
+			'A abordagem é tropical, psicológica e humanista, com regências modernas. O mapa organiza hipóteses de reflexão; não determina acontecimentos, profissão ou comportamento. Compare a leitura com sua experiência e com as condições concretas da situação.',
+			label,
+			9
+		);
+		paragraph(
+			'Horário e local de nascimento influenciam os ângulos e as casas. Confira os dados informados. Contatos planetários são selecionados por função, regência e proximidade; uma seleção não descreve todas as possibilidades do mapa.',
+			label,
+			9
+		);
+	} else r.limits.forEach((l) => paragraph(l, label, 9));
 	if (book) {
 		heading('Dados para conferir', 15);
 		const compact = saved.calculation.facts.filter(
@@ -255,20 +275,22 @@ export async function trialPdf(saved: SavedTrial) {
 				label,
 				9
 			);
-		const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
-		const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
-		heading(
-			'Fontes e registro da revisão',
-			15,
-			Math.min(
-				height - 148,
-				headingHeight('Fontes e registro da revisão', 15) +
-					sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
-					paragraphHeight(record, label, 8)
-			)
-		);
-		sources.forEach((source) => paragraph(source, label, 8, 4));
-		paragraph(record, label, 8);
+		if (!reconstructed) {
+			const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
+			const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
+			heading(
+				'Fontes e registro da revisão',
+				15,
+				Math.min(
+					height - 148,
+					headingHeight('Fontes e registro da revisão', 15) +
+						sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
+						paragraphHeight(record, label, 8)
+				)
+			);
+			sources.forEach((source) => paragraph(source, label, 8, 4));
+			paragraph(record, label, 8);
+		}
 	}
 	for (const [i, p] of doc.getPages().entries()) {
 		p.drawLine({

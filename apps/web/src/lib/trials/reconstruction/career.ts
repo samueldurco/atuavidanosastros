@@ -13,7 +13,8 @@ import { normalizeFactGraph, type Aspect, type FactGraph, type Position } from '
 
 export const RECONSTRUCTION_VERSION = 'atv-product-reconstruction/4.0.0';
 export const RECONSTRUCTION_POLICY = 'atv-private-interpretation-review/4.0.0';
-type ContextKey = 'transition' | 'leadership' | 'study' | 'independent' | 'workload' | 'general';
+type ContextKey =
+	'transition' | 'leadership' | 'study' | 'independent' | 'workload' | 'relationships' | 'general';
 type ContextBinding = {
 	key: ContextKey;
 	criteria: string;

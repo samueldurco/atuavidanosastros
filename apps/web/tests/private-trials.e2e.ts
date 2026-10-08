@@ -125,22 +125,26 @@ test('chapter changes and bookmarks persist without blocking reading on a failed
 		await route.fulfill({ status: 200, json: { saved: true } });
 	});
 	await page.goto('/testar-produtos/_spec');
-	await page.getByRole('button', { name: 'Sua página de decisão', exact: true }).click();
+	await page
+		.getByRole('button', { name: 'Comparar caminhos sem decidir só pelo título', exact: true })
+		.click();
 	await expect(
-		page.getByRole('heading', { name: 'Sua página de decisão', exact: true })
+		page.getByRole('heading', { name: 'Comparar caminhos sem decidir só pelo título', exact: true })
 	).toBeVisible();
 	await page.getByRole('button', { name: '☆ Marcar capítulo', exact: true }).click();
 	await expect(page.getByRole('button', { name: '★ Marcado', exact: true })).toHaveAttribute(
 		'aria-pressed',
 		'true'
 	);
-	await expect.poll(() => updates.at(-1)?.bookmarks).toEqual([7]);
+	await expect.poll(() => updates.at(-1)?.bookmarks).toEqual([5]);
 	await page.route('**/api/private-trials/*', (route) =>
 		route.fulfill({ status: 503, json: { message: 'Não foi possível salvar agora.' } })
 	);
-	await page.getByRole('button', { name: 'Sua direção em cinco minutos', exact: true }).click();
+	await page
+		.getByRole('button', { name: 'Como sua contribuição pode ganhar forma', exact: true })
+		.click();
 	await expect(
-		page.getByRole('heading', { name: 'Sua direção em cinco minutos', exact: true })
+		page.getByRole('heading', { name: 'Como sua contribuição pode ganhar forma', exact: true })
 	).toBeVisible();
 	await expect(
 		page.getByRole('status').filter({ hasText: 'Não foi possível salvar agora.' })
@@ -175,7 +179,9 @@ test('three pillars have distinct navigation and horoscope remains a web reading
 	);
 	await page.goto('/testar-produtos/_spec?product=three-pillars');
 	await page.getByRole('button', { name: /Lua · necessidades/ }).click();
-	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText('Lua');
+	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText(
+		'Afinidades'
+	);
 	await page.goto('/testar-produtos/_spec?product=horoscope');
 	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
 		0

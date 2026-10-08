@@ -9,7 +9,14 @@ import { buildChartScene, chartSceneSvg } from '../chart-engine-v2';
 import type { WorkflowInput } from '@atv/domain';
 
 const directory = process.env.ATV_RECONSTRUCTION_QA_DIR;
-for (const productId of ['career-compass', 'purpose-career'] as const) {
+for (const productId of [
+	'career-compass',
+	'purpose-career',
+	'three-pillars',
+	'birth-chart',
+	'ascendant',
+	'midheaven'
+] as const) {
 	it.skipIf(!directory)(
 		`exports complete ${productId} for visual inspection`,
 		async () => {
