@@ -11,10 +11,10 @@ test('career complete reading, provenance, personal approval and recoverable not
 		page.getByRole('heading', { name: 'Bússola de Carreira', exact: true })
 	).toBeVisible();
 	await page
-		.getByRole('button', { name: 'Ambientes em que vale fazer um teste', exact: true })
+		.getByRole('button', { name: 'O ambiente também participa da escolha', exact: true })
 		.click();
 	await expect(
-		page.getByRole('heading', { name: 'Ambientes em que vale fazer um teste' })
+		page.getByRole('heading', { name: 'O ambiente também participa da escolha' })
 	).toBeVisible();
 	await page.getByText('Origem e versão', { exact: true }).click();
 	await expect(page.locator('details ul li').first()).toBeVisible();

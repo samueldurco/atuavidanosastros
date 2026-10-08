@@ -6,8 +6,9 @@ import { curateExperience } from './experience-curation';
 import { personalizePositions } from './position-interpretation';
 import type { TrialReading } from './reading';
 
-import { CONTENT_VERSION } from './versions';
-export { CONTENT_VERSION, POLICY_VERSION } from './versions';
+// Frozen composer: persisted editions must remain reproducible after a canon update.
+export const CONTENT_VERSION = 'atv-ai-editorial-trials/3.0.0';
+export const POLICY_VERSION = 'atv-private-trial-approval/3.0.0';
 type Fact = CalculationSnapshot['facts'][number];
 type Section = TrialReading['sections'][number];
 const signs = Object.keys(signEditorial);

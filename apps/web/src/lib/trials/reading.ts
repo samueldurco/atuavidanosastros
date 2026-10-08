@@ -4,8 +4,18 @@ import {
 	CONTENT_VERSION as V2,
 	POLICY_VERSION as POLICY_V2
 } from './editorial-reading';
-import { composeTrialReading, CONTENT_VERSION, POLICY_VERSION } from './experience-reading';
-export { composeTrialReading } from './experience-reading';
+import {
+	composeTrialReading as composeV3,
+	CONTENT_VERSION as V3,
+	POLICY_VERSION as POLICY_V3
+} from './experience-reading';
+import {
+	composeReconstructedCareer,
+	reviewReconstructedCareer,
+	RECONSTRUCTION_VERSION,
+	RECONSTRUCTION_POLICY,
+	type EditorialTrace
+} from './reconstruction/career';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { trialProfiles, TRIAL_CONTENT_VERSION, TRIAL_POLICY_VERSION } from './content';
 
@@ -19,6 +29,7 @@ export type TrialReading = {
 	questions: string[];
 	practice: string;
 	limits: string[];
+	editorial?: EditorialTrace;
 };
 export type TrialApproval = {
 	status: 'approved';
@@ -42,6 +53,16 @@ export type TrialFeedback = {
 	comment: string;
 	updated_at: string;
 };
+
+export function composeTrialReading(
+	input: WorkflowInput,
+	calculation: CalculationSnapshot
+): TrialReading {
+	return ['career-compass', 'purpose-career'].includes(input.productId) &&
+		calculation.version === 'atv-private-career-synthesis/4.0.0'
+		? composeReconstructedCareer(input, calculation)
+		: composeV3(input, calculation);
+}
 
 export function canonical(value: unknown): string {
 	if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
@@ -87,13 +108,18 @@ export async function approveTrialReading(
 	}
 	const legacy = candidate.version === TRIAL_CONTENT_VERSION;
 	const previous = candidate.version === V2;
-	if (!legacy && !previous && candidate.version !== CONTENT_VERSION) return null;
+	const v3 = candidate.version === V3;
+	const reconstructed = candidate.version === RECONSTRUCTION_VERSION;
+	if (!legacy && !previous && !v3 && !reconstructed) return null;
 	const expected = legacy
 		? composeLegacyTrialReading(input, calculation)
 		: previous
 			? composeV2(input, calculation)
-			: composeTrialReading(input, calculation);
+			: v3
+				? composeV3(input, calculation)
+				: composeTrialReading(input, calculation);
 	if (canonical(candidate) !== canonical(expected)) return null;
+	if (reconstructed && reviewReconstructedCareer(input, calculation, candidate).length) return null;
 	if (
 		!legacy &&
 		(candidate.sections.length < 2 ||
@@ -108,7 +134,13 @@ export async function approveTrialReading(
 			!candidate.source.trim())
 	)
 		return null;
-	const policy = legacy ? TRIAL_POLICY_VERSION : previous ? POLICY_V2 : POLICY_VERSION;
+	const policy = legacy
+		? TRIAL_POLICY_VERSION
+		: previous
+			? POLICY_V2
+			: v3
+				? POLICY_V3
+				: RECONSTRUCTION_POLICY;
 	if (candidate.sections.some((s) => !s.text.trim() || s.factIds.some((id) => !ids.has(id))))
 		return null;
 	const covered = new Set(candidate.sections.flatMap((s) => s.factIds));

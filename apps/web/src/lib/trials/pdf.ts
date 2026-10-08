@@ -3,7 +3,8 @@ import fontkit from '@pdf-lib/fontkit';
 import type { SavedTrial } from './reading';
 import { trialText } from './exports';
 import { experienceFor } from './experience';
-import { trialGeometry, bodyNames, bodyGlyphs, signNames, nominalDegree } from './cartography';
+import { buildChartScene } from './chart-engine-v2';
+import { drawChartScenePdf } from './chart-pdf';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -169,115 +170,20 @@ export async function trialPdf(saved: SavedTrial) {
 		'couple-dossier'
 	].includes(saved.product_id)
 		? ['first', 'second']
-		: ['birth-chart', 'life-atlas', 'ascendant'].includes(saved.product_id)
+		: [
+					'birth-chart',
+					'life-atlas',
+					'ascendant',
+					'career-compass',
+					'purpose-career',
+					'midheaven'
+			  ].includes(saved.product_id)
 			? [undefined]
 			: [];
 	if (!book && chartPeople.length) newPage();
 	for (const person of chartPeople) {
-		const g = trialGeometry(saved, person),
-			cx = width / 2,
-			cy = height - 300,
-			scale = 0.68;
-		heading(
-			person
-				? `Fatores natais · ${person === 'first' ? (saved.input.presentation?.name ?? 'Pessoa A') : (saved.input.presentation?.partnerName ?? 'Pessoa B')}`
-				: 'Seu mapa em uma imagem',
-			23
-		);
-		const point = (a: number, rad: number) => ({
-			x: cx - rad * scale * Math.cos((a * Math.PI) / 180),
-			y: cy - rad * scale * Math.sin((a * Math.PI) / 180)
-		});
-		const radial = (a: number, r1: number, r2: number, color = muted) =>
-			page.drawLine({ start: point(a, r1), end: point(a, r2), thickness: 0.5, color });
-		page.drawCircle({ x: cx, y: cy, size: 255 * scale, borderColor: ink, borderWidth: 1 });
-		for (let a = 0; a < 360; a += 5) radial(a, a % 30 === 0 ? 235 : 246, 255);
-		signNames.forEach((s, i) => {
-			const p = point(i * 30 + 15, 282);
-			const v = safe(s, label);
-			page.drawText(v, {
-				x: p.x - label.widthOfTextAtSize(v, 8) / 2,
-				y: p.y - 3,
-				font: label,
-				size: 8,
-				color: ink
-			});
-		});
-		g.houses.cusps.forEach((a, i) => {
-			radial(a, 65, 235);
-			const next = g.houses.cusps[(i + 1) % 12],
-				p = point((a + ((next - a + 360) % 360) / 2) % 360, 155);
-			page.drawText(`${i + 1}`, { x: p.x - 3, y: p.y - 3, font: label, size: 7, color: muted });
-		});
-		g.aspects.forEach((a) => {
-			const first = g.positions.find((p) => p.body === a.first)!,
-				second = g.positions.find((p) => p.body === a.second)!;
-			page.drawLine({
-				start: point(first.longitude, 123),
-				end: point(second.longitude, 123),
-				thickness: 0.5,
-				color: ['square', 'opposition'].includes(a.kind)
-					? rgb(0.65, 0.36, 0.28)
-					: a.kind === 'conjunction'
-						? gold
-						: rgb(0.28, 0.43, 0.54),
-				opacity: 0.6
-			});
-		});
-		g.positions.forEach((p) => {
-			const radius = 216 - (g.tracks.get(p.body) ?? 0) * 26,
-				pos = point(p.longitude, radius);
-			radial(p.longitude, radius + 12, 235);
-			page.drawCircle({ x: pos.x, y: pos.y, size: 8.7, color: cream });
-			page.drawSvgPath(bodyGlyphs[p.body], {
-				x: pos.x,
-				y: pos.y,
-				scale: 0.65,
-				borderColor: ink,
-				borderWidth: 1.6
-			});
-		});
-		Object.entries(g.angles).forEach(([name, a]) => {
-			if (a === null) return;
-			radial(a, 55, 263, gold);
-			const p = point(a, 70);
-			page.drawRectangle({ x: p.x - 11, y: p.y + 3, width: 24, height: 12, color: cream });
-			page.drawText(name === 'ascendant' ? 'ASC' : 'MC', {
-				x: p.x - 8,
-				y: p.y + 6,
-				font: label,
-				size: 8,
-				color: gold
-			});
-		});
-		y = height - 525;
-		for (let i = 0; i < g.positions.length; i += 2) {
-			const left = g.positions[i],
-				right = g.positions[i + 1];
-			paragraph(
-				`${bodyNames[left.body]}: ${nominalDegree(left.longitude)}${right ? `     |     ${bodyNames[right.body]}: ${nominalDegree(right.longitude)}` : ''}`,
-				label,
-				9
-			);
-		}
-		if (g.angles.ascendant !== null)
-			paragraph(
-				`ASC: ${nominalDegree(g.angles.ascendant)}${g.angles.midheaven !== null ? ` · MC: ${nominalDegree(g.angles.midheaven)}` : ''}`,
-				label,
-				9
-			);
-		paragraph(
-			person
-				? `Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Este recorte contém posições planetárias, sem casas ou ângulos. ${saved.product_id === 'pair-preview' ? 'Lua, Vênus e Marte são referências individuais; aspectos entre mapas não foram calculados.' : 'Os contatos entre as duas pessoas estão nos capítulos.'}`
-				: 'Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Glifos identificam os planetas; números identificam as casas disponíveis. Linhas azuis: sextil/trígono; terracota: quadratura/oposição; ouro: conjunção.',
-			label,
-			8
-		);
-		paragraph(
-			'A geometria reproduz o cálculo salvo, cuja precisão permanece experimental. Graus arredondados apenas na apresentação.',
-			label,
-			8
-		);
+		const scene = buildChartScene(saved, { person });
+		drawChartScenePdf(page, scene, label, margin, height - margin, width - margin * 2);
 		newPage();
 	}
 	const contents: { page: typeof page; y: number; index: number }[] = [];
@@ -341,7 +247,7 @@ export async function trialPdf(saved: SavedTrial) {
 				!/nenhum aspecto/i.test(f.display) &&
 				f.display.length <= 650
 		);
-		compact.forEach((f) => paragraph(`${f.id} · ${f.display}`, label, 8, 4));
+		compact.forEach((f) => paragraph(f.display, label, 8, 4));
 		const omitted = saved.calculation.facts.length - compact.length;
 		if (omitted)
 			paragraph(

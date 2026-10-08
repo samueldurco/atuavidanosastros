@@ -6,6 +6,7 @@
 	import { experienceFor } from '$lib/trials/experience';
 	import { trialResponse } from '$lib/trials/response';
 	import ReadingPairCharts from './ReadingPairCharts.svelte';
+	import ReadingChart from './ReadingChart.svelte';
 	let { saved, initial }: { saved: SavedTrial; initial: ReaderState } = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
@@ -21,18 +22,17 @@
 	const currentIndex = $derived(chapters.findIndex((s) => s.index === current.index));
 	const contract = $derived(experienceFor(saved.product_id));
 	const references = $derived(sections.find((s) => s.title === 'Referências desta leitura'));
-	const hasChart = $derived(['birth-chart', 'life-atlas', 'ascendant'].includes(saved.product_id));
-	const factors = $derived(
-		saved.calculation.facts.filter((f) =>
-			[
-				'position-sun',
-				'position-moon',
-				'angle-ascendant',
-				'position-mercury',
-				'angle-midheaven'
-			].includes(f.id)
-		)
+	const hasChart = $derived(
+		[
+			'birth-chart',
+			'life-atlas',
+			'ascendant',
+			'career-compass',
+			'purpose-career',
+			'midheaven'
+		].includes(saved.product_id)
 	);
+
 	let pending: ReaderState | null = null;
 	async function persist(next: number, marked: number[]) {
 		chapter = next;
@@ -72,44 +72,6 @@
 				? bookmarks.filter((n) => n !== current.index)
 				: [...bookmarks, current.index]
 		);
-	}
-	async function downloadPng() {
-		status = 'Preparando imagem…';
-		let source = '',
-			output = '';
-		try {
-			const response = await fetch(`/api/private-trials/${saved.id}/download?format=svg`);
-			if (!response.ok) throw Error('Não foi possível recuperar a cartografia. Tente novamente.');
-			source = URL.createObjectURL(await response.blob());
-			const image = new Image();
-			image.src = source;
-			await image.decode();
-			const canvas = document.createElement('canvas');
-			canvas.width = 3000;
-			canvas.height = 4230;
-			const ctx = canvas.getContext('2d');
-			if (!ctx) throw Error('Este navegador não conseguiu preparar a imagem.');
-			ctx.fillStyle = '#f7f2e7';
-			ctx.fillRect(0, 0, 3000, 4230);
-			ctx.drawImage(image, 0, 0, 3000, 4230);
-			const blob = await new Promise<Blob>((resolve, reject) =>
-				canvas.toBlob(
-					(b) => (b ? resolve(b) : reject(Error('Não foi possível exportar a imagem.'))),
-					'image/png'
-				)
-			);
-			output = URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.href = output;
-			link.download = `${saved.product_id}-${saved.id}.png`;
-			link.click();
-			status = 'Imagem pronta. Confira os downloads do navegador.';
-		} catch (e) {
-			status = e instanceof Error ? e.message : 'Não foi possível gerar a imagem.';
-		} finally {
-			if (source) URL.revokeObjectURL(source);
-			if (output) setTimeout(() => URL.revokeObjectURL(output), 1000);
-		}
 	}
 </script>
 
@@ -161,23 +123,14 @@
 	></progress>
 	{#if hasChart}
 		<details class="map">
-			<summary>Seu mapa e cinco referências para explorar</summary>
-			<img
-				src={`/api/private-trials/${saved.id}/download?format=svg`}
-				alt="Cartografia dos fatores calculados desta leitura"
-				width="1000"
-				height="1410"
-				loading="lazy"
+			<summary>Explore seu mapa e os capítulos relacionados</summary>
+			<ReadingChart
+				{saved}
+				onselect={(id) => {
+					const target = chapters.find((s) => s.factIds.includes(id));
+					if (target) open(target.index);
+				}}
 			/>
-			<div class="factors">
-				{#each factors as fact (fact.id)}
-					{@const target =
-						chapters.find((s) => s.factIds.length === 1 && s.factIds[0] === fact.id) ??
-						chapters.find((s) => s.factIds.includes(fact.id))}
-					{#if target}<button onclick={() => open(target.index)}>{fact.display}</button>{/if}
-				{/each}
-			</div>
-			<button onclick={downloadPng}>Baixar imagem PNG em alta resolução</button>
 		</details>
 	{/if}
 	<div class="reader-grid">
@@ -367,22 +320,6 @@
 		padding: 1rem 1.25rem;
 		margin: 1.5rem 0;
 		background: #f7f2e7;
-	}
-	.map img {
-		display: block;
-		max-width: 520px;
-		width: 100%;
-		height: auto;
-		margin: 1rem auto;
-	}
-	.factors {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: 1rem;
-	}
-	.factors button {
-		font-size: 0.85rem;
 	}
 	.references .prose {
 		font-size: 0.85rem;

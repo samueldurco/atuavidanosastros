@@ -9,6 +9,7 @@ import {
 	type WorkflowInput
 } from '@atv/domain';
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
+import { modernRulers } from '../trials/reconstruction/canon';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -65,7 +66,7 @@ export async function calculateTrial(
 	const signal = AbortSignal.timeout(25000);
 	const context = { runId, signal };
 	if (['career-compass', 'purpose-career'].includes(input.productId)) {
-		// Private edition 3 expands the MC-only prototype. The canonical product gate stays closed.
+		// Modern, tropical private edition. Stored older calculations stay immutable.
 		const natal = (await calculators['birth-chart']!(
 			{ ...input, productId: 'birth-chart' },
 			context
@@ -73,32 +74,18 @@ export async function calculateTrial(
 		const positions = natal.data.positions as AspectPosition[];
 		const aspects = calculateAspects(positions, trialAspectPolicy);
 		const mc = natal.data.angles as { midheaven: number };
-		const rulers = [
-			'mars',
-			'venus',
-			'mercury',
-			'moon',
-			'sun',
-			'mercury',
-			'venus',
-			'mars',
-			'jupiter',
-			'saturn',
-			'saturn',
-			'jupiter'
-		];
-		const ruler = rulers[Math.floor(mc.midheaven / 30)];
+		const ruler = modernRulers[Math.floor(mc.midheaven / 30)];
 		return {
 			...natal,
-			version: 'atv-private-career-synthesis/3.0.0',
+			version: 'atv-private-career-synthesis/4.0.0',
 			kind: 'purpose',
 			facts: [
 				...natal.facts,
 				{
 					id: 'career-mc-ruler',
 					kind: 'calculated',
-					display: `Regente tradicional do Meio do Céu: ${labels[ruler]}`,
-					source: 'atv-traditional-sign-rulership/1.0.0; natal.angles.midheaven'
+					display: `Regente moderno do Meio do Céu: ${labels[ruler]}`,
+					source: 'atv-humanistic-modern/1.0.0; natal.angles.midheaven'
 				},
 				...aspects.aspects.map((a, i) => ({
 					id: `private-natal-aspect-${i}`,
@@ -112,16 +99,16 @@ export async function calculateTrial(
 				productId: input.productId,
 				privateAspects: aspects,
 				career: {
-					version: '3.0.0',
+					version: '4.0.0',
 					mcRuler: ruler,
-					rulership: 'traditional',
+					rulership: 'modern',
 					houses: [2, 6, 10],
 					factors: ['sun', 'mercury', 'mars', 'jupiter', 'saturn']
 				}
 			},
 			limits: [
-				...natal.limits,
-				'Regência tradicional explícita; síntese simbólica de MC, regente, casas disponíveis e cinco fatores natais. Não determina profissão nem renda.',
+				...natal.limits.filter((limit) => !limit.startsWith('Aspectos, síntese interpretativa')),
+				'Regência moderna tropical; casas Placidus somente quando calculáveis. A leitura não determina profissão nem renda.',
 				'Aspectos maiores nominais com orbes de teste; sem certificação de aplicação/separação.'
 			]
 		};

@@ -72,7 +72,12 @@ export async function executeTrialRuntime(value: unknown): Promise<TrialRuntimeR
 	const valid = !!original && original.digest === saved.approval?.digest;
 	if (request.operation === 'verify') return valid;
 	if (!valid) return null;
-	const reading = composeTrialReading(saved.input, saved.calculation);
-	const approval = await approveTrialReading(saved.input, saved.calculation, reading);
-	return approval ? { calculation: saved.calculation, reading, approval } : null;
+	const calculation =
+		['career-compass', 'purpose-career'].includes(saved.input.productId) &&
+		saved.calculation.version !== 'atv-private-career-synthesis/4.0.0'
+			? await calculateTrial(saved.input, crypto.randomUUID())
+			: saved.calculation;
+	const reading = composeTrialReading(saved.input, calculation);
+	const approval = await approveTrialReading(saved.input, calculation, reading);
+	return approval ? { calculation, reading, approval } : null;
 }

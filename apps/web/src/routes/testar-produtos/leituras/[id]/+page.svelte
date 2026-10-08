@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
 	import { privateFormats } from '$lib/trials/experience';
-	import { CONTENT_VERSION } from '$lib/trials/versions';
+	import { latestReadingVersion } from '$lib/trials/versions';
 	import ReadingExperience from '$lib/components/ReadingExperience.svelte';
 	import ReadingShare from '$lib/components/ReadingShare.svelte';
 	import { canShareReading } from '$lib/trials/sharing';
@@ -131,7 +131,7 @@
 		title={reading.title}
 		description={reading.opening}
 	/>
-	{#if reading.version !== CONTENT_VERSION}
+	{#if reading.version !== latestReadingVersion(data.saved.product_id)}
 		<div class="seal">
 			<strong>Há uma nova edição desta leitura</strong>
 			<p>

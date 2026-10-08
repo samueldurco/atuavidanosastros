@@ -292,7 +292,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			true
 		);
 	});
-	it('career uses saved natal geometry, traditional rulership and an actionable decision page', () => {
+	it('career integrates saved natal geometry, modern rulership and context into a practical decision', () => {
 		const s = saved.get('career-compass')!;
 		expect(s.calculation.facts.map((f) => f.id)).toEqual(
 			expect.arrayContaining([
@@ -308,11 +308,11 @@ describe('private free testing of the real 25 calculations and original AI/edito
 				'house-10'
 			])
 		);
-		expect(s.reading.sections.some((s) => s.text.includes('contribuição pública'))).toBe(true);
-		expect(trialText(s)).toContain(s.input.context);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'integrated-synthesis')).toBe(true);
+		expect(s.reading.editorial?.context.factId).toBe('personal-context');
 		expect(s.calculation.data.positions).toHaveLength(10);
-		expect(s.reading.sections.some((s) => s.title === 'Sua página de decisão')).toBe(true);
-		expect(s.reading.sections.some((s) => s.title === 'Um experimento de trinta dias')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'context-bound-decision')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'context-bound-experiment')).toBe(true);
 	});
 	it('calendar calculates one daily sample for all 31 days within the approval size bound', () => {
 		const s = saved.get('personal-calendar')!;
@@ -361,9 +361,9 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		expect(pdf.length).toBeGreaterThan(10000);
 		expect(trialText(natal)).toContain(natal.reading.sections.at(-1)!.text);
 		const svg = trialSvg(natal);
-		expect(svg.match(/data-body=/g)).toHaveLength(10);
+		expect(svg.match(/data-fact-id="position-[^"]+"/g)?.length).toBeGreaterThanOrEqual(10);
 		expect(svg).toContain('zero de Áries');
-		expect(trialSvg(saved.get('life-atlas')!)).toContain('data-body="sun"');
+		expect(trialSvg(saved.get('life-atlas')!)).toContain('data-fact-id="position-sun"');
 		const invalid = structuredClone(natal);
 		(invalid.calculation.data.positions as { longitude: number }[])[0].longitude = 360;
 		expect(() => trialSvg(invalid)).toThrow('geometry_invalid');
@@ -378,8 +378,9 @@ describe('private free testing of the real 25 calculations and original AI/edito
 	for (const product of cases.filter((p) => p.delivery.includes('svg')))
 		it(`${product.id}: catalog SVG represents its own calculated scope`, () => {
 			const svg = trialSvg(saved.get(product.id)!);
-			expect(svg).toContain('ASC:');
-			expect(svg.match(/data-body=/g) ?? []).toHaveLength(product.id === 'ascendant' ? 0 : 10);
+			expect(svg).toContain('ASC');
+			expect(svg).toContain('AstroChartEngineV2/2.0.0');
+			expect(svg.includes('data-fact-id="position-sun"')).toBe(product.id !== 'ascendant');
 			expect(svg).not.toContain('undefined');
 		});
 	for (const product of cases.filter((p) => privateFormats(p.id, p.delivery).includes('pdf')))
