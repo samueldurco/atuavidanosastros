@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
+import { calculateHistoricalNatalV4 as calculateTrial } from './historical-v4.test-helper';
 import type { WorkflowInput } from '@atv/domain';
-import { calculateTrial, calculateTrialAngleContacts } from '../../server/trial-calculation';
+import { calculateTrialAngleContacts } from '../../server/trial-calculation';
 import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
 import { buildChartScene } from '../chart-engine-v2';
 import { normalizeFactGraph } from './fact-graph';

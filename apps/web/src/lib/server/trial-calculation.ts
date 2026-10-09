@@ -1,3 +1,4 @@
+import { projectMidheavenReading } from '../trials/reconstruction/midheaven-facts';
 import { calculateAspects, type AspectPolicy, type AspectPosition } from '@atv/astrology';
 import {
 	calculateDreamRecord,
@@ -11,7 +12,6 @@ import {
 	type WorkflowInput
 } from '@atv/domain';
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
-import { modernRulers } from '../trials/reconstruction/canon';
 import { projectDateReading } from '../trials/reconstruction/date-facts';
 import { projectSynastry } from '../trials/reconstruction/synastry-facts';
 import { projectDossier } from '../trials/reconstruction/dossier-facts';
@@ -149,74 +149,10 @@ export async function calculateTrial(
 			{ ...input, productId: 'birth-chart' },
 			context
 		)) as CalculationSnapshot;
-		const positions = natal.data.positions as AspectPosition[];
 		if (input.productId === 'ascendant') return projectAscendantReading(input, natal);
 		if (input.productId === 'three-pillars') return projectPillarsReading(input, natal);
 		if (input.productId === 'birth-chart') return projectBirthReading(input, natal);
-		const aspects = calculateAspects(positions, trialAspectPolicy);
-		const mc = natal.data.angles as { midheaven: number | null; ascendant: number | null };
-		const ruler = mc.midheaven === null ? null : modernRulers[Math.floor(mc.midheaven / 30)];
-		const ascRuler = mc.ascendant === null ? null : modernRulers[Math.floor(mc.ascendant / 30)];
-		// Fixed three-degree angle policy. Geometry comes from the deterministic calculator.
-		const angleContacts = calculateTrialAngleContacts(positions, mc);
-		return {
-			...natal,
-			version: 'atv-private-natal-synthesis/4.0.0',
-			facts: [
-				...natal.facts,
-				...(ascRuler
-					? [
-							{
-								id: 'natal-asc-ruler',
-								kind: 'calculated' as const,
-								display: `Regente moderno do Ascendente: ${labels[ascRuler]}`,
-								source: 'atv-humanistic-modern/1.0.0; natal.angles.ascendant'
-							}
-						]
-					: []),
-				...(ruler
-					? [
-							{
-								id: 'career-mc-ruler',
-								kind: 'calculated' as const,
-								display: `Regente moderno do Meio do Céu: ${labels[ruler]}`,
-								source: 'atv-humanistic-modern/1.0.0; natal.angles.midheaven'
-							}
-						]
-					: []),
-				...angleContacts.map((a, i) => ({
-					id: `private-angle-contact-${i}`,
-					kind: 'calculated' as const,
-					display: `${labels[a.body]} — ${a.angle === 'ascendant' ? 'Ascendente' : 'Meio do Céu'}: ${aspectLabels[a.kind]}; orbe ${a.orb.toFixed(3)}°`,
-					source: 'atv-private-angle-contacts/1.0.0; nominal 3°'
-				})),
-				...aspects.aspects.map((a, i) => ({
-					id: `private-natal-aspect-${i}`,
-					kind: 'calculated' as const,
-					display: `${labels[a.first]} — ${labels[a.second]}: ${aspectLabels[a.kind]}; orbe ${a.orbDegrees.toFixed(3)}°`,
-					source: `${aspects.algorithmVersion};${trialAspectPolicy.id}@${trialAspectPolicy.version}`
-				}))
-			],
-			data: {
-				...natal.data,
-				productId: input.productId,
-				privateAspects: aspects,
-				angleContacts,
-				natalSynthesis: { version: '4.0.0', ascRuler, rulership: 'modern', angleOrb: 3 },
-				career: {
-					version: '4.0.0',
-					mcRuler: ruler,
-					rulership: 'modern',
-					houses: [2, 6, 10],
-					factors: ['sun', 'mercury', 'mars', 'jupiter', 'saturn']
-				}
-			},
-			limits: [
-				...natal.limits.filter((limit) => !limit.startsWith('Aspectos, síntese interpretativa')),
-				'Regência moderna tropical; casas Placidus somente quando calculáveis. A leitura não determina profissão nem renda.',
-				'Aspectos maiores nominais com orbes de teste; sem certificação de aplicação/separação.'
-			]
-		};
+		return projectMidheavenReading(input, natal);
 	}
 	if (input.productId === 'tarot-journey') {
 		const goal = input.tarotJourney!.goal;

@@ -10,21 +10,21 @@ import { experienceFor } from '../experience';
 import { buildChartScene } from '../chart-engine-v2';
 import { normalizeFactGraph } from './fact-graph';
 import { modernRulers } from './canon';
-import { ascendantModifiers, reviewReconstructedAscendant } from './ascendant';
+import { midheavenModifiers, reviewReconstructedMidheaven } from './midheaven';
 import {
-	assertAscendantProjection,
-	ascendantAngularContacts,
-	ASCENDANT_VERSION,
-	ASCENDANT_READING_VERSION,
-	type AscendantData
-} from './ascendant-facts';
+	assertMidheavenProjection,
+	midheavenAngularContacts,
+	MIDHEAVEN_VERSION,
+	MIDHEAVEN_READING_VERSION,
+	type MidheavenData
+} from './midheaven-facts';
 
-const runId = '00000000-0000-4000-8000-000000000180';
+const runId = '00000000-0000-4000-8000-000000000190';
 const input = (
 	context = 'Quero abrir uma conversa e explicar minhas necessidades.'
 ): WorkflowInput => ({
 	version: 'atv-workflow/1.0.0',
-	productId: 'ascendant',
+	productId: 'midheaven',
 	context,
 	birth: {
 		localDateTime: '2000-01-01T12:00:00',
@@ -52,34 +52,34 @@ const repeated = (r: ReturnType<typeof composeTrialReading>) => {
 	);
 	return sentences.filter((s, i) => sentences.indexOf(s) !== i).join('\n');
 };
-describe('Ascendente 5: regente, modificadores e integração', () => {
+describe('Meio do Céu 5: regente, modificadores e integração', () => {
 	it('preserves its native source, ruler position and house and all calculated relations', async () => {
 		const i = input(),
 			c = await sample(),
-			d = c.data as unknown as AscendantData,
+			d = c.data as unknown as MidheavenData,
 			g = normalizeFactGraph(c);
-		expect(c.version).toBe(ASCENDANT_VERSION);
-		expect(latestReadingVersion('ascendant')).toBe(ASCENDANT_READING_VERSION);
+		expect(c.version).toBe(MIDHEAVEN_VERSION);
+		expect(latestReadingVersion('midheaven')).toBe(MIDHEAVEN_READING_VERSION);
 		expect(g.positions).toHaveLength(10);
 		expect(g.houses).toHaveLength(12);
-		expect(d.regent.body).toBe(modernRulers[g.asc!.sign]);
+		expect(d.regent.body).toBe(modernRulers[g.mc!.sign]);
 		expect(d.regent.house).toBe(g.positions.find((p) => p.body === d.regent.body)!.house);
 		for (const f of d.natal.facts) expect(c.facts).toContainEqual(f);
 		expect(d.method.applyingSeparating).toBe(false);
-		assertAscendantProjection(i, c);
+		assertMidheavenProjection(i, c);
 	});
 	it('keeps wraparound conjunctions at three degrees and excludes contacts outside the orb', async () => {
-		const p = (await sample()).data.positions as AscendantData['positions'];
-		expect(ascendantAngularContacts([{ ...p[0], longitude: 2 }], 359)).toContainEqual({
+		const p = (await sample()).data.positions as MidheavenData['positions'];
+		expect(midheavenAngularContacts([{ ...p[0], longitude: 2 }], 359)).toContainEqual({
 			body: p[0].body,
-			angle: 'ascendant',
+			angle: 'midheaven',
 			kind: 'conjunction',
 			orb: 3
 		});
-		expect(ascendantAngularContacts([{ ...p[0], longitude: 2.001 }], 359)).toEqual([]);
-		expect(ascendantAngularContacts([{ ...p[0], longitude: 89 }], 359)).toContainEqual({
+		expect(midheavenAngularContacts([{ ...p[0], longitude: 2.001 }], 359)).toEqual([]);
+		expect(midheavenAngularContacts([{ ...p[0], longitude: 89 }], 359)).toContainEqual({
 			body: p[0].body,
-			angle: 'ascendant',
+			angle: 'midheaven',
 			kind: 'square',
 			orb: 0
 		});
@@ -88,20 +88,20 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 		const i = input(),
 			c = await sample(),
 			r = composeTrialReading(i, c);
-		expect(reviewReconstructedAscendant(i, c, r), repeated(r)).toEqual([]);
+		expect(reviewReconstructedMidheaven(i, c, r), repeated(r)).toEqual([]);
 		expect(await approveTrialReading(i, c, r)).not.toBeNull();
 		expect(r.sections).toHaveLength(12);
 		expect(r.editorial?.themes).toHaveLength(10);
 		expect(r.questions).toHaveLength(3);
 		expect(r.sections[10].text).toContain('vinte minutos');
 		expect(r.sections[10].text).toContain('evidência contrária');
-		expect(experienceFor('ascendant')).toMatchObject({ format: 'book', pdf: false });
+		expect(experienceFor('midheaven')).toMatchObject({ format: 'book', pdf: false });
 	});
-	it('lists all ruler aspects and ASC contacts even when only the closest three receive priority', async () => {
+	it('lists all ruler aspects and MC contacts even when only the closest three receive priority', async () => {
 		const c = await sample(),
 			g = normalizeFactGraph(c),
 			r = composeTrialReading(input(), c),
-			m = ascendantModifiers(g);
+			m = midheavenModifiers(g);
 		const ids = new Set(r.sections.at(-1)!.factIds);
 		for (const a of [...m.rulerAspects, ...m.contacts]) expect(ids.has(a.factId)).toBe(true);
 		expect(m.rulerAspects).toEqual(
@@ -124,10 +124,10 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 		expect(ra.sections[9].text).not.toBe(rb.sections[9].text);
 		expect(ra.practice).not.toBe(rb.practice);
 		expect(ra.questions).not.toEqual(rb.questions);
-		expect(reviewReconstructedAscendant(b, cb, rb), repeated(rb)).toEqual([]);
+		expect(reviewReconstructedMidheaven(b, cb, rb), repeated(rb)).toEqual([]);
 		expect(await approveTrialReading(b, cb, rb)).not.toBeNull();
 	});
-	it('uses genuinely different ascendants and handles luminary rulership without inventing a second planet', async () => {
+	it('uses genuinely different midheavens and handles luminary rulership without inventing a second planet', async () => {
 		const signs = new Set<number>();
 		let luminaryRulers = 0;
 		for (let hour = 0; hour < 24; hour += 2) {
@@ -141,23 +141,37 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 			const c = await calculateTrial(i, runId),
 				g = normalizeFactGraph(c),
 				r = composeTrialReading(i, c);
-			signs.add(g.asc!.sign);
-			expect(reviewReconstructedAscendant(i, c, r), `hour=${hour}\n${repeated(r)}`).toEqual([]);
+			signs.add(g.mc!.sign);
+			expect(reviewReconstructedMidheaven(i, c, r), `hour=${hour}\n${repeated(r)}`).toEqual([]);
 			expect(await approveTrialReading(i, c, r), `hour=${hour}`).not.toBeNull();
-			if (['sun', 'moon'].includes(g.asc!.ruler)) {
+			if (['sun', 'moon'].includes(g.mc!.ruler)) {
 				luminaryRulers++;
-				expect(r.sections.map((s) => s.text).join('\n')).toContain('também rege este Ascendente');
+				expect(r.sections.map((s) => s.text).join('\n')).toContain('O regente é uma luminária');
 			}
 		}
 		expect(signs.size).toBeGreaterThanOrEqual(10);
 		expect(luminaryRulers).toBeGreaterThan(0);
 	}, 60000);
+	it('keeps the polar MC while withholding unavailable Placidus houses', async () => {
+		const i = input();
+		i.birth!.latitude = 80;
+		const c = await calculateTrial(i, runId),
+			d = c.data as unknown as MidheavenData,
+			r = composeTrialReading(i, c);
+		expect(Number.isFinite(d.angles.midheaven)).toBe(true);
+		expect(d.houses.status).not.toBe('ok');
+		expect(d.houses.cusps).toEqual([]);
+		expect(d.regent.house).toBeNull();
+		expect(r.sections[6].text).toContain('nenhum planeta será colocado na casa dez');
+		expect(reviewReconstructedMidheaven(i, c, r)).toEqual([]);
+		expect(await approveTrialReading(i, c, r)).not.toBeNull();
+	});
 	it.each(['positions', 'regent', 'angleContacts', 'method', 'birth'])(
 		'rejects mutation of %s after projection',
 		async (key) => {
 			const c = structuredClone(await sample());
 			c.data[key] = null;
-			expect(() => assertAscendantProjection(input(), c)).toThrow();
+			expect(() => assertMidheavenProjection(input(), c)).toThrow();
 			await expect(
 				approveTrialReading(input(), c, composeTrialReading(input(), await sample()))
 			).rejects.toThrow();
@@ -167,14 +181,14 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 		const c = await sample(),
 			changed = structuredClone(c);
 		(changed.data.natal as CalculationSnapshot).facts[0].display += ' alterado';
-		expect(() => assertAscendantProjection(input(), changed)).toThrow();
+		expect(() => assertMidheavenProjection(input(), changed)).toThrow();
 		const forged = structuredClone(c);
-		forged.facts.find((f) => f.id === 'angle-ascendant')!.display += ' alterado';
-		expect(() => assertAscendantProjection(input(), forged)).toThrow();
-		expect(() => assertAscendantProjection(input('Outro contexto.'), c)).toThrow();
+		forged.facts.find((f) => f.id === 'angle-midheaven')!.display += ' alterado';
+		expect(() => assertMidheavenProjection(input(), forged)).toThrow();
+		expect(() => assertMidheavenProjection(input('Outro contexto.'), c)).toThrow();
 		const otherBirth = input();
 		otherBirth.birth!.utcInstant = '2000-01-01T13:00:00Z';
-		expect(() => assertAscendantProjection(otherBirth, c)).toThrow();
+		expect(() => assertMidheavenProjection(otherBirth, c)).toThrow();
 	});
 	it('rejects incomplete themes, factual omissions, repeated prose and unsupported additions', async () => {
 		const i = input(),
@@ -185,24 +199,24 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 		expect(await approveTrialReading(i, c, missing)).toBeNull();
 		const duplicate = structuredClone(r);
 		duplicate.sections[2].text = duplicate.sections[1].text;
-		expect(reviewReconstructedAscendant(i, c, duplicate)).toContain('repeated-opening');
+		expect(reviewReconstructedMidheaven(i, c, duplicate)).toContain('repeated-opening');
 		const deterministic = structuredClone(r);
 		deterministic.sections[0].text += ' Seu sucesso garantido está escrito no mapa.';
 		expect(await approveTrialReading(i, c, deterministic)).toBeNull();
 	});
-	it('keeps historical ascendant edition 4 and verifies the current saved content and chart', async () => {
+	it('keeps historical midheaven edition 4 and verifies the current saved content and chart', async () => {
 		const i = input(),
 			c = await sample(),
 			r = composeTrialReading(i, c),
 			approval = await approveTrialReading(i, c, r);
 		const old = await calculateHistoricalNatalV4({ ...i, productId: 'midheaven' }, runId);
-		old.data.productId = 'ascendant';
+		old.data.productId = 'midheaven';
 		const previous = composeTrialReading(i, old);
 		expect(previous.version).toBe('atv-product-reconstruction/4.0.0');
 		expect(previous.sections).not.toEqual(r.sections);
 		const saved: SavedTrial = {
 			id: runId,
-			product_id: 'ascendant',
+			product_id: 'midheaven',
 			created_at: '2026-10-08T12:00:00Z',
 			input: i,
 			calculation: c,
@@ -211,9 +225,9 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 		};
 		expect(await executeTrialRuntime({ operation: 'verify', saved })).toBe(true);
 		expect(buildChartScene(saved).markers).toHaveLength(10);
-		const dir = 'E:/ATVNA/tmp/reconstruction-qa/ascendant';
+		const dir = 'E:/ATVNA/tmp/reconstruction-qa/midheaven';
 		await mkdir(dir, { recursive: true });
-		await writeFile(`${dir}/ascendant.json`, JSON.stringify(saved, null, 2));
+		await writeFile(`${dir}/midheaven.json`, JSON.stringify(saved, null, 2));
 		await writeFile(
 			`${dir}/reading.txt`,
 			[

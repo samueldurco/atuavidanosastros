@@ -6,7 +6,7 @@ for (const width of [390, 1440]) {
 		['three-pillars', 'Três Pilares'],
 		['birth-chart', 'Mapa Astral — assinaturas e temas de vida'],
 		['ascendant', 'Ascendente — aproximação, regente e resposta'],
-		['midheaven', 'Meio do Céu']
+		['midheaven', 'Meio do Céu — direção pública e responsabilidade']
 	]) {
 		test(`${product}: integrated reading and chart at ${width}px`, async ({ page }) => {
 			await page.setViewportSize({ width, height: 900 });

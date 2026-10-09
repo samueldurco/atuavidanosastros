@@ -1,11 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { calculateHistoricalNatalV4 } from './historical-v4.test-helper';
 import { calculateAspects, type AspectPosition } from '@atv/astrology';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
-import {
-	calculateTrial as calculateCurrentTrial,
-	calculateTrialAngleContacts,
-	trialAspectPolicy
-} from '../../server/trial-calculation';
+import { calculateTrialAngleContacts, trialAspectPolicy } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
 import { approveTrialReading, composeTrialReading, type TrialReading } from '../reading';
 import { composeTrialReading as composeV3 } from '../experience-reading';
@@ -16,7 +13,7 @@ import { normalizeFactGraph } from './fact-graph';
 const runId = '00000000-0000-4000-8000-000000000084';
 // Preserve the historical 4.0 calculation contract while new revisions use Compass 5.0.
 async function calculateTrial(value: WorkflowInput, id: string): Promise<CalculationSnapshot> {
-	const natal = await calculateCurrentTrial({ ...value, productId: 'midheaven' }, id);
+	const natal = await calculateHistoricalNatalV4({ ...value, productId: 'midheaven' }, id);
 	return {
 		...natal,
 		version: 'atv-private-career-synthesis/4.0.0',

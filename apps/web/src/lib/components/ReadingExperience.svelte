@@ -33,6 +33,7 @@
 	const minutes = $derived(
 		[
 			'atv-private-ascendant/5.0.0',
+			'atv-private-midheaven/5.0.0',
 			'atv-private-three-pillars/5.0.0',
 			'atv-private-birth-chart/5.0.0',
 			'atv-private-career-compass/5.0.0',

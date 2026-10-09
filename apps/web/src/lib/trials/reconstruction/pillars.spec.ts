@@ -1,3 +1,4 @@
+import { calculateHistoricalNatalV4 } from './historical-v4.test-helper';
 import { describe, expect, it } from 'vitest';
 import { mkdir, writeFile } from 'node:fs/promises';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
@@ -176,7 +177,7 @@ describe('Três Pilares 5: integração, fonte e contrapontos', () => {
 			c = await sample(),
 			r = composeTrialReading(i, c),
 			approval = await approveTrialReading(i, c, r);
-		const old = await calculateTrial({ ...i, productId: 'midheaven' }, runId);
+		const old = await calculateHistoricalNatalV4({ ...i, productId: 'midheaven' }, runId);
 		old.data.productId = 'three-pillars';
 		const previous = composeTrialReading(i, old);
 		expect(previous.version).toBe('atv-product-reconstruction/4.0.0');

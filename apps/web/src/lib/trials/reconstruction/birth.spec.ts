@@ -1,3 +1,4 @@
+import { calculateHistoricalNatalV4 } from './historical-v4.test-helper';
 import { describe, expect, it } from 'vitest';
 import { mkdir, writeFile } from 'node:fs/promises';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
@@ -213,7 +214,7 @@ describe('Mapa Astral 5: seis assinaturas, temas e síntese', () => {
 	);
 	it('preserves the historical fourth edition and verifies a saved current reading', async () => {
 		const i = input(),
-			old = await calculateTrial({ ...i, productId: 'midheaven' }, runId);
+			old = await calculateHistoricalNatalV4({ ...i, productId: 'midheaven' }, runId);
 		old.data.productId = 'birth-chart';
 		const previous = composeTrialReading(i, old);
 		expect(previous.version).toBe('atv-product-reconstruction/4.0.0');

@@ -41,9 +41,10 @@ export const experiences: Record<string, Experience> = {
 		false
 	),
 	midheaven: contract(
-		'Separe a contribuição que você quer construir das expectativas sobre reconhecimento.',
-		5,
-		'brief'
+		'Examine sua direção pública pelo regente, pela casa e pelas relações calculadas; teste uma responsabilidade que pode sustentar.',
+		12,
+		'book',
+		false
 	),
 	horoscope: contract(
 		'Escolha um tema pessoal para observar hoje e um cuidado que cabe no seu dia.',

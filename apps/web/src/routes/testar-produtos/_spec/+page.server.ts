@@ -107,6 +107,11 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			url.searchParams.get('ascendantContext') === 'workload'
 				? 'Estou com sobrecarga e preciso preservar descanso.'
 				: 'Quero abrir uma conversa e explicar minhas necessidades.';
+	if (productId === 'midheaven')
+		input.context =
+			url.searchParams.get('midheavenContext') === 'workload'
+				? 'Estou com sobrecarga e preciso preservar descanso.'
+				: 'Quero abrir uma conversa sobre a responsabilidade que consigo assumir.';
 	if (productId === 'purpose-career')
 		input.context =
 			'Quero mudar de área e testar uma contribuição sem comprometer meus recursos e descanso.';
