@@ -200,7 +200,7 @@ function openingSynthesis(methodId: string, cards: Card[], context: Binding): st
 		case 'tarot-peladan-cross':
 			return `${relation(c(0), c(1))}\n\n${c(2).name}, no conselho, oferece uma mediação: ${c(2).meaning.action}. A tendência de ${c(3).name} descreve uma possibilidade caso essa dinâmica continue. ${c(4).name}, no centro, pede reunir as forças por ${c(4).meaning.core}. Para ${context.subject}, o apoio só pode ser avaliado junto do custo que a resistência torna visível.`;
 		case 'tarot-celtic-cross':
-			return `${relation(c(0), c(1))}\n\nA explicação consciente de ${c(4).name} precisa ser conferida com o fundamento de ${c(2).name}. Sua postura, em ${c(6).name}, conta com ${c(6).meaning.resource}; o ambiente, em ${c(7).name}, exige considerar ${c(7).meaning.action}. Essa exigência ajuda a distinguir o que depende da sua resposta do que precisa de uma condição externa. A tendência de ${c(9).name} pode ser explorada por este tema: ${theme(c(9))}. Ela permanece condicionada à relação entre postura e ambiente. Ao conferir a leitura, dê atenção a ${context.criterion}.`;
+			return `${relation(c(0), c(1))}\n\nA explicação consciente de ${c(4).name} precisa ser conferida com o fundamento de ${c(2).name}. Sua postura, em ${c(6).name}, conta com ${c(6).meaning.resource}; o ambiente, em ${c(7).name}, exige considerar ${c(7).meaning.action}. Essa exigência ajuda a distinguir o que depende da sua resposta do que precisa de uma condição externa. A tendência de ${c(9).name} pode ser explorada por este tema: ${theme(c(9))}. Ela permanece condicionada à relação entre postura e ambiente. Ao conferir a leitura, observe ${context.criterion}.`;
 		case 'tarot-aphrodite-temple':
 			return `${c(0).name}, no tema compartilhado, propõe olhar para ${c(0).meaning.core}. Esse tema ganha dois lados: ${c(1).name} ocupa sua posição e ${c(3).name} representa uma hipótese sobre a posição da outra pessoa. Sua necessidade, em ${c(2).name}, envolve ${c(2).meaning.core}; a outra perspectiva, em ${c(4).name}, pede que se investigue ${c(4).meaning.core} pela conversa.\n\nPara ${context.subject}, o encontro entre essas necessidades precisa considerar ${context.criterion}. ${c(5).name}, na tensão compartilhada, torna relevante o risco de ${c(5).meaning.excess}. A condição favorável de ${c(6).name} sugere ${c(6).meaning.action}. Observe se esse ajuste permite às duas partes declarar o que precisam sem transformar uma hipótese sobre o vínculo numa resposta atribuída à outra pessoa.`;
 		default: {
@@ -230,7 +230,7 @@ function application(methodId: string, cards: Card[], context: Binding) {
 					`Em que momento o recurso de ${c(0).name} dá lugar ao excesso descrito nesta leitura?`,
 					`Que efeito você observaria ao experimentar o ajuste de ${c(0).name}?`
 				],
-				practice: `Escolha um episódio relacionado a ${context.subject}. Antes de agir, anote como o tema de ${c(0).name} aparece e qual parte ainda é hipótese. Experimente este ajuste: ${c(0).meaning.action}. Registre o efeito e o custo; use ambos para decidir se o gesto merece ser repetido.`
+				practice: `Escolha um episódio que envolva ${context.subject}. Antes de agir, anote como o tema de ${c(0).name} aparece e qual parte ainda é hipótese. Experimente este ajuste: ${c(0).meaning.action}. Registre o efeito e o custo; use ambos para decidir se o gesto merece ser repetido.`
 			};
 		case 'tarot-situation-challenge-advice':
 			return {
@@ -306,7 +306,7 @@ function positionText(
 			text = `Uma conversa envolve o que se diz, o que se entende e o que circula depois. ${card.name} leva às trocas o movimento de ${m.core}. Aqui interessa reconhecer como uma informação chega, é verificada e ganha resposta.\n\nO eixo se completa com ${other}, nos horizontes. Uma conclusão ampla pode precisar de uma pergunta local mais precisa. Para melhorar essa passagem, considere ${m.action}. Observe se a conversa esclarece o assunto ou apenas repete uma interpretação conhecida.`;
 			break;
 		case 'roots':
-			text = `Nesta área, a pergunta é o que oferece base para a vida fora das exigências públicas. ${card.name} aborda raízes por ${m.core}. Casa, pertencimento e apoio são possibilidades de observação; a carta não inventa uma história familiar.\n\nNa outra ponta está ${other}, em contribuição. Compare o que a participação pública pede com o que sua base consegue sustentar. ${cap(m.resource)} pode favorecer essa sustentação; já ${m.excess} pode indicar um custo que ficou concentrado onde poucas pessoas o veem.`;
+			text = `Nesta área, a pergunta é o que oferece base para a vida fora das exigências públicas. ${card.name} aborda raízes por ${m.core}. Casa, pertencimento e apoio são possibilidades de observação; a carta não inventa uma história familiar.\n\nNa outra ponta está ${other}, em contribuição. Compare o que a participação pública pede com o que sua base consegue sustentar. O recurso de ${m.resource} pode favorecer essa sustentação; o excesso de ${m.excess} pode indicar um custo que ficou concentrado onde poucas pessoas o veem.`;
 			break;
 		case 'creation':
 			text = `Criar envolve dar forma a algo que ainda não tem resposta pronta. ${card.name} coloca nessa área ${m.core}. Pode ser um trabalho autoral, uma brincadeira ou uma experiência prazerosa; o tamanho real depende da situação que você escolher.\n\n${other}, nas redes, introduz a relação entre expressão própria e participação coletiva. Uma ideia não precisa representar todo o grupo para merecer um primeiro ensaio. O ajuste oferecido por esta carta é ${m.action}; confira se ele preserva espaço para experimentar sem transformar cada tentativa numa prova de valor.`;
@@ -336,7 +336,7 @@ function positionText(
 			text = `O fundamento descreve o que pode sustentar a questão, mesmo quando não ocupa o primeiro plano. ${card.name} propõe investigar ${m.core}. Procure uma condição recorrente, um recurso ou uma premissa que ajude a entender por que a situação se mantém.\n\n${other}, na consciência, apresenta a maneira de compreender o tema. Compare a explicação que você costuma dar com o que precisa existir para a situação funcionar. A diferença entre fundamento e explicação pode revelar uma necessidade de ajuste: ${m.action}.`;
 			break;
 		case 'awareness':
-			text = `Na posição de consciência, ${card.name} representa uma lente disponível para compreender a questão: ${m.core}. Uma lente ajuda a selecionar o que importa e também pode deixar uma parte do problema fora do campo.\n\nO contraponto é ${other}, no fundamento. Confira se sua explicação inclui as condições que sustentam a situação. ${cap(m.resource)} favorece uma compreensão mais útil quando admite revisão diante de algo que a explicação inicial não conseguiu abranger.`;
+			text = `Na posição de consciência, ${card.name} representa uma lente disponível para compreender a questão: ${m.core}. Uma lente ajuda a selecionar o que importa e também pode deixar uma parte do problema fora do campo.\n\nO contraponto é ${other}, no fundamento. Confira se sua explicação inclui as condições que sustentam a situação. O recurso de ${m.resource} favorece uma compreensão mais útil quando você admite revisão diante de algo que a explicação inicial não conseguiu abranger.`;
 			break;
 		case 'stance':
 			text = `Sua postura é a parte da tiragem que pergunta como você responde à questão. ${card.name} propõe examinar ${m.core}. Isso não define sua personalidade; descreve uma maneira de agir que pode estar disponível nesta situação.\n\nAo lado de ${other}, no ambiente, essa postura precisa encontrar condições reais de participação. Considere ${m.action}. Compare o efeito que espera produzir com a resposta que recebe, sem atribuir a você o controle de tudo que acontece ao redor.`;
@@ -351,7 +351,7 @@ function positionText(
 			text = `O tema compartilhado é uma pergunta sobre a dinâmica entre vocês. Com ${card.name}, ela se organiza por ${m.core}. A carta não descreve duas pessoas por inteiro; seleciona um processo para observar na relação.\n\n${other}, na tensão compartilhada, chama atenção para ${peer!.meaning.excess}. Compare o que o tema permite construir com a dificuldade que pode limitar essa construção. Exemplos conhecidos dos dois lados são mais úteis aqui do que tentar adivinhar o que alguém ainda não disse.`;
 			break;
 		case 'central-theme':
-			text = `${cap(m.action)}. Essa é uma maneira de dar aplicação ao tema de ${card.name}, sem exigir que uma única carta explique todos os aspectos da situação. ${application ? `${cap(application)}.` : `Considere o gesto em relação a ${context.subject}, observando o efeito que produz nas condições que você conhece.`}\n\nEscolha um episódio no qual esse gesto possa ser observado. A pergunta útil é o que muda quando você o pratica: fica mais fácil compreender, negociar ou agir? Se nada disso muda, o gesto pode precisar de outra medida ou a hipótese da leitura pode não corresponder à experiência.`;
+			text = `${cap(m.action)}. Essa é uma maneira de dar aplicação ao tema de ${card.name}, sem exigir que uma única carta explique todos os aspectos da situação. ${application ? `${cap(application)}.` : `Aplique o gesto numa situação que envolva ${context.subject}, observando o efeito que produz nas condições que você conhece.`}\n\nEscolha um episódio no qual esse gesto possa ser observado. A pergunta útil é o que muda quando você o pratica: fica mais fácil compreender, negociar ou agir? Se nada disso muda, o gesto pode precisar de outra medida ou a hipótese da leitura pode não corresponder à experiência.`;
 			break;
 		case 'challenge':
 		case 'crossing':
@@ -480,7 +480,7 @@ export function composeReconstructedTarot(
 		version: RECONSTRUCTION_VERSION,
 		productId: method.id,
 		title: method.name,
-		opening: `${method.description} ${input.focus || input.context ? `Nesta consulta, a aplicação considera ${context.subject} e dá prioridade a ${context.criterion}.` : 'Sem um foco informado, a leitura segue a função de cada posição; você pode escolher depois uma situação concreta para observá-la.'}`,
+		opening: `${method.description} ${input.focus || input.context ? `Nesta consulta, a aplicação considera ${context.subject} e usa como critério ${context.criterion}.` : 'Sem um foco informado, a leitura segue a função de cada posição; você pode escolher depois uma situação concreta para observá-la.'}`,
 		source:
 			'Esta leitura combina os significados das cartas com a função de cada posição, a partir dos Livros 19 e 20 do acervo ATVNA. Usa o baralho Rider–Waite–Smith, com Força VIII e Justiça XI.' +
 			(input.productId === 'tarot-peladan-cross'
