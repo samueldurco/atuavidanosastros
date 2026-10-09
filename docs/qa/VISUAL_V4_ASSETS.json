@@ -1,0 +1,280 @@
+{
+  "run_id": "ATV-20260902-170644Z-01A0630F",
+  "approved_manifest_sha256": "576f6d5fa1dee7d009f066b85432a5e5c84ea3dc9fc59efd6cf8f4160b49061d",
+  "basis": "85519cbfc966975ca80bee54dbd5219c5d684fb0",
+  "owner_approval": "QA/V4-07/ACEITE_FECHAMENTO_V001.json",
+  "assets": [
+    {
+      "source": "CARDS/recortes/B01-figure-1.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B01-figure-1.webp",
+      "bytes": 14044,
+      "sha256": "3df668541272b679b0fe6eebc5f5da56bcd6412f294e7af89d561c6e64b415bd"
+    },
+    {
+      "source": "CARDS/recortes/B02-figure-1.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B02-figure-1.webp",
+      "bytes": 11458,
+      "sha256": "a0d7cfb45f82fb2ed612e98bfd8aa26175cd7ee7fc89085b3c85ac2e2992f9a5"
+    },
+    {
+      "source": "CARDS/recortes/B03-figure-1.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B03-figure-1.webp",
+      "bytes": 16340,
+      "sha256": "73c31d0802d388658a175f46621e2eaf7ae560214f8685e4fbdad6d834b69554"
+    },
+    {
+      "source": "CARDS/recortes/B03-figure-2.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B03-figure-2.webp",
+      "bytes": 28450,
+      "sha256": "09c41f65b4f6d268be646ca6450c7c97f78a53cd4f9121db40aaa44d8839f061"
+    },
+    {
+      "source": "CARDS/recortes/B03-figure-3.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B03-figure-3.webp",
+      "bytes": 9640,
+      "sha256": "7823bd686fe550311f17f58db7c2c888870745210765d33c02c80c696256dd38"
+    },
+    {
+      "source": "CARDS/recortes/B04-figure-1.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B04-figure-1.webp",
+      "bytes": 38212,
+      "sha256": "a0fd6cbdeee1fc33fe13dedd5f7e8413a6f6d379fe10eefd599070a460948d31"
+    },
+    {
+      "source": "CARDS/recortes/B04-figure-2.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B04-figure-2.webp",
+      "bytes": 17148,
+      "sha256": "b24e6828175b12f4c3490fffa9de5dcfa7f258dcc9e625dc9e3f45b8ad7af283"
+    },
+    {
+      "source": "CARDS/recortes/B05-figure-1.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B05-figure-1.webp",
+      "bytes": 9364,
+      "sha256": "ed7a0d55bc70a869786dd0e2207948314bd31913837dba892ddae0d69a876cb6"
+    },
+    {
+      "source": "CARDS/recortes/B06-figure-1.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B06-figure-1.webp",
+      "bytes": 17704,
+      "sha256": "607ca400f8f93ebeeb1d7b3b55252da103247040abd2a2cc6d981fa1eec44e83"
+    },
+    {
+      "source": "CARDS/recortes/B06-figure-2.webp",
+      "runtime": "/brand/v4/CARDS/recortes/B06-figure-2.webp",
+      "bytes": 23284,
+      "sha256": "8f2220a9f42edbc23e9e3769717a3fff197ce4b80097115ab484d296670c5aa5"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-compacta-claro.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-compacta-claro.svg",
+      "bytes": 3110,
+      "sha256": "d21506f72b4b288b79db9731157f61bfbc57c5a70e48e4abf0a2a2e1f3d5e7cb"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-compacta-escuro.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-compacta-escuro.svg",
+      "bytes": 3111,
+      "sha256": "44035b637edb31a562562d48a3ca5d860af84f026ed6d6088406b8fd3f8954c4"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-horizontal-claro.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-horizontal-claro.svg",
+      "bytes": 23383,
+      "sha256": "7aeaba742f55e8c6077941557455e570273c9ad3825f1ed5fe3d3d5f1005f2ae"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-horizontal-escuro.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-horizontal-escuro.svg",
+      "bytes": 23384,
+      "sha256": "6bb6787dfd89718cdcec2c32a8eb3a081756d4ef0fcf37d2f42d4fb7b9d830e3"
+    },
+    {
+      "source": "MATERIAS/CONTINUIDADE_V004/papel-autonomo-v004.webp",
+      "runtime": "/brand/v4/MATERIAS/CONTINUIDADE_V004/papel-autonomo-v004.webp",
+      "bytes": 56042,
+      "sha256": "0fb319743880f14b64855a1e058dbfe5252f5ae85020d8b997351ce10c7e7edf"
+    },
+    {
+      "source": "MATERIAS/CONTINUIDADE_V005/fundo-continuo-desktop-v005.avif",
+      "runtime": "/brand/v4/MATERIAS/CONTINUIDADE_V005/fundo-continuo-desktop-v005.avif",
+      "bytes": 167025,
+      "sha256": "f6ce3be8c8f5aa0ce547da0e3e66c28fb9695bd577af42fe8f8819f569bf1f0b"
+    },
+    {
+      "source": "MATERIAS/CONTINUIDADE_V005/fundo-continuo-desktop-v005.webp",
+      "runtime": "/brand/v4/MATERIAS/CONTINUIDADE_V005/fundo-continuo-desktop-v005.webp",
+      "bytes": 171310,
+      "sha256": "fbed1a72d1ea01332eeceafede602f26090553e32f455b21c01b6aeea85ba835"
+    },
+    {
+      "source": "MATERIAS/CONTINUIDADE_V005/fundo-continuo-mobile-v005.avif",
+      "runtime": "/brand/v4/MATERIAS/CONTINUIDADE_V005/fundo-continuo-mobile-v005.avif",
+      "bytes": 152298,
+      "sha256": "a872ffecd40e160a13d972ddbc8bbf2ecb7944b5856b9811038575506bf08326"
+    },
+    {
+      "source": "MATERIAS/CONTINUIDADE_V005/fundo-continuo-mobile-v005.webp",
+      "runtime": "/brand/v4/MATERIAS/CONTINUIDADE_V005/fundo-continuo-mobile-v005.webp",
+      "bytes": 149324,
+      "sha256": "7e78eff29f1f3f79248da6bd468aed94986a8d09641a1b29332e1b58051e46bf"
+    },
+    {
+      "source": "MATERIAS/DERIVACOES_V001/fibra.svg",
+      "runtime": "/brand/v4/MATERIAS/DERIVACOES_V001/fibra.svg",
+      "bytes": 735,
+      "sha256": "82f15e1a5793f85e24346bb36eeb25de0b41de82dea1d12191b5471642c513df"
+    },
+    {
+      "source": "MATERIAS/DERIVACOES_V001/materia-azul.webp",
+      "runtime": "/brand/v4/MATERIAS/DERIVACOES_V001/materia-azul.webp",
+      "bytes": 16280,
+      "sha256": "5475dd6d3f6687941b67ac7d38c25ab8970a9a6b01016b7f47a9ca95d69d0ce6"
+    },
+    {
+      "source": "MATERIAS/DERIVACOES_V001/materia-papel.webp",
+      "runtime": "/brand/v4/MATERIAS/DERIVACOES_V001/materia-papel.webp",
+      "bytes": 6206,
+      "sha256": "31d07fb115f9da1883b9f22259062684f152eb326a7d6db08120c10b510c70ce"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-amor-nativo-v002.avif",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-amor-nativo-v002.avif",
+      "bytes": 157058,
+      "sha256": "c9be9a58835e2173b72f31e21bcbcccaa0cff83c51aa4000fa3360e071d91e6f"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-amor-nativo-v002.webp",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-amor-nativo-v002.webp",
+      "bytes": 259132,
+      "sha256": "04240e3442cdde7901d5255e384b7587b7ec67ab4109533ead39cc85a27d2dad"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-ciclos-nativo-v002.avif",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-ciclos-nativo-v002.avif",
+      "bytes": 158199,
+      "sha256": "e6ec96e7b6943e75b2bc538d2f9532d27d1a5389f36492864e0d15887252db02"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-ciclos-nativo-v002.webp",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-ciclos-nativo-v002.webp",
+      "bytes": 239174,
+      "sha256": "fdfa74be2908bd88fd98b5b0bb5c33f29bc51de32a83a7ae0d45ccdcca188454"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-meu-ceu-nativo-v002.avif",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-meu-ceu-nativo-v002.avif",
+      "bytes": 153100,
+      "sha256": "14b2b6ec98a59b94e72ed03db85d0775982dadbee16e746eb7634e0771c4ebb4"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-meu-ceu-nativo-v002.webp",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-meu-ceu-nativo-v002.webp",
+      "bytes": 275626,
+      "sha256": "2d3890813f29fe2ebfdf392fbb21d3ec749bed4c1befc51da7233c8d384ec2b9"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-proposito-nativo-v002.avif",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-proposito-nativo-v002.avif",
+      "bytes": 157493,
+      "sha256": "ae3c9d1962f5ab9c5964164e6015dd07119724c198e16ef17681606beb5dc10d"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-proposito-nativo-v002.webp",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-proposito-nativo-v002.webp",
+      "bytes": 316756,
+      "sha256": "46d3fc677294a8e5ee073781489015a2b976d933f8c89c65fb4199ef108699e1"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-sonhos-nativo-v002.avif",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-sonhos-nativo-v002.avif",
+      "bytes": 153138,
+      "sha256": "526361c33c4fc21e5eb9e625b366f941a67eec0ff90d064b27d832082b8eb239"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-sonhos-nativo-v002.webp",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-sonhos-nativo-v002.webp",
+      "bytes": 306062,
+      "sha256": "e06481476b7c3350dfdc2b8a2e13d1fc9044b53cb8de63055d8172fcbcc095ed"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-tarot-nativo-v002.avif",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-tarot-nativo-v002.avif",
+      "bytes": 151827,
+      "sha256": "db05072002b3c06e6bdf1a5eaf217eff9bebd3055fae09dbf07be3f5a7df565c"
+    },
+    {
+      "source": "MATERIAS/UNIVERSOS_V002/fundo-tarot-nativo-v002.webp",
+      "runtime": "/brand/v4/MATERIAS/UNIVERSOS_V002/fundo-tarot-nativo-v002.webp",
+      "bytes": 303712,
+      "sha256": "4144f526d3b15c2427fd8a336f37685d3174f28a8352c7e820248f58f7137b1f"
+    },
+    {
+      "source": "MATERIAS/ZODIACO_V003/mandala-autonoma-640-v003.webp",
+      "runtime": "/brand/v4/MATERIAS/ZODIACO_V003/mandala-autonoma-640-v003.webp",
+      "bytes": 75290,
+      "sha256": "5ec37f659536089768fcbbace34303d38ffbb14dc25452d22b697920c0bb8e54"
+    },
+    {
+      "source": "MATERIAS/simbolos/cartas.svg",
+      "runtime": "/brand/v4/MATERIAS/simbolos/cartas.svg",
+      "bytes": 747,
+      "sha256": "3741406b7c6406dbc6ba7fd9edcc02d2db462dca6d015aa302d1bd1d99fe0165"
+    },
+    {
+      "source": "MATERIAS/simbolos/fibra-ligacao.svg",
+      "runtime": "/brand/v4/MATERIAS/simbolos/fibra-ligacao.svg",
+      "bytes": 306,
+      "sha256": "732400a196f494976102312d8fe32544d8f9d4cc97114a8416b838d43769e818"
+    },
+    {
+      "source": "MARCA/fontes/bodoni-moda-variable.woff2",
+      "runtime": "/brand/fonts/bodoni-moda-variable.woff2",
+      "reused": true,
+      "bytes": 74372,
+      "sha256": "99846cc37bb4b3f43db103b15e259f333df784dd6252331f327d2cea7ceea6fb"
+    },
+    {
+      "source": "MARCA/fontes/newsreader-variable.woff2",
+      "runtime": "/brand/fonts/newsreader-variable.woff2",
+      "reused": true,
+      "bytes": 214960,
+      "sha256": "52f54c34206c51e23e2907bfda4f04fb11ac6ba7f75f8021b2d0075b091d1308"
+    },
+    {
+      "source": "MARCA/fontes/onest-variable.woff2",
+      "runtime": "/brand/fonts/onest-variable.woff2",
+      "reused": true,
+      "bytes": 83980,
+      "sha256": "cb4d777c1b146887a2902ef01ba91cb3fb0c85e9804e95794eb289a1966c0782"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-micro-32.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-micro-32.svg",
+      "bytes": 639,
+      "sha256": "55cdb67fbabf0ab8b593650aafdcf79511088e53fbf9befa3ef371e6d78bf851",
+      "approved_kit_manifest_sha256": "75968c907a6a48ada1887181e600d17306f4aceef0046473a9203e8efd6e42be"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-simbolo-claro.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-simbolo-claro.svg",
+      "bytes": 657,
+      "sha256": "1f27970f18e470bad37b5d6194d922d7ede5952cf3503aa5baed6756305df745",
+      "approved_kit_manifest_sha256": "75968c907a6a48ada1887181e600d17306f4aceef0046473a9203e8efd6e42be"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/vetores/atvna-simbolo-escuro.svg",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/vetores/atvna-simbolo-escuro.svg",
+      "bytes": 658,
+      "sha256": "3f1b2b9afa27848f53f9ae4dd85fde0a4f55bdf3aeb0cc4a602c6b8f3c427c0e",
+      "approved_kit_manifest_sha256": "75968c907a6a48ada1887181e600d17306f4aceef0046473a9203e8efd6e42be"
+    },
+    {
+      "source": "MARCA/KIT_A_V001/exports/atvna-micro-180.png",
+      "runtime": "/brand/v4/MARCA/KIT_A_V001/exports/atvna-micro-180.png",
+      "bytes": 6417,
+      "sha256": "11950cec5cc269914461436d31f5ce7d07cd190f898db15b029a5858f9ec297b",
+      "approved_kit_manifest_sha256": "75968c907a6a48ada1887181e600d17306f4aceef0046473a9203e8efd6e42be"
+    }
+  ],
+  "measured_runtime": false
+}

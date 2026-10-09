@@ -1,4 +1,6 @@
 <script lang="ts">
+	import VisualHeading from './VisualHeading.svelte';
+	import V4Artwork from './V4Artwork.svelte';
 	import { onMount, tick } from 'svelte';
 	import Button from './ui/Button.svelte';
 	import Field from './ui/Field.svelte';
@@ -80,7 +82,13 @@
 
 <section class="intake" aria-labelledby="journey-title" aria-busy={busy}>
 	<p class="eyebrow">Carreira · 30 dias</p>
-	<h1 id="journey-title">Jornada de Carreira</h1>
+	<div class="v4-title-group with-object">
+		<V4Artwork identity="direction-journey" title eager /><VisualHeading
+			id="journey-title"
+			title="Jornada de Carreira"
+			identity="direction-journey"
+		/>
+	</div>
 	<p class="lead">
 		Escolha um objetivo de carreira para acompanhar durante 30 dias. Conte o que você quer
 		desenvolver e quando pretende começar.
@@ -183,11 +191,6 @@
 		max-width: 48rem;
 		margin: 0 auto;
 		color: var(--atv-text-primary);
-	}
-	h1 {
-		font-family: var(--atv-font-display);
-		font-size: clamp(2rem, 4vw, 3.5rem);
-		line-height: 1.12;
 	}
 	.lead {
 		font-family: var(--atv-font-editorial);

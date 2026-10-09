@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
 	import VisualHeading from '$lib/components/VisualHeading.svelte';
-	import VisualMotif from '$lib/components/VisualMotif.svelte';
-	import { visualProduct } from '$lib/data/visual-v3';
+	import V4Artwork from '$lib/components/V4Artwork.svelte';
+
 	import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 	let { data } = $props();
 </script>
@@ -20,12 +20,14 @@
 	<section class="section">
 		<div class="reading">
 			<p class="eyebrow">{data.page.eyebrow}</p>
-			{#if data.products.length}<VisualMotif identity={data.slug} eager />{/if}
-			<VisualHeading
-				title={data.page.title}
-				identity={data.slug}
-				theme={data.products.length > 0}
-			/>
+			<div class="v4-title-group" class:with-object={data.products.length > 0}>
+				{#if data.products.length}<V4Artwork identity={data.slug} title eager />{/if}
+				<VisualHeading
+					title={data.page.title}
+					identity={data.slug}
+					theme={data.products.length > 0}
+				/>
+			</div>
 			<p class="lead">{data.page.description}</p>
 			{#each data.sections as section (section.title)}
 				<section class="topic-section">
@@ -39,15 +41,9 @@
 					<p>Confira o conteúdo e a disponibilidade de cada produto.</p>
 					<div class="product-grid">
 						{#each data.products as product (product.id)}
-							<article class="card product-card">
-								<img
-									class="v3-product-mark"
-									src={visualProduct(product.id)?.vignette}
-									alt=""
-									width="80"
-									height="40"
-									loading="lazy"
-								/>
+							<article class="card product-card v4-paper-card">
+								<div class="v4-paper-face" aria-hidden="true"></div>
+								<V4Artwork identity={product.id} />
 								<p class="eyebrow">
 									{data.trialAccess
 										? 'Teste gratuito disponível'

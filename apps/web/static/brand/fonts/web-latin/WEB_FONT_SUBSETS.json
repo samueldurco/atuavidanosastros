@@ -1,0 +1,83 @@
+{
+  "fontTools": "4.64.0",
+  "profile": "latin1_ui_nfd",
+  "unicode_range": "U+0000-00FF,U+0300-036F,U+2000-206F,U+2190-21FF,U+20AC,U+2122,U+2212,U+2605,U+2713,U+2736",
+  "full_source_files_unchanged": true,
+  "scope": "Web CSS only. Keep original fonts for offline HTML/SVG exports and non-subset fallback.",
+  "fonts": [
+    {
+      "file": "bodoni-moda-variable.woff2",
+      "source": "E:\\ATVNA\\DESING SITE\\SITE atvna desing\\V4\\MARCA\\fontes\\bodoni-moda-variable.woff2",
+      "source_sha256": "99846cc37bb4b3f43db103b15e259f333df784dd6252331f327d2cea7ceea6fb",
+      "source_bytes": 74372,
+      "derived_sha256": "ac63bd7d8ddc909e9745b2cd9489893e95633e034f186b1082ad49ee2c4c8dcc",
+      "derived_bytes": 60316,
+      "axes": [
+        [
+          "wght",
+          400.0,
+          400.0,
+          900.0
+        ],
+        [
+          "opsz",
+          6.0,
+          11.0,
+          96.0
+        ]
+      ],
+      "unicode_range": "U+0000-00FF,U+0300-036F,U+2000-206F,U+2190-21FF,U+20AC,U+2122,U+2212,U+2605,U+2713,U+2736",
+      "source_missing_ui": [
+        "U+2192",
+        "U+2736"
+      ]
+    },
+    {
+      "file": "newsreader-variable.woff2",
+      "source": "E:\\ATVNA\\DESING SITE\\SITE atvna desing\\V4\\MARCA\\fontes\\newsreader-variable.woff2",
+      "source_sha256": "52f54c34206c51e23e2907bfda4f04fb11ac6ba7f75f8021b2d0075b091d1308",
+      "source_bytes": 214960,
+      "derived_sha256": "4a99a87765b8b57ad5073db9929efbd64abbf3dce2e8e4ea751c074a03ccc2a8",
+      "derived_bytes": 141700,
+      "axes": [
+        [
+          "wght",
+          200.0,
+          400.0,
+          800.0
+        ],
+        [
+          "opsz",
+          6.0,
+          18.0,
+          72.0
+        ]
+      ],
+      "unicode_range": "U+0000-00FF,U+0300-036F,U+2000-206F,U+2190-21FF,U+20AC,U+2122,U+2212,U+2605,U+2713,U+2736",
+      "source_missing_ui": [
+        "U+2192",
+        "U+2736"
+      ]
+    },
+    {
+      "file": "onest-variable.woff2",
+      "source": "E:\\ATVNA\\DESING SITE\\SITE atvna desing\\V4\\MARCA\\fontes\\onest-variable.woff2",
+      "source_sha256": "cb4d777c1b146887a2902ef01ba91cb3fb0c85e9804e95794eb289a1966c0782",
+      "source_bytes": 83980,
+      "derived_sha256": "9ce3f158cd067c6a3e2463702431702b5ef3289970dc0ba9913eb5b2bb0793ce",
+      "derived_bytes": 40780,
+      "axes": [
+        [
+          "wght",
+          100.0,
+          400.0,
+          900.0
+        ]
+      ],
+      "unicode_range": "U+0000-00FF,U+0300-036F,U+2000-206F,U+2190-21FF,U+20AC,U+2122,U+2212,U+2605,U+2713,U+2736",
+      "source_missing_ui": [
+        "U+2736"
+      ]
+    }
+  ]
+}

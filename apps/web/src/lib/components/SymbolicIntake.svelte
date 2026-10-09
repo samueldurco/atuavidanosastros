@@ -1,4 +1,6 @@
 <script lang="ts">
+	import VisualHeading from './VisualHeading.svelte';
+	import V4Artwork from './V4Artwork.svelte';
 	import { onMount, tick } from 'svelte';
 	import { tarotMethodFor } from '@atv/domain';
 	import Button from './ui/Button.svelte';
@@ -86,7 +88,13 @@
 <section class:tarot class="intake" aria-labelledby="intake-title" aria-busy={busy}>
 	<header class="intro">
 		<p class="eyebrow">{tarot ? 'Tarot' : 'Sonhos'}</p>
-		<h1 id="intake-title">{product?.name}</h1>
+		<div class="v4-title-group with-object">
+			<V4Artwork identity={productId} title eager /><VisualHeading
+				id="intake-title"
+				title={product?.name ?? ''}
+				identity={productId}
+			/>
+		</div>
 		<p class="lead">
 			{tarot
 				? 'Escolha um foco, se desejar. A leitura também é completa sem uma pergunta.'
@@ -310,12 +318,6 @@
 		padding-bottom: 2rem;
 		margin-bottom: 2rem;
 	}
-	h1 {
-		font-family: var(--atv-font-display);
-		font-size: clamp(2rem, 4vw, 3.5rem);
-		line-height: 1.12;
-		margin: 0.7rem 0 1rem;
-	}
 	.lead {
 		font-family: var(--atv-font-editorial);
 		font-size: 1.25rem;
@@ -409,26 +411,26 @@
 		margin-top: 1rem;
 	}
 	.tarot {
-		background: #0b1635;
-		color: #fcfbf8;
+		background: transparent;
+		color: inherit;
 		padding: clamp(1.25rem, 3vw, 2.5rem);
 		border-radius: 12px;
 	}
 	.tarot .intro,
 	.tarot aside,
 	.tarot .continuity {
-		border-color: #58647a;
+		border-color: var(--atv-border);
 	}
 	.tarot :global(.eyebrow),
 	.tarot a {
-		color: #e8c18a;
+		color: inherit;
 	}
 	.tarot .lead,
 	.tarot :global(.field small) {
-		color: #d2d9e5;
+		color: var(--atv-text-secondary);
 	}
 	.tarot :global(.field-error) {
-		color: #ffb7b7;
+		color: #8a2525;
 	}
 	.tarot :global(input:disabled),
 	.tarot :global(textarea:disabled) {

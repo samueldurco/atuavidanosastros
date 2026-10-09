@@ -186,8 +186,8 @@
 
 <style>
 	.chart-panel {
-		background: #faf6ed;
-		color: #24374b;
+		background: #fcf8ef;
+		color: #193549;
 		padding: 1rem;
 		border-radius: 1rem;
 		max-width: 100%;
@@ -199,7 +199,7 @@
 	}
 	fieldset {
 		min-width: 0;
-		border: 1px solid #967536;
+		border: 1px solid #8b7256;
 		border-radius: 0.65rem;
 		display: flex;
 		gap: 1rem;
@@ -221,8 +221,8 @@
 	button {
 		font: inherit;
 		color: inherit;
-		background: #fffdf8;
-		border: 1px solid #967536;
+		background: #fcf8ef;
+		border: 1px solid #8b7256;
 		border-radius: 0.5rem;
 		min-height: 44px;
 		padding: 0.5rem 0.7rem;
@@ -235,14 +235,14 @@
 		max-width: 100%;
 	}
 	button[aria-pressed='true'] {
-		border: 2px solid #24374b;
-		background: #eee5d3;
+		border: 2px solid #193549;
+		background: #e3edf0;
 	}
 	button:focus-visible,
 	select:focus-visible,
 	input:focus-visible,
 	.viewport:focus-visible {
-		outline: 3px solid #365d7d;
+		outline: 3px solid #31566a;
 		outline-offset: 3px;
 	}
 	.actions {

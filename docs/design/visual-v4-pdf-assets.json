@@ -1,0 +1,67 @@
+{
+  "run_id": "ATV-20260902-170644Z-01A0630F",
+  "approved_manifest_sha256": "576f6d5fa1dee7d009f066b85432a5e5c84ea3dc9fc59efd6cf8f4160b49061d",
+  "derivation": "Bounded PNG from approved transparent WebP; proportional embedding on white print paper.",
+  "files": [
+    {
+      "universe": "meu-ceu",
+      "board": "B01",
+      "source": "CARDS/recortes/B01-figure-1.webp",
+      "source_sha256": "3df668541272b679b0fe6eebc5f5da56bcd6412f294e7af89d561c6e64b415bd",
+      "png_sha256": "5caddb947e2f82ec4440ba48e92d1a7131aad4956ab7f8a595ef4a01b04f3f3a",
+      "bytes": 73309,
+      "width": 213,
+      "height": 320
+    },
+    {
+      "universe": "ciclos-tempo",
+      "board": "B02",
+      "source": "CARDS/recortes/B02-figure-1.webp",
+      "source_sha256": "a0d7cfb45f82fb2ed612e98bfd8aa26175cd7ee7fc89085b3c85ac2e2992f9a5",
+      "png_sha256": "30bd293dfbdd0c435b8f8c21f054926a00c44e15ba24ec2e8938a12c8bca55f9",
+      "bytes": 29794,
+      "width": 240,
+      "height": 90
+    },
+    {
+      "universe": "amor-relacoes",
+      "board": "B03",
+      "source": "CARDS/recortes/B03-figure-1.webp",
+      "source_sha256": "73c31d0802d388658a175f46621e2eaf7ae560214f8685e4fbdad6d834b69554",
+      "png_sha256": "7aa050ced0f4390fe89c89d8d108f17835638cc9c20bd4219f1f63345695cb3c",
+      "bytes": 88372,
+      "width": 240,
+      "height": 300
+    },
+    {
+      "universe": "proposito-prosperidade",
+      "board": "B04",
+      "source": "CARDS/recortes/B04-figure-1.webp",
+      "source_sha256": "a0fd6cbdeee1fc33fe13dedd5f7e8413a6f6d379fe10eefd599070a460948d31",
+      "png_sha256": "966e28d9e6ddadd5c7c32d05b8d9eaad3985cd2db3d9ba3622bd874a8a913b4c",
+      "bytes": 118212,
+      "width": 240,
+      "height": 259
+    },
+    {
+      "universe": "tarot-arcanos",
+      "board": "B05",
+      "source": "CARDS/recortes/B05-figure-1.webp",
+      "source_sha256": "ed7a0d55bc70a869786dd0e2207948314bd31913837dba892ddae0d69a876cb6",
+      "png_sha256": "e131aaa9636e40fad48a526b845ab54ad585614af93aa2f24d4b65a7f899c07e",
+      "bytes": 50157,
+      "width": 213,
+      "height": 320
+    },
+    {
+      "universe": "sonhos-simbolos",
+      "board": "B06",
+      "source": "CARDS/recortes/B06-figure-1.webp",
+      "source_sha256": "607ca400f8f93ebeeb1d7b3b55252da103247040abd2a2cc6d981fa1eec44e83",
+      "png_sha256": "ee473065557402eb55f36aea83a33600b29a1d24cebf06d9485e67a34d5a18dc",
+      "bytes": 111378,
+      "width": 213,
+      "height": 320
+    }
+  ]
+}

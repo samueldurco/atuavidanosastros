@@ -1,5 +1,6 @@
 <script lang="ts">
 	import VisualHeading from './VisualHeading.svelte';
+	import V4Artwork from './V4Artwork.svelte';
 	import { customerProduct } from '$lib/data/product-copy';
 	import { onMount, tick } from 'svelte';
 	import { validDate, workflowFor } from '@atv/domain';
@@ -412,7 +413,13 @@
 							? 'Carreira e dinheiro'
 							: 'Mapa astral'} · novo pedido
 		</p>
-		<VisualHeading id="natal-product-title" title={product?.name ?? ''} identity={productId} />
+		<div class="v4-title-group with-object">
+			<V4Artwork identity={productId} title eager /><VisualHeading
+				id="natal-product-title"
+				title={product?.name ?? ''}
+				identity={productId}
+			/>
+		</div>
 		<p class="lead">
 			{customerProduct(productId)?.summary}
 		</p>

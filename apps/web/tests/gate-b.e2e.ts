@@ -133,7 +133,14 @@ test('reduced motion e contraste dos papéis de texto', async ({ page }) => {
 	});
 	expect(parseFloat(values.motion)).toBe(0);
 	function luminance(hex: string) {
-		return hex
+		const rgb = /^#[a-f\d]{3}$/i.test(hex)
+			? `#${hex
+					.slice(1)
+					.split('')
+					.map((channel) => channel.repeat(2))
+					.join('')}`
+			: hex;
+		return rgb
 			.match(/[a-f\d]{2}/gi)!
 			.map((channel) => parseInt(channel, 16) / 255)
 			.map((channel) => (channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4))

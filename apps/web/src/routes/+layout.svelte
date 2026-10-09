@@ -1,7 +1,9 @@
 <script lang="ts">
 	import '../app.css';
-	import '$lib/styles/visual-v3.css';
-	import { visualContext } from '$lib/data/visual-v3';
+	import '$lib/styles/visual-v4-reference.css';
+	import '$lib/styles/visual-v4.css';
+	import { visualContext } from '$lib/data/visual-v4';
+	import V4Backdrop from '$lib/components/V4Backdrop.svelte';
 	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
 	import { page } from '$app/state';
 	import PublicShell from '$lib/components/shells/PublicShell.svelte';
@@ -29,19 +31,24 @@
 <SeoHead seo={page.data.seo} />
 
 <svelte:head>
-	<link rel="icon" href="/brand/icons/favicon.svg" />
-	<link rel="apple-touch-icon" href="/brand/icons/apple-touch-icon.png" />
+	<link
+		rel="icon"
+		href="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-micro-32.svg"
+		type="image/svg+xml"
+	/>
+	<link rel="apple-touch-icon" href="/brand/v4/MARCA/KIT_A_V001/exports/atvna-micro-180.png" />
 	<link rel="manifest" href="/manifest.webmanifest" />
 </svelte:head>
 
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <div
-	class="v3-experience"
-	data-v3-theme={visual.universe}
-	data-v3-dense={visual.dense}
-	style={`--v3-left:url('${visual.theme.left}');--v3-right:url('${visual.theme.right}');--v3-top:url('${visual.theme.top}');--v3-bottom:url('${visual.theme.bottom}');--v3-divider:url('${visual.theme.divider}')`}
+	class="v4-experience"
+	class:v4-home={visual.home}
+	class:v4-internal={!visual.home}
+	class:universe-material={!!visual.universe}
+	data-universe={visual.universe}
 >
-	<div class="v3-margins" aria-hidden="true"></div>
+	<V4Backdrop universe={visual.universe} />
 	{#if member}<AuthenticatedShell>{@render children()}</AuthenticatedShell>{:else}<PublicShell
 			>{@render children()}</PublicShell
 		>{/if}

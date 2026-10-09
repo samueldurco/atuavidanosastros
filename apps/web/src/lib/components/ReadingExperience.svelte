@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { visualProduct } from '$lib/data/visual-v3';
 	import { onMount, untrack } from 'svelte';
 	import type { SavedTrial } from '$lib/trials/reading';
 	import type { ReaderState } from '$lib/trials/reader-state';
@@ -118,13 +117,6 @@
 </script>
 
 <section class="experience" aria-label="Percorra sua leitura">
-	<img
-		class="v3-product-mark"
-		src={visualProduct(saved.product_id)?.vignette}
-		alt=""
-		width="80"
-		height="40"
-	/>
 	{#if saved.input.presentation?.name || saved.input.birth}
 		<div class="identity">
 			{#if saved.input.presentation?.name}<p>

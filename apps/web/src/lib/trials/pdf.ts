@@ -16,7 +16,7 @@ import { CALENDAR_VERSION, type CalendarData } from './reconstruction/calendar-f
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
-import coverArt from '../data/visual-v3-pdf.generated.json';
+import { pdfCoverFor } from '../data/visual-v4-pdf';
 
 /** Local book export. This module is dynamically imported only by the download page. */
 export async function trialPdf(saved: SavedTrial) {
@@ -28,8 +28,7 @@ export async function trialPdf(saved: SavedTrial) {
 		label = await doc.embedFont(labelData, { subset: true }),
 		display = await doc.embedFont(displayData, { subset: true });
 	const r = saved.reading;
-	const theme = coverArt.products[saved.product_id as keyof typeof coverArt.products] ?? 'B01';
-	const engraving = await doc.embedPng(coverArt.themes[theme as keyof typeof coverArt.themes]);
+	const engraving = await doc.embedPng(pdfCoverFor(saved.product_id));
 	const format = experienceFor(saved.product_id).format;
 	const calendar = saved.calculation.version === CALENDAR_VERSION;
 	const book = format === 'book' || calendar;
@@ -38,15 +37,15 @@ export async function trialPdf(saved: SavedTrial) {
 	doc.setAuthor('A Tua Vida nos Astros');
 	doc.setLanguage('pt-BR');
 	doc.setCreationDate(new Date(saved.created_at));
-	doc.setCreator('atv-reading-pdf/3');
+	doc.setCreator('atv-reading-pdf/4');
 	const width = 595.28,
 		height = 841.89,
 		margin = 54,
 		available = width - 2 * margin;
-	const ink = rgb(0.063, 0.169, 0.227),
+	const ink = rgb(25 / 255, 53 / 255, 73 / 255),
 		muted = rgb(0.298, 0.337, 0.345),
 		gold = rgb(0.475, 0.357, 0.192),
-		cream = rgb(0.969, 0.949, 0.906);
+		cream = rgb(1, 1, 1);
 	let page = doc.addPage([width, height]),
 		y = height - 78;
 	const charsets = new Map([body, label, display].map((f) => [f, new Set(f.getCharacterSet())]));
@@ -141,7 +140,8 @@ export async function trialPdf(saved: SavedTrial) {
 		paragraph(value, label, size);
 	};
 	// Cover: no app navigation, evaluation form or browser-print chrome.
-	page.drawImage(engraving, { x: width - margin - 92, y: height - 168, width: 92, height: 92 });
+	const coverSize = engraving.scaleToFit(92, 92);
+	page.drawImage(engraving, { x: width - margin - coverSize.width, y: height - 168, ...coverSize });
 	page.drawRectangle({ x: margin, y: height - 115, width: 44, height: 2, color: gold });
 	page.drawText('A TUA VIDA NOS ASTROS', {
 		x: margin,

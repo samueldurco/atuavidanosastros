@@ -1,4 +1,5 @@
 import { productDefinitionFor } from '@atv/domain';
+import { visualExportPalette } from '../data/visual-v4-export';
 import { parseProductRun } from '../product-run';
 import type { CartographyBody } from '../product-cartography';
 import { longitudePoint } from '../product-cartography';
@@ -7,7 +8,7 @@ import displayData from '../../../static/brand/fonts/bodoni-moda-variable.woff2?
 import bodyData from '../../../static/brand/fonts/newsreader-variable.woff2?inline';
 import labelData from '../../../static/brand/fonts/onest-variable.woff2?inline';
 
-export const SVG_EXPORT_VERSION = 'atv-svg-export/1.1.0';
+export const SVG_EXPORT_VERSION = 'atv-svg-export/1.2.0';
 export const SVG_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";
 const escape = (value: string) =>
@@ -64,6 +65,7 @@ export function renderProductSvg(value: unknown) {
 		!product?.delivery.includes('svg')
 	)
 		return null;
+	const palette = visualExportPalette(run.productId);
 	const pieces: string[] = [];
 	for (let i = 0; i < 360; i += 5)
 		pieces.push(line(i, i % 30 === 0 ? 272 : i % 10 === 0 ? 281 : 286, 290, 'tick'));
@@ -142,17 +144,17 @@ export function renderProductSvg(value: unknown) {
 <desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Trilhas radiais separam os corpos, não representam distância. Linhas de casas e ângulos não são aspectos. Coordenadas também constam na legenda. Este desenho mostra os dados do cálculo experimental.</desc>
 <metadata>${escape(JSON.stringify(metadata))}</metadata>
 <style>@font-face{font-family:ATVDisplay;src:url('${displayData}') format('woff2')}@font-face{font-family:ATVBody;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}
-text{fill:#142139;font-family:ATVLabel,sans-serif;font-size:16px}.title{font-family:ATVDisplay,serif;font-size:42px}.sign{font-family:ATVBody,serif;font-size:21px}.label{font-size:13px;letter-spacing:2px;fill:#826124}.note,.house-label{font-size:15px;fill:#45516a}.legend{font-size:17px}.tick{stroke:#8791a2;stroke-width:1}.cusp{stroke:#abb2bd;stroke-width:1;stroke-dasharray:3 5}.angle{stroke:#95702b;stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:#142139;stroke:#fffdf7;stroke-width:2}.body-number{fill:#fffdf7;font-size:11px}.center{font-family:ATVBody,serif;font-size:22px}</style>
+text{fill:${palette.ink};font-family:ATVLabel,sans-serif;font-size:16px}.title{font-family:ATVDisplay,serif;font-size:42px}.sign{font-family:ATVBody,serif;font-size:21px}.label{font-size:13px;letter-spacing:2px;fill:${palette.ink}}.note,.house-label{font-size:15px;fill:${palette.ink}}.legend{font-size:17px}.tick{stroke:#8791a2;stroke-width:1}.cusp{stroke:#abb2bd;stroke-width:1;stroke-dasharray:3 5}.angle{stroke:${palette.line};stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:${palette.ink};stroke:#fffdf7;stroke-width:2}.body-number{fill:#fffdf7;font-size:11px}.center{font-family:ATVBody,serif;font-size:22px}</style>
 <rect width="1000" height="1360" fill="#fcfbf8"/>
 ${text(64, 47, 'A TUA VIDA NOS ASTROS · CARTOGRAFIA', 'label')}
 ${text(64, 96, product.name, 'title')}
 ${text(936, 47, `Revisão ${run.revision}`, 'note', 'end')}
-<circle cx="500" cy="430" r="290" fill="none" stroke="#95702b" stroke-width="1.2"/>
+<circle cx="500" cy="430" r="290" fill="none" stroke="${palette.line}" stroke-width="1.2"/>
 ${pieces.join('')}
 ${text(500, 424, 'Base preservada', 'center', 'middle')}${text(500, 450, 'experimental', 'note', 'middle')}
 ${text(64, 785, 'POSIÇÕES · GRAUS DE EXIBIÇÃO NÃO GARANTEM PRECISÃO', 'label')}
 ${legend.join('')}
-<path d="M64 1157H936" fill="none" stroke="#c5b58f"/>
+<path d="M64 1157H936" fill="none" stroke="${palette.line}"/>
 ${text(64, 1188, 'Zero de Áries à esquerda; longitudes em sentido anti-horário.', 'note')}
 ${text(64, 1213, 'Trilhas separam os corpos; raio não representa distância. MC tracejado; ASC contínuo.', 'note')}
 ${text(64, 1238, 'Cópia pessoal: excluir na Biblioteca não apaga arquivos já baixados.', 'note')}

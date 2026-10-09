@@ -131,6 +131,7 @@
 		>
 	</nav>
 	<PageIntro
+		identity={data.saved.product_id}
 		eyebrow="Leitura privada · teste gratuito"
 		title={reading.title}
 		description={reading.opening}
@@ -317,14 +318,14 @@
 	}
 	button {
 		font: inherit;
-		background: #243d39;
+		background: #193549;
 		color: #fff;
-		border: 1px solid #243d39;
+		border: 1px solid #193549;
 		cursor: pointer;
 	}
 	.secondary {
 		background: #fff;
-		color: #243d39;
+		color: #193549;
 	}
 	button:disabled {
 		opacity: 0.6;
@@ -339,8 +340,8 @@
 	select {
 		font: inherit;
 		background: #fff;
-		color: #202c2c;
-		border: 1px solid #817866;
+		color: #193549;
+		border: 1px solid #8b7256;
 		border-radius: 0.5rem;
 		padding: 0.75rem;
 		width: 100%;
@@ -348,7 +349,7 @@
 	}
 	.notice {
 		padding: 1rem;
-		border-left: 3px solid #243d39;
+		border-left: 3px solid #193549;
 	}
 	.digest {
 		overflow-wrap: anywhere;
