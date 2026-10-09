@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
 	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
+	import ClubContinuity from '$lib/components/ClubContinuity.svelte';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	let { data } = $props();
@@ -55,59 +56,64 @@
 		title="Um lugar para acompanhar suas leituras"
 		description="Explore os seis universos, retome o que você salvou e acompanhe suas anotações. O acesso desta fase é gratuito, sem cobrança ou renovação."
 	/>
-	<section aria-labelledby="ritual">
-		<h2 id="ritual">Seu ritmo de acompanhamento</h2>
-		<p>
-			Comece por uma leitura que tenha relação com seu momento. Escolha uma pergunta, registre um
-			experimento pequeno e volte para anotar o que aconteceu. As leituras simbólicas ajudam a
-			formular possibilidades; suas decisões continuam com você.
-		</p>
-		<ol>
-			<li><a href="/testar-produtos/tarot-single-card">Carta Única: um tema para observar</a></li>
-			<li>
-				<a href="/testar-produtos/week-reading"
-					>Nesta semana: uma leitura e um registro do cotidiano</a
-				>
-			</li>
-			<li>
-				<a href="/testar-produtos/direction-journey"
-					>Em 30 dias: acompanhe um objetivo e suas revisões</a
-				>
-			</li>
-			<li>
-				<a href="/testar-produtos/dream-journal"
-					>Ao despertar: registre um sonho para sua biblioteca</a
-				>
-			</li>
-		</ol>
-	</section>
-	{#each universes as [kind, label] (kind)}<section aria-label={label}>
-			<h2>{label}</h2>
-			<ul>
-				{#each data.products.filter((p) => p.universe === kind) as product (product.id)}<li>
-						<a href={`/testar-produtos/${product.id}`}>{product.name}</a>
-					</li>{/each}
-			</ul>
-		</section>{/each}
-	<TrialLibrary library={{ readings: data.readings, unavailable: false }} />
-	<section aria-labelledby="decision">
-		<h2 id="decision">Sua avaliação do ATV+</h2>
-		{#if data.feedback}<p>
-				Decisão atual: {data.feedback.decision === 'approved'
-					? 'aprovado por você'
-					: 'revisão solicitada'}.
-			</p>{/if}<label
-			>Comentário para a revisão<textarea bind:value={comment} maxlength="3000" rows="4"
-			></textarea></label
-		>
-		<div class="actions">
-			<button onclick={() => decide('approved')} disabled={!ready || busy}>Aprovar ATV+</button
-			><button onclick={() => decide('rejected')} disabled={!ready || busy}
-				>Solicitar revisão</button
+	{#if data.trialAccess}<section aria-labelledby="ritual">
+			<h2 id="ritual">Seu ritmo de acompanhamento</h2>
+			<p>
+				Comece por uma leitura que tenha relação com seu momento. Escolha uma pergunta, registre um
+				experimento pequeno e volte para anotar o que aconteceu. As leituras simbólicas ajudam a
+				formular possibilidades; suas decisões continuam com você.
+			</p>
+			<ol>
+				<li><a href="/testar-produtos/tarot-single-card">Carta Única: um tema para observar</a></li>
+				<li>
+					<a href="/testar-produtos/week-reading"
+						>Nesta semana: uma leitura e um registro do cotidiano</a
+					>
+				</li>
+				<li>
+					<a href="/testar-produtos/direction-journey"
+						>Em 30 dias: acompanhe um objetivo e suas revisões</a
+					>
+				</li>
+				<li>
+					<a href="/testar-produtos/dream-journal"
+						>Ao despertar: registre um sonho para sua biblioteca</a
+					>
+				</li>
+			</ol>
+		</section>
+		{#each universes as [kind, label] (kind)}<section aria-label={label}>
+				<h2>{label}</h2>
+				<ul>
+					{#each data.products.filter((p) => p.universe === kind) as product (product.id)}<li>
+							<a href={`/testar-produtos/${product.id}`}>{product.name}</a>
+						</li>{/each}
+				</ul>
+			</section>{/each}
+		<TrialLibrary library={{ readings: data.readings, unavailable: false }} />
+	{:else}<p>
+			Seu acesso aos testes está indisponível. Você ainda pode conferir e remover sua autorização de
+			continuidade nesta conta.
+		</p>{/if}
+	<ClubContinuity initial={data.continuity ?? null} readings={data.continuityReadings ?? []} />
+	{#if data.trialAccess}<section aria-labelledby="decision">
+			<h2 id="decision">Sua avaliação do ATV+</h2>
+			{#if data.feedback}<p>
+					Decisão atual: {data.feedback.decision === 'approved'
+						? 'aprovado por você'
+						: 'revisão solicitada'}.
+				</p>{/if}<label
+				>Comentário para a revisão<textarea bind:value={comment} maxlength="3000" rows="4"
+				></textarea></label
 			>
-		</div>
-		<p role="status">{message}</p>
-	</section>
+			<div class="actions">
+				<button onclick={() => decide('approved')} disabled={!ready || busy}>Aprovar ATV+</button
+				><button onclick={() => decide('rejected')} disabled={!ready || busy}
+					>Solicitar revisão</button
+				>
+			</div>
+			<p role="status">{message}</p>
+		</section>{/if}
 </ContentShell>
 
 <style>

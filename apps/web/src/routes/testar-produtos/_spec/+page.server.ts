@@ -6,6 +6,7 @@ import { approveTrialReading, composeTrialReading } from '$lib/trials/reading';
 import type { PageServerLoad } from './$types';
 import { customerProducts } from '$lib/data/product-copy';
 import { productDetails } from '$lib/data/product-details';
+import { prepareClubContinuity, type ClubState } from '$lib/trials/club-continuity';
 
 // Local rendering evidence. Never grants access or persists a reading/approval.
 export const load: PageServerLoad = async ({ url, setHeaders }) => {
@@ -177,9 +178,41 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		reading,
 		approval
 	};
+	const continuityState: ClubState = { revision: 0, granted: false, available: true, items: [] };
+	if (
+		url.searchParams.get('continuity') === 'saved' ||
+		url.searchParams.get('continuity') === 'unavailable'
+	) {
+		continuityState.revision = 1;
+		continuityState.granted = true;
+		continuityState.items = [
+			{
+				id: '11111111-1111-4111-8111-111111111111',
+				readingId: id,
+				selection: {
+					kind: 'reported',
+					category: 'recurrence',
+					text: 'Relato sintético: quero retomar uma escolha de carreira.'
+				},
+				source: {
+					productId: saved.product_id,
+					title: reading.title,
+					version: reading.version,
+					policy: approval.policy,
+					digest: approval.digest,
+					text: 'Relato sintético: quero retomar uma escolha de carreira.',
+					limits: reading.limits
+				}
+			}
+		];
+		if (url.searchParams.get('continuity') === 'unavailable') {
+			continuityState.available = false;
+			continuityState.items[0].source = null;
+		}
+	}
 	return {
 		view,
-		trialAccess: true,
+		trialAccess: url.searchParams.get('continuity') !== 'unavailable',
 		catalog: {
 			product: customerProducts.find((p) => p.id === productId)!,
 			details: productDetails[productId as keyof typeof productDetails],
@@ -248,7 +281,11 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 					version: saved.reading.version
 				}
 			],
-			feedback: null
+			feedback: null,
+			continuity: { state: continuityState, preparation: prepareClubContinuity(continuityState) },
+			continuityReadings: [
+				{ id, title: reading.title, chapters: reading.sections.map((section) => section.title) }
+			]
 		}
 	};
 };
