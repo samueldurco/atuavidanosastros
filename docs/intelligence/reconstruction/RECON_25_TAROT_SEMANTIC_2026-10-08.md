@@ -2,7 +2,7 @@
 
 RUN_ID: ATV-20260902-170644Z-01A0630F. Execução única, 08/10/2026; consolidação em 09/10 UTC. Escopo: teste privado gratuito autorizado, sem aprovação pessoal presumida.
 
-Foram lidas integralmente as seis leituras de exemplo em `E:/ATVNA/tmp/reconstruction-tarot-qa/`, geradas pelo compositor final com sorteio sintético identificado. A inspeção editorial humana feita pelo agente complementa os testes; os exemplos não representam sessão real do proprietário nem certificam todas as combinações possíveis.
+Foram lidas integralmente as seis leituras de exemplo em `E:/ATVNA/tmp/reconstruction-tarot-qa/`, geradas pelo compositor final com sorteio sintético identificado. A inspeção editorial do executor complementa os testes; os exemplos não representam sessão real do proprietário nem certificam todas as combinações possíveis.
 
 | Método | Cartas | Resultado da revisão |
 | --- | ---: | --- |
