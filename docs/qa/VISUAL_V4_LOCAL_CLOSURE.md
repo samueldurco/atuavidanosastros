@@ -24,6 +24,8 @@ O primeiro CI da PR 29 passou em `quality` e `sbom` e identificou dois problemas
 
 ## Provas visuais, formatos e desempenho
 
+O CI `37920454678`, no candidato `0a9bc065`, passou em quality, secrets, sbom e Pages; accessibility registrou 147 de 149 casos PASS. Os dois casos de Horóscopo em 320/390 px tentavam marcar o consentimento de avisos sob o banner de cookies, que interceptava o clique. O fluxo do harness agora escolhe explicitamente “Recusar opcionais” e confirma o fechamento do banner antes de continuar; a inspeção inicial Axe com o banner, os estados de armazenamento e as verificações do consentimento de avisos permanecem. O resultado anterior é diagnóstico, sem promoção da produção. Regressão local: cinco testes PASS em 1,4 min, incluindo 320/390/1440 px, URLs inválidas e armazenamento indisponível; lint focal PASS (`E:/ATVNA/tmp/v4-horoscope-consent-corrected.log`, `E:/ATVNA/tmp/v4-horoscope-consent-lint-final.log`). Logs e contextos anteriores: `E:/ATVNA/tmp/v4-audit/ci/new-candidate/`.
+
 - [PDFs](VISUAL_V4_PDF_REVIEW.md): 22 arquivos, 244 páginas; 37 páginas distintas inspecionadas. Seis universos e seis métodos de Tarot, tinta `#193549`, proporção, fontes e rodapés conferidos. Histórico dos quatro formatos preservado.
 - [Budget production](VISUAL_V4_PRODUCTION_BUDGET.md): quatro cenários abaixo de 650 KiB iniciais de imagens/fontes; dez checks passam; CLS máximo 0,0194. Home final desktop/mobile expõe nove artes completas.
 - O controle com os mesmos 49 assets verificados por SHA256 mediu LCP entre 184 e 352 ms; a comparação serial atribui os samples lentos à entrega local do Wrangler. Essa prova é diagnóstica. CWV hospedado/de campo permanece sem aprovação.
