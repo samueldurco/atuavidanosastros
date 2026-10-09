@@ -27,6 +27,7 @@ import { projectAtlasReading } from '../trials/reconstruction/atlas-facts';
 import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
 import { projectCompassReading } from '../trials/reconstruction/compass-facts';
 import { projectPillarsReading } from '../trials/reconstruction/pillars-facts';
+import { projectBirthReading } from '../trials/reconstruction/birth-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -149,6 +150,7 @@ export async function calculateTrial(
 		)) as CalculationSnapshot;
 		const positions = natal.data.positions as AspectPosition[];
 		if (input.productId === 'three-pillars') return projectPillarsReading(input, natal);
+		if (input.productId === 'birth-chart') return projectBirthReading(input, natal);
 		const aspects = calculateAspects(positions, trialAspectPolicy);
 		const mc = natal.data.angles as { midheaven: number | null; ascendant: number | null };
 		const ruler = mc.midheaven === null ? null : modernRulers[Math.floor(mc.midheaven / 30)];

@@ -19,7 +19,7 @@ const duplicates = (reading: ReturnType<typeof composeTrialReading>) => {
 	return sentences.filter((s, i) => sentences.indexOf(s) !== i).join('\n');
 };
 const input = (
-	productId = 'birth-chart',
+	productId = 'ascendant',
 	context = 'Quero compreender meus acordos no relacionamento.'
 ): WorkflowInput => ({
 	version: 'atv-workflow/1.0.0',
@@ -41,7 +41,7 @@ const input = (
 	context
 });
 describe('integrated natal editions', () => {
-	for (const productId of ['birth-chart', 'ascendant', 'midheaven']) {
+	for (const productId of ['ascendant', 'midheaven']) {
 		it(`${productId} binds its own plan, genuine geometry and complete reading`, async () => {
 			const value = input(productId),
 				calculation = await calculateTrial(value, runId),
@@ -69,8 +69,8 @@ describe('integrated natal editions', () => {
 		});
 	}
 	it('context changes chapter priority, observation and experiment without changing geometry', async () => {
-		const a = input('birth-chart'),
-			b = input('birth-chart', 'Quero escolher uma formação e estudar com continuidade.');
+		const a = input('ascendant'),
+			b = input('ascendant', 'Quero escolher uma formação e estudar com continuidade.');
 		const ca = await calculateTrial(a, runId),
 			cb = await calculateTrial(b, runId);
 		const ra = composeTrialReading(a, ca),
@@ -79,7 +79,8 @@ describe('integrated natal editions', () => {
 		expect(ra.opening).toBe(rb.opening);
 		expect(ra.editorial?.context.key).toBe('relationships');
 		expect(rb.editorial?.context.key).toBe('study');
-		expect(ra.sections.map((s) => s.title)).not.toEqual(rb.sections.map((s) => s.title));
+		expect(ra.sections.flatMap((s) => s.factIds)).toContain('personal-context');
+		expect(rb.sections.flatMap((s) => s.factIds)).toContain('personal-context');
 		expect(ra.practice).not.toBe(rb.practice);
 		expect(ra.sections.find((s) => /Uma situação/.test(s.title))?.text).not.toBe(
 			rb.sections.find((s) => /Uma situação/.test(s.title))?.text

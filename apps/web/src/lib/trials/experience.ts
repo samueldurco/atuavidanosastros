@@ -24,7 +24,7 @@ export const experiences: Record<string, Experience> = {
 		])
 	),
 	'birth-chart': contract(
-		'Conheça cinco referências do seu mapa e aprofunde os temas que fazem sentido na sua vida.',
+		'Explore seis assinaturas do seu mapa, relacione os temas de vida e construa uma síntese para uma situação real.',
 		20,
 		'book'
 	),
