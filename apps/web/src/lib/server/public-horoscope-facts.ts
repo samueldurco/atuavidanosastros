@@ -1,5 +1,6 @@
 import type { PublicHoroscopeSnapshot } from '../../../../worker/src/public-horoscope-calculation';
 import type { EditorialDocument } from './editorial';
+import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
 
 function canonical(value: unknown): string {
 	if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
@@ -32,8 +33,14 @@ export async function verifiedPublicHoroscopeFacts(
 	try {
 		const calculation = document.calculation;
 		if (!calculation) return false;
+		const archive = parseHoroscopeArchivePath(document.path);
 		let matches = 0;
 		for (const snapshot of snapshots) {
+			if (
+				archive &&
+				(archive.period !== snapshot.period || archive.startDate !== snapshot.startDate)
+			)
+				continue;
 			if (
 				calculation.engine !== snapshot.engine ||
 				calculation.version !== snapshot.version ||

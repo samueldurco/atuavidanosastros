@@ -1,6 +1,7 @@
 import { SITE } from '$lib/data/site';
 import { editorialHubs, legacyPublicPaths } from '$lib/seo';
 import { hubDocuments, type EditorialDocument } from './editorial';
+import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
 
 export const NEWS_WINDOW_MS = 48 * 60 * 60 * 1000;
 export const NEWS_LIMIT = 1000;
@@ -48,11 +49,22 @@ export function sitemapIndex(documents: readonly EditorialDocument[], now: Date)
 	return `<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="${sitemapNamespace}">${paths.map((path) => `<sitemap><loc>${xml(SITE.url + path)}</loc></sitemap>`).join('')}</sitemapindex>`;
 }
 export function pagesSitemap(documents: readonly EditorialDocument[]): string {
-	const hubs = Object.keys(editorialHubs).filter(
-		(path) => hubDocuments(documents, path as keyof typeof editorialHubs).length > 0
+	const horoscopeSigns = [
+		...new Set(
+			documents.flatMap((document) => {
+				const archive =
+					document.kind === 'horoscope' ? parseHoroscopeArchivePath(document.path) : null;
+				return archive ? [`/horoscopo/${archive.sign}`] : [];
+			})
+		)
+	];
+	const hubs = Object.keys(editorialHubs).filter((path) =>
+		path === '/horoscopo'
+			? horoscopeSigns.length > 0
+			: hubDocuments(documents, path as keyof typeof editorialHubs).length > 0
 	);
 	return urlset(
-		[...legacyPublicPaths, ...hubs]
+		[...legacyPublicPaths, ...hubs, ...horoscopeSigns]
 			.map((path) => `<url><loc>${xml(SITE.url + (path === '/' ? '' : path))}</loc></url>`)
 			.join('')
 	);

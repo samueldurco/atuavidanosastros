@@ -24,8 +24,18 @@ Para admitir um documento `horoscope`, o registro exige exatamente um snapshot v
 
 Essa verificação não autentica sozinha uma origem externa nem homologa precisão. Permanecem a revisão independente e a assinatura Ed25519 por autoridade habilitada, os gates editoriais, visuais e de produção. A política automática atual cobre guias educativos permanentes; não autoriza previsão datada. Nenhuma previsão foi admitida por esta WU.
 
+## Navegação, histórico e avisos — RECON-21
+
+O hub `/horoscopo` oferece os doze signos e os períodos dia, semana e mês. Cada índice `/horoscopo/<signo>` mostra a leitura atual e o histórico do ano escolhido, sempre projetados do registro editorial admitido. Período inválido ou ano fora de 1900–2099 retorna 400; signo desconhecido retorna 404. O histórico usa o ano de início da cobertura, inclusive para semanas que atravessam o ano. A leitura atual independe do ano selecionado no histórico.
+
+Novas leituras possuem URL imutável `/horoscopo/<signo>/<daily|weekly|monthly>/<AAAA-MM-DD>`. O período e a data desse caminho precisam coincidir com o snapshot verificado e assinado. Artigos legados aprovados conservam sua URL. Documentos antigos sem signo/período inequívocos não entram no novo índice. Ausência de leitura aprovada é apresentada explicitamente; não gera conteúdo de substituição. Hub e índices sem arquivo datado admitido ficam fora do sitemap e não indexáveis; artigos aprovados continuam no sitemap editorial.
+
+Avisos exigem escolha explícita e consentimento. A preferência local `atv.public-horoscope.follow.v1` contém somente versão, signo, período, instante do consentimento e último instante conferido. O navegador compara a modificação dos documentos admitidos com esse marco ao voltar ao horóscopo. O leitor pode marcar avisos como vistos ou remover a preferência. Valores malformados são ignorados; falha de armazenamento informa a recusa sem simular sucesso. Não guarda nascimento, leitura privada nem histórico pessoal e não envia mensagens, notificações do sistema ou alertas em segundo plano. Não há sincronização entre aparelhos.
+
+O histórico público é o arquivo de publicações aprovadas. A Biblioteca e o histórico natal privados pertencem ao fluxo privado existente; esta composição não os substitui nem concede acesso a eles.
+
 ## Limites e aceite
 
 Precisão integral experimental, ainda não homologada. A grade pode omitir contatos entre amostras; a última observação precede o fim do período. Não certifica aplicação, separação, duração ou eventos exatos. UTC não equivale ao dia local de todos os leitores. Os mesmos fatos gerais servem aos doze signos; uma interpretação por signo depende de método editorial explícito e aprovado.
 
-E1 possui implementação e validação locais; homologação permanece pendente. E2 exige leitura datada original e autoridade aplicável. E3/E4 ainda exigem navegação dos doze signos, períodos, histórico e alertas consentidos, além da liberação hospedada. E5 exige percurso real e aceite correspondente. Formato público web, sem PDF.
+E1 possui implementação e validação locais; homologação permanece pendente. E2 exige leitura datada original e autoridade aplicável. RECON-21 implementa a navegação dos doze signos, períodos, arquivo público e avisos consentidos; E3/E4 integrais ainda dependem de publicações legítimas e liberação hospedada. E5 exige percurso real e aceite correspondente. Formato público web, sem PDF.

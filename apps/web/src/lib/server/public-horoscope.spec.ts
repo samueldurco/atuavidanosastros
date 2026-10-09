@@ -150,6 +150,16 @@ async function forecast(): Promise<EditorialDocument> {
 	};
 }
 describe('exact facts binding before public editorial approval', () => {
+	it('binds dated archives to the exact sample cadence and start date, retaining legacy paths', async () => {
+		const doc = await forecast();
+		expect(
+			await verifiedPublicHoroscopeFacts({ ...doc, path: '/horoscopo/aries/daily/2026-10-08' }, [
+				daily
+			])
+		).toBe(true);
+		for (const path of ['/horoscopo/aries/weekly/2026-10-08', '/horoscopo/aries/daily/2026-10-09'])
+			expect(await verifiedPublicHoroscopeFacts({ ...doc, path }, [daily])).toBe(false);
+	});
 	it('requires one exact full snapshot, including engine and coverage', async () => {
 		const doc = await forecast();
 		expect(await verifiedPublicHoroscopeFacts(doc, [daily])).toBe(true);

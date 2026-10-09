@@ -1,4 +1,5 @@
 import { SITE, signs } from '$lib/data/site';
+import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
 import {
 	verifiedPublicHoroscopeFacts,
@@ -124,6 +125,7 @@ export function canonicalPair(first: string, second: string): string | null {
 	return `/compatibilidade/${signs[Math.min(a, b)]}-${signs[Math.max(a, b)]}`;
 }
 function validPath(document: EditorialDocument): boolean {
+	if (parseHoroscopeArchivePath(document.path)) return document.kind === 'horoscope';
 	if (document.kind === 'guide' && evergreenGuidePaths.some((path) => path === document.path))
 		return true;
 	const datedForecast = document.path.match(
