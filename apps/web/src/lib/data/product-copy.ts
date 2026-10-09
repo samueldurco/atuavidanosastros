@@ -1,7 +1,13 @@
-import { productCatalog } from '@atv/domain';
+import { productCatalog, tarotMethods } from '@atv/domain';
 
 /** Customer language. IDs, publication state and delivery rights stay in the domain catalog. */
 export const productCopy = {
+	...Object.fromEntries(
+		tarotMethods.map((method) => [
+			method.id,
+			{ summary: method.description, action: `Consultar ${method.name}` }
+		])
+	),
 	'birth-chart': {
 		summary: 'Conheça seu mapa astral: personalidade, emoções, relacionamentos e trabalho.',
 		action: 'Fazer meu mapa astral'

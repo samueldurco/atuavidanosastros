@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { tarotMethodFor } from '@atv/domain';
 	import Button from './ui/Button.svelte';
 	import Field from './ui/Field.svelte';
 	import { symbolicProduct, parseSymbolicForm, type IntakeAccess } from '$lib/symbolic-intake';
@@ -8,6 +9,7 @@
 		$props();
 	const product = $derived(symbolicProduct(productId));
 	const tarot = $derived(product?.kind === 'tarot');
+	const method = $derived(tarotMethodFor(productId));
 	const atlas = $derived(productId === 'dream-atlas');
 	let client: ReturnType<typeof createWorkflowRequest> | undefined;
 	let outcome = $state<WorkflowRequestState>({ mode: 'blocked', message: '' });
@@ -87,27 +89,14 @@
 		<h1 id="intake-title">{product?.name}</h1>
 		<p class="lead">
 			{tarot
-				? 'Escreva a pergunta que você quer explorar com o Tarot.'
+				? 'Escolha um foco, se desejar. A leitura também é completa sem uma pergunta.'
 				: atlas
 					? 'Escolha a data de início do seu diário de sonhos de 30 dias.'
 					: 'Conte o sonho que você quer interpretar.'}
 		</p>
 		<p class="access-note">{accessMessage}</p>
-		{#if productId === 'tarot-yes-no'}
-			<p>
-				A leitura explora a carta tirada e as condições relacionadas à sua pergunta. O resultado não
-				é uma resposta automática de sim ou não.
-			</p>
-		{:else if productId === 'tarot-focus'}
-			<p>
-				Escreva uma pergunta sobre o assunto que você quer explorar. A leitura relaciona a carta
-				tirada com essa pergunta.
-			</p>
-		{:else if productId === 'tarot-journey'}
-			<p>
-				Registre a pergunta inicial e o objetivo que você escolheu. A tiragem e as etapas da jornada
-				ainda dependem de definição e revisão.
-			</p>
+		{#if method}
+			<p>{method.description} {method.positions.length} cartas. {method.integration}</p>
 		{:else if productId === 'dream-dossier'}
 			<p>
 				Registre o sonho que você quer explorar. A escolha de registros anteriores e a comparação
@@ -124,44 +113,22 @@
 		<div class="writing">
 			<form bind:this={form} method="POST" onsubmit={submit} novalidate autocomplete="off">
 				<fieldset disabled={!canEnter}>
-					<legend>{tarot ? 'Sua pergunta' : atlas ? 'Início do caderno' : 'Seu sonho'}</legend>
+					<legend>{tarot ? 'Sua consulta' : atlas ? 'Início do caderno' : 'Seu sonho'}</legend>
 					{#if tarot}
-						{#each Array.from({ length: productId === 'three-questions' ? 3 : 1 }, (_, i) => i + 1) as number (number)}
-							<Field
-								id={`question${number}`}
-								label={productId === 'three-questions'
-									? `Pergunta ${number} (obrigatória)`
-									: 'Sua pergunta (obrigatória)'}
-								help="Até 400 caracteres. Prefira perguntas sobre suas escolhas e possibilidades."
-								error={errors[`question${number}`]}
-							>
-								{#snippet children(describedBy)}<textarea
-										id={`question${number}`}
-										name={`question${number}`}
-										rows="3"
-										maxlength="400"
-										required
-										aria-invalid={!!errors[`question${number}`]}
-										aria-describedby={describedBy}></textarea>{/snippet}
-							</Field>
-						{/each}
-						{#if productId === 'tarot-journey'}
-							<Field
-								id="goal"
-								label="Seu objetivo para a jornada (obrigatório)"
-								help="Até 400 caracteres. Descreva o que você deseja explorar, sem antecipar um resultado."
-								error={errors.goal}
-							>
-								{#snippet children(describedBy)}<textarea
-										id="goal"
-										name="goal"
-										rows="3"
-										maxlength="400"
-										required
-										aria-invalid={!!errors.goal}
-										aria-describedby={describedBy}></textarea>{/snippet}
-							</Field>
-						{/if}
+						<Field
+							id="focus"
+							label="Foco da consulta (opcional)"
+							help="Até 400 caracteres. Você pode deixar em branco; todas as posições serão interpretadas."
+							error={errors.focus}
+						>
+							{#snippet children(describedBy)}<textarea
+									id="focus"
+									name="focus"
+									rows="3"
+									maxlength="400"
+									aria-invalid={!!errors.focus}
+									aria-describedby={describedBy}></textarea>{/snippet}
+						</Field>
 					{:else if atlas}
 						<Field
 							id="startDate"
@@ -314,7 +281,7 @@
 						: atlas
 							? 'Este formulário registra somente o início e o contexto opcional do período. Não carrega relatos anteriores, identifica padrões ou cria leituras. Os registros diários dependerão de uma etapa própria.'
 							: tarot
-								? 'As cartas são sorteadas pelo motor do produto após o pedido. Nenhuma carta ou interpretação é criada por este formulário.'
+								? 'A tiragem fica vinculada ao seu pedido. Reabrir ou recuperar esse pedido preserva as mesmas cartas; somente uma nova consulta inicia outra tiragem.'
 								: 'O relato e suas associações orientam a leitura simbólica. Não deduzimos um diagnóstico, uma previsão ou uma recorrência a partir deste registro.'}
 			</p>
 			<ol>

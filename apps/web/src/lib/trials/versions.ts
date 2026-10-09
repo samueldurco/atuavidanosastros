@@ -1,2 +1,37 @@
+import { tarotMethodFor } from '@atv/domain';
+
 export const CONTENT_VERSION = 'atv-ai-editorial-trials/3.0.0';
+/** Historical editions keep their version; only an explicit revision uses the latest one. */
+export const latestReadingVersion = (productId: string) =>
+	productId === 'midheaven'
+		? 'atv-midheaven-editorial/5.0.0'
+		: productId === 'ascendant'
+			? 'atv-ascendant-editorial/5.0.0'
+			: productId === 'birth-chart'
+				? 'atv-birth-chart-editorial/5.0.0'
+				: productId === 'three-pillars'
+					? 'atv-three-pillars-editorial/5.0.0'
+					: productId === 'career-compass'
+						? 'atv-career-compass-editorial/5.0.0'
+						: tarotMethodFor(productId) ||
+							  [
+									'career-compass',
+									'purpose-career',
+									'direction-journey',
+									'life-atlas',
+									'three-pillars',
+									'birth-chart',
+									'ascendant',
+									'midheaven',
+									'date-reading',
+									'horoscope',
+									'week-reading',
+									'solar-return',
+									'personal-calendar',
+									'pair-preview',
+									'synastry',
+									'couple-dossier'
+							  ].includes(productId)
+							? 'atv-product-reconstruction/4.0.0'
+							: CONTENT_VERSION;
 export const POLICY_VERSION = 'atv-private-trial-approval/3.0.0';

@@ -11,10 +11,10 @@ test('career complete reading, provenance, personal approval and recoverable not
 		page.getByRole('heading', { name: 'Bússola de Carreira', exact: true })
 	).toBeVisible();
 	await page
-		.getByRole('button', { name: 'Ambientes em que vale fazer um teste', exact: true })
+		.getByRole('button', { name: 'Ambientes: condições que permitem contribuir', exact: true })
 		.click();
 	await expect(
-		page.getByRole('heading', { name: 'Ambientes em que vale fazer um teste' })
+		page.getByRole('heading', { name: 'Ambientes: condições que permitem contribuir' })
 	).toBeVisible();
 	await page.getByText('Origem e versão', { exact: true }).click();
 	await expect(page.locator('details ul li').first()).toBeVisible();
@@ -125,22 +125,29 @@ test('chapter changes and bookmarks persist without blocking reading on a failed
 		await route.fulfill({ status: 200, json: { saved: true } });
 	});
 	await page.goto('/testar-produtos/_spec');
-	await page.getByRole('button', { name: 'Sua página de decisão', exact: true }).click();
+	await page
+		.getByRole('button', { name: 'Modo de trabalhar: pensar, iniciar e concluir', exact: true })
+		.click();
 	await expect(
-		page.getByRole('heading', { name: 'Sua página de decisão', exact: true })
+		page.getByRole('heading', {
+			name: 'Modo de trabalhar: pensar, iniciar e concluir',
+			exact: true
+		})
 	).toBeVisible();
 	await page.getByRole('button', { name: '☆ Marcar capítulo', exact: true }).click();
 	await expect(page.getByRole('button', { name: '★ Marcado', exact: true })).toHaveAttribute(
 		'aria-pressed',
 		'true'
 	);
-	await expect.poll(() => updates.at(-1)?.bookmarks).toEqual([7]);
+	await expect.poll(() => updates.at(-1)?.bookmarks).toEqual([5]);
 	await page.route('**/api/private-trials/*', (route) =>
 		route.fulfill({ status: 503, json: { message: 'Não foi possível salvar agora.' } })
 	);
-	await page.getByRole('button', { name: 'Sua direção em cinco minutos', exact: true }).click();
+	await page
+		.getByRole('button', { name: 'Contribuição: do ângulo à entrega', exact: true })
+		.click();
 	await expect(
-		page.getByRole('heading', { name: 'Sua direção em cinco minutos', exact: true })
+		page.getByRole('heading', { name: 'Contribuição: do ângulo à entrega', exact: true })
 	).toBeVisible();
 	await expect(
 		page.getByRole('status').filter({ hasText: 'Não foi possível salvar agora.' })
@@ -151,7 +158,9 @@ test('couple charts and sharing require explicit consent and recover from HTML f
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?product=couple-dossier');
-	await expect(page.locator('svg[role="img"]')).toHaveCount(2);
+	await expect(
+		page.getByRole('region', { name: 'Fatores natais das duas pessoas' }).locator('svg[role="img"]')
+	).toHaveCount(2);
 	const share = page.getByRole('button', { name: 'Criar link por sete dias', exact: true });
 	await expect(share).toBeDisabled();
 	await page.getByLabel(/Tenho autorização da outra pessoa e quero compartilhar/).check();
@@ -175,26 +184,32 @@ test('three pillars have distinct navigation and horoscope remains a web reading
 	);
 	await page.goto('/testar-produtos/_spec?product=three-pillars');
 	await page.getByRole('button', { name: /Lua · necessidades/ }).click();
-	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText('Lua');
+	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText(
+		'Afinidades'
+	);
+	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
+		0
+	);
 	await page.goto('/testar-produtos/_spec?product=horoscope');
 	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
 		0
 	);
 });
 
-test('pair preview displays both calculated three-factor charts and the desire chapter', async ({
+test('pair preview displays both three-factor comparisons and the direction chapter', async ({
 	page
 }) => {
 	await page.route('**/api/private-trials/*', (route) =>
 		route.fulfill({ status: 200, json: { saved: true } })
 	);
 	await page.goto('/testar-produtos/_spec?product=pair-preview');
-	await expect(page.locator('svg[role="img"]')).toHaveCount(2);
-	await expect(page.locator('svg[role="img"] [data-body]')).toHaveCount(6);
-	await page.getByRole('button', { name: 'Desejo, iniciativa e limites', exact: true }).click();
-	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText(
-		'não calcula aspectos entre os mapas'
-	);
+	await page.getByText('Referências calculadas e informadas', { exact: true }).click();
+	await expect(page.getByText('Pessoa A · Sol:', { exact: false }).first()).toBeVisible();
+	await expect(page.getByText('Pessoa B · Ascendente:', { exact: false }).first()).toBeVisible();
+	await page
+		.getByRole('button', { name: 'Direções que cada pessoa quer construir', exact: true })
+		.click();
+	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText('Sol em');
 });
 
 test('ATV+ has all six universes, 25 products, notes library and personal approval', async ({
@@ -231,24 +246,27 @@ test('Atlas da Vida offers distinct priorities rather than an unexplained text f
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?view=intake&product=life-atlas');
-	await expect(page.getByRole('combobox', { name: 'Prioridade 1', exact: true })).toHaveValue(
-		'Autocuidado'
-	);
+	await expect(page.getByRole('combobox', { name: 'Prioridade 1', exact: true })).toHaveValue('');
+	await page
+		.getByRole('combobox', { name: 'Prioridade 1', exact: true })
+		.selectOption('Autocuidado e rotina');
 	await expect(
 		page
 			.getByRole('combobox', { name: 'Prioridade 2', exact: true })
-			.locator('option[value="Autocuidado"]')
+			.locator('option[value="Autocuidado e rotina"]')
 	).toHaveJSProperty('disabled', true);
-	await page.getByRole('combobox', { name: 'Prioridade 1', exact: true }).selectOption('Família');
+	await page
+		.getByRole('combobox', { name: 'Prioridade 1', exact: true })
+		.selectOption('Casa e pertencimento');
 	await expect(
 		page
 			.getByRole('combobox', { name: 'Prioridade 2', exact: true })
-			.locator('option[value="Autocuidado"]')
+			.locator('option[value="Autocuidado e rotina"]')
 	).toHaveJSProperty('disabled', false);
 	await expect(
 		page
 			.getByRole('combobox', { name: 'Prioridade 2', exact: true })
-			.locator('option[value="Família"]')
+			.locator('option[value="Casa e pertencimento"]')
 	).toHaveJSProperty('disabled', true);
 });
 

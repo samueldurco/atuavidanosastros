@@ -349,7 +349,7 @@ test("Week registration and processor allowlist are independent explicit server 
   assert.equal(
     productCalculationCoverage().filter((v) => v.calculation === "partial-base")
       .length,
-    13,
+    9,
   );
   assert.ok(
     productCalculationCoverage().every((v) => v.publication === "blocked"),

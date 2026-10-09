@@ -1,5 +1,15 @@
+import { tarotMethods } from '@atv/domain';
 /** Public explanations must describe the retained product contract, not invent availability. */
 export const productDetails = {
+	...Object.fromEntries(
+		tarotMethods.map((method) => [
+			method.id,
+			{
+				input: 'Foco opcional e autorização para guardar sua leitura.',
+				scope: `${method.positions.length} ${method.positions.length === 1 ? 'carta' : 'cartas'}: ${method.positions.map((p) => p.name).join(', ')}. ${method.integration}`
+			}
+		])
+	),
 	'birth-chart': {
 		input: 'Data, hora e local de nascimento.',
 		scope: 'Sol, Lua, planetas, Ascendente, casas e aspectos do seu mapa natal.'

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { productCatalog } from '@atv/domain';
-test('all 25 catalog pages open the free trial for an authorized account', async ({ page }) => {
+test('all 26 catalog pages open the free trial for an authorized account', async ({ page }) => {
 	for (const product of productCatalog.filter((p) => p.universe !== 'global')) {
 		await page.goto(`/testar-produtos/_spec?view=catalog&product=${product.id}`);
 		await expect(page.getByRole('heading', { name: 'Teste gratuito disponível' })).toBeVisible();
@@ -18,7 +18,7 @@ test('the authorized test index and library expose products, ATV+ and saved read
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?view=index');
-	await expect(page.locator('.products').getByRole('link', { name: /^Testar / })).toHaveCount(25);
+	await expect(page.locator('.products').getByRole('link', { name: /^Testar / })).toHaveCount(26);
 	await expect(
 		page
 			.getByRole('region', { name: 'Suas leituras de teste' })

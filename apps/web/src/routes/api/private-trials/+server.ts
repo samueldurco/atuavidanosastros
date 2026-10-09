@@ -1,5 +1,6 @@
 import { error, json } from '@sveltejs/kit';
-import { parseWorkflowInput } from '@atv/domain';
+import { isRetiredTarot, parseWorkflowInput, tarotMethodFor } from '@atv/domain';
+import { preparePrivateTarotDraw } from '$lib/server/private-tarot-draw';
 import { computeTrial } from '$lib/server/trial-runtime';
 import {
 	trialDreamSources,
@@ -39,7 +40,7 @@ export const POST: RequestHandler = async (event) => {
 	const identity = (await trialIdentity(event.locals))!;
 	const body = await trialJson(event);
 	const input = parseWorkflowInput(body?.input);
-	if (!input || !validTrialId(body?.requestKey))
+	if (!input || isRetiredTarot(input.productId) || !validTrialId(body?.requestKey))
 		error(400, 'Confira os dados e consentimentos da leitura.');
 	const sources = await trialDreamSources(event.locals, body.sourceIds ?? []);
 	const sourceIds = sources.map((s) => s.id).sort();
@@ -65,8 +66,11 @@ export const POST: RequestHandler = async (event) => {
 		await saveDiary(saved, identity.ownerId);
 		return json({ id: saved.id }, { headers: { 'cache-control': 'private, no-store' } });
 	}
-	const id = crypto.randomUUID();
-	const result = await computeTrial(event, input, id, sources);
+	const draw = tarotMethodFor(input.productId)
+		? await preparePrivateTarotDraw(identity.ownerId, body.requestKey, input)
+		: null;
+	const id = draw?.id ?? crypto.randomUUID();
+	const result = await computeTrial(event, input, id, sources, draw?.calculation);
 	if (!result) error(422, 'Esta leitura não passou nos critérios automáticos e não foi liberada.');
 	const { calculation, reading, approval } = result;
 	// Recheck revocation after calculation. The DB trigger also enforces the grant atomically.

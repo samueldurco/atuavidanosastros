@@ -250,7 +250,7 @@ test('offline corpus covers 13 partial bases, six capabilities and seven strata 
     [['birth-chart-boundary', 'insufficient_facts'], ['three-pillars-boundary', 'insufficient_facts'], ['ascendant-boundary', 'insufficient_facts']]);
   assert.equal(new Set(corpus.cases.map(item => item.id)).size, 105);
   assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 105);
-  assert.equal(corpus.unavailableProducts.length, 12);
+  assert.equal(corpus.unavailableProducts.length, 17);
   assert.equal(corpus.promotionEligible, false);
   assert.equal(new Set(corpus.cases.filter(item => item.request).map(item => item.request.facts.capability)).size, 6);
   for (const product of corpusProducts) {

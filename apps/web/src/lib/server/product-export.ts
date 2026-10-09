@@ -1,4 +1,4 @@
-import { productCatalog } from '@atv/domain';
+import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
 
@@ -14,7 +14,7 @@ const escape = (value: string) =>
 // Input must come from the owner RPC. Validation is not authentication or promotion.
 export function renderProductWebExport(value: unknown) {
 	const run = parseProductRun(value);
-	const product = productCatalog.find((entry) => entry.id === run?.productId);
+	const product = productDefinitionFor(run?.productId ?? '');
 	if (!run?.released || !run.editorial || !run.calculation || !product?.delivery.includes('web'))
 		return null;
 	const { editorial, calculation } = run;

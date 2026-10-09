@@ -69,7 +69,7 @@ export function parseWeekRequestInput(v: unknown): WeekRequestInput | null {
 		v.expectedRevision < 1 ||
 		v.expectedRevision >= 2147483647 ||
 		!validDate(v.targetDate) ||
-		v.targetDate > '2099-12-25' ||
+		v.targetDate > '2099-12-24' ||
 		!object(v.consent) ||
 		Object.keys(v.consent).length !== 4 ||
 		v.consent.storage !== true ||

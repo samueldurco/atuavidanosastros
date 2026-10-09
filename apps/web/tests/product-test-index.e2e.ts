@@ -7,11 +7,11 @@ test('test index preserves all private login return paths', async ({ page }) => 
 	expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow');
 	await expect(page.getByRole('heading', { name: 'Teste os produtos' })).toBeVisible();
 	const links = page.locator('a[href^="/testar-produtos/"]').filter({ hasNotText: 'ATV+' });
-	await expect(links).toHaveCount(25);
+	await expect(links).toHaveCount(26);
 	const targets = await links.evaluateAll((nodes) =>
 		nodes.map((node) => node.getAttribute('href'))
 	);
-	expect(new Set(targets).size).toBe(25);
+	expect(new Set(targets).size).toBe(26);
 	await expect(
 		page.getByRole('heading', { name: 'Entre para acessar seus testes gratuitos' })
 	).toBeVisible();

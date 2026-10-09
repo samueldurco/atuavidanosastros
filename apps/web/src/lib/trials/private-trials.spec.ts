@@ -3,6 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import {
 	productCatalog,
 	workflowFor,
+	type CalculationSnapshot,
 	type WorkflowInput,
 	type DreamAtlasFactSource
 } from '@atv/domain';
@@ -19,6 +20,7 @@ import { trialGeometry } from './cartography';
 import { privateFormats } from './experience';
 import { positionInterpretation } from './position-interpretation';
 import { signEditorial } from './content';
+import { createProductCalculators } from '../../../../worker/src/product-runtime';
 
 // Synthetic local evidence only. No user identities, commercial releases or provider calls.
 const id = '00000000-0000-4000-8000-000000000031';
@@ -66,6 +68,10 @@ function inputFor(productId: string): WorkflowInput {
 			localDateTime: '2001-01-01T12:00:00',
 			utcInstant: '2001-01-01T12:00:00Z'
 		};
+	if (productId === 'couple-dossier') {
+		input.context = 'Queremos melhorar a comunicação.';
+		input.questions = ['Como conversar quando discordamos?'];
+	}
 	if (kind === 'cycles')
 		input.targetDate = productId === 'personal-calendar' ? '2026-10-01' : '2026-10-06';
 	if (productId === 'solar-return') {
@@ -85,13 +91,15 @@ function inputFor(productId: string): WorkflowInput {
 			startDate: '2026-10-06'
 		};
 	if (productId === 'life-atlas')
-		input.atlas = { priorities: ['relações', 'trabalho', 'cuidado', 'criatividade'] };
-	if (productId === 'tarot-journey') input.tarotJourney = { goal: 'Organizar um projeto pessoal.' };
-	if (kind === 'tarot')
-		input.questions =
-			productId === 'three-questions'
-				? ['O que observar?', 'Que recurso experimentar?', 'Qual próximo passo?']
-				: ['O que posso observar na minha escolha?'];
+		input.atlas = {
+			priorities: [
+				'Vínculos e acordos',
+				'Trabalho e contribuição',
+				'Autocuidado e rotina',
+				'Aprendizado e expressão'
+			]
+		};
+	if (kind === 'tarot') input.focus = 'O que posso observar na minha escolha?';
 	if (kind === 'dream' && productId !== 'dream-atlas')
 		input.dream = {
 			date: '2026-10-06',
@@ -125,7 +133,7 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			expect(approval?.scope).toBe('private-free-test');
 			expect(approval?.digest).toMatch(/^[a-f0-9]{64}$/);
 			expect(reading.sections.length).toBeLessThan(60);
-			expect(reading.questions).toHaveLength(3);
+			expect(reading.questions.length).toBeGreaterThanOrEqual(3);
 			expect(
 				calculation.facts.every((f) => reading.sections.some((s) => s.factIds.includes(f.id)))
 			).toBe(true);
@@ -175,9 +183,21 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		}
 	});
 	it('historical readings remain verifiable, while a new edition preserves every calculation fact', async () => {
+		const historicalCalculators = createProductCalculators({
+			experimentalSolarReturnBase: true,
+			experimentalPersonalCalendarBase: true
+		});
 		for (const s of saved.values()) {
-			const historical = composeLegacyTrialReading(s.input, s.calculation);
-			expect((await approveTrialReading(s.input, s.calculation, historical))?.policy).toBe(
+			// Historical rendering applies to its original compact calculation schema.
+			// New daily evidence is deliberately not converted to thousands of legacy chapters.
+			const historicalCalculation = ['solar-return', 'personal-calendar'].includes(s.product_id)
+				? ((await historicalCalculators[s.product_id]!(s.input, {
+						runId: id,
+						signal: AbortSignal.timeout(25000)
+					})) as CalculationSnapshot)
+				: s.calculation;
+			const historical = composeLegacyTrialReading(s.input, historicalCalculation);
+			expect((await approveTrialReading(s.input, historicalCalculation, historical))?.policy).toBe(
 				'atv-private-trial-approval/1.0.0'
 			);
 			expect(s.reading.sections.some((section) => /nenhum aspecto/i.test(section.title))).toBe(
@@ -209,8 +229,12 @@ describe('private free testing of the real 25 calculations and original AI/edito
 	});
 	it('V2 remains authentic; V3 cannot borrow its approval or accept a changed civil identity', async () => {
 		const s = saved.get('birth-chart')!;
-		const v2 = composeV2(s.input, s.calculation);
-		expect((await approveTrialReading(s.input, s.calculation, v2))?.policy).toBe(
+		const historical = (await createProductCalculators({})['birth-chart']!(s.input, {
+			runId: id,
+			signal: AbortSignal.timeout(25000)
+		})) as CalculationSnapshot;
+		const v2 = composeV2(s.input, historical);
+		expect((await approveTrialReading(s.input, historical, v2))?.policy).toBe(
 			'atv-private-trial-approval/2.0.0'
 		);
 		expect(v2).not.toEqual(s.reading);
@@ -274,25 +298,20 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		for (const product of ['horoscope', 'daily-card', 'atv-plus'])
 			expect(privateFormats(product, ['web', 'pdf'])).not.toContain('pdf');
 	});
-	it('pair preview interprets all six calculated positions and renders both three-factor charts', () => {
+	it('pair preview interprets six role-bound Sun, Moon and Ascendant factors', () => {
 		const s = saved.get('pair-preview')!;
 		for (const person of ['first', 'second'] as const) {
-			const geometry = trialGeometry(s, person);
-			expect(geometry.positions.map((p) => p.body).sort()).toEqual(['mars', 'moon', 'venus']);
-			expect(geometry.houses.cusps).toEqual([]);
+			const points = (s.calculation.data[person] as { points: { factor: string }[] }).points;
+			expect(points.map((p) => p.factor)).toEqual(['sun', 'moon', 'ascendant']);
 		}
-		const chapters = s.reading.sections.slice(0, 3);
-		expect(chapters.map((s) => s.title)).toEqual([
-			'Afeto e aproximação',
-			'Necessidades emocionais',
-			'Desejo, iniciativa e limites'
-		]);
-		expect(new Set(chapters.flatMap((s) => s.factIds)).size).toBe(6);
-		expect(chapters.every((s) => s.text.includes('não calcula aspectos entre os mapas'))).toBe(
-			true
+		expect(s.reading.sections.map((s) => s.title)).toContain(
+			'Direções que cada pessoa quer construir'
 		);
+		expect(s.calculation.facts.filter((f) => f.kind === 'calculated')).toHaveLength(6);
+		expect(s.calculation.data.aspects).toEqual([]);
+		expect(s.calculation.data.compatibilityScore).toBeNull();
 	});
-	it('career uses saved natal geometry, traditional rulership and an actionable decision page', () => {
+	it('career integrates saved natal geometry, modern rulership and context into a practical decision', () => {
 		const s = saved.get('career-compass')!;
 		expect(s.calculation.facts.map((f) => f.id)).toEqual(
 			expect.arrayContaining([
@@ -308,36 +327,36 @@ describe('private free testing of the real 25 calculations and original AI/edito
 				'house-10'
 			])
 		);
-		expect(s.reading.sections.some((s) => s.text.includes('contribuição pública'))).toBe(true);
-		expect(trialText(s)).toContain(s.input.context);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'integrated-compass')).toBe(true);
+		expect(s.reading.editorial?.context.factId).toBe('personal-context');
 		expect(s.calculation.data.positions).toHaveLength(10);
-		expect(s.reading.sections.some((s) => s.title === 'Sua página de decisão')).toBe(true);
-		expect(s.reading.sections.some((s) => s.title === 'Um experimento de trinta dias')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'reported-context')).toBe(true);
+		expect(s.reading.editorial?.plan.some((s) => s.role === 'reversible-experiment')).toBe(true);
 	});
-	it('calendar calculates one daily sample for all 31 days within the approval size bound', () => {
+	it('calendar preserves every date and four observations per day within the approval size bound', () => {
 		const s = saved.get('personal-calendar')!;
 		expect(s.calculation.data.days).toHaveLength(31);
-		expect(s.calculation.facts.filter((f) => f.id.startsWith('day-'))).toHaveLength(31);
-		expect(s.calculation.limits.some((l) => l.includes('12h UTC'))).toBe(true);
-		expect(s.calculation.limits.some((l) => l.includes('Nenhum trânsito diário'))).toBe(false);
-		const days = s.reading.sections.filter((s) =>
-			s.factIds.some((id) => /^day-\d+-aspects$/.test(id))
-		);
+		expect(
+			s.calculation.facts.filter((f) => /^calendar-day-\d{4}-\d{2}-\d{2}$/.test(f.id))
+		).toHaveLength(31);
+		expect((s.calculation.data.samples as { rows: number[][] }).rows).toHaveLength(124);
+		const days = s.reading.editorial!.plan.filter((p) => p.role.startsWith('calendar-day-'));
 		expect(days).toHaveLength(31);
-		expect(
-			days.every((s) => s.text.includes('Tema central:') || s.text.includes('não encontrou'))
-		).toBe(true);
-		expect(
-			new Set(days.map((s) => s.text.split('Tema central:')[1]?.split('\n\n')[0])).size
-		).toBeGreaterThan(5);
+		for (const day of days) {
+			expect(day.factIds).toContain(day.role);
+			expect(
+				day.factIds.filter((id) => s.reading.editorial!.selection.some((x) => x.factId === id))
+					.length
+			).toBeLessThanOrEqual(3);
+		}
 	});
 	it('tarot retries with the same run id retain the drawn cards; no replacement or binary prophecy', async () => {
-		const s = saved.get('tarot-journey')!,
+		const s = saved.get('tarot-peladan-cross')!,
 			next = await calculateTrial(s.input, id);
 		expect(next.data.cards).toEqual(s.calculation.data.cards);
 		const cards = next.data.cards as { cardId: string }[];
-		expect(new Set(cards.map((c) => c.cardId)).size).toBe(3);
-		expect(saved.get('tarot-yes-no')!.reading.opening).toContain('condições');
+		expect(new Set(cards.map((c) => c.cardId)).size).toBe(5);
+		expect(s.reading.limits.join(' ')).toMatch(/tendência|previsão|simbólic/i);
 	});
 	it('dream dossiers require selected history; reported instructions never change the policy', async () => {
 		await expect(calculateTrial(inputFor('dream-dossier'), id, [])).rejects.toThrow();
@@ -361,9 +380,9 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		expect(pdf.length).toBeGreaterThan(10000);
 		expect(trialText(natal)).toContain(natal.reading.sections.at(-1)!.text);
 		const svg = trialSvg(natal);
-		expect(svg.match(/data-body=/g)).toHaveLength(10);
+		expect(svg.match(/data-fact-id="position-[^"]+"/g)?.length).toBeGreaterThanOrEqual(10);
 		expect(svg).toContain('zero de Áries');
-		expect(trialSvg(saved.get('life-atlas')!)).toContain('data-body="sun"');
+		expect(trialSvg(saved.get('life-atlas')!)).toContain('data-fact-id="position-sun"');
 		const invalid = structuredClone(natal);
 		(invalid.calculation.data.positions as { longitude: number }[])[0].longitude = 360;
 		expect(() => trialSvg(invalid)).toThrow('geometry_invalid');
@@ -378,8 +397,9 @@ describe('private free testing of the real 25 calculations and original AI/edito
 	for (const product of cases.filter((p) => p.delivery.includes('svg')))
 		it(`${product.id}: catalog SVG represents its own calculated scope`, () => {
 			const svg = trialSvg(saved.get(product.id)!);
-			expect(svg).toContain('ASC:');
-			expect(svg.match(/data-body=/g) ?? []).toHaveLength(product.id === 'ascendant' ? 0 : 10);
+			expect(svg).toContain('ASC');
+			expect(svg).toContain('AstroChartEngineV2/2.0.0');
+			expect(svg).toContain('data-fact-id="position-sun"');
 			expect(svg).not.toContain('undefined');
 		});
 	for (const product of cases.filter((p) => privateFormats(p.id, p.delivery).includes('pdf')))

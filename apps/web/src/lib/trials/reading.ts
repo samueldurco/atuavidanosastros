@@ -1,13 +1,75 @@
+import { MIDHEAVEN_VERSION, MIDHEAVEN_READING_VERSION } from './reconstruction/midheaven-facts';
+import {
+	composeReconstructedMidheaven,
+	reviewReconstructedMidheaven
+} from './reconstruction/midheaven';
 import { composeLegacyTrialReading } from './legacy-reading';
+import { PILLARS_VERSION, PILLARS_READING_VERSION } from './reconstruction/pillars-facts';
+import { ASCENDANT_VERSION, ASCENDANT_READING_VERSION } from './reconstruction/ascendant-facts';
+import {
+	composeReconstructedAscendant,
+	reviewReconstructedAscendant
+} from './reconstruction/ascendant';
+import { BIRTH_VERSION, BIRTH_READING_VERSION } from './reconstruction/birth-facts';
+import { composeReconstructedBirth, reviewReconstructedBirth } from './reconstruction/birth';
+import { composeReconstructedPillars, reviewReconstructedPillars } from './reconstruction/pillars';
+import { COMPASS_VERSION, COMPASS_READING_VERSION } from './reconstruction/compass-facts';
+import { composeReconstructedCompass, reviewReconstructedCompass } from './reconstruction/compass';
+import { ATLAS_VERSION } from './reconstruction/atlas-facts';
+import { composeReconstructedAtlas, reviewReconstructedAtlas } from './reconstruction/atlas';
+import { DIRECTION_VERSION } from './reconstruction/direction-facts';
+import {
+	composeReconstructedDirection,
+	reviewReconstructedDirection
+} from './reconstruction/direction';
+import { PURPOSE_VERSION } from './reconstruction/purpose-facts';
+import { composeReconstructedPurpose, reviewReconstructedPurpose } from './reconstruction/purpose';
+import { CALENDAR_VERSION } from './reconstruction/calendar-facts';
+import {
+	composeReconstructedCalendar,
+	reviewReconstructedCalendar
+} from './reconstruction/calendar';
 import {
 	composeTrialReading as composeV2,
 	CONTENT_VERSION as V2,
 	POLICY_VERSION as POLICY_V2
 } from './editorial-reading';
-import { composeTrialReading, CONTENT_VERSION, POLICY_VERSION } from './experience-reading';
-export { composeTrialReading } from './experience-reading';
+import {
+	composeTrialReading as composeV3,
+	CONTENT_VERSION as V3,
+	POLICY_VERSION as POLICY_V3
+} from './experience-reading';
+import {
+	composeReconstructedCareer,
+	reviewReconstructedCareer,
+	RECONSTRUCTION_VERSION,
+	RECONSTRUCTION_POLICY,
+	type EditorialTrace
+} from './reconstruction/career';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { trialProfiles, TRIAL_CONTENT_VERSION, TRIAL_POLICY_VERSION } from './content';
+import { composeReconstructedNatal, reviewReconstructedNatal } from './reconstruction/natal';
+import { composeReconstructedTarot, reviewReconstructedTarot } from './reconstruction/tarot';
+import { composeReconstructedDate, reviewReconstructedDate } from './reconstruction/date';
+import { DATE_VERSION } from './reconstruction/date-facts';
+import { HOROSCOPE_VERSION } from './reconstruction/horoscope-facts';
+import { WEEK_VERSION } from './reconstruction/week-facts';
+import { SOLAR_VERSION } from './reconstruction/solar-facts';
+import { composeReconstructedSolar, reviewReconstructedSolar } from './reconstruction/solar';
+import { composeReconstructedWeek, reviewReconstructedWeek } from './reconstruction/week';
+import {
+	composeReconstructedHoroscope,
+	reviewReconstructedHoroscope
+} from './reconstruction/horoscope';
+import { PAIR_VERSION } from './reconstruction/pair-facts';
+import { composeReconstructedPair, reviewReconstructedPair } from './reconstruction/pair';
+import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
+import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
+import { composeReconstructedDossier, reviewReconstructedDossier } from './reconstruction/dossier';
+import {
+	composeReconstructedSynastry,
+	reviewReconstructedSynastry
+} from './reconstruction/synastry';
 
 export type TrialReading = {
 	version: string;
@@ -19,6 +81,7 @@ export type TrialReading = {
 	questions: string[];
 	practice: string;
 	limits: string[];
+	editorial?: EditorialTrace;
 };
 export type TrialApproval = {
 	status: 'approved';
@@ -43,6 +106,46 @@ export type TrialFeedback = {
 	updated_at: string;
 };
 
+export function composeTrialReading(
+	input: WorkflowInput,
+	calculation: CalculationSnapshot
+): TrialReading {
+	if (calculation.version === MIDHEAVEN_VERSION)
+		return composeReconstructedMidheaven(input, calculation);
+	if (calculation.version === ASCENDANT_VERSION)
+		return composeReconstructedAscendant(input, calculation);
+	if (calculation.version === BIRTH_VERSION) return composeReconstructedBirth(input, calculation);
+	if (calculation.version === PILLARS_VERSION)
+		return composeReconstructedPillars(input, calculation);
+	if (calculation.version === COMPASS_VERSION)
+		return composeReconstructedCompass(input, calculation);
+	if (calculation.version === ATLAS_VERSION) return composeReconstructedAtlas(input, calculation);
+	if (calculation.version === DIRECTION_VERSION)
+		return composeReconstructedDirection(input, calculation);
+	if (calculation.version === PURPOSE_VERSION)
+		return composeReconstructedPurpose(input, calculation);
+	if (calculation.version === CALENDAR_VERSION)
+		return composeReconstructedCalendar(input, calculation);
+	if (calculation.version === SOLAR_VERSION) return composeReconstructedSolar(input, calculation);
+	if (calculation.version === WEEK_VERSION) return composeReconstructedWeek(input, calculation);
+	if (calculation.version === HOROSCOPE_VERSION)
+		return composeReconstructedHoroscope(input, calculation);
+	if (calculation.version === DOSSIER_VERSION)
+		return composeReconstructedDossier(input, calculation);
+	if (calculation.version === DATE_VERSION) return composeReconstructedDate(input, calculation);
+	if (calculation.version === PAIR_VERSION) return composeReconstructedPair(input, calculation);
+	if (calculation.version === SYNASTRY_VERSION)
+		return composeReconstructedSynastry(input, calculation);
+	if (calculation.version === 'atv-tarot-method-calculation/2.0.0')
+		return composeReconstructedTarot(input, calculation);
+	if (calculation.version === 'atv-private-natal-synthesis/4.0.0')
+		return composeReconstructedNatal(input, calculation);
+	return ['career-compass', 'purpose-career'].includes(input.productId) &&
+		calculation.version === 'atv-private-career-synthesis/4.0.0'
+		? composeReconstructedCareer(input, calculation)
+		: composeV3(input, calculation);
+}
+
 export function canonical(value: unknown): string {
 	if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
 	if (value && typeof value === 'object')
@@ -65,6 +168,7 @@ export async function approveTrialReading(
 ): Promise<TrialApproval | null> {
 	if (
 		!parseWorkflowInput(input) ||
+		candidate.productId !== input.productId ||
 		!trialProfiles[input.productId] ||
 		!Array.isArray(calculation.facts) ||
 		calculation.facts.length === 0 ||
@@ -87,13 +191,65 @@ export async function approveTrialReading(
 	}
 	const legacy = candidate.version === TRIAL_CONTENT_VERSION;
 	const previous = candidate.version === V2;
-	if (!legacy && !previous && candidate.version !== CONTENT_VERSION) return null;
+	const v3 = candidate.version === V3;
+	const reconstructed =
+		candidate.version === RECONSTRUCTION_VERSION ||
+		candidate.version === COMPASS_READING_VERSION ||
+		candidate.version === PILLARS_READING_VERSION ||
+		candidate.version === BIRTH_READING_VERSION ||
+		candidate.version === ASCENDANT_READING_VERSION ||
+		candidate.version === MIDHEAVEN_READING_VERSION;
+	if (!legacy && !previous && !v3 && !reconstructed) return null;
 	const expected = legacy
 		? composeLegacyTrialReading(input, calculation)
 		: previous
 			? composeV2(input, calculation)
-			: composeTrialReading(input, calculation);
+			: v3
+				? composeV3(input, calculation)
+				: composeTrialReading(input, calculation);
 	if (canonical(candidate) !== canonical(expected)) return null;
+	if (
+		reconstructed &&
+		(calculation.version === MIDHEAVEN_VERSION
+			? reviewReconstructedMidheaven(input, calculation, candidate)
+			: calculation.version === ASCENDANT_VERSION
+				? reviewReconstructedAscendant(input, calculation, candidate)
+				: calculation.version === BIRTH_VERSION
+					? reviewReconstructedBirth(input, calculation, candidate)
+					: calculation.version === PILLARS_VERSION
+						? reviewReconstructedPillars(input, calculation, candidate)
+						: calculation.version === COMPASS_VERSION
+							? reviewReconstructedCompass(input, calculation, candidate)
+							: calculation.version === ATLAS_VERSION
+								? reviewReconstructedAtlas(input, calculation, candidate)
+								: calculation.version === DIRECTION_VERSION
+									? reviewReconstructedDirection(input, calculation, candidate)
+									: calculation.version === PURPOSE_VERSION
+										? reviewReconstructedPurpose(input, calculation, candidate)
+										: calculation.version === CALENDAR_VERSION
+											? reviewReconstructedCalendar(input, calculation, candidate)
+											: calculation.version === SOLAR_VERSION
+												? reviewReconstructedSolar(input, calculation, candidate)
+												: calculation.version === WEEK_VERSION
+													? reviewReconstructedWeek(input, calculation, candidate)
+													: calculation.version === HOROSCOPE_VERSION
+														? reviewReconstructedHoroscope(input, calculation, candidate)
+														: calculation.version === DOSSIER_VERSION
+															? reviewReconstructedDossier(input, calculation, candidate)
+															: calculation.version === SYNASTRY_VERSION
+																? reviewReconstructedSynastry(input, calculation, candidate)
+																: calculation.version === PAIR_VERSION
+																	? reviewReconstructedPair(input, calculation, candidate)
+																	: calculation.version === DATE_VERSION
+																		? reviewReconstructedDate(input, calculation, candidate)
+																		: calculation.version === 'atv-tarot-method-calculation/2.0.0'
+																			? reviewReconstructedTarot(input, calculation, candidate)
+																			: calculation.version === 'atv-private-natal-synthesis/4.0.0'
+																				? reviewReconstructedNatal(input, calculation, candidate)
+																				: reviewReconstructedCareer(input, calculation, candidate)
+		).length
+	)
+		return null;
 	if (
 		!legacy &&
 		(candidate.sections.length < 2 ||
@@ -108,7 +264,13 @@ export async function approveTrialReading(
 			!candidate.source.trim())
 	)
 		return null;
-	const policy = legacy ? TRIAL_POLICY_VERSION : previous ? POLICY_V2 : POLICY_VERSION;
+	const policy = legacy
+		? TRIAL_POLICY_VERSION
+		: previous
+			? POLICY_V2
+			: v3
+				? POLICY_V3
+				: RECONSTRUCTION_POLICY;
 	if (candidate.sections.some((s) => !s.text.trim() || s.factIds.some((id) => !ids.has(id))))
 		return null;
 	const covered = new Set(candidate.sections.flatMap((s) => s.factIds));

@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import { WORKFLOW_VERSION, type WorkflowInput } from '@atv/domain';
+	import { WORKFLOW_VERSION, tarotMethodFor, type WorkflowInput } from '@atv/domain';
 	import { trialResponse } from '$lib/trials/response';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import TrialBirthFields from '$lib/components/TrialBirthFields.svelte';
 	import BirthCityFields from '$lib/components/BirthCityFields.svelte';
 	import { resolvedCivilInstant } from '$lib/city-location';
+	import { atlasPriorities, atlasPriorityFor, validAtlasChoices } from '$lib/atlas-priorities';
 	let { data } = $props();
 	let ready = $state(false);
 	onMount(() => {
@@ -32,25 +33,15 @@
 		storage = $state(false),
 		partnerConsent = $state(false),
 		historyConsent = $state(false);
+	let dossierQuestions = $state(['', '', '']);
 	let targetDate = $state(new Date().toISOString().slice(0, 10)),
 		month = $state(new Date().toISOString().slice(0, 7));
 	let returnYear = $state(new Date().getFullYear());
-	let questions = $state(['', '', '']),
+	const tarotMethod = $derived(tarotMethodFor(data.product.id));
+	let focus = $state(''),
 		goal = $state(''),
 		startDate = $state(new Date().toISOString().slice(0, 10));
-	let priorities = $state(['Autocuidado', 'Vínculos', 'Trabalho', 'Aprendizado']);
-	const priorityOptions = [
-		'Autocuidado',
-		'Vínculos',
-		'Trabalho',
-		'Aprendizado',
-		'Família',
-		'Criatividade',
-		'Organização financeira',
-		'Vida cotidiana',
-		'Propósito',
-		'Descanso'
-	];
+	let priorities = $state(['', '', '', '']);
 	let narrative = $state(''),
 		emotions = $state(''),
 		associations = $state(''),
@@ -85,7 +76,9 @@
 		birth = prefill(old.birth, old.presentation?.name, old.presentation?.city);
 		partner = prefill(old.partner, old.presentation?.partnerName, old.presentation?.partnerCity);
 		context = old.context ?? '';
-		if (old.atlas) priorities = [...old.atlas.priorities];
+		dossierQuestions = [...(old.questions ?? []), '', '', ''].slice(0, 3);
+		if (old.atlas)
+			priorities = old.atlas.priorities.map((label) => atlasPriorityFor(label)?.label ?? '');
 		if (old.targetDate) {
 			targetDate = old.targetDate;
 			month = old.targetDate.slice(0, 7);
@@ -100,7 +93,7 @@
 				longitude: String(old.returnLocation.longitude),
 				source: old.returnLocation.locationSource
 			};
-		if (old.questions) questions = [...old.questions, '', ''].slice(0, 3);
+		focus = old.focus ?? '';
 		if (old.journey) {
 			goal = old.journey.goal;
 			startDate = old.journey.startDate;
@@ -192,19 +185,12 @@
 			if (data.product.id === 'direction-journey') input.journey = { goal, startDate };
 			if (data.product.id === 'tarot-journey') input.tarotJourney = { goal };
 			if (data.product.id === 'life-atlas') {
-				if (new Set(priorities).size !== 4) throw Error('Escolha quatro prioridades diferentes.');
+				if (!validAtlasChoices(priorities))
+					throw Error('Escolha quatro áreas distintas entre as opções do Atlas.');
 				input.atlas = { priorities: priorities as [string, string, string, string] };
 			}
 			if (data.product.id === 'dream-atlas') input.dreamAtlas = { startDate };
-			if (data.product.kind === 'tarot')
-				input.questions =
-					data.product.id === 'three-questions'
-						? questions
-						: data.product.id === 'daily-card'
-							? ['O que posso observar hoje?']
-							: data.product.id === 'tarot-journey'
-								? [goal]
-								: [questions[0]];
+			if (tarotMethod && focus.trim()) input.focus = focus.trim();
 			if (data.product.kind === 'dream' && data.product.id !== 'dream-atlas')
 				input.dream = {
 					date: targetDate,
@@ -219,6 +205,8 @@
 						.filter(Boolean)
 				};
 			if (context.trim()) input.context = context.trim();
+			if (data.product.id === 'couple-dossier')
+				input.questions = dossierQuestions.map((q) => q.trim()).filter(Boolean);
 			const payload = JSON.stringify({ input, sourceIds });
 			if (payload !== lastPayload) {
 				requestKey = crypto.randomUUID();
@@ -282,7 +270,7 @@
 						>Ano da revolução solar<input
 							type="number"
 							min="1901"
-							max="2099"
+							max="2098"
 							required
 							bind:value={returnYear}
 						/></label
@@ -321,29 +309,40 @@
 				>{/if}
 			{#if data.product.id === 'life-atlas'}
 				<fieldset>
-					<legend>Suas quatro prioridades, em ordem</legend>
-					<p>Escolha temas distintos. Essa ordem é sua, e pode ser revista.</p>
+					<legend>Quatro prioridades para este pedido</legend>
+					<p>
+						Escolha quatro áreas distintas. A ordem orienta os capítulos, a seleção de fatores do
+						mapa e o percurso de trinta dias. Estas prioridades são escolhas suas.
+					</p>
 					{#each [0, 1, 2, 3] as i (i)}<label
 							>Prioridade {i + 1}<select required bind:value={priorities[i]}>
-								{#each priorityOptions as option (option)}<option
-										value={option}
-										disabled={priorities.some((v, index) => index !== i && v === option)}
-										>{option}</option
+								<option value="">Escolha uma área</option>
+								{#each atlasPriorities as option (option.id)}<option
+										value={option.label}
+										disabled={priorities.some((v, index) => index !== i && v === option.label)}
+										>{option.label}</option
 									>{/each}
 							</select></label
 						>{/each}
 				</fieldset>
 			{/if}
-			{#if data.product.kind === 'tarot' && !['daily-card', 'tarot-journey'].includes(data.product.id)}
-				{#each data.product.id === 'three-questions' ? [0, 1, 2] : [0] as i (i)}<label
-						>Pergunta {data.product.id === 'three-questions' ? i + 1 : ''}<textarea
-							maxlength="400"
-							required
-							bind:value={questions[i]}></textarea></label
-					>{/each}
-				{#if data.product.id === 'tarot-yes-no'}<p>
-						A leitura ajuda a examinar condições e escolhas; ela não entrega uma ordem binária.
-					</p>{/if}
+			{#if tarotMethod}
+				<p>
+					{tarotMethod.description} São {tarotMethod.positions.length}
+					{tarotMethod.positions.length === 1
+						? 'carta, com uma posição definida'
+						: 'cartas, cada uma com uma função definida'}.
+				</p>
+				<label
+					>Foco da consulta (opcional)<textarea
+						maxlength="400"
+						bind:value={focus}
+						aria-describedby="tarot-focus-help"></textarea></label
+				>
+				<p id="tarot-focus-help">
+					Você pode indicar uma situação ou assunto. Se deixar em branco, receberá a leitura
+					completa conforme as posições deste método.
+				</p>
 			{/if}
 			{#if data.product.kind === 'dream' && data.product.id !== 'dream-atlas'}
 				<label
@@ -402,11 +401,30 @@
 				</aside>
 			{/if}
 			<label
-				>Contexto que deseja trazer (opcional)<textarea
+				>Contexto que deseja trazer {data.product.id === 'couple-dossier'
+					? '(necessário para o Dossiê)'
+					: '(opcional)'}<textarea
+					required={data.product.id === 'couple-dossier'}
 					maxlength="1200"
 					rows="3"
 					bind:value={context}></textarea></label
 			>
+			{#if data.product.id === 'couple-dossier'}
+				<fieldset>
+					<legend>Perguntas para esta leitura</legend>
+					<p>
+						Traga de uma a três perguntas sobre a situação relatada. A leitura propõe caminhos para
+						conversar e agir; não revela sentimentos ocultos nem decide pela outra pessoa.
+					</p>
+					{#each [0, 1, 2] as i (i)}<label
+							>Pergunta {i + 1}{i === 0 ? ' (necessária)' : ' (opcional)'}<textarea
+								rows="2"
+								maxlength="400"
+								required={i === 0}
+								bind:value={dossierQuestions[i]}></textarea></label
+						>{/each}
+				</fieldset>
+			{/if}
 			<p>
 				Conteúdo original gerado com IA e revisado editorialmente, combinado com os fatos desta
 				leitura. Seus dados ficam na biblioteca privada; esta geração não envia seu relato a um

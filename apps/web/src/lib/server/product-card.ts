@@ -1,5 +1,5 @@
 import fontkit, { type Font } from '@pdf-lib/fontkit';
-import { productCatalog } from '@atv/domain';
+import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun } from '../product-run';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
@@ -26,7 +26,7 @@ class CardUnavailable extends Error {}
 /** One complete approved section with its bases and all limitations. No extractive summary or new interpretation. */
 export function renderProductCard(value: unknown, sectionIndex: number) {
 	const run = parseProductRun(value);
-	const product = productCatalog.find((p) => p.id === run?.productId);
+	const product = productDefinitionFor(run?.productId ?? '');
 	if (
 		!run?.released ||
 		!run.editorial ||

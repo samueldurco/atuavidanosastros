@@ -1,4 +1,5 @@
-import { productCatalog, type UniverseSlug } from './catalog.ts';
+import { productCatalog, retiredTarotProducts, type UniverseSlug } from './catalog.ts';
+import { tarotMethodFor } from './tarot-methods.ts';
 
 export const WORKFLOW_VERSION = 'atv-workflow/1.0.0';
 export type WorkflowKind = 'natal' | 'cycles' | 'relationship' | 'tarot' | 'purpose' | 'dream';
@@ -11,7 +12,10 @@ export const workflows = productCatalog.filter((p) => p.universe !== 'global').m
   // All are release-gated; catalog preparation does not authorize processing or sale.
   release: 'blocked' as const
 }));
-export const workflowFor = (id: string) => workflows.find((p) => p.id === id);
+// Historical records keep their schema after a product leaves the public catalog.
+// This registry does not authorize a new request; release gates remain authoritative.
+const archivedWorkflows = retiredTarotProducts.map((p) => ({ ...p, kind: 'tarot' as const, version: WORKFLOW_VERSION, release: 'blocked' as const }));
+export const workflowFor = (id: string) => workflows.find((p) => p.id === id) ?? archivedWorkflows.find((p) => p.id === id);
 
 export interface BirthInput {
   localDateTime: string; utcInstant: string; timezone: string;
@@ -46,6 +50,7 @@ export interface WorkflowInput {
   dreamAtlas?: { startDate: string };
   context?: string;
   questions?: string[];
+  focus?: string;
   dream?: { date: string; narrative: string; associations: string[]; emotions: string[] };
 }
 const object = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeof v === 'object' && !Array.isArray(v);
@@ -108,7 +113,7 @@ function calendarMarks(v: unknown, targetDate: unknown): v is CalendarMarksInput
 /** Structural contract. Engine adapters MUST additionally validate calendar/timezone correspondence. */
 export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (!object(v) || v.version !== WORKFLOW_VERSION || typeof v.productId !== 'string') return null;
-  const product = workflowFor(v.productId);
+  const product = workflowFor(v.productId) ?? retiredTarotProducts.map((p) => ({ ...p, kind: 'tarot' as const })).find((p) => p.id === v.productId);
   if (!product || !object(v.consent) || !keysOnly(v.consent, ['storage', 'policyVersion', 'partner', 'continuity']) ||
       v.consent.storage !== true || v.consent.policyVersion !== 'atv-input-consent/1' ||
       typeof v.consent.partner !== 'boolean' || typeof v.consent.continuity !== 'boolean') return null;
@@ -127,8 +132,9 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.id === 'life-atlas') fields.push('atlas');
   if (product.id === 'dream-atlas') fields.push('dreamAtlas');
   if (product.kind === 'relationship') fields.push('partner');
+  if (product.id === 'couple-dossier') fields.push('questions');
   if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
-  if (product.kind === 'tarot') fields.push('questions');
+  if (product.kind === 'tarot') fields.push(tarotMethodFor(product.id) ? 'focus' : 'questions');
   if (product.kind === 'dream' && product.id !== 'dream-atlas') fields.push('dream');
   if (!keysOnly(v, fields) || (v.context !== undefined && !text(v.context, 1200))) return null;
   if (fields.includes('birth') && !birth(v.birth)) return null;
@@ -147,15 +153,21 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
        Object.keys(v.dreamAtlas).length !== 1 || !validDate(v.dreamAtlas.startDate) ||
        v.dreamAtlas.startDate > '2099-12-02' || v.consent.continuity)) return null;
   if (product.kind === 'relationship' && (!birth(v.partner) || !v.consent.partner)) return null;
+  // Historical dossiers may omit these; new private editions require them in their projection.
+  if (product.id === 'couple-dossier' && v.questions !== undefined &&
+      (!strings(v.questions, 3, 400) || v.questions.length < 1 ||
+       v.questions.some((q) => /[\u007f-\u009f]/.test(q)) ||
+       new Set(v.questions.map((q) => q.trim().normalize('NFKC').toLocaleLowerCase('pt-BR'))).size !== v.questions.length)) return null;
   if (product.kind !== 'relationship' && v.consent.partner) return null;
   if (product.kind === 'cycles' && (!validDate(v.targetDate) ||
-      (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2099 ||
+      (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2098 ||
         !returnLocation(v.returnLocation) || String(v.targetDate).slice(0, 4) !== String(v.returnYear))))) return null;
   // A calendar request names one complete civil month, never an implicit rolling interval.
   if (product.id === 'personal-calendar' && String(v.targetDate).slice(8) !== '01') return null;
   if (product.id === 'solar-return' && v.importantDates !== undefined && !importantDates(v.importantDates, v.targetDate)) return null;
   if (product.id === 'personal-calendar' && v.calendarMarks !== undefined && !calendarMarks(v.calendarMarks, v.targetDate)) return null;
-  if (product.kind === 'tarot' && (!strings(v.questions, 3, 400) ||
+  if (tarotMethodFor(product.id) && v.focus !== undefined && (!text(v.focus, 400) || /[\u007f-\u009f]/.test(v.focus))) return null;
+  if (product.kind === 'tarot' && !tarotMethodFor(product.id) && (!strings(v.questions, 3, 400) ||
       v.questions.length !== (product.id === 'three-questions' ? 3 : 1))) return null;
   if (product.kind === 'dream' && product.id !== 'dream-atlas' &&
       (!object(v.dream) || !keysOnly(v.dream, ['date', 'narrative', 'associations', 'emotions']) ||

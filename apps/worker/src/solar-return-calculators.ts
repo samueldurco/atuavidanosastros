@@ -276,6 +276,8 @@ export function createSolarReturnCalculators(
         residualDegrees: residual,
         positions: structuredClone(chart.positions),
         houses: structuredClone(chart.houses),
+        natalInput: structuredClone(natal.input),
+        returnInput: structuredClone(chart.input),
         natalProvenance: structuredClone(natal.provenance),
         returnProvenance: structuredClone(chart.provenance),
         calendarScaffold: buildSolarReturnCalendar(

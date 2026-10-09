@@ -33,7 +33,7 @@ export function createProductPublisher(rpc: PublicationRpc, options: {
 } = {}) {
   const selected = options.enabledProducts ?? [];
   const known = new Set(workflows.map(w => w.id));
-  if (!Array.isArray(selected) || selected.length > 25 || new Set(selected).size !== selected.length
+  if (!Array.isArray(selected) || selected.length > known.size || new Set(selected).size !== selected.length
     || selected.some(p => !known.has(p))) throw new Error('invalid_product_configuration');
   const products = Object.freeze([...selected]);
   const timeoutMs = options.timeoutMs ?? 20_000;

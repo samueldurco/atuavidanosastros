@@ -121,7 +121,7 @@ test("experimental synastry has seven explicit scenarios without production regi
   assert.equal(corpus.promotionEligible, false);
   assert.equal(corpus.editorialReview, "not-reviewed");
   assert.ok(corpus.unavailableProducts.includes("synastry"));
-  assert.equal(corpus.unavailableProducts.length, 12);
+  assert.equal(corpus.unavailableProducts.length, 17);
   assert.equal(createProductCalculators().synastry, undefined);
   assert.equal(corpusProducts.includes("synastry"), false);
   assert.equal(

@@ -1,6 +1,6 @@
 import { PDFDocument, rgb, type PDFFont } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
-import { productCatalog } from '@atv/domain';
+import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
 import { weekTemporalFacts } from '../week-temporal-facts';
@@ -21,7 +21,7 @@ class PdfUnavailable extends Error {}
 /** Only the current authorized projection belongs here. No HTML, URL, raw input or provider access. */
 export async function renderProductPdf(value: unknown) {
 	const run = parseProductRun(value);
-	const product = productCatalog.find((entry) => entry.id === run?.productId);
+	const product = productDefinitionFor(run?.productId ?? '');
 	if (!run?.released || !run.editorial || !run.calculation || !product?.delivery.includes('pdf'))
 		return null;
 	const { editorial, calculation } = run;

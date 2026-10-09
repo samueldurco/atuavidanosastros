@@ -255,7 +255,7 @@ test('invalid partner UTC is a durable failure with no single-person fallback',a
   assert.equal((await db.query('select error_code from product_runs where id=$1',[id])).rows[0].error_code,'input_invalid');
 });
 
-test('composed runtime crosses all six universes through SQL and stops every product at editorial review',async(t)=>{
+test('commercial runtime crosses its five active universes through SQL and stops every product at editorial review',async(t)=>{
   const db=await boot(t),metrics=[];
   const coverage=productCalculationCoverage().filter(p=>p.calculation==='partial-base');
   const runtime=createProductProcessor(transport(db),{enabledProducts:coverage.map(p=>p.productId),emit:e=>metrics.push(e)});
@@ -282,7 +282,13 @@ test('composed runtime crosses all six universes through SQL and stops every pro
     assert.equal(await read(db,id,other),null);universes.add(product.universe);
     assert.equal(await runtime.step(),'idle');
   }
-  assert.equal(universes.size,6);assert.equal(coverage.length,13);
+  // Six new Tarot methods use the durable private-trial draw path, not this
+  // historical commercial processor. Retired methods cannot be enabled here.
+  assert.equal(universes.size,5);
+  assert.deepEqual(coverage.map(p=>p.productId).sort(),[
+    'birth-chart','three-pillars','ascendant','date-reading','pair-preview',
+    'midheaven','career-compass','dream-reading','dream-journal'
+  ].sort());
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
   assert.ok(metrics.every(e=>Object.keys(e).sort().join(',')==='attempt,durationMs,event,outcome'));
   assert.ok(!JSON.stringify(metrics).includes(owner));assert.ok(!JSON.stringify(metrics).includes('sintético'));

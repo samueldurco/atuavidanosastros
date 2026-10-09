@@ -1,17 +1,27 @@
 <script lang="ts">
 	import { visualProduct } from '$lib/data/visual-v3';
-	import { untrack } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import type { SavedTrial } from '$lib/trials/reading';
 	import type { ReaderState } from '$lib/trials/reader-state';
 	import { experienceFor } from '$lib/trials/experience';
 	import { trialResponse } from '$lib/trials/response';
+	import { PAIR_VERSION } from '$lib/trials/reconstruction/pair-facts';
 	import ReadingPairCharts from './ReadingPairCharts.svelte';
+	import ReadingChart from './ReadingChart.svelte';
+	import ReadingTarot from './ReadingTarot.svelte';
+	import ReadingCalendar from './ReadingCalendar.svelte';
+	import { tarotMethodFor } from '@atv/domain';
 	let { saved, initial }: { saved: SavedTrial; initial: ReaderState } = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
 	let status = $state(''),
 		saving = $state(false);
+	let interactive = $state(false);
+	onMount(() => {
+		interactive = true;
+	});
 	const sections = $derived(saved.reading.sections);
+	const tarotMethod = $derived(tarotMethodFor(saved.product_id));
 	const chapters = $derived(
 		sections
 			.map((s, i) => ({ ...s, index: i }))
@@ -20,19 +30,51 @@
 	const current = $derived(chapters.find((s) => s.index === chapter) ?? chapters[0]);
 	const currentIndex = $derived(chapters.findIndex((s) => s.index === current.index));
 	const contract = $derived(experienceFor(saved.product_id));
-	const references = $derived(sections.find((s) => s.title === 'Referências desta leitura'));
-	const hasChart = $derived(['birth-chart', 'life-atlas', 'ascendant'].includes(saved.product_id));
-	const factors = $derived(
-		saved.calculation.facts.filter((f) =>
-			[
-				'position-sun',
-				'position-moon',
-				'angle-ascendant',
-				'position-mercury',
-				'angle-midheaven'
-			].includes(f.id)
-		)
+	const minutes = $derived(
+		[
+			'atv-private-ascendant/5.0.0',
+			'atv-private-midheaven/5.0.0',
+			'atv-private-three-pillars/5.0.0',
+			'atv-private-birth-chart/5.0.0',
+			'atv-private-career-compass/5.0.0',
+			'atv-private-life-atlas/4.0.0',
+			'atv-private-direction-journey/4.0.0',
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-purpose-synthesis/4.0.0'
+		].includes(saved.calculation.version)
+			? Math.max(
+					1,
+					Math.ceil(
+						sections
+							.map((s) => s.text)
+							.join(' ')
+							.split(/\s+/).length / 200
+					)
+				)
+			: contract.minutes
 	);
+	const references = $derived(sections.find((s) => s.title === 'Referências desta leitura'));
+	const hasChart = $derived(
+		[
+			'three-pillars',
+			'birth-chart',
+			'life-atlas',
+			'ascendant',
+			'career-compass',
+			'purpose-career',
+			'midheaven',
+			'date-reading',
+			'horoscope',
+			'week-reading',
+			'solar-return',
+			'personal-calendar'
+		].includes(saved.product_id) ||
+			[
+				'atv-private-synastry-synthesis/4.0.0',
+				'atv-private-couple-dossier-synthesis/4.0.0'
+			].includes(saved.calculation.version)
+	);
+
 	let pending: ReaderState | null = null;
 	async function persist(next: number, marked: number[]) {
 		chapter = next;
@@ -73,44 +115,6 @@
 				: [...bookmarks, current.index]
 		);
 	}
-	async function downloadPng() {
-		status = 'Preparando imagem…';
-		let source = '',
-			output = '';
-		try {
-			const response = await fetch(`/api/private-trials/${saved.id}/download?format=svg`);
-			if (!response.ok) throw Error('Não foi possível recuperar a cartografia. Tente novamente.');
-			source = URL.createObjectURL(await response.blob());
-			const image = new Image();
-			image.src = source;
-			await image.decode();
-			const canvas = document.createElement('canvas');
-			canvas.width = 3000;
-			canvas.height = 4230;
-			const ctx = canvas.getContext('2d');
-			if (!ctx) throw Error('Este navegador não conseguiu preparar a imagem.');
-			ctx.fillStyle = '#f7f2e7';
-			ctx.fillRect(0, 0, 3000, 4230);
-			ctx.drawImage(image, 0, 0, 3000, 4230);
-			const blob = await new Promise<Blob>((resolve, reject) =>
-				canvas.toBlob(
-					(b) => (b ? resolve(b) : reject(Error('Não foi possível exportar a imagem.'))),
-					'image/png'
-				)
-			);
-			output = URL.createObjectURL(blob);
-			const link = document.createElement('a');
-			link.href = output;
-			link.download = `${saved.product_id}-${saved.id}.png`;
-			link.click();
-			status = 'Imagem pronta. Confira os downloads do navegador.';
-		} catch (e) {
-			status = e instanceof Error ? e.message : 'Não foi possível gerar a imagem.';
-		} finally {
-			if (source) URL.revokeObjectURL(source);
-			if (output) setTimeout(() => URL.revokeObjectURL(output), 1000);
-		}
-	}
 </script>
 
 <section class="experience" aria-label="Percorra sua leitura">
@@ -138,47 +142,75 @@
 				</p>{/if}
 		</div>
 	{/if}
-	{#if ['synastry', 'pair-preview', 'couple-dossier'].includes(saved.product_id)}<ReadingPairCharts
+	{#if ['synastry', 'couple-dossier'].includes(saved.product_id) || (saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)}<ReadingPairCharts
 			{saved}
 		/>{/if}
 	{#if saved.product_id === 'three-pillars'}
-		<div class="pillars" aria-label="Três funções do seu mapa">
+		<div class="pillars" role="group" aria-label="Três funções do seu mapa">
 			{#each [['position-sun', 'Sol · expressão'], ['position-moon', 'Lua · necessidades'], ['angle-ascendant', 'Ascendente · primeiro movimento']] as [id, label] (id)}
 				{@const fact = saved.calculation.facts.find((f) => f.id === id)}
-				{@const target = chapters.find((s) => s.factIds.length === 1 && s.factIds[0] === id)}
-				{#if fact && target}<button onclick={() => open(target.index)}
+				{@const preferredRole =
+					id === 'position-sun'
+						? 'integrated-trio'
+						: id === 'position-moon'
+							? 'trio-rhythm'
+							: 'asc-ruler'}
+				{@const target =
+					chapters.find((s) => saved.reading.editorial?.plan[s.index]?.role === preferredRole) ??
+					chapters.find((s) => s.factIds.includes(id))}
+				{#if fact && target}<button disabled={!interactive} onclick={() => open(target.index)}
 						><strong>{label}</strong><span>{fact.display}</span></button
 					>{/if}
 			{/each}
 		</div>
 	{/if}
+	{#if saved.calculation.version === 'atv-private-week-synthesis/4.0.0'}
+		<nav class="week-timeline" aria-label="Linha do tempo da semana">
+			<p>Sete datas · destaques e continuidade em UTC</p>
+			<div>
+				{#each saved.reading.editorial?.plan.filter( (p) => p.role.startsWith('week-day-') ) ?? [] as day (day.role)}
+					{@const index = sections.findIndex((s) => s.title === day.title)}
+					<button
+						disabled={!interactive}
+						aria-current={current.index === index ? 'date' : undefined}
+						onclick={() => open(index)}>{day.title}</button
+					>
+				{/each}
+			</div>
+		</nav>
+	{/if}
 	<div class="reading-meta">
-		<span>{contract.minutes} min de leitura · {chapters.length} capítulos</span><span
+		<span>{minutes} min de leitura · {chapters.length} capítulos</span><span
 			>Capítulo {currentIndex + 1} de {chapters.length}</span
 		>
 	</div>
 	<progress value={currentIndex + 1} max={chapters.length} aria-label="Posição na leitura"
 	></progress>
+	{#if saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0'}
+		<ReadingCalendar {saved} chapter={current.index} {interactive} onopen={open} />
+	{/if}
 	{#if hasChart}
 		<details class="map">
-			<summary>Seu mapa e cinco referências para explorar</summary>
-			<img
-				src={`/api/private-trials/${saved.id}/download?format=svg`}
-				alt="Cartografia dos fatores calculados desta leitura"
-				width="1000"
-				height="1410"
-				loading="lazy"
+			<summary>Explore seu mapa e os capítulos relacionados</summary>
+			<ReadingChart
+				{saved}
+				onselect={(id) => {
+					const target = chapters.find((s) => s.factIds.includes(id));
+					if (target) open(target.index);
+				}}
 			/>
-			<div class="factors">
-				{#each factors as fact (fact.id)}
-					{@const target =
-						chapters.find((s) => s.factIds.length === 1 && s.factIds[0] === fact.id) ??
-						chapters.find((s) => s.factIds.includes(fact.id))}
-					{#if target}<button onclick={() => open(target.index)}>{fact.display}</button>{/if}
-				{/each}
-			</div>
-			<button onclick={downloadPng}>Baixar imagem PNG em alta resolução</button>
 		</details>
+	{/if}
+	{#if tarotMethod}
+		<ReadingTarot
+			{saved}
+			{interactive}
+			onselect={(id) => {
+				const number = id.match(/^card-(\d+)$/)?.[1];
+				const target = chapters.find((s) => number && s.title.startsWith(`${number}. `));
+				if (target) open(target.index);
+			}}
+		/>
 	{/if}
 	<div class="reader-grid">
 		<nav aria-label="Capítulos da leitura">
@@ -187,6 +219,7 @@
 				<ol>
 					{#each chapters as item (item.index)}<li>
 							<button
+								disabled={!interactive}
 								aria-current={item.index === current.index ? 'step' : undefined}
 								onclick={() => open(item.index)}
 								>{bookmarks.includes(item.index) ? '★ ' : ''}{item.title}</button
@@ -225,6 +258,34 @@
 </section>
 
 <style>
+	.week-timeline {
+		padding: 1rem;
+		border: 1px solid #ad884c;
+		border-radius: 1rem;
+		margin: 1rem 0;
+	}
+	.week-timeline p {
+		font-weight: 600;
+		margin: 0 0 0.75rem;
+	}
+	.week-timeline div {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+	.week-timeline button {
+		flex: 1 1 160px;
+		text-align: left;
+		border: 1px solid #ad884c;
+		border-radius: 0.5rem;
+		padding: 0.75rem;
+		background: #faf6ed;
+		color: #24374b;
+	}
+	.week-timeline button[aria-current] {
+		background: #24374b;
+		color: #faf6ed;
+	}
 	.identity {
 		border-left: 3px solid #ad884c;
 		padding: 0.25rem 1rem;
@@ -278,6 +339,7 @@
 	}
 	.reader-grid {
 		display: grid;
+		align-items: start;
 		grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
 		gap: 2rem;
 	}
@@ -367,22 +429,6 @@
 		padding: 1rem 1.25rem;
 		margin: 1.5rem 0;
 		background: #f7f2e7;
-	}
-	.map img {
-		display: block;
-		max-width: 520px;
-		width: 100%;
-		height: auto;
-		margin: 1rem auto;
-	}
-	.factors {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-		margin-bottom: 1rem;
-	}
-	.factors button {
-		font-size: 0.85rem;
 	}
 	.references .prose {
 		font-size: 0.85rem;

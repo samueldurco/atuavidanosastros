@@ -1,3 +1,5 @@
+import { tarotMethods } from './tarot-methods.ts';
+
 export const universes = [
   "meu-ceu",
   "ciclos-tempo",
@@ -30,6 +32,55 @@ export interface PriceVersion {
   validUntil?: string;
   status: "DRAFT" | "ACTIVE" | "RETIRED";
 }
+
+/** Internal historical definitions, excluded from every visible catalog. */
+export const retiredTarotProducts: readonly ProductDefinition[] = [
+  {
+    id: "daily-card",
+    slug: "carta-do-dia",
+    name: "Carta do Dia",
+    universe: "tarot-arcanos",
+    state: "PREPARING",
+    delivery: ["web"],
+    personalized: true,
+  },
+  {
+    id: "tarot-yes-no",
+    slug: "sim-nao-responsavel",
+    name: "Tarot Sim ou Não",
+    universe: "tarot-arcanos",
+    state: "PREPARING",
+    delivery: ["web"],
+    personalized: true,
+  },
+  {
+    id: "three-questions",
+    slug: "tres-perguntas",
+    name: "Três Perguntas",
+    universe: "tarot-arcanos",
+    state: "PREPARING",
+    delivery: ["web"],
+    personalized: true,
+  },
+  {
+    id: "tarot-journey",
+    slug: "jornada-tarot",
+    name: "Jornada de Tarot",
+    universe: "tarot-arcanos",
+    state: "PREPARING",
+    delivery: ["web"],
+    personalized: true,
+  },
+  {
+    id: "tarot-focus",
+    slug: "foco-agora",
+    name: "Foco Agora",
+    universe: "tarot-arcanos",
+    state: "PREPARING",
+    delivery: ["web"],
+    personalized: true,
+  },
+];
 
 export const productCatalog: readonly ProductDefinition[] = [
   {
@@ -140,51 +191,11 @@ export const productCatalog: readonly ProductDefinition[] = [
     delivery: ["web", "pdf"],
     personalized: true,
   },
-  {
-    id: "daily-card",
-    slug: "carta-do-dia",
-    name: "Carta do Dia",
-    universe: "tarot-arcanos",
-    state: "PREPARING",
-    delivery: ["web"],
-    personalized: true,
-  },
-  {
-    id: "tarot-yes-no",
-    slug: "sim-nao-responsavel",
-    name: "Tarot Sim ou Não",
-    universe: "tarot-arcanos",
-    state: "PREPARING",
-    delivery: ["web"],
-    personalized: true,
-  },
-  {
-    id: "three-questions",
-    slug: "tres-perguntas",
-    name: "Três Perguntas",
-    universe: "tarot-arcanos",
-    state: "PREPARING",
-    delivery: ["web"],
-    personalized: true,
-  },
-  {
-    id: "tarot-journey",
-    slug: "jornada-tarot",
-    name: "Jornada de Tarot",
-    universe: "tarot-arcanos",
-    state: "PREPARING",
-    delivery: ["web"],
-    personalized: true,
-  },
-  {
-    id: "tarot-focus",
-    slug: "foco-agora",
-    name: "Foco Agora",
-    universe: "tarot-arcanos",
-    state: "PREPARING",
-    delivery: ["web"],
-    personalized: true,
-  },
+  ...tarotMethods.map((method): ProductDefinition => ({
+    id: method.id, slug: method.slug, name: method.name,
+    universe: 'tarot-arcanos', state: 'PREPARING',
+    delivery: ['web', 'pdf'], personalized: true
+  })),
   {
     id: "purpose-career",
     slug: "mapa-proposito-carreira",
@@ -267,3 +278,9 @@ export const productCatalog: readonly ProductDefinition[] = [
     personalized: false,
   },
 ] as const;
+
+/** Decode immutable historical deliveries without publishing or authorizing them. */
+export function productDefinitionFor(id: string): ProductDefinition | undefined {
+  return productCatalog.find((product) => product.id === id)
+    ?? retiredTarotProducts.find((product) => product.id === id);
+}

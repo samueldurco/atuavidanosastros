@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import { setupProductDatabase as setup, owner, other, file } from './helpers/product-database.mjs';
 import { workflows } from '../packages/domain/src/workflows.ts';
+import { retiredTarotProducts } from '../packages/domain/src/catalog.ts';
 
 // Real PostgreSQL in WASM, isolated synthetic users. Supabase auth/storage are minimal stubs;
 // this does NOT certify hosted PostgREST, JWT verification, Storage or connection concurrency.
@@ -20,9 +21,12 @@ const editorial={version:'fixture/1',promotionId:'synthetic-only',reviewDigest:'
 
 test('PostgreSQL workflow persistence, authorization, gates and recovery',async(t)=>{
   const db=await setup(); t.after(()=>db.close());
-  await t.test('catalog is complete, disabled, and unpromoted',async()=>{
+  await t.test('historical migration catalog is complete, disabled, and unpromoted',async()=>{
     const definitions=(await db.query('select product_id,enabled,engine_approved from workflow_releases')).rows;
-    assert.deepEqual(definitions.map(p=>p.product_id).sort(),workflows.map(p=>p.id).sort());
+    // This fixture stops at the September migrations. The October retirement/addition
+    // is exercised separately in private-tarot-methods-db.test.mjs.
+    const historical=[...workflows.filter(p=>p.kind!=='tarot'),...retiredTarotProducts];
+    assert.deepEqual(definitions.map(p=>p.product_id).sort(),historical.map(p=>p.id).sort());
     assert.ok(definitions.every(p=>!p.enabled&&!p.engine_approved));
     assert.equal((await db.query('select * from editorial_promotions')).rows.length,0);
     await assert.rejects(()=>as(db,'authenticated',owner,()=>request(db)),/workflow_unreleased/);

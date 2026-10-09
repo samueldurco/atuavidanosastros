@@ -3,7 +3,16 @@ import fontkit from '@pdf-lib/fontkit';
 import type { SavedTrial } from './reading';
 import { trialText } from './exports';
 import { experienceFor } from './experience';
-import { trialGeometry, bodyNames, bodyGlyphs, signNames, nominalDegree } from './cartography';
+import { buildChartScene } from './chart-engine-v2';
+import { drawChartScenePdf } from './chart-pdf';
+import { tarotMethodFor } from '@atv/domain';
+import { buildTarotScene } from './tarot-diagram';
+import { PAIR_VERSION } from './reconstruction/pair-facts';
+import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
+import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
+import { WEEK_VERSION } from './reconstruction/week-facts';
+import { SOLAR_VERSION } from './reconstruction/solar-facts';
+import { CALENDAR_VERSION, type CalendarData } from './reconstruction/calendar-facts';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -22,7 +31,8 @@ export async function trialPdf(saved: SavedTrial) {
 	const theme = coverArt.products[saved.product_id as keyof typeof coverArt.products] ?? 'B01';
 	const engraving = await doc.embedPng(coverArt.themes[theme as keyof typeof coverArt.themes]);
 	const format = experienceFor(saved.product_id).format;
-	const book = format === 'book';
+	const calendar = saved.calculation.version === CALENDAR_VERSION;
+	const book = format === 'book' || calendar;
 	const chapters = r.sections.filter((s) => s.title !== 'Referências desta leitura');
 	doc.setTitle(r.title);
 	doc.setAuthor('A Tua Vida nos Astros');
@@ -162,125 +172,115 @@ export async function trialPdf(saved: SavedTrial) {
 		10
 	);
 	if (book) newPage();
-	// Geometry is read from the saved calculation, never inferred from prose.
-	const chartPeople: ('first' | 'second' | undefined)[] = [
-		'synastry',
-		'pair-preview',
-		'couple-dossier'
-	].includes(saved.product_id)
-		? ['first', 'second']
-		: ['birth-chart', 'life-atlas', 'ascendant'].includes(saved.product_id)
-			? [undefined]
-			: [];
-	if (!book && chartPeople.length) newPage();
-	for (const person of chartPeople) {
-		const g = trialGeometry(saved, person),
-			cx = width / 2,
-			cy = height - 300,
-			scale = 0.68;
-		heading(
-			person
-				? `Fatores natais · ${person === 'first' ? (saved.input.presentation?.name ?? 'Pessoa A') : (saved.input.presentation?.partnerName ?? 'Pessoa B')}`
-				: 'Seu mapa em uma imagem',
-			23
+	if (calendar) {
+		const data = saved.calculation.data as unknown as CalendarData;
+		heading('Seu mês, data por data', 23);
+		paragraph(
+			'Dias e horários usam UTC. Os números indicam mudanças selecionadas. O ponto assinala um marco informado por você. Abra o capítulo da data para acompanhar a leitura.'
 		);
-		const point = (a: number, rad: number) => ({
-			x: cx - rad * scale * Math.cos((a * Math.PI) / 180),
-			y: cy - rad * scale * Math.sin((a * Math.PI) / 180)
-		});
-		const radial = (a: number, r1: number, r2: number, color = muted) =>
-			page.drawLine({ start: point(a, r1), end: point(a, r2), thickness: 0.5, color });
-		page.drawCircle({ x: cx, y: cy, size: 255 * scale, borderColor: ink, borderWidth: 1 });
-		for (let a = 0; a < 360; a += 5) radial(a, a % 30 === 0 ? 235 : 246, 255);
-		signNames.forEach((s, i) => {
-			const p = point(i * 30 + 15, 282);
-			const v = safe(s, label);
-			page.drawText(v, {
-				x: p.x - label.widthOfTextAtSize(v, 8) / 2,
-				y: p.y - 3,
+		const top = y - 20,
+			cell = available / 7,
+			offset = (new Date(data.days[0].startInstant).getUTCDay() + 6) % 7;
+		['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'].forEach((name, i) =>
+			page.drawText(name, {
+				x: margin + i * cell + 12,
+				y: top,
+				size: 10,
 				font: label,
-				size: 8,
+				color: muted
+			})
+		);
+		data.days.forEach((day, index) => {
+			const slot = offset + index,
+				x = margin + (slot % 7) * cell,
+				topY = top - 20 - Math.floor(slot / 7) * 72;
+			page.drawRectangle({
+				x,
+				y: topY - 65,
+				width: cell - 4,
+				height: 65,
+				color: rgb(0.995, 0.986, 0.96),
+				borderColor: gold,
+				borderWidth: 0.5
+			});
+			page.drawText(String(index + 1), {
+				x: x + 9,
+				y: topY - 20,
+				size: 16,
+				font: display,
 				color: ink
 			});
-		});
-		g.houses.cusps.forEach((a, i) => {
-			radial(a, 65, 235);
-			const next = g.houses.cusps[(i + 1) % 12],
-				p = point((a + ((next - a + 360) % 360) / 2) % 360, 155);
-			page.drawText(`${i + 1}`, { x: p.x - 3, y: p.y - 3, font: label, size: 7, color: muted });
-		});
-		g.aspects.forEach((a) => {
-			const first = g.positions.find((p) => p.body === a.first)!,
-				second = g.positions.find((p) => p.body === a.second)!;
-			page.drawLine({
-				start: point(first.longitude, 123),
-				end: point(second.longitude, 123),
-				thickness: 0.5,
-				color: ['square', 'opposition'].includes(a.kind)
-					? rgb(0.65, 0.36, 0.28)
-					: a.kind === 'conjunction'
-						? gold
-						: rgb(0.28, 0.43, 0.54),
-				opacity: 0.6
-			});
-		});
-		g.positions.forEach((p) => {
-			const radius = 216 - (g.tracks.get(p.body) ?? 0) * 26,
-				pos = point(p.longitude, radius);
-			radial(p.longitude, radius + 12, 235);
-			page.drawCircle({ x: pos.x, y: pos.y, size: 8.7, color: cream });
-			page.drawSvgPath(bodyGlyphs[p.body], {
-				x: pos.x,
-				y: pos.y,
-				scale: 0.65,
-				borderColor: ink,
-				borderWidth: 1.6
-			});
-		});
-		Object.entries(g.angles).forEach(([name, a]) => {
-			if (a === null) return;
-			radial(a, 55, 263, gold);
-			const p = point(a, 70);
-			page.drawRectangle({ x: p.x - 11, y: p.y + 3, width: 24, height: 12, color: cream });
-			page.drawText(name === 'ascendant' ? 'ASC' : 'MC', {
-				x: p.x - 8,
-				y: p.y + 6,
-				font: label,
+			const count = saved.reading.editorial!.selection.filter((s) =>
+				data.events.some((e) => e.id === s.factId && e.date === day.date)
+			).length;
+			page.drawText(`${count} ${count === 1 ? 'sinal' : 'sinais'}`, {
+				x: x + 6,
+				y: topY - 42,
 				size: 8,
-				color: gold
+				font: label,
+				color: muted
 			});
+			if (saved.input.calendarMarks?.entries.some((m) => m.date === day.date))
+				page.drawCircle({ x: x + cell - 15, y: topY - 14, size: 3, color: gold });
 		});
-		y = height - 525;
-		for (let i = 0; i < g.positions.length; i += 2) {
-			const left = g.positions[i],
-				right = g.positions[i + 1];
-			paragraph(
-				`${bodyNames[left.body]}: ${nominalDegree(left.longitude)}${right ? `     |     ${bodyNames[right.body]}: ${nominalDegree(right.longitude)}` : ''}`,
-				label,
-				9
-			);
-		}
-		if (g.angles.ascendant !== null)
-			paragraph(
-				`ASC: ${nominalDegree(g.angles.ascendant)}${g.angles.midheaven !== null ? ` · MC: ${nominalDegree(g.angles.midheaven)}` : ''}`,
-				label,
-				9
-			);
+		y = top - 20 - Math.ceil((offset + data.days.length) / 7) * 72 - 20;
 		paragraph(
-			person
-				? `Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Este recorte contém posições planetárias, sem casas ou ângulos. ${saved.product_id === 'pair-preview' ? 'Lua, Vênus e Marte são referências individuais; aspectos entre mapas não foram calculados.' : 'Os contatos entre as duas pessoas estão nos capítulos.'}`
-				: 'Zodíaco tropical; zero de Áries à esquerda; longitudes no sentido anti-horário. Glifos identificam os planetas; números identificam as casas disponíveis. Linhas azuis: sextil/trígono; terracota: quadratura/oposição; ouro: conjunção.',
+			'Zero sinais não descreve a qualidade do dia. Registre também experiências que contrariaram uma hipótese. As observações ocorrem a cada seis horas; picos não certificam o instante exato.',
 			label,
-			8
-		);
-		paragraph(
-			'A geometria reproduz o cálculo salvo, cuja precisão permanece experimental. Graus arredondados apenas na apresentação.',
-			label,
-			8
+			10
 		);
 		newPage();
 	}
+	// Geometry is read from the saved calculation, never inferred from prose.
+	const chartPeople: ('first' | 'second' | undefined)[] = [
+		SYNASTRY_VERSION,
+		DOSSIER_VERSION
+	].includes(saved.calculation.version)
+		? [undefined, 'first', 'second']
+		: saved.calculation.version === SOLAR_VERSION
+			? [undefined, 'second']
+			: ['synastry', 'couple-dossier'].includes(saved.product_id) ||
+				  (saved.product_id === 'pair-preview' && saved.calculation.version !== PAIR_VERSION)
+				? ['first', 'second']
+				: [
+							'three-pillars',
+							'birth-chart',
+							'life-atlas',
+							'ascendant',
+							'career-compass',
+							'purpose-career',
+							'midheaven',
+							'date-reading',
+							'week-reading',
+							'personal-calendar'
+					  ].includes(saved.product_id)
+					? [undefined]
+					: [];
+	if (!book && chartPeople.length) newPage();
+	for (const person of chartPeople) {
+		const scene = buildChartScene(saved, { person });
+		drawChartScenePdf(page, scene, label, margin, height - margin, width - margin * 2);
+		newPage();
+	}
 	const contents: { page: typeof page; y: number; index: number }[] = [];
+	if (tarotMethodFor(saved.product_id)) {
+		if (!book) newPage();
+		const scene = buildTarotScene(saved);
+		drawChartScenePdf(page, scene, label, margin, height - margin, available);
+		y = height - margin - (scene.height * available) / scene.width - 25;
+		paragraph(
+			scene.cards.length === 1
+				? 'A carta e sua função correspondem ao capítulo da posição. O diagrama preserva a tiragem salva.'
+				: 'A numeração corresponde aos capítulos das posições. A síntese relaciona as cartas; o diagrama preserva a tiragem salva.',
+			label,
+			11
+		);
+		if (scene.cards.length > 3) {
+			for (const card of scene.cards)
+				paragraph(`${card.position}. ${card.positionName}: ${card.name}`, label, 9.5, 0);
+		}
+		newPage();
+	}
 	if (book) {
 		heading('Índice da sua leitura', 23);
 		paragraph(
@@ -289,7 +289,14 @@ export async function trialPdf(saved: SavedTrial) {
 		chapters.forEach((s, index) => {
 			if (y < 105) newPage();
 			contents.push({ page, y, index });
-			paragraph(`${String(index + 1).padStart(2, '0')} · ${s.title}`, label, 10, 5);
+			paragraph(
+				tarotMethodFor(saved.product_id)
+					? s.title
+					: `${String(index + 1).padStart(2, '0')} · ${s.title}`,
+				label,
+				10,
+				5
+			);
 		});
 		newPage();
 	}
@@ -302,7 +309,10 @@ export async function trialPdf(saved: SavedTrial) {
 				(saved.product_id === 'career-compass' && s.title === 'Sua página de decisão'))
 		)
 			newPage();
-		heading(`${String(i + 1).padStart(2, '0')} · ${s.title}`);
+		const chapterTitle = tarotMethodFor(saved.product_id)
+			? s.title
+			: `${String(i + 1).padStart(2, '0')} · ${s.title}`;
+		heading(chapterTitle, 17, headingHeight(chapterTitle) + Math.min(paragraphHeight(s.text), 108));
 		chapterPages.push(doc.getPageCount());
 		paragraph(s.text);
 	}
@@ -329,19 +339,72 @@ export async function trialPdf(saved: SavedTrial) {
 	r.questions.forEach((q, i) => paragraph(`${i + 1}. ${q}`));
 	heading('Experimento prático', 17, 0);
 	paragraph(r.practice);
+	if ([PAIR_VERSION, SYNASTRY_VERSION, DOSSIER_VERSION].includes(saved.calculation.version)) {
+		const references = r.sections.find((s) => s.title === 'Referências desta leitura');
+		if (references) {
+			heading(references.title, 15);
+			paragraph(references.text, label, 9);
+		}
+	}
 	if (book) newPage();
-	heading(book ? 'Apêndice · método e limites' : 'Método e limites', book ? 23 : 15);
+	const reconstructed = r.version === 'atv-product-reconstruction/4.0.0';
+	heading(
+		reconstructed
+			? 'Sobre esta leitura'
+			: book
+				? 'Apêndice · método e limites'
+				: 'Método e limites',
+		book ? 23 : 15
+	);
 	paragraph(r.source, label, 9);
-	r.limits.forEach((l) => paragraph(l, label, 9));
+	if (reconstructed && tarotMethodFor(saved.product_id)) {
+		paragraph(
+			'As cartas e suas posições pertencem à tiragem registrada. Reabrir esta leitura ou baixar outro formato preserva a mesma tiragem. Uma nova leitura começa com um novo registro.',
+			label,
+			9
+		);
+		paragraph(
+			'A leitura combina os símbolos das cartas com a função de cada posição e, quando informado, o foco escolhido por você. Use essas relações para examinar possibilidades e atitudes; elas não comprovam acontecimentos futuros nem pensamentos ou intenções de outras pessoas.',
+			label,
+			9
+		);
+	} else if (saved.calculation.version === DOSSIER_VERSION) {
+		r.limits.slice(-9).forEach((limit) => paragraph(limit, label, 9));
+	} else if (saved.calculation.version === SYNASTRY_VERSION) {
+		r.limits.slice(-6).forEach((limit) => paragraph(limit, label, 9));
+	} else if (saved.calculation.version === PAIR_VERSION) {
+		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
+	} else if ([WEEK_VERSION, SOLAR_VERSION, CALENDAR_VERSION].includes(saved.calculation.version)) {
+		r.limits.forEach((limit) => paragraph(limit, label, 9));
+	} else if (reconstructed) {
+		paragraph(
+			'A abordagem é tropical, psicológica e humanista, com regências modernas. O mapa organiza hipóteses de reflexão; não determina acontecimentos, profissão ou comportamento. Compare a leitura com sua experiência e com as condições concretas da situação.',
+			label,
+			9
+		);
+		paragraph(
+			'Horário e local de nascimento influenciam os ângulos e as casas. Confira os dados informados. Contatos planetários são selecionados por função, regência e proximidade; uma seleção não descreve todas as possibilidades do mapa.',
+			label,
+			9
+		);
+	} else r.limits.forEach((l) => paragraph(l, label, 9));
 	if (book) {
 		heading('Dados para conferir', 15);
 		const compact = saved.calculation.facts.filter(
 			(f) =>
+				(!calendar ||
+					(!f.id.startsWith('calendar-window-') &&
+						!f.id.startsWith('calendar-position-') &&
+						!f.id.startsWith('calendar-day-'))) &&
+				(saved.calculation.version !== SOLAR_VERSION ||
+					r.sections
+						.filter((s) => s.title !== 'Referências desta leitura')
+						.some((s) => s.factIds.includes(f.id))) &&
 				!/^day-\d+-|series$/.test(f.id) &&
 				!/nenhum aspecto/i.test(f.display) &&
 				f.display.length <= 650
 		);
-		compact.forEach((f) => paragraph(`${f.id} · ${f.display}`, label, 8, 4));
+		compact.forEach((f) => paragraph(f.display, label, 8, 4));
 		const omitted = saved.calculation.facts.length - compact.length;
 		if (omitted)
 			paragraph(
@@ -349,20 +412,22 @@ export async function trialPdf(saved: SavedTrial) {
 				label,
 				9
 			);
-		const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
-		const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
-		heading(
-			'Fontes e registro da revisão',
-			15,
-			Math.min(
-				height - 148,
-				headingHeight('Fontes e registro da revisão', 15) +
-					sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
-					paragraphHeight(record, label, 8)
-			)
-		);
-		sources.forEach((source) => paragraph(source, label, 8, 4));
-		paragraph(record, label, 8);
+		if (!reconstructed) {
+			const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
+			const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
+			heading(
+				'Fontes e registro da revisão',
+				15,
+				Math.min(
+					height - 148,
+					headingHeight('Fontes e registro da revisão', 15) +
+						sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
+						paragraphHeight(record, label, 8)
+				)
+			);
+			sources.forEach((source) => paragraph(source, label, 8, 4));
+			paragraph(record, label, 8);
+		}
 	}
 	for (const [i, p] of doc.getPages().entries()) {
 		p.drawLine({

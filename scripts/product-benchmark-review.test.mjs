@@ -61,10 +61,10 @@ test('blank template binds current capture, rubric, exact output and all trusted
   assert.equal(JSON.stringify(template).includes('CANARY'), false);
 });
 
-test('empty capture retains 306 missing samples, three polar blockers and 12 unavailable products', () => {
+test('empty capture retains 306 missing samples, three polar blockers and 17 active products without default calculators', () => {
   const input = envelope(); const report = evaluateProductReview(input, productReviewTemplate(input, corpus), corpus);
   assert.equal(report.summary.missingSamples, 306); assert.equal(report.summary.blockedCases, 3);
-  assert.equal(report.unavailableProducts.length, 12); assert.equal(report.products.length, 13);
+  assert.equal(report.unavailableProducts.length, 17); assert.equal(report.products.length, 13);
   assert.equal(report.summary.preparedDiagnosticsComplete, false); assert.deepEqual(report.results, []);
 });
 

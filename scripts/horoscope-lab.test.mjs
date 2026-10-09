@@ -102,7 +102,7 @@ test("Horoscope corpus is explicit, synthetic and separate from the frozen defau
   assert.equal(corpus.editorialReview, "not-reviewed");
   assert.equal(corpus.promotionEligible, false);
   assert.ok(corpus.unavailableProducts.includes("horoscope"));
-  assert.equal(corpus.unavailableProducts.length, 12);
+  assert.equal(corpus.unavailableProducts.length, 17);
   assert.equal(createProductCalculators()["horoscope"], undefined);
   assert.equal(
     productCalculationCoverage().find((item) => item.productId === "horoscope")

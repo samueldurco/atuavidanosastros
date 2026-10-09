@@ -1,4 +1,5 @@
 /** Private, free-test experience contracts. These do not enable sales or override catalog gates. */
+import { tarotMethods } from '@atv/domain';
 export type Experience = {
 	benefit: string;
 	minutes: number;
@@ -12,25 +13,38 @@ const contract = (
 	pdf = true
 ): Experience => ({ benefit, minutes, format, pdf });
 export const experiences: Record<string, Experience> = {
+	...Object.fromEntries(
+		tarotMethods.map((method) => [
+			method.id,
+			contract(
+				method.description,
+				Math.max(4, method.positions.length * 2),
+				method.positions.length > 5 ? 'book' : 'brief'
+			)
+		])
+	),
 	'birth-chart': contract(
-		'Conheça cinco referências do seu mapa e aprofunde os temas que fazem sentido na sua vida.',
+		'Explore seis assinaturas do seu mapa, relacione os temas de vida e construa uma síntese para uma situação real.',
 		20,
 		'book'
 	),
 	'three-pillars': contract(
 		'Relacione o que você expressa, o que precisa e como inicia uma experiência.',
-		5,
-		'brief'
+		10,
+		'book',
+		false
 	),
 	ascendant: contract(
-		'Observe seu primeiro contato com pessoas e situações e experimente uma resposta diferente.',
-		4,
-		'brief'
+		'Relacione sua forma de aproximação ao regente, a Sol e Lua e aos contatos calculados; teste uma resposta em uma situação real.',
+		12,
+		'book',
+		false
 	),
 	midheaven: contract(
-		'Separe a contribuição que você quer construir das expectativas sobre reconhecimento.',
-		5,
-		'brief'
+		'Examine sua direção pública pelo regente, pela casa e pelas relações calculadas; teste uma responsabilidade que pode sustentar.',
+		12,
+		'book',
+		false
 	),
 	horoscope: contract(
 		'Escolha um tema pessoal para observar hoje e um cuidado que cabe no seu dia.',
@@ -74,9 +88,10 @@ export const experiences: Record<string, Experience> = {
 		'book'
 	),
 	'career-compass': contract(
-		'Compare ambientes de trabalho e teste uma direção profissional por trinta dias.',
+		'Compare contribuição, motivação e ambientes de trabalho num experimento curto e reversível.',
 		12,
-		'book'
+		'book',
+		false
 	),
 	'purpose-career': contract(
 		'Relacione contribuição, recursos e rotina antes de escolher um próximo passo.',
@@ -86,7 +101,8 @@ export const experiences: Record<string, Experience> = {
 	'direction-journey': contract(
 		'Acompanhe um objetivo com revisões nos dias 7, 14 e 30.',
 		10,
-		'journal'
+		'journal',
+		false
 	),
 	'life-atlas': contract(
 		'Cruze o mapa com suas quatro prioridades e escolha uma experiência por vez.',

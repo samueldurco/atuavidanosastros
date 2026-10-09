@@ -14,9 +14,9 @@ it.each(['AVAILABLE', 'UNRELEASED', 'ACCESS_REQUIRED'])(
 	'returns only minimal access state %s',
 	async (state) => {
 		const m = mock({ state });
-		expect(await readIntakeAccess(m.client, 'daily-card')).toBe(state);
+		expect(await readIntakeAccess(m.client, 'tarot-single-card')).toBe(state);
 		expect(m.rpc).toHaveBeenCalledWith('read_product_request_access', {
-			p_product_id: 'daily-card'
+			p_product_id: 'tarot-single-card'
 		});
 		expect(m.abortSignal).toHaveBeenCalledWith(expect.any(AbortSignal));
 	}
@@ -30,19 +30,19 @@ it.each([
 	'AVAILABLE',
 	{ state: ['AVAILABLE'] }
 ])('fails closed on malformed projection %#', async (data) => {
-	expect(await readIntakeAccess(mock(data).client, 'daily-card')).toBe('UNAVAILABLE');
+	expect(await readIntakeAccess(mock(data).client, 'tarot-single-card')).toBe('UNAVAILABLE');
 });
 it('fails closed on missing RPC, transport exception, client or unknown product', async () => {
 	const m = mock({ state: 'AVAILABLE' }, { message: 'PRIVATE' });
-	expect(await readIntakeAccess(m.client, 'daily-card')).toBe('UNAVAILABLE');
+	expect(await readIntakeAccess(m.client, 'tarot-single-card')).toBe('UNAVAILABLE');
 	m.abortSignal.mockRejectedValue(new Error('PRIVATE'));
-	expect(await readIntakeAccess(m.client, 'daily-card')).toBe('UNAVAILABLE');
+	expect(await readIntakeAccess(m.client, 'tarot-single-card')).toBe('UNAVAILABLE');
 	m.rpc.mockClear();
 	expect(await readIntakeAccess(m.client, 'unknown')).toBe('UNAVAILABLE');
-	expect(await readIntakeAccess(undefined, 'daily-card')).toBe('UNAVAILABLE');
+	expect(await readIntakeAccess(undefined, 'tarot-single-card')).toBe('UNAVAILABLE');
 	expect(m.rpc).not.toHaveBeenCalled();
 });
-function event(user: unknown, productId = 'daily-card') {
+function event(user: unknown, productId = 'tarot-single-card') {
 	const m = mock({ state: 'UNRELEASED' });
 	const setHeaders = vi.fn();
 	return {
@@ -60,7 +60,7 @@ it.each([null, { id: 'invalid' }])('requires verified identity before RPC %#', a
 	const e = event(user);
 	await expect(load(e.args)).rejects.toMatchObject({
 		status: 303,
-		location: '/entrar?next=%2Fbiblioteca%2Fnova%2Fdaily-card'
+		location: '/entrar?next=%2Fbiblioteca%2Fnova%2Ftarot-single-card'
 	});
 	expect(e.m.rpc).not.toHaveBeenCalled();
 });
@@ -68,7 +68,7 @@ it('returns private minimal data without form input or entitlement rows', async 
 	const e = event({ id: owner });
 	expect(await load(e.args)).toEqual({
 		ownerId: owner,
-		productId: 'daily-card',
+		productId: 'tarot-single-card',
 		access: 'UNRELEASED'
 	});
 	expect(e.setHeaders).toHaveBeenCalledWith({
@@ -92,7 +92,7 @@ it.each([
 	'solar-return',
 	'personal-calendar',
 	'direction-journey',
-	'tarot-journey',
+	'tarot-celtic-cross',
 	'dream-dossier',
 	'dream-atlas'
 ])('loads only minimal access for supported intake %s', async (productId) => {
@@ -111,7 +111,7 @@ it.each([
 	'solar-return',
 	'personal-calendar',
 	'direction-journey',
-	'tarot-journey',
+	'tarot-celtic-cross',
 	'dream-dossier',
 	'dream-atlas'
 ])('requires authentication before loading %s access', async (productId) => {

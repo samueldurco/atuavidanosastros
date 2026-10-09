@@ -117,7 +117,7 @@ test('unfilled ledgers preserve unknowns on both sides and all excluded products
   const report = compare(args);
   assert.equal(report.summary.pairedCompleteDeclarations, 0);
   assert.equal(report.summary.evidenceLostSlots, 0); assert.equal(report.summary.evidenceRecoveredSlots, 0);
-  assert.equal(report.mechanical.blockedCases.length, 3); assert.equal(report.mechanical.unavailableProducts.length, 12);
+  assert.equal(report.mechanical.blockedCases.length, 3); assert.equal(report.mechanical.unavailableProducts.length, 17);
   assert.equal(report.products.length, 13);
 });
 

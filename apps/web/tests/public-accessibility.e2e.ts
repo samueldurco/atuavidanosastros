@@ -92,10 +92,10 @@ for (const width of [320, 1440]) {
 		await expect(magazine.locator('article')).toHaveCount(3);
 		await page.getByRole('link', { name: 'Ver todas as leituras' }).click();
 		await expect(page).toHaveURL('/leituras');
-		await expect(page.locator('.product-card')).toHaveCount(25);
+		await expect(page.locator('.product-card')).toHaveCount(26);
 		await expect(
 			page.locator('.product-card').getByText('Em preparação', { exact: true })
-		).toHaveCount(25);
+		).toHaveCount(26);
 		const topic = page.getByRole('navigation', { name: 'Temas das leituras' });
 		await topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true }).click();
 		await expect(page).toHaveURL('/leituras?tema=amor');

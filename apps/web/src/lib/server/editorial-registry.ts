@@ -11,6 +11,8 @@ import {
 	type AutomatedRegistry
 } from './editorial-automation';
 import release from './editorial-release/registry.json';
+import storedHoroscopeFacts from './editorial-release/horoscope-facts.json';
+import type { PublicHoroscopeSnapshot } from './public-horoscope-facts';
 
 // Server-owned, immutable packages admitted by the release process. Public keys only.
 // Exact evidence bytes remain bundled so every read rechecks the signed package.
@@ -20,6 +22,8 @@ type StoredRelease = {
 	evidenceByDigest: Record<string, string>;
 };
 const stored = release as unknown as StoredRelease;
+const horoscopeFacts = storedHoroscopeFacts as unknown as PublicHoroscopeSnapshot[];
+freezeEditorialJson(horoscopeFacts);
 for (const entry of stored.packages) {
 	freezeEditorialJson(entry.document);
 	freezeEditorialJson(entry.document.author);
@@ -51,5 +55,5 @@ const approvals: readonly EditorialApproval[] = [];
 const authorities: Readonly<Record<string, EditorialAuthority>> = {};
 
 export function publishedEditorial(now = new Date()): Promise<EditorialDocument[]> {
-	return approvedDocuments(documents, approvals, authorities, now, automated);
+	return approvedDocuments(documents, approvals, authorities, now, automated, horoscopeFacts);
 }

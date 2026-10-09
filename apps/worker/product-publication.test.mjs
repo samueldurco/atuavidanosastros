@@ -4,30 +4,30 @@ import { createProductPublisher } from './src/product-publication.ts';
 
 const claim=()=>({runId:'00000000-0000-4000-8000-000000000001',receiptId:'00000000-0000-4000-8000-000000000002',
   token:'00000000-0000-4000-8000-000000000003',revision:3,leaseUntil:new Date(Date.now()+60000).toISOString()});
-const config={enabledProducts:['daily-card']};
+const config={enabledProducts:['tarot-single-card']};
 const deferred=()=>{let resolve;const promise=new Promise(r=>{resolve=r;});return {promise,resolve};};
 
 test('publisher defaults offline, validates configuration and captures allowlist and sink',async()=>{
   const events=[];const offline=createProductPublisher(async()=>assert.fail('offline'),{emit:e=>events.push(e)});
   assert.equal(await offline.step(),'idle');assert.ok(Object.isFrozen(offline));
   assert.deepEqual(Object.keys(events[0]).sort(),['durationMs','event','outcome']);assert.ok(Object.isFrozen(events[0]));
-  for(const enabledProducts of [['unknown'],['daily-card','daily-card'],[null],'daily-card'])
+  for(const enabledProducts of [['unknown'],['daily-card'],['tarot-single-card','tarot-single-card'],[null],'tarot-single-card'])
     assert.throws(()=>createProductPublisher(async()=>null,{enabledProducts}),/invalid_product_configuration/);
   for(const timeoutMs of [0,-1,25001,NaN,1.5]) assert.throws(()=>createProductPublisher(async()=>null,{timeoutMs}),/invalid_publication_deadline/);
   assert.throws(()=>createProductPublisher(null),/invalid_publication_configuration/);
-  const options={enabledProducts:['daily-card'],emit:e=>events.push(e)};
+  const options={enabledProducts:['tarot-single-card'],emit:e=>events.push(e)};
   const runtime=createProductPublisher(async(name,args,signal)=>{
-    assert.equal(name,'claim_product_editorial');assert.deepEqual(args,{p_products:['daily-card']});assert.ok(signal instanceof AbortSignal);return null;
+    assert.equal(name,'claim_product_editorial');assert.deepEqual(args,{p_products:['tarot-single-card']});assert.ok(signal instanceof AbortSignal);return null;
   },options);
   options.enabledProducts.push('birth-chart');options.emit=()=>assert.fail('mutated sink');
-  assert.equal(await runtime.step(),'idle');assert.deepEqual(runtime.products,['daily-card']);assert.ok(Object.isFrozen(runtime.products));
+  assert.equal(await runtime.step(),'idle');assert.deepEqual(runtime.products,['tarot-single-card']);assert.ok(Object.isFrozen(runtime.products));
 });
 
 test('one claim plus one fixed publication RPC never carries text, input, owner or approval',async()=>{
   const c=claim(),calls=[];
   const runtime=createProductPublisher(async(name,args)=>{calls.push({name,args});return calls.length===1?c:{state:'READY',revision:4};},config);
   assert.equal(await runtime.step(),'published');assert.deepEqual(calls,[
-    {name:'claim_product_editorial',args:{p_products:['daily-card']}},
+    {name:'claim_product_editorial',args:{p_products:['tarot-single-card']}},
     {name:'complete_product_editorial',args:{p_id:c.runId,p_receipt:c.receiptId,p_token:c.token,p_revision:3}},
   ]);
 });

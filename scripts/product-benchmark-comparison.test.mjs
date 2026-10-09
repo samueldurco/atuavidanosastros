@@ -44,7 +44,7 @@ test('empty captures retain every prepared slot, blocked case and unavailable pr
   assert.equal(report.summary.regressedSlots, 0);
   assert.equal(report.summary.preparedChecksComplete, false);
   assert.equal(report.products.length, 13);
-  assert.equal(report.unavailableProducts.length, 12);
+  assert.equal(report.unavailableProducts.length, 17);
   assert.deepEqual(report.blockedCases.map(item => item.caseId), ['birth-chart-boundary', 'three-pillars-boundary', 'ascendant-boundary']);
   assert.ok(report.blockedCases.every(item => item.blockReason));
   assert.equal(rowFor(report).baselineChecks, null);

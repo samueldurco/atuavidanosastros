@@ -1,16 +1,20 @@
-import { parseWorkflowInput, workflowFor, WORKFLOW_VERSION, validDate } from '@atv/domain';
+import {
+	parseWorkflowInput,
+	workflowFor,
+	WORKFLOW_VERSION,
+	validDate,
+	tarotMethods,
+	tarotMethodFor
+} from '@atv/domain';
 
 export const symbolicProducts = [
-	'daily-card',
-	'three-questions',
-	'tarot-focus',
-	'tarot-yes-no',
+	...tarotMethods.map((method) => method.id),
 	'dream-reading',
 	'dream-journal'
 ] as const;
 export const symbolicProduct = (id: string) =>
 	symbolicProducts.some((candidate) => candidate === id) ||
-	['tarot-journey', 'dream-dossier', 'dream-atlas'].includes(id)
+	['dream-dossier', 'dream-atlas'].includes(id)
 		? workflowFor(id)
 		: undefined;
 export type IntakeAccess = 'AVAILABLE' | 'UNRELEASED' | 'ACCESS_REQUIRED' | 'UNAVAILABLE';
@@ -61,7 +65,11 @@ export function parseSymbolicForm(productId: string, form: FormData) {
 	};
 	const allowed = ['storage', 'context'];
 	let candidate: unknown;
-	if (product?.kind === 'tarot') {
+	if (tarotMethodFor(productId)) {
+		allowed.push('focus');
+		const focus = text('focus', 400);
+		candidate = { ...base, ...(focus.trim() ? { focus: focus.trim() } : {}) };
+	} else if (product?.kind === 'tarot') {
 		const questions = Array.from({ length: productId === 'three-questions' ? 3 : 1 }, (_, i) => {
 			const name = `question${i + 1}`;
 			allowed.push(name);

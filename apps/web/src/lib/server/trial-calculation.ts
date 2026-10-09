@@ -1,7 +1,10 @@
+import { projectMidheavenReading } from '../trials/reconstruction/midheaven-facts';
 import { calculateAspects, type AspectPolicy, type AspectPosition } from '@atv/astrology';
 import {
 	calculateDreamRecord,
 	calculateTarot,
+	calculateTarotMethod,
+	tarotMethodFor,
 	parseWorkflowInput,
 	prepareDreamAtlasFacts,
 	type CalculationSnapshot,
@@ -9,6 +12,23 @@ import {
 	type WorkflowInput
 } from '@atv/domain';
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
+import { projectDateReading } from '../trials/reconstruction/date-facts';
+import { projectSynastry } from '../trials/reconstruction/synastry-facts';
+import { projectDossier } from '../trials/reconstruction/dossier-facts';
+import { projectPairPreview } from '../trials/reconstruction/pair-facts';
+import { projectHoroscopeReading } from '../trials/reconstruction/horoscope-facts';
+import { projectWeekReading, weekAspectPolicy } from '../trials/reconstruction/week-facts';
+import { projectSolarReading } from '../trials/reconstruction/solar-facts';
+import { calculateSolarYearSamples } from '../../../../worker/src/solar-year-samples';
+import { calculateCalendarSamples } from '../../../../worker/src/personal-calendar-samples';
+import { projectCalendarReading } from '../trials/reconstruction/calendar-facts';
+import { projectDirectionReading } from '../trials/reconstruction/direction-facts';
+import { projectAtlasReading } from '../trials/reconstruction/atlas-facts';
+import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
+import { projectCompassReading } from '../trials/reconstruction/compass-facts';
+import { projectAscendantReading } from '../trials/reconstruction/ascendant-facts';
+import { projectPillarsReading } from '../trials/reconstruction/pillars-facts';
+import { projectBirthReading } from '../trials/reconstruction/birth-facts';
 
 export const trialAspectPolicy: AspectPolicy = {
 	id: 'atv-private-test-major-aspects',
@@ -25,7 +45,7 @@ const calculators = createProductCalculators({
 	experimentalSynastryPolicy: trialAspectPolicy,
 	experimentalCoupleDossierPolicy: trialAspectPolicy,
 	experimentalHoroscopePolicy: trialAspectPolicy,
-	experimentalWeekTransitPolicy: trialAspectPolicy,
+	experimentalWeekTemporalPolicy: weekAspectPolicy,
 	experimentalSolarReturnBase: true,
 	experimentalPersonalCalendarBase: true,
 	experimentalPurposeCareerBase: true,
@@ -51,8 +71,33 @@ const aspectLabels: Record<string, string> = {
 	trine: 'trígono',
 	opposition: 'oposição'
 };
-const dateAt = (date: string, days: number) =>
-	new Date(Date.parse(date + 'T12:00:00Z') + days * 86400000).toISOString().slice(0, 10);
+/** Angle policy is deterministic; unavailable angles produce no contacts. */
+export function calculateTrialAngleContacts(
+	positions: AspectPosition[],
+	angles: { ascendant: number | null; midheaven: number | null }
+) {
+	return positions.flatMap((p) =>
+		(['ascendant', 'midheaven'] as const).flatMap((angle) => {
+			const value = angles[angle];
+			if (typeof value !== 'number' || !Number.isFinite(value)) return [];
+			const distance = Math.abs(p.longitude - value),
+				separation = Math.min(distance, 360 - distance);
+			return (
+				[
+					['conjunction', 0],
+					['sextile', 60],
+					['square', 90],
+					['trine', 120],
+					['opposition', 180]
+				] as const
+			).flatMap(([kind, exact]) =>
+				Math.abs(separation - exact) <= 3
+					? [{ body: p.body, angle, kind, orb: Math.abs(separation - exact) }]
+					: []
+			);
+		})
+	);
+}
 
 /** Only server-owned, RLS-authorized diary sources enter this calculation. Never accepts client facts. */
 export async function calculateTrial(
@@ -63,68 +108,51 @@ export async function calculateTrial(
 	const input = parseWorkflowInput(value);
 	if (!input) throw new Error('Confira os dados e consentimentos antes de gerar.');
 	const signal = AbortSignal.timeout(25000);
+	if (tarotMethodFor(input.productId)) return calculateTarotMethod(input, runId, signal);
 	const context = { runId, signal };
-	if (['career-compass', 'purpose-career'].includes(input.productId)) {
-		// Private edition 3 expands the MC-only prototype. The canonical product gate stays closed.
+	if (['pair-preview', 'synastry', 'couple-dossier'].includes(input.productId)) {
+		const birthInputs = [input.birth!, input.partner!] as const;
+		const sources = await Promise.all(
+			birthInputs.map((birth) =>
+				calculators['birth-chart']!(
+					{
+						version: input.version,
+						productId: 'birth-chart',
+						birth,
+						consent: { ...input.consent, partner: false }
+					},
+					context
+				)
+			)
+		);
+		return (
+			input.productId === 'couple-dossier'
+				? projectDossier
+				: input.productId === 'synastry'
+					? projectSynastry
+					: projectPairPreview
+		)(input, sources as [CalculationSnapshot, CalculationSnapshot], [...birthInputs]);
+	}
+	if (input.productId === 'purpose-career' || input.productId === 'career-compass') {
 		const natal = (await calculators['birth-chart']!(
 			{ ...input, productId: 'birth-chart' },
 			context
 		)) as CalculationSnapshot;
-		const positions = natal.data.positions as AspectPosition[];
-		const aspects = calculateAspects(positions, trialAspectPolicy);
-		const mc = natal.data.angles as { midheaven: number };
-		const rulers = [
-			'mars',
-			'venus',
-			'mercury',
-			'moon',
-			'sun',
-			'mercury',
-			'venus',
-			'mars',
-			'jupiter',
-			'saturn',
-			'saturn',
-			'jupiter'
-		];
-		const ruler = rulers[Math.floor(mc.midheaven / 30)];
-		return {
-			...natal,
-			version: 'atv-private-career-synthesis/3.0.0',
-			kind: 'purpose',
-			facts: [
-				...natal.facts,
-				{
-					id: 'career-mc-ruler',
-					kind: 'calculated',
-					display: `Regente tradicional do Meio do Céu: ${labels[ruler]}`,
-					source: 'atv-traditional-sign-rulership/1.0.0; natal.angles.midheaven'
-				},
-				...aspects.aspects.map((a, i) => ({
-					id: `private-natal-aspect-${i}`,
-					kind: 'calculated' as const,
-					display: `${labels[a.first]} — ${labels[a.second]}: ${aspectLabels[a.kind]}; orbe ${a.orbDegrees.toFixed(3)}°`,
-					source: `${aspects.algorithmVersion};${trialAspectPolicy.id}@${trialAspectPolicy.version}`
-				}))
-			],
-			data: {
-				...natal.data,
-				productId: input.productId,
-				privateAspects: aspects,
-				career: {
-					version: '3.0.0',
-					mcRuler: ruler,
-					rulership: 'traditional',
-					houses: [2, 6, 10],
-					factors: ['sun', 'mercury', 'mars', 'jupiter', 'saturn']
-				}
-			},
-			limits: [
-				...natal.limits,
-				'Regência tradicional explícita; síntese simbólica de MC, regente, casas disponíveis e cinco fatores natais. Não determina profissão nem renda.',
-				'Aspectos maiores nominais com orbes de teste; sem certificação de aplicação/separação.'
-			]
-		};
+		return (input.productId === 'career-compass' ? projectCompassReading : projectPurposeReading)(
+			input,
+			natal
+		);
+	}
+	if (['three-pillars', 'birth-chart', 'ascendant', 'midheaven'].includes(input.productId)) {
+		// Modern, tropical private edition. Stored older calculations stay immutable.
+		const natal = (await calculators['birth-chart']!(
+			{ ...input, productId: 'birth-chart' },
+			context
+		)) as CalculationSnapshot;
+		if (input.productId === 'ascendant') return projectAscendantReading(input, natal);
+		if (input.productId === 'three-pillars') return projectPillarsReading(input, natal);
+		if (input.productId === 'birth-chart') return projectBirthReading(input, natal);
+		return projectMidheavenReading(input, natal);
 	}
 	if (input.productId === 'tarot-journey') {
 		const goal = input.tarotJourney!.goal;
@@ -262,80 +290,73 @@ export async function calculateTrial(
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
-	if (input.productId === 'personal-calendar') {
-		const count = new Date(
-			Date.UTC(Number(input.targetDate!.slice(0, 4)), Number(input.targetDate!.slice(5, 7)), 0)
-		).getUTCDate();
-		const days = [];
-		for (let day = 0; day < count; day++) {
-			signal.throwIfAborted();
-			const date = dateAt(input.targetDate!, day);
-			const sample = (await calculators.horoscope!(
-				{
-					version: input.version,
-					productId: 'horoscope',
-					consent: input.consent,
-					birth: input.birth,
-					targetDate: date
-				},
-				context
-			)) as CalculationSnapshot;
-			const geometry = (
-				sample.data.crossAspectStability as {
-					calculation: {
-						aspects: { first: string; second: string; kind: string; orbDegrees: number }[];
-						algorithmVersion: string;
-					};
-				}
-			).calculation;
-			const data = sample.data.base as CalculationSnapshot;
-			const summary = geometry.aspects
-				.map(
-					(a) =>
-						`${labels[a.first]} em trânsito / ${labels[a.second]} natal: ${aspectLabels[a.kind]}, orbe ${a.orbDegrees.toFixed(3)}°`
-				)
-				.join('; ');
-			base.facts.push({
-				id: `day-${day + 1}-aspects`,
-				kind: 'calculated',
-				display: `${date} — ${summary || 'Nenhum aspecto maior dentro dos orbes desta política.'}`,
-				source: `${geometry.algorithmVersion};${trialAspectPolicy.id}@${trialAspectPolicy.version};12:00UTC`
-			});
-			days.push({
-				date,
-				positions: (data.data.second as { positions: AspectPosition[] }).positions,
-				aspects: geometry.aspects
-			});
-		}
-		const natal = (await calculators['date-reading']!(
+	if (input.productId === 'direction-journey') return projectDirectionReading(input, base);
+	if (input.productId === 'solar-return') {
+		const natal = (await calculators['birth-chart']!(
 			{
 				version: input.version,
-				productId: 'date-reading',
-				consent: input.consent,
+				productId: 'birth-chart',
 				birth: input.birth,
-				targetDate: input.targetDate
+				consent: input.consent,
+				context: input.context
 			},
 			context
 		)) as CalculationSnapshot;
-		base.version = 'atv-private-personal-calendar/1.0.0';
-		base.data = {
-			...base.data,
-			days,
-			natalPositions: (natal.data.first as { positions: AspectPosition[] }).positions,
-			aspectPolicy: trialAspectPolicy,
-			dailyEvents: 'nominal-aspect-samples'
-		};
-		base.limits = [
-			...base.limits.filter(
-				(l) => !l.includes('apenas dias civis') && !l.includes('Nenhum trânsito diário')
-			),
-			'Uma amostra às 12h UTC por dia com aspectos nominais entre longitudes tropicais de datas distintas; precisão não certificada. Não indica eventos exatos, horas locais favoráveis ou estações.'
-		];
+		const calendar = base.data.calendarScaffold as { startDate: string; endDateExclusive: string };
+		const samples = await calculateSolarYearSamples(
+			calendar.startDate,
+			calendar.endDateExclusive,
+			signal
+		);
+		return projectSolarReading(input, base, natal, samples);
 	}
-	const natalData =
-		input.productId === 'life-atlas' ? (base.data.natal as CalculationSnapshot).data : base.data;
+	if (input.productId === 'week-reading') {
+		const natal = (await calculators['birth-chart']!(
+			{
+				version: input.version,
+				productId: 'birth-chart',
+				birth: input.birth,
+				consent: input.consent,
+				context: input.context
+			},
+			context
+		)) as CalculationSnapshot;
+		return projectWeekReading(input, base, natal);
+	}
+	if (input.productId === 'date-reading' || input.productId === 'horoscope') {
+		const natal = await calculators['birth-chart']!(
+			{
+				version: input.version,
+				productId: 'birth-chart',
+				birth: input.birth,
+				consent: input.consent,
+				context: input.context
+			},
+			context
+		);
+		return input.productId === 'horoscope'
+			? projectHoroscopeReading(input, base, natal as CalculationSnapshot)
+			: projectDateReading(input, base, natal as CalculationSnapshot);
+	}
+	if (input.productId === 'personal-calendar') {
+		const natal = (await calculators['birth-chart']!(
+			{
+				version: input.version,
+				productId: 'birth-chart',
+				consent: input.consent,
+				birth: input.birth,
+				context: input.context
+			},
+			context
+		)) as CalculationSnapshot;
+		const samples = await calculateCalendarSamples(input.targetDate!, signal);
+		return projectCalendarReading(input, base, natal, samples);
+	}
+
+	if (input.productId === 'life-atlas') return projectAtlasReading(input, base);
+	const natalData = base.data;
 	if (
-		['birth-chart', 'life-atlas'].includes(input.productId) &&
+		input.productId === 'birth-chart' &&
 		Array.isArray(natalData.positions) &&
 		natalData.positions.length === 10
 	) {

@@ -81,11 +81,11 @@ it('workflow recovery timeout is unavailable, never not-found or another submiss
 it('intake timeout cannot grant eligibility', async () => {
 	vi.useFakeTimers();
 	const s = mock({});
-	const pending = readIntakeAccess(s.client, 'daily-card');
+	const pending = readIntakeAccess(s.client, 'tarot-single-card');
 	await vi.advanceTimersByTimeAsync(10000);
 	expect(await pending).toBe('UNAVAILABLE');
 	expect(s.rpc).toHaveBeenCalledExactlyOnceWith('read_product_request_access', {
-		p_product_id: 'daily-card'
+		p_product_id: 'tarot-single-card'
 	});
 	expect(s.abortSignal.mock.calls[0][0].aborted).toBe(true);
 	expect(vi.getTimerCount()).toBe(0);

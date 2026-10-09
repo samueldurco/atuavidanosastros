@@ -1,4 +1,4 @@
-import { productCatalog } from '@atv/domain';
+import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun } from '../product-run';
 
 export const NARRATION_VERSION = 'atv-audio-transcript/1.1.0';
@@ -51,7 +51,7 @@ async function digest(text: string) {
  * Never send this candidate to a provider based only on these flags/digests. No network or storage. */
 export async function prepareProductNarration(value: unknown) {
 	const run = parseProductRun(value);
-	const product = productCatalog.find((entry) => entry.id === run?.productId);
+	const product = productDefinitionFor(run?.productId ?? '');
 	if (!run?.released || !run.calculation || !run.editorial || !product?.delivery.includes('audio'))
 		return null;
 	const { calculation, editorial } = run;

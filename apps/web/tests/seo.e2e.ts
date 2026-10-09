@@ -17,6 +17,9 @@ test('editorial hubs reflect admitted content with one canonical', async ({ page
 		const html = await response.text();
 		if (path === '/noticias' && news.length > 0) {
 			for (const document of news) expect(html).toContain(document.title);
+		} else if (path === '/horoscopo') {
+			expect(html).toContain('Horóscopo dos 12 signos');
+			expect(html).toContain('Ainda não há leituras publicadas para este período e ano.');
 		} else expect(html).toContain('Nenhum artigo publicado ainda');
 		expect(html).not.toContain('application/ld+json');
 		await page.goto(path);
@@ -39,7 +42,7 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 }) => {
 	for (const path of [
 		'/signos/aries',
-		'/horoscopo/aries',
+		'/horoscopo/aries/daily/2026-10-08',
 		'/compatibilidade/aries-touro',
 		'/compatibilidade/touro-aries',
 		'/noticias/2026/10/nao-publicado',
@@ -60,6 +63,20 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 			expect(body, path).toBe('Not Found');
 		}
 	}
+});
+test('sign horoscope indexes exist without claiming an admitted forecast', async ({ page }) => {
+	await page.goto('/horoscopo/aries');
+	await expect(page.locator('h1')).toHaveText('Horóscopo de Áries');
+	await expect(
+		page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
+	).toBeVisible();
+	await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+		'href',
+		'https://atuavidanosastros.com.br/horoscopo/aries'
+	);
+	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
 });
 test('sitemaps preserve real routes and do not include unpublished content', async ({
 	request

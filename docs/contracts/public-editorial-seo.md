@@ -43,7 +43,7 @@ Estado textual `APPROVED` ou `PUBLISHED`, isoladamente, não libera publicação
 
 O horário da revisão não pode ser posterior à modificação nem ao instante atual. Este protocolo não cria uma autoridade editorial legítima: o proprietário ainda precisa aprovar a identidade e a chave pública do revisor por um processo externo auditável. O app verifica a assinatura, não a veracidade biográfica de uma pessoa.
 
-Horóscopos exigem motor, versão, digest dos fatos e intervalo de cobertura válidos. Esses campos são incluídos na revisão assinada, mas ainda não há ligação automática deste registro com o motor de cálculo nem verificação independente dos bytes dos fatos. Sem essa integração e os gates exigidos, não liberar previsões reais.
+Horóscopos exigem motor, versão, digest dos fatos e intervalo de cobertura válidos, incluídos na revisão assinada. Desde RECON-20, a admissão também exige exatamente um snapshot completo do motor público, com cobertura e digest correspondentes; grade, proveniência declarada, políticas e seleção são revalidadas. O contrato `public-horoscope-reconstruction.md` define a ligação e seus limites. Isso não homologa precisão nem substitui a autoridade editorial independente. O registro de fatos permanece vazio; sem fatos reais aprovados e os gates exigidos, não liberar previsões reais.
 
 ## Metadados e conteúdo visível
 

@@ -3,7 +3,9 @@
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
 	import { privateFormats } from '$lib/trials/experience';
-	import { CONTENT_VERSION } from '$lib/trials/versions';
+	import { latestReadingVersion } from '$lib/trials/versions';
+	import ReadingDirectionJourney from '$lib/components/ReadingDirectionJourney.svelte';
+	import { DIRECTION_VERSION } from '$lib/trials/reconstruction/direction-facts';
 	import ReadingExperience from '$lib/components/ReadingExperience.svelte';
 	import ReadingShare from '$lib/components/ReadingShare.svelte';
 	import { canShareReading } from '$lib/trials/sharing';
@@ -21,11 +23,13 @@
 		busy = $state(false),
 		speaking = $state(false);
 	const checkIns = $derived(
-		data.saved.product_id === 'direction-journey'
-			? [0, 7, 14, 30]
-			: data.saved.product_id === 'tarot-journey'
-				? [0, 1, 7, 14]
-				: [0]
+		data.saved.calculation.version === 'atv-private-life-atlas/4.0.0'
+			? [0, 7, 14, 21, 30]
+			: data.saved.product_id === 'direction-journey'
+				? [0, 7, 14, 30]
+				: data.saved.product_id === 'tarot-journey'
+					? [0, 1, 7, 14]
+					: [0]
 	);
 	const reading = $derived(data.saved.reading);
 	const formats = $derived(privateFormats(data.saved.product_id, data.product.delivery));
@@ -131,7 +135,7 @@
 		title={reading.title}
 		description={reading.opening}
 	/>
-	{#if reading.version !== CONTENT_VERSION}
+	{#if reading.version !== latestReadingVersion(data.saved.product_id)}
 		<div class="seal">
 			<strong>Há uma nova edição desta leitura</strong>
 			<p>
@@ -166,7 +170,7 @@
 	{/key}
 	<article aria-label="Sua leitura completa">
 		<section class="chapter">
-			<h2>Três perguntas para levar com você</h2>
+			<h2>Perguntas para levar com você</h2>
 			<ol>
 				{#each reading.questions as question (question)}<li>{question}</li>{/each}
 			</ol>
@@ -180,34 +184,44 @@
 			</ul>
 		</section>
 	</article>
-	<section class="workspace" aria-labelledby="notes-title">
-		<h2 id="notes-title">Suas anotações e acompanhamento</h2>
-		<p>
-			Registre um exemplo observado, uma possibilidade que você quer testar e o que mudou depois.
-		</p>
-		{#if checkIns.length > 1}<label
-				>Etapa<select bind:value={step}
-					>{#each checkIns as day (day)}<option value={day}
-							>{day === 0 ? 'Ponto de partida' : `Dia ${day}`}</option
-						>{/each}</select
-				></label
-			>{/if}
-		{#each data.notes as savedNote (savedNote.step)}<div class="note">
-				<h3>{savedNote.step === 0 ? 'Anotação inicial' : `Dia ${savedNote.step}`}</h3>
-				<p class="prose">{savedNote.text}</p>
-			</div>{/each}
-		<form
-			onsubmit={(event) => {
-				event.preventDefault();
-				save({ action: 'note', step, text: note });
-			}}
-		>
-			<label
-				>Sua anotação<textarea maxlength="3000" required rows="4" bind:value={note}
-				></textarea></label
-			><button disabled={!ready || busy}>Salvar anotação desta etapa</button>
-		</form>
-	</section>
+	{#if data.saved.calculation.version === DIRECTION_VERSION}
+		<ReadingDirectionJourney
+			saved={data.saved}
+			notes={data.notes}
+			{ready}
+			{busy}
+			onSave={(step, text) => save({ action: 'note', step, text })}
+		/>
+	{:else}
+		<section class="workspace" aria-labelledby="notes-title">
+			<h2 id="notes-title">Suas anotações e acompanhamento</h2>
+			<p>
+				Registre um exemplo observado, uma possibilidade que você quer testar e o que mudou depois.
+			</p>
+			{#if checkIns.length > 1}<label
+					>Etapa<select bind:value={step}
+						>{#each checkIns as day (day)}<option value={day}
+								>{day === 0 ? 'Ponto de partida' : `Dia ${day}`}</option
+							>{/each}</select
+					></label
+				>{/if}
+			{#each data.notes as savedNote (savedNote.step)}<div class="note">
+					<h3>{savedNote.step === 0 ? 'Anotação inicial' : `Dia ${savedNote.step}`}</h3>
+					<p class="prose">{savedNote.text}</p>
+				</div>{/each}
+			<form
+				onsubmit={(event) => {
+					event.preventDefault();
+					save({ action: 'note', step, text: note });
+				}}
+			>
+				<label
+					>Sua anotação<textarea maxlength="3000" required rows="4" bind:value={note}
+					></textarea></label
+				><button disabled={!ready || busy}>Salvar anotação desta etapa</button>
+			</form>
+		</section>
+	{/if}
 	<section class="workspace" aria-labelledby="feedback-title">
 		<h2 id="feedback-title">Seu parecer sobre este produto</h2>
 		{#if data.feedback}<p>

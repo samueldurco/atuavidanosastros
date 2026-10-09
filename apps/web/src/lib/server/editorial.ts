@@ -1,5 +1,10 @@
 import { SITE, signs } from '$lib/data/site';
+import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
+import {
+	verifiedPublicHoroscopeFacts,
+	type PublicHoroscopeSnapshot
+} from './public-horoscope-facts';
 import {
 	isImmutableEditorialJson,
 	verifyAdmittedApprovals,
@@ -120,6 +125,7 @@ export function canonicalPair(first: string, second: string): string | null {
 	return `/compatibilidade/${signs[Math.min(a, b)]}-${signs[Math.max(a, b)]}`;
 }
 function validPath(document: EditorialDocument): boolean {
+	if (parseHoroscopeArchivePath(document.path)) return document.kind === 'horoscope';
 	if (document.kind === 'guide' && evergreenGuidePaths.some((path) => path === document.path))
 		return true;
 	const datedForecast = document.path.match(
@@ -263,7 +269,8 @@ export async function approvedDocuments(
 	approvals: readonly EditorialApproval[],
 	authorities: Readonly<Record<string, EditorialAuthority>>,
 	now: Date,
-	automated?: AutomatedRegistry
+	automated?: AutomatedRegistry,
+	horoscopeFacts: readonly PublicHoroscopeSnapshot[] = []
 ): Promise<EditorialDocument[]> {
 	const published: EditorialDocument[] = [];
 	const authorSignatures = new Map<EditorialDocument, string>();
@@ -278,6 +285,11 @@ export async function approvedDocuments(
 	let automatedResults: Awaited<ReturnType<typeof verifyAdmittedApprovals>> | undefined;
 	for (const document of documents) {
 		if (!validDocument(document, now)) continue;
+		if (
+			document.kind === 'horoscope' &&
+			!(await verifiedPublicHoroscopeFacts(document, horoscopeFacts))
+		)
+			continue;
 		// Ambiguous identity/path or conflicting author biographies fails closed.
 		if (
 			documents.filter((other) => other.id === document.id || other.path === document.path)

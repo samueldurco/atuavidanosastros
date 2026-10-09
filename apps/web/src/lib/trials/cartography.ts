@@ -45,7 +45,8 @@ const angle = (n: unknown): n is number =>
 	typeof n === 'number' && Number.isFinite(n) && n >= 0 && n < 360;
 export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
 	const root =
-		saved.product_id === 'couple-dossier'
+		saved.product_id === 'couple-dossier' &&
+		saved.calculation.version !== 'atv-private-couple-dossier-synthesis/4.0.0'
 			? (saved.calculation.data.base as { data: Record<string, unknown> }).data
 			: saved.calculation.data;
 	const data = person
@@ -54,7 +55,11 @@ export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
 			? (root.natal as { data?: Record<string, unknown> } | undefined)?.data
 			: root;
 	if (!data) throw Error('geometry_missing');
-	const positions = (data.positions ?? []) as { body: string; longitude: number }[];
+	const positions = (data.positions ?? []) as {
+		body: string;
+		longitude: number;
+		retrograde?: boolean;
+	}[];
 	const angles = (person ? { ascendant: null, midheaven: null } : data.angles) as {
 		ascendant: number | null;
 		midheaven: number | null;
@@ -66,7 +71,16 @@ export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
 	if (
 		!Array.isArray(positions) ||
 		positions.length !==
-			(saved.product_id === 'ascendant' ? 0 : saved.product_id === 'pair-preview' ? 3 : 10) ||
+			(['ascendant', 'midheaven'].includes(saved.product_id) &&
+			![
+				'atv-private-natal-synthesis/4.0.0',
+				'atv-private-ascendant/5.0.0',
+				'atv-private-midheaven/5.0.0'
+			].includes(saved.calculation.version)
+				? 0
+				: saved.product_id === 'pair-preview'
+					? 3
+					: 10) ||
 		(saved.product_id === 'pair-preview' &&
 			positions.some((p) => !['moon', 'venus', 'mars'].includes(p.body))) ||
 		positions.some((p) => !bodyNames[p.body] || !angle(p.longitude)) ||
@@ -113,5 +127,7 @@ export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
 	}
 	return { positions, angles, houses, aspects: raw, tracks };
 }
-export const nominalDegree = (a: number) =>
-	`${(a % 30).toFixed(2)}° ${signNames[Math.floor(a / 30)]}`;
+export const nominalDegree = (a: number) => {
+	const minutes = Math.round(a * 60) % 21600;
+	return `${Math.floor((minutes % 1800) / 60)}°${String(minutes % 60).padStart(2, '0')}′ ${signNames[Math.floor(minutes / 1800)]}`;
+};

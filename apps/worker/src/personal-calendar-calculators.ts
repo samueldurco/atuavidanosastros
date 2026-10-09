@@ -100,16 +100,18 @@ export function createPersonalCalendarCalculators(
       facts,
       data: {
         productId: "personal-calendar",
+        natalInput: structuredClone(chart.input),
         monthStart: input.targetDate,
         monthEndExclusive: end.toISOString().slice(0, 10),
         dates,
         natalSunLongitude: natalSun,
         natalSource: source,
         dailyEvents: "not-produced",
-        reportedMarks: input.calendarMarks?.entries.map((entry) => ({
-          date: entry.date,
-          label: entry.label,
-        })) ?? [],
+        reportedMarks:
+          input.calendarMarks?.entries.map((entry) => ({
+            date: entry.date,
+            label: entry.label,
+          })) ?? [],
       },
       limits: [
         "A grade contém apenas dias civis UTC e uma referência natal estática.",
