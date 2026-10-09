@@ -48,8 +48,8 @@ export type ChartOptions = {
 	solarView?: 'return' | 'natal';
 };
 export const chartColors = {
-	paper: '#faf6ed',
-	ink: '#24374b',
+	paper: '#fcf8ef',
+	ink: '#193549',
 	gold: '#967536',
 	muted: '#596674',
 	blue: '#365d7d',

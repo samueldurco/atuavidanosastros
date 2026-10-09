@@ -108,7 +108,7 @@ test("PDF 1.2 expands writes, retains exact historical bytes and has a reversibl
         ...input,
         rendererVersion: "atv-pdf-export/1.4.0",
       }),
-    /artifact_invalid/,
+    /artifact_unavailable/,
   );
   await db.exec(
     await file(

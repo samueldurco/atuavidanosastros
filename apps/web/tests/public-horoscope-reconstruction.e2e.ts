@@ -21,6 +21,10 @@ for (const width of [320, 390, 1440]) {
 			path: testInfo.outputPath(`horoscope-hub-${width}.png`),
 			fullPage: true
 		});
+		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
+		await expect(page.getByRole('complementary', { name: 'Preferências de cookies' })).toHaveCount(
+			0
+		);
 		await page
 			.getByRole('navigation', { name: 'Período da leitura' })
 			.getByRole('link', { name: 'Semana', exact: true })
@@ -104,6 +108,8 @@ test('malformed preferences are ignored and unavailable storage is reported with
 	await page.addInitScript((key) => localStorage.setItem(key, '{'), HOROSCOPE_FOLLOW_KEY);
 	await page.goto('/horoscopo');
 	await expect(page.getByText('Ativar avisos neste navegador', { exact: true })).toBeVisible();
+	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
+	await expect(page.getByRole('complementary', { name: 'Preferências de cookies' })).toHaveCount(0);
 	await page.evaluate(() => {
 		Storage.prototype.setItem = () => {
 			throw new Error('storage unavailable in test');

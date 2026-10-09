@@ -38,7 +38,7 @@
 				<div class="individual-chart">{@html svg}</div>
 			{:else}
 				<svg viewBox="0 0 360 360" role="img" aria-label={`Posições natais de ${person.name}`}>
-					<circle cx="180" cy="180" r="142" fill="#fcfaf6" stroke="#142139" />
+					<circle cx="180" cy="180" r="142" fill="#fcf8ef" stroke="#193549" />
 					{#each signNames as name, i (name)}
 						{@const label = point(i * 30 + 15, 161)}
 						{@const tick = point(i * 30, 142)}
@@ -50,15 +50,15 @@
 							text-anchor="middle"
 							dominant-baseline="middle"
 							font-size="9"
-							fill="#142139">{name}</text
+							fill="#193549">{name}</text
 						>
 					{/each}
 					{#each geometry.positions as planet (planet.body)}
 						{@const p = point(planet.longitude, 119 - (geometry.tracks.get(planet.body) ?? 0) * 20)}
 						<g data-body={planet.body} transform={`translate(${p.x} ${p.y}) scale(.6)`}>
 							<title>{bodyNames[planet.body]}: {nominalDegree(planet.longitude)}</title>
-							<circle r="12" fill="#fcfaf6" />
-							<path d={bodyGlyphs[planet.body]} fill="none" stroke="#142139" stroke-width="1.8" />
+							<circle r="12" fill="#fcf8ef" />
+							<path d={bodyGlyphs[planet.body]} fill="none" stroke="#193549" stroke-width="1.8" />
 						</g>
 					{/each}
 				</svg>
@@ -94,9 +94,9 @@
 	figure {
 		margin: 0;
 		padding: 1rem;
-		border: 1px solid #ded6c8;
+		border: 1px solid #c09c73;
 		border-radius: 1rem;
-		background: #fcfaf6;
+		background: #fcf8ef;
 	}
 	figcaption {
 		font: 500 1.6rem var(--atv-font-display, Georgia);

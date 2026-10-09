@@ -1,10 +1,14 @@
 import { productDefinitionFor } from '@atv/domain';
+import { visualExportPalette } from '../data/visual-v4-export';
+import displayData from '../../../static/brand/fonts/bodoni-moda-variable.woff2?inline';
+import bodyData from '../../../static/brand/fonts/newsreader-variable.woff2?inline';
+import labelData from '../../../static/brand/fonts/onest-variable.woff2?inline';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
 
-export const WEB_EXPORT_VERSION = 'atv-web-export/1.2.0';
+export const WEB_EXPORT_VERSION = 'atv-web-export/1.3.0';
 export const EXPORT_CSP =
-	"default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'";
+	"default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";
 const escape = (value: string) =>
 	value.replace(
 		/[&<>"']/g,
@@ -18,19 +22,23 @@ export function renderProductWebExport(value: unknown) {
 	if (!run?.released || !run.editorial || !run.calculation || !product?.delivery.includes('web'))
 		return null;
 	const { editorial, calculation } = run;
+	const palette = visualExportPalette(run.productId);
 	const html = `<!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="${escape(EXPORT_CSP)}"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
 <meta name="generator" content="${WEB_EXPORT_VERSION}"><title>${escape(editorial.title)} — A Tua Vida nos Astros</title>
 <style>
-:root{color-scheme:light;color:#0b1635;background:#fcfbf8;font-family:"Segoe UI",sans-serif}
+@font-face{font-family:ATVDisplay;src:url('${displayData}') format('woff2');font-weight:100 900}
+@font-face{font-family:ATVBody;src:url('${bodyData}') format('woff2');font-weight:100 900}
+@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2');font-weight:100 900}
+:root{color-scheme:light;color:${palette.ink};background:#fcfbf8;font-family:ATVLabel,sans-serif}
 *{box-sizing:border-box}body{margin:0;padding:48px 20px}main{max-width:720px;margin:auto;overflow-wrap:anywhere}
-header{border-bottom:1px solid #e4e8ef;padding-bottom:32px}h1,h2,h3{font-family:Georgia,serif;font-weight:400;line-height:1.2}
+header{border-bottom:1px solid ${palette.line};padding-bottom:32px}h1,h2,h3{font-family:ATVDisplay,serif;font-weight:400;line-height:1.2}
 h1{font-size:clamp(2.25rem,5vw,3.75rem);margin:24px 0}h2{font-size:2rem}h3{font-size:1.5rem}
-p,li,dd{line-height:1.7}p.text,dd{white-space:pre-wrap}.text{font-family:Georgia,serif;font-size:19px}
-.label,small{color:#526079;font-size:14px}section{margin-top:48px}article{margin:32px 0}dt{font-weight:600}dd{margin:8px 0 24px}small{display:block}
-nav ul{padding-left:20px}a{color:#073f87;text-underline-offset:4px;display:inline-block;padding:10px 0}a:focus-visible{outline:2px solid #3176c2;outline-offset:4px}
-footer{border-top:1px solid #e4e8ef;margin-top:48px;padding-top:24px}h2,h3,dt{break-after:avoid}p{orphans:3;widows:3}
+p,li,dd{line-height:1.7}p.text,dd{white-space:pre-wrap}.text{font-family:ATVBody,serif;font-size:19px}
+.label,small{color:${palette.ink};font-size:14px}section{margin-top:48px}article{margin:32px 0}dt{font-weight:600}dd{margin:8px 0 24px}small{display:block}
+nav ul{padding-left:20px}a{color:inherit;text-underline-offset:4px;display:inline-block;padding:10px 0}a:focus-visible{outline:2px solid ${palette.ink};outline-offset:4px}
+footer{border-top:1px solid ${palette.line};margin-top:48px;padding-top:24px}h2,h3,dt{break-after:avoid}p{orphans:3;widows:3}
 @page{size:A4;margin:20mm}@media print{:root{background:white}body{padding:0}main{max-width:none}nav{display:none}a{color:inherit}section{margin-top:24px}}
 </style></head><body><main>
 <header><p class="label">A Tua Vida nos Astros · Seu arquivo pessoal</p><p>${escape(product.name)}</p><h1>${escape(editorial.title)}</h1>

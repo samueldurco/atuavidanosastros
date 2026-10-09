@@ -108,7 +108,7 @@ test("Language renderers expand writes, retains exact historical bytes and has a
         ...input,
         rendererVersion: "atv-pdf-export/1.4.0",
       }),
-    /artifact_invalid/,
+    /artifact_unavailable/,
   );
   const savedCards = [];
   for (const version of ["1.0.0", "1.1.0"]) {

@@ -21,7 +21,12 @@
 		/>
 		<div class="access-grid">
 			<section class="card login" aria-labelledby="access-title">
-				<img src="/brand/logo/symbol/atv-symbol.svg" alt="" width="64" height="64" />
+				<img
+					src="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-simbolo-claro.svg"
+					alt=""
+					width="64"
+					height="64"
+				/>
 				<p class="eyebrow">Acesso à sua conta</p>
 				<h2 id="access-title">Acesse sua conta</h2>
 				<p>Continue com sua conta Google. Depois do login, você voltará à página que escolheu.</p>

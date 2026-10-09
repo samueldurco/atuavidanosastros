@@ -1,11 +1,12 @@
 import fontkit, { type Font } from '@pdf-lib/fontkit';
 import { productDefinitionFor } from '@atv/domain';
+import { visualExportPalette } from '../data/visual-v4-export';
 import { parseProductRun } from '../product-run';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 
-export const CARD_EXPORT_VERSION = 'atv-reading-card/1.1.0';
+export const CARD_EXPORT_VERSION = 'atv-reading-card/1.2.0';
 export const CARD_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";
 export const CARD_LIMITS = Object.freeze({
@@ -27,6 +28,7 @@ class CardUnavailable extends Error {}
 export function renderProductCard(value: unknown, sectionIndex: number) {
 	const run = parseProductRun(value);
 	const product = productDefinitionFor(run?.productId ?? '');
+	const palette = visualExportPalette(run?.productId ?? '');
 	if (
 		!run?.released ||
 		!run.editorial ||
@@ -148,7 +150,7 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 		);
 		paragraph(section.title, 'display', 42, 54, 24);
 		paragraph(section.text);
-		elements.push(`<path d="M80 ${y}H1000" stroke="#c5b58f"/>`);
+		elements.push(`<path d="M80 ${y}H1000" stroke="${palette.line}"/>`);
 		y += 50;
 		paragraph('BASES DESTA SEÇÃO', 'label', 22, 32, 12);
 		for (const fact of facts) {
@@ -195,8 +197,8 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 <title id="card-title">${escape(section.title)} — card de leitura</title><desc id="card-desc">Seção integral com bases e limites preservados. Cópia privada; não é a leitura completa.</desc>
 <metadata>${escape(JSON.stringify(metadata))}</metadata>
 <style>@font-face{font-family:ATVDisplay;src:url('${displayData}') format('truetype')}@font-face{font-family:ATVBody;src:url('${bodyData}') format('truetype')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('truetype')}
-text{fill:#142139;font-kerning:normal;font-variant-ligatures:normal}.display{font-family:ATVDisplay,serif}.body{font-family:ATVBody,serif}.label{font-family:ATVLabel,sans-serif;fill:#45516a}</style>
-<rect width="1080" height="${height}" fill="#fcfbf8"/><path d="M80 28H1000" stroke="#95702b"/>
+text{fill:${palette.ink};font-kerning:normal;font-variant-ligatures:normal}.display{font-family:ATVDisplay,serif}.body{font-family:ATVBody,serif}.label{font-family:ATVLabel,sans-serif;fill:${palette.ink}}</style>
+<rect width="1080" height="${height}" fill="#fcfbf8"/><path d="M80 28H1000" stroke="${palette.line}"/>
 ${elements.join('')}</svg>`;
 		if (new TextEncoder().encode(svg).length > CARD_LIMITS.bytes) return null;
 		return {

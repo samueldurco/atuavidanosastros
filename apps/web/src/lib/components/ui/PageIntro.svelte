@@ -1,18 +1,29 @@
 <script lang="ts">
 	import VisualHeading from '../VisualHeading.svelte';
+	import V4Artwork from '../V4Artwork.svelte';
 	import type { Snippet } from 'svelte';
 	let {
 		eyebrow,
 		title,
 		description,
+		identity,
 		actions
-	}: { eyebrow: string; title: string; description?: string; actions?: Snippet } = $props();
+	}: {
+		eyebrow: string;
+		title: string;
+		description?: string;
+		identity?: string;
+		actions?: Snippet;
+	} = $props();
 </script>
 
 <header class="page-intro">
 	<div>
 		<p class="eyebrow">{eyebrow}</p>
-		<VisualHeading {title} />
+		<div class="v4-title-group" class:with-object={!!identity}>
+			{#if identity}<V4Artwork {identity} title eager />{/if}
+			<VisualHeading {title} identity={identity ?? title} />
+		</div>
 		{#if description}<p class="intro-description">{description}</p>{/if}
 	</div>
 	{#if actions}<div class="intro-actions">{@render actions()}</div>{/if}

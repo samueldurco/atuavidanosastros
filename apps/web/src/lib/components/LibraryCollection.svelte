@@ -144,7 +144,12 @@
 		{#if visible.length}<section class="collection" aria-label="Itens salvos">
 				{#each visible as item (item.id)}<article class="card item">
 						<div class="item-cover" aria-hidden="true">
-							<img src="/brand/logo/symbol/atv-symbol.svg" alt="" width="64" height="64" />
+							<img
+								src="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-simbolo-claro.svg"
+								alt=""
+								width="64"
+								height="64"
+							/>
 						</div>
 						<div class="item-body">
 							<p class="eyebrow">{labels[item.universe] ?? item.universe}</p>
@@ -177,7 +182,12 @@
 		>
 	{:else}
 		<div class="empty-library">
-			<img src="/brand/logo/monogram/atv-monogram.svg" alt="" width="80" height="80" />
+			<img
+				src="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-compacta-claro.svg"
+				alt=""
+				width="80"
+				height="80"
+			/>
 			<p class="eyebrow">Minhas leituras</p>
 			<h2>Sua Biblioteca ainda está vazia.</h2>
 			<p>

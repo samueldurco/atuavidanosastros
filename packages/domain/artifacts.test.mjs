@@ -13,10 +13,10 @@ test('manifest is a minimal frozen projection and never exposes storage data',()
 test('web, PDF, SVG and reading cards retain historical renderers while rejecting future versions',()=>{
  const birth={...reading,productId:'birth-chart'};
  for(const [format,prefix,versions,future] of [
-  ['web','atv-web-export',['1.0.0','1.1.0','1.2.0'],'1.3.0'],
-  ['pdf','atv-pdf-export',['1.0.0','1.1.0','1.2.0','1.3.0'],'1.4.0'],
-  ['svg','atv-svg-export',['1.0.0','1.1.0'],'1.2.0'],
-  ['card','atv-reading-card',['1.0.0','1.1.0'],'1.2.0']]) {
+  ['web','atv-web-export',['1.0.0','1.1.0','1.2.0','1.3.0'],'1.4.0'],
+  ['pdf','atv-pdf-export',['1.0.0','1.1.0','1.2.0','1.3.0','1.4.0'],'1.5.0'],
+  ['svg','atv-svg-export',['1.0.0','1.1.0','1.2.0'],'1.3.0'],
+  ['card','atv-reading-card',['1.0.0','1.1.0','1.2.0'],'1.3.0']]) {
   for(const version of versions) {
    const input={...manifest,format,section:format==='card'?1:-1,rendererVersion:`${prefix}/${version}`};
    assert.deepEqual(parseArtifactManifest(input,birth),input);

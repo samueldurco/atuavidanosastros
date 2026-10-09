@@ -7,9 +7,9 @@ import { weekTemporalFacts } from '../week-temporal-facts';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
-import coverArt from '../data/visual-v3-pdf.generated.json';
+import { pdfCoverFor } from '../data/visual-v4-pdf';
 
-export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.3.0';
+export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.4.0';
 export const PDF_LIMITS = Object.freeze({
 	characters: 120_000,
 	pages: 40,
@@ -45,7 +45,7 @@ export async function renderProductPdf(value: unknown) {
 		const display = await doc.embedFont(displayData, { subset: true });
 		const body = await doc.embedFont(bodyData, { subset: true });
 		const label = await doc.embedFont(labelData, { subset: true });
-		const ink = rgb(0.063, 0.169, 0.227),
+		const ink = rgb(25 / 255, 53 / 255, 73 / 255),
 			muted = rgb(0.298, 0.337, 0.345),
 			gold = rgb(0.475, 0.357, 0.192);
 		const width = 595.28,
@@ -72,7 +72,7 @@ export async function renderProductPdf(value: unknown) {
 		let page = doc.addPage([width, height]);
 		let y = height - 86;
 		const decorate = () => {
-			page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(0.969, 0.949, 0.906) });
+			page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(1, 1, 1) });
 			page.drawText('A Tua Vida nos Astros', {
 				x: margin,
 				y: height - 43,
@@ -88,13 +88,12 @@ export async function renderProductPdf(value: unknown) {
 			});
 		};
 		decorate();
-		const theme = coverArt.products[product.id as keyof typeof coverArt.products] ?? 'B01';
-		const engraving = await doc.embedPng(coverArt.themes[theme as keyof typeof coverArt.themes]);
+		const engraving = await doc.embedPng(pdfCoverFor(product.id));
+		const coverSize = engraving.scaleToFit(30, 30);
 		page.drawImage(engraving, {
-			x: width - margin - 30,
+			x: width - margin - coverSize.width,
 			y: height - 49,
-			width: 30,
-			height: 30,
+			...coverSize,
 			opacity: 0.8
 		});
 		const ensure = (space: number) => {

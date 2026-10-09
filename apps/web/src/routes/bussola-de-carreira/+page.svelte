@@ -225,7 +225,12 @@
 								>{/if}</StatePanel
 						>{/if}
 				{:else}<div class="result-empty">
-						<img src="/brand/logo/symbol/atv-symbol.svg" alt="" width="80" height="80" />
+						<img
+							src="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-simbolo-claro.svg"
+							alt=""
+							width="80"
+							height="80"
+						/>
 						<p class="eyebrow">02 · Um lugar para a sua pergunta</p>
 						<h2>Seu Meio do Céu aparece aqui.</h2>
 						<p>

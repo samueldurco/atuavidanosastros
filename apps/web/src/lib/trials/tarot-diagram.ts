@@ -11,9 +11,9 @@ export type TarotScene = {
 	nodes: ChartNode[];
 	cards: MethodCard[];
 };
-const ink = '#24374b',
-	gold = '#967536',
-	paper = '#faf6ed';
+const ink = '#3d3027',
+	gold = '#8b673e',
+	paper = '#eddbb8';
 const wrap = (text: string, limit: number) => {
 	const lines: string[] = [];
 	for (const word of text.split(/\s+/)) {
@@ -88,7 +88,7 @@ export function buildTarotScene(saved: Pick<SavedTrial, 'product_id' | 'calculat
 			w: cardWidth,
 			h: cardHeight,
 			rx: 8,
-			fill: '#fffdf7',
+			fill: '#fcf8ef',
 			stroke: gold,
 			width: 1.7
 		});

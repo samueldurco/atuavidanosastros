@@ -67,9 +67,9 @@
 	.tarot-reading {
 		margin: 2rem 0;
 		padding: clamp(1rem, 3vw, 2rem);
-		background: #faf6ed;
-		color: #24374b;
-		border: 1px solid #d5c9ac;
+		background: #eddbb8;
+		color: #3d3027;
+		border: 1px solid #8b673e;
 		border-radius: 1rem;
 	}
 	h2 {
@@ -99,9 +99,9 @@
 		min-height: 64px;
 		padding: 0.9rem;
 		text-align: left;
-		border: 1px solid #ad9a70;
+		border: 1px solid #8b673e;
 		border-radius: 0.5rem;
-		background: #fffdf7;
+		background: #fcf8ef;
 		color: inherit;
 		cursor: pointer;
 	}
@@ -112,7 +112,7 @@
 	}
 	button:focus-visible,
 	a:focus-visible {
-		outline: 3px solid #365d7d;
+		outline: 3px solid #3d3027;
 		outline-offset: 3px;
 	}
 	nav {
@@ -129,7 +129,7 @@
 		display: inline-flex;
 		align-items: center;
 		min-height: 44px;
-		color: #24374b;
+		color: #3d3027;
 		text-underline-offset: 0.2em;
 	}
 </style>

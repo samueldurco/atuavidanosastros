@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { scanAccessibility } from './fixtures/accessibility';
 
 // Pre-admission Gate B: real signed bodies rendered by the actual SSR component.
+// Keep the root layout's V4 context so candidates inherit the deployed reading surface.
 // This local surface is a candidate inspection, never a public route or admission.
 for (const width of [1440, 390, 320]) {
 	test(`twelve signed candidates: reading and accessibility at ${width}px`, async ({
@@ -23,7 +24,7 @@ for (const width of [1440, 390, 320]) {
 				'utf8'
 			);
 			await page.setContent(
-				`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inspeção local ${code}</title>${styles}</head><body><main id="conteudo" tabindex="-1">${html}</main></body></html>`
+				`<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Inspeção local ${code}</title>${styles}</head><body><div class="v4-experience v4-internal"><main id="conteudo" tabindex="-1">${html}</main></div></body></html>`
 			);
 			await page.evaluate(() => document.fonts.ready);
 			await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);

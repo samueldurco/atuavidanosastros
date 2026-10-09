@@ -75,10 +75,10 @@ for (const width of [320, 1440]) {
 		const sections = page.locator('main > section[aria-labelledby]');
 		await expect(sections).toHaveCount(4);
 		for (const [index, name] of [
-			'Comece gratuitamente',
-			'Leituras e experiências',
-			'Revista ATVNA',
-			'Loja dos Signos'
+			'Comece gratuitamente.',
+			'Leituras e experiências.',
+			'Revista ATVNA.',
+			'Loja dos Signos.'
 		].entries()) {
 			await expect(sections.nth(index).getByRole('heading', { level: 2 })).toHaveText(name);
 		}

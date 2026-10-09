@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
 	import VisualHeading from '$lib/components/VisualHeading.svelte';
-	import VisualMotif from '$lib/components/VisualMotif.svelte';
+	import V4Artwork from '$lib/components/V4Artwork.svelte';
 	import { formatLabels } from '$lib/data/product-details';
 	let { data } = $props();
 </script>
@@ -9,8 +9,10 @@
 <section class="section">
 	<div class="reading">
 		<p class="eyebrow">Conheça a leitura</p>
-		<VisualMotif identity={data.product.id} eager />
-		<VisualHeading title={data.product.name} identity={data.product.id} />
+		<div class="v4-title-group with-object">
+			<V4Artwork identity={data.product.id} title eager />
+			<VisualHeading title={data.product.name} identity={data.product.id} />
+		</div>
 		<p class="lead">{data.product.summary}</p>
 		<h2>O que a leitura aborda</h2>
 		<p>{data.details.scope}</p>

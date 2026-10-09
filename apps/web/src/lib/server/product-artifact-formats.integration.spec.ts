@@ -45,9 +45,9 @@ async function fixture(
 	const db = await setupProductDatabase();
 	try {
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
-		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
+		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
 		await db.exec(await file('supabase/migrations/20260929020000_product_pdf_renderer_1_2.sql'));
-		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
+		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
 		const query = async (
 			role: string,
 			user: string | null,
@@ -296,9 +296,7 @@ for (const withContext of [true, false]) {
 			const savedAfterFix = await workflowArtifacts(f.event(), f.id, stored.artifact.id);
 			expect(savedAfterFix.status).toBe(200);
 			expect(new Uint8Array(await savedAfterFix.arrayBuffer())).toEqual(pdf.bytes);
-			await f.db.exec(
-				await file('supabase/migrations/20261005150000_language_renderer_versions.sql')
-			);
+			await f.db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
 			expect(await f.producer.produce(f.job('pdf'))).toEqual(stored);
 			await f.db.exec("update workflow_releases set enabled=false where product_id='week-reading'");
 			expect((await workflowArtifacts(f.event(), f.id, stored.artifact.id)).status).toBe(404);
