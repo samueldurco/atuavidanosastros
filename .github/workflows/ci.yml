@@ -50,7 +50,7 @@ jobs:
       - name: Editorial candidate Gate B and public SEO
         run: pnpm --dir apps/web exec playwright test editorial-candidates.e2e.ts seo.e2e.ts articles-discovery.e2e.ts --workers=1
       - name: Public and synthetic private accessibility with keyboard regression
-        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts public-menu.e2e.ts private-accessibility.e2e.ts gate-b.e2e.ts consent-reflow.e2e.ts city-location.e2e.ts product-test-index.e2e.ts private-trials.e2e.ts trial-access.e2e.ts visual-v3.e2e.ts reconstruction.e2e.ts tarot-reconstruction.e2e.ts reconstruction-dossier.e2e.ts reconstruction-horoscope.e2e.ts reconstruction-week.e2e.ts reconstruction-atlas.e2e.ts reconstruction-compass.e2e.ts reconstruction-pillars.e2e.ts reconstruction-birth.e2e.ts --workers=1
+        run: pnpm --dir apps/web exec playwright test public-accessibility.e2e.ts public-menu.e2e.ts private-accessibility.e2e.ts gate-b.e2e.ts consent-reflow.e2e.ts city-location.e2e.ts product-test-index.e2e.ts private-trials.e2e.ts trial-access.e2e.ts visual-v3.e2e.ts reconstruction.e2e.ts tarot-reconstruction.e2e.ts reconstruction-dossier.e2e.ts reconstruction-horoscope.e2e.ts reconstruction-week.e2e.ts reconstruction-atlas.e2e.ts reconstruction-compass.e2e.ts reconstruction-pillars.e2e.ts reconstruction-birth.e2e.ts reconstruction-ascendant.e2e.ts --workers=1
       - name: Legal documents and TikTok endpoint isolation
         run: pnpm --dir apps/web exec playwright test --config=playwright.social.config.ts
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

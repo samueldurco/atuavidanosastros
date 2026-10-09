@@ -102,6 +102,11 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			url.searchParams.get('birthContext') === 'workload'
 				? 'Estou com sobrecarga e preciso preservar descanso.'
 				: 'Quero estudar e explicar melhor o que aprendo.';
+	if (productId === 'ascendant')
+		input.context =
+			url.searchParams.get('ascendantContext') === 'workload'
+				? 'Estou com sobrecarga e preciso preservar descanso.'
+				: 'Quero abrir uma conversa e explicar minhas necessidades.';
 	if (productId === 'purpose-career')
 		input.context =
 			'Quero mudar de área e testar uma contribuição sem comprometer meus recursos e descanso.';

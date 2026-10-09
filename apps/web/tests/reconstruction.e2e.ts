@@ -4,8 +4,8 @@ import AxeBuilder from '@axe-core/playwright';
 for (const width of [390, 1440]) {
 	for (const [product, title] of [
 		['three-pillars', 'Três Pilares'],
-		['birth-chart', 'Mapa Astral'],
-		['ascendant', 'Ascendente'],
+		['birth-chart', 'Mapa Astral — assinaturas e temas de vida'],
+		['ascendant', 'Ascendente — aproximação, regente e resposta'],
 		['midheaven', 'Meio do Céu']
 	]) {
 		test(`${product}: integrated reading and chart at ${width}px`, async ({ page }) => {

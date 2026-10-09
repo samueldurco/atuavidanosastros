@@ -35,9 +35,10 @@ export const experiences: Record<string, Experience> = {
 		false
 	),
 	ascendant: contract(
-		'Observe seu primeiro contato com pessoas e situações e experimente uma resposta diferente.',
-		4,
-		'brief'
+		'Relacione sua forma de aproximação ao regente, a Sol e Lua e aos contatos calculados; teste uma resposta em uma situação real.',
+		12,
+		'book',
+		false
 	),
 	midheaven: contract(
 		'Separe a contribuição que você quer construir das expectativas sobre reconhecimento.',

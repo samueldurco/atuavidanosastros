@@ -26,6 +26,7 @@ import { projectDirectionReading } from '../trials/reconstruction/direction-fact
 import { projectAtlasReading } from '../trials/reconstruction/atlas-facts';
 import { projectPurposeReading } from '../trials/reconstruction/purpose-facts';
 import { projectCompassReading } from '../trials/reconstruction/compass-facts';
+import { projectAscendantReading } from '../trials/reconstruction/ascendant-facts';
 import { projectPillarsReading } from '../trials/reconstruction/pillars-facts';
 import { projectBirthReading } from '../trials/reconstruction/birth-facts';
 
@@ -149,6 +150,7 @@ export async function calculateTrial(
 			context
 		)) as CalculationSnapshot;
 		const positions = natal.data.positions as AspectPosition[];
+		if (input.productId === 'ascendant') return projectAscendantReading(input, natal);
 		if (input.productId === 'three-pillars') return projectPillarsReading(input, natal);
 		if (input.productId === 'birth-chart') return projectBirthReading(input, natal);
 		const aspects = calculateAspects(positions, trialAspectPolicy);

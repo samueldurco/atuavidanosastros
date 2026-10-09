@@ -72,7 +72,9 @@ export function trialGeometry(saved: SavedTrial, person?: 'first' | 'second') {
 		!Array.isArray(positions) ||
 		positions.length !==
 			(['ascendant', 'midheaven'].includes(saved.product_id) &&
-			saved.calculation.version !== 'atv-private-natal-synthesis/4.0.0'
+			!['atv-private-natal-synthesis/4.0.0', 'atv-private-ascendant/5.0.0'].includes(
+				saved.calculation.version
+			)
 				? 0
 				: saved.product_id === 'pair-preview'
 					? 3

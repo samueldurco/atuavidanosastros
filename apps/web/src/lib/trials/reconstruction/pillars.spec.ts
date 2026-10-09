@@ -176,7 +176,7 @@ describe('Três Pilares 5: integração, fonte e contrapontos', () => {
 			c = await sample(),
 			r = composeTrialReading(i, c),
 			approval = await approveTrialReading(i, c, r);
-		const old = await calculateTrial({ ...i, productId: 'ascendant' }, runId);
+		const old = await calculateTrial({ ...i, productId: 'midheaven' }, runId);
 		old.data.productId = 'three-pillars';
 		const previous = composeTrialReading(i, old);
 		expect(previous.version).toBe('atv-product-reconstruction/4.0.0');

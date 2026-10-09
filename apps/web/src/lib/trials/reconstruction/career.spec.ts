@@ -16,7 +16,7 @@ import { normalizeFactGraph } from './fact-graph';
 const runId = '00000000-0000-4000-8000-000000000084';
 // Preserve the historical 4.0 calculation contract while new revisions use Compass 5.0.
 async function calculateTrial(value: WorkflowInput, id: string): Promise<CalculationSnapshot> {
-	const natal = await calculateCurrentTrial({ ...value, productId: 'ascendant' }, id);
+	const natal = await calculateCurrentTrial({ ...value, productId: 'midheaven' }, id);
 	return {
 		...natal,
 		version: 'atv-private-career-synthesis/4.0.0',
