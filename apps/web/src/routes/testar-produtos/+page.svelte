@@ -5,6 +5,14 @@
 	import Card from '$lib/components/ui/Card.svelte';
 	import { loginHref } from '$lib/auth-return';
 	let { data } = $props();
+	const products = $derived(data.products.filter((product) => product.universe !== 'global'));
+	const approvedProducts = $derived(
+		products.filter((product) =>
+			data.feedback.some(
+				(feedback) => feedback.product_id === product.id && feedback.decision === 'approved'
+			)
+		).length
+	);
 </script>
 
 <svelte:head>
@@ -21,7 +29,7 @@
 		eyebrow="Área de teste"
 		title="Teste os produtos"
 		description={data.trialAccess
-			? 'Seus 25 produtos estão disponíveis para teste gratuito. Gere as leituras, reabra os resultados e registre seu parecer, um produto por vez.'
+			? `Seus ${products.length} produtos estão disponíveis para teste gratuito. Gere as leituras, reabra os resultados e registre seu parecer, um produto por vez.`
 			: 'Entre com sua conta Google para acessar os testes privados.'}
 	/>
 	{#if data.trialAccess}
@@ -42,11 +50,11 @@
 		<section aria-labelledby="free-products">
 			<h2 id="free-products">Escolha seu próximo produto</h2>
 			<p>
-				{data.feedback.filter((f) => f.decision === 'approved').length} de 25 produtos aprovados por você.
-				Uma rejeição fica registrada para orientar a revisão.
+				{approvedProducts} de {products.length} produtos aprovados por você. Uma rejeição fica registrada
+				para orientar a revisão.
 			</p>
 			<div class="products">
-				{#each data.products.filter((p) => p.universe !== 'global') as product (product.id)}
+				{#each products as product (product.id)}
 					{@const feedback = data.feedback.find((f) => f.product_id === product.id)}
 					<Card
 						title={product.name}
@@ -78,21 +86,21 @@
 			variant="attention"
 		>
 			<p>
-				O acesso aos 25 produtos e ao ATV+ é liberado por conta. Use a mesma conta Google autorizada
-				para seus testes.
+				O acesso aos {products.length} produtos e ao ATV+ é liberado por conta. Use a mesma conta Google
+				autorizada para seus testes.
 			</p>
 			<p>
 				<a href={loginHref('/testar-produtos')}>Entrar com Google para testar</a>
 			</p>
 		</Card>
 		<section aria-labelledby="entradas-title">
-			<h2 id="entradas-title">Os 25 produtos para teste privado</h2>
+			<h2 id="entradas-title">Os {products.length} produtos para teste privado</h2>
 			<p>
 				Ao entrar com a conta autorizada, você poderá gerar, salvar e avaliar cada leitura
 				gratuitamente.
 			</p>
 			<div class="products">
-				{#each data.products.filter((product) => product.universe !== 'global') as product (product.id)}
+				{#each products as product (product.id)}
 					<Card title={product.name} eyebrow="Teste privado" variant="product">
 						<a href={`/testar-produtos/${product.id}`}>Testar {product.name}</a>
 					</Card>
