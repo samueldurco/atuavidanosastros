@@ -174,7 +174,10 @@ for (const width of [1440, 390]) {
 		test.setTimeout(240_000);
 		await page.setViewportSize({ width, height: 1000 });
 		for (const document of published) {
-			const response = await request.get(document.path);
+			// Axe and screenshots can outlive the local server's idle keep-alive window.
+			const response = await request.get(document.path, {
+				headers: { Connection: 'close' }
+			});
 			expect(response.status(), document.path).toBe(200);
 			const html = await response.text();
 			expect(html).toContain(document.title);
