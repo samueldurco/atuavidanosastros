@@ -11,6 +11,8 @@ export default defineConfig({
 		command: `pnpm build && pnpm exec wrangler pages dev .svelte-kit/cloudflare --port ${port} --binding FREE_TOOL_RECEIPT_KEY=${freeToolReceiptKey}`,
 		env: { FREE_TOOL_RECEIPT_KEY: freeToolReceiptKey },
 		port,
+		stdout: 'pipe',
+		stderr: 'pipe',
 		reuseExistingServer: false,
 		timeout: 300_000
 	},
