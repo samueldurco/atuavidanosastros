@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { onMount, untrack } from 'svelte';
+	import { loginHref } from '$lib/auth-return';
 	import BirthCityFields from '$lib/components/BirthCityFields.svelte';
 	import { emptyNatalForm } from '$lib/natal-form';
 	import { resolvedCivilInstant } from '$lib/city-location';
@@ -11,6 +14,10 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import { isUuid } from '$lib/library-result';
 	let { data } = $props();
+	let hydrated = $state(false);
+	onMount(() => {
+		hydrated = true;
+	});
 	let date = $state('');
 	let time = $state('');
 	let birthForm = $state(emptyNatalForm());
@@ -23,6 +30,7 @@
 	let saveMessage = $state('');
 	let savedItemId = $state<string | null>(null);
 	let saveFailed = $state(false);
+	let storageMessage = $state('');
 	let error = $state('');
 	let submittedInput = $state<Record<string, string | number> | null>(null);
 	let result = $state<{
@@ -33,6 +41,109 @@
 		warning: string | null;
 		provenance: { provider: string; providerVersion: string };
 	} | null>(null);
+	const storageKey = 'atv-free-tool:bussola-de-carreira';
+	const draftLifetime = 30 * 60 * 1000;
+	function clearStorage() {
+		try {
+			sessionStorage.removeItem(storageKey);
+		} catch {
+			/* Storage may be unavailable. */
+		}
+	}
+	function clear() {
+		clearStorage();
+		date = '';
+		time = '';
+		birthForm = emptyNatalForm();
+		result = null;
+		submittedInput = null;
+		error = '';
+		saveMessage = '';
+		savedItemId = null;
+		saveFailed = false;
+		storageMessage = '';
+	}
+	function remember() {
+		if (!result || !submittedInput) return;
+		try {
+			sessionStorage.setItem(
+				storageKey,
+				JSON.stringify({
+					expiresAt: Date.now() + draftLifetime,
+					draft: birthForm,
+					input: submittedInput,
+					result
+				})
+			);
+		} catch {
+			storageMessage =
+				'Este navegador não permite guardar o resultado temporário. Mantenha esta página aberta para consultá-lo.';
+		}
+	}
+	function restore() {
+		try {
+			const raw = sessionStorage.getItem(storageKey);
+			if (!raw) return;
+			if (raw.length > 16000) throw new Error('invalid draft');
+			const saved = JSON.parse(raw);
+			const form = saved.draft;
+			const input = saved.input;
+			const value = saved.result;
+			if (
+				!Number.isFinite(saved.expiresAt) ||
+				saved.expiresAt <= Date.now() ||
+				saved.expiresAt > Date.now() + draftLifetime ||
+				!form ||
+				!input ||
+				!value ||
+				Object.keys(emptyNatalForm()).some(
+					(key) => typeof form[key] !== 'string' || form[key].length > 250
+				) ||
+				!/^\d{4}-\d{2}-\d{2}$/.test(form.date) ||
+				!/^\d{2}:\d{2}$/.test(form.time) ||
+				typeof value.sign !== 'string' ||
+				value.sign.length > 40 ||
+				!Number.isFinite(value.degree) ||
+				value.degree < 0 ||
+				value.degree >= 30 ||
+				!Number.isFinite(value.midheaven) ||
+				value.midheaven < 0 ||
+				value.midheaven >= 360 ||
+				typeof value.status !== 'string' ||
+				(value.warning !== null && typeof value.warning !== 'string') ||
+				!value.provenance ||
+				typeof value.provenance.provider !== 'string' ||
+				typeof value.provenance.providerVersion !== 'string'
+			)
+				throw new Error('invalid draft');
+			const resolved = resolvedCivilInstant(form.date, form.time, form.timezone, form.occurrence);
+			if (
+				input.localDateTime !== `${form.date}T${form.time}:00` ||
+				input.timezone !== form.timezone ||
+				input.utcInstant !== resolved.utcInstant ||
+				input.latitude !== Number(form.latitude) ||
+				input.longitude !== Number(form.longitude) ||
+				input.locationSource !== form.source ||
+				!Number.isFinite(input.latitude) ||
+				Math.abs(input.latitude) > 90 ||
+				!Number.isFinite(input.longitude) ||
+				Math.abs(input.longitude) > 180
+			)
+				throw new Error('invalid draft');
+			birthForm = form;
+			date = form.date;
+			time = form.time;
+			submittedInput = input;
+			result = value;
+			storageMessage =
+				'Seu cálculo foi recuperado nesta aba. Você pode salvar o mesmo resultado depois de entrar.';
+		} catch {
+			clearStorage();
+		}
+	}
+	$effect(() => {
+		if (browser) untrack(restore);
+	});
 	async function submit(event: SubmitEvent) {
 		event.preventDefault();
 		pending = true;
@@ -41,6 +152,8 @@
 		submittedInput = null;
 		saveMessage = '';
 		savedItemId = null;
+		storageMessage = '';
+		clearStorage();
 		try {
 			const localDateTime = `${date}T${time}:00`;
 			if (!birthForm.location) throw new Error('Selecione sua cidade nos resultados da busca.');
@@ -62,6 +175,7 @@
 				throw new Error('Não foi possível calcular. Confira a data, a hora e a cidade.');
 			result = await response.json();
 			submittedInput = input;
+			remember();
 		} catch (issue) {
 			error =
 				issue instanceof Error && issue.message
@@ -85,6 +199,7 @@
 			if (!response.ok)
 				throw new Error('Não foi possível calcular. Confira a data, a hora e a cidade.');
 			saveMessage = 'Sua Bússola foi salva na Biblioteca.';
+			clearStorage();
 			const saved = await response.json();
 			savedItemId =
 				saved &&
@@ -104,19 +219,10 @@
 	}
 </script>
 
-<svelte:head
-	><title>Bússola de Carreira grátis — A Tua Vida nos Astros</title><meta
-		name="description"
-		content="Calcule seu Meio do Céu gratuitamente com sua data, hora e local de nascimento. Conheça esse ponto do mapa ligado à carreira."
-	/><link
-		rel="canonical"
-		href="https://atuavidanosastros.com.br/bussola-de-carreira"
-	/></svelte:head
->
 <ContentShell kind="product">
 	<div data-stitch="P0-01 VRT-05">
 		<nav aria-label="Caminho da Bússola" class="breadcrumb">
-			<a href="/proposito">Carreira e dinheiro</a><span aria-hidden="true">/</span><span
+			<a href="/temas/carreira">Carreira e propósito</a><span aria-hidden="true">/</span><span
 				aria-current="page">Bússola de Carreira</span
 			>
 		</nav>
@@ -127,13 +233,13 @@
 			description="Descubra o signo do seu Meio do Céu. Informe seus dados de nascimento para fazer o cálculo gratuito."
 		/>
 		<div class="tool-grid">
-			<form class="card natal-form" onsubmit={submit}>
+			<form class="card natal-form" data-hydrated={hydrated} onsubmit={submit}>
 				<div class="form-heading">
 					<p class="eyebrow">01 · Seus dados</p>
 					<h2>Seus dados de nascimento</h2>
 					<p>Preencha os dados de nascimento com a maior precisão que tiver.</p>
 				</div>
-				<fieldset disabled={pending || savePending}>
+				<fieldset disabled={!hydrated || pending || savePending}>
 					<legend class="sr-only">Dados de nascimento</legend>
 					<div class="field-pair">
 						<Field id="birth-date" label="Data de nascimento"
@@ -160,10 +266,13 @@
 					</div>
 					<BirthCityFields id="birth-city" label="Cidade de nascimento" bind:form={birthForm} />
 				</fieldset>
-				<Button type="submit" {pending} disabled={savePending}
+				<Button type="submit" {pending} disabled={!hydrated || savePending}
 					>{pending ? 'Calculando…' : 'Calcular meu Meio do Céu'}</Button
 				>
-				<p class="input-note">Seus dados de nascimento não são salvos neste cálculo.</p>
+				<p class="input-note">
+					O resultado aparece antes do cadastro. Ele pode ser retomado nesta aba por 30 minutos; ao
+					fechar a aba, o registro local é descartado.
+				</p>
 			</form>
 			<section class="result-column" aria-label="Resultado da Bússola">
 				{#if pending}<StatePanel
@@ -193,12 +302,15 @@
 							<div class="result-actions">
 								{#if data.canSave}<Button variant="secondary" onclick={save} pending={savePending}
 										>{savePending ? 'Salvando…' : 'Salvar na Biblioteca'}</Button
-									>{:else}<Button href="/entrar?next=%2Fbussola-de-carreira" variant="secondary"
-										>Entrar para guardar meus cálculos</Button
+									>{:else}<Button
+										href={loginHref('/bussola-de-carreira')}
+										onclick={remember}
+										variant="secondary">Entrar para guardar meus cálculos</Button
 									>{/if}
 							</div>
 							{#if !data.canSave}<p class="muted">
-									Após entrar, preencha os dados novamente para calcular e salvar o resultado.
+									Entre para guardar este resultado na Biblioteca. Você pode retomá-lo nesta aba por
+									30 minutos.
 								</p>{/if}</Card
 						>
 					</div>
@@ -209,8 +321,8 @@
 							{result.provenance.providerVersion}.
 						</p>
 						<p>
-							Dados de nascimento não são armazenados; ao salvar, apenas o resultado e seu método
-							entram na Biblioteca.
+							A retomada nesta aba vale por 30 minutos. Ao fechar a aba, o registro local é
+							descartado. Ao salvar, apenas o resultado e seu método entram na Biblioteca.
 						</p>
 						<p>
 							O resultado corresponde ao último cálculo concluído. Se alterar os campos, calcule
@@ -247,6 +359,12 @@
 					>{/if}
 			</section>
 		</div>
+		{#if storageMessage}<p role="status" class="input-note">{storageMessage}</p>{/if}
+		{#if result || date || time || birthForm.location}<div class="clear-data">
+				<Button variant="tertiary" onclick={clear} disabled={pending || savePending}
+					>Limpar dados e resultado desta aba</Button
+				>
+			</div>{/if}
 		<section class="continuity">
 			<p class="eyebrow">Carreira no mapa astral</p>
 			<h2>Quer conhecer outros fatores do seu mapa?</h2>
@@ -260,6 +378,9 @@
 </ContentShell>
 
 <style>
+	.clear-data {
+		margin-top: 2rem;
+	}
 	.breadcrumb {
 		display: flex;
 		gap: 0.75rem;

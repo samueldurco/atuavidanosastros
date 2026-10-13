@@ -32,7 +32,7 @@
 				<p>Os novos artigos aparecerão aqui assim que forem publicados.</p>
 			</div>
 		{/if}
-		<p><a href="/metodo">Como fazemos as leituras</a> · <a href="/caderno">Ver artigos</a></p>
+		<p><a href="/metodo">Como fazemos as leituras</a> · <a href="/revista">Ver artigos</a></p>
 		{#if seo.path === '/noticias'}<p><a href="/noticias/feed.xml">Acompanhar pelo RSS</a></p>{/if}
 	</div>
 </section>

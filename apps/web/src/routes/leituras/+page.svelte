@@ -3,6 +3,8 @@
 	import VisualHeading from '$lib/components/VisualHeading.svelte';
 	import V4Artwork from '$lib/components/V4Artwork.svelte';
 	import { visualUniverse } from '$lib/data/visual-v4';
+	import { interestNavigation } from '$lib/data/public-navigation';
+	import { freeTools } from '$lib/data/free-tools';
 	let { data } = $props();
 </script>
 
@@ -22,6 +24,13 @@
 		<p class="lead">
 			Escolha um assunto e conheça as leituras para você. Cada página apresenta o conteúdo, os dados
 			necessários e a disponibilidade do produto.
+		</p>
+		<p>
+			Quer começar com uma experiência gratuita? <a href="/ferramentas/ascendente"
+				>Descubra seu Ascendente</a
+			>
+			ou <a href="/ferramentas">explore as ferramentas grátis</a>. Você recebe o resultado antes de
+			criar a conta.
 		</p>
 		<nav class="topics" aria-label="Temas das leituras">
 			<a href="/leituras" aria-current={!data.selected ? 'page' : undefined}>Todos os temas</a>
@@ -48,6 +57,16 @@
 						id={`group-${group.slug}`}
 					/>
 				</div>
+				<p class="topic-path">
+					<a
+						href={interestNavigation.find((topic) => topic.productUniverse === group.slug)?.href ??
+							'/temas'}>Explorar este tema</a
+					>{#each freeTools.filter((tool) => tool.topicId === interestNavigation.find((topic) => topic.productUniverse === group.slug)?.id) as tool (tool.id)}<span
+							aria-hidden="true"
+						>
+							·
+						</span><a href={tool.href}>{tool.label} grátis</a>{/each}
+				</p>
 				<div class="grid grid-3">
 					{#each group.products as product (product.id)}
 						<article class="card product-card v4-paper-card">

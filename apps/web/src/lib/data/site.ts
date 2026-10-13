@@ -1,3 +1,5 @@
+import { interestNavigation } from './public-navigation';
+
 export const SITE = {
 	name: 'A Tua Vida nos Astros',
 	tagline: 'Astrologia para conhecer você.',
@@ -6,19 +8,12 @@ export const SITE = {
 		'Mapa astral, previsões, amor, carreira, Tarot e sonhos. Conheça os temas e as leituras da A Tua Vida nos Astros.'
 } as const;
 
-export const navigation = [
-	{ href: '/meu-ceu', label: 'Mapa astral' },
-	{ href: '/ciclos', label: 'Previsões' },
-	{ href: '/amor', label: 'Amor' },
-	{ href: '/proposito', label: 'Carreira e dinheiro' },
-	{ href: '/tarot', label: 'Tarot' },
-	{ href: '/sonhos', label: 'Sonhos' }
-];
+export const navigation = interestNavigation.map(({ href, label }) => ({ href, label }));
 
 export const universes = [
 	{
 		slug: 'meu-ceu',
-		href: '/meu-ceu',
+		href: '/temas/mapa-astral',
 		eyebrow: 'Sobre você',
 		title: 'Mapa astral',
 		description:
@@ -28,7 +23,7 @@ export const universes = [
 	},
 	{
 		slug: 'ciclos',
-		href: '/ciclos',
+		href: '/temas/previsoes',
 		eyebrow: 'Seu período',
 		title: 'Previsões',
 		description:
@@ -38,7 +33,7 @@ export const universes = [
 	},
 	{
 		slug: 'amor',
-		href: '/amor',
+		href: '/temas/amor',
 		eyebrow: 'Relacionamentos',
 		title: 'Amor e relacionamentos',
 		description: 'Conheça a combinação de dois mapas: atração, afinidades e desafios da relação.',
@@ -47,9 +42,9 @@ export const universes = [
 	},
 	{
 		slug: 'proposito',
-		href: '/proposito',
+		href: '/temas/carreira',
 		eyebrow: 'Trabalho',
-		title: 'Carreira e dinheiro',
+		title: 'Carreira e propósito',
 		description:
 			'Explore sua vocação, sua vida profissional e sua relação com dinheiro no mapa astral.',
 		cta: 'Conhecer as leituras de carreira',
@@ -57,7 +52,7 @@ export const universes = [
 	},
 	{
 		slug: 'tarot',
-		href: '/tarot',
+		href: '/temas/tarot',
 		eyebrow: 'Sua pergunta',
 		title: 'Tarot',
 		description: 'Tire uma carta, faça suas perguntas e conheça as leituras de Tarot.',
@@ -66,7 +61,7 @@ export const universes = [
 	},
 	{
 		slug: 'sonhos',
-		href: '/sonhos',
+		href: '/temas/sonhos',
 		eyebrow: 'Seus sonhos',
 		title: 'Sonhos',
 		description: 'Conte seus sonhos, explore seus símbolos e acompanhe os temas que se repetem.',
@@ -140,14 +135,14 @@ export const editorialPages = {
 		description:
 			'Conheça o cálculo dos mapas, a interpretação dos resultados e o tratamento de dados incompletos.',
 		cta: 'Ver os temas',
-		href: '/#universos'
+		href: '/temas'
 	},
-	caderno: {
+	revista: {
 		eyebrow: 'Artigos',
 		title: 'Artigos de astrologia',
 		description: 'Guias sobre mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos.',
 		cta: 'Conhecer o mapa astral',
-		href: '/meu-ceu'
+		href: '/temas/mapa-astral'
 	},
 	privacidade: {
 		eyebrow: 'Seus dados',

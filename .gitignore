@@ -30,3 +30,4 @@ Thumbs.db
 *.log
 .idea/
 supabase/functions/atv-trial-runtime/runtime.js
+supabase/functions/atv-free-tools-runtime/runtime.js

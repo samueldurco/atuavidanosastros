@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { SITE, universes } from '$lib/data/site';
+	import { SITE } from '$lib/data/site';
+	import { interestNavigation } from '$lib/data/public-navigation';
 	import { visualV4 } from '$lib/data/visual-v4';
 	import V4Card from '$lib/components/V4Card.svelte';
 	let { data } = $props();
@@ -19,7 +20,7 @@
 			gratuita ou encontre um assunto para conhecer melhor.
 		</p>
 		<div class="hero-actions">
-			<a class="button" href="#comece-gratuitamente">Começar gratuitamente</a><a
+			<a class="button" href="/ferramentas/ascendente">Descobrir meu Ascendente grátis</a><a
 				class="text-link"
 				href="/leituras">Conhecer as leituras →</a
 			>
@@ -31,21 +32,21 @@
 		<div class="section-heading">
 			<div>
 				<p class="eyebrow">Sem custo · sem cadastro para calcular</p>
-				<h2 id="free-heading">Comece gratuitamente.</h2>
+				<h2 id="free-heading">Descubra seu Ascendente.</h2>
 			</div>
 		</div>
 		<div class="free-feature">
 			<div class="free-art" aria-hidden="true">
 				<img
 					class="sun"
-					src={visualV4.figures.proposito[0]}
+					src={visualV4.figures['meu-ceu'][0]}
 					alt=""
 					width="320"
 					height="320"
 					loading="lazy"
 				/><img
 					class="saturn"
-					src={visualV4.figures.proposito[1]}
+					src={visualV4.mandala}
 					alt=""
 					width="320"
 					height="320"
@@ -53,12 +54,13 @@
 				/>
 			</div>
 			<div class="free-copy">
-				<h3>Bússola de Carreira</h3>
+				<h3>Calculadora de Ascendente</h3>
 				<p>
-					Descubra o signo e o grau do seu Meio do Céu, um dos pontos do mapa associados à vida
-					profissional. Informe sua data, hora e cidade de nascimento.
+					Informe sua data, hora e cidade de nascimento. Veja o signo e o grau do seu Ascendente,
+					com uma leitura curta, antes de criar sua conta.
 				</p>
-				<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu grátis</a>
+				<a class="button" href="/ferramentas/ascendente">Calcular meu Ascendente grátis</a>
+				<p><a href="/ferramentas">Explorar todas as ferramentas gratuitas →</a></p>
 			</div>
 		</div>
 		<ol class="free-steps">
@@ -72,8 +74,8 @@
 			<li>
 				<span class="step-number">02</span>
 				<div>
-					<h4>Conheça seu Meio do Céu</h4>
-					<p>Veja o signo, o grau, o método e os limites do cálculo.</p>
+					<h4>Conheça seu Ascendente</h4>
+					<p>Veja o resultado, a leitura curta e os limites do cálculo.</p>
 				</div>
 			</li>
 			<li>
@@ -90,23 +92,22 @@
 	<div class="section-inner">
 		<div class="section-heading has-link">
 			<div>
-				<p class="eyebrow">Produtos digitais</p>
-				<h2 id="readings-heading">Leituras e experiências.</h2>
+				<p class="eyebrow">Seis temas para explorar</p>
+				<h2 id="readings-heading">O que você quer conhecer?</h2>
 			</div>
 			<a href="/leituras">Ver todas as leituras →</a>
 		</div>
 		<p class="section-lead">
-			Escolha um tema para conhecer os produtos digitais. Confira o conteúdo e a disponibilidade de
-			cada leitura.
+			Encontre ferramentas gratuitas, leituras e artigos relacionados ao assunto que interessa a
+			você.
 		</p>
 		<div class="universe-track">
-			{#each universes as universe (universe.slug)}<V4Card
-					identity={universe.slug}
-					title={universe.title}
+			{#each interestNavigation as universe (universe.id)}<V4Card
+					identity={universe.id}
+					title={universe.label}
 					description={universe.description}
-					eyebrow={universe.eyebrow}
-					href={`/leituras?tema=${universe.slug}`}
-					action={universe.cta}
+					href={universe.href}
+					action="Explorar o tema"
 				/>{/each}
 		</div>
 	</div>
@@ -118,7 +119,7 @@
 				<p class="eyebrow">Artigos e guias</p>
 				<h2 id="magazine-heading">Revista ATVNA.</h2>
 			</div>
-			<a href="/caderno">Explorar a Revista ATVNA →</a>
+			<a href="/revista">Explorar a Revista ATVNA →</a>
 		</div>
 		<p class="section-lead">
 			Entenda seu mapa astral, acompanhe os temas dos ciclos e explore relacionamentos, carreira,
@@ -136,25 +137,6 @@
 					compact={index > 0}
 					variant={index}
 				/>{/each}
-		</div>
-	</div>
-</section>
-<section class="paper-section shop" aria-labelledby="shop-heading">
-	<div class="section-inner shop-inner">
-		<div>
-			<p class="eyebrow">Produtos físicos</p>
-			<h2 id="shop-heading">Loja dos Signos.</h2>
-			<p>Um espaço para levar os símbolos dos signos para o seu dia a dia.</p>
-			<a class="button" href="/loja">Conhecer a Loja dos Signos</a>
-		</div>
-		<div class="shop-note">
-			<span class="printed-star" aria-hidden="true">✶</span>
-			<div>
-				<h3>A coleção está em preparação.</h3>
-				<p>
-					As novidades em produtos físicos serão apresentadas aqui quando estiverem disponíveis.
-				</p>
-			</div>
 		</div>
 	</div>
 </section>

@@ -15,9 +15,9 @@ for (const width of [390, 1440]) {
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
 		await page
 			.getByRole('navigation', { name: 'Navegação principal' })
-			.getByRole('link', { name: 'Revista ATVNA', exact: true })
+			.getByRole('link', { name: 'Revista', exact: true })
 			.click();
-		await expect(page).toHaveURL(/\/caderno$/);
+		await expect(page).toHaveURL(/\/revista$/);
 		await expect(page.locator('.published-guide')).toHaveCount(12);
 		await page.screenshot({ path: testInfo.outputPath(`artigos-${width}.png`), fullPage: true });
 		const accessibility = await new AxeBuilder({ page })
@@ -30,7 +30,7 @@ for (const width of [390, 1440]) {
 				.getByRole('navigation', { name: 'Assuntos dos artigos' })
 				.getByRole('link', { name: item.label, exact: true })
 				.click();
-			await expect(page).toHaveURL(new RegExp(`/caderno\\?tema=${item.id}$`));
+			await expect(page).toHaveURL(new RegExp(`/revista\\?tema=${item.id}$`));
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(
 				`Revista ATVNA: ${item.label}`
 			);
@@ -44,17 +44,17 @@ for (const width of [390, 1440]) {
 				expect((await request.get(path)).status(), path).toBe(200);
 			await cards.first().getByRole('link').click();
 			const breadcrumb = page.getByRole('navigation', { name: 'Caminho do artigo' });
-			await expect(breadcrumb.getByRole('link', { name: 'Artigos', exact: true })).toHaveAttribute(
+			await expect(breadcrumb.getByRole('link', { name: 'Revista', exact: true })).toHaveAttribute(
 				'href',
-				'/caderno'
+				'/revista'
 			);
 			await breadcrumb.getByRole('link', { name: item.label, exact: true }).click();
-			await expect(page).toHaveURL(new RegExp(`/caderno\\?tema=${item.id}$`));
+			await expect(page).toHaveURL(new RegExp(`/revista\\?tema=${item.id}$`));
 			await page
 				.getByRole('navigation', { name: 'Assuntos dos artigos' })
 				.getByRole('link', { name: 'Todos os temas' })
 				.click();
-			await expect(page).toHaveURL(/\/caderno$/);
+			await expect(page).toHaveURL(/\/revista$/);
 			await expect(page.locator('.published-guide')).toHaveCount(12);
 		}
 		expect(
@@ -66,7 +66,7 @@ for (const width of [390, 1440]) {
 test('a lista completa e seus destinos estão no HTML servido, sem depender de JavaScript', async ({
 	request
 }) => {
-	const response = await request.get('/caderno');
+	const response = await request.get('/revista');
 	expect(response.status()).toBe(200);
 	const html = await response.text();
 	for (const path of Object.values(editorialTopicPaths).flat())

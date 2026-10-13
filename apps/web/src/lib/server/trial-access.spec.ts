@@ -118,6 +118,7 @@ describe('nominal trial access in the normal app', () => {
 				event: {
 					locals: {},
 					url: new URL('https://example.com/produtos/mapa-astral'),
+					request: new Request('https://example.com/produtos/mapa-astral'),
 					cookies: { getAll: () => [{ name, value: 'synthetic' }] }
 				},
 				resolve: async () => new Response('catalog')

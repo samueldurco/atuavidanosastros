@@ -64,7 +64,7 @@ export function pagesSitemap(documents: readonly EditorialDocument[]): string {
 			: hubDocuments(documents, path as keyof typeof editorialHubs).length > 0
 	);
 	return urlset(
-		[...legacyPublicPaths, ...hubs, ...horoscopeSigns]
+		[...new Set([...legacyPublicPaths, ...hubs, ...horoscopeSigns])]
 			.map((path) => `<url><loc>${xml(SITE.url + (path === '/' ? '' : path))}</loc></url>`)
 			.join('')
 	);
