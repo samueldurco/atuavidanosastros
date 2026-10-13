@@ -1,8 +1,15 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { isUuid, parseSavedCompass, type LibraryReaderData } from '$lib/library-result';
 import { parseProductRun, type WorkflowReaderData } from '$lib/product-run';
+import { parseFreeToolResult } from '$lib/free-tool-result';
+import type { FreeToolResult } from '$lib/free-tools';
+import type { LibraryItemSummary } from '$lib/library-result';
 
-export type ReaderLookup = LibraryReaderData | WorkflowReaderData | { state: 'not-found' };
+export type ReaderLookup =
+	| LibraryReaderData
+	| WorkflowReaderData
+	| { state: 'free-tool'; item: LibraryItemSummary; result: FreeToolResult }
+	| { state: 'not-found' };
 
 /** The caller passes the session client, never a service-role client. Explicit ownership complements RLS. */
 export async function readLibraryResult(
@@ -40,6 +47,20 @@ export async function readLibraryResult(
 			const run = error ? null : parseProductRun(data);
 			return run && run.id === item.source_id && run.libraryItemId === itemId
 				? { state: 'workflow', item: summary, run }
+				: { state: 'unavailable', item: summary, result: null };
+		}
+		if (item.item_type === 'FREE_TOOL_RESULT') {
+			if (typeof item.source_id !== 'string' || !isUuid(item.source_id))
+				return { state: 'unavailable', item: summary, result: null };
+			const { data: saved, error } = await client
+				.from('free_tool_results')
+				.select('result')
+				.eq('user_id', userId)
+				.eq('id', item.source_id)
+				.maybeSingle();
+			const result = error ? null : parseFreeToolResult(saved?.result);
+			return result && result.id === item.source_id
+				? { state: 'free-tool', item: summary, result }
 				: { state: 'unavailable', item: summary, result: null };
 		}
 		if (item.item_type !== 'COMPASS_RESULT')

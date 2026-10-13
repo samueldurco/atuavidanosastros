@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { freeTools } from '../src/lib/data/free-tools';
 import type { EditorialDocument } from '../src/lib/server/editorial';
 import { scanAccessibility } from './fixtures/accessibility';
 
@@ -9,6 +10,25 @@ const release = JSON.parse(
 ) as { packages: { document: EditorialDocument }[] };
 const published = release.packages.map((entry) => entry.document);
 const news = published.filter((document) => document.path.startsWith('/noticias/'));
+
+test('the purpose landing keeps its existing URL and one canonical without a redirect', async ({
+	request
+}) => {
+	for (const method of ['GET', 'HEAD']) {
+		const response = await request.fetch('/mapa-de-proposito?origem=qa', {
+			method,
+			maxRedirects: 0
+		});
+		expect(response.status()).toBe(200);
+		expect(response.headers()['location']).toBeUndefined();
+		if (method === 'GET') {
+			const html = await response.text();
+			expect(html.match(/rel="canonical"/g)).toHaveLength(1);
+			expect(html).toContain('href="https://atuavidanosastros.com.br/mapa-de-proposito"');
+			expect(html).toContain('Mapa de Carreira');
+		}
+	}
+});
 
 test('editorial hubs reflect admitted content with one canonical', async ({ page, request }) => {
 	for (const path of ['/noticias', '/signos', '/horoscopo', '/compatibilidade']) {
@@ -78,6 +98,36 @@ test('sign horoscope indexes exist without claiming an admitted forecast', async
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
 	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
 });
+test('all eight free tools emit one primary metadata set in SSR and the browser', async ({
+	page,
+	request
+}) => {
+	expect(freeTools).toHaveLength(8);
+	expect(freeTools.find((tool) => tool.id === 'bussola-de-carreira')?.href).toBe(
+		'/bussola-de-carreira'
+	);
+	for (const tool of freeTools) {
+		const response = await request.get(tool.href, { headers: { accept: 'text/html' } });
+		expect(response.status(), tool.href).toBe(200);
+		const head = (await response.text()).match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1];
+		expect(head, tool.href).toBeDefined();
+		expect(head?.match(/<title\b/gi), tool.href).toHaveLength(1);
+		expect(head?.match(/<link\b[^>]*\brel=["']canonical["']/gi), tool.href).toHaveLength(1);
+		expect(head?.match(/<meta\b[^>]*\bname=["']description["']/gi), tool.href).toHaveLength(1);
+		await page.goto(tool.href);
+		await expect(page.locator('head > title')).toHaveCount(1);
+		await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
+		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+			'href',
+			`https://atuavidanosastros.com.br${tool.href}`
+		);
+		await expect(page.locator('meta[name="description"]')).toHaveCount(1);
+		await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+			'content',
+			tool.description
+		);
+	}
+});
 test('sitemaps preserve real routes and do not include unpublished content', async ({
 	request
 }) => {
@@ -93,7 +143,8 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 		expect(body).not.toContain('/dashboard');
 		if (path === '/sitemap-pages.xml') {
 			expect(body).toContain('https://atuavidanosastros.com.br/leituras');
-			expect(body.match(/<url>/g)).toHaveLength(15 + (news.length > 0 ? 1 : 0));
+			expect(body.match(/<url>/g)).toHaveLength(25 + (news.length > 0 ? 1 : 0));
+			expect(body).toContain('https://atuavidanosastros.com.br/mapa-de-proposito</loc>');
 		} else if (path === '/sitemap-editorial.xml') {
 			expect(body.match(/<url>/g) ?? []).toHaveLength(
 				published.length + (published.length ? 1 : 0)
@@ -123,7 +174,10 @@ for (const width of [1440, 390]) {
 		test.setTimeout(240_000);
 		await page.setViewportSize({ width, height: 1000 });
 		for (const document of published) {
-			const response = await request.get(document.path);
+			// Axe and screenshots can outlive the local server's idle keep-alive window.
+			const response = await request.get(document.path, {
+				headers: { Connection: 'close' }
+			});
 			expect(response.status(), document.path).toBe(200);
 			const html = await response.text();
 			expect(html).toContain(document.title);

@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ url }) => {
 		selected: selected?.id ?? null,
 		topics,
 		seo: {
-			...legacySeo('/caderno')!,
+			...legacySeo('/revista')!,
 			title: 'Revista ATVNA — A Tua Vida nos Astros',
 			description:
 				'Encontre guias sobre mapa astral, ciclos, relacionamentos, Tarot, carreira e sonhos. Escolha um assunto e continue a leitura.',
@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ url }) => {
 				'@context': 'https://schema.org',
 				'@type': 'CollectionPage',
 				name: 'Revista ATVNA',
-				url: `${SITE.url}/caderno`,
+				url: `${SITE.url}/revista`,
 				mainEntity: {
 					'@type': 'ItemList',
 					itemListElement: topics

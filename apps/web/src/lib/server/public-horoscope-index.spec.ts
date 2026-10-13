@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { publicHoroscopeIndex, loadPublicHoroscopeIndex } from './public-horoscope-index';
 import type { EditorialDocument } from './editorial';
 import { pagesSitemap } from './editorial-feeds';
+import { SITE } from '$lib/data/site';
 import {
 	horoscopeRange,
 	parseHoroscopeArchivePath,
@@ -41,11 +42,14 @@ const weekly = fixture('/horoscopo/aries/weekly/2026-10-05', '2026-10-12');
 
 describe('public horoscope archives', () => {
 	it('exposes only sign indexes backed by admitted dated archives in the pages sitemap', () => {
-		expect(pagesSitemap([fixture('/horoscopo/aries', '2026-10-09')])).not.toContain('/horoscopo');
+		const empty = pagesSitemap([fixture('/horoscopo/aries', '2026-10-09')]);
+		expect(empty).toContain(`<loc>${SITE.url}/ferramentas/horoscopo</loc>`);
+		expect(empty).not.toContain(`<loc>${SITE.url}/horoscopo</loc>`);
+		expect(empty).not.toContain(`<loc>${SITE.url}/horoscopo/aries</loc>`);
 		const body = pagesSitemap([daily]);
-		expect(body).toContain('/horoscopo</loc>');
-		expect(body).toContain('/horoscopo/aries</loc>');
-		expect(body).not.toContain('/horoscopo/touro');
+		expect(body).toContain(`<loc>${SITE.url}/horoscopo</loc>`);
+		expect(body).toContain(`<loc>${SITE.url}/horoscopo/aries</loc>`);
+		expect(body).not.toContain(`<loc>${SITE.url}/horoscopo/touro</loc>`);
 	});
 	it('accepts only canonical, real dates and the twelve known signs', () => {
 		expect(parseHoroscopeArchivePath(daily.path)).toEqual({

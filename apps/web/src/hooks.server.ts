@@ -1,8 +1,18 @@
 import { env } from '$env/dynamic/public';
 import { createServerClient } from '@supabase/ssr';
 import type { Handle } from '@sveltejs/kit';
+import { permanentPublicDestination } from '$lib/server/public-redirects';
 
 export const handle: Handle = async ({ event, resolve }) => {
+	const destination = ['GET', 'HEAD'].includes(event.request?.method ?? '')
+		? permanentPublicDestination(event.url)
+		: null;
+	if (destination) {
+		const headers = new Headers({ location: destination, 'x-content-type-options': 'nosniff' });
+		if (event.url.hostname.endsWith('.pages.dev') || event.url.hostname === 'localhost')
+			headers.set('x-robots-tag', 'noindex, nofollow');
+		return new Response(null, { status: 301, headers });
+	}
 	const supabaseKey = env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || env.PUBLIC_SUPABASE_ANON_KEY;
 	if (env.PUBLIC_SUPABASE_URL && supabaseKey) {
 		event.locals.supabase = createServerClient(env.PUBLIC_SUPABASE_URL, supabaseKey, {

@@ -10,7 +10,7 @@
 <section class="section">
 	<div class="horoscope-wrap">
 		<nav class="breadcrumb" aria-label="Caminho do horóscopo">
-			<a href="/ciclos">Previsões</a>{#if data.sign}<span aria-hidden="true"> / </span><a
+			<a href="/temas/previsoes">Previsões</a>{#if data.sign}<span aria-hidden="true"> / </span><a
 					href="/horoscopo">Todos os signos</a
 				>{/if}
 		</nav>

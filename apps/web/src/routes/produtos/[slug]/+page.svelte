@@ -4,6 +4,73 @@
 	import V4Artwork from '$lib/components/V4Artwork.svelte';
 	import { formatLabels } from '$lib/data/product-details';
 	let { data } = $props();
+	const freeEntryByProduct: Record<string, { href: string; label: string }> = {
+		ascendant: { href: '/ferramentas/ascendente', label: 'Calcular meu Ascendente grátis' },
+		'three-pillars': {
+			href: '/ferramentas/mapa-astral',
+			label: 'Ver Sol, Lua e Ascendente grátis'
+		},
+		'birth-chart': { href: '/ferramentas/mapa-astral', label: 'Ver o preview gratuito do mapa' },
+		'life-atlas': {
+			href: '/ferramentas/mapa-astral',
+			label: 'Começar pelo preview gratuito do mapa'
+		},
+		horoscope: { href: '/ferramentas/horoscopo', label: 'Explorar o horóscopo gratuito' },
+		'date-reading': { href: '/ferramentas/horoscopo', label: 'Explorar o horóscopo gratuito' },
+		'pair-preview': {
+			href: '/ferramentas/combinacao-do-casal',
+			label: 'Ver a combinação gratuita do casal'
+		},
+		synastry: {
+			href: '/ferramentas/combinacao-do-casal',
+			label: 'Ver a combinação gratuita do casal'
+		},
+		'couple-dossier': {
+			href: '/ferramentas/combinacao-do-casal',
+			label: 'Começar pela combinação gratuita'
+		},
+		'career-compass': { href: '/bussola-de-carreira', label: 'Calcular meu Meio do Céu grátis' },
+		'tarot-single-card': {
+			href: '/ferramentas/carta-do-dia',
+			label: 'Começar com a Carta do Dia grátis'
+		},
+		'dream-reading': {
+			href: '/ferramentas/registro-de-sonho',
+			label: 'Registrar meu sonho grátis'
+		},
+		'dream-journal': {
+			href: '/ferramentas/registro-de-sonho',
+			label: 'Registrar meu sonho grátis'
+		},
+		'dream-dossier': {
+			href: '/ferramentas/registro-de-sonho',
+			label: 'Registrar meu sonho grátis'
+		},
+		'dream-atlas': { href: '/ferramentas/registro-de-sonho', label: 'Registrar meu sonho grátis' }
+	};
+	const freeEntryByUniverse: Record<string, { href: string; label: string }> = {
+		'meu-ceu': { href: '/ferramentas/mapa-astral', label: 'Ver o preview gratuito do mapa' },
+		'ciclos-tempo': { href: '/ferramentas/horoscopo', label: 'Explorar o horóscopo gratuito' },
+		'amor-relacoes': {
+			href: '/ferramentas/combinacao-do-casal',
+			label: 'Ver a combinação gratuita do casal'
+		},
+		'proposito-prosperidade': {
+			href: '/bussola-de-carreira',
+			label: 'Calcular meu Meio do Céu grátis'
+		},
+		'tarot-arcanos': {
+			href: '/ferramentas/carta-do-dia',
+			label: 'Tirar minha Carta do Dia grátis'
+		},
+		'sonhos-simbolos': {
+			href: '/ferramentas/registro-de-sonho',
+			label: 'Registrar meu sonho grátis'
+		}
+	};
+	const freeEntry = $derived(
+		freeEntryByProduct[data.product.id] ?? freeEntryByUniverse[data.product.universe]
+	);
 </script>
 
 <section class="section">
@@ -42,11 +109,12 @@
 				</p>
 			</div>
 		{/if}
-		{#if !data.trialAccess}
-			<p><a href="/testar-produtos">Acessar testes gratuitos com minha conta</a></p>
-		{/if}
-		{#if data.product.id === 'career-compass'}
-			<Button href="/bussola-de-carreira">Calcular meu Meio do Céu grátis</Button>
+		{#if freeEntry}
+			<div class="card free-entry">
+				<h2>Comece gratuitamente</h2>
+				<p>Conheça um resultado relacionado a esta leitura antes de criar sua conta.</p>
+				<Button href={freeEntry.href}>{freeEntry.label}</Button>
+			</div>
 		{/if}
 		<p class="back">
 			<a href="/dashboard">Ver minhas leituras</a> · <a href="/metodo">Como fazemos as leituras</a>
@@ -59,12 +127,14 @@
 		margin-top: 2rem;
 	}
 	.status,
-	.trial-status {
+	.trial-status,
+	.free-entry {
 		padding: 1.5rem;
 		margin-block: 2rem;
 	}
 	.status h2,
-	.trial-status h2 {
+	.trial-status h2,
+	.free-entry h2 {
 		margin-top: 0;
 	}
 	.trial-status {

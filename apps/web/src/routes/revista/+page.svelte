@@ -11,9 +11,9 @@
 		</h1>
 		<p class="lead">Escolha um assunto e encontre os guias completos para continuar sua leitura.</p>
 		<nav class="topics" aria-label="Assuntos dos artigos">
-			<a href="/caderno" aria-current={!data.selected ? 'page' : undefined}>Todos os temas</a>
+			<a href="/revista" aria-current={!data.selected ? 'page' : undefined}>Todos os temas</a>
 			{#each interestNavigation as item (item.id)}<a
-					href={`/caderno?tema=${item.id}`}
+					href={`/revista?tema=${item.id}`}
 					aria-current={data.selected === item.id ? 'page' : undefined}>{item.label}</a
 				>{/each}
 		</nav>

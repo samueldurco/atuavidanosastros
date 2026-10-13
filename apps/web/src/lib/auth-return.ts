@@ -1,4 +1,5 @@
 import { productCatalog } from '@atv/domain';
+import { savedFreeToolIds } from './free-tool-result';
 
 /** Only known internal destinations may survive authentication. Never carry personal form data. */
 export function authReturnPath(value: string | null | undefined): string {
@@ -12,6 +13,11 @@ export function authReturnPath(value: string | null | undefined): string {
 			'/testar-produtos',
 			'/testar-produtos/atv-plus'
 		].includes(value)
+	)
+		return value;
+	if (
+		savedFreeToolIds.some((id) => value === `/ferramentas/${id}`) ||
+		value === '/ferramentas/horoscopo'
 	)
 		return value;
 	const trial = value.match(/^\/testar-produtos\/([a-z-]+)$/)?.[1];

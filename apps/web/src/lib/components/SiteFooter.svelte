@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { primaryNavigation } from '$lib/data/public-navigation';
 	import { visualContext } from '$lib/data/visual-v4';
 	import BrandLogo from './BrandLogo.svelte';
 	const universe = $derived(
@@ -18,11 +19,10 @@
 			<p>Astrologia para conhecer você.</p>
 		</div>
 		<nav aria-label="Rodapé">
-			<a href="/leituras">Leituras e experiências</a><a href="/metodo">Nosso método</a><a
-				href="/caderno">Revista ATVNA</a
-			><a href="/loja">Loja dos Signos</a><a href="/termos">Termos de uso</a><a href="/privacidade"
-				>Privacidade</a
-			><button
+			{#each primaryNavigation as item (item.href)}<a href={item.href}>{item.label}</a>{/each}
+			<a href="/metodo">Nosso método</a><a href="/loja">Loja dos Signos</a><a href="/termos"
+				>Termos de uso</a
+			><a href="/privacidade">Privacidade</a><button
 				type="button"
 				onclick={() => window.dispatchEvent(new Event('atv-cookie-preferences'))}
 				>Preferências de cookies</button
@@ -30,7 +30,7 @@
 		</nav>
 		<div class="fineprint">
 			<p>Mapa astral, previsões, amor, carreira, Tarot e sonhos.</p>
-			<a href="/#universos">Conheça os temas <span aria-hidden="true">↗</span></a>
+			<a href="/temas">Conheça os temas <span aria-hidden="true">↗</span></a>
 		</div>
 	</div>
 </footer>

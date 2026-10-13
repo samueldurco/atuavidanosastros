@@ -1,4 +1,6 @@
 import { SITE, editorialPages, signs, signNames } from '$lib/data/site';
+import { interestNavigation } from '$lib/data/public-navigation';
+import { freeTools } from '$lib/data/free-tools';
 
 export interface PageSeo {
 	title: string;
@@ -14,14 +16,12 @@ export interface PageSeo {
 // Existing public inventory, not retroactive editorial approval.
 export const legacyPublicPaths = [
 	'/',
-	'/meu-ceu',
-	'/ciclos',
-	'/amor',
-	'/proposito',
-	'/tarot',
-	'/sonhos',
+	'/temas',
+	...interestNavigation.map((topic) => topic.href),
+	'/ferramentas',
+	...freeTools.map((tool) => tool.href),
+	'/revista',
 	'/meio-do-ceu',
-	'/bussola-de-carreira',
 	'/mapa-de-proposito',
 	'/vocacao-no-mapa-astral',
 	'/carreira-no-mapa-astral',
@@ -77,6 +77,8 @@ export function isProductionOrigin(url: URL): boolean {
 }
 
 export function legacySeo(path: string): PageSeo | null {
+	const discovery = discoverySeo(path);
+	if (discovery) return discovery;
 	const slug = path.slice(1);
 	const page = Object.hasOwn(editorialPages, slug)
 		? editorialPages[slug as keyof typeof editorialPages]
@@ -125,6 +127,42 @@ export function legacySeo(path: string): PageSeo | null {
 		path,
 		indexable: !shopSign,
 		managePrimary: false,
+		image: { url: `${SITE.url}/brand/social/og-default-1200x630.png`, alt: SITE.name, large: false }
+	};
+}
+
+export function discoverySeo(path: string): PageSeo | null {
+	const topic = interestNavigation.find((item) => item.href === path);
+	const tool = freeTools.find((item) => item.href === path);
+	const directories: Record<string, { title: string; description: string }> = {
+		'/temas': {
+			title: 'Explore os seis temas',
+			description:
+				'Mapa astral, previsões, amor, carreira, Tarot e sonhos: encontre uma ferramenta grátis, compare leituras e leia artigos de cada tema.'
+		},
+		'/ferramentas': {
+			title: 'Ferramentas grátis',
+			description:
+				'Descubra seu Ascendente, calcule seu mapa astral e Meio do Céu, explore Tarot, relações e sonhos. Consulte a disponibilidade do horóscopo por signo.'
+		},
+		'/revista': {
+			title: 'Revista ATVNA',
+			description:
+				'Guias e artigos sobre mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos.'
+		}
+	};
+	const entry = topic
+		? { title: topic.label, description: topic.description }
+		: tool
+			? { title: tool.label, description: tool.description }
+			: directories[path];
+	if (!entry) return null;
+	return {
+		title: `${entry.title} — ${SITE.name}`,
+		description: entry.description,
+		path,
+		indexable: true,
+		managePrimary: true,
 		image: { url: `${SITE.url}/brand/social/og-default-1200x630.png`, alt: SITE.name, large: false }
 	};
 }

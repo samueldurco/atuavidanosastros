@@ -1,4 +1,6 @@
 import { productCatalog } from '@atv/domain';
+import { interestNavigation } from './public-navigation';
+import { freeTools } from './free-tools';
 
 export const visualUniverses = [
 	'meu-ceu',
@@ -46,8 +48,13 @@ export function visualUniverse(value: string): VisualUniverse | undefined {
 export function visualContext(pathname: string, search = '', productId = '') {
 	const parts = pathname.split('/').filter(Boolean);
 	const params = new URLSearchParams(search);
+	const route = pathname.replace(/\/$/, '');
+	const publicTopic =
+		interestNavigation.find((topic) => topic.href === route)?.id ||
+		freeTools.find((tool) => tool.href === route)?.topicId;
 	const candidate =
 		productId ||
+		publicTopic ||
 		parts.find((part) => visualProduct(part)) ||
 		params.get('product') ||
 		params.get('tema') ||

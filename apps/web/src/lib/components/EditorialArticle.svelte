@@ -23,8 +23,8 @@
 	<div class="reading">
 		<nav class="breadcrumb" aria-label="Caminho do artigo">
 			<a href="/">Início</a><span aria-hidden="true"> / </span>
-			<a href="/caderno">Artigos</a>
-			{#if topic}<span aria-hidden="true"> / </span><a href={`/caderno?tema=${topic.id}`}
+			<a href="/revista">Revista</a>
+			{#if topic}<span aria-hidden="true"> / </span><a href={`/revista?tema=${topic.id}`}
 					>{topic.label}</a
 				>{/if}
 		</nav>
@@ -108,8 +108,8 @@
 			</nav>
 		{/if}
 		<p>
-			<a href="/caderno">Ver todos os artigos</a>{#if topic}
-				· <a href={`/caderno?tema=${topic.id}`}>Mais sobre {topic.label.toLowerCase()}</a>{/if}
+			<a href="/revista">Ver todos os artigos</a>{#if topic}
+				· <a href={`/revista?tema=${topic.id}`}>Mais sobre {topic.label.toLowerCase()}</a>{/if}
 		</p>
 		<p><a href="/metodo">Método e limites</a> · <a href="/suporte">Solicitar uma correção</a></p>
 	</div>
