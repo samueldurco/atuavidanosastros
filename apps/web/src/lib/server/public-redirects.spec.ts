@@ -14,10 +14,13 @@ describe('public URL migration', () => {
 		expect(permanentPublicDestination(new URL('https://example.test/meu-ceu/'))).toBe(
 			'/temas/mapa-astral'
 		);
-		expect(permanentPublicDestination(new URL('https://example.test/mapa-de-proposito'))).toBe(
-			'/produtos/mapa-proposito-carreira'
-		);
 	});
+	it.each(['/mapa-de-proposito', '/mapa-de-proposito/', '/mapa-de-proposito?origem=old'])(
+		'preserves the indexable public landing %s instead of redirecting to a preparing product',
+		(path) => {
+			expect(permanentPublicDestination(new URL(`https://example.test${path}`))).toBeNull();
+		}
+	);
 	it('preserves article/tool collisions and private IDs', () => {
 		for (const path of [
 			'/mapa-astral',
@@ -55,6 +58,22 @@ describe('public URL migration', () => {
 			event: {
 				url,
 				request: method ? new Request(url, { method }) : undefined,
+				locals: {},
+				cookies: { getAll: () => [] }
+			},
+			resolve
+		} as unknown as Parameters<typeof handle>[0]);
+		expect(response.status).toBe(200);
+		expect(response.headers.get('location')).toBeNull();
+		expect(resolve).toHaveBeenCalledOnce();
+	});
+	it.each(['GET', 'HEAD'])('resolves the preserved public landing for %s', async (method) => {
+		const url = new URL('https://example.test/mapa-de-proposito?origem=old');
+		const resolve = vi.fn(async () => new Response('public landing'));
+		const response = await handle({
+			event: {
+				url,
+				request: new Request(url, { method }),
 				locals: {},
 				cookies: { getAll: () => [] }
 			},

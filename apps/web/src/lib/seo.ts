@@ -22,6 +22,7 @@ export const legacyPublicPaths = [
 	...freeTools.map((tool) => tool.href),
 	'/revista',
 	'/meio-do-ceu',
+	'/mapa-de-proposito',
 	'/vocacao-no-mapa-astral',
 	'/carreira-no-mapa-astral',
 	'/casa-10',

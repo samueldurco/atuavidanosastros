@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { visualContext } from './visual-v4';
 import { freeTools } from './free-tools';
 import { interestNavigation } from './public-navigation';
-import { discoverySeo, legacyPublicPaths } from '../seo';
+import { discoverySeo, legacyPublicPaths, legacySeo, robotsPolicy } from '../seo';
 import { pagesSitemap } from '../server/editorial-feeds';
 
 describe('public discovery identity and canonical URLs', () => {
@@ -31,12 +31,26 @@ describe('public discovery identity and canonical URLs', () => {
 			'/proposito',
 			'/tarot',
 			'/sonhos',
-			'/caderno',
-			'/mapa-de-proposito'
+			'/caderno'
 		])
 			expect(legacyPublicPaths).not.toContain(path);
 		expect(
 			sitemap.match(/https:\/\/atuavidanosastros.com.br\/bussola-de-carreira<\/loc>/g)
 		).toHaveLength(1);
+	});
+	it('keeps the existing purpose landing indexable and canonical while its product prepares', () => {
+		const path = '/mapa-de-proposito';
+		const seo = legacySeo(path);
+		expect(seo?.path).toBe(path);
+		expect(seo?.indexable).toBe(true);
+		expect(seo?.managePrimary).toBe(false);
+		expect(robotsPolicy(seo, new URL(`https://atuavidanosastros.com.br${path}`))).toBe(
+			'index, follow'
+		);
+		expect(legacyPublicPaths).toContain(path);
+		expect(
+			pagesSitemap([]).match(/https:\/\/atuavidanosastros.com.br\/mapa-de-proposito<\/loc>/g)
+		).toHaveLength(1);
+		expect(pagesSitemap([])).not.toContain('/produtos/mapa-proposito-carreira</loc>');
 	});
 });

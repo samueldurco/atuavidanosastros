@@ -350,9 +350,10 @@ describe('public content integrity', () => {
 	});
 });
 describe('feeds and search surfaces', () => {
-	it('keeps the 24 canonical public pages, including discovery and excluding candidate and empty hubs', () => {
+	it('keeps the 25 canonical public pages, including discovery and excluding candidate and empty hubs', () => {
 		const body = pagesSitemap([]);
-		expect(body.match(/<url>/g)).toHaveLength(24);
+		expect(body.match(/<url>/g)).toHaveLength(25);
+		expect(body).toContain('https://atuavidanosastros.com.br/mapa-de-proposito</loc>');
 		expect(body).toContain('https://atuavidanosastros.com.br/leituras');
 		expect(body).toContain('https://atuavidanosastros.com.br/temas</loc>');
 		expect(body).toContain('https://atuavidanosastros.com.br/ferramentas</loc>');

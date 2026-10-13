@@ -46,20 +46,21 @@ O horóscopo não inventa previsões para preencher períodos ausentes. O índic
 
 ## URLs antigas e redirecionamentos
 
-O helper `apps/web/src/lib/server/public-redirects.ts`, chamado pelo hook, responde **301** a GET e HEAD das correspondências exatas abaixo. Aceita uma barra final e preserva integralmente `url.search`. POST, métodos não elegíveis e eventos sem método não recebem esse redirecionamento.
+O helper `apps/web/src/lib/server/public-redirects.ts`, chamado pelo hook, responde **301** a GET e HEAD das sete correspondências exatas abaixo. Aceita uma barra final e preserva integralmente `url.search`. POST, métodos não elegíveis e eventos sem método não recebem esse redirecionamento.
 
-| URL antiga           | Destino 301                         |
-| -------------------- | ----------------------------------- |
-| `/meu-ceu`           | `/temas/mapa-astral`                |
-| `/ciclos`            | `/temas/previsoes`                  |
-| `/amor`              | `/temas/amor`                       |
-| `/proposito`         | `/temas/carreira`                   |
-| `/tarot`             | `/temas/tarot`                      |
-| `/sonhos`            | `/temas/sonhos`                     |
-| `/caderno`           | `/revista`                          |
-| `/mapa-de-proposito` | `/produtos/mapa-proposito-carreira` |
+| URL antiga   | Destino 301          |
+| ------------ | -------------------- |
+| `/meu-ceu`   | `/temas/mapa-astral` |
+| `/ciclos`    | `/temas/previsoes`   |
+| `/amor`      | `/temas/amor`        |
+| `/proposito` | `/temas/carreira`    |
+| `/tarot`     | `/temas/tarot`       |
+| `/sonhos`    | `/temas/sonhos`      |
+| `/caderno`   | `/revista`           |
 
 Exemplo: `/caderno?tema=amor&utm_source=legacy` retorna `Location: /revista?tema=amor&utm_source=legacy`. As regras exatas não redirecionam artigos como `/amor/{slug}`, APIs, bibliotecas ou entregas privadas. Canonicals, breadcrumbs e links do diretório apontam para `/revista`; o sitemap deduplica URLs dos hubs publicados.
+
+**Exceção preservada:** `/mapa-de-proposito` continua sendo uma página pública, indexável no domínio de produção, com canonical próprio e presença única no sitemap. Não redireciona para `/produtos/mapa-proposito-carreira`: o produto permanece `PREPARING`, e esse destino tem `noindex`. A página antiga mantém seu conteúdo e estado de preparação, sem abrir compra nem alterar gates. A contagem estática vigente do sitemap é **25 URLs**, incluindo essa exceção. O breadcrumb público do horóscopo aponta diretamente para `/temas/previsoes`.
 
 Existe também o alias de rota `/ferramentas/bussola-de-carreira`, com **308** para `/bussola-de-carreira`. O registro e os links públicos usam diretamente a canônica antiga preservada. Esse alias não integra a matriz de 301 com query acima.
 
@@ -67,19 +68,23 @@ Existe também o alias de rota `/ferramentas/bussola-de-carreira`, com **308** p
 
 Prévia utilizada: `http://127.0.0.1:5193`, servidor Vite. Nenhum resultado desta seção deve ser descrito como validação de um deployment hospedado ou de um build de produção.
 
-| Verificação executada                                         | Resultado e alcance                                                                                                                                 |
-| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Playwright `public-menu.e2e.ts` + `articles-discovery.e2e.ts` | **9/9 PASS**, Chromium, um worker, 1,8 min                                                                                                          |
-| Menu público                                                  | Quatro intenções, seis temas, larguras 320/390/820/1440; teclado Enter/Escape, retorno de foco e axe                                                |
-| Descoberta editorial                                          | Diretório SSR, 12 guias, seis filtros, breadcrumbs, acessibilidade, links canônicos e aliases 301 com query                                         |
-| HTTP dos destinos de descoberta                               | `/temas`, seis hubs, `/ferramentas` e `/revista`: 200                                                                                               |
-| Varredura de largura                                          | Seis hubs e índice de ferramentas em 320/390/1440: **21 casos**, sem overflow horizontal                                                            |
-| Vitest após correções do gate agregado                        | **92/92 PASS**, quatro arquivos, 34,46 s: `trial-access.spec.ts`, `editorial.spec.ts`, `public-horoscope-index.spec.ts`, `public-redirects.spec.ts` |
-| Contratos unitários corrigidos                                | 24 URLs canônicas estáticas; comparação de `<loc>` exato; `Request` real no mock privado; GET/HEAD 301 e POST/método ausente sem redirect           |
-| ESLint e Prettier focais                                      | PASS nos arquivos de navegação, redirects e testes alterados                                                                                        |
-| `git diff --check` focal                                      | Sem erro de whitespace nos arquivos próprios                                                                                                        |
+| Verificação executada                                         | Resultado e alcance                                                                                                                                                |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Playwright `public-menu.e2e.ts` + `articles-discovery.e2e.ts` | **9/9 PASS**, Chromium, um worker, 1,8 min                                                                                                                         |
+| Menu público                                                  | Quatro intenções, seis temas, larguras 320/390/820/1440; teclado Enter/Escape, retorno de foco e axe                                                               |
+| Descoberta editorial                                          | Diretório SSR, 12 guias, seis filtros, breadcrumbs, acessibilidade, links canônicos e aliases 301 com query                                                        |
+| HTTP dos destinos de descoberta                               | `/temas`, seis hubs, `/ferramentas` e `/revista`: 200                                                                                                              |
+| Varredura de largura                                          | Seis hubs e índice de ferramentas em 320/390/1440: **21 casos**, sem overflow horizontal                                                                           |
+| Vitest após correções do gate agregado                        | **92/92 PASS**, quatro arquivos, 34,46 s: `trial-access.spec.ts`, `editorial.spec.ts`, `public-horoscope-index.spec.ts`, `public-redirects.spec.ts`                |
+| Contratos unitários vigentes                                  | 25 URLs canônicas estáticas; `<loc>` exato e único da exceção `/mapa-de-proposito`; GET/HEAD dessa página sem redirect; produção `index, follow`; sete aliases 301 |
+| ESLint e Prettier focais                                      | PASS nos arquivos de navegação, redirects e testes alterados                                                                                                       |
+| `git diff --check` focal                                      | Sem erro de whitespace nos arquivos próprios                                                                                                                       |
 
 Evidência detalhada: `E:/ATVNA/evidencias/free-tools-navigation-preview-20261013.txt`. Inspeção visual do hub de carreira em 390 px: `E:/ATVNA/evidencias/navigation-topic-preview-390-20261013.png`. A configuração temporária usada para apontar Playwright à prévia foi removida após os testes.
+
+**Revisão SEO focal de 13/10/2026:** a exceção `/mapa-de-proposito` foi revalidada por Vitest: **64/64 PASS**, quatro arquivos, 3,01 s (`public-redirects.spec.ts`, `public-discovery.spec.ts`, `editorial.spec.ts`, `public-horoscope-index.spec.ts`). Os contratos verificam ausência de redirect em GET/HEAD, SEO `index, follow` no domínio de produção e `<loc>` único. O teste HTTP/SSR em `seo.e2e.ts` foi atualizado, mas não executado nesta revisão. O registro anterior `E:/ATVNA/evidencias/free-tools-routes-candidate-final-20261013.json` cobria oito aliases antes da correção; a prova hospedada da nova matriz de sete aliases e da página preservada continua a cargo do gate de release.
+
+O diff contra `origin/main` preserva os conteúdos, registros e rotas dos artigos, signos e horóscopo; os novos temas e a revista mantêm os links `article.path` originais. O sitemap editorial mantém `document.path` e as condições de publicação dos índices. Esta revisão não mediu tráfego nem histórico de indexação e não garante ausência de oscilação após a publicação. Para confirmar a migração, verificar no domínio canônico sete 301 sem cadeia e com query preservada, destinos 200 indexáveis, canonicals únicos, sitemap atualizado e `/mapa-de-proposito` 200 com canonical próprio.
 
 ## Preservação e gates restantes
 

@@ -65,27 +65,57 @@ test('menu público aberto por teclado no celular', async ({ page }, testInfo) =
 });
 
 for (const width of [320, 1440]) {
-	test(`home organiza ferramentas, leituras, revista e produtos físicos em ${width}px`, async ({
+	test(`home destaca Ascendente, seis temas, revista e método em ${width}px`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/');
 		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 		await page.screenshot({ path: testInfo.outputPath(`home-${width}.png`), fullPage: true });
-		const sections = page.locator('main > section[aria-labelledby]');
-		await expect(sections).toHaveCount(4);
-		for (const [index, name] of [
-			'Comece gratuitamente.',
-			'Leituras e experiências.',
+		const main = page.getByRole('main');
+		await expect(main.getByRole('heading', { level: 2 })).toHaveText([
+			'Descubra seu Ascendente.',
+			'O que você quer conhecer?',
 			'Revista ATVNA.',
-			'Loja dos Signos.'
-		].entries()) {
-			await expect(sections.nth(index).getByRole('heading', { level: 2 })).toHaveText(name);
-		}
-		const free = page.getByRole('region', { name: 'Comece gratuitamente' });
-		await expect(free.getByRole('link')).toHaveCount(1);
-		await free.getByRole('link', { name: 'Calcular meu Meio do Céu grátis' }).click();
-		await expect(page).toHaveURL('/bussola-de-carreira');
+			'Entenda suas leituras.'
+		]);
+		const themes = page.getByRole('region', { name: 'O que você quer conhecer?' });
+		const themeCards = themes.getByRole('article');
+		await expect(themeCards).toHaveCount(6);
+		const themeHeadings = themeCards.getByRole('heading', { level: 3 });
+		await expect(themeHeadings).toHaveText([
+			'Mapa astral',
+			'Previsões',
+			'Amor e relacionamentos',
+			'Carreira e propósito',
+			'Tarot',
+			'Sonhos'
+		]);
+		const themeLinks = themeHeadings.getByRole('link');
+		await expect(themeLinks).toHaveCount(6);
+		expect(
+			await themeLinks.evaluateAll((links) => links.map((link) => link.getAttribute('href')))
+		).toEqual([
+			'/temas/mapa-astral',
+			'/temas/previsoes',
+			'/temas/amor',
+			'/temas/carreira',
+			'/temas/tarot',
+			'/temas/sonhos'
+		]);
+		await expect(main.getByRole('link', { name: 'Entender as leituras' })).toHaveAttribute(
+			'href',
+			'/metodo'
+		);
+		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+			true
+		);
+		const free = page.getByRole('region', { name: 'Descubra seu Ascendente.' });
+		await expect(
+			free.getByRole('link', { name: 'Explorar todas as ferramentas gratuitas' })
+		).toHaveAttribute('href', '/ferramentas');
+		await free.getByRole('link', { name: 'Calcular meu Ascendente grátis' }).click();
+		await expect(page).toHaveURL('/ferramentas/ascendente');
 		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 		await page.goto('/');
 		const magazine = page.getByRole('region', { name: 'Revista ATVNA' });

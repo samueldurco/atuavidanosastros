@@ -90,8 +90,7 @@ test('URLs antigas redirecionam permanentemente sem perder filtros', async ({ re
 		['/amor', '/temas/amor'],
 		['/proposito', '/temas/carreira'],
 		['/tarot', '/temas/tarot'],
-		['/sonhos', '/temas/sonhos'],
-		['/mapa-de-proposito', '/produtos/mapa-proposito-carreira']
+		['/sonhos', '/temas/sonhos']
 	]) {
 		const redirect = await request.get(oldPath, { maxRedirects: 0 });
 		expect(redirect.status(), oldPath).toBe(301);

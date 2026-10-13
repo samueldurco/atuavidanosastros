@@ -6,9 +6,11 @@ const publicAliases: Readonly<Record<string, string>> = {
 	'/proposito': '/temas/carreira',
 	'/tarot': '/temas/tarot',
 	'/sonhos': '/temas/sonhos',
-	'/caderno': '/revista',
-	'/mapa-de-proposito': '/produtos/mapa-proposito-carreira'
+	'/caderno': '/revista'
 };
+
+// Keep /mapa-de-proposito indexable at its existing URL while the product is preparing.
+// Its product route is noindex and must not replace this public landing in search.
 
 export function permanentPublicDestination(url: URL): string | null {
 	const destination = publicAliases[url.pathname.replace(/\/$/, '')];
