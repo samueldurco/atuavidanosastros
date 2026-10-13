@@ -1,4 +1,6 @@
-// Exact public aliases only: articles and account/API routes keep their identities.
+import { SITE } from '$lib/data/site';
+
+// Only exact public aliases rename paths; article and account/API identities are retained.
 const publicAliases: Readonly<Record<string, string>> = {
 	'/meu-ceu': '/temas/mapa-astral',
 	'/ciclos': '/temas/previsoes',
@@ -14,5 +16,7 @@ const publicAliases: Readonly<Record<string, string>> = {
 
 export function permanentPublicDestination(url: URL): string | null {
 	const destination = publicAliases[url.pathname.replace(/\/$/, '')];
+	if (url.origin === 'https://www.atuavidanosastros.com.br')
+		return `${SITE.url}${destination ?? url.pathname}${url.search}`;
 	return destination ? `${destination}${url.search}` : null;
 }
