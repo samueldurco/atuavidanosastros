@@ -22,8 +22,8 @@
 <div class="member-shell mvp-private" data-mvp-private="shell" data-stitch="SH-02">
 	<header class="member-header">
 		<a href="/" aria-label="A Tua Vida nos Astros — início"
-			><span class="full-logo"><BrandLogo /></span><span class="symbol-logo"
-				><BrandLogo compact /></span
+			><span class="full-logo"><BrandLogo onDark={false} /></span><span class="symbol-logo"
+				><BrandLogo compact onDark={false} /></span
 			></a
 		>
 		<div class="header-actions">

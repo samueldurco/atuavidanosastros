@@ -74,12 +74,13 @@ for (const width of [320, 1440]) {
 		await page.screenshot({ path: testInfo.outputPath(`home-${width}.png`), fullPage: true });
 		const main = page.getByRole('main');
 		await expect(main.getByRole('heading', { level: 2 })).toHaveText([
-			'Descubra seu Ascendente.',
-			'O que você quer conhecer?',
-			'Revista ATVNA.',
-			'Entenda suas leituras.'
+			'Explore os seis universos',
+			'Bússola de Carreira',
+			'Descubra seu Ascendente',
+			'Revista ATVNA',
+			'Entenda suas leituras'
 		]);
-		const themes = page.getByRole('region', { name: 'O que você quer conhecer?' });
+		const themes = page.getByRole('region', { name: 'Explore os seis universos' });
 		const themeCards = themes.getByRole('article');
 		await expect(themeCards).toHaveCount(6);
 		const themeHeadings = themeCards.getByRole('heading', { level: 3 });
@@ -110,7 +111,7 @@ for (const width of [320, 1440]) {
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
 		);
-		const free = page.getByRole('region', { name: 'Descubra seu Ascendente.' });
+		const free = page.getByRole('region', { name: 'Descubra seu Ascendente' });
 		await expect(
 			free.getByRole('link', { name: 'Explorar todas as ferramentas gratuitas' })
 		).toHaveAttribute('href', '/ferramentas');
@@ -120,11 +121,15 @@ for (const width of [320, 1440]) {
 		await page.goto('/');
 		const magazine = page.getByRole('region', { name: 'Revista ATVNA' });
 		await expect(magazine.locator('article')).toHaveCount(3);
-		await page.getByRole('link', { name: 'Ver todas as leituras' }).click();
+		await page.locator('button[aria-controls="primary-navigation"]').click();
+		await page
+			.getByRole('navigation', { name: 'Navegação principal', exact: true })
+			.getByRole('link', { name: 'Leituras', exact: true })
+			.click();
 		await expect(page).toHaveURL('/leituras');
-		await expect(page.locator('.product-card')).toHaveCount(26);
+		await expect(page.locator('.public-product-card')).toHaveCount(26);
 		await expect(
-			page.locator('.product-card').getByText('Em preparação', { exact: true })
+			page.locator('.public-product-card').getByText('Em preparação', { exact: true })
 		).toHaveCount(26);
 		const topic = page.getByRole('navigation', { name: 'Temas das leituras' });
 		await topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true }).click();
@@ -132,7 +137,7 @@ for (const width of [320, 1440]) {
 		await expect(
 			topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true })
 		).toHaveAttribute('aria-current', 'page');
-		await expect(page.locator('.product-group')).toHaveCount(1);
+		await expect(page.locator('.universe-catalog-group')).toHaveCount(1);
 		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 			'href',
 			'https://atuavidanosastros.com.br/leituras'
