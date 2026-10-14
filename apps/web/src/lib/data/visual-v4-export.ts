@@ -1,13 +1,13 @@
 import { visualUniverse } from './visual-v4';
 
-// Approved V4 universe inks and rules: INTERNAS/universos-v002.css.
+// Approved MVP universe inks. Calculation geometry and export contracts are independent.
 const palettes = {
-	'meu-ceu': { ink: '#193345', line: '#c09c73' },
-	ciclos: { ink: '#193549', line: '#8b7256' },
-	amor: { ink: '#442d32', line: '#965c48' },
-	proposito: { ink: '#303a2d', line: '#7d7048' },
-	tarot: { ink: '#3d3027', line: '#8b673e' },
-	sonhos: { ink: '#30364e', line: '#76748f' }
+	'meu-ceu': { ink: '#174c69', line: '#a16f27' },
+	ciclos: { ink: '#22647b', line: '#9e742f' },
+	amor: { ink: '#983e4b', line: '#b75640' },
+	proposito: { ink: '#4d6231', line: '#977025' },
+	tarot: { ink: '#92501f', line: '#9d6c30' },
+	sonhos: { ink: '#625096', line: '#8971ad' }
 } as const;
 export function visualExportPalette(identity: string) {
 	const universe = visualUniverse(identity);

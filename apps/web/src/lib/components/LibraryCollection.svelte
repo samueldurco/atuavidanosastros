@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
+	import { privateUniverseVisual } from '$lib/data/mvp-private-visual';
+	import '$lib/styles/mvp-private.css';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -59,7 +61,7 @@
 		content="noindex,nofollow"
 	/></svelte:head
 >
-<div data-stitch="MEM-02">
+<div class="mvp-private" data-mvp-private="library" data-stitch="MEM-02">
 	<PageIntro
 		eyebrow="Minhas leituras"
 		title="Biblioteca"
@@ -142,14 +144,11 @@
 			Busca, filtros e ordenação se aplicam somente aos registros desta página.
 		</p>
 		{#if visible.length}<section class="collection" aria-label="Itens salvos">
-				{#each visible as item (item.id)}<article class="card item">
+				{#each visible as item (item.id)}
+					{@const visual = privateUniverseVisual(item.universe)}
+					<article class="card item" style={`--private-universe: ${visual.color}`}>
 						<div class="item-cover" aria-hidden="true">
-							<img
-								src="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-simbolo-claro.svg"
-								alt=""
-								width="64"
-								height="64"
-							/>
+							<img src={visual.image} alt="" width="640" height="360" loading="lazy" />
 						</div>
 						<div class="item-body">
 							<p class="eyebrow">{labels[item.universe] ?? item.universe}</p>
@@ -182,12 +181,7 @@
 		>
 	{:else}
 		<div class="empty-library">
-			<img
-				src="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-compacta-claro.svg"
-				alt=""
-				width="80"
-				height="80"
-			/>
+			<img src="/brand/mvp/assets/marca-escura.svg" alt="" width="80" height="80" />
 			<p class="eyebrow">Minhas leituras</p>
 			<h2>Sua Biblioteca ainda está vazia.</h2>
 			<p>

@@ -1,6 +1,8 @@
 import { calculateHistoricalNatalV4 } from './historical-v4.test-helper';
 import { describe, expect, it } from 'vitest';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
 import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
@@ -211,7 +213,7 @@ describe('Ascendente 5: regente, modificadores e integração', () => {
 		};
 		expect(await executeTrialRuntime({ operation: 'verify', saved })).toBe(true);
 		expect(buildChartScene(saved).markers).toHaveLength(10);
-		const dir = 'E:/ATVNA/tmp/reconstruction-qa/ascendant';
+		const dir = join(tmpdir(), 'atvna-reconstruction-qa', 'ascendant');
 		await mkdir(dir, { recursive: true });
 		await writeFile(`${dir}/ascendant.json`, JSON.stringify(saved, null, 2));
 		await writeFile(

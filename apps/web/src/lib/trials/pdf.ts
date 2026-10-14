@@ -16,7 +16,8 @@ import { CALENDAR_VERSION, type CalendarData } from './reconstruction/calendar-f
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
-import { pdfCoverFor } from '../data/visual-v4-pdf';
+import { pdfBrandMark, pdfCoverFor } from '../data/visual-v4-pdf';
+import { visualExportPalette } from '../data/visual-v4-export';
 
 /** Local book export. This module is dynamically imported only by the download page. */
 export async function trialPdf(saved: SavedTrial) {
@@ -29,6 +30,7 @@ export async function trialPdf(saved: SavedTrial) {
 		display = await doc.embedFont(displayData, { subset: true });
 	const r = saved.reading;
 	const engraving = await doc.embedPng(pdfCoverFor(saved.product_id));
+	const brand = await doc.embedPng(pdfBrandMark());
 	const format = experienceFor(saved.product_id).format;
 	const calendar = saved.calculation.version === CALENDAR_VERSION;
 	const book = format === 'book' || calendar;
@@ -42,9 +44,14 @@ export async function trialPdf(saved: SavedTrial) {
 		height = 841.89,
 		margin = 54,
 		available = width - 2 * margin;
-	const ink = rgb(25 / 255, 53 / 255, 73 / 255),
+	const palette = visualExportPalette(saved.product_id);
+	const color = (hex: string) =>
+		rgb(
+			...([1, 3, 5].map((n) => parseInt(hex.slice(n, n + 2), 16) / 255) as [number, number, number])
+		);
+	const ink = color(palette.ink),
 		muted = rgb(0.298, 0.337, 0.345),
-		gold = rgb(0.475, 0.357, 0.192),
+		gold = color(palette.line),
 		cream = rgb(1, 1, 1);
 	let page = doc.addPage([width, height]),
 		y = height - 78;
@@ -140,17 +147,22 @@ export async function trialPdf(saved: SavedTrial) {
 		paragraph(value, label, size);
 	};
 	// Cover: no app navigation, evaluation form or browser-print chrome.
-	const coverSize = engraving.scaleToFit(92, 92);
-	page.drawImage(engraving, { x: width - margin - coverSize.width, y: height - 168, ...coverSize });
-	page.drawRectangle({ x: margin, y: height - 115, width: 44, height: 2, color: gold });
+	const coverSize = engraving.scaleToFit(270, 198);
+	page.drawImage(engraving, {
+		x: (width - coverSize.width) / 2,
+		y: height - 90 - coverSize.height,
+		...coverSize
+	});
+	page.drawImage(brand, { x: margin, y: height - 49, width: 22, height: 22 });
+	page.drawRectangle({ x: margin, y: height - 56, width: available, height: 0.6, color: gold });
 	page.drawText('A TUA VIDA NOS ASTROS', {
-		x: margin,
-		y: height - 98,
+		x: margin + 30,
+		y: height - 43,
 		font: label,
 		size: 10,
 		color: muted
 	});
-	y = height - 205;
+	y = height - 90 - coverSize.height - 40;
 	paragraph(r.title, display, book ? 34 : 25);
 	y -= 18;
 	paragraph(r.opening, body, book ? 17 : 12);

@@ -26,16 +26,17 @@ const aliases: Record<string, VisualUniverse> = {
 	'sonhos-simbolos': 'sonhos',
 	sonhos: 'sonhos'
 };
-const cut = (id: string) => `/brand/v4/CARDS/recortes/${id}.webp`;
+// Approved MVP assets; resolver names retained for route compatibility.
+const art = (name: string) => '/brand/mvp/assets/revisao/' + name + '.webp';
 export const visualV4 = {
-	mandala: '/brand/v4/MATERIAS/ZODIACO_V003/mandala-autonoma-640-v003.webp',
+	mandala: art('mandala-gravada'),
 	figures: {
-		'meu-ceu': [cut('B01-figure-1')],
-		ciclos: [cut('B02-figure-1')],
-		amor: [cut('B03-figure-1'), cut('B03-figure-2'), cut('B03-figure-3')],
-		proposito: [cut('B04-figure-1'), cut('B04-figure-2')],
-		tarot: [cut('B05-figure-1')],
-		sonhos: [cut('B06-figure-1'), cut('B06-figure-2')]
+		'meu-ceu': [art('mandala-gravada')],
+		ciclos: [art('fases-lunares')],
+		amor: [art('flor-gravada')],
+		proposito: [art('bussola-gravada')],
+		tarot: [art('cartas-gravadas')],
+		sonhos: [art('sonhos-gravados')]
 	} satisfies Record<VisualUniverse, string[]>
 };
 export function visualProduct(value: string) {

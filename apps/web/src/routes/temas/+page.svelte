@@ -1,73 +1,54 @@
 <script lang="ts">
-	import VisualMotif from '$lib/components/VisualMotif.svelte';
+	import MvpUniverseCard from '$lib/components/MvpUniverseCard.svelte';
+	import { mvpArt } from '$lib/data/mvp-visual';
 	let { data } = $props();
 </script>
 
-<section class="section">
-	<div class="container">
-		<div class="reading intro">
-			<p class="eyebrow">Explore por assunto</p>
-			<h1 class="h1">Por onde você quer começar?</h1>
+<div class="mvp-public">
+	<section class="universes-overview-hero">
+		<div class="wrap universes-overview-copy">
+			<p class="eyebrow">Os seis universos</p>
+			<h1>Um céu, diferentes caminhos.</h1>
 			<p class="lead">
-				Cada tema reúne ferramentas grátis, leituras para comparar e artigos para entender melhor o
-				assunto.
+				Mapa astral, previsões, amor, carreira, Tarot e sonhos. Cada tema reúne ferramentas grátis,
+				leituras para comparar e artigos para entender melhor o assunto.
 			</p>
 		</div>
-		<div class="topic-grid">
+	</section>
+	<section class="wrap section" aria-labelledby="topics-heading">
+		<header class="chapter-opening">
+			<p class="eyebrow">Escolha seu assunto</p>
+			<img
+				class="chapter-lettering"
+				src={mvpArt('lettering-descoberta')}
+				alt="Descoberta"
+				width="720"
+				height="245"
+				loading="lazy"
+			/>
+			<h2 id="topics-heading">Por onde você quer começar?</h2>
+		</header>
+		<div class="grid grid-3">
 			{#each data.topics as topic (topic.id)}
-				<article class="card topic-card">
-					<VisualMotif identity={topic.id} />
-					<h2><a href={topic.href}>{topic.label}</a></h2>
-					<p>{topic.description}</p>
-					<a class="topic-action" href={topic.href}
-						>Explorar este tema <span aria-hidden="true">→</span></a
-					>
-				</article>
+				<MvpUniverseCard
+					identity={topic.id}
+					title={topic.label}
+					description={topic.description}
+					href={topic.href}
+				/>
 			{/each}
 		</div>
-	</div>
-</section>
+		<p class="catalog-link">
+			<a class="text-link" href="/leituras"
+				>Ver todas as leituras <span aria-hidden="true">↗</span></a
+			>
+		</p>
+	</section>
+</div>
 
 <style>
-	.intro {
-		margin-inline: 0;
-		margin-bottom: 2.5rem;
-	}
-	.topic-grid {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 1.25rem;
-	}
-	.topic-card {
-		padding: 1.5rem;
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-	}
-	h2 {
-		font: 500 1.65rem/1.2 var(--atv-font-display);
-	}
-	h2 a {
-		text-decoration: none;
-	}
-	p {
-		line-height: 1.7;
-	}
-	.topic-action {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		min-height: 48px;
-		margin-top: auto;
-	}
-	@media (max-width: 900px) {
-		.topic-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
-		}
-	}
-	@media (max-width: 540px) {
-		.topic-grid {
-			grid-template-columns: 1fr;
-		}
+	.catalog-link {
+		margin-top: 2rem;
+		text-align: center;
 	}
 </style>

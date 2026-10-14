@@ -1,67 +1,415 @@
 {
   "run_id": "ATV-20260902-170644Z-01A0630F",
-  "approved_manifest_sha256": "576f6d5fa1dee7d009f066b85432a5e5c84ea3dc9fc59efd6cf8f4160b49061d",
-  "derivation": "Bounded PNG from approved transparent WebP; proportional embedding on white print paper.",
+  "direction": "MVP aprovado 2026-10-14",
+  "source": "apps/web/src/lib/data/mvp-product-design.json",
+  "source_sha256": "76813cc8ef773628e9227e84b150673988c52dce0b5782281618e0752bd137b5",
+  "derivation": "Individual approved product SVG compositions rasterized to bounded 480x352 indexed PNG. PNG API and renderer versions retained; data, calculations and reading content unchanged. White reading pages retain print legibility.",
+  "bundle_bytes": 775573,
+  "brand": {
+    "source": "/brand/mvp/assets/marca-escura.svg",
+    "source_sha256": "ff2bd01b75c71d3e072943d3586f191b83604fa22f11c308883d69d19f08443a",
+    "png_sha256": "71f718770656027d59dd2120906682060f5f9a10eaa7516aff86e94e1c76d47a",
+    "bytes": 3020
+  },
   "files": [
     {
-      "universe": "meu-ceu",
-      "board": "B01",
-      "source": "CARDS/recortes/B01-figure-1.webp",
-      "source_sha256": "3df668541272b679b0fe6eebc5f5da56bcd6412f294e7af89d561c6e64b415bd",
-      "png_sha256": "5caddb947e2f82ec4440ba48e92d1a7131aad4956ab7f8a595ef4a01b04f3f3a",
-      "bytes": 73309,
-      "width": 213,
-      "height": 320
+      "product": "birth-chart",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+          "sha256": "fa29e053df1df50786e81920b186a7f5753ea8744742ff56013b36538a1aef2e"
+        }
+      ],
+      "png_sha256": "54f60de25e0e9ef47ab7a7232e0114d549d744dbf87c49f21c2a424a6d50fa6d",
+      "bytes": 40886,
+      "width": 480,
+      "height": 352
     },
     {
-      "universe": "ciclos-tempo",
-      "board": "B02",
-      "source": "CARDS/recortes/B02-figure-1.webp",
-      "source_sha256": "a0d7cfb45f82fb2ed612e98bfd8aa26175cd7ee7fc89085b3c85ac2e2992f9a5",
-      "png_sha256": "30bd293dfbdd0c435b8f8c21f054926a00c44e15ba24ec2e8938a12c8bca55f9",
-      "bytes": 29794,
-      "width": 240,
-      "height": 90
+      "product": "three-pillars",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+          "sha256": "5ca7fa8c680ed70c2f3fd6e42115f64274d05328dfb1071e2ed2f18b29dd0758"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/lua-gravada.webp",
+          "sha256": "8a911d2aa50ee48fe4f36fc2671e6d983e2b997ab6eadfcb26da3632c10f31ea"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+          "sha256": "46aec817b7db2257be75c5d0f986b16144e616228c8d4b525707fd3b3d6104e3"
+        }
+      ],
+      "png_sha256": "b1d6856f905fe68fd8caf0d614d9dc3b92ad7d0be05555b1428be9bdbed15592",
+      "bytes": 13472,
+      "width": 480,
+      "height": 352
     },
     {
-      "universe": "amor-relacoes",
-      "board": "B03",
-      "source": "CARDS/recortes/B03-figure-1.webp",
-      "source_sha256": "73c31d0802d388658a175f46621e2eaf7ae560214f8685e4fbdad6d834b69554",
-      "png_sha256": "7aa050ced0f4390fe89c89d8d108f17835638cc9c20bd4219f1f63345695cb3c",
-      "bytes": 88372,
-      "width": 240,
-      "height": 300
+      "product": "ascendant",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+          "sha256": "46aec817b7db2257be75c5d0f986b16144e616228c8d4b525707fd3b3d6104e3"
+        }
+      ],
+      "png_sha256": "00548d6ed464a1db9e1895dcbda697e0a4737cfce5f35a77f7cbaea0a019bd69",
+      "bytes": 19127,
+      "width": 480,
+      "height": 352
     },
     {
-      "universe": "proposito-prosperidade",
-      "board": "B04",
-      "source": "CARDS/recortes/B04-figure-1.webp",
-      "source_sha256": "a0fd6cbdeee1fc33fe13dedd5f7e8413a6f6d379fe10eefd599070a460948d31",
-      "png_sha256": "966e28d9e6ddadd5c7c32d05b8d9eaad3985cd2db3d9ba3622bd874a8a913b4c",
-      "bytes": 118212,
-      "width": 240,
-      "height": 259
+      "product": "life-atlas",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+          "sha256": "fa29e053df1df50786e81920b186a7f5753ea8744742ff56013b36538a1aef2e"
+        },
+        {
+          "path": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+          "sha256": "5ca7fa8c680ed70c2f3fd6e42115f64274d05328dfb1071e2ed2f18b29dd0758"
+        }
+      ],
+      "png_sha256": "a008cdc20b537ba229e41ef92ed8193390cd3353ccfe9f46b9d0ecd87d46bf33",
+      "bytes": 19086,
+      "width": 480,
+      "height": 352
     },
     {
-      "universe": "tarot-arcanos",
-      "board": "B05",
-      "source": "CARDS/recortes/B05-figure-1.webp",
-      "source_sha256": "ed7a0d55bc70a869786dd0e2207948314bd31913837dba892ddae0d69a876cb6",
-      "png_sha256": "e131aaa9636e40fad48a526b845ab54ad585614af93aa2f24d4b65a7f899c07e",
-      "bytes": 50157,
-      "width": 213,
-      "height": 320
+      "product": "horoscope",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
+          "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
+        }
+      ],
+      "png_sha256": "1696f576739567f31ce5f11ffebd07f2151e86576e75acce348a437a34ba2bb4",
+      "bytes": 13892,
+      "width": 480,
+      "height": 352
     },
     {
-      "universe": "sonhos-simbolos",
-      "board": "B06",
-      "source": "CARDS/recortes/B06-figure-1.webp",
-      "source_sha256": "607ca400f8f93ebeeb1d7b3b55252da103247040abd2a2cc6d981fa1eec44e83",
-      "png_sha256": "ee473065557402eb55f36aea83a33600b29a1d24cebf06d9485e67a34d5a18dc",
-      "bytes": 111378,
-      "width": 213,
-      "height": 320
+      "product": "date-reading",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
+          "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/lua-gravada.webp",
+          "sha256": "8a911d2aa50ee48fe4f36fc2671e6d983e2b997ab6eadfcb26da3632c10f31ea"
+        }
+      ],
+      "png_sha256": "5b2e9d7b05d77c9598f865004b5712d240d59f5938e95c1eeabe41cb1cf057c0",
+      "bytes": 9653,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "week-reading",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
+          "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
+        }
+      ],
+      "png_sha256": "4a346b091cef8a1d1379e6b7f9ae2e956b2d22998f170f5b067095ab65f95f1c",
+      "bytes": 17842,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "personal-calendar",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
+          "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
+        }
+      ],
+      "png_sha256": "0eabda0c828e4cb72af7ce09ad45c62d2b1c19c177626ebe58a168acef02b99c",
+      "bytes": 9725,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "solar-return",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+          "sha256": "5ca7fa8c680ed70c2f3fd6e42115f64274d05328dfb1071e2ed2f18b29dd0758"
+        }
+      ],
+      "png_sha256": "31c905c5d62c0d15cbf212ec59a8678997b5ecddeae027e904f4d9fc2fed166f",
+      "bytes": 33855,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "synastry",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+          "sha256": "fa29e053df1df50786e81920b186a7f5753ea8744742ff56013b36538a1aef2e"
+        }
+      ],
+      "png_sha256": "afdff8b3dedd067acc36ba129aa6e94e8f22bc88ac0de6ace7cfe3e3bca37ae1",
+      "bytes": 37554,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "pair-preview",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+          "sha256": "5ca7fa8c680ed70c2f3fd6e42115f64274d05328dfb1071e2ed2f18b29dd0758"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/lua-gravada.webp",
+          "sha256": "8a911d2aa50ee48fe4f36fc2671e6d983e2b997ab6eadfcb26da3632c10f31ea"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+          "sha256": "46aec817b7db2257be75c5d0f986b16144e616228c8d4b525707fd3b3d6104e3"
+        }
+      ],
+      "png_sha256": "be4d17157101b4ca5553ed06a999b99d10bd5c6fe4edf4c4ec37aec7cad34e6e",
+      "bytes": 15885,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "couple-dossier",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/vinculo-gravado-v1.webp",
+          "sha256": "e6d19fa034ee0a942dc12ce7619c685e12fc2ae0ad51aed28de5f0cfe457fb05"
+        }
+      ],
+      "png_sha256": "dd33d8954213834f7b0d178c428ce3a2a4482f73afe317047c1288cc61e0a830",
+      "bytes": 13247,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "tarot-single-card",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "19cf31228d1ace62dd3f373ca762151d1ce434cf2605f15282787f7ae0ca832f",
+      "bytes": 37353,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "tarot-situation-challenge-advice",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "94314fba5648c46fbb51c9e31e8a7067da92bd8a70a0209b65834e7a15fe83ee",
+      "bytes": 66526,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "tarot-peladan-cross",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "c37553ceabda76f3ad795034034f2ead91e6828e88f7e239f233ba055dbe9539",
+      "bytes": 19392,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "tarot-celtic-cross",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "5af5b14af8e455245b8232fffb85c5de8f169e7d03772d4b5f9ffc323ef97e50",
+      "bytes": 23283,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "tarot-aphrodite-temple",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "38a18ad5617bb67390cb43f8040a0dc3c028da6bca1a87898577f1a3b1fa6daf",
+      "bytes": 24447,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "tarot-astrological-mandala",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "b24a6ad0db38d462794c9ce3459ac26508f5a3e89f63e9757067564668cbe168",
+      "bytes": 23738,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "purpose-career",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+          "sha256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5"
+        }
+      ],
+      "png_sha256": "8ed992f995e8bf3abf55e35edb5cbf42eec3e461a817bd473cad58a22aa39ce4",
+      "bytes": 11095,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "midheaven",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+          "sha256": "5ca7fa8c680ed70c2f3fd6e42115f64274d05328dfb1071e2ed2f18b29dd0758"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+          "sha256": "46aec817b7db2257be75c5d0f986b16144e616228c8d4b525707fd3b3d6104e3"
+        }
+      ],
+      "png_sha256": "c2e23b5e9dc4ed17b20301e45cad8166c8500cfdb20a53d7f5cde13f37951a52",
+      "bytes": 14640,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "career-compass",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+          "sha256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5"
+        }
+      ],
+      "png_sha256": "fe1ff7d5ced55456a00a2e0f2e7fe3f24d184e58787f4bf118c0752e6e29c69d",
+      "bytes": 21989,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "direction-journey",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+          "sha256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5"
+        }
+      ],
+      "png_sha256": "58a9335faa20124f2ed5ce04b07362cd9bf87eb30808e404dd96f5c7df48dfb8",
+      "bytes": 7839,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "dream-reading",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/sonhos-gravados.webp",
+          "sha256": "9db83ef4bb389225a027f462959f8c6df674b7a68d81a1d640bd689071c22809"
+        }
+      ],
+      "png_sha256": "033354c088832b4e6ae2eb6e1b690f8538bb2701c46691cd18f1044c2c4315d8",
+      "bytes": 34397,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "dream-journal",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sonhos-motivos-gravados-v1.webp",
+          "sha256": "756949bc6477fff9d39b5b821fec2879a876f6c88336c48d06f282a77661fc39"
+        }
+      ],
+      "png_sha256": "c5927aa496ef99dbc753fb71a367e0f25d31f061c1339c540bde850fe94b66ef",
+      "bytes": 8951,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "dream-dossier",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sonhos-motivos-gravados-v1.webp",
+          "sha256": "756949bc6477fff9d39b5b821fec2879a876f6c88336c48d06f282a77661fc39"
+        }
+      ],
+      "png_sha256": "d78e6cfb953bee99af33feff90da1301afb0eab55b2db72f5b39ef4248c6e983",
+      "bytes": 14546,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "dream-atlas",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/sonhos-motivos-gravados-v1.webp",
+          "sha256": "756949bc6477fff9d39b5b821fec2879a876f6c88336c48d06f282a77661fc39"
+        }
+      ],
+      "png_sha256": "38121541eb56dac693d082882af36d839bf9e5454305ed185effbfe531091ad4",
+      "bytes": 16560,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "atv-plus",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+          "sha256": "fa29e053df1df50786e81920b186a7f5753ea8744742ff56013b36538a1aef2e"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/lua-gravada.webp",
+          "sha256": "8a911d2aa50ee48fe4f36fc2671e6d983e2b997ab6eadfcb26da3632c10f31ea"
+        },
+        {
+          "path": "/brand/mvp/assets/product-final/vinculo-gravado-v1.webp",
+          "sha256": "e6d19fa034ee0a942dc12ce7619c685e12fc2ae0ad51aed28de5f0cfe457fb05"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+          "sha256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5"
+        },
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/sonhos-gravados.webp",
+          "sha256": "9db83ef4bb389225a027f462959f8c6df674b7a68d81a1d640bd689071c22809"
+        }
+      ],
+      "png_sha256": "59a7c01360d63a22cb5d8a4229084f9ae411e3df747e528f20cd9de2022c3ecf",
+      "bytes": 8946,
+      "width": 480,
+      "height": 352
     }
   ]
 }

@@ -1,9 +1,14 @@
 <script lang="ts">
+	import '$lib/styles/mvp-private.css';
 	import type { ContinuitySummary } from '$lib/continuity-summary';
 	let { summary }: { summary: ContinuitySummary } = $props();
 </script>
 
-<section class="continuity-summary" aria-labelledby="dashboard-continuity-title">
+<section
+	class="continuity-summary mvp-private"
+	data-mvp-private="dashboard-continuity"
+	aria-labelledby="dashboard-continuity-title"
+>
 	<p class="eyebrow">Meus registros</p>
 	<h2 id="dashboard-continuity-title">Registros salvos</h2>
 	{#if summary.state === 'PREVIEW'}

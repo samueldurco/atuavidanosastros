@@ -1,0 +1,141 @@
+/* Approved MVP product artwork and universe tokens. Only dedicated artwork classes and custom properties are shared with the private library; public layout and resets stay in mvp-approved.css. */
+.theme-meu-ceu {
+	--universe-color: #174c69;
+	--universe-accent: #cf9a44;
+	--universe-tint: #d8e5e8;
+	--universe-bg: url('/brand/mvp/assets/universos/fundo-meu-ceu.webp');
+}
+.theme-ciclos {
+	--universe-color: #22647b;
+	--universe-accent: #e8bd6b;
+	--universe-tint: #dcebee;
+	--universe-bg: url('/brand/mvp/assets/universos/fundo-ciclos.webp');
+}
+.theme-amor {
+	--universe-color: #983e4b;
+	--universe-accent: #de765d;
+	--universe-tint: #f3d8cf;
+	--universe-bg: url('/brand/mvp/assets/universos/fundo-amor.webp');
+}
+.theme-proposito {
+	--universe-color: #4d6231;
+	--universe-accent: #ce9b45;
+	--universe-tint: #e1e7cc;
+	--universe-bg: url('/brand/mvp/assets/universos/fundo-proposito.webp');
+}
+.theme-tarot {
+	--universe-color: #92501f;
+	--universe-accent: #ddb168;
+	--universe-tint: #f0ddbb;
+	--universe-bg: url('/brand/mvp/assets/universos/fundo-tarot.webp');
+}
+.theme-sonhos {
+	--universe-color: #625096;
+	--universe-accent: #bea7e2;
+	--universe-tint: #e7dff2;
+	--universe-bg: url('/brand/mvp/assets/universos/fundo-sonhos.webp');
+}
+.product-art {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	width: 100%;
+	aspect-ratio: 600/440;
+	background-color: var(--pa-tint);
+	color: var(--pa-ink);
+}
+.product-art:before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: url('/brand/mvp/assets/papel-fino.webp') center/cover;
+	opacity: 0.24;
+	mix-blend-mode: multiply;
+	pointer-events: none;
+}
+.product-art > .pa-canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.product-art .pa-crop {
+	overflow: hidden;
+	min-height: 0;
+	aspect-ratio: auto;
+}
+.product-art .pa-engraving {
+	pointer-events: none;
+}
+.product-art:after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	background: url('/brand/mvp/assets/papel-fino.webp') center/720px auto;
+	opacity: 0.11;
+	mix-blend-mode: multiply;
+	pointer-events: none;
+}
+.pa-drawing {
+	fill: none;
+	stroke: var(--pa-ink);
+	stroke-width: 1.25;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+.pa-drawing .pa-fine {
+	stroke-width: 0.65;
+	opacity: 0.7;
+}
+.pa-drawing .pa-paper {
+	fill: #faf3e5;
+	stroke: #b8a78d;
+	stroke-width: 0.7;
+	filter: drop-shadow(0 3px 2px #3a2b1d16);
+}
+.pa-drawing .pa-grid-point {
+	fill: var(--pa-ink);
+	stroke: none;
+	opacity: 0.4;
+}
+.pa-drawing .pa-library-volume {
+	fill: var(--pa-accent);
+	fill-opacity: 0.16;
+	stroke: var(--pa-accent);
+	stroke-width: 1;
+}
+.pa-drawing .pa-writing {
+	stroke-width: 0.7;
+	opacity: 0.48;
+}
+.pa-drawing .pa-accent {
+	stroke: var(--pa-accent);
+	stroke-width: 1.5;
+}
+.pa-drawing .pa-accent-fill {
+	fill: var(--pa-accent);
+	stroke: var(--pa-ink);
+	stroke-width: 0.7;
+}
+.pa-drawing .pa-book-spine {
+	stroke: var(--pa-accent);
+	stroke-width: 2.4;
+}
+.pa-drawing text {
+	fill: var(--pa-ink);
+	stroke: none;
+	text-anchor: middle;
+	letter-spacing: 2px;
+	font-family: 'Newsreader', Georgia, serif;
+	font-weight: 500;
+}
+.product-art-index {
+	position: absolute;
+	bottom: 13px;
+	right: 17px;
+	font-size: 9px;
+	letter-spacing: 0.15em;
+	opacity: 0.68;
+}

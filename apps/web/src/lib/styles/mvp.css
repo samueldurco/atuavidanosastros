@@ -1,0 +1,340 @@
+/* ATVNA MVP — approved 14 October 2026. Integration of the approved artwork
+   with the existing application. Functional state remains owned by each view. */
+body {
+	background: #f6efdf url('/brand/mvp/assets/papel-fino.webp') center / 1200px auto;
+	color: #183746;
+}
+.mvp-experience {
+	--ink: #183746;
+	--deep: #102c3d;
+	--paper: #f6efdf;
+	--light: #fff8e9;
+	--sage: #d5d9c6;
+	--copper: #a36632;
+	--muted: #596365;
+	--rule: #c7bfac;
+}
+.mvp-experience h1,
+.mvp-experience h2,
+.mvp-experience h3 {
+	font-family: var(--atv-font-display);
+}
+.mvp-experience p + p {
+	margin-top: 1em;
+}
+.mvp-experience :focus-visible {
+	outline: 3px solid #23749b;
+	outline-offset: 4px;
+	box-shadow: 0 0 0 7px #fff8e9;
+}
+.mvp-experience .eyebrow {
+	color: inherit;
+}
+.mvp-experience .button {
+	border-radius: 2px;
+	min-height: 48px;
+}
+.mvp-experience .card {
+	border-radius: 2px;
+	box-shadow: none;
+}
+.mvp-experience .site-header {
+	position: relative;
+	z-index: 30;
+	color: #fff8e9;
+	background: #102c3d;
+	border-bottom: 1px solid #ffffff26;
+}
+.mvp-experience .header-inner {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px;
+	width: min(1160px, calc(100% - 64px));
+	min-height: 124px;
+	margin: auto;
+}
+.mvp-experience .site-header a {
+	color: inherit;
+}
+.mvp-experience .site-header .brand {
+	text-decoration: none;
+	flex-shrink: 0;
+}
+.mvp-experience .header-actions {
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	font-size: 13px;
+}
+.mvp-experience .header-account {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	text-decoration: none;
+	border-bottom: 1px solid #c9944e;
+}
+.mvp-experience .menu-button {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 44px;
+	padding: 8px 12px;
+	border: 1px solid #faf5e95c;
+	color: inherit;
+	background: transparent;
+	cursor: pointer;
+}
+.mvp-experience #primary-navigation {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0;
+	width: min(640px, 100%);
+	max-height: calc(100dvh - 150px);
+	overflow: auto;
+	padding: 32px;
+	background: #102c3d;
+	color: #fff8e9;
+	border: 1px solid #c7bfac55;
+	box-shadow: 0 18px 30px #102c3d35;
+}
+.mvp-experience #primary-navigation.open {
+	display: block;
+}
+.mvp-experience .nav-main,
+.mvp-experience .nav-secondary {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px 24px;
+}
+.mvp-experience .nav-main a,
+.mvp-experience .nav-secondary a {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+}
+.mvp-experience .nav-interests {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px 24px;
+	margin: 12px 0 24px;
+}
+.mvp-experience .site-footer {
+	margin-top: 0;
+	padding: 64px 0 28px;
+	background: #d5d9c6;
+	border-top: 1px solid #c7bfac;
+	color: #183746;
+}
+.mvp-experience .footer-grid {
+	display: grid;
+	grid-template-columns: 1fr 1.3fr;
+	gap: 48px;
+}
+.mvp-experience .footer-brand > p {
+	margin-top: 20px;
+	max-width: 30ch;
+	font-size: 14px;
+}
+.mvp-experience .site-footer nav {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 8px 24px;
+	align-content: start;
+}
+.mvp-experience .site-footer nav a,
+.mvp-experience .site-footer nav button {
+	display: block;
+	color: inherit;
+	font-size: 13px;
+	line-height: 1.65;
+	padding: 8px 0;
+	min-height: 40px;
+	text-align: left;
+	background: none;
+	border: 0;
+	cursor: pointer;
+}
+.mvp-experience .fineprint {
+	grid-column: 1/-1;
+	border-top: 1px solid #18374625;
+	padding-top: 20px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 16px;
+	font-size: 12px;
+}
+.mvp-experience .fineprint p {
+	margin: 0;
+}
+.mvp-context-card {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border: 1px solid #c7bfac;
+	background: #fff8e9 url('/brand/mvp/assets/papel-fino.webp') center / 900px auto;
+}
+.mvp-context-card .mvp-card-image {
+	min-height: 220px;
+	display: grid;
+	place-items: center;
+	padding: 24px;
+	background:
+		var(--universe-bg) center / cover,
+		var(--universe-tint, #e3dbc9);
+}
+.mvp-context-card .mvp-card-image img {
+	width: 180px;
+	height: 180px;
+	object-fit: contain;
+}
+.mvp-context-card .card-copy {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	padding: 28px;
+}
+.mvp-context-card .card-copy h3 {
+	font-size: 30px;
+	line-height: 1.08;
+	margin: 0;
+}
+.mvp-context-card .card-copy h3 a {
+	text-decoration: none;
+}
+.mvp-context-card .card-copy p {
+	margin: 0;
+	font-size: 15px;
+}
+.mvp-context-card .card-action {
+	margin-top: auto;
+	padding-top: 12px;
+	font-size: 13px;
+	font-weight: 600;
+}
+.mvp-context-card.compact .mvp-card-image {
+	min-height: 160px;
+}
+.mvp-context-card.compact .mvp-card-image img {
+	width: 130px;
+	height: 130px;
+}
+.mvp-context-art {
+	display: block;
+	width: 100%;
+	max-width: 270px;
+	height: 230px;
+	object-fit: contain;
+	margin-inline: auto;
+}
+.v4-title-group.with-object {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 240px;
+	align-items: center;
+	gap: 32px;
+}
+.v4-title-group .v4-internal-art {
+	grid-column: 2;
+	grid-row: 1 / span 3;
+}
+.mvp-experience main > .section:first-child {
+	background:
+		linear-gradient(90deg, #fff8e9eb, #fff8e9df),
+		var(--universe-bg, url('/brand/mvp/assets/fundo-continuo.webp')) center / cover;
+}
+.mvp-experience .reading {
+	max-width: 100%;
+}
+.mvp-experience .reading > p,
+.mvp-experience .prose p {
+	line-height: 1.75;
+}
+.mvp-experience input,
+.mvp-experience select,
+.mvp-experience textarea {
+	max-width: 100%;
+	border-radius: 2px;
+}
+.mvp-experience [aria-invalid='true'] {
+	border-color: #9b342d;
+}
+.mvp-experience .error {
+	color: #9b342d;
+}
+@media (min-width: 1200px) {
+	.mvp-experience .header-inner {
+		width: min(1320px, calc(100% - 64px));
+	}
+}
+@media (max-width: 900px) {
+	.mvp-experience .footer-grid {
+		grid-template-columns: 1fr;
+		gap: 32px;
+	}
+	.mvp-experience .site-footer nav {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+	.v4-title-group.with-object {
+		grid-template-columns: minmax(0, 1fr) 160px;
+		gap: 16px;
+	}
+	.mvp-context-art {
+		height: 180px;
+	}
+}
+@media (max-width: 680px) {
+	.mvp-experience .header-inner {
+		width: calc(100% - 32px);
+		min-height: 100px;
+		gap: 12px;
+	}
+	.mvp-experience .header-actions {
+		gap: 12px;
+	}
+	.mvp-experience .menu-button {
+		padding: 8px;
+		gap: 8px;
+		font-size: 12px;
+	}
+	.mvp-experience .header-account {
+		font-size: 12px;
+	}
+	.mvp-experience #primary-navigation {
+		position: absolute;
+		padding: 24px;
+		max-height: calc(100dvh - 110px);
+	}
+	.mvp-experience .nav-interests {
+		grid-template-columns: 1fr;
+	}
+	.mvp-experience .site-footer {
+		padding-top: 40px;
+	}
+	.v4-title-group.with-object {
+		grid-template-columns: 1fr;
+	}
+	.v4-title-group .v4-internal-art {
+		grid-column: 1;
+		grid-row: auto;
+		width: 160px;
+		height: 140px;
+	}
+	.mvp-context-card .card-copy {
+		padding: 24px;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+	.mvp-experience *,
+	.mvp-experience *::before,
+	.mvp-experience *::after {
+		animation: none !important;
+		transition: none !important;
+	}
+}

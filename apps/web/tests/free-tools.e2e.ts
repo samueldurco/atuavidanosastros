@@ -48,7 +48,7 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	page
 }, testInfo) => {
 	await page.goto('/');
-	await expect(page.getByRole('link', { name: 'Descobrir meu Ascendente grátis' })).toHaveAttribute(
+	await expect(page.getByRole('link', { name: 'Calcular meu Ascendente grátis' })).toHaveAttribute(
 		'href',
 		'/ferramentas/ascendente'
 	);

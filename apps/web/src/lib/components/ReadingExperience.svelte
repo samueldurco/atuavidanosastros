@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '$lib/styles/mvp-private.css';
 	import { onMount, untrack } from 'svelte';
 	import type { SavedTrial } from '$lib/trials/reading';
 	import type { ReaderState } from '$lib/trials/reader-state';
@@ -116,7 +117,11 @@
 	}
 </script>
 
-<section class="experience" aria-label="Percorra sua leitura">
+<section
+	class="experience mvp-private"
+	data-mvp-private="experience"
+	aria-label="Percorra sua leitura"
+>
 	{#if saved.input.presentation?.name || saved.input.birth}
 		<div class="identity">
 			{#if saved.input.presentation?.name}<p>
