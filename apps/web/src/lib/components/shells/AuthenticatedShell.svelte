@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import '$lib/styles/mvp-private.css';
 	import { page } from '$app/state';
 	import BrandLogo from '../BrandLogo.svelte';
 	import { navigation } from '$lib/data/site';
@@ -18,7 +19,7 @@
 	]);
 </script>
 
-<div class="member-shell" data-stitch="SH-02">
+<div class="member-shell mvp-private" data-mvp-private="shell" data-stitch="SH-02">
 	<header class="member-header">
 		<a href="/" aria-label="A Tua Vida nos Astros — início"
 			><span class="full-logo"><BrandLogo /></span><span class="symbol-logo"

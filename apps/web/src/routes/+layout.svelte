@@ -1,9 +1,8 @@
 <script lang="ts">
 	import '../app.css';
-	import '$lib/styles/visual-v4-reference.css';
-	import '$lib/styles/visual-v4.css';
+	import '$lib/styles/mvp-approved.css';
+	import '$lib/styles/mvp.css';
 	import { visualContext } from '$lib/data/visual-v4';
-	import V4Backdrop from '$lib/components/V4Backdrop.svelte';
 	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
 	import { page } from '$app/state';
 	import PublicShell from '$lib/components/shells/PublicShell.svelte';
@@ -31,24 +30,19 @@
 <SeoHead seo={page.data.seo} />
 
 <svelte:head>
-	<link
-		rel="icon"
-		href="/brand/v4/MARCA/KIT_A_V001/vetores/atvna-micro-32.svg"
-		type="image/svg+xml"
-	/>
-	<link rel="apple-touch-icon" href="/brand/v4/MARCA/KIT_A_V001/exports/atvna-micro-180.png" />
+	<link rel="icon" href="/brand/mvp/assets/marca-clara.svg" type="image/svg+xml" />
+	<link rel="apple-touch-icon" href="/brand/mvp/icon-192.png" />
 	<link rel="manifest" href="/manifest.webmanifest" />
 </svelte:head>
 
 <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 <div
-	class="v4-experience"
+	class="v4-experience mvp-experience"
 	class:v4-home={visual.home}
 	class:v4-internal={!visual.home}
 	class:universe-material={!!visual.universe}
 	data-universe={visual.universe}
 >
-	<V4Backdrop universe={visual.universe} />
 	{#if member}<AuthenticatedShell>{@render children()}</AuthenticatedShell>{:else}<PublicShell
 			>{@render children()}</PublicShell
 		>{/if}

@@ -146,7 +146,8 @@ export function renderProductSvg(value: unknown) {
 <style>@font-face{font-family:ATVDisplay;src:url('${displayData}') format('woff2')}@font-face{font-family:ATVBody;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}
 text{fill:${palette.ink};font-family:ATVLabel,sans-serif;font-size:16px}.title{font-family:ATVDisplay,serif;font-size:42px}.sign{font-family:ATVBody,serif;font-size:21px}.label{font-size:13px;letter-spacing:2px;fill:${palette.ink}}.note,.house-label{font-size:15px;fill:${palette.ink}}.legend{font-size:17px}.tick{stroke:#8791a2;stroke-width:1}.cusp{stroke:#abb2bd;stroke-width:1;stroke-dasharray:3 5}.angle{stroke:${palette.line};stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:${palette.ink};stroke:#fffdf7;stroke-width:2}.body-number{fill:#fffdf7;font-size:11px}.center{font-family:ATVBody,serif;font-size:22px}</style>
 <rect width="1000" height="1360" fill="#fcfbf8"/>
-${text(64, 47, 'A TUA VIDA NOS ASTROS · CARTOGRAFIA', 'label')}
+<g transform="translate(64 18) scale(.34)" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="#bf9153" stroke-width="1.4"/><path d="M50 15C51.9 28 53.2 30.9 65 33C53.2 35.1 51.9 38 50 51C48.1 38 46.8 35.1 35 33C46.8 30.9 48.1 28 50 15Z" fill="#bf9153"/><path d="M17 58C28 53 40 58 50 70C60 58 72 53 83 58M21 70C32 67 41 73 50 82C59 73 68 67 79 70" fill="none" stroke="#bf9153" stroke-width="3.8" stroke-linecap="round"/></g>
+${text(112, 47, 'A TUA VIDA NOS ASTROS · CARTOGRAFIA', 'label')}
 ${text(64, 96, product.name, 'title')}
 ${text(936, 47, `Revisão ${run.revision}`, 'note', 'end')}
 <circle cx="500" cy="430" r="290" fill="none" stroke="${palette.line}" stroke-width="1.2"/>

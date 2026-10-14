@@ -12,7 +12,7 @@
 </script>
 
 <svelte:head
-	><title>Atlas Essencial — laboratório de componentes</title><meta
+	><title>ATVNA MVP — laboratório de componentes</title><meta
 		name="robots"
 		content="noindex,nofollow"
 	/></svelte:head
@@ -20,7 +20,7 @@
 <ContentShell kind="product">
 	<PageIntro
 		eyebrow="Gate B · laboratório local"
-		title="Atlas Essencial em código"
+		title="A identidade ATVNA em uso"
 		description="Exemplos sintéticos para testar os contratos de interação. Esta página só está disponível no ambiente local."
 	/>
 	<section class="spec">

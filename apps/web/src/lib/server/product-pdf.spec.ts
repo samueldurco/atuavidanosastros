@@ -35,6 +35,10 @@ describe('private PDF renderer', () => {
 		expect(doc.getPageCount()).toBeLessThan(5);
 		expect(first!.bytes).toEqual((await renderProductPdf(run))!.bytes);
 		expect(first!.filename).toMatch(/^atv-birth-chart-[a-f0-9-]+-r4\.pdf$/);
+		if (process.env.ATV_PDF_QA === '1') {
+			await mkdir('../../test-results/pdf', { recursive: true });
+			await writeFile('../../test-results/pdf/atv-birth-cover-synthetic.pdf', first!.bytes);
+		}
 	});
 	it('rejects unsupported glyphs rather than silently replacing approved content', async () => {
 		for (const text of ['Texto com emoji 🌙', '漢字', 'controle\u0000inválido']) {

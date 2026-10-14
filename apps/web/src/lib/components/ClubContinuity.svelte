@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '$lib/styles/mvp-private.css';
 	import { onMount, untrack } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
 	import type { ClubItem, ClubState, ClubPreparation } from '$lib/trials/club-continuity';
@@ -95,7 +96,11 @@
 	}
 </script>
 
-<section class="continuity card" aria-labelledby="continuity-heading">
+<section
+	class="continuity card mvp-private"
+	data-mvp-private="club-continuity"
+	aria-labelledby="continuity-heading"
+>
 	<p class="eyebrow">Continuidade escolhida por você</p>
 	<h2 id="continuity-heading">O que você quer retomar?</h2>
 	<p>

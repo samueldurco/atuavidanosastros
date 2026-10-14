@@ -5,6 +5,8 @@
 	import { CONTENT_VERSION } from '$lib/trials/versions';
 	import { editorialTopicPaths } from '$lib/data/editorial-topics';
 	import Button from './ui/Button.svelte';
+	import MvpProductArt from './MvpProductArt.svelte';
+	import '$lib/styles/mvp-private.css';
 	let { library }: { library: TrialLibraryData } = $props();
 	const topics: Record<string, string> = {
 		'meu-ceu': 'meu-ceu',
@@ -16,7 +18,11 @@
 	};
 </script>
 
-<section class="card trials" aria-labelledby="free-trials-heading">
+<section
+	class="card trials mvp-private"
+	data-mvp-private="trials"
+	aria-labelledby="free-trials-heading"
+>
 	<p class="eyebrow">Seu acesso gratuito está ativo</p>
 	<h2 id="free-trials-heading">Suas leituras de teste</h2>
 	<p>Os 25 produtos e o ATV+ estão disponíveis para você testar e avaliar.</p>
@@ -39,10 +45,10 @@
 				{@const topicPath = product && editorialTopicPaths[topics[product.universe]]?.[0]}
 				<article class="edition">
 					<a class="cover" href={`/testar-produtos/leituras/${reading.id}`}>
-						<span class="eyebrow">A Tua Vida nos Astros</span><span
-							aria-hidden="true"
-							class="ornament">✧</span
-						>
+						<div class="edition-art" aria-hidden="true">
+							<MvpProductArt productId={reading.product_id} />
+						</div>
+						<span class="eyebrow">A Tua Vida nos Astros</span>
 						<h3>{product?.name ?? reading.product_id}</h3>
 						<span
 							>{new Date(reading.created_at).toLocaleDateString('pt-BR', {
@@ -109,12 +115,8 @@
 		text-align: center;
 		text-decoration: none;
 	}
-	.cover .eyebrow,
-	.ornament {
+	.cover .eyebrow {
 		color: #dcc695;
-	}
-	.ornament {
-		font-size: 2.5rem;
 	}
 	h3 {
 		font: 500 1.6rem/1.25 var(--atv-font-display);

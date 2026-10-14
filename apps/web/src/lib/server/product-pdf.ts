@@ -7,7 +7,8 @@ import { weekTemporalFacts } from '../week-temporal-facts';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
-import { pdfCoverFor } from '../data/visual-v4-pdf';
+import { pdfBrandMark, pdfCoverFor } from '../data/visual-v4-pdf';
+import { visualExportPalette } from '../data/visual-v4-export';
 
 export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.4.0';
 export const PDF_LIMITS = Object.freeze({
@@ -45,9 +46,19 @@ export async function renderProductPdf(value: unknown) {
 		const display = await doc.embedFont(displayData, { subset: true });
 		const body = await doc.embedFont(bodyData, { subset: true });
 		const label = await doc.embedFont(labelData, { subset: true });
-		const ink = rgb(25 / 255, 53 / 255, 73 / 255),
+		const palette = visualExportPalette(product.id);
+		const color = (hex: string) =>
+			rgb(
+				...([1, 3, 5].map((n) => parseInt(hex.slice(n, n + 2), 16) / 255) as [
+					number,
+					number,
+					number
+				])
+			);
+		const ink = color(palette.ink),
 			muted = rgb(0.298, 0.337, 0.345),
-			gold = rgb(0.475, 0.357, 0.192);
+			gold = color(palette.line);
+		const brand = await doc.embedPng(pdfBrandMark());
 		const width = 595.28,
 			height = 841.89,
 			margin = 54,
@@ -73,8 +84,9 @@ export async function renderProductPdf(value: unknown) {
 		let y = height - 86;
 		const decorate = () => {
 			page.drawRectangle({ x: 0, y: 0, width, height, color: rgb(1, 1, 1) });
+			page.drawImage(brand, { x: margin, y: height - 49, width: 22, height: 22 });
 			page.drawText('A Tua Vida nos Astros', {
-				x: margin,
+				x: margin + 30,
 				y: height - 43,
 				size: 9,
 				font: label,
@@ -89,13 +101,13 @@ export async function renderProductPdf(value: unknown) {
 		};
 		decorate();
 		const engraving = await doc.embedPng(pdfCoverFor(product.id));
-		const coverSize = engraving.scaleToFit(30, 30);
+		const coverSize = engraving.scaleToFit(270, 198);
 		page.drawImage(engraving, {
-			x: width - margin - coverSize.width,
-			y: height - 49,
-			...coverSize,
-			opacity: 0.8
+			x: (width - coverSize.width) / 2,
+			y: y - coverSize.height,
+			...coverSize
 		});
+		y -= coverSize.height + 30;
 		const ensure = (space: number) => {
 			checkTime();
 			if (y - space >= 66) return;
@@ -207,7 +219,8 @@ export async function renderProductPdf(value: unknown) {
 		};
 		const heading = (text: string) => {
 			y -= 16;
-			ensure(85);
+			// Keep the heading with the first section or recorded-fact block.
+			ensure(128);
 			paragraph(text, display, 24, 29, 14);
 		};
 		paragraph(product.name, label, 10, 15);

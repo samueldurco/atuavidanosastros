@@ -1,21 +1,12 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { primaryNavigation } from '$lib/data/public-navigation';
-	import { visualContext } from '$lib/data/visual-v4';
 	import BrandLogo from './BrandLogo.svelte';
-	const universe = $derived(
-		visualContext(
-			page.url.pathname,
-			page.url.search,
-			page.data.product?.id || page.data.saved?.product_id || page.data.run?.productId
-		).universe
-	);
 </script>
 
 <footer class="site-footer" data-stitch="SH-01">
 	<div class="container footer-grid">
 		<div class="footer-brand">
-			<BrandLogo compact onDark={!universe || universe === 'meu-ceu'} />
+			<BrandLogo compact onDark={false} />
 			<p>Astrologia para conhecer você.</p>
 		</div>
 		<nav aria-label="Rodapé">

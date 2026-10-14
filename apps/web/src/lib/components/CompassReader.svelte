@@ -15,7 +15,7 @@
 		);
 </script>
 
-<div data-stitch="MEM-03 SH-03">
+<div class="mvp-private" data-mvp-private="compass-reader" data-stitch="MEM-03 SH-03">
 	<ReadingShell
 		contents={data.state === 'ready'
 			? [

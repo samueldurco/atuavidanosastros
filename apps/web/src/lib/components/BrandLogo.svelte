@@ -1,39 +1,75 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { visualContext } from '$lib/data/visual-v4';
-	let { compact = false, onDark }: { compact?: boolean; onDark?: boolean } = $props();
-	const dark = $derived(
-		onDark ??
-			!visualContext(
-				page.url.pathname,
-				page.url.search,
-				page.data.product?.id || page.data.saved?.product_id || page.data.run?.productId
-			).universe
-	);
-	const tone = $derived(dark ? 'escuro' : 'claro');
+	let { compact = false, onDark = true }: { compact?: boolean; onDark?: boolean } = $props();
 </script>
 
-<picture class:compact>
-	{#if !compact}<source
-			media="(min-width: 1000px)"
-			srcset={`/brand/v4/MARCA/KIT_A_V001/vetores/atvna-horizontal-${tone}.svg`}
-		/>{/if}
+<span
+	class="mvp-brand"
+	class:compact
+	class:on-dark={onDark}
+	role="img"
+	aria-label="A Tua Vida nos Astros"
+>
 	<img
-		src={`/brand/v4/MARCA/KIT_A_V001/vetores/atvna-compacta-${tone}.svg`}
-		alt="A Tua Vida nos Astros"
-		width="480"
-		height="142"
+		src={onDark ? '/brand/mvp/assets/marca-escura.svg' : '/brand/mvp/assets/marca-clara.svg'}
+		alt=""
+		width="52"
+		height="52"
 	/>
-</picture>
+	<span class="mvp-wordmark" aria-hidden="true"
+		><small>A TUA VIDA</small><span>nos astros</span></span
+	>
+</span>
 
 <style>
-	picture {
-		display: block;
-		width: 100%;
+	.mvp-brand {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		color: #183746;
+	}
+	.mvp-brand.on-dark {
+		color: #fff8e9;
 	}
 	img {
-		display: block;
-		width: 100%;
-		height: auto;
+		width: 52px;
+		height: 52px;
+		flex: 0 0 52px;
+	}
+	.mvp-wordmark {
+		display: flex;
+		flex-direction: column;
+		line-height: 1;
+		white-space: nowrap;
+	}
+	small {
+		font:
+			500 10px/1.5 'Onest',
+			sans-serif;
+		letter-spacing: 0.2em;
+	}
+	.mvp-wordmark > span {
+		font:
+			400 34px/1.05 'Newsreader',
+			Georgia,
+			serif;
+		letter-spacing: -0.03em;
+	}
+	.compact img {
+		width: 44px;
+		height: 44px;
+		flex-basis: 44px;
+	}
+	@media (max-width: 480px) {
+		img {
+			width: 42px;
+			height: 42px;
+			flex-basis: 42px;
+		}
+		.mvp-brand {
+			gap: 10px;
+		}
+		.mvp-wordmark > span {
+			font-size: 29px;
+		}
 	}
 </style>

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import '$lib/styles/mvp-private.css';
 	let {
 		heading,
 		children,
@@ -15,7 +16,12 @@
 	} = $props();
 </script>
 
-<div class="reader-shell" class:atlas={layout === 'atlas'} data-shell="reading">
+<div
+	class="reader-shell mvp-private"
+	class:atlas={layout === 'atlas'}
+	data-mvp-private="reader"
+	data-shell="reading"
+>
 	{@render heading()}
 	<div class="reader-grid">
 		<nav aria-label="Índice do resultado" class="reader-index">

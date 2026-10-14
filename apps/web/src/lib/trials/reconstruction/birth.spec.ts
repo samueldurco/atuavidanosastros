@@ -1,6 +1,8 @@
 import { calculateHistoricalNatalV4 } from './historical-v4.test-helper';
 import { describe, expect, it } from 'vitest';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
@@ -230,7 +232,7 @@ describe('Mapa Astral 5: seis assinaturas, temas e síntese', () => {
 			doc = await PDFDocument.load(pdf);
 		expect(doc.getPageCount()).toBeGreaterThan(10);
 		for (const f of s.calculation.facts) expect(trialText(s)).toContain(f.display);
-		const dir = 'E:/ATVNA/tmp/reconstruction-qa/birth';
+		const dir = join(tmpdir(), 'atvna-reconstruction-qa', 'birth');
 		await mkdir(dir, { recursive: true });
 		await writeFile(`${dir}/birth-chart.pdf`, pdf);
 		await writeFile(`${dir}/birth-chart.json`, JSON.stringify(s, null, 2));

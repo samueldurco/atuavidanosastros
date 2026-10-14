@@ -1,20 +1,29 @@
 <script lang="ts">
-	import VisualMotif from '$lib/components/VisualMotif.svelte';
+	import MvpProductCard from '$lib/components/MvpProductCard.svelte';
+	import { mvpArt, mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
 	let { data } = $props();
+	const theme = $derived(mvpTheme(data.topic.id));
 </script>
 
-<section class="section topic-hub">
-	<div class="container">
-		<div class="topic-intro">
-			<div class="reading">
-				<a class="back-link" href="/temas">Todos os temas <span aria-hidden="true">↗</span></a>
-				<p class="eyebrow">Explorar um tema</p>
-				<h1 class="h1">{data.topic.label}</h1>
-				<p class="lead">{data.topic.description}</p>
+<div class="mvp-public">
+	<div class="theme-{theme}">
+		<section class="universe-hero">
+			<div class="universe-hero-surface">
+				<div class="universe-hero-copy">
+					<a class="back-link" href="/temas">Todos os temas <span aria-hidden="true">↗</span></a>
+					<p class="eyebrow">Explore este universo</p>
+					<h1>{data.topic.label}</h1>
+					<p class="lead">{data.topic.description}</p>
+					<a class="button primary" href="#leituras"
+						>Conhecer as leituras <span aria-hidden="true">↗</span></a
+					>
+				</div>
+				<div class="universe-hero-emblem" aria-hidden="true">
+					<img src={mvpArt(mvpThemes[theme].art)} alt="" width="550" height="420" />
+				</div>
 			</div>
-			<VisualMotif identity={data.topic.id} eager />
-		</div>
-		<section class="hub-section" aria-labelledby="free-tools-title">
+		</section>
+		<section class="wrap section" aria-labelledby="free-tools-title">
 			<p class="eyebrow">Experimente</p>
 			<h2 id="free-tools-title">Comece gratuitamente</h2>
 			<div class="tool-grid">
@@ -33,99 +42,81 @@
 				{/each}
 			</div>
 		</section>
-		<section class="hub-section" aria-labelledby="readings-title">
-			<p class="eyebrow">Escolha o que faz sentido para você</p>
-			<h2 id="readings-title">Compare as leituras deste tema</h2>
-			<p class="section-intro">
-				Veja o foco de cada leitura e os dados necessários. A página de cada produto informa o
-				conteúdo e sua disponibilidade.
-			</p>
-			<div class="reading-options">
-				{#each data.products as product (product.id)}
-					<article class="reading-option">
-						<div>
-							<h3><a href={product.href}>{product.name}</a></h3>
-							<p>{product.details?.scope || product.summary}</p>
-							{#if product.details?.input}<p class="requirements">{product.details.input}</p>{/if}
-						</div>
-						<div class="option-action">
-							{#if product.state !== 'ACTIVE'}<span class="availability">Em preparação</span>{/if}
-							<a href={product.href}>Conhecer a leitura <span aria-hidden="true">→</span></a>
-						</div>
-					</article>
-				{/each}
-			</div>
-			<a class="back-link" href="/leituras"
-				>Ver todas as leituras <span aria-hidden="true">→</span></a
-			>
-		</section>
-		<section class="hub-section" aria-labelledby="articles-title">
-			<p class="eyebrow">Entenda o assunto</p>
-			<h2 id="articles-title">Para continuar a leitura</h2>
-			{#if data.articles.length}
-				<div class="article-grid">
-					{#each data.articles as article (article.id)}
-						<article>
-							<h3><a href={article.path}>{article.title}</a></h3>
-							<p>{article.description}</p>
-						</article>
-					{/each}
+		<section class="universe-readings section" id="leituras" aria-labelledby="readings-title">
+			<div class="wrap">
+				<p class="eyebrow">Escolha o que faz sentido para você</p>
+				<h2 id="readings-title">Leituras de {data.topic.label}</h2>
+				<p class="section-intro">
+					Compare o foco de cada leitura e os dados necessários. Cada página informa o conteúdo e a
+					disponibilidade.
+				</p>
+				<div class="grid grid-3 reading-options">
+					{#each data.products as product (product.id)}<MvpProductCard {product} showInput />{/each}
 				</div>
-			{/if}
-			<a class="back-link" href={`/revista?tema=${data.topic.id}`}
-				>{data.topic.editorial} <span aria-hidden="true">→</span></a
-			>
+				<a class="back-link" href="/leituras"
+					>Ver todas as leituras <span aria-hidden="true">→</span></a
+				>
+			</div>
+		</section>
+		<section class="universe-editorial-band" aria-labelledby="articles-title">
+			<div class="wrap universe-editorial-inner">
+				<div>
+					{#if theme === 'sonhos'}<img
+							class="universe-lettering"
+							src={mvpArt('lettering-sonhar')}
+							alt="Sonhar"
+							width="660"
+							height="210"
+							loading="lazy"
+						/>{/if}
+					<p class="eyebrow">Entenda o assunto</p>
+					<h2 id="articles-title">Para continuar a leitura</h2>
+					{#if data.articles.length}<div class="article-grid">
+							{#each data.articles as article (article.id)}<article>
+									<h3><a href={article.path}>{article.title}</a></h3>
+									<p>{article.description}</p>
+								</article>{/each}
+						</div>{/if}
+					<a class="back-link" href={'/revista?tema=' + data.topic.id}
+						>{data.topic.editorial} <span aria-hidden="true">→</span></a
+					>
+				</div>
+			</div>
 		</section>
 	</div>
-</section>
+</div>
 
 <style>
-	.topic-intro {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 2rem;
-	}
-	.reading {
-		margin-inline: 0;
-	}
 	.back-link,
-	.tool-action,
-	.option-action a {
+	.tool-action {
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
 		min-height: 48px;
 	}
-	.hub-section {
-		margin-top: 3rem;
-		padding-top: 2rem;
-		border-top: 1px solid var(--atv-border);
-	}
-	h2 {
-		font: 500 2rem/1.2 var(--atv-font-display);
-	}
-	h3 {
-		font: 500 1.4rem/1.3 var(--atv-font-editorial);
-	}
-	p {
-		line-height: 1.7;
-	}
-	.section-intro {
-		max-width: 44rem;
+	.universe-hero-copy .back-link {
+		margin-bottom: 1.25rem;
 	}
 	.tool-grid,
 	.article-grid {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1.25rem;
+		gap: 1.5rem;
 		margin-top: 1.5rem;
 	}
 	.tool-card {
-		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem;
+		border-top: 4px solid var(--universe-accent);
+		background-image: url('/brand/mvp/assets/papel-fino.webp');
+	}
+	.tool-card .tool-action {
+		margin-top: auto;
 	}
 	.availability {
-		font: 500 0.8rem/1.5 var(--atv-font-ui);
+		font-size: 0.8rem;
+		font-weight: 600;
 	}
 	.partial {
 		text-decoration: underline;
@@ -135,37 +126,23 @@
 		font-size: 0.9rem;
 		color: var(--atv-text-secondary);
 	}
-	.reading-options {
-		margin-block: 1.5rem;
+	.section-intro {
+		max-width: 44rem;
 	}
-	.reading-option {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) 11rem;
-		gap: 2rem;
-		padding-block: 1.5rem;
+	.reading-options {
+		margin-block: 2rem;
+	}
+	.article-grid article {
+		padding-top: 1rem;
 		border-top: 1px solid var(--atv-border);
 	}
-	.reading-option h3 {
-		margin-top: 0;
-	}
-	.option-action {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
+	.article-grid h3 {
+		font-size: 1.5rem;
 	}
 	@media (max-width: 650px) {
-		.topic-intro {
-			flex-direction: column;
-			align-items: flex-start;
-		}
 		.tool-grid,
-		.article-grid,
-		.reading-option {
+		.article-grid {
 			grid-template-columns: 1fr;
-		}
-		.reading-option {
-			gap: 0.5rem;
 		}
 	}
 </style>

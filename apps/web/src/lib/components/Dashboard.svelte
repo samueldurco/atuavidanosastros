@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { universes } from '$lib/data/site';
+	import { privateUniverseVisual } from '$lib/data/mvp-private-visual';
+	import '$lib/styles/mvp-private.css';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
@@ -16,7 +18,7 @@
 		content="noindex,nofollow"
 	/></svelte:head
 >
-<div data-stitch="MEM-01">
+<div class="mvp-private" data-mvp-private="dashboard" data-stitch="MEM-01">
 	<PageIntro
 		eyebrow="Área pessoal"
 		title="Minhas leituras"
@@ -62,7 +64,14 @@
 				</div>
 				{#if data.items.length}<div class="recent-list">
 						{#each data.items as item (item.id)}<article class="recent-item">
-								<span class="paper-mark" aria-hidden="true"></span>
+								<span class="paper-mark" aria-hidden="true"
+									><img
+										src="/brand/mvp/assets/marca-escura.svg"
+										alt=""
+										width="38"
+										height="38"
+									/></span
+								>
 								<div>
 									<p class="eyebrow">Na sua Biblioteca</p>
 									<h3>{item.title}</h3>
@@ -109,8 +118,12 @@
 		<p class="eyebrow">Escolha um tema</p>
 		<h2 id="paths-title">O que você quer conhecer?</h2>
 		<div class="universe-grid">
-			{#each universes as universe, i (universe.slug)}<a href={`/${universe.slug}`}
-					><span class="index">0{i + 1}</span>
+			{#each universes as universe (universe.slug)}
+				{@const visual = privateUniverseVisual(universe.slug)}
+				<a href={`/${universe.slug}`} style={`--private-universe: ${visual.color}`}
+					><span class="universe-art" aria-hidden="true"
+						><img src={visual.image} alt="" width="140" height="140" loading="lazy" /></span
+					>
 					<div>
 						<h3>{universe.title}</h3>
 						<p>{universe.eyebrow}</p>
@@ -253,11 +266,6 @@
 		font-size: 0.8rem;
 		color: var(--atv-text-secondary);
 		margin: 0.4rem 0 0;
-	}
-	.index {
-		color: var(--atv-text-accent);
-		font-size: 0.75rem;
-		padding-top: 0.2rem;
 	}
 	@media (max-width: 1200px) {
 		.dashboard-grid {
