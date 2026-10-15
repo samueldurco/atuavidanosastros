@@ -22,20 +22,20 @@ try {
 		await page
 			.locator('.tool-block')
 			.first()
-			.getByRole('button', { name: 'Descobrir meu ascendente' })
+			.locator('.tool-open[aria-controls="interactive-ascendente"]')
 			.click();
 		await page.locator('#ascendente-first-birth-date').fill('2000-01-01');
 		await page.locator('#ascendente-first-birth-time').fill('09:00');
 		const first = page.locator('.tool-block').first();
-		await first.getByRole('button', { name: 'Recolher ferramenta' }).click();
-		await first.getByRole('button', { name: 'Descobrir meu ascendente', exact: true }).click();
+		await first.locator('.tool-open[aria-controls="interactive-ascendente"]').click();
+		await first.locator('.tool-open[aria-controls="interactive-ascendente"]').click();
 		if ((await page.locator('#ascendente-first-birth-date').inputValue()) !== '2000-01-01')
 			throw new Error('Form state lost on collapse');
 		const formOverflow = await first.evaluate((el) => el.scrollWidth > el.clientWidth + 1);
 		const axe = await new AxeBuilder({ page })
 			.withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
 			.analyze();
-		await first.getByRole('button', { name: 'Recolher ferramenta' }).click();
+		await first.locator('.tool-open[aria-controls="interactive-ascendente"]').click();
 		await page.screenshot({ path: `${out}/home-${width}.png`, fullPage: true });
 		await page.locator('.tool-collection').screenshot({ path: `${out}/tools-${width}.png` });
 		const love = page
