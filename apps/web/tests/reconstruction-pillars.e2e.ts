@@ -85,7 +85,7 @@ for (const width of [390, 1440]) {
 			'Estou com sobrecarga e preciso preservar descanso.'
 		);
 		await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
-			'capacidade disponível hoje'
+			'o tempo e a energia realmente disponíveis'
 		);
 		await page.screenshot({
 			path: testInfo.outputPath(`reconstruction-pillars-${width}-workload.png`),
