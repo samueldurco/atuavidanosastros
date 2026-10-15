@@ -56,7 +56,7 @@ test("selected career compass runtime requests the current private candidate ver
     { name: "claim_product_run_work", args: { p_products: ["career-compass"], p_lease_seconds: 60 } },
     { name: "select_next_career_compass_candidate", args: { p_candidate_version: CAREER_COMPASS_CANDIDATE_VERSION } },
   ]);
-  assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.4");
+  assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.7");
 });
 
 const synastryPolicy = () => ({
