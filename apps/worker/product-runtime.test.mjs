@@ -44,6 +44,20 @@ test("default runtime never contacts RPC, emits only aggregate idle metrics and 
   assert.ok(Object.isFrozen(runtime));
 });
 
+test("new Three Pillars runs fail closed while the historical v1 calculator remains available", () => {
+  assert.equal(typeof createProductCalculators()["three-pillars"], "function");
+  const rpc = async () => assert.fail("rejected configuration must not contact RPC");
+  for (const enabledProducts of [
+    ["three-pillars"],
+    ["daily-card", "three-pillars"],
+  ]) {
+    assert.throws(
+      () => createProductProcessor(rpc, { enabledProducts }),
+      /invalid_product_configuration/,
+    );
+  }
+});
+
 const synastryPolicy = () => ({
   id: "synthetic-runtime-not-approved",
   version: "qa-fixture-1",

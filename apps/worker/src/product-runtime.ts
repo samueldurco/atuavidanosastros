@@ -164,7 +164,14 @@ export function createProductProcessor(
     !Array.isArray(requested) ||
     requested.length > Object.keys(all).length ||
     new Set(requested).size !== requested.length ||
-    requested.some((id) => typeof id !== "string" || !Object.hasOwn(all, id))
+    // The legacy v1 calculator remains available for historical snapshots, but
+    // cannot produce a new paid Three Pillars delivery until the v5.1 gate exists.
+    requested.some(
+      (id) =>
+        typeof id !== "string" ||
+        id === "three-pillars" ||
+        !Object.hasOwn(all, id),
+    )
   )
     throw new Error("invalid_product_configuration");
   if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 25000)
