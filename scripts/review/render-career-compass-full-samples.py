@@ -21,9 +21,9 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
+    CondPageBreak,
     Flowable,
     HRFlowable,
-    KeepTogether,
     PageBreak,
     Paragraph,
     SimpleDocTemplate,
@@ -248,7 +248,7 @@ def opening(sample: dict) -> list:
             *prose(reading['opening']), Spacer(1, 26),
             HRFlowable(width='100%', thickness=0.7, color=RULE), Spacer(1, 14),
             para('A leitura segue capítulo por capítulo, como na experiência web.', 'ui'),
-            PageBreak()]
+            Spacer(1, 30)]
 
 
 def chapters(sample: dict) -> list:
@@ -258,48 +258,24 @@ def chapters(sample: dict) -> list:
                    para(section['title'], 'chapter'), Spacer(1, 12),
                    HRFlowable(width=70, thickness=2.2, color=PRODUCT_ACCENT, hAlign='LEFT'),
                    Spacer(1, 20)]
-        parts = split_section_text(number, section['text'])
-        if len(parts) == 2:
-            first, second = parts
-            result.extend([KeepTogether(heading), *prose(first), PageBreak(),
-                           para(f'CAPÍTULO {number:02d}  /  11  ·  CONTINUAÇÃO', 'eyebrow'),
-                           Spacer(1, 13), para(section['title'], 'chapter'),
-                           Spacer(1, 12), HRFlowable(width=70, thickness=2.2,
-                                                      color=PRODUCT_ACCENT, hAlign='LEFT'),
-                           Spacer(1, 20), *prose(second), PageBreak()])
-        else:
-            result.extend([KeepTogether(heading), *prose(section['text']), PageBreak()])
+        # Give each chapter room for its heading and opening text, then let
+        # the prose flow across pages. One forced page per chapter left most
+        # A4 sheets nearly empty and obscured the reading's natural rhythm.
+        result.extend([CondPageBreak(180), *heading, *prose(section['text']),
+                       Spacer(1, 26),
+                       HRFlowable(width='100%', thickness=0.7, color=RULE),
+                       Spacer(1, 24)])
     return result
-
-
-def split_at_sentence(value: str) -> tuple[str, str]:
-    """Balance a long chapter across two pages without rewriting its words."""
-    boundaries = [match.end() for match in re.finditer(r'(?<=[.!?])\s+', value)]
-    if not boundaries:
-        raise ValueError('Long section lacks a sentence boundary')
-    at = min(boundaries, key=lambda candidate: abs(candidate - len(value) / 2))
-    return value[:at].rstrip(), value[at:].lstrip()
-
-
-def split_section_text(number: int, value: str) -> tuple[str, ...]:
-    # The 39 facts in chapter 11 are short lines. Their vertical size is much
-    # greater than their character count suggests, so split at a fact boundary.
-    lines = value.splitlines(keepends=True)
-    if number == 11 and len(lines) > 30:
-        return ''.join(lines[:23]).rstrip(), ''.join(lines[23:]).lstrip()
-    if len(value) > 2100:
-        return split_at_sentence(value)
-    return (value,)
 
 
 def endmatter(sample: dict) -> list:
     reading = sample['reading']
-    result = [para('PARA CONTINUAR', 'eyebrow'), Spacer(1, 12),
+    result = [CondPageBreak(180), para('PARA CONTINUAR', 'eyebrow'), Spacer(1, 12),
               para('Perguntas para levar com você', 'subhead'), Spacer(1, 15)]
     for i, question in enumerate(reading['questions'], start=1):
         result.extend([para(f'{i:02d}  {question}', 'body'), Spacer(1, 12)])
     result.extend([Spacer(1, 13), para('Experimente', 'subhead'), Spacer(1, 11),
-                   *prose(reading['practice']), PageBreak(),
+                   *prose(reading['practice']), Spacer(1, 29), CondPageBreak(165),
                    para('PARA CONTINUAR  /  MÉTODO', 'eyebrow'), Spacer(1, 12),
                    para('Alcance e limites desta leitura', 'subhead'), Spacer(1, 13)])
     for limit in reading['limits']:
@@ -324,13 +300,20 @@ def render(sample: dict, output_dir: Path) -> Path:
     doc.build([*cover(sample), *opening(sample), *chapters(sample), *endmatter(sample)],
               onFirstPage=chrome, onLaterPages=chrome)
     reader = PdfReader(str(path))
-    text = '\n'.join(page.extract_text() or '' for page in reader.pages)
+    page_text = (page.extract_text() or '' for page in reader.pages)
+    text = '\n'.join(
+        line for page in page_text for line in page.splitlines()
+        if line.strip() not in {
+            'A TUA VIDA NOS ASTROS',
+            'AMOSTRA FICTÍCIA  ·  PRÉVIA PRIVADA  ·  FORMATO DE CATÁLOGO: WEB',
+        } and not re.fullmatch(r'\d{2}', line.strip())
+    )
     expected = [sample['reading']['title'], sample['reading']['opening'],
                 *(s['title'] for s in sample['reading']['sections']),
                 *sample['reading']['questions'], sample['reading']['practice'],
                 *sample['reading']['limits'], sample['reading']['source']]
-    for number, section in enumerate(sample['reading']['sections'], start=1):
-        expected.extend(split_section_text(number, section['text']))
+    for section in sample['reading']['sections']:
+        expected.extend(part for part in section['text'].split('\n\n') if part.strip())
     compact = lambda value: re.sub(r'\s+', ' ', value).strip()
     visible = compact(text)
     for value in expected:
