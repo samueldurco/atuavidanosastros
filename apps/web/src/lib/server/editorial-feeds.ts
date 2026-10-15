@@ -1,4 +1,5 @@
 import { SITE } from '$lib/data/site';
+import { publicEditorialAuthor } from '$lib/data/editorial-author';
 import { editorialHubs, legacyPublicPaths } from '$lib/seo';
 import { hubDocuments, type EditorialDocument } from './editorial';
 import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
@@ -70,7 +71,9 @@ export function pagesSitemap(documents: readonly EditorialDocument[]): string {
 	);
 }
 export function editorialSitemap(documents: readonly EditorialDocument[]): string {
-	const authors = [...new Set(documents.map((document) => document.author.id))];
+	const authors = [
+		...new Set(documents.map((document) => publicEditorialAuthor(document.author).id))
+	];
 	return urlset(
 		documents
 			.map(

@@ -1,4 +1,5 @@
 import { SITE, signs } from '$lib/data/site';
+import { publicEditorialAuthor } from '$lib/data/editorial-author';
 import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
 import {
@@ -391,6 +392,7 @@ export function hubSeo(path: EditorialHub, documents: readonly EditorialDocument
 }
 export function articleSeo(document: EditorialDocument): PageSeo {
 	const image = document.image;
+	const author = publicEditorialAuthor(document.author);
 	return {
 		title: `${document.title} — ${SITE.name}`,
 		description: document.description,
@@ -415,9 +417,9 @@ export function articleSeo(document: EditorialDocument): PageSeo {
 			dateModified: document.modifiedAt,
 			inLanguage: 'pt-BR',
 			author: {
-				'@type': document.author.type ?? 'Person',
-				name: document.author.name,
-				url: `${SITE.url}/pessoas/${document.author.id}`
+				'@type': author.type ?? 'Person',
+				name: author.name,
+				url: `${SITE.url}/pessoas/${author.id}`
 			},
 			publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url },
 			...(image ? { image: [`${SITE.url}${image.path}`] } : {})
