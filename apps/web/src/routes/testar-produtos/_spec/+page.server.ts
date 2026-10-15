@@ -98,6 +98,36 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			url.searchParams.get('pillarsContext') === 'workload'
 				? 'Estou com sobrecarga e preciso preservar descanso.'
 				: 'Quero observar como inicio uma conversa e apresento minhas necessidades.';
+	// Whitelisted, wholly synthetic identities for private side-by-side review.
+	// They exercise the same calculation and reading path as the real trial form.
+	if (productId === 'three-pillars') {
+		const profile = url.searchParams.get('pillarsProfile');
+		if (profile === 'lia' || profile === 'caio') {
+			input.birth =
+				profile === 'lia'
+					? {
+							localDateTime: '1998-05-12T09:00:00',
+							utcInstant: '1998-05-12T12:00:00Z',
+							timezone: 'America/Sao_Paulo',
+							latitude: -23.55,
+							longitude: -46.63,
+							locationSource: 'synthetic-review'
+						}
+					: {
+							localDateTime: '1992-06-15T05:30:00',
+							utcInstant: '1992-06-15T08:30:00Z',
+							timezone: 'America/Sao_Paulo',
+							latitude: -23.55,
+							longitude: -46.63,
+							locationSource: 'synthetic-review'
+						};
+			input.presentation = {
+				version: 'atv-reading-identity/1',
+				name: profile === 'lia' ? 'Lia Exemplo' : 'Caio Exemplo',
+				city: 'São Paulo'
+			};
+		}
+	}
 	if (productId === 'birth-chart')
 		input.context =
 			url.searchParams.get('birthContext') === 'workload'
