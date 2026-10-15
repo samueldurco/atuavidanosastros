@@ -26,7 +26,10 @@ const input: WorkflowInput = {
 		policyVersion: 'atv-input-consent/1'
 	}
 };
-const context = { runId: '00000000-0000-4000-8000-000000000163', signal: new AbortController().signal };
+const context = {
+	runId: '00000000-0000-4000-8000-000000000163',
+	signal: new AbortController().signal
+};
 let draft: Awaited<ReturnType<typeof createThreePillarsPaidDraft>>;
 const sample = async () => (draft ??= await createThreePillarsPaidDraft(input, context));
 
@@ -42,23 +45,33 @@ describe('Three Pillars paid bridge, staged only', () => {
 		expect(result!.calculation.facts.length).toBeGreaterThan(
 			(result!.calculation.data.natal as { facts: unknown[] }).facts.length
 		);
-		const evidence = new Set(result!.calculation.facts.map(fact => fact.id));
+		const evidence = new Set(result!.calculation.facts.map((fact) => fact.id));
 		for (const section of result!.content.sections)
 			for (const id of section.evidence) expect(evidence.has(id), id).toBe(true);
 		expect(result!.content.sections[1].text.length).toBeGreaterThan(220);
 		expect(result!.content.sections[11].text.length).toBeGreaterThan(220);
 		expect(await reviewThreePillarsPaidDraft(input, result)).toEqual([]);
-		expect(await reviewThreePillarsPaidDraft(input, JSON.parse(JSON.stringify(result)))).toEqual([]);
+		expect(await reviewThreePillarsPaidDraft(input, JSON.parse(JSON.stringify(result)))).toEqual(
+			[]
+		);
 	});
 
 	it('fails closed when facts, interpretation, contract, or input are changed', async () => {
 		const original = await sample();
 		expect(original).not.toBeNull();
 		const changes = {
-			'fact': (copy: NonNullable<typeof original>) => { copy.calculation.facts[0]!.display = 'inventado'; },
-			'chapter': (copy: NonNullable<typeof original>) => { copy.content.sections[1]!.text = 'Texto diferente'; },
-			'candidate': (copy: NonNullable<typeof original>) => { copy.publication = 'approved' as 'blocked'; },
-			'contract': (copy: NonNullable<typeof original>) => { copy.calculation.data.paidContract = 'other'; }
+			fact: (copy: NonNullable<typeof original>) => {
+				copy.calculation.facts[0]!.display = 'inventado';
+			},
+			chapter: (copy: NonNullable<typeof original>) => {
+				copy.content.sections[1]!.text = 'Texto diferente';
+			},
+			candidate: (copy: NonNullable<typeof original>) => {
+				copy.publication = 'approved' as 'blocked';
+			},
+			contract: (copy: NonNullable<typeof original>) => {
+				copy.calculation.data.paidContract = 'other';
+			}
 		};
 		for (const [label, change] of Object.entries(changes)) {
 			const copy = structuredClone(original!);

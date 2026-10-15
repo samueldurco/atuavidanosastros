@@ -93,7 +93,7 @@ const evidenceCue: Record<string, string> = {
 	mercury: 'a pergunta respondida',
 	venus: 'o acordo aceito pelas partes',
 	mars: 'a iniciativa com limite',
-		jupiter: 'o alcance da proposta',
+	jupiter: 'o alcance da proposta',
 	saturn: 'o prazo e a capacidade disponíveis',
 	uranus: 'a alternativa comparada com a rotina',
 	neptune: 'o observado separado da impressão',

@@ -202,7 +202,9 @@ describe('Três Pilares 5: integração, fonte e contrapontos', () => {
 			expect(r.sections[0].text).toContain('não comprova por si só');
 			expect(r.sections[7].text).toContain('uma função não comprova a outra');
 			expect(r.sections[7].text).not.toContain('conjunção oferece uma passagem');
-			expect(all).not.toMatch(/descreve uma condição|um sinal de a |regente moderno|sem proximidade ao ângulo|os recursos para ampliar pode/);
+			expect(all).not.toMatch(
+				/descreve uma condição|um sinal de a |regente moderno|sem proximidade ao ângulo|os recursos para ampliar pode/
+			);
 			expect(reviewReconstructedPillarsV51(i, c, r)).toEqual([]);
 			expect(await approveTrialReading(i, c, r)).not.toBeNull();
 		}
@@ -219,7 +221,11 @@ describe('Três Pilares 5: integração, fonte e contrapontos', () => {
 		};
 		const c = await calculateTrial(i, runId);
 		const g = normalizeFactGraph(c);
-		expect(g.aspects.find((a) => [a.first, a.second].includes('sun') && [a.first, a.second].includes('moon'))?.kind).toBe('conjunction');
+		expect(
+			g.aspects.find(
+				(a) => [a.first, a.second].includes('sun') && [a.first, a.second].includes('moon')
+			)?.kind
+		).toBe('conjunction');
 		const r = composeTrialReading(i, c);
 		expect(r.sections[3].text).toContain('não informa sozinha se existe apoio');
 		expect(r.sections[3].text).not.toContain('Se a cooperação sugerida aparecer');

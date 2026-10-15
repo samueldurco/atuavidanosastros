@@ -86,16 +86,26 @@ test('abas e overlays mantêm contrato de teclado e foco', async ({ page }) => {
 	}
 });
 
-test('Bússola mostra erro recuperável com os campos preservados', async ({ page }) => {
+test('Meio do Céu mostra erro recuperável com os campos preservados', async ({ page }) => {
 	await page.goto('/bussola-de-carreira');
 	await page.getByLabel('Data de nascimento').fill('2000-01-01');
 	await page.getByLabel('Hora de nascimento').fill('09:00');
-	await selectCity(page, '#birth-city', 'Sao Paulo', 'São Paulo, São Paulo, Brasil');
-	await page.route('**/api/astrology/midheaven', (route) =>
-		route.fulfill({ status: 503, json: { code: 'unavailable' } })
+	await selectCity(
+		page,
+		'#meio-do-ceu-first-birth-city',
+		'Sao Paulo',
+		'São Paulo, São Paulo, Brasil'
+	);
+	await page.route('**/api/free-tools/meio-do-ceu', (route) =>
+		route.fulfill({
+			status: 503,
+			json: { error: 'Não foi possível calcular agora. Tente novamente.' }
+		})
 	);
 	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
-	await expect(page.getByRole('alert')).toContainText('Confira os dados de nascimento');
+	await expect(page.getByRole('alert')).toContainText(
+		'Não foi possível calcular agora. Tente novamente.'
+	);
 	await expect(page.getByLabel('Data de nascimento')).toHaveValue('2000-01-01');
 	await expect(page.getByRole('button', { name: 'Calcular meu Meio do Céu' })).toBeEnabled();
 });

@@ -221,16 +221,21 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	)
 		return buildDateChartScene(saved, options);
 	if (
-		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(
-			saved.calculation.version
-		) &&
+		[
+			'atv-private-week-synthesis/4.0.0',
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0'
+		].includes(saved.calculation.version) &&
 		options.mode !== 'natal'
 	) {
 		const days = saved.calculation.data.days as WeekDay[];
 		const index = options.weekDay ?? 0;
 		if (!Number.isInteger(index) || !days[index]) throw Error('week_chart_day_invalid');
 		const base = saved.calculation.data.base as SavedTrial['calculation'];
-		const calendar = ['atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(saved.calculation.version);
+		const calendar = [
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0'
+		].includes(saved.calculation.version);
 		const policy: AspectPolicy = calendar
 			? {
 					id: 'atv-calendar-observed-major-aspects',

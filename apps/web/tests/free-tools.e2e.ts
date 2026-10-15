@@ -11,6 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 async function fillBirth(page: Page, prefix: string, date = '1990-01-15', time = '12:30') {
+	prefix = `${new URL(page.url()).pathname.split('/').at(-1)}-${prefix}`;
 	await expect(page.locator('form[data-hydrated]')).toHaveAttribute('data-hydrated', 'true');
 	await page.locator(`#${prefix}-date`).fill(date);
 	await page.locator(`#${prefix}-time`).fill(time);
@@ -48,10 +49,10 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	page
 }, testInfo) => {
 	await page.goto('/');
-	await expect(page.getByRole('link', { name: 'Calcular meu Ascendente grátis' })).toHaveAttribute(
-		'href',
-		'/ferramentas/ascendente'
-	);
+	await expect(
+		page.getByRole('region', { name: 'Experimente uma ferramenta' }).locator('article')
+	).toHaveCount(9);
+	await expect(page.locator('.tool-open').first()).toBeVisible();
 	await page.screenshot({
 		path: testInfo.outputPath('home-free-tools-desktop.png'),
 		fullPage: true
@@ -61,7 +62,9 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	const ascendant = await generate(page, 'ascendente');
 	expect(ascendant.result.facts.find((fact) => fact.id === 'ascendant')?.value).toContain('Áries');
 	await expect(page.locator('.result-card')).toContainText('14.31°');
-	await expect(page.locator('.continuation a[href="/produtos/tres-pilares"]')).toBeVisible();
+	await expect(
+		page.locator('.continuation a[href="/produtos/sol-lua-e-ascendente"]')
+	).toBeVisible();
 	await expect(page).toHaveURL(/\/ferramentas\/ascendente$/);
 	await page.screenshot({
 		path: testInfo.outputPath('ascendente-anonymous-desktop.png'),
@@ -100,7 +103,7 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	});
 });
 
-for (const tool of ['carta-do-dia', 'tarot-sim-ou-nao']) {
+for (const tool of ['carta-do-dia', 'carta-do-amor']) {
 	test(`${tool}: resultado público e retorno conservam UUID e carta sem novo sorteio`, async ({
 		page
 	}, testInfo) => {
@@ -114,28 +117,16 @@ for (const tool of ['carta-do-dia', 'tarot-sim-ou-nao']) {
 		});
 		await page.goto(`/ferramentas/${tool}`);
 		await expect(page.locator('form.tool-form')).toHaveAttribute('data-hydrated', 'true');
-		if (tool === 'tarot-sim-ou-nao') {
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Tarot para uma pergunta');
-			await expect(
-				page.getByText(
-					'Uma carta para explorar sua pergunta. Esta leitura não responde sim ou não.',
-					{
-						exact: true
-					}
-				)
-			).toBeVisible();
-		}
 		const focus = 'Como observar minha rotina com mais atenção?';
-		await page.locator('#tarot-focus').fill(focus);
+		await page.locator(`#${tool}-tarot-focus`).fill(focus);
 		const original = await generate(page, tool);
-		if (tool === 'tarot-sim-ou-nao') expect(original.result.title).toBe('Tarot para uma pergunta');
 		expect(original.result.draw?.cardId).toBeTruthy();
 		expect(original.result.draw?.orientation).toBe('upright');
 		await expect(page.locator('.result-card')).toContainText(original.result.draw!.name);
 		await page.reload();
 		await expect(page.locator('.result-card h2')).toHaveText(original.result.title);
 		expect((await stored(page, tool)).result).toEqual(original.result);
-		await expect(page.locator('#tarot-focus')).toHaveValue(focus);
+		await expect(page.locator(`#${tool}-tarot-focus`)).toHaveValue(focus);
 		await page.getByRole('link', { name: 'Entrar para salvar e continuar' }).click();
 		await expect(page).toHaveURL(/\/entrar\?next=/);
 		expect(new URL(page.url()).searchParams.get('next')).toBe(`/ferramentas/${tool}`);
@@ -155,10 +146,10 @@ test('Registro de sonho respeita relato, escape, privacidade e limpeza explícit
 	const narrative =
 		'Na biblioteca encontrei <img src=x onerror="document.body.dataset.dreamAttack=\'executed\'"> e um livro azul.';
 	await page.goto(`/ferramentas/${tool}`);
-	await page.locator('#dream-date').fill('2026-10-13');
-	await page.locator('#dream-narrative').fill(narrative);
-	await page.locator('#dream-emotions').fill('curiosidade, tranquilidade');
-	await page.locator('#dream-associations').fill('minha escola, vontade de aprender');
+	await page.locator(`#${tool}-dream-date`).fill('2026-10-13');
+	await page.locator(`#${tool}-dream-narrative`).fill(narrative);
+	await page.locator(`#${tool}-dream-emotions`).fill('curiosidade, tranquilidade');
+	await page.locator(`#${tool}-dream-associations`).fill('minha escola, vontade de aprender');
 	const original = await generate(page, tool);
 	await expect(page.locator('.result-card')).toContainText(narrative);
 	await expect(page.locator('.result-card img')).toHaveCount(0);
@@ -180,7 +171,7 @@ test('Registro de sonho respeita relato, escape, privacidade e limpeza explícit
 	});
 	await page.getByRole('button', { name: 'Limpar dados e resultado desta página' }).click();
 	await expect(page.locator('.result-card')).toHaveCount(0);
-	await expect(page.locator('#dream-narrative')).toHaveValue('');
+	await expect(page.locator(`#${tool}-dream-narrative`)).toHaveValue('');
 	expect(
 		await page.evaluate(() => sessionStorage.getItem('atv-free-tool:registro-de-sonho'))
 	).toBeNull();
@@ -197,7 +188,9 @@ test('Combinação do Casal usa os dois mapas e requer autorização para compar
 	await consent.check();
 	const pair = await generate(page, 'combinacao-do-casal');
 	expect(pair.result.facts.filter((fact) => fact.kind === 'calculated')).not.toHaveLength(0);
-	await expect(page.locator('.continuation a[href="/produtos/sinastria"]')).toBeVisible();
+	await expect(
+		page.locator('.continuation a[href="/produtos/analise-astral-do-casal"]')
+	).toBeVisible();
 });
 
 test('Bússola mantém cálculo ao voltar de Entrar e elimina dados ao limpar', async ({
@@ -206,41 +199,28 @@ test('Bússola mantém cálculo ao voltar de Entrar e elimina dados ao limpar', 
 	let calculations = 0;
 	page.on('request', (request) => {
 		if (
-			new URL(request.url()).pathname === '/api/astrology/midheaven' &&
+			new URL(request.url()).pathname === '/api/free-tools/meio-do-ceu' &&
 			request.method() === 'POST'
 		)
 			calculations += 1;
 	});
 	await page.goto('/bussola-de-carreira');
-	await fillBirth(page, 'birth');
-	const responsePromise = page.waitForResponse(
-		(response) =>
-			new URL(response.url()).pathname === '/api/astrology/midheaven' &&
-			response.request().method() === 'POST'
-	);
-	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
-	const response = await responsePromise;
-	expect(response.status()).toBe(200);
-	const result = (await response.json()) as { sign: string; degree: number };
-	await expect(
-		page.getByRole('heading', { name: `Meio do Céu em ${result.sign}`, exact: true })
-	).toBeVisible();
-	await page.getByRole('link', { name: 'Entrar para guardar meus cálculos' }).click();
-	await expect(page).toHaveURL(/\/entrar\?next=%2Fbussola-de-carreira$/);
+	await expect(page).toHaveURL(/\/ferramentas\/meio-do-ceu$/);
+	await fillBirth(page, 'first-birth');
+	const result = await generate(page, 'meio-do-ceu');
+	await page.getByRole('link', { name: 'Entrar para salvar e continuar' }).click();
+	await expect(page).toHaveURL(/\/entrar\?next=%2Fferramentas%2Fmeio-do-ceu$/);
 	await page.goBack();
+	await expect(page.locator('.result-card h2')).toHaveText(result.result.title);
 	await expect(
-		page.getByRole('heading', { name: `Meio do Céu em ${result.sign}`, exact: true })
+		page.getByText('Seu resultado foi recuperado nesta aba.', { exact: false })
 	).toBeVisible();
-	await expect(
-		page.getByText('Seu cálculo foi recuperado nesta aba.', { exact: false })
-	).toBeVisible();
-	await expect(page.locator('#birth-date')).toHaveValue('1990-01-15');
-	await expect(page.locator('#birth-time')).toHaveValue('12:30');
+	await expect(page.locator('#meio-do-ceu-first-birth-date')).toHaveValue('1990-01-15');
+	await expect(page.locator('#meio-do-ceu-first-birth-time')).toHaveValue('12:30');
+	expect((await stored(page, 'meio-do-ceu')).result).toEqual(result.result);
 	expect(calculations).toBe(1);
 	await page.screenshot({ path: testInfo.outputPath('bussola-restored.png'), fullPage: true });
-	await page.getByRole('button', { name: 'Limpar dados e resultado desta aba' }).click();
-	await expect(page.locator('#birth-date')).toHaveValue('');
-	expect(
-		await page.evaluate(() => sessionStorage.getItem('atv-free-tool:bussola-de-carreira'))
-	).toBeNull();
+	await page.getByRole('button', { name: 'Limpar dados e resultado desta página' }).click();
+	await expect(page.locator('#meio-do-ceu-first-birth-date')).toHaveValue('');
+	expect(await page.evaluate(() => sessionStorage.getItem('atv-free-tool:meio-do-ceu'))).toBeNull();
 });
