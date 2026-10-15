@@ -19,7 +19,10 @@
 	import DreamAtlasDiary from '$lib/components/DreamAtlasDiary.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
-	import { careerCompassFactValue, careerCompassReaderLimits } from '$lib/career-compass-fact-presentation';
+	import {
+		careerCompassFactValue,
+		careerCompassReaderLimits
+	} from '$lib/career-compass-fact-presentation';
 	import { weekReadingTimeline, weekReadingAreaLinks } from '$lib/week-reading-timeline';
 	import { weekTemporalFacts } from '$lib/week-temporal-facts';
 	import {
@@ -598,9 +601,7 @@
 				{:else}
 					{@render provenance()}
 				{/if}
-				{#each data.run.productId === 'career-compass'
-					? careerCompassReaderLimits(data.run.calculation.limits, data.run.editorial.limits)
-					: [...data.run.calculation.limits, ...data.run.editorial.limits] as limit, index (index)}<p
+				{#each data.run.productId === 'career-compass' ? careerCompassReaderLimits(data.run.calculation.limits, data.run.editorial.limits) : [...data.run.calculation.limits, ...data.run.editorial.limits] as limit, index (index)}<p
 					>
 						{limit}
 					</p>{/each}

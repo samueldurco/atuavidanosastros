@@ -21,7 +21,9 @@ function careerRun() {
 			evidence: ['angle-midheaven']
 		}
 	];
-	run.calculation!.limits.push('UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.');
+	run.calculation!.limits.push(
+		'UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.'
+	);
 	return run;
 }
 
@@ -54,7 +56,9 @@ describe('career compass standalone web export', () => {
 		])
 			expect(html).toContain(value);
 		expect(html).not.toContain(run.calculation!.facts[0].display);
-		expect(html).toContain('Pequenas diferenças na referência de tempo podem alterar os graus exatos.');
+		expect(html).toContain(
+			'Pequenas diferenças na referência de tempo podem alterar os graus exatos.'
+		);
 		expect(html).not.toContain('UTC aproxima UT1');
 		expect(html).toContain('href="#origem"');
 		expect(html).toContain('href="#historico"');

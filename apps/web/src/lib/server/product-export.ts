@@ -9,7 +9,10 @@ import careerLabelData from '../../../static/brand/mvp/assets/onest-variable.wof
 import { mvpProductDesign } from '../data/mvp-visual';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
-import { careerCompassFactValue, careerCompassReaderLimits } from '../career-compass-fact-presentation';
+import {
+	careerCompassFactValue,
+	careerCompassReaderLimits
+} from '../career-compass-fact-presentation';
 
 export const WEB_EXPORT_VERSION = 'atv-web-export/1.4.0';
 export const EXPORT_CSP =

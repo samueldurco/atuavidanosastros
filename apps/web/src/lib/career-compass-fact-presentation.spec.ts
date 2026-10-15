@@ -58,7 +58,9 @@ describe('Career Compass fact presentation', () => {
 		const result = careerCompassReaderLimits(calculation, ['Considere sua experiência concreta.']);
 		expect(result).toHaveLength(4);
 		expect(result.join(' ')).not.toMatch(/UT1|IANA|DUT1|DST|offset|candidata/);
-		expect(result).toContain('Confira a hora e o fuso de nascimento informados antes de usar a leitura.');
+		expect(result).toContain(
+			'Confira a hora e o fuso de nascimento informados antes de usar a leitura.'
+		);
 		expect(result).toContain('A leitura não determina profissão, emprego, renda ou destino.');
 		expect(calculation).toEqual(snapshot);
 	});

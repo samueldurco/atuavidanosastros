@@ -12,11 +12,7 @@ describe('approved MVP product art', () => {
 		const compass = design['career-compass'];
 		expect(compass.theme).toBe('proposito');
 		expect(compass.composition).toBe('compass');
-		expect([compass.ink, compass.accent, compass.tint]).toEqual([
-			'#385240',
-			'#95a244',
-			'#e7ebcf'
-		]);
+		expect([compass.ink, compass.accent, compass.tint]).toEqual(['#385240', '#95a244', '#e7ebcf']);
 		expect(compass.art).toContain('/brand/mvp/assets/revisao/bussola-gravada.webp');
 		expect(compass.art).toContain('--pa-ink:#385240;--pa-tint:#e7ebcf');
 		expect(compass.art).not.toContain('/brand/redesign-2026-10-14/');

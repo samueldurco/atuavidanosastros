@@ -3,7 +3,10 @@ import fontkit from '@pdf-lib/fontkit';
 import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
-import { careerCompassFactValue, careerCompassReaderLimits } from '../career-compass-fact-presentation';
+import {
+	careerCompassFactValue,
+	careerCompassReaderLimits
+} from '../career-compass-fact-presentation';
 import { weekTemporalFacts } from '../week-temporal-facts';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
@@ -106,9 +109,7 @@ export async function renderProductPdf(value: unknown) {
 			});
 		};
 		decorate();
-		const engraving = await doc.embedPng(
-			careerDesign ? careerCover : pdfCoverFor(product.id)
-		);
+		const engraving = await doc.embedPng(careerDesign ? careerCover : pdfCoverFor(product.id));
 		const coverSize = engraving.scaleToFit(270, 198);
 		page.drawImage(engraving, {
 			x: (width - coverSize.width) / 2,
@@ -288,7 +289,8 @@ export async function renderProductPdf(value: unknown) {
 		);
 		for (const limit of run.productId === 'career-compass'
 			? careerCompassReaderLimits(calculation.limits, editorial.limits)
-			: [...calculation.limits, ...editorial.limits]) paragraph(limit);
+			: [...calculation.limits, ...editorial.limits])
+			paragraph(limit);
 
 		// Keep the compact version history and provenance together when possible.
 		ensure(200 + run.history.length * 20);

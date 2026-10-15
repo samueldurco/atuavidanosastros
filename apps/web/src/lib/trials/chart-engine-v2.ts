@@ -256,9 +256,7 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	const career = ['career-compass', 'purpose-career', 'midheaven', 'direction-journey'].includes(
 		saved.product_id
 	);
-	const { paper, ink, gold, muted, blue, red } = career
-		? careerChartColors
-		: chartColors;
+	const { paper, ink, gold, muted, blue, red } = career ? careerChartColors : chartColors;
 	const scene: ChartScene = {
 		version: CHART_ENGINE_VERSION,
 		width: 900,

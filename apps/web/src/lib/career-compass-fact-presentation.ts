@@ -91,5 +91,7 @@ export function careerCompassReaderLimits(
 			? careerCalculationNotices[limit]
 			: unreviewedCalculationNotice
 	);
-	return [...new Set([...translated, ...editorialLimits].filter((limit): limit is string => !!limit))];
+	return [
+		...new Set([...translated, ...editorialLimits].filter((limit): limit is string => !!limit))
+	];
 }
