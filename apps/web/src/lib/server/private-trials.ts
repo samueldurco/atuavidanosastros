@@ -1,6 +1,5 @@
-import { env as publicEnv } from '$env/dynamic/public';
-import { env as privateEnv } from '$env/dynamic/private';
 import { createClient } from '@supabase/supabase-js';
+import { trialServiceBindings } from './runtime-bindings';
 import { error, type RequestEvent } from '@sveltejs/kit';
 import { isRetiredTarot, parseDreamAtlasEntryInput, type DreamAtlasFactSource } from '@atv/domain';
 import type { SavedTrial } from '$lib/trials/reading';
@@ -23,10 +22,11 @@ export async function trialIdentity(locals: App.Locals, required = true) {
 	}
 	return { ownerId, supabase: locals.supabase };
 }
-export function trialWriter() {
-	if (!publicEnv.PUBLIC_SUPABASE_URL || !privateEnv.SUPABASE_SERVICE_ROLE_KEY)
+export function trialWriter(event: Pick<RequestEvent, 'platform'>) {
+	const { url, serviceRoleKey } = trialServiceBindings(event);
+	if (!url || !serviceRoleKey?.trim())
 		error(503, 'O salvamento de testes está temporariamente indisponível.');
-	return createClient(publicEnv.PUBLIC_SUPABASE_URL, privateEnv.SUPABASE_SERVICE_ROLE_KEY, {
+	return createClient(url, serviceRoleKey, {
 		auth: { persistSession: false, autoRefreshToken: false }
 	});
 }

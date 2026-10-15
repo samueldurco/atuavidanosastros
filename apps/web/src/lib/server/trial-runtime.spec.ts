@@ -86,3 +86,40 @@ it('preserva 422 da rejeição de origem no runtime hospedado', async () => {
 	});
 	expect(mocks.execute).not.toHaveBeenCalled();
 });
+
+it('encaminha com bindings da requisição em preferência ao env dinâmico', async () => {
+	mocks.fetch.mockResolvedValue(
+		new Response(JSON.stringify({ protocol: 'atv-trial-runtime/1', result: true }), {
+			headers: { 'content-type': 'application/json' }
+		})
+	);
+	const hosted = {
+		...event,
+		platform: {
+			env: {
+				PUBLIC_SUPABASE_URL: 'https://request.synthetic.test',
+				SUPABASE_SERVICE_ROLE_KEY: 'synthetic-request-service',
+				ATV_TRIAL_RUNTIME_KEY: 'synthetic-request-runtime'
+			}
+		}
+	} as unknown as RequestEvent;
+	expect(await reviewTrial(hosted, {} as never)).toBe(true);
+	expect(mocks.fetch).toHaveBeenCalledWith(
+		'https://request.synthetic.test/functions/v1/atv-trial-runtime',
+		expect.objectContaining({
+			headers: expect.objectContaining({
+				authorization: 'Bearer synthetic-request-service',
+				apikey: 'synthetic-request-service',
+				'x-atv-runtime-key': 'synthetic-request-runtime'
+			})
+		})
+	);
+	expect(mocks.execute).not.toHaveBeenCalled();
+});
+
+it('não recupera chave antiga se o binding da requisição estiver vazio', async () => {
+	const hosted = { ...event, platform: { env: { ATV_TRIAL_RUNTIME_KEY: '' } } } as RequestEvent;
+	await expect(reviewTrial(hosted, {} as never)).rejects.toMatchObject({ status: 503 });
+	expect(mocks.fetch).not.toHaveBeenCalled();
+	expect(mocks.execute).not.toHaveBeenCalled();
+});

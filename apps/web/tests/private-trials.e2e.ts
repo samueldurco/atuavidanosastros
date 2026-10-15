@@ -293,7 +293,7 @@ test('ATV+ shows three public plans while simulation stays restricted to the own
 	expect(alias.headers().location).toBe('/atv-mais?source=library');
 	const origin = new URL(page.url()).origin;
 	for (const action of ['start', 'cancel']) {
-		const form =
+		const form: Record<string, string> =
 			action === 'start'
 				? { planId: 'premium', requestKey: '00000000-0000-4000-8000-000000000019' }
 				: { cycleId: '00000000-0000-4000-8000-000000000019' };

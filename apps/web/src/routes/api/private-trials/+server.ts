@@ -88,7 +88,7 @@ export const POST: RequestHandler = async (event) => {
 	}
 	if (cycleId) await requirePlusSelection(event.locals, cycleId, input.productId);
 	const draw = tarotMethodFor(input.productId)
-		? await preparePrivateTarotDraw(identity.ownerId, body.requestKey, input)
+		? await preparePrivateTarotDraw(identity.ownerId, body.requestKey, input, event)
 		: null;
 	const id = draw?.id ?? crypto.randomUUID();
 	const result = await computeTrial(event, input, id, sources, draw?.calculation);

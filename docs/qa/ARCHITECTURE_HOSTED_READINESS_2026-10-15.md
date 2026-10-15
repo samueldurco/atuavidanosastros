@@ -37,3 +37,11 @@ A revisão independente da migração do Diário confirmou os controles de propr
 5. Com conta Google real, testar geração, gravação, reabertura, download e os três ciclos ATV+. A suíte local e os probes anônimos não substituem esse percurso nem o parecer do proprietário.
 
 Nenhuma migração, grant, função, segredo, publicação ou cobrança hospedada foi alterada por esta auditoria.
+
+## Correção local de resolução dos bindings
+
+A revisão encontrou leitura direta de `$env/dynamic/private` no runtime privado e no writer, enquanto o adaptador Cloudflare disponibiliza os bindings de cada requisição em `event.platform.env` ([documentação oficial](https://svelte.dev/docs/kit/adapter-cloudflare#Runtime-APIs)). Um resolver server-only passa a priorizar esses bindings no hook de autenticação, encaminhamento ao runtime, writer e health. A configuração dinâmica permanece como fallback quando o binding não é fornecido; um binding explicitamente vazio falha fechado. O resolver da autenticação recebe somente chaves públicas e não usa a chave de serviço. Não há cache de configuração entre requisições.
+
+O evento também é propagado no sorteio persistido de Tarot, na atualização de leituras e na abertura de links compartilhados. A mudança mantém autenticação, consentimento, RLS, grants, geração idempotente, protocolo do runtime e gates de aprovação existentes.
+
+Validação local: 118 testes em seis arquivos focais, ESLint focal e `svelte-check` sem erros ou avisos. Evidências em `test-results/runtime-bindings-20261015.txt`, `test-results/runtime-bindings-eslint-20261015.txt` e `test-results/runtime-bindings-svelte-check-20261015.txt`. Os testes cobrem prioridade da plataforma, fallback, isolamento entre requisições, desativação explícita, ausência de vazamento e indisponibilidade do banco. Esta correção ainda não foi publicada; a causa efetiva e a resolução do 503 remoto precisam de novo probe após o deployment coordenado. Nenhum segredo foi alterado.

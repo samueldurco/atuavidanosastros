@@ -1,7 +1,6 @@
 import { dev } from '$app/environment';
-import { env as privateEnv } from '$env/dynamic/private';
-import { env as publicEnv } from '$env/dynamic/public';
 import { error, type RequestEvent } from '@sveltejs/kit';
+import { trialRuntimeConfigured, trialServiceBindings } from './runtime-bindings';
 import type { WorkflowInput, DreamAtlasFactSource, CalculationSnapshot } from '@atv/domain';
 import type {
 	TrialEdition,
@@ -11,7 +10,7 @@ import type {
 } from './trial-computation';
 
 async function run(
-	event: Pick<RequestEvent, 'url' | 'fetch'>,
+	event: Pick<RequestEvent, 'url' | 'fetch' | 'platform'>,
 	request: TrialRuntimeRequest
 ): Promise<TrialRuntimeResult> {
 	// Local fixtures stay local. Hosted requests never fall back to a CPU-heavy Pages function.
@@ -25,11 +24,10 @@ async function run(
 			throw e;
 		}
 	}
-	const base = publicEnv.PUBLIC_SUPABASE_URL;
-	const key = privateEnv.SUPABASE_SERVICE_ROLE_KEY;
-	const runtimeKey = privateEnv.ATV_TRIAL_RUNTIME_KEY;
-	if (!base || !key || !runtimeKey || !base.startsWith('https://'))
+	const config = trialServiceBindings(event);
+	if (!trialRuntimeConfigured(config))
 		error(503, 'O serviço de leituras está indisponível. Tente novamente.');
+	const { url: base, serviceRoleKey: key, runtimeKey } = config;
 	try {
 		const response = await event.fetch(`${base}/functions/v1/atv-trial-runtime`, {
 			method: 'POST',
