@@ -41,6 +41,27 @@
 			!!data.run.calculation
 	);
 	const threePillars = $derived(data.run.productId === 'three-pillars');
+	const pillarTerms: Record<string, string> = {
+		'pillar-0': 'Sol natal',
+		'pillar-1': 'Lua natal',
+		'pillar-2': 'Ascendente',
+		'sun-moon-dynamics': 'relação entre Sol e Lua',
+		'ascendant-expression': 'expressão do Ascendente',
+		'position-sun': 'Sol',
+		'position-moon': 'Lua',
+		'angle-ascendant': 'Ascendente',
+		'personal-context': 'contexto pessoal informado'
+	};
+	function readingSectionTitle(title: string): string {
+		return threePillars ? title.replace(/\s*\[[a-z0-9]+(?:-[a-z0-9]+)+\]/gi, '') : title;
+	}
+	function readingSectionText(text: string): string {
+		if (!threePillars) return text;
+		return text.replace(
+			/\b(?:pillar-[0-2]|sun-moon-dynamics|ascendant-expression|position-sun|position-moon|angle-ascendant|personal-context)\b/g,
+			(id) => pillarTerms[id] ?? id
+		);
+	}
 	const birthGeometry = $derived(
 		birthAtlas && data.run.calculation
 			? parseProductCartography(
@@ -123,7 +144,7 @@
 				'angle-ascendant': 'Ascendente',
 				'personal-context': 'Contexto pessoal relatado'
 			};
-			if (labels[id]) return `${labels[id]} (${id})`;
+			if (labels[id]) return labels[id];
 		}
 		return id;
 	}
@@ -265,7 +286,7 @@
 						...((birthAtlas || threePillars) && data.run.editorial
 							? data.run.editorial.sections.map((section, index) => ({
 									id: `capitulo-${index + 1}`,
-									label: section.title
+									label: readingSectionTitle(section.title)
 								}))
 							: []),
 						{ id: 'origem', label: 'Base e limites' },
@@ -324,7 +345,7 @@
 							<label for="card-section">Trecho da leitura</label>
 							<select id="card-section" bind:value={cardSection} disabled={!!busy}>
 								{#each data.run.editorial.sections as section, index (index)}
-									<option value={index}>{index + 1}. {section.title}</option>
+									<option value={index}>{index + 1}. {readingSectionTitle(section.title)}</option>
 								{/each}
 							</select>
 						</div>
@@ -526,9 +547,9 @@
 				{#each data.run.editorial.sections as section, index (index)}<article
 						id={birthAtlas || weekTimeline || threePillars ? `capitulo-${index + 1}` : undefined}
 					>
-						<h3>{section.title}</h3>
+						<h3>{readingSectionTitle(section.title)}</h3>
 						{#if threePillars}<div class="chapter-prose">
-								{#each section.text
+								{#each readingSectionText(section.text)
 									.split(/\n\s*\n/)
 									.map((part) => part.trim())
 									.filter(Boolean) as paragraph, paragraphIndex (paragraphIndex)}
@@ -551,10 +572,36 @@
 							id={birthAtlas ? `fact-${fact.id}` : undefined}
 						>
 							<dt>{factLabel(fact.id)}</dt>
-							<dd>{fact.display}<small>{fact.source}</small></dd>
+							<dd>
+								{fact.display}{#if !threePillars}<small>{fact.source}</small>{/if}
+							</dd>
 						</div>{/each}
 				</dl>
-				<p>Método: {data.run.calculation.version}. Edição: {data.run.editorial.version}.</p>
+				{#if threePillars}
+					<details class="technical-details">
+						<summary>Identificadores e versões desta leitura</summary>
+						<p>Registro técnico para conferir os capítulos, os dados e suas fontes.</p>
+						<ol>
+							{#each data.run.editorial.sections as section, index (index)}
+								<li>{section.title}</li>
+							{/each}
+						</ol>
+						<dl>
+							{#each data.run.calculation.facts as fact (fact.id)}
+								<div>
+									<dt>{factLabel(fact.id)}</dt>
+									<dd><code>{fact.id}</code> · <code>{fact.source}</code></dd>
+								</div>
+							{/each}
+						</dl>
+						<p>
+							Método: <code>{data.run.calculation.version}</code>. Edição:
+							<code>{data.run.editorial.version}</code>.
+						</p>
+					</details>
+				{:else}<p>
+						Método: {data.run.calculation.version}. Edição: {data.run.editorial.version}.
+					</p>{/if}
 				{#each [...data.run.calculation.limits, ...data.run.editorial.limits] as limit, index (index)}<p
 					>
 						{limit}
@@ -668,6 +715,20 @@
 		background: var(--atv-surface-card);
 		font: inherit;
 		font-size: 0.85rem;
+	}
+	.technical-details {
+		border-block: 1px solid var(--atv-border);
+		margin-block: 1.5rem;
+	}
+	.technical-details summary {
+		min-height: 2.75rem;
+		padding-block: 0.75rem;
+		cursor: pointer;
+		font-weight: 600;
+	}
+	.technical-details code {
+		white-space: normal;
+		overflow-wrap: anywhere;
 	}
 	section {
 		scroll-margin-top: 2rem;

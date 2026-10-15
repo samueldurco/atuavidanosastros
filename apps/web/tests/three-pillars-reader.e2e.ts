@@ -25,11 +25,11 @@ for (const width of [1440, 820, 390, 320]) {
 		await expect(page.locator('#leitura .reading-intro')).toContainText('dados calculados');
 		await expect(page.locator('#historico')).toContainText('A leitura em HTML é gerada');
 		for (const name of [
-			'Seu Sol — Fato [pillar-0]',
-			'Sua Lua — Fato [pillar-1]',
-			'Seu Ascendente — Fato [pillar-2]',
-			'Sol e Lua: intenção e necessidade — Hipótese [sun-moon-dynamics]',
-			'Ascendente: abordagem e expressão — Hipótese [ascendant-expression]',
+			'Seu Sol — Fato',
+			'Sua Lua — Fato',
+			'Seu Ascendente — Fato',
+			'Sol e Lua: intenção e necessidade — Hipótese',
+			'Ascendente: abordagem e expressão — Hipótese',
 			'Relações (1)',
 			'Síntese dos Três Pilares (1) e três perguntas práticas'
 		])
@@ -41,20 +41,27 @@ for (const width of [1440, 820, 390, 320]) {
 			'Qual abordagem posso experimentar de modo reversível?'
 		])
 			await expect(reading).toContainText(question);
-		await expect(reading).toContainText(
-			'Base: Sol (position-sun) · Lua (position-moon) · Ascendente (angle-ascendant)'
+		await expect(reading).toContainText('Base: Sol · Lua · Ascendente');
+		await expect(reading).not.toContainText(
+			/pillar-[0-2]|sun-moon-dynamics|ascendant-expression|position-sun|position-moon|angle-ascendant|personal-context/
 		);
 		const source = page.locator('#origem');
-		for (const label of [
-			'Sol (position-sun)',
-			'Lua (position-moon)',
-			'Ascendente (angle-ascendant)',
-			'Contexto pessoal relatado (personal-context)',
-			'input.context',
-			'atv-product-delivery/1.18.0',
-			'Fixture de apresentação'
-		])
-			await expect(source).toContainText(label);
+		for (const label of ['Sol', 'Lua', 'Ascendente', 'Contexto pessoal relatado'])
+			await expect(source.locator(':scope > dl dt', { hasText: label })).toBeVisible();
+		const technical = source.locator('details.technical-details');
+		const summary = technical.locator('summary');
+		await expect(summary).toBeVisible();
+		await expect(technical.locator('code', { hasText: 'position-sun' })).toBeHidden();
+		await summary.focus();
+		await expect(summary).toBeFocused();
+		await page.keyboard.press('Enter');
+		await expect(technical).toHaveAttribute('open', '');
+		for (const item of ['position-sun', 'input.context', 'atv-product-delivery/1.18.0'])
+			await expect(technical).toContainText(item);
+		await expect(technical.locator('code', { hasText: 'position-sun' })).toBeVisible();
+		await page.keyboard.press('Enter');
+		await expect(technical).not.toHaveAttribute('open', '');
+		await expect(source).toContainText('Fixture de apresentação');
 		await expect(source).toContainText('parcial');
 		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);
