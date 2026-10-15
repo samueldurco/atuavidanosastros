@@ -8,7 +8,9 @@ for (const width of [390, 1440]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/testar-produtos/_spec?product=synastry');
 		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
-		await expect(page.getByRole('heading', { name: 'Sinastria', exact: true })).toBeVisible();
+		await expect(
+			page.getByRole('heading', { name: 'Análise Astral do Casal', exact: true })
+		).toBeVisible();
 		await expect(page.getByText('Há uma nova edição desta leitura', { exact: true })).toHaveCount(
 			0
 		);

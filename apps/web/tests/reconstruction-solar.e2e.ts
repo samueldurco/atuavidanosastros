@@ -8,7 +8,9 @@ for (const width of [390, 1440]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/testar-produtos/_spec?product=solar-return');
 		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
-		await expect(page.getByRole('heading', { name: 'Revolução Solar', exact: true })).toBeVisible();
+		await expect(
+			page.getByRole('heading', { name: 'Mapa do Seu Ano — Revolução Solar', exact: true })
+		).toBeVisible();
 		await expect(page.getByText('Há uma nova edição desta leitura', { exact: true })).toHaveCount(
 			0
 		);

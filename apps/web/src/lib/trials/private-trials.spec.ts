@@ -19,6 +19,7 @@ import { canShareReading, sharedReading, shareTokenHash, validShareToken } from 
 import { trialGeometry } from './cartography';
 import { privateFormats } from './experience';
 import { positionInterpretation } from './position-interpretation';
+import { offerNames20261015, OFFER_NAME_REVISION } from './offer-names';
 import { signEditorial } from './content';
 import { createProductCalculators } from '../../../../worker/src/product-runtime';
 
@@ -115,7 +116,7 @@ function inputFor(productId: string): WorkflowInput {
 }
 const saved = new Map<string, SavedTrial>();
 const measurements: unknown[] = [];
-describe('private free testing of the real 25 calculations and original AI/editorial corpus', () => {
+describe('private free testing of real current and historical calculations and editorial corpus', () => {
 	for (const product of cases)
 		it(`${product.id}: complete fact-bound reading receives private approval`, async () => {
 			const input = inputFor(product.id),
@@ -124,6 +125,11 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			const calculation = await calculateTrial(input, id, sources);
 			const reading = composeTrialReading(input, calculation),
 				approval = await approveTrialReading(input, calculation, reading);
+			const currentName = offerNames20261015[product.id as keyof typeof offerNames20261015];
+			if (currentName && product.id !== 'personal-calendar') {
+				expect(reading.title).toBe(currentName);
+				expect(reading.nameRevision).toBe(OFFER_NAME_REVISION);
+			}
 			if (!approval) {
 				await mkdir('.trial-qa', { recursive: true });
 				await writeFile(
@@ -408,8 +414,12 @@ describe('private free testing of the real 25 calculations and original AI/edito
 		});
 	for (const product of cases.filter((p) => privateFormats(p.id, p.delivery).includes('pdf')))
 		it(`${product.id}: complete catalog PDF can be reopened`, async () => {
-			const pdf = await trialPdf(saved.get(product.id)!);
-			expect((await PDFDocument.load(pdf)).getPageCount()).toBeGreaterThan(0);
+			const delivery = saved.get(product.id)!;
+			const pdf = await trialPdf(delivery);
+			const document = await PDFDocument.load(pdf);
+			expect(document.getPageCount()).toBeGreaterThan(0);
+			expect(document.getTitle()).toBe(delivery.reading.title);
+			expect(trialText(delivery).split('\n')[0]).toBe(delivery.reading.title);
 			expect(pdf.length).toBeGreaterThan(10000);
 			await writeFile(`.trial-qa/${product.id}.pdf`, pdf);
 		}, 30000);

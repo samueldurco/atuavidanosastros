@@ -9,7 +9,7 @@ for (const width of [390, 1440]) {
 		await page.goto('/testar-produtos/_spec?product=purpose-career');
 		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 		await expect(
-			page.getByRole('heading', { name: 'Mapa de Propósito & Carreira', exact: true })
+			page.getByRole('heading', { name: 'Mapa Astral de Dinheiro e Carreira', exact: true })
 		).toBeVisible();
 		await expect(page.getByText('Há uma nova edição desta leitura', { exact: true })).toHaveCount(
 			0
