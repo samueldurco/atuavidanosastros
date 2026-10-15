@@ -3,6 +3,9 @@ import type { FreeToolResult } from './free-tools';
 export const savedFreeToolIds = [
 	'ascendente',
 	'mapa-astral',
+	'meio-do-ceu',
+	'dinheiro-no-mapa',
+	'carta-do-amor',
 	'carta-do-dia',
 	'tarot-sim-ou-nao',
 	'combinacao-do-casal',

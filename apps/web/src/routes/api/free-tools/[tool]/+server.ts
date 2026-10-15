@@ -20,7 +20,8 @@ export const POST: RequestHandler = async (event) => {
 	} catch (failure) {
 		const code = failure && typeof failure === 'object' && 'code' in failure ? failure.code : null;
 		if (code === 'invalid_input') return json({ code }, { status: 400, headers });
-		if (code === 'ascendant_unavailable') return json({ code }, { status: 422, headers });
+		if (code === 'ascendant_unavailable' || code === 'houses_unavailable')
+			return json({ code }, { status: 422, headers });
 		if (failure && typeof failure === 'object' && 'status' in failure && failure.status === 503)
 			return json({ code: 'calculation_unavailable' }, { status: 503, headers });
 		return json({ code: 'calculation_failed' }, { status: 422, headers });

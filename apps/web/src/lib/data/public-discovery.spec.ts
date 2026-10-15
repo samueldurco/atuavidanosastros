@@ -34,8 +34,9 @@ describe('public discovery identity and canonical URLs', () => {
 			'/caderno'
 		])
 			expect(legacyPublicPaths).not.toContain(path);
+		expect(sitemap).not.toContain('/bussola-de-carreira</loc>');
 		expect(
-			sitemap.match(/https:\/\/atuavidanosastros.com.br\/bussola-de-carreira<\/loc>/g)
+			sitemap.match(/https:\/\/atuavidanosastros.com.br\/ferramentas\/meio-do-ceu<\/loc>/g)
 		).toHaveLength(1);
 	});
 	it('keeps the existing purpose landing indexable and canonical while its product prepares', () => {

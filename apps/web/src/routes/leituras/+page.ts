@@ -1,5 +1,5 @@
 import { universes } from '$lib/data/site';
-import { customerProducts } from '$lib/data/product-copy';
+import { customerOffers } from '$lib/data/product-copy';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ url }) => {
@@ -8,7 +8,7 @@ export const load: PageLoad = ({ url }) => {
 		selected: selected?.slug ?? null,
 		groups: (selected ? [selected] : universes).map((universe) => ({
 			...universe,
-			products: customerProducts.filter((product) => product.universe === universe.productUniverse)
+			products: customerOffers.filter((product) => product.universe === universe.productUniverse)
 		}))
 	};
 };

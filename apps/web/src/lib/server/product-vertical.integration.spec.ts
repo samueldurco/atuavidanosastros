@@ -56,7 +56,6 @@ import { workflowArtifacts } from './workflow-artifacts';
 // decoding remains covered by the artifact and recovery suites.
 const products = [
 	'birth-chart',
-	'three-pillars',
 	'ascendant',
 	'date-reading',
 	'pair-preview',
@@ -352,8 +351,18 @@ it('vertical integration covers every active registered partial calculator', () 
 	expect([...products].sort()).toEqual(
 		Object.keys(createProductCalculators())
 			.filter((id) => !retiredTarotProducts.some((product) => product.id === id))
+			.filter((id) => id !== 'three-pillars')
 			.sort()
 	);
+});
+
+it('keeps historical Three Pillars calculation available without issuing a new legacy paid reading', () => {
+	expect(createProductCalculators()).toHaveProperty('three-pillars');
+	// Current v5.1 is exercised by private-trial origin/review/persistence suites.
+	// The public paid v1 pipeline must remain closed until its migration is reviewed.
+	expect(() =>
+		createProductProcessor(async () => null, { enabledProducts: ['three-pillars'] })
+	).toThrow('invalid_product_configuration');
 });
 
 for (const productId of products)
