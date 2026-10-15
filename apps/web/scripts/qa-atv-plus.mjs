@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { randomUUID } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
@@ -48,7 +49,7 @@ try {
 		assert.equal(redirected.headers().location, '/atv-mais?origin=qa');
 		const denied = await page.request.post(`${base}/atv-mais?/start`, {
 			headers: { origin: base, accept: 'application/json' },
-			form: { planId: 'premium', requestKey: 'c7330767-e171-4f1d-a03f-ce11515aa02c' }
+			form: { planId: 'premium', requestKey: randomUUID() }
 		});
 		assert.ok(
 			[401, 503].includes(denied.status()),

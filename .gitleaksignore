@@ -1,0 +1,3 @@
+# Historical false positive: synthetic UUID used as an anonymous QA request nonce.
+# Not a credential; the current QA script generates a fresh UUID per request.
+1855e1b99d81d3e194384ecf1d9e9854d6cb1625:apps/web/scripts/qa-atv-plus.mjs:generic-api-key:51
