@@ -29,7 +29,9 @@ for (const width of [1440, 390, 320]) {
 			await page.evaluate(() => document.fonts.ready);
 			await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 			await expect(page.getByRole('heading', { name: 'Fontes e referências' })).toBeVisible();
-			await expect(page.getByRole('link', { name: 'Método e limites' })).toBeVisible();
+			const methodLink = page.getByRole('link', { name: 'Conheça nosso método', exact: true });
+			await expect(methodLink).toBeVisible();
+			await expect(methodLink).toHaveAttribute('href', '/metodo');
 			expect(
 				await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth),
 				code

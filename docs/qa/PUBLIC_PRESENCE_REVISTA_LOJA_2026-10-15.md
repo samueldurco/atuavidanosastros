@@ -76,3 +76,11 @@ Diretório local de evidências: `apps/web/test-results/arquitetura-publica-2026
 - `editorial.spec.ts`: 36 de 37 testes passaram; a única divergência foi a contagem antiga do sitemap (25 versus 26 naquele instante da integração). A atualização da contagem e das novas rotas pertence à execução principal. Nenhum teste de assinatura/admissão editorial falhou.
 
 A validação final conjunta e a liberação no domínio principal continuam sob responsabilidade da execução principal. O teste de tipos e os testes afetados devem ser fechados sobre a árvore integrada antes da publicação.
+
+## Revalidação dos artigos na árvore integrada
+
+Em 15/10/2026, `editorial-candidates.e2e.ts` passou os três casos em Chromium contra a compilação integrada servida em `127.0.0.1:4182`: 12 artigos assinados em cada largura de 1440, 390 e 320 px, totalizando 36 renderizações. Cada artigo apresentou um título principal, fontes e referências, link visível “Conheça nosso método” com destino `/metodo`, ausência de overflow horizontal e zero violações Axe WCAG 2 A/AA e 2.1 AA. Foram salvas capturas completas de todas as renderizações.
+
+O teste anterior ainda procurava a copy antiga “Método e limites”. Foi atualizada somente essa expectativa, acrescentando a verificação do destino. Nenhum conteúdo assinado, componente público ou regra de admissão editorial foi alterado nesta correção.
+
+Evidências locais: `test-results/architecture-editorial-e2e.txt` (3/3; 2,5 minutos) e `apps/web/test-results/architecture-editorial-e2e/` (capturas e relatórios). A inspeção usa os corpos assinados renderizados pelo componente SSR real e os estilos da compilação corrente. Trata-se de validação local da superfície de leitura; não constitui publicação nem liberação hospedada dos artigos.
