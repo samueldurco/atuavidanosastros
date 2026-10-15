@@ -5,6 +5,7 @@ import {
 } from './reconstruction/midheaven';
 import { composeLegacyTrialReading } from './legacy-reading';
 import { PILLARS_VERSION, PILLARS_READING_VERSION } from './reconstruction/pillars-facts';
+import { verifyPillarsOrigin } from './reconstruction/pillars-origin';
 import { ASCENDANT_VERSION, ASCENDANT_READING_VERSION } from './reconstruction/ascendant-facts';
 import {
 	composeReconstructedAscendant,
@@ -175,6 +176,11 @@ export async function approveTrialReading(
 		calculation.facts.length > 1500 ||
 		!calculation.version ||
 		!calculation.limits.length
+	)
+		return null;
+	if (
+		calculation.version === PILLARS_VERSION &&
+		!(await verifyPillarsOrigin(input, calculation)).ok
 	)
 		return null;
 	const ids = new Set<string>();

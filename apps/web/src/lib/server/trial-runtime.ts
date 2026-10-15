@@ -44,7 +44,7 @@ async function run(
 		if (
 			response.status === 422 &&
 			typeof body.error === 'string' &&
-			/^(Confira|Salve|Autorize|Produto sem)/.test(body.error)
+			/^(Confira|Salve|Autorize|Produto sem|Origem dos Três Pilares:)/.test(body.error)
 		)
 			error(422, body.error);
 		if (!response.ok || body.protocol !== 'atv-trial-runtime/1' || !Object.hasOwn(body, 'result'))
