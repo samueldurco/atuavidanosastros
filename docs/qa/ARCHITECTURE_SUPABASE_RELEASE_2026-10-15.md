@@ -10,6 +10,14 @@ Funções anteriores: `atv-trial-runtime` v15, JWT ativado, SHA ezbr `e4e9bb095c
 
 Advisors anteriores: segurança INFO `rls_enabled_no_policy` (13), WARN `anon_security_definer_function_executable` (1), `authenticated_security_definer_function_executable` (6), `auth_leaked_password_protection` (1). Performance INFO `unindexed_foreign_keys` (13), `unused_index` (6), WARN `auth_rls_initplan` (9). Comparar o delta após DDL; não confundir achado preexistente com regressão nem habilitar escrita para eliminar alerta de RLS sem política. Referências: [Database Advisor](https://supabase.com/docs/guides/database/database-advisors), [proteção de senhas](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection).
 
+## Escopo auditado dos testes do proprietário
+
+Na revisão somente leitura de 15/10/2026, as 19 ofertas de `offeredProductIds` possuem cálculo, composição e revisão no caminho privado. As evidências locais existentes em `apps/web/.trial-qa/` registram as 19 aprovações no escopo `private-free-test`. Isso comprova a execução das entradas sintéticas avaliadas; não representa E5, aprovação pessoal do proprietário nem liberação hospedada. Os motores opt-in usados pelo teste privado são distintos do registry comercial padrão: os 18 casos indisponíveis desse registry não impedem o teste privado nem autorizam venda.
+
+O Dossiê de Sonhos exige de um a três registros anteriores da própria conta e consentimento. O Diário permite iniciar o período e registrar sonhos imediatamente, mas sua análise pessoal integrada exige os 30 dias reais persistidos; a marca de proprietário não antecipa esse prazo. A rota de exemplo final usa dados fictícios identificados e não substitui o ciclo pessoal. As demais ofertas conservam validação dos dados, consentimentos aplicáveis e revisão automática antes da entrega.
+
+`owner_evaluation=true` não concede acesso isoladamente: exige a conta Google correta e grant ativo, não revogado e dentro da validade. Os testes completos das 19 ofertas ficam separados das quotas do simulador ATV+. Antes da liberação, verificar novamente a identidade nominal e os grants ativos para preservar a exclusividade solicitada. Ainda são necessárias as três migrações abaixo, os runtimes e Pages atualizados, a operação nominal e a validação com sessão real; nenhum bloqueador adicional de motor foi identificado nesta revisão.
+
 ## Congelamento local
 
 O template nominal tem teste isolado, com identidades sintéticas e banco descartável: `node --test scripts/architecture-owner-evaluation-db.test.mjs` (3/3). Ele cobre conta não verificada, ausência de identidade Google, grant ausente/revogado/expirado, segunda conta proprietária, idempotência e preservação da validade. A operação serializa tentativas concorrentes pelo mesmo procedimento com um lock transacional; esse teste não é uma prova da sessão real do proprietário.
