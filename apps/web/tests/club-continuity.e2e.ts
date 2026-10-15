@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
 const fixture = '/testar-produtos/_spec?view=club&product=direction-journey';
 for (const width of [320, 390, 1440]) {
-	test(`ATV+ explicit selection, authorized save and revoke at ${width}px`, async ({
+	test(`Reading continuity explicit selection, authorized save and revoke at ${width}px`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
@@ -98,7 +98,7 @@ for (const width of [320, 390, 1440]) {
 		await expect(panel.locator('details')).toHaveCount(0);
 	});
 }
-test('ATV+ conflict keeps explicit draft and does not retry or silently overwrite', async ({
+test('Reading continuity conflict keeps explicit draft and does not retry or silently overwrite', async ({
 	page
 }) => {
 	await page.goto(fixture);
@@ -123,7 +123,7 @@ test('ATV+ conflict keeps explicit draft and does not retry or silently overwrit
 	await expect(panel.locator('ol > li')).toHaveCount(1);
 	expect(requests).toBe(1);
 });
-test('ATV+ reopens a labelled synthetic saved selection with consent unchecked', async ({
+test('Reading continuity reopens a labelled synthetic saved selection with consent unchecked', async ({
 	page
 }, testInfo) => {
 	await page.goto(`${fixture}&continuity=saved`);
@@ -137,7 +137,7 @@ test('ATV+ reopens a labelled synthetic saved selection with consent unchecked',
 	);
 	await scanAccessibility(page, testInfo);
 });
-test('ATV+ access unavailable still exposes revocation and no reading selection', async ({
+test('Reading continuity access unavailable still exposes revocation and no reading selection', async ({
 	page
 }, testInfo) => {
 	await page.setViewportSize({ width: 320, height: 900 });
@@ -146,7 +146,7 @@ test('ATV+ access unavailable still exposes revocation and no reading selection'
 	const panel = page.locator('section.continuity');
 	await expect(panel.getByLabel('Leitura ou jornada')).toHaveCount(0);
 	await expect(panel.getByRole('checkbox')).toHaveCount(0);
-	await expect(page.getByRole('button', { name: 'Aprovar ATV+', exact: true })).toHaveCount(0);
+	await expect(page.getByRole('button', { name: 'Aprovar esta área', exact: true })).toHaveCount(0);
 	await expect(
 		panel.getByRole('button', { name: 'Remover autorização e apagar contexto' })
 	).toBeEnabled();

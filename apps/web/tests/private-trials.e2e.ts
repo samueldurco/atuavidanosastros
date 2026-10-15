@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { offeredProductIds, atvPlusPlans } from '@atv/domain';
 import { readFile } from 'node:fs/promises';
 import { PDFDocument } from 'pdf-lib';
 
@@ -212,7 +213,7 @@ test('pair preview displays both three-factor comparisons and the direction chap
 	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText('Sol em');
 });
 
-test('ATV+ has all six universes, 25 products, notes library and personal approval', async ({
+test('the reading area keeps 19 offers, saved readings and its own feedback separate from ATV+', async ({
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?view=club');
@@ -220,11 +221,90 @@ test('ATV+ has all six universes, 25 products, notes library and personal approv
 		(await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
 			.violations
 	).toEqual([]);
-	const productLinks = page
-		.locator('a[href^="/testar-produtos/"]')
-		.filter({ hasNotText: 'Bússola de Carreira' });
-	expect(await productLinks.count()).toBeGreaterThanOrEqual(24);
-	await expect(page.getByRole('button', { name: 'Aprovar ATV+' })).toBeVisible();
+	const targets: string[] = [];
+	for (const universe of [
+		'Mapa Astral',
+		'Previsões',
+		'Amor e Relacionamentos',
+		'Tarot',
+		'Dinheiro e Carreira',
+		'Sonhos'
+	]) {
+		const region = page.getByRole('region', { name: universe, exact: true });
+		await expect(region.getByRole('heading', { name: universe, exact: true })).toBeVisible();
+		targets.push(
+			...(await region
+				.getByRole('link')
+				.evaluateAll((links) => links.map((link) => link.getAttribute('href')!)))
+		);
+	}
+	expect(targets.sort()).toEqual(offeredProductIds.map((id) => `/testar-produtos/${id}`).sort());
+	await expect(page.getByRole('region', { name: 'Suas leituras de teste' })).toBeVisible();
+	await expect(
+		page.getByRole('link', { name: 'três planos do ATV+', exact: true })
+	).toHaveAttribute('href', '/atv-mais');
+	await expect(page.locator('section.continuity').getByRole('checkbox')).not.toBeChecked();
+	const posted: unknown[] = [];
+	let subscriptionRequests = 0;
+	page.on('request', (request) => {
+		if (request.method() === 'POST' && new URL(request.url()).pathname === '/atv-mais')
+			subscriptionRequests++;
+	});
+	await page.route('**/api/private-trials/club', async (route) => {
+		posted.push(route.request().postDataJSON());
+		await route.fulfill({ status: 200, json: { saved: true } });
+	});
+	const feedback = page.getByRole('region', { name: 'Sua avaliação desta área' });
+	await feedback.getByLabel('Comentário para a revisão').fill('Biblioteca e anotações avaliadas.');
+	await feedback.getByRole('button', { name: 'Aprovar esta área' }).click();
+	await expect(feedback.getByRole('status')).toContainText('Sua avaliação desta área foi salva.');
+	expect(posted).toEqual([{ decision: 'approved', comment: 'Biblioteca e anotações avaliadas.' }]);
+	expect(subscriptionRequests).toBe(0);
+	await expect(page.locator('section.continuity').getByRole('checkbox')).not.toBeChecked();
+});
+
+test('ATV+ shows three public plans while simulation stays restricted to the owner', async ({
+	page,
+	request
+}) => {
+	const response = await page.goto('/atv-mais');
+	expect(response?.status()).toBe(200);
+	expect(response?.headers()['cache-control']).toContain('no-store');
+	await expect(page.getByRole('heading', { name: 'ATV+', exact: true })).toBeVisible();
+	const plans = page.locator('.plans article');
+	await expect(plans).toHaveCount(3);
+	for (const plan of atvPlusPlans) {
+		const card = plans.filter({ has: page.getByRole('heading', { name: plan.name, exact: true }) });
+		await expect(card).toBeVisible();
+		await expect(card.getByText('Assinaturas em preparação', { exact: true })).toBeVisible();
+		await expect(card.locator('form')).toHaveCount(0);
+	}
+	await expect(page.getByRole('heading', { name: 'Experimente cada plano' })).toHaveCount(0);
+	await expect(
+		page.getByRole('button', { name: /Testar este plano|Reiniciar este teste|Encerrar simulação/ })
+	).toHaveCount(0);
+	await expect(page.locator('a[href*="atvPlusCycle"]')).toHaveCount(0);
+	expect(
+		(await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
+			.violations
+	).toEqual([]);
+	const alias = await request.get('/atv-plus?source=library', { maxRedirects: 0 });
+	expect(alias.status()).toBe(308);
+	expect(alias.headers().location).toBe('/atv-mais?source=library');
+	const origin = new URL(page.url()).origin;
+	for (const action of ['start', 'cancel']) {
+		const form =
+			action === 'start'
+				? { planId: 'premium', requestKey: '00000000-0000-4000-8000-000000000019' }
+				: { cycleId: '00000000-0000-4000-8000-000000000019' };
+		const unauthorized = await request.post(`/atv-mais?/${action}`, { headers: { origin }, form });
+		expect([401, 503]).toContain(unauthorized.status());
+		const crossOrigin = await request.post(`/atv-mais?/${action}`, {
+			headers: { origin: 'https://example.invalid' },
+			form
+		});
+		expect(crossOrigin.status()).toBe(403);
+	}
 });
 
 test('private routes and API require an authenticated trial grant', async ({ request }) => {
