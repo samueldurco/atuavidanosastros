@@ -1,6 +1,6 @@
 # Arquitetura integral — prontidão hospedada
 
-Verificação somente de leitura em 15/10/2026, entre 15:27 e 16:00 UTC. RUN_ID: `ATV-20260902-170644Z-01A0630F`. Esta nota distingue configuração observada, implementação local e liberação; não declara aceite dos produtos pelo proprietário.
+Verificação em 15/10/2026, entre 15:27 e 15:58 UTC. A única mudança administrativa nesta auditoria foi a autenticação pessoal pelo CLI oficial; configuração e dados hospedados foram somente consultados. RUN_ID: `ATV-20260902-170644Z-01A0630F`. Esta nota distingue configuração observada, implementação local e liberação; não declara aceite dos produtos pelo proprietário.
 
 ## Estado comprovado
 
@@ -18,11 +18,15 @@ A credencial GitHub existente permite leitura administrativa e push no repositó
 
 Não há segredos de repositório GitHub. O único environment listado é `atvna-editorial-signing`; não é um mecanismo de configuração do runtime Pages.
 
-O Wrangler 4.129.1 inicialmente não carregava o backend Windows de keyring. A dependência explicitamente exigida pelo CLI, `@napi-rs/keyring@1.3.0`, foi instalada globalmente sem scripts de instalação. Depois disso, `whoami --json` informou `loggedIn:false`; `auth token --json` confirmou ausência de login. Há somente o perfil `default`.
+O Wrangler 4.129.1 inicialmente não carregava o backend Windows de keyring. A dependência explicitamente exigida pelo CLI, `@napi-rs/keyring@1.3.0`, foi instalada globalmente sem scripts de instalação. Depois disso, a consulta inicial ainda indicou ausência de login. O proprietário concluiu uma nova autorização oficial por `wrangler login --use-keyring --scopes account:read user:read pages:write`; o processo terminou com `Successfully logged in.` e código 0. `whoami --json` confirmou OAuth na conta esperada. Nenhum token, código de callback ou identificação pessoal foi incluído nesta nota.
 
-O helper somente de leitura já documentado em `VISUAL_V4_RELEASE_PREPARATION.md` também foi verificado: o arquivo de credencial criptografado existe, mas a leitura não fornece uma credencial utilizável. Os guards impediram escrita, exclusão, migração e renovação. Não houve login, alteração de perfil, exposição de token, navegação no painel do provedor ou alteração de configuração hospedada. O HTTP 403 histórico não foi revalidado, pois falta uma credencial efetiva para fazer essa consulta.
+Após a autenticação, o helper somente de leitura documentado em `VISUAL_V4_RELEASE_PREPARATION.md` retornou HTTP 200 para o projeto e o deployment canônico. Os guards impediram escrita, exclusão, migração e renovação de credenciais durante essas consultas. Não houve navegação no painel do provedor nem alteração da configuração hospedada. O bloqueio anterior de credencial Cloudflare está resolvido.
 
-O snapshot de 09/10 registrava 18 bindings de produção, inclusive os três exigidos pelo runtime. Ele não comprova a configuração atual. Publicar código pelo app GitHub/Pages é possível; inspecionar ou corrigir os bindings exige recuperar uma sessão ou credencial Cloudflare com acesso ao projeto.
+O deployment de produção continua em `4c7e81c36d4acf694fc5c9a61b98005628d7e549`, `ed80a224-97c7-4648-9ba0-fd8f7e4732dd`, concluído com sucesso em 14/10 às 22:17 UTC. A configuração atual e os metadados desse deployment incluem `PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e `ATV_TRIAL_RUNTIME_KEY`. Os dois últimos são `secret_text`, também confirmados por `wrangler pages secret list --project-name atuavidanosastros` como `Value Encrypted`. A API omite seus valores: um campo de valor vazio na resposta não comprova um segredo vazio.
+
+Os probes do domínio principal e do URL imutável `https://ed80a224.atuavidanosastros.pages.dev/api/private-trials/health` continuaram retornando 503 com `configurationReady:false`. Isso deixa pendente a resolução efetiva dos bindings/valores no runtime. Não há evidência para atribuir a falha a um segredo específico. A configuração de preview contém apenas os bindings públicos e `FREE_TOOL_RECEIPT_KEY`; ela não possui os dois segredos de testes privados. Uma publicação de preview, por si só, não valida a geração privada.
+
+A revisão independente da migração do Diário confirmou os controles de proprietário, concessão, janela de 30 dias, revisão dos relatos, snapshot autorizado e conclusão única. `node --test scripts/private-dream-atlas-db.test.mjs` passou 9/9. Essa suíte usa PGlite sequencial; não equivale a uma prova de concorrência com duas conexões hospedadas. Os locks de ciclo e o índice único foram revisados no SQL.
 
 ## Ordem de liberação preservada
 
