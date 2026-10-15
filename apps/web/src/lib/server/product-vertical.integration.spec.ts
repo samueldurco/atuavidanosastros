@@ -138,6 +138,7 @@ async function fixture(productId: string) {
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
 		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
 		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
+		await db.exec(await file('supabase/migrations/20261015125547_career_web_export_1_4.sql'));
 		await db.exec(
 			await file('supabase/migrations/20260923110000_product_editorial_publication.sql')
 		);
@@ -616,7 +617,11 @@ for (const productId of products)
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');
 			}
-			expect(html).toContain('Escopo declarado: parcial.');
+			expect(html).toContain(
+				productId === 'career-compass'
+					? 'Esta leitura usa uma base parcial do mapa.'
+					: 'Escopo declarado: parcial.'
+			);
 			expect((await workflowArtifacts(f.event(other), runId, artifact.id)).status).toBe(404);
 			const svg = productId === 'ascendant' ? await f.store(runId, 'svg') : null;
 			if (svg) {

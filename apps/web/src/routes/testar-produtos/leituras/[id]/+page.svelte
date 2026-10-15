@@ -377,6 +377,7 @@
 		border-radius: 0;
 	}
 	.career-trial :global(.experience nav button[aria-current]) {
+		color: #183746;
 		background: #fff8e9;
 		border-color: #4d6231;
 	}
