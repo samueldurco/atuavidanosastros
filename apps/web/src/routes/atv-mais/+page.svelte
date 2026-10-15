@@ -85,13 +85,13 @@
 	</header>
 
 	<div class="plans" aria-label="Os três planos do ATV+">
-		{#each atvPlusPlans as plan, index}
+		{#each atvPlusPlans as plan, index (plan.id)}
 			<article class:premium={plan.id === 'premium'}>
 				<p class="eyebrow">0{index + 1} · ciclo de 30 dias</p>
 				<h2>{plan.name}</h2>
 				<p>{plan.description}</p>
 				<ul>
-					{#each plan.benefits as benefit}<li>{benefit}</li>{/each}
+					{#each plan.benefits as benefit (benefit)}<li>{benefit}</li>{/each}
 				</ul>
 				{#if data.ownerAccess}
 					<form method="POST" action="?/start" use:enhance={enhanceForm}>
@@ -141,7 +141,7 @@
 				<h4>Escolha sua próxima leitura</h4>
 				{#if availableIds.length}
 					<div class="choices">
-						{#each availableIds as id}<a
+						{#each availableIds as id (id)}<a
 								class="choice"
 								href={`/testar-produtos/${id}?atvPlusCycle=${current.id}`}
 								>{nameFor(id)} <span aria-hidden="true">↗</span></a
@@ -157,7 +157,7 @@
 				</p>
 				{#if currentUses.length}<h4>Leituras deste ciclo</h4>
 					<ul class="readings">
-						{#each currentUses as use}<li>
+						{#each currentUses as use (use)}<li>
 								{#if use.reading_id}<a href={`/testar-produtos/leituras/${use.reading_id}`}
 										>{nameFor(use.product_id)}</a
 									>{:else}{nameFor(use.product_id)} · leitura removida{/if}
@@ -167,13 +167,13 @@
 			{#if data.cycles.some((cycle) => cycle.id !== current?.id)}
 				<details>
 					<summary>Ciclos anteriores</summary
-					>{#each data.cycles.filter((cycle) => cycle.id !== current?.id) as cycle}<div
+					>{#each data.cycles.filter((cycle) => cycle.id !== current?.id) as cycle (cycle.id)}<div
 							class="past-cycle"
 						>
 							<h3>{atvPlusPlanFor(cycle.plan_id)?.name}</h3>
 							<p>{date(cycle.started_at)} · {cycle.cancelled_at ? 'encerrado' : 'concluído'}</p>
 							<ul>
-								{#each data.uses.filter((use) => use.cycle_id === cycle.id) as use}<li>
+								{#each data.uses.filter((use) => use.cycle_id === cycle.id) as use (use)}<li>
 										{#if use.reading_id}<a href={`/testar-produtos/leituras/${use.reading_id}`}
 												>{nameFor(use.product_id)}</a
 											>{:else}{nameFor(use.product_id)} · leitura removida{/if}
@@ -198,7 +198,7 @@
 		<details>
 			<summary>Quais leituras ficam fora dos planos?</summary>
 			<ul>
-				{#each atvPlusSeparateOfferIds as id}<li>{nameFor(id)}</li>{/each}
+				{#each atvPlusSeparateOfferIds as id (id)}<li>{nameFor(id)}</li>{/each}
 			</ul>
 		</details>
 	</section>

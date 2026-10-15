@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { SvelteURLSearchParams } from 'svelte/reactivity';
 	import { interestNavigation } from '$lib/data/public-navigation';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
 	let { data } = $props();
@@ -10,7 +11,7 @@
 	const topicFor = (id: string) => interestNavigation.find((item) => item.id === id);
 	const themeFor = (id: string) => mvpThemes[id as keyof typeof mvpThemes] ?? mvpThemes['meu-ceu'];
 	function topicHref(id?: string): string {
-		const params = new URLSearchParams();
+		const params = new SvelteURLSearchParams();
 		if (id) params.set('tema', id);
 		if (data.query) params.set('q', data.query);
 		if (data.kind) params.set('tipo', data.kind);
