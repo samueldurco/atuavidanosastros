@@ -84,3 +84,11 @@ Em 15/10/2026, `editorial-candidates.e2e.ts` passou os três casos em Chromium c
 O teste anterior ainda procurava a copy antiga “Método e limites”. Foi atualizada somente essa expectativa, acrescentando a verificação do destino. Nenhum conteúdo assinado, componente público ou regra de admissão editorial foi alterado nesta correção.
 
 Evidências locais: `test-results/architecture-editorial-e2e.txt` (3/3; 2,5 minutos) e `apps/web/test-results/architecture-editorial-e2e/` (capturas e relatórios). A inspeção usa os corpos assinados renderizados pelo componente SSR real e os estilos da compilação corrente. Trata-se de validação local da superfície de leitura; não constitui publicação nem liberação hospedada dos artigos.
+
+## Correção focal do CI de SEO
+
+O job de acessibilidade `116553542900`, execução `38773045695` do PR #35, falhou em duas expectativas de `seo.e2e.ts`: oito ferramentas em vez das nove atuais e 26 URLs no sitemap em vez de 30. Os outros 15 casos daquela etapa passaram. O log foi obtido pela API oficial GitHub e salvo em `test-results/ci-pr35-accessibility-job116553542900.log`.
+
+A comparação com a arquitetura aprovada confirmou a origem da diferença: substituição da Bússola pela calculadora do Meio do Céu e do Tarot Sim ou Não pela Carta do Amor; inclusão de Dinheiro no Seu Mapa Astral e das páginas ATV+, Canais oficiais e Fale conosco. O teste agora compara o inventário exato das nove ferramentas e das 29 páginas base, mais Notícias quando houver conteúdo admitido, em vez de depender somente de contagens. Também verifica os redirecionamentos 308 dos dois endereços antigos. Foram mantidas as verificações de metadados únicos em SSR e no navegador, canonical, descrição, exclusão de conteúdo não publicado e rotas privadas.
+
+Os dois casos afetados passaram em Chromium usando a compilação integrada em `127.0.0.1:4182`, sem rebuild ou alteração do runtime: **2/2 em 9,3 segundos**. Evidência: `test-results/architecture-seo-e2e.txt`. Prettier e ESLint do arquivo passaram. Esta prova local não substitui a nova execução completa do CI no commit corrigido.
