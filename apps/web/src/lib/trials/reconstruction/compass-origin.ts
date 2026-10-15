@@ -94,7 +94,7 @@ export async function prepareCareerCompassV6Origin(
 			return { ...base, status: 'blocked', reason: 'editorial_review_failed' };
 		}
 		return { ...base, status: 'prepared_for_review', calculation, reading };
-	} catch (error) {
+	} catch {
 		if (signal.aborted) signal.throwIfAborted();
 		return { ...base, status: 'blocked', reason: 'projection_invalid' };
 	}
