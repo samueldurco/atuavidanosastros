@@ -13,7 +13,7 @@ test("coverage distinguishes active coverage from thirteen historical calculatio
     coverage = productCalculationCoverage();
   assert.ok(Object.isFrozen(calculators));
   assert.equal(Object.keys(calculators).length, 13);
-  assert.equal(coverage.length, 26);
+  assert.equal(coverage.length, workflows.length);
   assert.deepEqual(
     coverage.map((p) => p.productId),
     workflows.map((p) => p.id),

@@ -221,7 +221,7 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	)
 		return buildDateChartScene(saved, options);
 	if (
-		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0'].includes(
+		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(
 			saved.calculation.version
 		) &&
 		options.mode !== 'natal'
@@ -230,7 +230,7 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		const index = options.weekDay ?? 0;
 		if (!Number.isInteger(index) || !days[index]) throw Error('week_chart_day_invalid');
 		const base = saved.calculation.data.base as SavedTrial['calculation'];
-		const calendar = saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0';
+		const calendar = ['atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(saved.calculation.version);
 		const policy: AspectPolicy = calendar
 			? {
 					id: 'atv-calendar-observed-major-aspects',
@@ -253,9 +253,13 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		});
 	}
 	const g = trialGeometry(saved, options.person);
-	const career = ['career-compass', 'purpose-career', 'midheaven', 'direction-journey'].includes(
-		saved.product_id
-	);
+	const career = [
+		'career-compass',
+		'purpose-career',
+		'midheaven',
+		'direction-journey',
+		'career-forecast-30d'
+	].includes(saved.product_id);
 	const { paper, ink, gold, muted, blue, red } = career ? careerChartColors : chartColors;
 	const scene: ChartScene = {
 		version: CHART_ENGINE_VERSION,

@@ -13,9 +13,11 @@
 	let weekDay = $state(0);
 	let solarView = $state<ChartOptions['solarView']>('return');
 	const weekDays = $derived(
-		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0'].includes(
-			saved.calculation.version
-		)
+		[
+			'atv-private-week-synthesis/4.0.0',
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0'
+		].includes(saved.calculation.version)
 			? (saved.calculation.data.days as { date: string }[])
 			: []
 	);

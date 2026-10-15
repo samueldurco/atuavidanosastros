@@ -20,10 +20,10 @@ export function authReturnPath(value: string | null | undefined): string {
 		value === '/ferramentas/horoscopo'
 	)
 		return value;
-	const trial = value.match(/^\/testar-produtos\/([a-z-]+)$/)?.[1];
+	const trial = value.match(/^\/testar-produtos\/([a-z0-9-]+)$/)?.[1];
 	if (trial && productCatalog.some((item) => item.id === trial && item.universe !== 'global'))
 		return value;
-	const product = value.match(/^\/biblioteca\/nova\/([a-z-]+)$/)?.[1];
+	const product = value.match(/^\/biblioteca\/nova\/([a-z0-9-]+)$/)?.[1];
 	if (product && productCatalog.some((item) => item.id === product && item.personalized))
 		return value;
 	if (/^\/biblioteca\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value))

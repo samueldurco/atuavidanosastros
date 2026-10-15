@@ -46,6 +46,7 @@
 			'atv-private-life-atlas/4.0.0',
 			'atv-private-direction-journey/4.0.0',
 			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0',
 			'atv-private-purpose-synthesis/4.0.0'
 		].includes(saved.calculation.version)
 			? Math.max(
@@ -194,7 +195,7 @@
 	</div>
 	<progress value={currentIndex + 1} max={chapters.length} aria-label="Posição na leitura"
 	></progress>
-	{#if saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0'}
+	{#if ['atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(saved.calculation.version)}
 		<ReadingCalendar {saved} chapter={current.index} {interactive} onopen={open} />
 	{/if}
 	{#if hasChart}

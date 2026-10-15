@@ -12,14 +12,15 @@ export function inputFor(p) {
   if (p.id==='life-atlas') value.atlas={priorities:['Relações','Trabalho','Rotina','Aprendizado']};
   if (p.kind==='relationship') { value.partner={...birth}; value.consent.partner=true; }
   if (p.kind==='cycles') value.targetDate=p.id==='personal-calendar'?'2026-09-01':'2026-09-09';
+  if (p.id==='career-forecast-30d') value.forecastPeriod='rolling-30-days';
   if (p.id==='solar-return') { value.returnYear=2026; value.returnLocation={city:'São Paulo', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic'}; }
   if (['daily-card','tarot-focus','tarot-yes-no','three-questions','tarot-journey'].includes(p.id)) value.questions=Array.from({length:p.id==='three-questions'?3:1},(_,i)=>`Questão sintética ${i+1}`);
   if (p.id==='dream-atlas') value.dreamAtlas={startDate:'2026-09-09'};
   else if (p.kind==='dream') value.dream={date:'2026-09-09', narrative:'Uma porta azul em um jardim.',associations:['calma'],emotions:['curiosidade']};
   return value;
 }
-test('26 active products cover six universes, with six Tarot methods and gated, typed input',()=>{
-  assert.equal(workflows.length,26);
+test('27 retained workflows cover six universes, with six Tarot methods and gated, typed input',()=>{
+  assert.equal(workflows.length,27);
   assert.equal(workflows.filter(p=>p.kind==='tarot').length,6);
   for (const id of ['daily-card','tarot-focus','tarot-yes-no','three-questions','tarot-journey']) assert.equal(workflows.some(p=>p.id===id),false,id);
   assert.equal(new Set(workflows.map(p=>p.kind)).size,6);

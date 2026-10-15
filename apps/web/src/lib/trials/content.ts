@@ -372,6 +372,16 @@ export const trialProfiles: Record<string, TrialProfile> = {
 		'Marque uma prioridade por semana e reserve um intervalo livre para revisar a agenda.',
 		['Mês civil', 'Referências diárias', 'Marcos pessoais', 'Organização']
 	),
+	'career-forecast-30d': profile(
+		'Trinta dias de trânsitos observados em relação ao seu mapa, com foco em recursos, rotina de trabalho e direção profissional.',
+		[
+			'Qual recurso pede atenção?',
+			'Que compromisso cabe nas suas condições?',
+			'O que você quer revisar ao final dos 30 dias?'
+		],
+		'Escolha um ajuste reversível e registre o que aconteceu, incluindo o que contrariou a hipótese.',
+		['Seu ponto de partida', 'Movimentos do período', 'Trinta dias', 'Revisão']
+	),
 	'solar-return': profile(
 		'A Revolução Solar calcula o retorno do Sol à longitude natal no ano e local informados. O mapa do retorno é uma referência simbólica; não determina os acontecimentos do ano.',
 		[

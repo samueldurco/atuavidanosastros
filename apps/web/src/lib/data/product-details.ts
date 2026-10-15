@@ -5,7 +5,8 @@ export const productDetails = {
 		tarotMethods.map((method) => [
 			method.id,
 			{
-				input: 'Foco opcional e autorização para guardar sua leitura.',
+				input:
+					'Escolha do método e autorização para guardar sua leitura. Não é necessário formular uma pergunta.',
 				scope: `${method.positions.length} ${method.positions.length === 1 ? 'carta' : 'cartas'}: ${method.positions.map((p) => p.name).join(', ')}. ${method.integration}`
 			}
 		])
@@ -39,8 +40,8 @@ export const productDetails = {
 		scope: 'Os trânsitos da semana e os dias em destaque no período escolhido.'
 	},
 	'personal-calendar': {
-		input: 'Dados de nascimento, mês e datas pessoais que você quiser marcar.',
-		scope: 'Um calendário de trânsitos para consultar ao longo do mês.'
+		input: 'Dados de nascimento e datas pessoais que você quiser marcar.',
+		scope: 'Trânsitos pessoais para 30 dias consecutivos, contados a partir da geração da leitura.'
 	},
 	'solar-return': {
 		input: 'Dados de nascimento, ano e local onde você estará no aniversário.',
@@ -81,7 +82,12 @@ export const productDetails = {
 	},
 	'purpose-career': {
 		input: 'Dados de nascimento e o contexto profissional que você quiser contar.',
-		scope: 'Uma leitura do mapa voltada a carreira, trabalho e relação com recursos.'
+		scope: 'Uma leitura do mapa de nascimento sobre sua relação com recursos, trabalho e carreira.'
+	},
+	'career-forecast-30d': {
+		input: 'Dados de nascimento e o contexto de trabalho e dinheiro que você quiser contar.',
+		scope:
+			'Trânsitos pessoais ligados a dinheiro, trabalho e carreira para 30 dias consecutivos, a partir da geração. A leitura apresenta temas e períodos de atenção sem prometer renda, emprego ou resultados.'
 	},
 	midheaven: {
 		input: 'Data, hora e local de nascimento.',
@@ -111,12 +117,13 @@ export const productDetails = {
 	},
 	'dream-atlas': {
 		input: 'Data de início e os relatos dos sonhos que você registrar.',
-		scope: 'Um diário de 30 dias para reunir os sonhos e observar temas que se repetem.'
+		scope:
+			'Registros organizados durante 30 dias e uma análise integrada ao final, relacionando os sonhos e os contextos informados. A análise considera somente os relatos registrados; interpretações individuais são leituras separadas.'
 	},
 	'atv-plus': {
-		input: 'Sua conta e os registros que você autorizar guardar.',
+		input: 'Sua conta, a escolha do plano e os dados necessários às leituras escolhidas.',
 		scope:
-			'Acompanhamento das suas leituras. Os planos, benefícios e condições de assinatura serão apresentados quando estiverem definidos.'
+			'Três planos com escolhas a cada 30 dias. Essencial: uma previsão. Ampliado: uma previsão e uma leitura básica. Premium: uma previsão e duas leituras básicas ou uma leitura de Tarot de 5 ou 7 cartas. Os produtos completos que não fazem parte dessas escolhas continuam avulsos. A avaliação privada não realiza cobranças.'
 	}
 } satisfies Record<string, { input: string; scope: string }>;
 

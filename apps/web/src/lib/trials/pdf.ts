@@ -12,7 +12,11 @@ import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
 import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
 import { WEEK_VERSION } from './reconstruction/week-facts';
 import { SOLAR_VERSION } from './reconstruction/solar-facts';
-import { CALENDAR_VERSION, type CalendarData } from './reconstruction/calendar-facts';
+import {
+	CALENDAR_VERSION,
+	PERIOD_VERSION,
+	type CalendarData
+} from './reconstruction/calendar-facts';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
@@ -35,6 +39,7 @@ export function pdfPresentationSource(productId: string, source: string) {
 		case 'direction-journey':
 			return 'Acompanhamento de 30 dias baseado em datas civis, no objetivo informado e na revisão dos experimentos. Não utiliza cálculo astrológico.';
 		case 'personal-calendar':
+		case 'career-forecast-30d':
 			return 'Síntese original com observações a cada seis horas e contexto consentido.';
 		case 'solar-return':
 			return 'Carta anual própria, com regências modernas, cinco aspectos maiores anuais até 4° e observações diárias mensais até 2°.';
@@ -66,7 +71,8 @@ export async function trialPdf(saved: SavedTrial) {
 	const engraving = await doc.embedPng(career ? careerCover : pdfCoverFor(saved.product_id));
 	const brand = await doc.embedPng(pdfBrandMark());
 	const format = experienceFor(saved.product_id).format;
-	const calendar = saved.calculation.version === CALENDAR_VERSION;
+	const rollingPeriod = saved.calculation.version === PERIOD_VERSION;
+	const calendar = rollingPeriod || saved.calculation.version === CALENDAR_VERSION;
 	const book = format === 'book' || calendar;
 	const chapters = r.sections.filter((s) => s.title !== 'Referências desta leitura');
 	doc.setTitle(r.title);
@@ -267,7 +273,7 @@ export async function trialPdf(saved: SavedTrial) {
 	if (book) newPage();
 	if (calendar) {
 		const data = saved.calculation.data as unknown as CalendarData;
-		heading('Seu mês, data por data', 23);
+		heading(rollingPeriod ? 'Seus próximos 30 dias' : 'Seu mês, data por data', 23);
 		paragraph(
 			'Dias e horários usam UTC. Os números indicam mudanças selecionadas. O ponto assinala um marco informado por você. Abra o capítulo da data para acompanhar a leitura.'
 		);
@@ -296,13 +302,16 @@ export async function trialPdf(saved: SavedTrial) {
 				borderColor: gold,
 				borderWidth: 0.5
 			});
-			page.drawText(String(index + 1), {
-				x: x + 9,
-				y: topY - 20,
-				size: 16,
-				font: display,
-				color: ink
-			});
+			page.drawText(
+				rollingPeriod ? day.date.slice(8, 10) + '/' + day.date.slice(5, 7) : String(index + 1),
+				{
+					x: x + 9,
+					y: topY - 20,
+					size: 16,
+					font: display,
+					color: ink
+				}
+			);
 			const count = saved.reading.editorial!.selection.filter((s) =>
 				data.events.some((e) => e.id === s.factId && e.date === day.date)
 			).length;
@@ -345,7 +354,8 @@ export async function trialPdf(saved: SavedTrial) {
 							'midheaven',
 							'date-reading',
 							'week-reading',
-							'personal-calendar'
+							'personal-calendar',
+							'career-forecast-30d'
 					  ].includes(saved.product_id)
 					? [undefined]
 					: [];
@@ -395,13 +405,28 @@ export async function trialPdf(saved: SavedTrial) {
 	}
 	const chapterPages: number[] = [];
 	for (const [i, s] of chapters.entries()) {
-		if (book && !career && i > 0 && y < height - 200 && s.text.length > 900) newPage();
+		if (book && !career && !rollingPeriod && i > 0 && y < height - 200 && s.text.length > 900)
+			newPage();
 		const chapterTitle = tarotMethodFor(saved.product_id)
 			? s.title
 			: `${String(i + 1).padStart(2, '0')} · ${s.title}`;
-		heading(chapterTitle, 17, headingHeight(chapterTitle) + Math.min(paragraphHeight(s.text), 108));
+		const datedBlocks =
+			rollingPeriod && /^\d{2}\/\d{2}\/\d{4}\n/.test(s.text) ? s.text.split('\n\n') : null;
+		heading(
+			chapterTitle,
+			17,
+			headingHeight(chapterTitle) +
+				Math.min(paragraphHeight(datedBlocks?.[0] ?? s.text), datedBlocks ? height - 220 : 108)
+		);
 		chapterPages.push(doc.getPageCount());
-		paragraph(s.text);
+		if (datedBlocks) {
+			// A date and its observations form one reading unit in the rolling edition.
+			for (const block of datedBlocks) {
+				const needed = paragraphHeight(block);
+				if (needed <= height - 148 && needed > y - 70) newPage();
+				paragraph(block);
+			}
+		} else paragraph(s.text);
 	}
 	for (const item of contents)
 		item.page.drawText(String(chapterPages[item.index]), {
@@ -461,7 +486,11 @@ export async function trialPdf(saved: SavedTrial) {
 		r.limits.slice(-6).forEach((limit) => paragraph(limit, label, 9));
 	} else if (saved.calculation.version === PAIR_VERSION) {
 		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
-	} else if ([WEEK_VERSION, SOLAR_VERSION, CALENDAR_VERSION].includes(saved.calculation.version)) {
+	} else if (
+		[WEEK_VERSION, SOLAR_VERSION, CALENDAR_VERSION, PERIOD_VERSION].includes(
+			saved.calculation.version
+		)
+	) {
 		r.limits.forEach((limit) => paragraph(limit, label, 9));
 	} else if (saved.product_id === 'direction-journey') {
 		r.limits.forEach((limit) => paragraph(limit, label, 9));

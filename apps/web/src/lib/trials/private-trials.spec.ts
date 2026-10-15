@@ -74,6 +74,7 @@ function inputFor(productId: string): WorkflowInput {
 	}
 	if (kind === 'cycles')
 		input.targetDate = productId === 'personal-calendar' ? '2026-10-01' : '2026-10-06';
+	if (productId === 'career-forecast-30d') input.forecastPeriod = 'rolling-30-days';
 	if (productId === 'solar-return') {
 		input.targetDate = '2026-01-01';
 		input.returnYear = 2026;
@@ -187,7 +188,10 @@ describe('private free testing of the real 25 calculations and original AI/edito
 			experimentalSolarReturnBase: true,
 			experimentalPersonalCalendarBase: true
 		});
-		for (const s of saved.values()) {
+		for (const s of [...saved.values()].filter(
+			(value) => value.product_id !== 'career-forecast-30d'
+		)) {
+			// The thirty-day career forecast has no historical edition to reproduce.
 			// Historical rendering applies to its original compact calculation schema.
 			// New daily evidence is deliberately not converted to thousands of legacy chapters.
 			const historicalCalculation = ['solar-return', 'personal-calendar'].includes(s.product_id)

@@ -47,14 +47,14 @@ export const interestNavigation = [
 	{
 		id: 'proposito',
 		slug: 'carreira',
-		label: 'Carreira e propósito',
+		label: 'Dinheiro e carreira',
 		href: '/temas/carreira',
-		description: 'Comece pelo Meio do Céu e explore vocação, trabalho e direção profissional.',
+		description: 'Explore sua relação com dinheiro, trabalho e carreira a partir do seu mapa.',
 		productUniverse: 'proposito-prosperidade',
-		toolHref: '/bussola-de-carreira',
-		action: 'Fazer minha Bússola de Carreira',
+		toolHref: '/ferramentas/meio-do-ceu',
+		action: 'Calcular meu Meio do Céu',
 		note: 'Calcule seu Meio do Céu gratuitamente',
-		editorial: 'Artigos sobre carreira e vocação',
+		editorial: 'Artigos sobre dinheiro e carreira',
 		available: true,
 		icon: 'M12 3l3 6 6 3-6 3-3 6-3-6-6-3 6-3Z'
 	},
@@ -63,7 +63,7 @@ export const interestNavigation = [
 		slug: 'tarot',
 		label: 'Tarot',
 		href: '/temas/tarot',
-		description: 'Escolha uma pergunta e um método de reflexão que faça sentido para o momento.',
+		description: 'Conheça diferentes métodos de leitura e explore os símbolos das cartas.',
 		productUniverse: 'tarot-arcanos',
 		toolHref: '/ferramentas/carta-do-dia',
 		action: 'Tirar minha carta do dia',
@@ -90,17 +90,18 @@ export const interestNavigation = [
 ] as const;
 
 export const primaryNavigation = [
-	{ href: '/temas', label: 'Explorar temas' },
+	{ href: '/temas', label: 'Seis universos' },
 	{ href: '/ferramentas', label: 'Ferramentas grátis' },
 	{ href: '/leituras', label: 'Leituras' },
-	{ href: '/revista', label: 'Revista' }
+	{ href: '/revista', label: 'Revista ATVNA' },
+	{ href: '/loja', label: 'Loja dos Signos' },
+	{ href: '/atv-mais', label: 'ATV+' }
 ] as const;
 
 export const secondaryNavigation = [
 	{ href: '/', label: 'Início' },
-	{ href: '/loja', label: 'Loja dos Signos' },
 	{ href: '/metodo', label: 'Nosso método' },
-	{ href: '/suporte', label: 'Ajuda' }
+	{ href: '/fale-conosco', label: 'Fale conosco' }
 ] as const;
 
 export type PublicTopicId = (typeof interestNavigation)[number]['id'];

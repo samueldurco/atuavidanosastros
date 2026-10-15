@@ -2,9 +2,9 @@
   "run_id": "ATV-20260902-170644Z-01A0630F",
   "direction": "MVP aprovado 2026-10-14",
   "source": "apps/web/src/lib/data/mvp-product-design.json",
-  "source_sha256": "76813cc8ef773628e9227e84b150673988c52dce0b5782281618e0752bd137b5",
+  "source_sha256": "f09a946f542798fba4efb152cb5edc22e36d8f54fb159767268cbd88d8ea7265",
   "derivation": "Individual approved product SVG compositions rasterized to bounded 480x352 indexed PNG. PNG API and renderer versions retained; data, calculations and reading content unchanged. White reading pages retain print legibility.",
-  "bundle_bytes": 775573,
+  "bundle_bytes": 788522,
   "brand": {
     "source": "/brand/mvp/assets/marca-escura.svg",
     "source_sha256": "ff2bd01b75c71d3e072943d3586f191b83604fa22f11c308883d69d19f08443a",
@@ -408,6 +408,19 @@
       ],
       "png_sha256": "59a7c01360d63a22cb5d8a4229084f9ae411e3df747e528f20cd9de2022c3ecf",
       "bytes": 8946,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "career-forecast-30d",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
+          "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
+        }
+      ],
+      "png_sha256": "99f9e8827a281764faa39c78f9ca17804c5afbaf5e6d7d4f3477458638d4e629",
+      "bytes": 9690,
       "width": 480,
       "height": 352
     }

@@ -46,6 +46,8 @@ export interface ProductCalculationOptions {
   experimentalSolarReturnBase?: true;
   /** Independent civil-month scaffold with natal reference; no temporal or editorial approval. */
   experimentalPersonalCalendarBase?: true;
+  /** Independent private 30-day career forecast; never a public release switch. */
+  experimentalCareerForecastBase?: true;
   /** Independent MC and 2/6/10 cusp projection; no paid release or editorial approval. */
   experimentalPurposeCareerBase?: true;
   /** Independent goal and civil-check-in scaffold; no interpretation or release approval. */
@@ -56,6 +58,8 @@ export interface ProductCalculationOptions {
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
 ): Readonly<Record<string, ProductCalculator>> {
+  if (options.experimentalCareerForecastBase !== undefined && options.experimentalCareerForecastBase !== true)
+    throw new Error('invalid_product_configuration');
   if (
     options.experimentalWeekBase !== undefined &&
     options.experimentalWeekBase !== true
@@ -123,6 +127,9 @@ export function createProductCalculators(
       : {}),
     ...(options.experimentalPersonalCalendarBase === true
       ? createPersonalCalendarCalculators()
+      : {}),
+    ...(options.experimentalCareerForecastBase === true
+      ? createPersonalCalendarCalculators(undefined, 'career-forecast-30d')
       : {}),
     ...(options.experimentalPurposeCareerBase === true
       ? createPurposeCareerCalculators()
