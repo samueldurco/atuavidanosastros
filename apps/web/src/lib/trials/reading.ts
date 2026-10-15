@@ -1,4 +1,6 @@
 import { MIDHEAVEN_VERSION, MIDHEAVEN_READING_VERSION } from './reconstruction/midheaven-facts';
+import { canonical } from './reconstruction/canonical';
+export { canonical } from './reconstruction/canonical';
 import {
 	composeReconstructedMidheaven,
 	reviewReconstructedMidheaven
@@ -153,20 +155,6 @@ export function composeTrialReading(
 		calculation.version === 'atv-private-career-synthesis/4.0.0'
 		? composeReconstructedCareer(input, calculation)
 		: composeV3(input, calculation);
-}
-
-export function canonical(value: unknown): string {
-	if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
-	if (value && typeof value === 'object')
-		return (
-			'{' +
-			Object.entries(value)
-				.sort(([a], [b]) => a.localeCompare(b))
-				.map(([k, v]) => JSON.stringify(k) + ':' + canonical(v))
-				.join(',') +
-			'}'
-		);
-	return JSON.stringify(value);
 }
 
 /** Server-owned deterministic review. Neither a client flag nor a hash authenticates a reading. */
