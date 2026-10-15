@@ -9,6 +9,10 @@
 	import ReadingExperience from '$lib/components/ReadingExperience.svelte';
 	import ReadingShare from '$lib/components/ReadingShare.svelte';
 	import { canShareReading } from '$lib/trials/sharing';
+	import {
+		careerCompassFactLabel,
+		careerCompassFactValue
+	} from '$lib/career-compass-fact-presentation';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	let { data } = $props();
@@ -32,6 +36,7 @@
 					: [0]
 	);
 	const reading = $derived(data.saved.reading);
+	const careerCompass = $derived(data.saved.product_id === 'career-compass');
 	const formats = $derived(privateFormats(data.saved.product_id, data.product.delivery));
 	let refreshKey = '';
 	async function refreshEdition() {
@@ -122,156 +127,281 @@
 	/></svelte:head
 >
 <ContentShell kind="product">
-	<nav aria-label="Leitura de teste">
-		<a href="/testar-produtos">← Produtos e biblioteca</a> ·
-		<a href={`/testar-produtos/${data.saved.product_id}`}>Gerar outra leitura</a>
-		·
-		<a href={`/testar-produtos/${data.saved.product_id}?from=${data.saved.id}`}
-			>Conferir ou corrigir dados</a
-		>
-	</nav>
-	<PageIntro
-		identity={data.saved.product_id}
-		eyebrow="Leitura privada · teste gratuito"
-		title={reading.title}
-		description={reading.opening}
-	/>
-	{#if reading.version !== latestReadingVersion(data.saved.product_id)}
-		<div class="seal">
-			<strong>Há uma nova edição desta leitura</strong>
-			<p>
-				A revisão organiza a síntese, os capítulos e o PDF. Ela usa os mesmos dados e cálculos; suas
-				cartas, anotações e parecer anterior são preservados na leitura original.
-			</p>
-			<button disabled={!ready || busy} onclick={refreshEdition}
-				>Criar edição revisada gratuita</button
+	<div class={careerCompass ? 'career-trial' : ''}>
+		<nav aria-label="Leitura de teste">
+			<a href="/testar-produtos">← Produtos e biblioteca</a> ·
+			<a href={`/testar-produtos/${data.saved.product_id}`}>Gerar outra leitura</a>
+			·
+			<a href={`/testar-produtos/${data.saved.product_id}?from=${data.saved.id}`}
+				>Conferir ou corrigir dados</a
 			>
-		</div>
-	{/if}
-	<nav class="downloads" aria-label="Formatos da leitura">
-		{#if formats.includes('pdf')}<a
-				href={`/api/private-trials/${data.saved.id}/download?format=pdf`}>Guardar leitura em PDF</a
-			>{/if}
-		{#if formats.includes('svg')}<a
-				href={`/api/private-trials/${data.saved.id}/download?format=svg`}>Baixar cartografia SVG</a
-			>{/if}
-		<a href={`/api/private-trials/${data.saved.id}/download?format=txt`}
-			>Guardar uma cópia em texto</a
-		>
-		{#if data.product.delivery.includes('audio')}<button onclick={listen}
-				>{speaking ? 'Parar leitura em voz' : 'Ouvir a leitura'}</button
-			>
-			<p>
-				A voz é a síntese local do seu navegador. Mantenha esta página aberta durante a reprodução.
-			</p>{/if}
-	</nav>
-	{#key data.saved.id}
-		<ReadingExperience saved={data.saved} initial={data.readerState} />
-		{#if canShareReading(data.saved.product_id)}<ReadingShare id={data.saved.id} />{/if}
-	{/key}
-	<article aria-label="Sua leitura completa">
-		<section class="chapter">
-			<h2>Perguntas para levar com você</h2>
-			<ol>
-				{#each reading.questions as question (question)}<li>{question}</li>{/each}
-			</ol>
-			<h3>Experimente</h3>
-			<p>{reading.practice}</p>
-		</section>
-		<section class="chapter">
-			<h2>Alcance e limites desta leitura</h2>
-			<ul>
-				{#each reading.limits as limit (limit)}<li>{limit}</li>{/each}
-			</ul>
-		</section>
-	</article>
-	{#if data.saved.calculation.version === DIRECTION_VERSION}
-		<ReadingDirectionJourney
-			saved={data.saved}
-			notes={data.notes}
-			{ready}
-			{busy}
-			onSave={(step, text) => save({ action: 'note', step, text })}
-		/>
-	{:else}
-		<section class="workspace" aria-labelledby="notes-title">
-			<h2 id="notes-title">Suas anotações e acompanhamento</h2>
-			<p>
-				Registre um exemplo observado, uma possibilidade que você quer testar e o que mudou depois.
-			</p>
-			{#if checkIns.length > 1}<label
-					>Etapa<select bind:value={step}
-						>{#each checkIns as day (day)}<option value={day}
-								>{day === 0 ? 'Ponto de partida' : `Dia ${day}`}</option
-							>{/each}</select
-					></label
+		</nav>
+		{#if careerCompass}
+			<header class="career-hero">
+				<div>
+					<p class="career-kicker">Bússola de Carreira · leitura privada de teste</p>
+					<h1>{reading.title}</h1>
+					<p class="career-caption">Um primeiro ponto de orientação</p>
+					<p class="career-opening">{reading.opening}</p>
+				</div>
+				<img src="/brand/mvp/assets/revisao/bussola-gravada.webp" alt="" width="210" height="210" />
+			</header>
+		{:else}
+			<PageIntro
+				identity={data.saved.product_id}
+				eyebrow="Leitura privada · teste gratuito"
+				title={reading.title}
+				description={reading.opening}
+			/>
+		{/if}
+		{#if reading.version !== latestReadingVersion(data.saved.product_id)}
+			<div class="seal">
+				<strong>Há uma nova edição desta leitura</strong>
+				<p>
+					A revisão organiza a síntese, os capítulos e o PDF. Ela usa os mesmos dados e cálculos;
+					suas cartas, anotações e parecer anterior são preservados na leitura original.
+				</p>
+				<button disabled={!ready || busy} onclick={refreshEdition}
+					>Criar edição revisada gratuita</button
+				>
+			</div>
+		{/if}
+		<nav class="downloads" aria-label="Formatos da leitura">
+			{#if formats.includes('pdf')}<a
+					href={`/api/private-trials/${data.saved.id}/download?format=pdf`}
+					>Guardar leitura em PDF</a
 				>{/if}
-			{#each data.notes as savedNote (savedNote.step)}<div class="note">
-					<h3>{savedNote.step === 0 ? 'Anotação inicial' : `Dia ${savedNote.step}`}</h3>
-					<p class="prose">{savedNote.text}</p>
-				</div>{/each}
-			<form
-				onsubmit={(event) => {
-					event.preventDefault();
-					save({ action: 'note', step, text: note });
-				}}
+			{#if formats.includes('svg')}<a
+					href={`/api/private-trials/${data.saved.id}/download?format=svg`}
+					>Baixar cartografia SVG</a
+				>{/if}
+			<a href={`/api/private-trials/${data.saved.id}/download?format=txt`}
+				>Guardar uma cópia em texto</a
 			>
-				<label
-					>Sua anotação<textarea maxlength="3000" required rows="4" bind:value={note}
-					></textarea></label
-				><button disabled={!ready || busy}>Salvar anotação desta etapa</button>
-			</form>
-		</section>
-	{/if}
-	<section class="workspace" aria-labelledby="feedback-title">
-		<h2 id="feedback-title">Seu parecer sobre este produto</h2>
-		{#if data.feedback}<p>
-				Seu último parecer: <strong
-					>{data.feedback.decision === 'approved' ? 'aprovado' : 'revisão solicitada'}</strong
-				>. {data.feedback.reading_id !== data.saved.id
-					? 'O parecer foi registrado em outra leitura deste produto.'
-					: ''}
+			{#if data.product.delivery.includes('audio')}<button onclick={listen}
+					>{speaking ? 'Parar leitura em voz' : 'Ouvir a leitura'}</button
+				>
+				<p>
+					A voz é a síntese local do seu navegador. Mantenha esta página aberta durante a
+					reprodução.
+				</p>{/if}
+		</nav>
+		{#key data.saved.id}
+			<ReadingExperience saved={data.saved} initial={data.readerState} />
+			{#if canShareReading(data.saved.product_id)}<ReadingShare id={data.saved.id} />{/if}
+		{/key}
+		<article aria-label="Sua leitura completa">
+			<section class="chapter">
+				<h2>Perguntas para levar com você</h2>
+				<ol>
+					{#each reading.questions as question (question)}<li>{question}</li>{/each}
+				</ol>
+				<h3>Experimente</h3>
+				<p>{reading.practice}</p>
+			</section>
+			<section class="chapter">
+				<h2>Alcance e limites desta leitura</h2>
+				<ul>
+					{#each reading.limits as limit (limit)}<li>{limit}</li>{/each}
+				</ul>
+			</section>
+		</article>
+		{#if data.saved.calculation.version === DIRECTION_VERSION}
+			<ReadingDirectionJourney
+				saved={data.saved}
+				notes={data.notes}
+				{ready}
+				{busy}
+				onSave={(step, text) => save({ action: 'note', step, text })}
+			/>
+		{:else}
+			<section class="workspace" aria-labelledby="notes-title">
+				<h2 id="notes-title">Suas anotações e acompanhamento</h2>
+				<p>
+					Registre um exemplo observado, uma possibilidade que você quer testar e o que mudou
+					depois.
+				</p>
+				{#if checkIns.length > 1}<label
+						>Etapa<select bind:value={step}
+							>{#each checkIns as day (day)}<option value={day}
+									>{day === 0 ? 'Ponto de partida' : `Dia ${day}`}</option
+								>{/each}</select
+						></label
+					>{/if}
+				{#each data.notes as savedNote (savedNote.step)}<div class="note">
+						<h3>{savedNote.step === 0 ? 'Anotação inicial' : `Dia ${savedNote.step}`}</h3>
+						<p class="prose">{savedNote.text}</p>
+					</div>{/each}
+				<form
+					onsubmit={(event) => {
+						event.preventDefault();
+						save({ action: 'note', step, text: note });
+					}}
+				>
+					<label
+						>Sua anotação<textarea maxlength="3000" required rows="4" bind:value={note}
+						></textarea></label
+					><button disabled={!ready || busy}>Salvar anotação desta etapa</button>
+				</form>
+			</section>
+		{/if}
+		<section class="workspace" aria-labelledby="feedback-title">
+			<h2 id="feedback-title">Seu parecer sobre este produto</h2>
+			{#if data.feedback}<p>
+					Seu último parecer: <strong
+						>{data.feedback.decision === 'approved' ? 'aprovado' : 'revisão solicitada'}</strong
+					>. {data.feedback.reading_id !== data.saved.id
+						? 'O parecer foi registrado em outra leitura deste produto.'
+						: ''}
+				</p>
+				<p class="prose">{data.feedback.comment}</p>{/if}
+			<label
+				>Comentário sobre a leitura (opcional)<textarea
+					maxlength="3000"
+					rows="4"
+					bind:value={comment}></textarea></label
+			>
+			<div class="decisions">
+				<button
+					disabled={!ready || busy}
+					onclick={() => save({ action: 'feedback', decision: 'approved', comment })}
+					>Aprovar este produto</button
+				><button
+					class="secondary"
+					disabled={!ready || busy}
+					onclick={() => save({ action: 'feedback', decision: 'rejected', comment })}
+					>Solicitar revisão</button
+				>
+			</div>
+			<p>
+				Seu parecer fica vinculado a esta leitura e versão. A revisão automática não substitui sua
+				avaliação.
 			</p>
-			<p class="prose">{data.feedback.comment}</p>{/if}
-		<label
-			>Comentário sobre a leitura (opcional)<textarea maxlength="3000" rows="4" bind:value={comment}
-			></textarea></label
-		>
-		<div class="decisions">
-			<button
-				disabled={!ready || busy}
-				onclick={() => save({ action: 'feedback', decision: 'approved', comment })}
-				>Aprovar este produto</button
-			><button
-				class="secondary"
-				disabled={!ready || busy}
-				onclick={() => save({ action: 'feedback', decision: 'rejected', comment })}
-				>Solicitar revisão</button
-			>
-		</div>
-		<p>
-			Seu parecer fica vinculado a esta leitura e versão. A revisão automática não substitui sua
-			avaliação.
-		</p>
-	</section>
-	{#if status}<p class="notice" role="status">{status}</p>{/if}
-	<details>
-		<summary>Origem e versão</summary>
-		<p>{reading.version} · {data.saved.approval.policy}</p>
-		<p class="digest">Identificador da revisão: {data.saved.approval.digest}</p>
-		<ul>
-			{#each data.saved.calculation.facts as fact (fact.id)}<li>
-					<strong>{fact.display}</strong> — {fact.source}
-				</li>{/each}
-		</ul>
-		<p>
-			O selo comprova os critérios do teste privado; não certifica precisão integral do motor ou uma
-			oferta comercial.
-		</p>
-	</details>
+		</section>
+		{#if status}<p class="notice" role="status">{status}</p>{/if}
+		<details>
+			<summary>{careerCompass ? 'Dados usados nesta leitura' : 'Origem e versão'}</summary>
+			{#if !careerCompass}
+				<p>{reading.version} · {data.saved.approval.policy}</p>
+				<p class="digest">Identificador da revisão: {data.saved.approval.digest}</p>
+			{:else}
+				<p>
+					Os fatos abaixo vêm dos dados informados e do cálculo experimental. Os limites de precisão
+					estão descritos na seção acima.
+				</p>
+			{/if}
+			<ul>
+				{#each data.saved.calculation.facts as fact (fact.id)}<li>
+						{#if careerCompass}<strong
+								>{careerCompassFactLabel(fact.id)}:
+							</strong>{careerCompassFactValue(fact.id, fact.display)}{:else}<strong
+								>{fact.display}</strong
+							>
+							— {fact.source}{/if}
+					</li>{/each}
+			</ul>
+			<p>
+				O selo comprova os critérios do teste privado; não certifica precisão integral do motor ou
+				uma oferta comercial.
+			</p>
+		</details>
+	</div>
 </ContentShell>
 
 <style>
+	.career-trial {
+		--atv-ink: #183746;
+		--atv-font-display: Newsreader, Georgia, serif;
+		color: #183746;
+		background: #f6efdf;
+		border-top: 6px solid #4d6231;
+		padding: 1rem clamp(1rem, 4vw, 3rem) 4rem;
+	}
+	.career-trial > nav:first-child {
+		max-width: 1120px;
+		margin: 0 auto 1.5rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+	}
+	.career-hero {
+		max-width: 1120px;
+		margin: 0 auto;
+		padding: clamp(1.5rem, 4vw, 3rem);
+		background: #fff8e9;
+		border: 1px solid #c7bfac;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 210px;
+		align-items: center;
+		gap: 2rem;
+	}
+	.career-hero h1 {
+		font:
+			500 clamp(2.5rem, 5vw, 4.5rem) / 1.05 Newsreader,
+			Georgia,
+			serif;
+		max-width: 18ch;
+		margin: 0.75rem 0 1.25rem;
+	}
+	.career-hero img {
+		width: 210px;
+		height: 210px;
+		object-fit: contain;
+	}
+	.career-kicker,
+	.career-caption {
+		font:
+			700 0.8rem/1.5 Onest,
+			Arial,
+			sans-serif;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+		color: #4d6231;
+	}
+	.career-opening {
+		font:
+			400 1.25rem/1.7 Newsreader,
+			Georgia,
+			serif;
+		max-width: 68ch;
+	}
+	.career-trial :global(.experience .reader-grid > nav) {
+		background: #e1e7cc;
+		border: 1px solid #c7bfac;
+		border-top: 4px solid #4d6231;
+		padding: 1rem;
+	}
+	.career-trial :global(.experience .reader-grid > article) {
+		background: #fff8e9;
+		border-color: #c7bfac;
+		border-top: 4px solid #ce9b45;
+		border-radius: 0;
+	}
+	.career-trial :global(.experience nav button[aria-current]) {
+		background: #fff8e9;
+		border-color: #4d6231;
+	}
+	.career-trial :global(.experience progress) {
+		accent-color: #4d6231;
+	}
+	.career-trial .downloads,
+	.career-trial .workspace,
+	.career-trial > article,
+	.career-trial > details {
+		background: #fff8e9;
+		border: 1px solid #c7bfac;
+		border-radius: 0;
+		padding: 1.5rem;
+	}
+	@media (max-width: 740px) {
+		.career-hero {
+			grid-template-columns: 1fr;
+		}
+		.career-hero img {
+			width: 144px;
+			height: 144px;
+			margin: 0 auto;
+		}
+	}
 	article,
 	.workspace,
 	.seal,

@@ -49,6 +49,10 @@ import {
   validCareerCompassFacts,
 } from "./career-compass.ts";
 import {
+  CAREER_COMPASS_FULL_EDITORIAL_VERSION,
+  validCareerCompassFullFacts,
+} from "./career-compass-full.ts";
+import {
   THREE_PILLARS_EDITORIAL_VERSION,
   validThreePillarsFacts,
 } from "./three-pillars.ts";
@@ -98,6 +102,7 @@ export interface FactsEnvelope {
   /** Optional versioned product requirements; selected by trusted preparation. */
   editorialProfile?:
     | typeof CAREER_COMPASS_EDITORIAL_VERSION
+    | typeof CAREER_COMPASS_FULL_EDITORIAL_VERSION
     | typeof THREE_PILLARS_EDITORIAL_VERSION
     | typeof BIRTH_CHART_EDITORIAL_VERSION
     | typeof ASCENDANT_EDITORIAL_VERSION
@@ -236,7 +241,9 @@ export function validateFacts(value: FactsEnvelope): boolean {
     !Array.isArray(value.facts) ||
     value.facts.length < 1 ||
     value.facts.length >
-      (value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
+      (value.editorialProfile === CAREER_COMPASS_FULL_EDITORIAL_VERSION
+        ? 96
+        : value.editorialProfile === HOROSCOPE_EDITORIAL_VERSION
         ? 122
         : value.editorialProfile === WEEK_READING_EDITORIAL_VERSION
           ? 89
@@ -286,6 +293,8 @@ export function validateFacts(value: FactsEnvelope): boolean {
     value.editorialProfile === undefined ||
     (value.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION &&
       validCareerCompassFacts(value)) ||
+    (value.editorialProfile === CAREER_COMPASS_FULL_EDITORIAL_VERSION &&
+      validCareerCompassFullFacts(value)) ||
     (value.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION &&
       validThreePillarsFacts(value)) ||
     (value.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&

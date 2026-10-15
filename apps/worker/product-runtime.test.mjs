@@ -6,6 +6,7 @@ import {
   createProductProcessor,
   productCalculationCoverage,
 } from "./src/product-runtime.ts";
+import { CAREER_COMPASS_CANDIDATE_VERSION } from "./src/career-compass-candidate.ts";
 
 test("coverage distinguishes active coverage from thirteen historical calculation bases from releases", () => {
   const calculators = createProductCalculators(),
@@ -42,6 +43,20 @@ test("default runtime never contacts RPC, emits only aggregate idle metrics and 
   ]);
   assert.equal(events[0].outcome, "idle");
   assert.ok(Object.isFrozen(runtime));
+});
+
+test("selected career compass runtime requests the current private candidate version", async () => {
+  const calls = [];
+  const runtime = createProductProcessor(async (name, args) => {
+    calls.push({ name, args });
+    return null;
+  }, { enabledProducts: ["career-compass"] });
+  assert.equal(await runtime.step(), "idle");
+  assert.deepEqual(calls, [
+    { name: "claim_product_run_work", args: { p_products: ["career-compass"], p_lease_seconds: 60 } },
+    { name: "select_next_career_compass_candidate", args: { p_candidate_version: CAREER_COMPASS_CANDIDATE_VERSION } },
+  ]);
+  assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.4");
 });
 
 const synastryPolicy = () => ({

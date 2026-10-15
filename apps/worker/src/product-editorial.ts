@@ -8,6 +8,7 @@ import {
   WEEK_TEMPORAL_EDITORIAL_VERSION,
 } from "@atv/ai";
 import {
+  parseWorkflowInput,
   workflowFor,
   type CalculationSnapshot,
   type WorkflowKind,
@@ -37,11 +38,16 @@ import {
   DREAM_JOURNAL_EDITORIAL_VERSION,
   type Capability,
   type FactsEnvelope,
+  type Reading,
   type Tier,
   type ScoredReview,
   type Finding,
 } from "@atv/ai";
 import { validateCalculation } from "./product-processing.ts";
+import {
+  inspectCareerCompassFullGeometry,
+  prepareCareerCompassFullFacts,
+} from "./career-compass-full-editorial.ts";
 import { validCareerCompassProjection } from "./purpose-calculators.ts";
 import { inspectPurposeCareerProjection } from "./purpose-career-calculators.ts";
 import { validDirectionJourneyProjection } from "./direction-journey-calculators.ts";
@@ -73,6 +79,8 @@ import {
 
 export const PRODUCT_EDITORIAL_VERSION =
   "atv-product-editorial-evidence/1.34.0";
+export const CAREER_COMPASS_FULL_PRODUCT_EDITORIAL_VERSION =
+  "atv-product-editorial-evidence/2.0.0";
 const capability: Record<WorkflowKind, Capability> = {
   natal: "natal-synthesis",
   cycles: "cycle-context",
@@ -89,10 +97,7 @@ type Preparation =
     }
   | {
       status: "blocked";
-      reason:
-        | "calculation_invalid"
-        | "facts_not_representable"
-        | "insufficient_facts";
+      reason: string;
     };
 
 /** Trusted persisted calculation only. No raw input, history, inference, truncation or re-draw.
@@ -287,6 +292,10 @@ export interface ProductDraft {
   calculation: unknown;
   output: unknown;
 }
+/** The workflow input must come from the persisted run beside its calculation. */
+export interface CareerCompassFullDraft extends ProductDraft {
+  workflowInput: unknown;
+}
 export interface BoundProductReview {
   basisDigest: string;
   review: ScoredReview;
@@ -297,7 +306,7 @@ export interface ProductReviewAuthority {
   calibrations: readonly string[];
 }
 export interface ProductDraftAssessment {
-  version: typeof PRODUCT_EDITORIAL_VERSION;
+  version: typeof PRODUCT_EDITORIAL_VERSION | typeof CAREER_COMPASS_FULL_PRODUCT_EDITORIAL_VERSION;
   status: "rejected" | "needs_editorial_review" | "reviewed_candidate";
   publication: "blocked";
   reason: string;
@@ -338,8 +347,42 @@ export async function evaluateProductDraft(
   bound?: BoundProductReview,
   authority: ProductReviewAuthority = { reviewers: [], calibrations: [] },
 ): Promise<ProductDraftAssessment> {
+  return evaluatePreparedProductDraft(input, PRODUCT_EDITORIAL_VERSION,
+    () => prepareProductFacts(input.productId, input.calculation), bound, authority);
+}
+
+/** Private complete-basis route. Review evidence binds the persisted workflow input,
+ * calculation, facts and generated text. It never grants publication or READY. */
+export async function evaluateCareerCompassFullDraft(
+  input: CareerCompassFullDraft,
+  bound?: BoundProductReview,
+  authority: ProductReviewAuthority = { reviewers: [], calibrations: [] },
+): Promise<ProductDraftAssessment> {
+  const parsed = input && parseWorkflowInput(input.workflowInput);
+  const prepared = parsed && input.productId === "career-compass" && input.tier === "premium"
+    ? prepareCareerCompassFullFacts(parsed, input.calculation)
+    : undefined;
+  return evaluatePreparedProductDraft(input, CAREER_COMPASS_FULL_PRODUCT_EDITORIAL_VERSION,
+    prepared?.status === "prepared_for_review"
+      ? { status: "prepared", calculation: prepared.calculation, facts: prepared.facts }
+      : prepared?.status === "blocked"
+        ? { status: "blocked", reason: prepared.reason }
+        : undefined,
+    bound, authority, parsed ? structuredClone(parsed) : undefined,
+    inspectCareerCompassFullGeometry);
+}
+
+async function evaluatePreparedProductDraft(
+  input: ProductDraft,
+  version: ProductDraftAssessment["version"],
+  preparation: Preparation | undefined | (() => Preparation),
+  bound: BoundProductReview | undefined,
+  authority: ProductReviewAuthority,
+  workflowInput?: unknown,
+  extraInspector?: (reading: Reading, calculation: CalculationSnapshot) => Finding[],
+): Promise<ProductDraftAssessment> {
   const result: ProductDraftAssessment = {
-    version: PRODUCT_EDITORIAL_VERSION,
+    version,
     status: "rejected",
     publication: "blocked",
     reason: "invalid_input",
@@ -358,7 +401,8 @@ export async function evaluateProductDraft(
     !tierLimits[input.tier]
   )
     return result;
-  const prepared = prepareProductFacts(input.productId, input.calculation);
+  const prepared = typeof preparation === "function" ? preparation() : preparation;
+  if (!prepared) return result;
   if (prepared.status === "blocked")
     return { ...result, reason: prepared.reason };
   const reading = parseReading(
@@ -372,14 +416,22 @@ export async function evaluateProductDraft(
       reason: "invalid_schema",
       findings: [{ code: "invalid_schema", location: "root" }],
     };
-  const mechanical = inspectReading(reading, prepared.facts);
+  const inspected = inspectReading(reading, prepared.facts);
+  const extraFindings = extraInspector?.(reading, prepared.calculation) ?? [];
+  const mechanical = extraFindings.length > 0
+    ? { ...inspected, status: "rejected" as const,
+        findings: [...inspected.findings, ...extraFindings] }
+    : inspected;
   // Capture all caller-owned fields before the first await; no mutable request can change this basis.
   const tier = input.tier;
   const review = bound ? structuredClone(bound) : undefined;
   const trusted = structuredClone(authority);
-  const outputJson = JSON.stringify(reading);
+  // The full private candidate round-trips through JSONB. Bind semantic JSON
+  // rather than insertion order; preserve the public v1 digest contract.
+  const outputJson = version === CAREER_COMPASS_FULL_PRODUCT_EDITORIAL_VERSION
+    ? canonical(reading) : JSON.stringify(reading);
   const basisJson = canonical({
-    version: PRODUCT_EDITORIAL_VERSION,
+    version,
     runId: input.runId.toLowerCase(),
     revision: input.revision,
     productId: input.productId,
@@ -393,6 +445,7 @@ export async function evaluateProductDraft(
     calculation: prepared.calculation,
     facts: prepared.facts,
     reading,
+    ...(workflowInput ? { workflowInput } : {}),
   });
   const [basisDigest, outputDigest] = await Promise.all([
     digest(basisJson),

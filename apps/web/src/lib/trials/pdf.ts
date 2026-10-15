@@ -18,6 +18,37 @@ import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import { pdfBrandMark, pdfCoverFor } from '../data/visual-v4-pdf';
 import { visualExportPalette } from '../data/visual-v4-export';
+import { mvpProductDesign } from '../data/mvp-visual';
+import careerCover from '../../../static/brand/mvp/assets/revisao/bussola-gravada-pdf.png?inline';
+
+const careerDesign = mvpProductDesign('career-compass');
+const designColor = (hex: string) =>
+	rgb(
+		Number.parseInt(hex.slice(1, 3), 16) / 255,
+		Number.parseInt(hex.slice(3, 5), 16) / 255,
+		Number.parseInt(hex.slice(5, 7), 16) / 255
+	);
+
+/** Keep method details readable in the client PDF; audit versions remain in the saved record. */
+export function pdfPresentationSource(productId: string, source: string) {
+	switch (productId) {
+		case 'direction-journey':
+			return 'Acompanhamento de 30 dias baseado em datas civis, no objetivo informado e na revisão dos experimentos. Não utiliza cálculo astrológico.';
+		case 'personal-calendar':
+			return 'Síntese original com observações a cada seis horas e contexto consentido.';
+		case 'solar-return':
+			return 'Carta anual própria, com regências modernas, cinco aspectos maiores anuais até 4° e observações diárias mensais até 2°.';
+		case 'week-reading':
+			return 'Busca temporal preservada e seleção de cinco aspectos maiores até 2°.';
+		default:
+			return source;
+	}
+}
+
+/** The embedded PDF fonts do not include Greek Delta. Expand the symbol in display only. */
+export function pdfDisplayText(value: string) {
+	return value.normalize('NFC').replace(/ΔT/g, 'delta T');
+}
 
 /** Local book export. This module is dynamically imported only by the download page. */
 export async function trialPdf(saved: SavedTrial) {
@@ -25,11 +56,14 @@ export async function trialPdf(saved: SavedTrial) {
 	if (trialText(saved).length > 650000) throw Error('pdf_too_large');
 	const doc = await PDFDocument.create();
 	doc.registerFontkit(fontkit);
-	const body = await doc.embedFont(bodyData, { subset: true }),
-		label = await doc.embedFont(labelData, { subset: true }),
-		display = await doc.embedFont(displayData, { subset: true });
 	const r = saved.reading;
-	const engraving = await doc.embedPng(pdfCoverFor(saved.product_id));
+	const career = saved.product_id === 'career-compass';
+	const body = await doc.embedFont(bodyData, { subset: !career }),
+		// Full Onest embedding maps common ligatures to incorrect CIDs (e.g. the
+		// "t" in "Método"), widening small labels and corrupting text extraction.
+		label = await doc.embedFont(labelData, { subset: true }),
+		display = await doc.embedFont(displayData, { subset: !career });
+	const engraving = await doc.embedPng(career ? careerCover : pdfCoverFor(saved.product_id));
 	const brand = await doc.embedPng(pdfBrandMark());
 	const format = experienceFor(saved.product_id).format;
 	const calendar = saved.calculation.version === CALENDAR_VERSION;
@@ -49,16 +83,16 @@ export async function trialPdf(saved: SavedTrial) {
 		rgb(
 			...([1, 3, 5].map((n) => parseInt(hex.slice(n, n + 2), 16) / 255) as [number, number, number])
 		);
-	const ink = color(palette.ink),
-		muted = rgb(0.298, 0.337, 0.345),
-		gold = color(palette.line),
-		cream = rgb(1, 1, 1);
+	const ink = career ? designColor(careerDesign.ink) : color(palette.ink),
+		muted = career ? rgb(89 / 255, 99 / 255, 101 / 255) : rgb(0.298, 0.337, 0.345),
+		gold = career ? designColor(careerDesign.accent) : color(palette.line),
+		cream = career ? rgb(246 / 255, 239 / 255, 223 / 255) : rgb(1, 1, 1);
 	let page = doc.addPage([width, height]),
 		y = height - 78;
 	const charsets = new Map([body, label, display].map((f) => [f, new Set(f.getCharacterSet())]));
 	const widths = new Map([body, label, display].map((f) => [f, new Map<string, number>()]));
 	const safe = (value: string, font: PDFFont) =>
-		Array.from(value.normalize('NFC'))
+		Array.from(pdfDisplayText(value))
 			.map((c) =>
 				charsets.get(font)!.has(c.codePointAt(0)!)
 					? c
@@ -128,7 +162,8 @@ export async function trialPdf(saved: SavedTrial) {
 	};
 	const paragraphHeight = (value: string, font = body, size = 12, after = 9) =>
 		wrap(value, font, size).reduce((n, l) => n + (l ? size * 1.5 : size * 0.8), after);
-	const headingHeight = (value: string, size = 17) => 8 + paragraphHeight(value, label, size);
+	const headingHeight = (value: string, size = 17) =>
+		8 + paragraphHeight(value, career ? body : label, size);
 	const paragraph = (value: string, font = body, size = 12, after = 9) => {
 		const lines = wrap(value, font, size);
 		const needed = paragraphHeight(value, font, size, after);
@@ -144,15 +179,10 @@ export async function trialPdf(saved: SavedTrial) {
 	const heading = (value: string, size = 17, reserve = 120) => {
 		if (y < 70 + reserve) newPage();
 		y -= 8;
-		paragraph(value, label, size);
+		paragraph(value, career ? body : label, size);
 	};
 	// Cover: no app navigation, evaluation form or browser-print chrome.
-	const coverSize = engraving.scaleToFit(270, 198);
-	page.drawImage(engraving, {
-		x: (width - coverSize.width) / 2,
-		y: height - 90 - coverSize.height,
-		...coverSize
-	});
+	const coverSize = engraving.scaleToFit(career ? 192 : 270, career ? 192 : 198);
 	page.drawImage(brand, { x: margin, y: height - 49, width: 22, height: 22 });
 	page.drawRectangle({ x: margin, y: height - 56, width: available, height: 0.6, color: gold });
 	page.drawText('A TUA VIDA NOS ASTROS', {
@@ -162,8 +192,59 @@ export async function trialPdf(saved: SavedTrial) {
 		size: 10,
 		color: muted
 	});
-	y = height - 90 - coverSize.height - 40;
-	paragraph(r.title, display, book ? 34 : 25);
+	if (career) {
+		page.drawRectangle({
+			x: width - margin - 220,
+			y: height - 322,
+			width: 220,
+			height: 244,
+			color: designColor(careerDesign.tint)
+		});
+		page.drawRectangle({
+			x: width - margin - 207,
+			y: height - 310,
+			width: 194,
+			height: 220,
+			color: rgb(250 / 255, 243 / 255, 229 / 255),
+			borderColor: rgb(184 / 255, 167 / 255, 141 / 255),
+			borderWidth: 0.7
+		});
+		page.drawImage(engraving, {
+			x: width - margin - 206,
+			y: height - 282,
+			...coverSize
+		});
+		page.drawText('ORIENTAÇÃO', {
+			x: width - margin - 193,
+			y: height - 302,
+			font: label,
+			size: 8,
+			color: ink
+		});
+		page.drawText(`${careerDesign.number} / ATVNA`, {
+			x: width - margin - 85,
+			y: height - 302,
+			font: label,
+			size: 7,
+			color: ink
+		});
+		page.drawRectangle({ x: margin, y: height - 115, width: 44, height: 2, color: gold });
+		page.drawText(careerDesign.caption.toLocaleUpperCase('pt-BR'), {
+			x: margin,
+			y: height - 138,
+			font: label,
+			size: 9,
+			color: ink
+		});
+	} else {
+		page.drawImage(engraving, {
+			x: (width - coverSize.width) / 2,
+			y: height - 90 - coverSize.height,
+			...coverSize
+		});
+	}
+	y = career ? height - 370 : height - 90 - coverSize.height - 40;
+	paragraph(r.title, career ? body : display, book ? 34 : 25);
 	y -= 18;
 	paragraph(r.opening, body, book ? 17 : 12);
 	if (saved.input.presentation?.name) paragraph(saved.input.presentation.name, body, 20);
@@ -314,13 +395,7 @@ export async function trialPdf(saved: SavedTrial) {
 	}
 	const chapterPages: number[] = [];
 	for (const [i, s] of chapters.entries()) {
-		if (
-			book &&
-			i > 0 &&
-			(s.text.length > 900 ||
-				(saved.product_id === 'career-compass' && s.title === 'Sua página de decisão'))
-		)
-			newPage();
+		if (book && !career && i > 0 && y < height - 200 && s.text.length > 900) newPage();
 		const chapterTitle = tarotMethodFor(saved.product_id)
 			? s.title
 			: `${String(i + 1).padStart(2, '0')} · ${s.title}`;
@@ -358,7 +433,7 @@ export async function trialPdf(saved: SavedTrial) {
 			paragraph(references.text, label, 9);
 		}
 	}
-	if (book) newPage();
+	if (book && !career) newPage();
 	const reconstructed = r.version === 'atv-product-reconstruction/4.0.0';
 	heading(
 		reconstructed
@@ -366,9 +441,9 @@ export async function trialPdf(saved: SavedTrial) {
 			: book
 				? 'Apêndice · método e limites'
 				: 'Método e limites',
-		book ? 23 : 15
+		career ? 20 : book ? 23 : 15
 	);
-	paragraph(r.source, label, 9);
+	paragraph(pdfPresentationSource(saved.product_id, r.source), label, 9, career ? 4 : 9);
 	if (reconstructed && tarotMethodFor(saved.product_id)) {
 		paragraph(
 			'As cartas e suas posições pertencem à tiragem registrada. Reabrir esta leitura ou baixar outro formato preserva a mesma tiragem. Uma nova leitura começa com um novo registro.',
@@ -388,6 +463,8 @@ export async function trialPdf(saved: SavedTrial) {
 		r.limits.slice(-4).forEach((limit) => paragraph(limit, label, 9));
 	} else if ([WEEK_VERSION, SOLAR_VERSION, CALENDAR_VERSION].includes(saved.calculation.version)) {
 		r.limits.forEach((limit) => paragraph(limit, label, 9));
+	} else if (saved.product_id === 'direction-journey') {
+		r.limits.forEach((limit) => paragraph(limit, label, 9));
 	} else if (reconstructed) {
 		paragraph(
 			'A abordagem é tropical, psicológica e humanista, com regências modernas. O mapa organiza hipóteses de reflexão; não determina acontecimentos, profissão ou comportamento. Compare a leitura com sua experiência e com as condições concretas da situação.',
@@ -399,8 +476,9 @@ export async function trialPdf(saved: SavedTrial) {
 			label,
 			9
 		);
-	} else r.limits.forEach((l) => paragraph(l, label, 9));
-	if (book) {
+	} else if (career) r.limits.forEach((l) => paragraph(l, label, 9, 4));
+	else r.limits.forEach((l) => paragraph(l, label, 9));
+	if (book && !career) {
 		heading('Dados para conferir', 15);
 		const compact = saved.calculation.facts.filter(
 			(f) =>
@@ -424,22 +502,12 @@ export async function trialPdf(saved: SavedTrial) {
 				label,
 				9
 			);
-		if (!reconstructed) {
-			const sources = [...new Set(saved.calculation.facts.map((f) => f.source))];
-			const record = `Conteúdo: ${r.version}\nPolítica: ${saved.approval.policy}\nLeitura: ${saved.id}\nRegistro: ${saved.approval.digest}`;
-			heading(
-				'Fontes e registro da revisão',
-				15,
-				Math.min(
-					height - 148,
-					headingHeight('Fontes e registro da revisão', 15) +
-						sources.reduce((sum, source) => sum + paragraphHeight(source, label, 8, 4), 0) +
-						paragraphHeight(record, label, 8)
-				)
+		if (!reconstructed)
+			paragraph(
+				'As referências de cada dado e o registro integral de revisão permanecem na cópia TXT desta leitura.',
+				label,
+				9
 			);
-			sources.forEach((source) => paragraph(source, label, 8, 4));
-			paragraph(record, label, 8);
-		}
 	}
 	for (const [i, p] of doc.getPages().entries()) {
 		p.drawLine({
@@ -451,8 +519,8 @@ export async function trialPdf(saved: SavedTrial) {
 		p.drawText('A Tua Vida nos Astros', {
 			x: margin,
 			y: 32,
-			font: label,
-			size: 8,
+			font: career ? body : label,
+			size: career ? 9 : 8,
 			color: muted
 		});
 		p.drawText(`${i + 1} / ${doc.getPageCount()}`, {

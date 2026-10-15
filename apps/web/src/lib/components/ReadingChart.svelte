@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SavedTrial } from '$lib/trials/reading';
 	import { buildChartScene, chartSceneSvg, type ChartOptions } from '$lib/trials/chart-engine-v2';
+	import { formatCareerCompassFactDisplay } from '$lib/career-compass-fact-presentation';
 	let { saved, onselect }: { saved: SavedTrial; onselect: (id: string) => void } = $props();
 	let houses = $state(true),
 		degrees = $state(true),
@@ -61,6 +62,7 @@
 		})
 	);
 	function factorDisplay(display: string) {
+		if (saved.product_id === 'career-compass') return formatCareerCompassFactDisplay(display);
 		return saved.calculation.version === 'atv-private-solar-synthesis/4.0.0'
 			? display.replace(/(\d+\.\d{2})\d+(?=°)/g, '$1').replace(/ da candidata\b/g, '')
 			: display;

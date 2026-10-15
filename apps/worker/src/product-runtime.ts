@@ -22,6 +22,11 @@ import {
   type WorkflowRpc,
   type ProcessingEvent,
 } from "./product-processing.ts";
+import {
+  processNextCareerCompassCandidate,
+  type CareerCompassCandidateRpc,
+  type CareerCompassCandidateEvent,
+} from "./career-compass-persistence.ts";
 
 /** Calculation availability is not entitlement, release or editorial/motor approval. */
 export interface ProductCalculationOptions {
@@ -150,11 +155,11 @@ export function productCalculationCoverage() {
  * Even configured products must pass the database release/contract and ownership gates.
  * RPC transport/authentication/deadline enforcement belongs to the hosting integration. */
 export function createProductProcessor(
-  rpc: WorkflowRpc,
+  rpc: WorkflowRpc & CareerCompassCandidateRpc,
   options: ProductCalculationOptions & {
     enabledProducts?: readonly string[];
     timeoutMs?: number;
-    emit?: (event: ProcessingEvent) => void;
+    emit?: (event: ProcessingEvent | CareerCompassCandidateEvent) => void;
   } = {},
 ) {
   const all = createProductCalculators(options),
@@ -179,13 +184,25 @@ export function createProductProcessor(
   );
   const repository = createWorkflowRepository(rpc),
     emit = options.emit;
+  const careerCandidateEnabled = Object.hasOwn(selected, "career-compass");
   return Object.freeze({
     products: Object.freeze(Object.keys(selected)),
     // Capture configuration now; mutations to the caller's options never broaden later claims.
-    step: () =>
-      processNextProductRun(repository, selected, {
+    step: async () => {
+      const outcome = await processNextProductRun(repository, selected, {
         timeoutMs,
         ...(emit ? { emit } : {}),
-      }),
+      });
+      if (careerCandidateEnabled) {
+        // AWAITING_EDITORIAL is persisted by the calculation RPC before this
+        // stage runs. Each later invocation also retries one pending draft.
+        // Candidate errors cannot alter the calculation outcome or run state.
+        await processNextCareerCompassCandidate(
+          rpc,
+          { timeoutMs, ...(emit ? { emit } : {}) },
+        );
+      }
+      return outcome;
+    },
   });
 }

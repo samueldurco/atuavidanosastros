@@ -17,7 +17,7 @@ import {
   type ProductDraft,
 } from "./product-editorial.ts";
 
-export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.18.0";
+export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.20.0";
 const synastryBodies: Record<string, string> = {
   sun: "Sol",
   moon: "Lua",
@@ -65,9 +65,9 @@ const labels = {
 };
 const unique = (values: string[]) => [...new Set(values)];
 const careerTitles = new Map([
-  ["public-direction", "Direção pública e contribuição"],
-  ["work-possibilities", "Ambientes e modos de trabalhar"],
-  ["tension-or-excess", "Tensão ou excesso possível"],
+  ["public-direction", "Uma direção para experimentar"],
+  ["work-possibilities", "Onde testar essa direção"],
+  ["tension-or-excess", "O que observar antes de decidir"],
 ]);
 const ascendantTitles = new Map([
   ["ascendant-approach", "Abordagem e primeiro contato"],
@@ -124,6 +124,13 @@ function claimTitle(
   claim: Reading["claims"][number],
   productId: string,
 ): string {
+  if (productId === "career-compass") {
+    if (claim.kind === "fact" && claim.evidence.includes("angle-midheaven"))
+      return "Seu Meio do Céu";
+    if (claim.kind === "fact" && claim.evidence.includes("personal-context"))
+      return "Contexto profissional informado";
+    return careerTitles.get(claim.id) ?? labels[claim.kind];
+  }
   if (productId === "week-reading") {
     const temporalTitles: Record<string, string> = {
       "week-temporal-frame": "Panorama dos registros temporais",
@@ -223,8 +230,8 @@ function claimTitle(
   return `${subject ? subject + " — " : ""}${labels[claim.kind]} [${claim.id}]`;
 }
 
-/** Fixed text projection, not summarization. Claim references remain visible as well as resolved
- * fact evidence. Reflections share the final synthesis section, but are explicitly not evidence.
+/** Fixed text projection, not summarization. Internal claim references remain in the reading;
+ * sections carry resolved fact evidence. Reflections share the final synthesis section, but are explicitly not evidence.
  * Oversized content fails closed instead of disappearing from the delivered representation. */
 function project(
   reading: Reading,
@@ -414,17 +421,25 @@ function project(
     relationEvidence: string[] = [],
     group = 0;
   const flush = () => {
-    if (relationText)
+    if (relationText) {
+      const sectionNumber = ++group;
       sections.push({
-        title: `${productId === "three-questions" ? "Convergências e tensões entre as três perguntas" : productId === "couple-dossier" ? "Conexões possíveis do Dossiê" : "Relações"} (${++group})`,
+        title:
+          productId === "career-compass"
+            ? `Como essas pistas se relacionam${sectionNumber > 1 ? ` (${sectionNumber})` : ""}`
+            : `${productId === "three-questions" ? "Convergências e tensões entre as três perguntas" : productId === "couple-dossier" ? "Conexões possíveis do Dossiê" : "Relações"} (${sectionNumber})`,
         text: relationText,
         evidence: unique(relationEvidence),
       });
+    }
     relationText = "";
     relationEvidence = [];
   };
   for (const relation of reading.relations) {
-    const text = `${relation.kind === "convergence" ? "Convergência" : "Tensão"} entre afirmações: ${relation.claimIds.join(", ")}\n\n${relation.text}`;
+    const text =
+      productId === "career-compass"
+        ? `${relation.kind === "convergence" ? "O que se combina" : "O que pede equilíbrio"}\n\n${relation.text}`
+        : `${relation.kind === "convergence" ? "Convergência" : "Tensão"} entre afirmações: ${relation.claimIds.join(", ")}\n\n${relation.text}`;
     if (text.length > 20000) return null;
     if (relationText && relationText.length + text.length + 2 > 20000) flush();
     relationText += (relationText ? "\n\n" : "") + text;
@@ -434,7 +449,9 @@ function project(
   for (const [index, synthesis] of reading.synthesis.entries()) {
     const last = index === reading.synthesis.length - 1;
     const questions = last
-      ? "\n\nPerguntas exploratórias (não são afirmações factuais; as referências desta seção correspondem somente à síntese):\n\n" +
+      ? (productId === "career-compass"
+          ? "\n\nTrês perguntas para pensar:\n\n"
+          : "\n\nPerguntas exploratórias (não são afirmações factuais; as referências desta seção correspondem somente à síntese):\n\n") +
         reading.reflections.map((text, i) => `${i + 1}. ${text}`).join("\n\n")
       : "";
     sections.push({
@@ -443,8 +460,12 @@ function project(
           ? `${index === 0 ? "Panorama dos registros" : "Escolha reversível"} — Possibilidade simbólica`
           : productId === "week-reading" && index < weekReadingAreas.length
             ? `Resumo por área: ${weekReadingAreas[index]} — Possibilidade simbólica`
-            : `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : productId === "synastry" ? "Síntese da Sinastria" : productId === "couple-dossier" ? "Síntese do Dossiê do Casal" : productId === "horoscope" ? "Síntese do Horóscopo" : productId === "week-reading" ? "Síntese da Semana" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["career-compass", "three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview", "synastry", "couple-dossier", "horoscope", "week-reading"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
-      text: `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n${synthesis.text}${questions}`,
+            : productId === "career-compass"
+              ? reading.synthesis.length === 1
+                ? "Um próximo passo para considerar"
+                : `Um próximo passo para considerar ${index + 1}`
+              : `${productId === "three-pillars" ? "Síntese dos Três Pilares" : productId === "birth-chart" ? "Síntese do Mapa Astral" : productId === "ascendant" ? "Síntese do Ascendente" : productId === "midheaven" ? "Síntese do Meio do Céu" : productId === "daily-card" ? "Síntese da Carta do Dia" : productId === "tarot-focus" ? "Síntese do Foco Agora" : productId === "tarot-yes-no" ? "Síntese do Sim/Não responsável" : productId === "three-questions" ? "Síntese das Três Perguntas" : productId === "dream-journal" ? "Síntese do Registro de Sonho" : productId === "dream-reading" ? "Síntese da Leitura Essencial de Sonhos" : productId === "date-reading" ? "Síntese da Leitura da Data" : productId === "pair-preview" ? "Síntese do Preview do Par" : productId === "synastry" ? "Síntese da Sinastria" : productId === "couple-dossier" ? "Síntese do Dossiê do Casal" : productId === "horoscope" ? "Síntese do Horóscopo" : productId === "week-reading" ? "Síntese da Semana" : "Síntese"} (${index + 1})${last ? (productId === "dream-journal" ? " e uma pergunta exploratória" : productId === "dream-reading" ? " e duas perguntas exploratórias" : ["daily-card", "tarot-focus", "tarot-yes-no"].includes(productId) ? " e uma pergunta prática" : ["three-pillars", "birth-chart", "ascendant", "midheaven", "three-questions", "date-reading", "pair-preview", "synastry", "couple-dossier", "horoscope", "week-reading"].includes(productId) ? " e três perguntas práticas" : " e perguntas") : ""}`,
+      text: `${productId === "career-compass" ? "" : `Afirmações de base: ${synthesis.claimIds.join(", ")}\n\n`}${synthesis.text}${questions}`,
       evidence: evidence(synthesis.claimIds),
     });
   }
@@ -469,7 +490,9 @@ function project(
     title: reading.title,
     sections,
     limits: [
-      `Escopo declarado: ${reading.scope === "partial" ? "parcial" : "integrado"}.`,
+      productId === "career-compass"
+        ? "Esta leitura usa uma base parcial do mapa."
+        : `Escopo declarado: ${reading.scope === "partial" ? "parcial" : "integrado"}.`,
       ...reading.limits,
       ...missingDreamFields,
       ...missingDateFields,

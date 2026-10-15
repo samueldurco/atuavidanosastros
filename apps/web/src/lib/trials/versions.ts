@@ -12,7 +12,7 @@ export const latestReadingVersion = (productId: string) =>
 				: productId === 'three-pillars'
 					? 'atv-three-pillars-editorial/5.0.0'
 					: productId === 'career-compass'
-						? 'atv-career-compass-editorial/5.0.0'
+						? 'atv-career-compass-editorial/6.0.0'
 						: tarotMethodFor(productId) ||
 							  [
 									'career-compass',

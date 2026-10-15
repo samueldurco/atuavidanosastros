@@ -10,12 +10,16 @@ for (const width of [1440, 820, 390, 320]) {
 		if (await consent.isVisible()) await consent.click();
 		await page.evaluate(() => document.fonts.ready);
 		await expect(page.getByRole('main')).toHaveCount(1);
+		await expect(page.locator('.career-hero .product-art-compass')).toBeVisible();
+		await expect(
+			page.locator('.career-hero image[href="/brand/mvp/assets/revisao/bussola-gravada.webp"]')
+		).toHaveCount(1);
 		for (const name of [
-			'Seu Meio do Céu — Fato [mc]',
-			'Direção pública e contribuição — Hipótese [public-direction]',
-			'Ambientes e modos de trabalhar — Hipótese [work-possibilities]',
-			'Tensão ou excesso possível — Hipótese [tension-or-excess]',
-			'Síntese (1) e três perguntas práticas'
+			'Seu Meio do Céu',
+			'Uma direção para experimentar',
+			'Onde testar essa direção',
+			'O que observar antes de decidir',
+			'Um próximo passo para considerar'
 		])
 			await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
 		const reading = page.locator('#leitura');
@@ -25,14 +29,13 @@ for (const width of [1440, 820, 390, 320]) {
 			'Qual experimento reversível cabe nesta semana?'
 		])
 			await expect(reading).toContainText(question);
-		await expect(reading).toContainText('Hipótese');
-		await expect(reading).toContainText('Base: Meio do Céu (angle-midheaven)');
+		await expect(reading).toContainText('Fixture estrutural');
+		await expect(reading).toContainText('Base desta parte: Meio do Céu');
 		const source = page.locator('#origem');
-		await expect(source).toContainText('Contexto profissional relatado (personal-context)');
-		await expect(source).toContainText('input.context');
-		await expect(source).toContainText('atv-career-compass-calculation/1.0.0');
-		await expect(source).toContainText('atv-product-delivery/1.18.0');
-		await expect(source).toContainText('Somente signo e grau experimentais do Meio do Céu');
+		await source.getByText('Consultar dados usados nesta leitura').click();
+		await expect(source).toContainText('Meio do Céu');
+		await expect(source).toContainText('Os fatos calculados foram preservados');
+		await expect(source).toContainText('Esta leitura usa uma base parcial do mapa');
 		await expect(source).toContainText('Fixture de apresentação');
 		await expect(page.getByRole('button', { name: 'Baixar leitura' })).toBeDisabled();
 		await expect(page.getByRole('button', { name: 'Baixar PDF', exact: true })).toHaveCount(0);

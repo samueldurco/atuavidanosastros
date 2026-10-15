@@ -7,6 +7,8 @@
 	import SolarReturnCalendar from '$lib/components/SolarReturnCalendar.svelte';
 	import PersonalCalendarGrid from '$lib/components/PersonalCalendarGrid.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
+	import MvpProductArt from '$lib/components/MvpProductArt.svelte';
+	import '$lib/styles/mvp-product-art.css';
 
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
@@ -17,6 +19,7 @@
 	import DreamAtlasDiary from '$lib/components/DreamAtlasDiary.svelte';
 	import { runLabels, type WorkflowReaderData } from '$lib/product-run';
 	import { productFactLabel } from '$lib/product-fact-label';
+	import { careerCompassFactValue, careerCompassReaderLimits } from '$lib/career-compass-fact-presentation';
 	import { weekReadingTimeline, weekReadingAreaLinks } from '$lib/week-reading-timeline';
 	import { weekTemporalFacts } from '$lib/week-temporal-facts';
 	import {
@@ -71,9 +74,10 @@
 		cardSection = 0;
 	});
 	const cardEligible = $derived(
-		productCatalog.some(
-			(entry) => entry.id === data.run.productId && entry.delivery.includes('web')
-		)
+		data.run.productId !== 'career-compass' &&
+			productCatalog.some(
+				(entry) => entry.id === data.run.productId && entry.delivery.includes('web')
+			)
 	);
 	let confirmDelete = $state(false);
 	const product = $derived(workflowFor(data.run.productId));
@@ -112,8 +116,7 @@
 		}
 		if (data.run.productId === 'birth-chart') return productFactLabel(data.run.productId, id);
 		if (data.run.productId === 'career-compass') {
-			if (id === 'angle-midheaven') return `Meio do Céu (${id})`;
-			if (id === 'personal-context') return `Contexto profissional relatado (${id})`;
+			return productFactLabel(data.run.productId, id);
 		}
 		if (data.run.productId === 'three-pillars') {
 			const labels: Record<string, string> = {
@@ -245,7 +248,11 @@
 	}
 </script>
 
-<div class="mvp-private" data-mvp-private="product-reader" data-stitch="MEM-03 SH-03">
+<div
+	class={`mvp-private ${data.run.productId === 'career-compass' ? 'career-reading' : ''}`}
+	data-mvp-private="product-reader"
+	data-stitch="MEM-03 SH-03"
+>
 	<ReadingShell
 		layout={birthAtlas ? 'atlas' : 'reading'}
 		contents={[
@@ -256,7 +263,7 @@
 						...(temporalFacts ? [{ id: 'semana', label: 'Busca temporal experimental' }] : []),
 						...(weekAreas ? [{ id: 'areas', label: 'Resumo por áreas' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
-						...(birthAtlas && data.run.editorial
+						...((birthAtlas || data.run.productId === 'career-compass') && data.run.editorial
 							? data.run.editorial.sections.map((section, index) => ({
 									id: `capitulo-${index + 1}`,
 									label: section.title
@@ -278,12 +285,26 @@
 			{#if data.synthetic}<p class="fixture-notice">
 					Referência sintética local — não é uma leitura homologada nem pertence a uma pessoa.
 				</p>{/if}
-			<PageIntro
-				identity={data.run.productId}
-				eyebrow="Sua leitura"
-				title={data.item.title}
-				description={`Guardado em ${date(data.run.createdAt)}. Cada versão preserva seu próprio histórico.`}
-			/>
+			{#if data.run.productId === 'career-compass'}
+				<header class="career-hero">
+					<div>
+						<p class="career-kicker">Bússola de Carreira · sua leitura</p>
+						<h1>{data.item.title}</h1>
+						<p>Um primeiro ponto de orientação, a partir da base disponível nesta versão.</p>
+						<p class="career-record">
+							Guardado em {date(data.run.createdAt)}. Cada versão preserva seu próprio histórico.
+						</p>
+					</div>
+					<MvpProductArt productId="career-compass" />
+				</header>
+			{:else}
+				<PageIntro
+					identity={data.run.productId}
+					eyebrow="Sua leitura"
+					title={data.item.title}
+					description={`Guardado em ${date(data.run.createdAt)}. Cada versão preserva seu próprio histórico.`}
+				/>
+			{/if}
 		{/snippet}
 		{#snippet actions()}
 			<div class="actions-panel">
@@ -513,11 +534,19 @@
 				<p class="eyebrow">Leitura preservada</p>
 				<h2 id="reading-title">{data.run.editorial.title}</h2>
 				{#each data.run.editorial.sections as section, index (index)}<article
-						id={birthAtlas || weekTimeline ? `capitulo-${index + 1}` : undefined}
+						id={birthAtlas || weekTimeline || data.run.productId === 'career-compass'
+							? `capitulo-${index + 1}`
+							: undefined}
 					>
+						{#if data.run.productId === 'career-compass'}<p class="career-chapter">
+								Capítulo {String(index + 1).padStart(2, '0')}
+							</p>{/if}
 						<h3>{section.title}</h3>
 						<p class="editorial">{section.text}</p>
-						<p class="evidence">Base: {section.evidence.map(factLabel).join(' · ')}</p>
+						<p class="evidence">
+							{data.run.productId === 'career-compass' ? 'Base desta parte:' : 'Base:'}
+							{section.evidence.map(factLabel).join(' · ')}
+						</p>
 					</article>{/each}
 			</section>
 			<ReaderContinuity
@@ -527,17 +556,51 @@
 				ownerId={data.ownerId}
 			/>
 			<section id="origem" aria-labelledby="source-title">
-				<h2 id="source-title">Base e limites</h2>
-				<dl>
-					{#each data.run.calculation.facts as fact (fact.id)}<div
-							id={birthAtlas ? `fact-${fact.id}` : undefined}
-						>
-							<dt>{factLabel(fact.id)}</dt>
-							<dd>{fact.display}<small>{fact.source}</small></dd>
-						</div>{/each}
-				</dl>
-				<p>Método: {data.run.calculation.version}. Edição: {data.run.editorial.version}.</p>
-				{#each [...data.run.calculation.limits, ...data.run.editorial.limits] as limit, index (index)}<p
+				{#if data.run.productId === 'career-compass'}<p class="career-chapter">
+						Alcance e origem
+					</p>{/if}
+				<h2 id="source-title">
+					{data.run.productId === 'career-compass'
+						? 'O que esta leitura considera'
+						: 'Base e limites'}
+				</h2>
+				{#if data.run.productId === 'career-compass'}
+					<p>
+						Esta leitura propõe hipóteses e perguntas de reflexão com base nos dados apresentados
+						abaixo. Ela não determina uma profissão nem prevê resultados.
+					</p>
+				{/if}
+				{#snippet provenance()}
+					<dl>
+						{#each data.run.calculation?.facts ?? [] as fact (fact.id)}<div
+								id={birthAtlas ? `fact-${fact.id}` : undefined}
+							>
+								<dt>{factLabel(fact.id)}</dt>
+								<dd>
+									{data.run.productId === 'career-compass'
+										? careerCompassFactValue(fact.id, fact.display)
+										: fact.display}{#if data.run.productId !== 'career-compass'}<small
+											>{fact.source}</small
+										>{/if}
+								</dd>
+							</div>{/each}
+					</dl>
+					{#if data.run.productId === 'career-compass'}
+						<p>Os fatos calculados foram preservados no registro auditável desta versão.</p>
+					{:else}
+						<p>Método: {data.run.calculation?.version}. Edição: {data.run.editorial?.version}.</p>
+					{/if}
+				{/snippet}
+				{#if data.run.productId === 'career-compass'}
+					<details class="career-provenance">
+						<summary>Consultar dados usados nesta leitura</summary>{@render provenance()}
+					</details>
+				{:else}
+					{@render provenance()}
+				{/if}
+				{#each data.run.productId === 'career-compass'
+					? careerCompassReaderLimits(data.run.calculation.limits, data.run.editorial.limits)
+					: [...data.run.calculation.limits, ...data.run.editorial.limits] as limit, index (index)}<p
 					>
 						{limit}
 					</p>{/each}
@@ -586,15 +649,167 @@
 						>
 					</li>{/each}
 			</ol>
-			<p>
-				Relatórios web, PDF, cards e mapa em SVG disponíveis são gerados ao baixar, após nova
-				verificação de acesso. Outros formatos permanecem indisponíveis.
-			</p>
+			<p>Os arquivos disponíveis acima são gerados ao baixar, após nova verificação de acesso.</p>
 		</section>
 	</ReadingShell>
 </div>
 
 <style>
+	:global(.v4-internal #conteudo:has(.career-reading)) {
+		padding: clamp(1.5rem, 4vw, 3rem);
+		background: #f6efdf;
+		color: #183746;
+	}
+	:global(.v4-internal #conteudo:has(.career-reading)::before) {
+		display: none;
+	}
+	.career-reading {
+		--career-ink: #183746;
+		--career-paper: #f6efdf;
+		--career-light: #fff8e9;
+		--career-rule: #c7bfac;
+		--career-green: #385240;
+		background: var(--career-paper);
+		color: var(--career-ink);
+	}
+	.career-reading :global(.reader-index) {
+		border-top: 1px solid var(--career-rule);
+		padding-top: 1rem;
+	}
+	.career-reading :global(.reader-shell) {
+		width: 100%;
+	}
+	.career-reading :global(.reader-grid) {
+		grid-template-columns: minmax(10rem, 13rem) minmax(0, 1fr);
+	}
+	.career-reading :global(.reader-content) {
+		max-width: 68ch;
+		background: var(--career-light);
+		color: var(--career-ink);
+		border-color: var(--career-rule);
+	}
+	.career-reading :global(.reader-index a) {
+		color: var(--career-ink);
+		min-height: 44px;
+	}
+	.career-reading :global(.reader-index a:focus-visible),
+	.career-reading summary:focus-visible {
+		outline: 3px solid var(--career-ink);
+		outline-offset: 4px;
+	}
+	.career-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(9rem, 13rem);
+		gap: clamp(1.5rem, 4vw, 4rem);
+		align-items: center;
+		background: #e7ebcf;
+		border: 1px solid var(--career-rule);
+		padding: clamp(1.5rem, 4vw, 3.5rem);
+		margin-bottom: clamp(2rem, 5vw, 4rem);
+	}
+	.career-hero h1 {
+		font: 400 clamp(2.625rem, 6vw, 5rem)/1.04 var(--atv-font-editorial);
+		letter-spacing: -0.035em;
+		margin: 0.5rem 0 1.25rem;
+		max-width: 14ch;
+	}
+	.career-hero p {
+		max-width: 53ch;
+		margin: 0;
+		line-height: 1.65;
+	}
+	.career-hero .career-kicker,
+	.career-hero .career-record,
+	.career-chapter {
+		font: 600 0.8rem/1.5 var(--atv-font-ui);
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+	}
+	.career-hero .career-record {
+		margin-top: 1.5rem;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+	.career-hero :global(.mvp-product-art) {
+		width: 100%;
+		max-width: 13rem;
+		align-self: center;
+	}
+	.career-reading #leitura h2,
+	.career-reading #origem h2 {
+		font: 400 clamp(2rem, 4vw, 3rem)/1.12 var(--atv-font-editorial);
+		letter-spacing: -0.025em;
+		max-width: 24ch;
+	}
+	.career-reading #leitura article {
+		background: var(--career-light);
+		border: 1px solid var(--career-rule);
+		padding: clamp(1.25rem, 3vw, 2.25rem);
+		margin-block: 1rem;
+	}
+	.career-reading #leitura article h3 {
+		font: 400 clamp(1.6rem, 3vw, 2.2rem)/1.2 var(--atv-font-editorial);
+		margin: 0.6rem 0 1rem;
+	}
+	.career-reading #leitura .editorial {
+		font: 400 1.1875rem/1.68 var(--atv-font-editorial);
+		max-width: 68ch;
+	}
+	.career-reading .career-chapter {
+		color: var(--career-green);
+		margin: 0;
+	}
+	.career-reading #leitura .evidence {
+		color: var(--career-ink);
+		border-top: 1px solid var(--career-rule);
+		padding-top: 0.8rem;
+		margin-top: 1.5rem;
+	}
+	.career-reading #origem {
+		background: var(--career-light);
+		border: 1px solid var(--career-rule);
+		padding: clamp(1.25rem, 3vw, 2.25rem);
+	}
+	.career-reading #origem > p {
+		max-width: 68ch;
+		line-height: 1.65;
+	}
+	.career-reading .career-provenance {
+		border-top: 1px solid var(--career-rule);
+		padding-top: 1rem;
+		margin-top: 1.5rem;
+	}
+	.career-reading .career-provenance summary {
+		cursor: pointer;
+		font-weight: 600;
+		min-height: 44px;
+	}
+	.career-reading .actions-panel {
+		background: var(--career-light);
+		border: 1px solid var(--career-rule);
+		padding: 1rem;
+	}
+	@media (max-width: 680px) {
+		:global(.v4-internal #conteudo:has(.career-reading)) {
+			padding-inline: 1rem;
+		}
+		.career-reading :global(.reader-grid) {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.career-reading :global(.reader-content) {
+			padding: 1rem;
+		}
+		.career-hero {
+			grid-template-columns: 1fr;
+		}
+		.career-hero :global(.mvp-product-art) {
+			grid-row: 1;
+			width: 8rem;
+		}
+		.career-hero h1 {
+			font-size: clamp(2.625rem, 11vw, 4rem);
+		}
+	}
 	.week-timeline,
 	.week-areas {
 		display: grid;
