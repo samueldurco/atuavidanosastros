@@ -18,6 +18,10 @@ import {
 } from "./product-editorial.ts";
 
 export const PRODUCT_DELIVERY_VERSION = "atv-product-delivery/1.20.0";
+/** The free Career Compass reader has its own edition so unrelated product
+ * delivery digests do not change when its presentation is corrected. */
+export const CAREER_COMPASS_READER_VERSION =
+  "atv-product-delivery-career-compass/1.0.0";
 const synastryBodies: Record<string, string> = {
   sun: "Sol",
   moon: "Lua",
@@ -64,6 +68,18 @@ const labels = {
   hypothesis: "Hipótese",
 };
 const unique = (values: string[]) => [...new Set(values)];
+/** Approximate display only. The six-decimal calculated fact and its source
+ * remain unchanged in the calculation, evidence envelope and reading claim. */
+export function careerCompassReaderFact(text: string): string | null {
+  const match = /^Meio do Céu: (\d{1,2})\.(\d{6})° de ([\p{L}]+)$/u.exec(text);
+  if (!match) return null;
+  const degrees = Number(match[1]);
+  if (degrees >= 30) return null;
+  // The displayed minute is truncated: rounding 29°59′ to 30° would assert
+  // the next sign, although the six-decimal source remains in this sign.
+  const minutes = Math.floor((Number(match[2]) * 60) / 1_000_000);
+  return `Meio do Céu: aproximadamente ${degrees}°${String(minutes).padStart(2, "0")}′ de ${match[3]}`;
+}
 const careerTitles = new Map([
   ["public-direction", "Uma direção para experimentar"],
   ["work-possibilities", "Onde testar essa direção"],
@@ -409,9 +425,18 @@ function project(
         evidence: [question.id, card.id],
       });
     }
+    const readerText =
+      productId === "career-compass" && claim.id === "midheaven-fact"
+        ? claim.kind === "fact" &&
+          claim.evidence.length === 1 &&
+          claim.evidence[0] === "angle-midheaven"
+          ? careerCompassReaderFact(claim.text)
+          : null
+        : claim.text;
+    if (readerText === null) return null;
     sections.push({
       title: claimTitle(claim, productId),
-      text: claim.text,
+      text: readerText,
       evidence: [...claim.evidence],
     });
   }
@@ -486,7 +511,10 @@ function project(
   )
     return null;
   return {
-    version: PRODUCT_DELIVERY_VERSION,
+    version:
+      productId === "career-compass"
+        ? CAREER_COMPASS_READER_VERSION
+        : PRODUCT_DELIVERY_VERSION,
     title: reading.title,
     sections,
     limits: [
@@ -566,7 +594,7 @@ export async function prepareProductDelivery(
   );
   if (!content) return reject("delivery_not_representable");
   const encoded = JSON.stringify({
-    version: PRODUCT_DELIVERY_VERSION,
+    version: content.version,
     basisDigest: assessment.basisDigest,
     outputDigest: assessment.outputDigest,
     content,

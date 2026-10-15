@@ -16,7 +16,7 @@ import { prepareProductDelivery } from "./product-delivery.ts";
 
 /** Offline editorial candidate only. Changing authored language requires a new version. */
 export const CAREER_COMPASS_CANDIDATE_VERSION =
-  "atv-career-compass-candidate/1.8.4";
+  "atv-career-compass-candidate/1.8.7";
 
 type SignReading = {
   direction: string;
@@ -40,7 +40,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Qual proposta parada você poderia iniciar em uma escala que permita revisão?",
       "Em qual tarefa há autonomia suficiente para testar a primeira etapa e receber retorno?",
-      "que melhoria pequena você poderia propor e revisar depois de ouvir uma pessoa afetada?",
+      "Que melhoria pequena você poderia propor e revisar depois de ouvir uma pessoa afetada?",
     ],
   },
   Touro: {
@@ -55,7 +55,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Qual entrega melhora quando você pode acompanhar a qualidade por mais de uma etapa?",
       "Que recursos e ritmo seriam necessários para sustentar essa qualidade sem repetir trabalho inútil?",
-      "qual etapa você poderia variar por pouco tempo e comparar com o procedimento atual?",
+      "Qual etapa você poderia variar por pouco tempo e comparar com o procedimento atual?",
     ],
   },
   Gêmeos: {
@@ -70,7 +70,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Que informação você poderia traduzir para alguém que precisa decidir ou executar algo?",
       "Qual espaço permite fazer perguntas e também verificar se a explicação ajudou?",
-      "que conversa você poderia concluir com um resumo e uma próxima ação definida?",
+      "Que conversa você poderia concluir com um resumo e uma próxima ação definida?",
     ],
   },
   Câncer: {
@@ -85,7 +85,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Em qual decisão o cuidado com as pessoas ajudaria a equipe a agir melhor?",
       "Que condições de confiança permitem dividir responsabilidades em vez de concentrá-las?",
-      "qual apoio concreto você poderia oferecer deixando explícito o seu limite?",
+      "Qual apoio concreto você poderia oferecer deixando explícito o seu limite?",
     ],
   },
   Leão: {
@@ -100,7 +100,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Qual ideia sua precisaria de uma forma visível para poder ser discutida?",
       "Onde uma apresentação permitiria reconhecer também quem ajudou a construir a entrega?",
-      "que proposta breve você poderia mostrar e complementar com a contribuição de outra pessoa?",
+      "Que proposta breve você poderia mostrar e complementar com a contribuição de outra pessoa?",
     ],
   },
   Virgem: {
@@ -115,7 +115,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Que detalhe de uma entrega faria diferença para quem a usa?",
       "Qual rotina permite medir se a correção melhorou o serviço?",
-      "que critério de pronto você poderia definir antes da próxima revisão?",
+      "Que critério de pronto você poderia definir antes da próxima revisão?",
     ],
   },
   Libra: {
@@ -130,7 +130,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Qual decisão precisa de um critério que as pessoas envolvidas possam entender?",
       "Em que espaço é possível escutar posições diferentes e ainda concluir uma escolha?",
-      "que decisão pequena você poderia fechar após registrar duas perspectivas e um critério?",
+      "Que decisão pequena você poderia fechar após registrar duas perspectivas e um critério?",
     ],
   },
   Escorpião: {
@@ -145,7 +145,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Que problema merece investigação antes de uma mudança importante?",
       "Onde há tempo e confiança para explicar critérios sem expor informações privadas?",
-      "qual etapa do seu método você poderia compartilhar antes de apresentar uma conclusão?",
+      "Qual etapa do seu método você poderia compartilhar antes de apresentar uma conclusão?",
     ],
   },
   Sagitário: {
@@ -160,7 +160,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Qual tarefa atual ganharia sentido com uma pergunta de aprendizado mais ampla?",
       "Que ambiente permite estudar uma ideia e testar sua utilidade em uma entrega?",
-      "que parte pequena de uma visão maior você poderia executar e avaliar primeiro?",
+      "Que parte pequena de uma visão maior você poderia executar e avaliar primeiro?",
     ],
   },
   Capricórnio: {
@@ -175,7 +175,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Qual responsabilidade você poderia estruturar para que não dependa só do impulso inicial?",
       "Que meta tem etapas claras e recursos suficientes para uma execução responsável?",
-      "qual etapa você poderia combinar com outra pessoa depois de conferir o esforço necessário?",
+      "Qual etapa você poderia combinar com outra pessoa depois de conferir o esforço necessário?",
     ],
   },
   Aquário: {
@@ -190,7 +190,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Que regra de trabalho poderia ser revista porque deixou de ajudar quem a utiliza?",
       "Onde é possível experimentar uma alternativa com participação das pessoas afetadas?",
-      "quem poderia testar uma mudança simples e dizer o que ela resolveu ou dificultou?",
+      "Quem poderia testar uma mudança simples e dizer o que ela resolveu ou dificultou?",
     ],
   },
   Peixes: {
@@ -205,7 +205,7 @@ const bySign: Readonly<Record<string, SignReading>> = Object.freeze({
     questions: [
       "Que experiência ainda pouco nomeada você poderia tornar compreensível para alguém?",
       "Qual atividade permite escuta e criação com um resultado que possa ser conferido?",
-      "que pedido concreto você poderia acolher definindo antes o limite da sua resposta?",
+      "Que pedido concreto você poderia acolher definindo antes o limite da sua resposta?",
     ],
   },
 });
@@ -215,7 +215,7 @@ type ContextLens = {
 };
 
 type ContextTopic =
-  | "overload" | "leadershipInvitation" | "team" | "transition" | "study" | "noStudy"
+  | "overload" | "leadershipInvitation" | "team" | "transition" | "relocation" | "study" | "noStudy"
   | "creativePractice" | "change" | "noLeadership" | "keepLeadership"
   | "stayCurrent" | "stayCareer" | "independent";
 
@@ -224,6 +224,7 @@ type ContextSignals = {
   overload: boolean;
   missingRest: boolean;
   transitionKind: "employment" | "career" | "profession" | "general" | undefined;
+  relocationKind: "city" | "municipality" | "state" | "region" | "country" | undefined;
   study: boolean;
   returningToStudy: boolean;
   noStudy: boolean;
@@ -266,6 +267,13 @@ const contextLenses: Readonly<Record<ContextTopic, ContextLens>> = Object.freeze
       "Que tipo de contribuição você quer verificar nesta transição?",
       "Quais condições concretas distinguem duas possibilidades que está considerando?",
       "Qual amostra pequena de trabalho permitiria comparar uma delas antes de uma decisão maior?",
+    ],
+  },
+  relocation: {
+    questions: [
+      "Que oportunidade concreta você quer comparar no destino?",
+      "Quais condições de trabalho, custo e apoio você consegue confirmar antes de mudar?",
+      "Que conversa ou atividade breve permitiria testar a possibilidade antes da mudança?",
     ],
   },
   study: {
@@ -397,6 +405,11 @@ function contextSignals(context: string | undefined): ContextSignals | undefined
   const transitionKind: ContextSignals["transitionKind"] =
     transitionObject === "carreira" ? "career" : transitionObject === "profissao" ? "profession" :
     transitionObject ? "employment" : /\b(?:transicao|recolocacao)\b/.test(affirmed) ? "general" : undefined;
+  const relocationObject = /\b(?:mudar|trocar|mudanca)\s+(?:de\s+)?(cidade|municipio|estado|regiao|pais)\b|\b(?:mudar|mudanca)\s+para\s+(?:outr[oa]\s+)?(cidade|municipio|estado|regiao|pais)\b/.exec(affirmed);
+  const relocationTerm = relocationObject?.[1] ?? relocationObject?.[2];
+  const relocationKind: ContextSignals["relocationKind"] = relocationTerm === "cidade" ? "city" :
+    relocationTerm === "municipio" ? "municipality" : relocationTerm === "estado" ? "state" :
+    relocationTerm === "regiao" ? "region" : relocationTerm === "pais" ? "country" : undefined;
   const returningToStudy = /\b(?:voltar|retornar|retorno)\s+(?:a|aos|para os)?\s*estud(?:o|ar)\b/.test(affirmed);
   const affirmedStudy = returningToStudy || /\b(?:quero|pretendo|desejo|busco|preciso)\s+(?:de\s+)?estudar\b|\bestudar\b|\b(?:curso|formacao)\b/.test(affirmed);
   const declinedStudyReturn = clauses.some((clause) =>
@@ -418,12 +431,12 @@ function contextSignals(context: string | undefined): ContextSignals | undefined
   const missingCeramicClay = /\b(?:nao\s+(?:tenho|possuo)|sem)\s+argila\b/.test(reported);
   const missingCeramicFiringAccess = /\b(?:nao\s+(?:tenho|possuo)|sem|nem)\s+acesso\s+(?:a|ao)\s+(?:um\s+)?(?:forno|queima)\b/.test(reported);
   const change = /\b(?:mudar|mudanca)\s+(?:(?:uma|a|de)\s+)?(?:rotina|etapa|processo|modo de trabalhar)\b/.test(affirmed);
-  const primary: ContextTopic | undefined = overload ? "overload" : transitionKind ? "transition" : study ? "study" : noStudy ? "noStudy" :
+  const primary: ContextTopic | undefined = overload ? "overload" : relocationKind ? "relocation" : transitionKind ? "transition" : study ? "study" : noStudy ? "noStudy" :
     invitation ? "leadershipInvitation" : team ? "team" : creative ? "creativePractice" :
     change ? "change" : unambiguousNoLeadership ? "noLeadership" : unambiguousKeepLeadership ? "keepLeadership" :
     stayCurrent ? "stayCurrent" : stayCareerKind ? "stayCareer" :
     independent ? "independent" : undefined;
-  return primary ? { primary, overload, missingRest, transitionKind, study, returningToStudy, noStudy, declinedStudyReturn, independent,
+  return primary ? { primary, overload, missingRest, transitionKind, relocationKind, study, returningToStudy, noStudy, declinedStudyReturn, independent,
     noLeadership: unambiguousNoLeadership, keepLeadership: unambiguousKeepLeadership,
     stayCurrent, stayCareerKind, creativeKind, missingCeramicClay, missingCeramicFiringAccess } : undefined;
 }
@@ -435,6 +448,9 @@ function contextualReading(sign: string, signals: ContextSignals): SignReading {
   const transitionName = signals.transitionKind === "career" ? "mudança de carreira" :
     signals.transitionKind === "profession" ? "mudança de profissão" :
     signals.transitionKind === "employment" ? "mudança de emprego" : "transição profissional";
+  const relocationName = signals.relocationKind === "municipality" ? "mudança de município" :
+    signals.relocationKind === "state" ? "mudança de estado" : signals.relocationKind === "region" ? "mudança de região" :
+    signals.relocationKind === "country" ? "mudança de país" : "mudança de cidade";
   const preservedPath = signals.stayCareerKind === "profession" ? "profissão" : "carreira";
   // Changing career, profession and employer are separate intentions. Preserve
   // a refused object whenever it differs from the affirmed transition.
@@ -471,10 +487,18 @@ function contextualReading(sign: string, signals: ContextSignals): SignReading {
     case "transition":
       return {
         direction: `Na ${transitionName} que você considera, o Meio do Céu em ${sign} oferece uma pergunta: onde seria possível ${scopedAction}? Use a hipótese para comparar atividades, sem tomá-la como promessa de resultado.${signals.study ? " Você também considera estudar; verifique se esse objetivo prepara a mudança ou se pede uma decisão própria." : ""}`,
-        workMode: `Compare duas possibilidades ligadas à ${transitionName} pelo tempo, recursos e autonomia necessários para ${scopedAction}. Confira as condições concretas de cada possibilidade antes de decidir.${signals.study ? " Se o estudo fizer parte da transição, identifique uma habilidade necessária e compare formas de aprendê-la pelo tempo e custo." : ""}`,
+        workMode: `Escolha uma possibilidade ligada à ${transitionName} e anote tempo, recursos e autonomia necessários para ${scopedAction}. Se houver outra opção, aplique os mesmos critérios; se não houver, registre o que ainda precisa descobrir antes de decidir.${signals.study ? " Se o estudo fizer parte da transição, identifique uma habilidade necessária e compare formas de aprendê-la pelo tempo e custo." : ""}`,
         tension: `${frame.risk} Nessa ${transitionName}, a pressa pode fazer uma diferença de condições parecer solução completa; investigue o esforço exigido por cada possibilidade${transitionCondition ? `, ${transitionCondition}` : ""}.${signals.study ? " Uma formação não resolve, por si, condições ruins de trabalho." : ""}`,
-        synthesis: `Antes de decidir sobre a ${transitionName}, faça uma atividade curta que permita ${scopedAction}. Em cada opção, confira ${frame.marker}. Depois compare tempo, recursos e autonomia exigidos.${signals.study ? " Use o resultado para decidir se estudar responde a uma dúvida concreta dessa transição." : ""}`,
-        questions: [`Que tipo de contribuição você quer verificar nesta ${transitionName}${transitionCondition ? `, ${transitionCondition}` : ""}?`, signals.study ? `Há uma habilidade que você deseja estudar para comparar as possibilidades da ${transitionName}, ou esse estudo atende a outro objetivo?` : `Em qual possibilidade da ${transitionName} você poderia ${scopedAction}?`, `Que atividade curta permitiria conferir ${frame.marker} antes da ${transitionName}${transitionCondition ? `, ${transitionCondition}` : ""}?`],
+        synthesis: `Antes de decidir sobre a ${transitionName}, faça uma atividade curta que permita ${scopedAction}. No teste realizado, confira ${frame.marker}. Depois registre tempo, recursos e autonomia exigidos; compare alternativas somente se elas estiverem disponíveis.${signals.study ? " Use o resultado para decidir se estudar responde a uma dúvida concreta dessa transição." : ""}`,
+        questions: [`Que tipo de contribuição você quer verificar nesta ${transitionName}${transitionCondition ? `, ${transitionCondition}` : ""}?`, signals.study ? `Há uma habilidade que você deseja estudar para examinar a ${transitionName}, ou esse estudo atende a outro objetivo?` : `Em que atividade possível durante a ${transitionName} você poderia ${scopedAction}?`, `Antes da ${transitionName}${transitionCondition ? ` e ${transitionCondition}` : ""}, qual atividade curta permitiria conferir ${frame.marker}?`],
+      };
+    case "relocation":
+      return {
+        direction: `Você relatou que considera uma ${relocationName}${signals.transitionKind ? `, junto de uma ${transitionName}` : ""}. O Meio do Céu em ${sign} oferece uma hipótese para examinar possibilidades de trabalho no destino: onde seria possível ${scopedAction}? Essa posição não avalia o lugar nem prevê uma vaga.`,
+        workMode: `Compare uma possibilidade de trabalho no destino com sua situação atual. Verifique função, condições de contratação, tempo e recursos para ${scopedAction}; se ainda não houver uma oportunidade concreta, registre o que precisa descobrir antes de tratar a ${relocationName} como decisão.`,
+        tension: `${frame.risk} Na ${relocationName}, a expectativa de mais oportunidades não comprova que uma vaga esteja disponível. Confira custos, prazo e apoio no destino antes de assumir compromissos difíceis de reverter.`,
+        synthesis: `Antes de decidir sobre a ${relocationName}, examine uma oportunidade verificável ou converse com alguém que conheça o trabalho no destino. Se houver uma atividade breve em que possa ${scopedAction}, observe ${frame.marker}; compare o resultado e as condições reais com o que tem hoje.`,
+        questions: [question, `Que condição de trabalho e de vida no destino você consegue confirmar para ${scopedAction}?`, `Que conversa ou atividade breve ajudaria a verificar ${frame.marker} antes da ${relocationName}?`],
       };
     case "study":
       return {
@@ -680,7 +704,7 @@ export function composeCareerCompassCandidate(
           authored.questions[0],
           authored.questions[1],
           context
-            ? `Qual parte da situação que você relatou poderia ser observada neste teste?`
+            ? `Na situação que você relatou, existe uma atividade concreta para ${contextBySign[sign!]!.action}, ou falta alguma condição para esse teste?`
             : authored.questions[2].charAt(0).toLocaleUpperCase("pt-BR") +
               authored.questions[2].slice(1),
         ],

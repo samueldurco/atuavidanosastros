@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createCareerCompassFullBasisCalculator } from '../../../../../worker/src/career-compass-full-basis';
 import { calculateTrial } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
 import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
@@ -25,6 +26,7 @@ import {
 	type CompassQaProfile
 } from './compass-qa-profiles';
 import { normalizeFactGraph } from './fact-graph';
+import { prepareCareerCompassV6Origin } from './compass-origin';
 import { purposeHouseAt } from './purpose-facts';
 
 const runId = '00000000-0000-4000-8000-000000000150';
@@ -109,7 +111,7 @@ describe('Bússola de Carreira: fonte íntegra, contexto e hipóteses verificáv
 		expect(compassAngularContacts([{ ...p[0], longitude: 2.00001 }], 359)).toHaveLength(0);
 		expect(compassAngularContacts([{ ...p[0], longitude: 356 }], 359)).toHaveLength(1);
 	});
-	it('covers every source fact and all five themes in eleven substantial chapters', async () => {
+	it('preserves every source fact and cites the selected evidence in eleven substantial chapters', async () => {
 		const c = await sample(),
 			r = composeTrialReading(input(), c);
 		expect(reviewReconstructedCompass(input(), c, r)).toEqual([]);
@@ -122,9 +124,12 @@ describe('Bússola de Carreira: fonte íntegra, contexto e hipóteses verificáv
 			'working-style',
 			'sustainability'
 		]);
-		expect(new Set(r.sections.flatMap((s) => s.factIds))).toEqual(
-			new Set(c.facts.map((f) => f.id))
+		const sourceIds = new Set(c.facts.map((fact) => fact.id));
+		expect(sourceIds.size).toBe(c.facts.length);
+		expect(r.sections.flatMap((section) => section.factIds).every((id) => sourceIds.has(id))).toBe(
+			true
 		);
+		expect(new Set(r.sections.flatMap((section) => section.factIds))).toEqual(sourceIds);
 		expect(r.questions).toHaveLength(3);
 		expect(r.sections.find((s) => s.title.includes('vinte minutos'))!.text).toContain(
 			'evidência contrária'
@@ -525,15 +530,29 @@ describe('Bússola de Carreira: fonte íntegra, contexto e hipóteses verificáv
 		);
 		expect(chapter('study', 'contribution')).not.toContain('utilidade para outra pessoa');
 		for (const { name, reading } of variants) {
+			const profile = compassQaProfiles.find((item) => item.slug === name)!;
+			const fullBasis = (await createCareerCompassFullBasisCalculator()(profile.input, {
+				runId,
+				signal: new AbortController().signal
+			})) as CalculationSnapshot;
+			const origin = await prepareCareerCompassV6Origin(profile.input, fullBasis);
+			expect(origin.status, `${name}: trusted origin`).toBe('prepared_for_review');
+			if (origin.status === 'prepared_for_review') {
+				expect(origin.reading, `${name}: PDF reading matches trusted origin`).toEqual(reading);
+			}
 			expect(reading.limits.join(' ')).not.toMatch(/Gauntlet|IANA|UT1|DUT1|1900–2099/);
-			const appendix = reading.sections.find((section) =>
-				section.title.includes('Base preservada e referências')
+			const method = reading.sections.find(
+				(section) => section.title === 'Como esta leitura foi construída'
 			)!;
 			const saved = JSON.parse(
 				await readFile(`.trial-qa/compass-v6-saved/${name}.json`, 'utf8')
 			) as SavedTrial;
-			expect(appendix.factIds).toEqual(saved.calculation.facts.map((fact) => fact.id));
-			expect(appendix.text).not.toMatch(/\d+[.,]\d{2,}°|da candidata|do candidato/);
+			const sourceIds = new Set(saved.calculation.facts.map((fact) => fact.id));
+			expect(sourceIds.size).toBe(saved.calculation.facts.length);
+			expect(new Set(method.factIds)).toEqual(sourceIds);
+			expect(method.factIds.every((id) => sourceIds.has(id))).toBe(true);
+			expect(method.text.length).toBeLessThan(1000);
+			expect(method.text).not.toMatch(/\d+[.,]\d{2,}°|da candidata|do candidato/);
 		}
 	});
 	it('regenerates counterfactuals for targets, negation, workload and natal facts', async () => {

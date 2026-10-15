@@ -678,13 +678,34 @@ test("refusing a career or profession change becomes an explicit boundary", asyn
   }
 });
 
-test("city relocation for work does not become an unreported routine or employer change", async () => {
-  const result = await candidate(await calculation("00:00:00", "Quero mudar de cidade por oportunidades de trabalho."));
-  assert.equal(result.status, "prepared_for_review", result.reason);
-  const interpretation = interpretiveSections(result).join(" ");
-  assert.match(result.reading.limits.join(" "), /tema não foi classificado/i);
-  assert.doesNotMatch(interpretation, /mudança de rotina|mudança de emprego|outro emprego/i);
-  assert.equal(result.publication, "blocked");
+test("city relocation for work changes all reading blocks without inventing employer change", async () => {
+  for (const report of ["Quero mudar de cidade por oportunidades de trabalho.", "Penso em mudança de cidade."]) {
+    const result = await candidate(await calculation("00:00:00", report));
+    assert.equal(result.status, "prepared_for_review", result.reason);
+    for (const role of ["public-direction", "work-possibilities", "tension-or-excess"]) {
+      const claim = result.reading.claims.find((item) => item.id === role);
+      assert.match(claim.text, /destino|mudança de cidade/i, role);
+      assert.deepEqual(claim.evidence, ["angle-midheaven", "personal-context"]);
+    }
+    assert.match(result.reading.synthesis[0].text, /mudança de cidade/i);
+    assert.equal(new Set(result.reading.reflections).size, 3);
+    assert.match(result.reading.reflections.join(" "), /destino|mudança de cidade/i);
+    assert.doesNotMatch(result.reading.limits.join(" "), /tema não foi classificado/i);
+    assert.doesNotMatch(interpretiveSections(result).join(" "), /mudança de rotina|mudança de emprego|outro emprego/i);
+    assert.equal(result.publication, "blocked");
+  }
+});
+
+test("a refused city move is not assigned, while a separate employer intention remains", async () => {
+  const refused = await candidate(await calculation("00:00:00", "Não quero mudar de cidade."));
+  assert.equal(refused.status, "prepared_for_review", refused.reason);
+  assert.match(refused.reading.limits.join(" "), /tema não foi classificado/i);
+  assert.doesNotMatch(interpretiveSections(refused).join(" "), /você relatou que considera uma mudança de cidade/i);
+
+  const mixed = await candidate(await calculation("00:00:00", "Não quero mudar de cidade, mas quero mudar de emprego."));
+  assert.equal(mixed.status, "prepared_for_review", mixed.reason);
+  assert.match(mixed.reading.claims.find((claim) => claim.id === "public-direction").text, /mudança de emprego/i);
+  assert.doesNotMatch(interpretiveSections(mixed).join(" "), /você relatou que considera uma mudança de cidade/i);
 });
 
 test("editorial illustration names the reported practice and bounds its experiment", async () => {
@@ -725,8 +746,19 @@ test("all 12 Midheaven signs render context actions without broken infinitive te
   assert.equal(signs.size, 12);
 });
 
+test("all 12 Midheaven signs present the third reflection with an initial capital", async () => {
+  const signs = new Set();
+  for (let hour = 0; hour < 24; hour++) {
+    const result = await candidate(await calculation(`${String(hour).padStart(2, "0")}:00:00`));
+    assert.equal(result.status, "prepared_for_review", result.reason);
+    signs.add(result.facts.facts[0].display.split(" de ")[1]);
+    assert.match(result.reading.reflections[2], /^[A-ZÁÉÍÓÚÂÊÔÃÕÇ]/u);
+  }
+  assert.equal(signs.size, 12);
+});
+
 test("a short exercise keeps its reported boundary without repeating delivery labels", async () => {
-  assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.4");
+  assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.7");
   for (const [context, expectedBoundary] of [
     ["Não quero liderar equipe.", /sem assumir liderança formal/i],
     ["Quero mudar de carreira.", /atividade curta/i],
@@ -748,6 +780,64 @@ test("a short exercise keeps its reported boundary without repeating delivery la
     assert.match(bySign.get("Virgem"), /corrigir uma falha específica/i);
     assert.match(bySign.get("Câncer"), /identificar uma necessidade/i);
   }
+});
+
+test("a transition without named alternatives asks for one feasible test before comparison", async () => {
+  const result = await candidate(await calculation("12:00:00", "Quero mudar de carreira."));
+  assert.equal(result.status, "prepared_for_review", result.reason);
+  const possibilities = result.reading.claims.find((claim) => claim.id === "work-possibilities").text;
+  const synthesis = result.reading.synthesis[0].text;
+  assert.match(possibilities, /Escolha uma possibilidade ligada à mudança de carreira/i);
+  assert.match(possibilities, /Se houver outra opção/i);
+  assert.doesNotMatch(possibilities, /Compare duas possibilidades/i);
+  assert.doesNotMatch(synthesis, /Em cada opção/i);
+  assert.match(synthesis, /compare alternativas somente se elas estiverem disponíveis/i);
+  assert.equal(result.reading.reflections.length, 3);
+  assert.equal(result.publication, "blocked");
+});
+
+test("contrasting circumstances on the same Midheaven produce different feasible actions", async () => {
+  const profiles = [
+    ["Estou sobrecarregada e quero reduzir a carga.", /carga|demanda/i],
+    ["Quero mudar de carreira.", /mudança de carreira/i],
+    ["Não quero estudar.", /sem estudar|não quer estudar/i],
+  ];
+  const results = [];
+  for (const [statement, expected] of profiles) {
+    const result = await candidate(await calculation("12:00:00", statement));
+    assert.equal(result.status, "prepared_for_review", result.reason);
+    assert.match(result.reading.synthesis[0].text, expected, statement);
+    assert.equal(result.reading.reflections.length, 3);
+    assert.equal(new Set(result.reading.reflections).size, 3);
+    assert.equal(result.publication, "blocked");
+    results.push(result);
+  }
+  assert.equal(new Set(results.map((result) => result.facts.facts[0].display)).size, 1);
+  for (const role of ["public-direction", "work-possibilities", "tension-or-excess"]) {
+    assert.equal(new Set(results.map((result) => result.reading.claims.find((claim) => claim.id === role).text)).size, 3, role);
+  }
+  assert.equal(new Set(results.map((result) => result.reading.synthesis[0].text)).size, 3);
+});
+
+test("an unclassified report keeps MC-only hypotheses and asks a concrete sign-specific question", async () => {
+  const report = "Quero tirar um ano sabático para cuidar dos meus gatos.";
+  const plain = await candidate(await calculation("12:00:00"));
+  const unknown = await candidate(await calculation("12:00:00", report));
+  assert.equal(plain.status, "prepared_for_review", plain.reason);
+  assert.equal(unknown.status, "prepared_for_review", unknown.reason);
+  assert.equal(unknown.reading.claims.find((claim) => claim.id === "reported-context").text, report);
+  for (const role of ["public-direction", "work-possibilities", "tension-or-excess"]) {
+    const withoutContext = plain.reading.claims.find((claim) => claim.id === role);
+    const withUnknownContext = unknown.reading.claims.find((claim) => claim.id === role);
+    assert.equal(withUnknownContext.text, withoutContext.text);
+    assert.deepEqual(withUnknownContext.evidence, ["angle-midheaven"]);
+  }
+  assert.deepEqual(unknown.reading.reflections.slice(0, 2), plain.reading.reflections.slice(0, 2));
+  assert.match(unknown.reading.reflections[2], /Na situação que você relatou, existe uma atividade concreta para/i);
+  assert.doesNotMatch(unknown.reading.reflections[2], /Qual parte da situação/i);
+  assert.match(unknown.reading.limits.join(" "), /tema não foi classificado/i);
+  assert.doesNotMatch(interpretiveSections(unknown).join(" "), /mudança de emprego|mudança de carreira/i);
+  assert.equal(unknown.publication, "blocked");
 });
 
 test("authored readings avoid repeated words and conditions in reported situations", async () => {

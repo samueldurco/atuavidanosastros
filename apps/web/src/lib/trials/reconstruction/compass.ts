@@ -1,6 +1,5 @@
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import type { TrialReading } from '../reading';
-import { formatCareerCompassFactDisplay } from '../../career-compass-fact-presentation';
 import { CANON_VERSION, aspectNames, bodyNames, functions, signMeanings, signs } from './canon';
 import type { EditorialTrace } from './career';
 import { normalizeFactGraph, type Aspect, type FactGraph, type Position } from './fact-graph';
@@ -970,7 +969,7 @@ function contextualRelation(g: FactGraph, a: Aspect, binding: CompassContext) {
 			if (a.kind === 'square' && pair === 'saturn:venus')
 				return `${contact} A clareza visual buscada pode pedir uma revisão que o tempo ou a ferramenta disponível não comporta. Aponte uma mudança concreta que tornaria a imagem mais clara e confira se conseguiria realizá-la com os recursos atuais. Se o recurso faltar, o limite é do teste; ele não mede aptidão para ilustrar.`;
 			if (a.kind === 'square' && pair === 'jupiter:moon')
-				return `${contact} O interesse em ampliar a prática pode ocupar a mesma margem usada para desenhar e revisar. Depois da amostra, escolha apenas uma variação futura e confira se ela caberia na rotina que preserva a renda atual. Se não couber, reduza o escopo antes de tratar expansão como próximo passo.`;
+				return `${contact} O interesse em ampliar a prática pode ocupar a mesma margem usada para desenhar e revisar. Depois da amostra, escolha apenas uma variação futura e confira se haveria tempo para ela. Se não houver, reduza o escopo antes de tratar expansão como próximo passo.`;
 		}
 		if (binding.probe.kind === 'ceramics' && a.kind === 'square' && pair === 'saturn:venus')
 			return `${contact} A qualidade pretendida para uma peça depende de material, espaço e etapas que talvez ainda não estejam acessíveis. Verifique quais dessas condições estão acessíveis e, se houver, quais faltam antes de julgar o resultado do esboço. Sem modelagem e queima, a aparência planejada não demonstra a qualidade de uma peça pronta.`;
@@ -1110,7 +1109,7 @@ export function composeReconstructedCompass(
 						: 'As tensões descritas pedem uma negociação de tarefas e limites; elas não determinam uma ocupação nem um resultado.';
 	const contextualSynthesis =
 		binding.key === 'transition' && binding.probe?.kind === 'illustration'
-			? `Em conjunto, os contatos pedem três verificações diferentes na ilustração editorial: se o rascunho começou dentro do tempo combinado, qual revisão parece necessária e, se foi realizada, o que mudou e quanto exigiu. Se uma pessoa puder ver a amostra, peça apenas que diga o que entendeu; esse retorno testa comunicação, não aceitação profissional. Anote tempo e esforço; compare com uma tarefa conhecida ${binding.currentActivity ? `do seu trabalho ${binding.currentActivity}` : 'da sua atividade atual'} somente se duração e condições forem semelhantes. Preserve ${binding.constraint ?? 'a atividade atual'}. Se só houver plano ou faltar ferramenta, a qualidade e o custo da execução ficam em aberto.`
+			? 'Em conjunto, as relações distinguem a facilidade de começar, o custo de revisar e o impulso de ampliar. Essas funções podem divergir na mesma amostra: iniciar com facilidade não mostra que a revisão caberá no tempo, e desejar continuar não cria espaço na rotina. Se nenhuma imagem for feita, esses efeitos continuam como perguntas; o retorno de outra pessoa, quando existir, acrescenta uma observação diferente da sua.'
 			: binding.key === 'transition' && binding.probe?.kind === 'ceramics'
 				? `Em conjunto, os contatos separam o que o esboço mostrou do que modelagem, secagem e queima ainda exigem. Registre material e espaço disponíveis, tempo da etapa realmente feita e o que não foi executado. Compare com uma tarefa do emprego atual somente se duração e condições forem semelhantes; se só o desenho foi possível, não deduza qualidade, utilidade nem custo de repetir uma peça pronta. Preserve ${binding.constraint ?? 'a atividade atual'} enquanto testa o acesso às etapas seguintes.`
 				: binding.key === 'transition' && !binding.probe && ruler.body === 'pluto'
@@ -1133,7 +1132,7 @@ export function composeReconstructedCompass(
 			'Uma proposta própria começa pelo tamanho que seus recursos permitem entregar. Esboce uma amostra pequena e confira o custo de realizá-la antes de prometer expansão; a primeira resposta do público não mede a rotina de atender a novas demandas.',
 		transition:
 			binding.probe?.kind === 'illustration'
-				? `Experimentar ilustração editorial enquanto preserva ${binding.constraint ?? 'a atividade atual'} começa por um rascunho que torne uma ideia visível. Desenhar, revisar e pedir retorno são etapas diferentes: cada uma informa uma parte da hipótese, sem demonstrar renda na nova atividade.`
+				? `Experimentar ilustração editorial enquanto preserva ${binding.constraint ?? 'a atividade atual'} começa por um rascunho que torne uma ideia visível. Desenhar, revisar e pedir retorno são etapas diferentes: cada uma informa uma parte distinta da hipótese.`
 				: binding.probe?.kind === 'ceramics'
 					? `Experimentar cerâmica enquanto preserva ${binding.constraint ?? 'a atividade atual'} começa por distinguir a peça imaginada da peça feita. Um esboço revela intenção e recursos necessários; modelagem, secagem e queima só informam a prática quando forem acessíveis e executadas.`
 					: ruler.body === 'pluto'
@@ -1249,7 +1248,7 @@ export function composeReconstructedCompass(
 			'A proposta própria pode avançar apenas no tamanho que os recursos e o tempo disponíveis sustentem. Se a amostra exigir uma promessa ou gasto antecipado, reduza a oferta antes de avaliar sua continuidade.',
 		transition:
 			binding.probe?.kind === 'illustration'
-				? `Uma amostra de ilustração permite examinar se a ideia pretendida aparece no rascunho e qual revisão seria necessária. Conte o tempo de desenhar e, se houver, da revisão; se houver retorno de outra pessoa, use o que ela compreendeu da imagem, sem tratá-lo como aprovação comercial. Compare esse esforço com uma tarefa conhecida ${binding.currentActivity ? `do seu trabalho ${binding.currentActivity}` : 'da atividade atual'} somente se duração e condições forem semelhantes; de outro modo, registre apenas o custo observado. Preserve ${binding.constraint ?? 'a atividade atual'}. Um rascunho ainda não demonstra renda ou rotina de uma nova profissão.`
+				? `Ao decidir o próximo passo na ilustração editorial, separe o que você conseguiu verificar do que segue desconhecido. Uma imagem feita pode mostrar uma escolha visual sua; uma revisão possível informa o custo de melhorá-la; a leitura de outra pessoa, se acontecer, informa o que foi comunicado. Nenhuma dessas etapas estima procura, renda ou uma rotina profissional. Se o processo coube na margem disponível, outra amostra privada pode esclarecer uma dúvida nova. Se não coube, reduzir o escopo ou interromper também responde à pergunta. Preserve ${binding.constraint ?? 'a atividade atual'}.`
 				: binding.probe?.kind === 'ceramics'
 					? `O esboço permite avaliar a intenção da peça e os materiais necessários. A modelagem, a secagem e a queima precisam ser registradas separadamente quando forem acessíveis; não atribua ao desenho o tempo ou a qualidade dessas etapas. Avalie somente a etapa alcançada, os recursos usados ou eventualmente indisponíveis e o custo observado. Compare com o emprego apenas se houver tarefa de duração e condições equivalentes; preserve ${binding.constraint ?? 'a atividade atual'}. Uma peça planejada ainda não mostra o custo de repetir a produção.`
 					: !binding.probe && ruler.body === 'pluto'
@@ -1270,7 +1269,7 @@ export function composeReconstructedCompass(
 			'Ao rever a amostra, registre o resultado obtido, o recurso usado e o custo para repeti-la.',
 		transition:
 			binding.probe?.kind === 'illustration'
-				? 'Ao reler, observe se a ideia pretendida aparece no rascunho e se alguma revisão ficou fora do tempo. Registre compreensão de outra pessoa só se ela tiver dado retorno.'
+				? 'Na releitura, identifique qual condição mudou sua interpretação da experiência: acesso, tempo, qualidade percebida por você ou retorno efetivo de outra pessoa.'
 				: binding.probe?.kind === 'ceramics'
 					? 'Ao reler, marque até qual etapa da peça chegou, quais recursos estavam disponíveis e se algum material, espaço ou tempo faltou para prosseguir.'
 					: 'Ao reler, distinga o que ficou no plano do que foi executado e compare os recursos usados com os disponíveis.',
@@ -1402,7 +1401,7 @@ export function composeReconstructedCompass(
 					'No rascunho, observe se a ideia central se torna reconhecível na imagem e marque a decisão visual que produziu esse efeito. Esse resultado descreve sua contribuição nesta amostra; a utilidade para um leitor real depende de resposta externa. Se só houver planejamento, a qualidade da imagem permanece em aberto.';
 				themeConclusions.environment =
 					'Anote quais condições estavam de fato disponíveis — tempo, ferramenta e espaço para revisar —, se alguma faltou e, caso haja imagem, quais ajudaram a concluí-la. Isso informa como repetir o ensaio sem converter uma condição ausente em juízo sobre sua aptidão.';
-				themeConclusions.motivation = `Depois da etapa acessível, diferencie o interesse em desenhar do interesse na ideia da ilustração. ${label(moon)} sugere observar o apoio disponível ou necessário para começar; ${label(venus)} oferece um critério de clareza visual a confrontar com o rascunho. Se apenas planejou, ainda não há evidência sobre o prazer ou o custo de praticar.`;
+				themeConclusions.motivation = `Depois da etapa acessível, diferencie o interesse no assunto da vontade de fazer outra versão. ${label(moon)} sugere observar de que apoio você precisou para começar; ${label(venus)} pede um critério de qualidade que você consiga explicar. Se apenas planejou, a experiência de praticar ainda é uma pergunta aberta.`;
 				themeConclusions.sustainability = `Anote o tempo gasto no rascunho e, se houver, na revisão. Compare com uma tarefa conhecida da atividade atual somente se duração e condições forem semelhantes; sem essa equivalência, mantenha apenas o custo observado. Uma imagem inicial não mede a cadência de novas ilustrações nem a renda que poderiam gerar. Se a etapa já consumir a margem disponível, reduza o escopo antes de ampliar a prática.`;
 			} else if (binding.probe.kind === 'ceramics') {
 				themeConclusions.contribution =
@@ -1506,7 +1505,7 @@ export function composeReconstructedCompass(
 			);
 			setInterpretiveOpening(
 				'motivation',
-				`${label(sun)} descreve a vontade de ${authorship.motivation}; ${label(moon)} pede ${security.motivation} e ${label(venus)} valoriza ${values.contribution}. O prazer de pensar uma imagem pode existir antes de desenhá-la, mas não substitui a experiência de revisar o rascunho. Sem a imagem, o interesse pela prática e sua qualidade permanecem perguntas abertas.`
+				`${label(sun)} descreve a vontade de ${authorship.motivation}; ${label(moon)} pede ${security.motivation} e ${label(venus)} valoriza ${values.contribution}. Imaginar uma imagem pode ser prazeroso, enquanto revisá-la põe à prova quanto apoio e tempo o seu padrão de qualidade pede. Se a revisão não ocorrer, essa tensão permanece uma hipótese.`
 			);
 		}
 		if (binding.key === 'transition' && binding.probe?.kind === 'ceramics') {
@@ -1535,7 +1534,7 @@ export function composeReconstructedCompass(
 	sections[contextIndex].text =
 		edition === 'v5'
 			? `${sections[contextIndex].text}\n\nPara responder à pergunta declarada, ${binding.task}. A informação a procurar é esta: ${binding.question}`
-			: `${input.context ? `Você informou: “${input.context}”` : 'Nenhum contexto profissional foi informado; escolha uma tarefa real para aplicar esta hipótese.'}\n\n${binding.key === 'workload' ? `Considere descanso antes de qualquer registro. Se houver uma obrigação identificada, observe se pode ser reduzida ou adiada; só considere uma conversa sobre mudança quando houver outra pessoa envolvida.${binding.deferredAlternative ? ` A intenção de explorar ${binding.deferredAlternative} preservando ${binding.constraint} fica para depois dessa recuperação.` : ''}` : binding.key === 'study' ? 'Compare dois exercícios acessíveis para observar compreensão, interesse após a prática e necessidade de orientação.' : binding.constraint ? `Uma amostra curta pode investigar a alternativa sem alterar ${binding.constraint}; ela não demonstra que a atividade atual possa ser substituída.` : 'A experiência concreta pode confirmar, limitar ou contrariar a hipótese simbólica.'} ${binding.currentActivity ? `Você também relatou trabalhar ${binding.currentActivity}; uma entrega conhecida dessa atividade pode servir de referência somente se duração e condições forem comparáveis. Caso contrário, registre apenas o custo observado da amostra, sem presumir renda ou reconhecimento equivalentes. ` : ''}A pergunta decisiva é: ${binding.question}`;
+			: `${input.context ? `Você informou: “${input.context}”` : 'Nenhum contexto profissional foi informado; escolha uma tarefa real para aplicar esta hipótese.'}\n\n${binding.key === 'workload' ? `Considere descanso antes de qualquer registro. Se houver uma obrigação identificada, observe se pode ser reduzida ou adiada; só considere uma conversa sobre mudança quando houver outra pessoa envolvida.${binding.deferredAlternative ? ` A intenção de explorar ${binding.deferredAlternative} preservando ${binding.constraint} fica para depois dessa recuperação.` : ''}` : binding.key === 'study' ? 'Compare dois exercícios acessíveis para observar compreensão, interesse após a prática e necessidade de orientação.' : binding.probe?.kind === 'illustration' ? 'Uma amostra curta pode investigar a alternativa, mas não demonstra que a atividade atual possa ser substituída.' : binding.constraint ? `Uma amostra curta pode investigar a alternativa sem alterar ${binding.constraint}; ela não demonstra que a atividade atual possa ser substituída.` : 'A experiência concreta pode confirmar, limitar ou contrariar a hipótese simbólica.'} ${binding.currentActivity ? `Você também relatou trabalhar ${binding.currentActivity}; essa experiência define um limite material para a hipótese, sem oferecer equivalência automática com a alternativa. ` : ''}A pergunta decisiva é: ${binding.question}`;
 	const experimentIndex = plan.findIndex((p) => p.role === 'reversible-experiment');
 	sections[experimentIndex].text =
 		edition === 'v5'
@@ -1563,22 +1562,25 @@ export function composeReconstructedCompass(
 		.sort((a, b) => order.indexOf(a.p.role) - order.indexOf(b.p.role));
 	sections.splice(0, sections.length, ...ordered.map((o) => o.s));
 	plan.splice(0, plan.length, ...ordered.map((o) => o.p));
-	const used = new Set(sections.flatMap((s) => s.factIds)),
-		remaining = g.facts.filter((f) => !used.has(f.id)),
-		appendixFacts = edition === 'v5' ? remaining : g.facts;
-	add(
-		'Base preservada e referências de cálculo',
-		appendixFacts
-			.map((f) =>
-				edition === 'latest'
-					? formatCareerCompassFactDisplay(f.display)
-					: f.display.replace(/ da candidata\b/g, '')
-			)
-			.join('\n') +
-			`${edition === 'latest' ? '\n\nAs posições e os orbes acima foram arredondados a 0,1° para leitura; os valores originais permanecem na base técnica.' : ''}\n\nA base natal integral fica preservada para conferência. A seleção acima organiza uma investigação de trabalho e contribuição; fatores de outras áreas não viram afirmações profissionais sem uma relação explícita. Casas indisponíveis permanecem indisponíveis. Os aspectos usam o método registrado, sem atribuir aplicação ou separação. A experiência relatada pode contrariar a hipótese e modificar seu uso.`,
-		appendixFacts.map((f) => f.id),
-		'technical-reference'
-	);
+	if (edition === 'v5') {
+		// Historical editions remain byte-for-byte reproducible for saved readings.
+		const used = new Set(sections.flatMap((s) => s.factIds));
+		const remaining = g.facts.filter((f) => !used.has(f.id));
+		add(
+			'Base preservada e referências de cálculo',
+			remaining.map((f) => f.display.replace(/ da candidata\b/g, '')).join('\n') +
+				'\n\nA base natal integral fica preservada para conferência. A seleção acima organiza uma investigação de trabalho e contribuição; fatores de outras áreas não viram afirmações profissionais sem uma relação explícita. Casas indisponíveis permanecem indisponíveis. Os aspectos usam o método registrado, sem atribuir aplicação ou separação. A experiência relatada pode contrariar a hipótese e modificar seu uso.',
+			remaining.map((f) => f.id),
+			'technical-reference'
+		);
+	} else {
+		add(
+			'Como esta leitura foi construída',
+			`O ponto de partida foi o Meio do Céu em ${signs[g.mc.sign]} e seu regente, ${label(ruler)}. Os contatos destacados nos capítulos foram escolhidos entre relações calculadas; as demais posições continuam registradas na base técnica, sem receber uma interpretação profissional só por existirem.\n\n${input.context ? 'Seu relato orientou a ordem dos temas e o experimento, sem alterar o mapa de nascimento.' : 'Sem um relato profissional específico, aplique as hipóteses a uma tarefa real de sua escolha.'} Os valores completos e a origem dos fatos permanecem no registro da leitura. Confira data, hora, local e fuso antes de comparar as hipóteses com sua experiência.`,
+			g.facts.map((fact) => fact.id),
+			'technical-reference'
+		);
+	}
 	const openingByContext: Record<CompassContext['key'], string> = {
 		workload:
 			'Considere primeiro as condições que permitiriam descansar. Esta leitura considera a margem disponível antes de propor qualquer experimento; se ela faltar, adiar também é uma conclusão válida.',
@@ -1614,7 +1616,11 @@ export function composeReconstructedCompass(
 					: binding.probe
 						? `A quais recursos para ${binding.probe.sample} você tem acesso hoje?`
 						: 'Qual problema da alternativa você consegue investigar agora com os recursos disponíveis?',
-			'Que resultado da etapa executada mudaria sua hipótese sem ameaçar a atividade atual?'
+			binding.probe?.kind === 'illustration'
+				? 'Qual limite da imagem feita ou do retorno recebido faria você reduzir ou suspender essa exploração?'
+				: binding.probe?.kind === 'ceramics'
+					? 'Que dificuldade de modelagem, secagem ou queima faria você rever a hipótese criada pelo esboço?'
+					: 'Que evidência contrária na etapa executada faria você reduzir ou suspender essa exploração?'
 		],
 		relationships: [
 			'Como as pessoas envolvidas descrevem suas responsabilidades na mesma tarefa?',
@@ -1637,7 +1643,7 @@ export function composeReconstructedCompass(
 		transition:
 			binding.probe?.kind === 'ceramics'
 				? 'Registre se houve plano, modelagem ou etapa posterior e quanto tempo e material cada uma exigiu. Não extrapole do esboço para produção ou renda.'
-				: 'Registre a etapa da alternativa que foi acessível e se houve execução ou apenas plano. Compare o esforço com a atividade atual só se houver uma tarefa de duração e condições semelhantes; caso contrário, anote apenas o custo observado.',
+				: 'Ao encerrar o ensaio, marque o que foi executado, o que ficou apenas no plano e qual pergunta nova surgiu. Uma condição que faltou também é um resultado útil.',
 		relationships:
 			'Em uma tarefa compartilhada, registre o acordo, as ações de cada pessoa e o retorno recebido antes de ampliar compromissos.',
 		general:
@@ -1674,7 +1680,7 @@ export function composeReconstructedCompass(
 						'As posições do mapa dependem da data, hora, local e fuso informados. Confira esses dados se a leitura parecer incompatível com o registro de nascimento.',
 						'A base de cálculo astronômico ainda está em validação. Posições próximas de limites de signo ou de casa, e horários históricos, exigem conferência adicional antes de interpretações finas.',
 						'Os contatos entre planetas não indicam datas ou acontecimentos futuros. Quando uma casa não puder ser calculada, a leitura não atribui uma casa por suposição.',
-						'A Bússola propõe hipóteses para comparar com a experiência; não determina profissão, competência, renda, contratação ou sucesso. Formação, saúde, responsabilidades, oportunidades e recursos reais delimitam qualquer escolha.'
+						'Esta leitura experimental propõe hipóteses para comparar com a experiência; não determina profissão, competência, renda, contratação ou sucesso. Formação, saúde, responsabilidades, oportunidades e recursos reais delimitam qualquer escolha.'
 					],
 		editorial: {
 			version: edition === 'v5' ? COMPASS_READING_VERSION_V5 : COMPASS_READING_VERSION,

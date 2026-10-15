@@ -2,7 +2,8 @@
 
 Input is supplied by career-compass-full-sample-pdfs.mjs. All interpretive
 paragraphs, chapter titles, questions, source and limits are printed verbatim.
-The public Career Compass product is web only; these files are owner previews.
+This private integral prototype is not the free MC-only Career Compass or a
+promise of the paid career product.
 """
 
 from __future__ import annotations
@@ -70,6 +71,7 @@ def make_style(name: str, face: str, size: float, leading: float, color=INK):
 STYLES = {
     'eyebrow': make_style('eyebrow', 'Onest', 8, 12, PRODUCT_INK),
     'title': make_style('title', 'Newsreader', 37, 41),
+    'cover-title': make_style('cover-title', 'Newsreader', 28, 32),
     'name': make_style('name', 'Newsreader', 25, 29, PRODUCT_INK),
     'chapter': make_style('chapter', 'Newsreader', 28, 33),
     'subhead': make_style('subhead', 'Newsreader', 22, 27),
@@ -173,7 +175,7 @@ def chrome(canvas, doc) -> None:
     canvas.line(LEFT, 48, W - RIGHT, 48)
     canvas.setFillColor(INK)
     canvas.setFont('Onest', 7.3)
-    canvas.drawString(LEFT, 34, 'AMOSTRA FICTÍCIA  ·  PRÉVIA PRIVADA  ·  FORMATO DE CATÁLOGO: WEB')
+    canvas.drawString(LEFT, 34, 'CENÁRIO FICTÍCIO  ·  PROTÓTIPO EXPERIMENTAL  ·  REVISÃO PRIVADA')
     canvas.drawRightString(W - RIGHT, 34, f'{doc.page:02d}')
     canvas.restoreState()
 
@@ -212,12 +214,11 @@ def birth_label(birth: dict) -> str:
 
 def cover(sample: dict) -> list:
     value = sample['input']
-    reading = sample['reading']
     presentation = value.get('presentation') or {}
     birth = value.get('birth') or {}
     name = presentation.get('name') or 'Pessoa fictícia'
-    left = [para('BÚSSOLA DE CARREIRA  /  LEITURA FICTÍCIA', 'eyebrow'),
-            Spacer(1, 16), para(reading['title'], 'title'), Spacer(1, 15),
+    left = [para('ATVNA  /  PROTÓTIPO EXPERIMENTAL', 'eyebrow'),
+            Spacer(1, 13), para('Estudo privado de leitura integral de carreira', 'cover-title'), Spacer(1, 13),
             HRFlowable(width=72, thickness=2.5, color=PRODUCT_ACCENT, hAlign='LEFT'),
             Spacer(1, 15), para(name, 'name')]
     art = CompassArt()
@@ -233,21 +234,21 @@ def cover(sample: dict) -> list:
              para(birth_label(birth), 'ui'),
              Spacer(1, 6), para(f"Cidade informada: {presentation.get('city', 'não informada')}", 'ui'),
              Spacer(1, 6), para(f"Contexto: {value.get('context') or 'não informado'}", 'ui')]
-    note = [para('PARA ANÁLISE DO PROPRIETÁRIO', 'eyebrow'), Spacer(1, 10),
-            para('Esta prévia reproduz o texto gerado pelo motor integral atual para análise editorial do proprietário.', 'small'),
+    note = [para('ESCOPO DESTA PEÇA', 'eyebrow'), Spacer(1, 10),
+            para('Esta prévia reproduz uma leitura integral experimental para análise editorial privada.', 'small'),
             Spacer(1, 8),
-            para('O formato previsto no catálogo para a Bússola é uma leitura interativa na web. Este PDF é somente um fac-símile privado para avaliar texto e apresentação; o mapa interativo não é reproduzido aqui.', 'small')]
+            para('A Bússola gratuita do catálogo tem escopo próprio, centrado no Meio do Céu e entregue na web. Este estudo não reproduz essa entrega nem promete conteúdo do Mapa de Propósito & Carreira pago.', 'small')]
     return [Spacer(1, 30), hero, Spacer(1, 33), card(facts, fill=PRODUCT_TINT, accent=PRODUCT_ACCENT),
             Spacer(1, 25), card(note, fill=LIGHT, accent=RULE), PageBreak()]
 
 
 def opening(sample: dict) -> list:
     reading = sample['reading']
-    return [para('SUA LEITURA  /  ABERTURA', 'eyebrow'), Spacer(1, 11),
+    return [para('LEITURA EXPERIMENTAL  /  ABERTURA', 'eyebrow'), Spacer(1, 11),
             para('Um primeiro ponto de orientação', 'subhead'), Spacer(1, 16),
             *prose(reading['opening']), Spacer(1, 26),
             HRFlowable(width='100%', thickness=0.7, color=RULE), Spacer(1, 14),
-            para('A leitura segue capítulo por capítulo, como na experiência web.', 'ui'),
+            para('A análise integral segue capítulo por capítulo neste fac-símile privado.', 'ui'),
             Spacer(1, 30)]
 
 
@@ -261,10 +262,10 @@ def chapters(sample: dict) -> list:
         # Give each chapter room for its heading and opening text, then let
         # the prose flow across pages. One forced page per chapter left most
         # A4 sheets nearly empty and obscured the reading's natural rhythm.
-        result.extend([CondPageBreak(180), *heading, *prose(section['text']),
-                       Spacer(1, 26),
+        result.extend([CondPageBreak(130), *heading, *prose(section['text']),
+                       Spacer(1, 16),
                        HRFlowable(width='100%', thickness=0.7, color=RULE),
-                       Spacer(1, 24)])
+                       Spacer(1, 14)])
     return result
 
 
@@ -292,10 +293,10 @@ def render(sample: dict, output_dir: Path) -> Path:
         raise ValueError('Invalid synthetic profile slug')
     if len(sample['reading']['sections']) != 11:
         raise ValueError('Full reading requires eleven chapters')
-    path = output_dir / f'atvna-bussola-integral-v6-previa-{slug}.pdf'
+    path = output_dir / f'atvna-estudo-carreira-integral-v6-previa-{slug}.pdf'
     doc = SimpleDocTemplate(str(path), pagesize=A4, rightMargin=RIGHT,
                             leftMargin=LEFT, topMargin=TOP, bottomMargin=BOTTOM,
-                            title=sample['reading']['title'] + ' · prévia fictícia privada',
+                            title='Estudo privado de leitura integral de carreira · protótipo experimental',
                             author='ATVNA · revisão privada')
     doc.build([*cover(sample), *opening(sample), *chapters(sample), *endmatter(sample)],
               onFirstPage=chrome, onLaterPages=chrome)
@@ -305,10 +306,10 @@ def render(sample: dict, output_dir: Path) -> Path:
         line for page in page_text for line in page.splitlines()
         if line.strip() not in {
             'A TUA VIDA NOS ASTROS',
-            'AMOSTRA FICTÍCIA  ·  PRÉVIA PRIVADA  ·  FORMATO DE CATÁLOGO: WEB',
+            'CENÁRIO FICTÍCIO  ·  PROTÓTIPO EXPERIMENTAL  ·  REVISÃO PRIVADA',
         } and not re.fullmatch(r'\d{2}', line.strip())
     )
-    expected = [sample['reading']['title'], sample['reading']['opening'],
+    expected = [sample['reading']['opening'],
                 *(s['title'] for s in sample['reading']['sections']),
                 *sample['reading']['questions'], sample['reading']['practice'],
                 *sample['reading']['limits'], sample['reading']['source']]

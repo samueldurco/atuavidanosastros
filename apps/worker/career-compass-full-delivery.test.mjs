@@ -102,9 +102,14 @@ test('complete private delivery binds persisted input, calculation and text and 
   assert.equal(delivery.content.sections.length, 11);
   assert.equal(delivery.content.sections[1].text.startsWith(`${context}\n\n`), true);
   assert.equal(delivery.content.sections[7].text.includes('1. A primeira combinação'), true);
-  assert.equal(delivery.content.sections[10].evidence.length, snapshot.facts.length);
-  assert.equal(delivery.content.sections[10].text.includes('movimento direto da candidata'), false);
-  assert.equal(delivery.content.sections[10].title, 'Base da leitura');
+  const method = delivery.content.sections[10];
+  assert.equal(method.title, 'Como esta leitura foi construída');
+  assert.ok(method.text.length < 1000);
+  assert.deepEqual(method.evidence, snapshot.facts.map((fact) => fact.id));
+  assert.ok(method.evidence.includes('angle-midheaven'));
+  assert.ok(method.evidence.includes('personal-context'));
+  assert.deepEqual(new Set(snapshot.facts.map((fact) => fact.id)).size, snapshot.facts.length);
+  assert.equal(method.text.includes('movimento direto da candidata'), false);
   const readerText = `${delivery.content.sections.map((section) => section.text).join('\n')}\n${delivery.content.limits.join('\n')}`;
   assert.doesNotMatch(readerText, /\b(?:gauntlet|UT1|IANA|orbe)\b/i);
   assert.doesNotMatch(readerText, /\d+[.,]\d{2,}°/);

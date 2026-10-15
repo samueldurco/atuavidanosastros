@@ -1,5 +1,5 @@
 /**
- * Private facsimiles of the full Career Compass web reading.
+ * Private facsimiles of an experimental integral career reading.
  * Runs the existing six-profile test, which calculates and approves each
  * current reading before saving its exact payload. This script cannot publish
  * a product, create a customer run, or alter the interpretation.
@@ -22,8 +22,10 @@ const python = process.env.ATVNA_REVIEW_PYTHON ||
 const slugs = ['livia', 'ceramics-employment', 'leadership', 'workload', 'study', 'different-birth'];
 const sourceFiles = [
   'apps/web/src/lib/trials/reconstruction/compass.ts',
+  'apps/web/src/lib/trials/reconstruction/compass-origin.ts',
   'apps/web/src/lib/trials/reconstruction/compass-facts.ts',
   'apps/web/src/lib/trials/reconstruction/compass-qa-profiles.ts',
+  'apps/worker/src/career-compass-full-basis.ts',
   'apps/web/src/lib/trials/reading.ts',
   'apps/web/src/lib/server/trial-calculation.ts',
 ];
@@ -110,7 +112,7 @@ const manifest = {
   scope: 'private-owner-review-only',
   status: fromSaved ? 'private-owner-review-facsimile' : 'preview-awaiting-independent-editorial-gate',
   publicDelivery: 'web',
-  explanation: 'PDF facsimiles of the current web reading, not a customer PDF offering.',
+  explanation: 'Private integral reading prototype for owner review. It does not reproduce the free MC-centered web Career Compass or promise the paid Career Map; these PDFs are not a customer offering.',
   generationMode: fromSaved ? 'frozen-saved-json' : 'regenerated-by-vitest',
   engineSourcesSha256: sourceDigests,
   generatorTest: fromSaved ? 'Previously generated and editorially frozen JSON' : 'apps/web/src/lib/trials/reconstruction/compass.spec.ts :: regenerates six fictional profiles',
@@ -127,5 +129,5 @@ const manifest = {
     pdfSha256: sha(readFileSync(files[i])),
   })),
 };
-writeFileSync(path.join(output, 'atvna-bussola-integral-amostras-manifest.json'), JSON.stringify(manifest, null, 2));
+writeFileSync(path.join(output, 'atvna-estudo-carreira-integral-amostras-manifest.json'), JSON.stringify(manifest, null, 2));
 process.stdout.write(`${files.join('\n')}\n`);

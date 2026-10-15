@@ -7,7 +7,7 @@ import {
 } from "./product-editorial.ts";
 
 export const CAREER_COMPASS_FULL_DELIVERY_VERSION =
-  "atv-career-compass-full-delivery/1.0.1";
+  "atv-career-compass-full-delivery/1.0.2";
 
 /** An editorial preview, deliberately lacking promotionId and reviewDigest. */
 export type CareerCompassFullDeliveryContent = Omit<
@@ -68,18 +68,6 @@ function readerCalculationLimits(limits: readonly string[]): string[] | null {
   }));
 }
 
-function readerFactDisplay(fact: { id: string; display: string }): string {
-  if (fact.id === "personal-context") return `Contexto informado: ${fact.display}`;
-  return fact.display
-    .replace(/(-?\d+(?:\.\d+)?)°/g, (_, degrees: string) =>
-      `${Number(degrees).toFixed(1).replace(".", ",")}°`)
-    .replace(/^Regente moderno do Meio do Céu:/, "Regente do Meio do Céu:")
-    .replace(/; orbe /, "; distância de ")
-    .replace(/; distância em longitude /, "; a ")
-    .replace("condições fora do contrato conservador de casas/ângulos",
-      "dados insuficientes para este cálculo");
-}
-
 function project(reading: Reading, facts: readonly { id: string; display: string }[],
   calculationLimits: readonly string[]): CareerCompassFullDeliveryContent | null {
   const readerLimits = readerCalculationLimits(calculationLimits);
@@ -130,7 +118,8 @@ function project(reading: Reading, facts: readonly { id: string; display: string
     experiment,
     { title: "Revisão para decidir", text: `${decision.text}\n\n${synthesis}\n\nPerguntas para a revisão:\n\n${questions}`,
       evidence: decisionEvidence },
-    { title: "Base da leitura", text: facts.map(readerFactDisplay).join("\n\n"),
+    { title: "Como esta leitura foi construída",
+      text: "A direção parte do Meio do Céu e de seu regente. As relações selecionadas mostram por que certos temas ganharam espaço nesta leitura; as demais posições calculadas continuam preservadas na base factual do registro. Seu contexto declarado ajudou a ordenar as perguntas e o experimento, sem modificar o mapa. Use as propostas como hipóteses para observar na vida real, considerando tempo, recursos e limites próprios. Antes de tomar uma decisão, confira seus dados de nascimento e compare a leitura com sua experiência.",
       evidence: facts.map((fact) => fact.id) },
   ] as CareerCompassFullDeliveryContent["sections"];
   if (sections.length !== 11 || sections.some((section) =>

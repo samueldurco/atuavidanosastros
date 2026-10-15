@@ -328,9 +328,15 @@
 					<div class="method-note">
 						<p class="eyebrow">Detalhes do cálculo</p>
 						<p>
-							Cálculo tropical/Placidus: {result.provenance.provider}
-							{result.provenance.providerVersion}.
+							O Meio do Céu foi calculado no zodíaco tropical a partir da data, hora e cidade
+							informadas.
 						</p>
+						<details>
+							<summary>Ver origem técnica do cálculo</summary>
+							<p>
+								Provedor: {result.provenance.provider}. Versão: {result.provenance.providerVersion}.
+							</p>
+						</details>
 						<p>
 							A retomada nesta aba vale por 30 minutos. Ao fechar a aba, o registro local é
 							descartado. Ao salvar, apenas o resultado e seu método entram na Biblioteca.
@@ -377,11 +383,11 @@
 				<p class="eyebrow">Da descoberta à leitura</p>
 				<h2 id="reading-bridge-title">A leitura personalizada da Bússola</h2>
 				<p>
-					A leitura completa relaciona o Meio do Céu ao contexto profissional que você informa para
-					organizar direção pública, ambientes e tensões possíveis, com três perguntas práticas.
-					Quando estiver disponível, uma leitura solicitada será entregue na Biblioteca.
+					A leitura da Bússola relaciona o Meio do Céu ao contexto profissional que você informa
+					para organizar direção pública, ambientes e tensões possíveis, com três perguntas
+					práticas. Quando estiver disponível, uma leitura solicitada será entregue na Biblioteca.
 				</p>
-				<p class="availability">Leitura completa em preparação</p>
+				<p class="availability">Leitura personalizada em preparação</p>
 			</div>
 		</section>
 		<section class="continuity">
@@ -567,6 +573,18 @@
 		border-block: 1px solid var(--atv-border);
 		font-size: 0.8rem;
 		color: var(--atv-text-secondary);
+	}
+	.method-note summary {
+		width: fit-content;
+		color: var(--atv-link, #385240);
+		cursor: pointer;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	.method-note summary:focus-visible {
+		outline: 3px solid #183746;
+		outline-offset: 4px;
+		box-shadow: 0 0 0 4px #fff8e9;
 	}
 	.reading-bridge {
 		display: grid;
