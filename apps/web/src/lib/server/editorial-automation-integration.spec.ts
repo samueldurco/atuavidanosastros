@@ -189,7 +189,9 @@ describe('automated public guide integration', () => {
 		expect(schema['@type']).toBe('Article');
 		expect(schema.author['@type']).toBe('Organization');
 		const { body } = render(EditorialArticle, { props: { document: docs[0] } });
-		expect(body).toContain('Sem revisão humana independente');
+		expect(docs[0].automationDisclosure).toEqual(document.automationDisclosure);
+		expect(schema.author.name).toBe('Organização sintética');
+		expect(body).not.toContain('Sem revisão humana independente');
 		expect(body).toContain('Organização sintética');
 		expect(editorialSitemap(docs)).toContain('/mapa-astral');
 		expect(recentNews(docs, now)).toEqual([]);

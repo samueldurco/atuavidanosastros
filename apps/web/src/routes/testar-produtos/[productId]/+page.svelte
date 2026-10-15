@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PrivateDreamAtlas from '$lib/components/PrivateDreamAtlas.svelte';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { WORKFLOW_VERSION, tarotMethodFor, type WorkflowInput } from '@atv/domain';
@@ -242,7 +243,9 @@
 	<PageIntro
 		eyebrow="Teste privado · gratuito"
 		title={data.product.name}
-		description="Crie uma leitura com seus dados. A revisão automática verifica os critérios antes de salvar; depois você pode aprovar ou rejeitar o produto."
+		description={data.product.id === 'dream-atlas'
+			? 'Guarde seus sonhos durante 30 dias e receba uma análise integrada ao final. Seus relatos ficam na sua conta.'
+			: 'Crie uma leitura com seus dados. A revisão automática verifica os critérios antes de salvar; depois você pode aprovar ou rejeitar o produto.'}
 	/>
 	{#if data.plusCycle}
 		<p role="status">
@@ -250,200 +253,212 @@
 			<a href="/atv-mais">Ver as opções do ciclo</a>.
 		</p>
 	{/if}
-	<form onsubmit={generate} aria-busy={busy}>
-		<fieldset class="intake-fields" disabled={!ready || busy}>
-			{#if data.previous}<p>
-					Correção da leitura anterior: confira e ajuste os dados abaixo. A nova leitura será salva
-					separadamente; a anterior continuará na biblioteca.
-				</p>{/if}
-			{#if needsBirth}<TrialBirthFields id="birth" label="Seu nascimento" bind:form={birth} />{/if}
-			{#if data.product.kind === 'relationship'}
-				<TrialBirthFields id="partner" label="Nascimento da outra pessoa" bind:form={partner} />
-				<label class="check"
-					><input type="checkbox" required bind:checked={partnerConsent} />Confirmo que tenho
-					autorização para usar e salvar os dados dessa pessoa nesta leitura privada.</label
-				>
-			{/if}
-			{#if data.product.kind === 'cycles'}
-				{#if ['personal-calendar', 'career-forecast-30d'].includes(data.product.id)}
-					<p>
-						Esta leitura acompanha os próximos 30 dias a partir da geração. As datas do período
-						aparecem no resultado.
-					</p>
-				{:else if data.product.id === 'solar-return'}<label
-						>Ano da revolução solar<input
-							type="number"
-							min="1901"
-							max="2098"
-							required
-							bind:value={returnYear}
-						/></label
+	{#if data.product.id === 'dream-atlas'}
+		<PrivateDreamAtlas
+			cycles={data.atlasCycles}
+			atvPlusCycleId={data.plusCycle?.id ?? null}
+			exampleAccess={data.atlasExampleAccess}
+		/>
+	{:else}
+		<form onsubmit={generate} aria-busy={busy}>
+			<fieldset class="intake-fields" disabled={!ready || busy}>
+				{#if data.previous}<p>
+						Correção da leitura anterior: confira e ajuste os dados abaixo. A nova leitura será
+						salva separadamente; a anterior continuará na biblioteca.
+					</p>{/if}
+				{#if needsBirth}<TrialBirthFields
+						id="birth"
+						label="Seu nascimento"
+						bind:form={birth}
+					/>{/if}
+				{#if data.product.kind === 'relationship'}
+					<TrialBirthFields id="partner" label="Nascimento da outra pessoa" bind:form={partner} />
+					<label class="check"
+						><input type="checkbox" required bind:checked={partnerConsent} />Confirmo que tenho
+						autorização para usar e salvar os dados dessa pessoa nesta leitura privada.</label
 					>
+				{/if}
+				{#if data.product.kind === 'cycles'}
+					{#if ['personal-calendar', 'career-forecast-30d'].includes(data.product.id)}
+						<p>
+							Esta leitura acompanha os próximos 30 dias a partir da geração. As datas do período
+							aparecem no resultado.
+						</p>
+					{:else if data.product.id === 'solar-return'}<label
+							>Ano da revolução solar<input
+								type="number"
+								min="1901"
+								max="2098"
+								required
+								bind:value={returnYear}
+							/></label
+						>
+						<p>
+							A referência usa o aniversário no ano escolhido. Para nascimento em 29 de fevereiro,
+							usa 28 de fevereiro nos anos sem esse dia.
+						</p>
+					{:else}<label
+							>Data de referência<input
+								type="date"
+								min="1900-01-01"
+								max="2099-12-31"
+								required
+								bind:value={targetDate}
+							/></label
+						>{/if}
+					{#if data.product.id === 'solar-return'}<BirthCityFields
+							id="return-city"
+							label="Cidade de referência para a revolução solar"
+							bind:form={returnCity}
+						/>{/if}
+				{/if}
+				{#if ['direction-journey', 'tarot-journey'].includes(data.product.id)}<label
+						>Objetivo que você quer explorar<textarea maxlength="400" required bind:value={goal}
+						></textarea></label
+					>{/if}
+				{#if ['direction-journey', 'dream-atlas'].includes(data.product.id)}<label
+						>Início do período de 30 dias<input
+							type="date"
+							min="1900-01-01"
+							max="2099-12-02"
+							required
+							bind:value={startDate}
+						/></label
+					>{/if}
+				{#if data.product.id === 'life-atlas'}
+					<fieldset>
+						<legend>Quatro prioridades para este pedido</legend>
+						<p>
+							Escolha quatro áreas distintas. A ordem orienta os capítulos, a seleção de fatores do
+							mapa e o percurso de trinta dias. Estas prioridades são escolhas suas.
+						</p>
+						{#each [0, 1, 2, 3] as i (i)}<label
+								>Prioridade {i + 1}<select required bind:value={priorities[i]}>
+									<option value="">Escolha uma área</option>
+									{#each atlasPriorities as option (option.id)}<option
+											value={option.label}
+											disabled={priorities.some((v, index) => index !== i && v === option.label)}
+											>{option.label}</option
+										>{/each}
+								</select></label
+							>{/each}
+					</fieldset>
+				{/if}
+				{#if tarotMethod}
 					<p>
-						A referência usa o aniversário no ano escolhido. Para nascimento em 29 de fevereiro, usa
-						28 de fevereiro nos anos sem esse dia.
+						{tarotMethod.description} São {tarotMethod.positions.length}
+						{tarotMethod.positions.length === 1
+							? 'carta, com uma posição definida'
+							: 'cartas, cada uma com uma função definida'}.
 					</p>
-				{:else}<label
-						>Data de referência<input
+					<label
+						>Foco da consulta (opcional)<textarea
+							maxlength="400"
+							bind:value={focus}
+							aria-describedby="tarot-focus-help"></textarea></label
+					>
+					<p id="tarot-focus-help">
+						Você pode indicar uma situação ou assunto. Se deixar em branco, receberá a leitura
+						completa conforme as posições deste método.
+					</p>
+				{/if}
+				{#if data.product.kind === 'dream' && data.product.id !== 'dream-atlas'}
+					<label
+						>Data do sonho<input
 							type="date"
 							min="1900-01-01"
 							max="2099-12-31"
 							required
 							bind:value={targetDate}
 						/></label
-					>{/if}
-				{#if data.product.id === 'solar-return'}<BirthCityFields
-						id="return-city"
-						label="Cidade de referência para a revolução solar"
-						bind:form={returnCity}
-					/>{/if}
-			{/if}
-			{#if ['direction-journey', 'tarot-journey'].includes(data.product.id)}<label
-					>Objetivo que você quer explorar<textarea maxlength="400" required bind:value={goal}
-					></textarea></label
-				>{/if}
-			{#if ['direction-journey', 'dream-atlas'].includes(data.product.id)}<label
-					>Início do período de 30 dias<input
-						type="date"
-						min="1900-01-01"
-						max="2099-12-02"
-						required
-						bind:value={startDate}
-					/></label
-				>{/if}
-			{#if data.product.id === 'life-atlas'}
-				<fieldset>
-					<legend>Quatro prioridades para este pedido</legend>
-					<p>
-						Escolha quatro áreas distintas. A ordem orienta os capítulos, a seleção de fatores do
-						mapa e o percurso de trinta dias. Estas prioridades são escolhas suas.
-					</p>
-					{#each [0, 1, 2, 3] as i (i)}<label
-							>Prioridade {i + 1}<select required bind:value={priorities[i]}>
-								<option value="">Escolha uma área</option>
-								{#each atlasPriorities as option (option.id)}<option
-										value={option.label}
-										disabled={priorities.some((v, index) => index !== i && v === option.label)}
-										>{option.label}</option
-									>{/each}
-							</select></label
-						>{/each}
-				</fieldset>
-			{/if}
-			{#if tarotMethod}
-				<p>
-					{tarotMethod.description} São {tarotMethod.positions.length}
-					{tarotMethod.positions.length === 1
-						? 'carta, com uma posição definida'
-						: 'cartas, cada uma com uma função definida'}.
-				</p>
-				<label
-					>Foco da consulta (opcional)<textarea
-						maxlength="400"
-						bind:value={focus}
-						aria-describedby="tarot-focus-help"></textarea></label
-				>
-				<p id="tarot-focus-help">
-					Você pode indicar uma situação ou assunto. Se deixar em branco, receberá a leitura
-					completa conforme as posições deste método.
-				</p>
-			{/if}
-			{#if data.product.kind === 'dream' && data.product.id !== 'dream-atlas'}
-				<label
-					>Data do sonho<input
-						type="date"
-						min="1900-01-01"
-						max="2099-12-31"
-						required
-						bind:value={targetDate}
-					/></label
-				>
-				<label
-					>Seu relato<textarea rows="7" maxlength="6000" required bind:value={narrative}
-					></textarea></label
-				>
-				<label
-					>Emoções percebidas (até oito, separadas por vírgula)<input
-						maxlength="640"
-						bind:value={emotions}
-					/></label
-				>
-				<label
-					>Suas associações pessoais (até oito, separadas por vírgula)<textarea
-						maxlength="1600"
-						bind:value={associations}></textarea></label
-				>
-			{/if}
-			{#if isHistory}
-				<fieldset>
-					<legend>Registros do seu diário que você deseja incluir</legend>
-					<p>
-						Somente os registros selecionados serão usados. <a href="/testar-produtos/dream-journal"
-							>Adicionar um sonho ao diário</a
-						>.
-					</p>
-					{#if !data.dreams.length}<p>
-							Seu diário ainda está vazio. Salve um primeiro sonho para usar o Atlas de Sonhos.
-						</p>{/if}
-					{#each data.dreams as dream (dream.id)}<label class="check"
-							><input type="checkbox" value={dream.id} bind:group={sourceIds} />{dream.date} — {dream.preview}</label
-						>{/each}
-				</fieldset>
-				{#if data.product.id === 'dream-dossier'}<label class="check"
-						><input type="checkbox" bind:checked={historyConsent} />Autorizo usar os registros
-						selecionados nesta síntese.</label
-					>{/if}
-			{/if}
-			{#if needsBirth}
-				<aside aria-label="Confira os dados usados no cálculo">
-					<h2>Confira antes de gerar</h2>
-					<p>{reviewBirth(birth)}</p>
-					{#if data.product.kind === 'relationship'}<p>{reviewBirth(partner)}</p>{/if}<label
-						><input type="checkbox" required bind:checked={birthConfirmed} />Conferi a cidade, a
-						data e a hora de cada pessoa.</label
 					>
-				</aside>
-			{/if}
-			<label
-				>Contexto que deseja trazer {data.product.id === 'couple-dossier'
-					? '(necessário para o Dossiê)'
-					: '(opcional)'}<textarea
-					required={data.product.id === 'couple-dossier'}
-					maxlength="1200"
-					rows="3"
-					bind:value={context}></textarea></label
-			>
-			{#if data.product.id === 'couple-dossier'}
-				<fieldset>
-					<legend>Perguntas para esta leitura</legend>
-					<p>
-						Traga de uma a três perguntas sobre a situação relatada. A leitura propõe caminhos para
-						conversar e agir; não revela sentimentos ocultos nem decide pela outra pessoa.
-					</p>
-					{#each [0, 1, 2] as i (i)}<label
-							>Pergunta {i + 1}{i === 0 ? ' (necessária)' : ' (opcional)'}<textarea
-								rows="2"
-								maxlength="400"
-								required={i === 0}
-								bind:value={dossierQuestions[i]}></textarea></label
-						>{/each}
-				</fieldset>
-			{/if}
-			<p>
-				A leitura considera os dados que você informou. Você poderá conferir o resultado e registrar
-				sua avaliação na biblioteca privada.
-			</p>
-			<label class="check"
-				><input type="checkbox" required bind:checked={storage} />Autorizo salvar os dados e o
-				resultado na minha biblioteca privada para testar e avaliar este produto.</label
-			>
-			{#if message}<p class="message" role="alert">{message}</p>{/if}
-			<button type="submit" disabled={busy}
-				>{busy ? 'Calculando, revisando e salvando…' : 'Gerar leitura gratuita'}</button
-			>
-			<p>Você poderá reabrir a leitura e registrar sua aprovação ou rejeição. Não há cobrança.</p>
-		</fieldset>
-	</form>
+					<label
+						>Seu relato<textarea rows="7" maxlength="6000" required bind:value={narrative}
+						></textarea></label
+					>
+					<label
+						>Emoções percebidas (até oito, separadas por vírgula)<input
+							maxlength="640"
+							bind:value={emotions}
+						/></label
+					>
+					<label
+						>Suas associações pessoais (até oito, separadas por vírgula)<textarea
+							maxlength="1600"
+							bind:value={associations}></textarea></label
+					>
+				{/if}
+				{#if isHistory}
+					<fieldset>
+						<legend>Registros do seu diário que você deseja incluir</legend>
+						<p>
+							Somente os registros selecionados serão usados. <a
+								href="/testar-produtos/dream-journal">Adicionar um sonho ao diário</a
+							>.
+						</p>
+						{#if !data.dreams.length}<p>
+								Seu diário ainda está vazio. Salve um primeiro sonho para usar o Atlas de Sonhos.
+							</p>{/if}
+						{#each data.dreams as dream (dream.id)}<label class="check"
+								><input type="checkbox" value={dream.id} bind:group={sourceIds} />{dream.date} — {dream.preview}</label
+							>{/each}
+					</fieldset>
+					{#if data.product.id === 'dream-dossier'}<label class="check"
+							><input type="checkbox" bind:checked={historyConsent} />Autorizo usar os registros
+							selecionados nesta síntese.</label
+						>{/if}
+				{/if}
+				{#if needsBirth}
+					<aside aria-label="Confira os dados usados no cálculo">
+						<h2>Confira antes de gerar</h2>
+						<p>{reviewBirth(birth)}</p>
+						{#if data.product.kind === 'relationship'}<p>{reviewBirth(partner)}</p>{/if}<label
+							><input type="checkbox" required bind:checked={birthConfirmed} />Conferi a cidade, a
+							data e a hora de cada pessoa.</label
+						>
+					</aside>
+				{/if}
+				<label
+					>Contexto que deseja trazer {data.product.id === 'couple-dossier'
+						? '(necessário para o Dossiê)'
+						: '(opcional)'}<textarea
+						required={data.product.id === 'couple-dossier'}
+						maxlength="1200"
+						rows="3"
+						bind:value={context}></textarea></label
+				>
+				{#if data.product.id === 'couple-dossier'}
+					<fieldset>
+						<legend>Perguntas para esta leitura</legend>
+						<p>
+							Traga de uma a três perguntas sobre a situação relatada. A leitura propõe caminhos
+							para conversar e agir; não revela sentimentos ocultos nem decide pela outra pessoa.
+						</p>
+						{#each [0, 1, 2] as i (i)}<label
+								>Pergunta {i + 1}{i === 0 ? ' (necessária)' : ' (opcional)'}<textarea
+									rows="2"
+									maxlength="400"
+									required={i === 0}
+									bind:value={dossierQuestions[i]}></textarea></label
+							>{/each}
+					</fieldset>
+				{/if}
+				<p>
+					A leitura considera os dados que você informou. Você poderá conferir o resultado e
+					registrar sua avaliação na biblioteca privada.
+				</p>
+				<label class="check"
+					><input type="checkbox" required bind:checked={storage} />Autorizo salvar os dados e o
+					resultado na minha biblioteca privada para testar e avaliar este produto.</label
+				>
+				{#if message}<p class="message" role="alert">{message}</p>{/if}
+				<button type="submit" disabled={busy}
+					>{busy ? 'Calculando, revisando e salvando…' : 'Gerar leitura gratuita'}</button
+				>
+				<p>Você poderá reabrir a leitura e registrar sua aprovação ou rejeição. Não há cobrança.</p>
+			</fieldset>
+		</form>
+	{/if}
 </ContentShell>
 
 <style>

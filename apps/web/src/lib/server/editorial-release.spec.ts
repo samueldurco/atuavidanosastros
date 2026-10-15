@@ -95,7 +95,9 @@ describe('externally signed finite editorial release', () => {
 			).toBe(true);
 			const html = render(EditorialArticle, { props: { document } }).body;
 			expect(html, code).toContain(document.title);
-			expect(html, code).toContain('revisão humana independente');
+			expect(html, code).toContain('ATVNA');
+			expect(document.automationDisclosure?.humanReview, code).toBe(false);
+			expect(html, code).not.toContain('revisão humana independente');
 			expect((html.match(/<h1\b/g) || []).length, code).toBe(1);
 			for (const source of document.sources) expect(html, code).toContain(source.url);
 			const seo = articleSeo(document);

@@ -6,6 +6,7 @@
 	import Index from '../+page.svelte';
 	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
 	import Download from '../leituras/[id]/baixar/+page.svelte';
+	import AtlasExample from '../dream-atlas/exemplo/+page.svelte';
 	let { data } = $props();
 </script>
 
@@ -18,8 +19,11 @@
 {:else if data.view === 'index'}<Index data={{ ...data, ...data.index }} />
 {:else if data.view === 'library'}<TrialLibrary library={data.library} />
 {:else if data.view === 'download'}<Download data={{ ...data, ...data.download }} />
+{:else if data.view === 'atlas-example'}<AtlasExample
+		data={{ ...data, saved: data.result.saved }}
+	/>
 {:else if data.view === 'intake'}<Intake
-		data={{ ...data, ...data.intake, plusCycle: null }}
+		data={{ ...data, ...data.intake, plusCycle: null, atlasCycles: [], atlasExampleAccess: false }}
 	/>{:else if data.view === 'club'}<Club data={{ ...data, ...data.club }} />{:else}<Result
 		data={{ ...data, ...data.result }}
 	/>{/if}

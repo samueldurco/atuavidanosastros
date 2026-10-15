@@ -1,3 +1,4 @@
+import { calculateDreamAtlasSnapshot } from '../trials/dream-atlas-reading';
 import { projectMidheavenReading } from '../trials/reconstruction/midheaven-facts';
 import { calculateAspects, type AspectPolicy, type AspectPosition } from '@atv/astrology';
 import {
@@ -6,7 +7,6 @@ import {
 	calculateTarotMethod,
 	tarotMethodFor,
 	parseWorkflowInput,
-	prepareDreamAtlasFacts,
 	type CalculationSnapshot,
 	type DreamAtlasFactSource,
 	type WorkflowInput
@@ -48,6 +48,7 @@ const calculators = createProductCalculators({
 	experimentalWeekTemporalPolicy: weekAspectPolicy,
 	experimentalSolarReturnBase: true,
 	experimentalPersonalCalendarBase: true,
+	experimentalCareerForecastBase: true,
 	experimentalPurposeCareerBase: true,
 	experimentalDirectionJourneyBase: true,
 	experimentalLifeAtlasBase: true
@@ -188,56 +189,8 @@ export async function calculateTrial(
 			]
 		};
 	}
-	if (input.productId === 'dream-atlas') {
-		const atlas = prepareDreamAtlasFacts(input.dreamAtlas!.startDate, sources);
-		if (!atlas || !atlas.recordedCount)
-			throw new Error('Salve e selecione ao menos um sonho do período no Registro de Sonhos.');
-		const facts: CalculationSnapshot['facts'] = [
-			{
-				id: 'atlas-period',
-				kind: 'reported',
-				display: `Período escolhido: ${atlas.period.startDate} a ${atlas.period.endDate}`,
-				source: 'input.dreamAtlas.startDate'
-			},
-			{
-				id: 'atlas-count',
-				kind: 'calculated',
-				display: `${atlas.recordedCount} sonhos selecionados; ${atlas.excludedCount} registros excluídos do período`,
-				source: atlas.version
-			},
-			...atlas.windows.map((w) => ({
-				id: `atlas-window-${w.index}`,
-				kind: 'calculated' as const,
-				display: `Janela ${w.startDate} a ${w.endDate}: ${w.includedEntryIds.length} sonhos`,
-				source: atlas.version
-			})),
-			...atlas.recurrences.map((r, i) => ({
-				id: `recurrence-${i}`,
-				kind: 'reported' as const,
-				display: `${r.label}: informado em ${r.entryIds.length} registros selecionados`,
-				source: `${r.source};${r.entryIds.join(',')}`
-			}))
-		];
-		for (const entry of sources.filter((e) => atlas.includedEntryIds.includes(e.id)))
-			facts.push({
-				id: `entry-${entry.id}`,
-				kind: 'reported',
-				display: `${entry.dreamDate}: ${entry.narrative}`,
-				source: `private-diary:${entry.id}@${entry.revision}`
-			});
-		return {
-			version: 'atv-private-dream-atlas/1.0.0',
-			kind: 'dream',
-			status: 'recorded',
-			facts,
-			data: { atlas, sourceIds: atlas.includedEntryIds },
-			limits: [
-				'Síntese de 30 dias civis com registros selecionados de sua própria biblioteca.',
-				'Repetições usam somente emoções e associações declaradas; nenhuma imagem foi interpretada como significado universal.',
-				'Dias sem registros são lacunas; não representam ausência de sonhos.'
-			]
-		};
-	}
+	if (input.productId === 'dream-atlas')
+		return calculateDreamAtlasSnapshot(input.dreamAtlas!.startDate, sources);
 	if (input.productId === 'dream-dossier') {
 		if (!sources.length)
 			throw new Error('Salve e selecione ao menos um registro anterior para o dossiê.');
@@ -338,7 +291,7 @@ export async function calculateTrial(
 			? projectHoroscopeReading(input, base, natal as CalculationSnapshot)
 			: projectDateReading(input, base, natal as CalculationSnapshot);
 	}
-	if (input.productId === 'personal-calendar') {
+	if (['personal-calendar', 'career-forecast-30d'].includes(input.productId)) {
 		const natal = (await calculators['birth-chart']!(
 			{
 				version: input.version,
@@ -349,7 +302,12 @@ export async function calculateTrial(
 			},
 			context
 		)) as CalculationSnapshot;
-		const samples = await calculateCalendarSamples(input.targetDate!, signal);
+		const samples = await calculateCalendarSamples(
+			input.targetDate!,
+			signal,
+			undefined,
+			input.forecastPeriod === 'rolling-30-days'
+		);
 		return projectCalendarReading(input, base, natal, samples);
 	}
 

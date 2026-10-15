@@ -2,7 +2,7 @@ import { error, redirect } from '@sveltejs/kit';
 import { loginHref } from '$lib/auth-return';
 import { workflows } from '@atv/domain';
 import { trialIdentity } from '$lib/server/private-trials';
-import { requirePlusSelection } from '$lib/server/atv-plus';
+import { plusOwnerIdentity, requirePlusSelection } from '$lib/server/atv-plus';
 import type { WorkflowInput } from '@atv/domain';
 import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
 	const cycleId = url.searchParams.get('atvPlusCycle');
 	const plusCycle = cycleId ? await requirePlusSelection(locals, cycleId, product.id) : null;
 	let dreams: { id: string; date: string; preview: string }[] = [];
-	if (['dream-dossier', 'dream-atlas'].includes(product.id)) {
+	if (product.id === 'dream-dossier') {
 		const result = await identity.supabase
 			.from('atv_trial_dreams')
 			.select('id,data')
@@ -26,6 +26,17 @@ export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
 			date: String(row.data.dreamDate),
 			preview: String(row.data.narrative).slice(0, 140)
 		}));
+	}
+	let atlasCycles: { id: string; start_date: string; ready_at: string }[] = [];
+	if (product.id === 'dream-atlas') {
+		const result = await identity.supabase
+			.from('atv_trial_dream_cycles')
+			.select('id,start_date,ready_at')
+			.eq('owner_id', identity.ownerId)
+			.order('started_at', { ascending: false })
+			.limit(100);
+		if (result.error) error(503, 'Não foi possível consultar seus diários.');
+		atlasCycles = result.data ?? [];
 	}
 	let previous: { id: string; input: WorkflowInput } | null = null;
 	const from = url.searchParams.get('from');
@@ -42,5 +53,7 @@ export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
 		if (!result.data) error(404, 'Leitura de origem não encontrada.');
 		previous = result.data as { id: string; input: WorkflowInput };
 	}
-	return { product, dreams, previous, plusCycle };
+	const atlasExampleAccess =
+		product.id === 'dream-atlas' && Boolean(await plusOwnerIdentity(locals, false));
+	return { product, dreams, previous, plusCycle, atlasCycles, atlasExampleAccess };
 };

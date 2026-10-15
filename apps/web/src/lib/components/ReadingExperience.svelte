@@ -11,7 +11,11 @@
 	import ReadingTarot from './ReadingTarot.svelte';
 	import ReadingCalendar from './ReadingCalendar.svelte';
 	import { tarotMethodFor } from '@atv/domain';
-	let { saved, initial }: { saved: SavedTrial; initial: ReaderState } = $props();
+	let {
+		saved,
+		initial,
+		ephemeral = false
+	}: { saved: SavedTrial; initial: ReaderState; ephemeral?: boolean } = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
 	let status = $state(''),
@@ -86,6 +90,10 @@
 	async function persist(next: number, marked: number[]) {
 		chapter = next;
 		bookmarks = [...marked];
+		if (ephemeral) {
+			status = 'Posição e marcadores ficam somente enquanto este exemplo está aberto.';
+			return;
+		}
 		pending = { chapter: next, bookmarks: [...marked] };
 		if (saving) return;
 		saving = true;
