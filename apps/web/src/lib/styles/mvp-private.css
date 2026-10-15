@@ -444,6 +444,13 @@
 	outline: 3px solid #237c8a;
 	outline-offset: 3px;
 }
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars']
+	:is(a, button, input, select, textarea, summary):focus-visible,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars']
+	:is(a, button, input, select, textarea, summary):focus-visible {
+	outline-color: #183746;
+	outline-offset: 4px;
+}
 @media (max-width: 1100px) {
 	.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index {
 		max-height: none;

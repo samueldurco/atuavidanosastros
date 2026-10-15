@@ -91,6 +91,30 @@ for (const width of [1440, 820, 390, 320]) {
 	});
 }
 
+test('three pillars free and library readers use the approved ink focus', async ({ page }) => {
+	for (const [url, selector] of [
+		[
+			'/testar-produtos/_spec?product=three-pillars&pillarsProfile=lia&pillarsContext=workload',
+			".mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars button"
+		],
+		[
+			'/biblioteca/_spec/fluxo?state=ready&product=three-pillars',
+			".mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index a"
+		]
+	] as const) {
+		await page.goto(url);
+		const focusTarget = page.locator(selector).first();
+		await expect(focusTarget).toBeEnabled();
+		await focusTarget.focus();
+		await expect(focusTarget).toBeFocused();
+		await expect(focusTarget).toHaveCSS('outline-style', 'solid');
+		await expect(focusTarget).toHaveCSS('outline-width', '3px');
+		await expect(focusTarget).toHaveCSS('outline-color', 'rgb(24, 55, 70)');
+		await expect(focusTarget).toHaveCSS('outline-offset', '4px');
+		await expect(focusTarget).toHaveCSS('box-shadow', 'rgb(255, 248, 233) 0px 0px 0px 7px');
+	}
+});
+
 test('three pillars pending review, revocation and failure withhold the reading', async ({
 	page
 }) => {
