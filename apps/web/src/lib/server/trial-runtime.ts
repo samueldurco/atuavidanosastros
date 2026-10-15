@@ -17,7 +17,13 @@ async function run(
 	// Local fixtures stay local. Hosted requests never fall back to a CPU-heavy Pages function.
 	if (dev || ['localhost', '127.0.0.1', '[::1]'].includes(event.url.hostname)) {
 		const { executeTrialRuntime } = await import('./trial-computation');
-		return executeTrialRuntime(request);
+		try {
+			return await executeTrialRuntime(request);
+		} catch (e) {
+			if (e instanceof Error && e.message.startsWith('Origem dos Três Pilares:'))
+				error(422, e.message);
+			throw e;
+		}
 	}
 	const base = publicEnv.PUBLIC_SUPABASE_URL;
 	const key = privateEnv.SUPABASE_SERVICE_ROLE_KEY;
