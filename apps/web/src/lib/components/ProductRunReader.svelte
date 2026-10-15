@@ -40,6 +40,7 @@
 			!!data.run.editorial &&
 			!!data.run.calculation
 	);
+	const threePillars = $derived(data.run.productId === 'three-pillars');
 	const birthGeometry = $derived(
 		birthAtlas && data.run.calculation
 			? parseProductCartography(
@@ -245,7 +246,12 @@
 	}
 </script>
 
-<div class="mvp-private" data-mvp-private="product-reader" data-stitch="MEM-03 SH-03">
+<div
+	class="mvp-private"
+	data-mvp-private="product-reader"
+	data-product={data.run.productId}
+	data-stitch="MEM-03 SH-03"
+>
 	<ReadingShell
 		layout={birthAtlas ? 'atlas' : 'reading'}
 		contents={[
@@ -256,7 +262,7 @@
 						...(temporalFacts ? [{ id: 'semana', label: 'Busca temporal experimental' }] : []),
 						...(weekAreas ? [{ id: 'areas', label: 'Resumo por áreas' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
-						...(birthAtlas && data.run.editorial
+						...((birthAtlas || threePillars) && data.run.editorial
 							? data.run.editorial.sections.map((section, index) => ({
 									id: `capitulo-${index + 1}`,
 									label: section.title
@@ -280,6 +286,7 @@
 				</p>{/if}
 			<PageIntro
 				identity={data.run.productId}
+				productArtwork={threePillars}
 				eyebrow="Sua leitura"
 				title={data.item.title}
 				description={`Guardado em ${date(data.run.createdAt)}. Cada versão preserva seu próprio histórico.`}
@@ -512,11 +519,22 @@
 			<section id="leitura" aria-labelledby="reading-title">
 				<p class="eyebrow">Leitura preservada</p>
 				<h2 id="reading-title">{data.run.editorial.title}</h2>
+				{#if threePillars}<p class="reading-intro">
+						Explore os capítulos no índice. A arte de abertura identifica esta edição; os dados
+						calculados e seus limites estão na seção Base e limites.
+					</p>{/if}
 				{#each data.run.editorial.sections as section, index (index)}<article
-						id={birthAtlas || weekTimeline ? `capitulo-${index + 1}` : undefined}
+						id={birthAtlas || weekTimeline || threePillars ? `capitulo-${index + 1}` : undefined}
 					>
 						<h3>{section.title}</h3>
-						<p class="editorial">{section.text}</p>
+						{#if threePillars}<div class="chapter-prose">
+								{#each section.text
+									.split(/\n\s*\n/)
+									.map((part) => part.trim())
+									.filter(Boolean) as paragraph, paragraphIndex (paragraphIndex)}
+									<p class="editorial">{paragraph}</p>
+								{/each}
+							</div>{:else}<p class="editorial">{section.text}</p>{/if}
 						<p class="evidence">Base: {section.evidence.map(factLabel).join(' · ')}</p>
 					</article>{/each}
 			</section>
@@ -586,10 +604,13 @@
 						>
 					</li>{/each}
 			</ol>
-			<p>
-				Relatórios web, PDF, cards e mapa em SVG disponíveis são gerados ao baixar, após nova
-				verificação de acesso. Outros formatos permanecem indisponíveis.
-			</p>
+			{#if threePillars}<p>
+					A leitura em HTML é gerada ao baixar, após nova verificação de acesso. Você também pode
+					copiar o texto desta página.
+				</p>{:else}<p>
+					Relatórios web, PDF, cards e mapa em SVG disponíveis são gerados ao baixar, após nova
+					verificação de acesso. Outros formatos permanecem indisponíveis.
+				</p>{/if}
 		</section>
 	</ReadingShell>
 </div>
