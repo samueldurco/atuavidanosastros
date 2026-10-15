@@ -275,7 +275,7 @@ export function composeReconstructedPillarsV51(
 	);
 	replace(
 		8,
-		`Faça uma tentativa sem despesa, de até vinte minutos, na situação que você trouxe: ${scene.move}. Diga qual parte cabe agora (${ways[sun.sign].choose}) e de que condição dependeria a continuidade (${ways[moon.sign].need}). A entrada por ${ways[g.asc.sign].start} pode apresentar esse passo; ${roles[ruler.body].work} pode ajudar a torná-lo claro.\n\n${selected[0] ? `Na resposta, procure um sinal de ${evidenceCue[selected[0].aspect.first]} e outro de ${evidenceCue[selected[0].aspect.second]}.` : 'Na resposta, procure um sinal da escolha e outro do apoio.'} Anote o que ocorreu e o custo real. Uma evidência contrária é a condição esperada não ter importância no resultado. Se o custo for maior que o previsto, reduza ou abandone a tentativa.`,
+		`Faça uma tentativa sem despesa, de até vinte minutos, na situação que você trouxe: ${scene.move}. Diga qual parte cabe agora (${ways[sun.sign].choose}) e de que condição dependeria a continuidade (${ways[moon.sign].need}). O gesto de ${ways[g.asc.sign].start} pode apresentar esse passo; ${roles[ruler.body].work} pode ajudar a torná-lo claro.\n\n${selected[0] ? `Na resposta, procure um sinal de ${evidenceCue[selected[0].aspect.first]} e outro de ${evidenceCue[selected[0].aspect.second]}.` : 'Na resposta, procure um sinal da escolha e outro do apoio.'} Anote o que ocorreu e o custo real. Uma evidência contrária é a condição esperada não ter importância no resultado. Se o custo for maior que o previsto, reduza ou abandone a tentativa.`,
 		integration.factIds
 	);
 	replace(
