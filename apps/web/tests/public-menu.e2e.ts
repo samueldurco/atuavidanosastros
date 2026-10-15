@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { interestNavigation, primaryNavigation } from '../src/lib/data/public-navigation';
+import { editorialTopicPaths } from '../src/lib/data/editorial-topics';
 
 for (const width of [320, 390, 820, 1440]) {
 	test(`menu por intenção: destinos, teclado e reflow em ${width}px`, async ({
@@ -55,7 +56,7 @@ for (const width of [320, 390, 820, 1440]) {
 		await expect(button).toBeFocused();
 		await expect(button).toHaveAttribute('aria-expanded', 'false');
 		await button.click();
-		await nav.getByRole('link', { name: 'Revista', exact: true }).click();
+		await nav.getByRole('link', { name: 'Revista ATVNA', exact: true }).click();
 		await expect(page).toHaveURL(/\/revista$/);
 		await expect(nav).not.toBeVisible();
 	});
@@ -66,14 +67,33 @@ test('artigos filtram o assunto e mantêm o catálogo comercial fora da navegaç
 }) => {
 	for (const item of interestNavigation) {
 		await page.goto(`/revista?tema=${item.id}`);
-		await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-			`Revista ATVNA: ${item.label}`
+		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Revista ATVNA');
+		await expect(
+			page.getByRole('heading', { level: 2, name: item.label, exact: true })
+		).toBeVisible();
+		await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(
+			editorialTopicPaths[item.id].length
 		);
-		await expect(page.locator('main section.topic')).toHaveCount(1);
+		const next = page.getByRole('complementary', { name: 'Explore esse assunto no seu ritmo.' });
+		await expect(next.getByRole('link', { name: item.action })).toHaveAttribute(
+			'href',
+			item.toolHref
+		);
+		await expect(
+			next.getByRole('link', { name: 'Conhecer as leituras deste universo' })
+		).toHaveAttribute('href', item.href);
 		await expect(page.locator('main a[href^="/produtos/"]')).toHaveCount(0);
 	}
 	await page.goto('/revista?tema=desconhecido');
-	await expect(page.locator('main section.topic')).toHaveCount(6);
+	await expect(
+		page.getByRole('heading', { level: 2, name: 'Para ler agora', exact: true })
+	).toBeVisible();
+	await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(12);
+	await expect(
+		page
+			.getByRole('navigation', { name: 'Assuntos da Revista' })
+			.getByRole('link', { name: 'Todos os assuntos', exact: true })
+	).toHaveAttribute('aria-current', 'page');
 	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 		'href',
 		'https://atuavidanosastros.com.br/revista'
