@@ -250,7 +250,11 @@ test('offline corpus covers 13 partial bases, six capabilities and seven strata 
     [['birth-chart-boundary', 'insufficient_facts'], ['three-pillars-boundary', 'insufficient_facts'], ['ascendant-boundary', 'insufficient_facts']]);
   assert.equal(new Set(corpus.cases.map(item => item.id)).size, 105);
   assert.equal(new Set(corpus.cases.map(item => item.runId)).size, 105);
-  assert.equal(corpus.unavailableProducts.length, 17);
+  assert.equal(corpus.unavailableProducts.length, 18);
+  // The new forecast remains opt-in; catalog expansion cannot silently promote it.
+  assert.ok(corpus.unavailableProducts.includes('career-forecast-30d'));
+  assert.equal(Object.hasOwn(createProductCalculators(), 'career-forecast-30d'), false);
+  assert.equal(corpus.cases.some(item => item.productId === 'career-forecast-30d'), false);
   assert.equal(corpus.promotionEligible, false);
   assert.equal(new Set(corpus.cases.filter(item => item.request).map(item => item.request.facts.capability)).size, 6);
   for (const product of corpusProducts) {
