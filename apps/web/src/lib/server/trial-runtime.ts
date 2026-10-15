@@ -17,7 +17,13 @@ async function run(
 	// Local fixtures stay local. Hosted requests never fall back to a CPU-heavy Pages function.
 	if (dev || ['localhost', '127.0.0.1', '[::1]'].includes(event.url.hostname)) {
 		const { executeTrialRuntime } = await import('./trial-computation');
-		return executeTrialRuntime(request);
+		try {
+			return await executeTrialRuntime(request);
+		} catch (e) {
+			if (e instanceof Error && e.message.startsWith('Origem dos Três Pilares:'))
+				error(422, e.message);
+			throw e;
+		}
 	}
 	const base = publicEnv.PUBLIC_SUPABASE_URL;
 	const key = privateEnv.SUPABASE_SERVICE_ROLE_KEY;
@@ -44,7 +50,7 @@ async function run(
 		if (
 			response.status === 422 &&
 			typeof body.error === 'string' &&
-			/^(Confira|Salve|Autorize|Produto sem)/.test(body.error)
+			/^(Confira|Salve|Autorize|Produto sem|Origem dos Três Pilares:)/.test(body.error)
 		)
 			error(422, body.error);
 		if (!response.ok || body.protocol !== 'atv-trial-runtime/1' || !Object.hasOwn(body, 'result'))

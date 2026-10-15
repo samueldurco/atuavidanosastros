@@ -46,6 +46,28 @@
 			!!data.run.editorial &&
 			!!data.run.calculation
 	);
+	const threePillars = $derived(data.run.productId === 'three-pillars');
+	const pillarTerms: Record<string, string> = {
+		'pillar-0': 'Sol natal',
+		'pillar-1': 'Lua natal',
+		'pillar-2': 'Ascendente',
+		'sun-moon-dynamics': 'relação entre Sol e Lua',
+		'ascendant-expression': 'expressão do Ascendente',
+		'position-sun': 'Sol',
+		'position-moon': 'Lua',
+		'angle-ascendant': 'Ascendente',
+		'personal-context': 'contexto pessoal informado'
+	};
+	function readingSectionTitle(title: string): string {
+		return threePillars ? title.replace(/\s*\[[a-z0-9]+(?:-[a-z0-9]+)+\]/gi, '') : title;
+	}
+	function readingSectionText(text: string): string {
+		if (!threePillars) return text;
+		return text.replace(
+			/\b(?:pillar-[0-2]|sun-moon-dynamics|ascendant-expression|position-sun|position-moon|angle-ascendant|personal-context)\b/g,
+			(id) => pillarTerms[id] ?? id
+		);
+	}
 	const birthGeometry = $derived(
 		birthAtlas && data.run.calculation
 			? parseProductCartography(
@@ -128,7 +150,7 @@
 				'angle-ascendant': 'Ascendente',
 				'personal-context': 'Contexto pessoal relatado'
 			};
-			if (labels[id]) return `${labels[id]} (${id})`;
+			if (labels[id]) return labels[id];
 		}
 		return id;
 	}
@@ -254,6 +276,7 @@
 <div
 	class={`mvp-private ${data.run.productId === 'career-compass' ? 'career-reading' : ''}`}
 	data-mvp-private="product-reader"
+	data-product={data.run.productId}
 	data-stitch="MEM-03 SH-03"
 >
 	<ReadingShell
@@ -266,10 +289,11 @@
 						...(temporalFacts ? [{ id: 'semana', label: 'Busca temporal experimental' }] : []),
 						...(weekAreas ? [{ id: 'areas', label: 'Resumo por áreas' }] : []),
 						{ id: 'leitura', label: 'Sua leitura' },
-						...((birthAtlas || data.run.productId === 'career-compass') && data.run.editorial
+						...((birthAtlas || threePillars || data.run.productId === 'career-compass') &&
+						data.run.editorial
 							? data.run.editorial.sections.map((section, index) => ({
 									id: `capitulo-${index + 1}`,
-									label: section.title
+									label: readingSectionTitle(section.title)
 								}))
 							: []),
 						{ id: 'origem', label: 'Base e limites' },
@@ -303,6 +327,7 @@
 			{:else}
 				<PageIntro
 					identity={data.run.productId}
+					productArtwork={threePillars}
 					eyebrow="Sua leitura"
 					title={data.item.title}
 					description={`Guardado em ${date(data.run.createdAt)}. Cada versão preserva seu próprio histórico.`}
@@ -341,7 +366,7 @@
 							<label for="card-section">Trecho da leitura</label>
 							<select id="card-section" bind:value={cardSection} disabled={!!busy}>
 								{#each data.run.editorial.sections as section, index (index)}
-									<option value={index}>{index + 1}. {section.title}</option>
+									<option value={index}>{index + 1}. {readingSectionTitle(section.title)}</option>
 								{/each}
 							</select>
 						</div>
@@ -536,16 +561,30 @@
 			<section id="leitura" aria-labelledby="reading-title">
 				<p class="eyebrow">Leitura preservada</p>
 				<h2 id="reading-title">{data.run.editorial.title}</h2>
+				{#if threePillars}<p class="reading-intro">
+						Explore os capítulos no índice. A arte de abertura identifica esta edição; os dados
+						calculados e seus limites estão na seção Base e limites.
+					</p>{/if}
 				{#each data.run.editorial.sections as section, index (index)}<article
-						id={birthAtlas || weekTimeline || data.run.productId === 'career-compass'
+						id={birthAtlas ||
+						weekTimeline ||
+						threePillars ||
+						data.run.productId === 'career-compass'
 							? `capitulo-${index + 1}`
 							: undefined}
 					>
 						{#if data.run.productId === 'career-compass'}<p class="career-chapter">
 								Capítulo {String(index + 1).padStart(2, '0')}
 							</p>{/if}
-						<h3>{section.title}</h3>
-						<p class="editorial">{section.text}</p>
+						<h3>{readingSectionTitle(section.title)}</h3>
+						{#if threePillars}<div class="chapter-prose">
+								{#each readingSectionText(section.text)
+									.split(/\n\s*\n/)
+									.map((part) => part.trim())
+									.filter(Boolean) as paragraph, paragraphIndex (paragraphIndex)}
+									<p class="editorial">{paragraph}</p>
+								{/each}
+							</div>{:else}<p class="editorial">{section.text}</p>{/if}
 						<p class="evidence">
 							{data.run.productId === 'career-compass' ? 'Base desta parte:' : 'Base:'}
 							{section.evidence.map(factLabel).join(' · ')}
@@ -582,7 +621,7 @@
 								<dd>
 									{data.run.productId === 'career-compass'
 										? careerCompassFactValue(fact.id, fact.display)
-										: fact.display}{#if data.run.productId !== 'career-compass'}<small
+										: fact.display}{#if data.run.productId !== 'career-compass' && !threePillars}<small
 											>{fact.source}</small
 										>{/if}
 								</dd>
@@ -590,6 +629,28 @@
 					</dl>
 					{#if data.run.productId === 'career-compass'}
 						<p>Os fatos calculados foram preservados no registro auditável desta versão.</p>
+					{:else if threePillars}
+						<details class="technical-details">
+							<summary>Identificadores e versões desta leitura</summary>
+							<p>Registro técnico para conferir os capítulos, os dados e suas fontes.</p>
+							<ol>
+								{#each data.run.editorial?.sections ?? [] as section, index (index)}
+									<li>{section.title}</li>
+								{/each}
+							</ol>
+							<dl>
+								{#each data.run.calculation?.facts ?? [] as fact (fact.id)}
+									<div>
+										<dt>{factLabel(fact.id)}</dt>
+										<dd><code>{fact.id}</code> · <code>{fact.source}</code></dd>
+									</div>
+								{/each}
+							</dl>
+							<p>
+								Método: <code>{data.run.calculation?.version}</code>. Edição:
+								<code>{data.run.editorial?.version}</code>.
+							</p>
+						</details>
 					{:else}
 						<p>Método: {data.run.calculation?.version}. Edição: {data.run.editorial?.version}.</p>
 					{/if}
@@ -650,7 +711,12 @@
 						>
 					</li>{/each}
 			</ol>
-			<p>Os arquivos disponíveis acima são gerados ao baixar, após nova verificação de acesso.</p>
+			{#if threePillars}<p>
+					A leitura em HTML é gerada ao baixar, após nova verificação de acesso. Você também pode
+					copiar o texto desta página.
+				</p>{:else}<p>
+					Os arquivos disponíveis acima são gerados ao baixar, após nova verificação de acesso.
+				</p>{/if}
 		</section>
 	</ReadingShell>
 </div>
@@ -863,6 +929,20 @@
 		background: var(--atv-surface-card);
 		font: inherit;
 		font-size: 0.85rem;
+	}
+	.technical-details {
+		border-block: 1px solid var(--atv-border);
+		margin-block: 1.5rem;
+	}
+	.technical-details summary {
+		min-height: 2.75rem;
+		padding-block: 0.75rem;
+		cursor: pointer;
+		font-weight: 600;
+	}
+	.technical-details code {
+		white-space: normal;
+		overflow-wrap: anywhere;
 	}
 	section {
 		scroll-margin-top: 2rem;

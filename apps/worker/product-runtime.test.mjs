@@ -59,6 +59,20 @@ test("selected career compass runtime requests the current private candidate ver
   assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.7");
 });
 
+test("new Three Pillars runs fail closed while the historical v1 calculator remains available", () => {
+  assert.equal(typeof createProductCalculators()["three-pillars"], "function");
+  const rpc = async () => assert.fail("rejected configuration must not contact RPC");
+  for (const enabledProducts of [
+    ["three-pillars"],
+    ["daily-card", "three-pillars"],
+  ]) {
+    assert.throws(
+      () => createProductProcessor(rpc, { enabledProducts }),
+      /invalid_product_configuration/,
+    );
+  }
+});
+
 const synastryPolicy = () => ({
   id: "synthetic-runtime-not-approved",
   version: "qa-fixture-1",

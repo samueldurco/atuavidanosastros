@@ -84,7 +84,9 @@
 	}
 	function listen() {
 		if (typeof speechSynthesis === 'undefined') {
-			status = 'Este navegador não oferece leitura em voz. Você pode abrir o PDF ou ler aqui.';
+			status = formats.includes('pdf')
+				? 'Este navegador não oferece leitura em voz. Você pode abrir o PDF ou ler aqui.'
+				: 'Este navegador não oferece leitura em voz. Você pode ler aqui ou guardar uma cópia em texto.';
 			return;
 		}
 		speechSynthesis.cancel();
@@ -149,6 +151,7 @@
 		{:else}
 			<PageIntro
 				identity={data.saved.product_id}
+				productArtwork={data.saved.product_id === 'three-pillars'}
 				eyebrow="Leitura privada · teste gratuito"
 				title={reading.title}
 				description={reading.opening}
@@ -158,13 +161,20 @@
 			<div class="seal">
 				<strong>Há uma nova edição desta leitura</strong>
 				<p>
-					A revisão organiza a síntese, os capítulos e o PDF. Ela usa os mesmos dados e cálculos;
-					suas cartas, anotações e parecer anterior são preservados na leitura original.
+					A revisão organiza a síntese e os capítulos{formats.includes('pdf') ? ' e o PDF' : ''}.
+					Ela usa os mesmos dados e cálculos; suas cartas, anotações e parecer anterior são
+					preservados na leitura original.
 				</p>
 				<button disabled={!ready || busy} onclick={refreshEdition}
 					>Criar edição revisada gratuita</button
 				>
 			</div>
+		{/if}
+		{#if data.saved.product_id === 'three-pillars'}
+			<p class="delivery-note">
+				Leia os capítulos nesta página. Você pode guardar o texto em TXT e o mapa calculado em SVG.
+				A ilustração da capa é decorativa; o mapa apresenta os dados desta leitura.
+			</p>
 		{/if}
 		<nav class="downloads" aria-label="Formatos da leitura">
 			{#if formats.includes('pdf')}<a
@@ -441,6 +451,15 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 1rem;
+	}
+	.delivery-note {
+		max-width: 68ch;
+		margin: 1.5rem auto 0;
+		padding: 0.9rem 1rem;
+		border-left: 3px solid #397da2;
+		background: #f6f0e4;
+		color: #213b59;
+		line-height: 1.6;
 	}
 	.downloads a,
 	button {

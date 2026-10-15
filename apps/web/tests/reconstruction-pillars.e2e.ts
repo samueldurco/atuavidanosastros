@@ -106,3 +106,50 @@ for (const width of [390, 1440]) {
 		});
 	});
 }
+
+for (const width of [320, 820]) {
+	test(`Três Pilares: leitor editorial, teclado e acessibilidade em ${width}px`, async ({
+		page
+	}, testInfo) => {
+		await page.setViewportSize({ width, height: 900 });
+		await page.goto('/testar-produtos/_spec?product=three-pillars');
+		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
+		await expect(page.locator('.page-intro .product-cover .product-art')).toBeVisible();
+		await expect(
+			page.getByText('A ilustração da capa é decorativa;', { exact: false })
+		).toBeVisible();
+		const nav = page.getByRole('navigation', { name: 'Capítulos da leitura' });
+		await expect(nav.getByRole('button')).toHaveCount(11);
+		const article = page.getByRole('article', { name: 'Capítulo selecionado' });
+		expect(await article.locator('.chapter-prose p').count()).toBeGreaterThan(1);
+		const nextChapter = nav.getByRole('button').nth(1);
+		await nextChapter.focus();
+		await expect(nextChapter).toBeFocused();
+		await page.keyboard.press('Enter');
+		await expect(nextChapter).toHaveAttribute('aria-current', 'step');
+		await expect(article.getByRole('heading')).toHaveText(await nextChapter.innerText());
+		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
+			true
+		);
+		expect(
+			(await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
+				.violations
+		).toEqual([]);
+		await page.screenshot({
+			path: testInfo.outputPath(`reconstruction-pillars-e4-${width}.png`),
+			fullPage: true
+		});
+	});
+}
+
+test('Três Pilares: texto ampliado a 200% preserva navegação e leitura', async ({ page }) => {
+	await page.setViewportSize({ width: 1280, height: 900 });
+	await page.goto('/testar-produtos/_spec?product=three-pillars');
+	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
+	await page.evaluate(() => {
+		document.documentElement.style.fontSize = '200%';
+	});
+	await expect(page.getByRole('navigation', { name: 'Capítulos da leitura' })).toBeVisible();
+	await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toBeVisible();
+	expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});

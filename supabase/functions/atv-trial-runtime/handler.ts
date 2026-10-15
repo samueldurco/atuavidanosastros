@@ -35,7 +35,7 @@ export function trialRuntimeHandler(runtimeKey: string | undefined, nextRuntimeK
    try { value = JSON.parse(new TextDecoder().decode(body)); } catch { return json({ error: 'Solicitação inválida.' }, 400); }
    return json({ protocol: 'atv-trial-runtime/1', result: await executeTrialRuntime(value) });
   } catch (e) {
-   const message = e instanceof Error && /^(Confira|Salve|Autorize|Produto sem)/.test(e.message) ? e.message : 'Não foi possível preparar a leitura.';
+   const message = e instanceof Error && /^(Confira|Salve|Autorize|Produto sem|Origem dos Três Pilares:)/.test(e.message) ? e.message : 'Não foi possível preparar a leitura.';
    return json({ error: message }, 422);
   }
  };

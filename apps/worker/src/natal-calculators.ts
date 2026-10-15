@@ -1,12 +1,18 @@
 import { bodies, CaelusEphemerisProvider, engineContract, validateCalculationInput,
   type CelestialBody, type EphemerisProvider, type NatalChart } from '@atv/astrology';
 import { parseWorkflowInput, type BirthInput, type CalculationSnapshot } from '@atv/domain';
-import { ProcessingError, type ProductCalculator } from './product-processing.ts';
+import { ProcessingError, validateCalculation, type ProductCalculator } from './product-processing.ts';
 
 export const natalProductContract = Object.freeze({
   version: 'atv-natal-product-calculation/1.0.0',
   products: Object.freeze(['birth-chart', 'three-pillars', 'ascendant', 'midheaven']),
   zodiac: 'tropical', presentation: 'zodiac-half-open-sectors/truncated-6-decimals/1',
+  aspects: 'not-assessed', interpretation: 'not-produced', status: 'experimental'
+});
+/** Opt-in factual basis for a later reviewed Three Pillars editorial candidate. Never registered as a paid calculator. */
+export const threePillarsFullContract = Object.freeze({
+  version: 'atv-three-pillars-product-calculation/2.0.0', productId: 'three-pillars',
+  natalProjection: natalProductContract.version, zodiac: 'tropical', houseSystem: 'placidus',
   aspects: 'not-assessed', interpretation: 'not-produced', status: 'experimental'
 });
 export const bodyLabels: Readonly<Record<CelestialBody, string>> = Object.freeze({sun:'Sol',moon:'Lua',mercury:'Mercúrio',venus:'Vênus',
@@ -86,6 +92,24 @@ export function inspectBirthChartProjection(value: CalculationSnapshot): 'availa
   return inspectNatalProjection(value, 'birth-chart');
 }
 
+/** Structural coherence only. A later editorial adapter must authenticate origin against the run input. */
+export function inspectThreePillarsFullProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
+  if (!validateCalculation(value, 'three-pillars') || value.version !== threePillarsFullContract.version ||
+      value.kind !== 'natal' || value.status !== 'experimental' || Object.keys(value.data).length !== 3 ||
+      value.data.productId !== 'three-pillars' || !sameContract(value.data.projection, threePillarsFullContract)) return null;
+  const natal = validateCalculation(value.data.natal, 'birth-chart');
+  if (!natal || Object.keys(value.data.natal as Record<string, unknown>).length !== 6) return null;
+  const availability = inspectBirthChartProjection(natal);
+  if (!availability || natal.facts.length !== value.facts.length || natal.limits.length !== value.limits.length ||
+      !natal.limits.every((limit, index) => value.limits[index] === limit) ||
+      !natal.facts.every((fact, index) => {
+        const actual = value.facts[index];
+        return actual && Object.keys(actual).length === 4 && Object.keys(fact).length === 4 &&
+          actual.id === fact.id && actual.kind === fact.kind && actual.display === fact.display && actual.source === fact.source;
+      })) return null;
+  return availability;
+}
+
 /** ASC-only persisted projection; no planets, MC or house cusps may be injected. */
 export function inspectAscendantProjection(value: CalculationSnapshot): 'available' | 'unavailable' | null {
   return inspectNatalProjection(value, 'ascendant');
@@ -158,4 +182,25 @@ export function createNatalCalculators(provider: EphemerisProvider = new CaelusE
     return snapshot;
   };
   return Object.freeze(Object.fromEntries(natalProductContract.products.map(product=>[product,calculate])));
+}
+
+/** Full natal facts for Three Pillars v2. This is deliberately absent from the runtime registry. */
+export function createThreePillarsFullCalculator(provider: EphemerisProvider = new CaelusEphemerisProvider()): ProductCalculator {
+  const birthChartCalculator = createNatalCalculators(provider)['birth-chart']!;
+  return async (value, context) => {
+    context.signal.throwIfAborted();
+    const input = parseWorkflowInput(value);
+    if (!input?.birth || input.productId !== 'three-pillars') throw new ProcessingError('input_invalid');
+    const natal = validateCalculation(await birthChartCalculator({ ...input, productId: 'birth-chart' }, context), 'birth-chart');
+    if (!natal || !inspectBirthChartProjection(natal)) throw new ProcessingError('calculation_invalid');
+    const snapshot: CalculationSnapshot = {
+      version: threePillarsFullContract.version, kind: 'natal', status: 'experimental',
+      facts: structuredClone(natal.facts),
+      data: { productId: 'three-pillars', natal, projection: threePillarsFullContract },
+      limits: [...natal.limits]
+    };
+    if (!validateCalculation(snapshot, 'three-pillars') || !inspectThreePillarsFullProjection(snapshot))
+      throw new ProcessingError('calculation_invalid');
+    return snapshot;
+  };
 }

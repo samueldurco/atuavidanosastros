@@ -1,10 +1,17 @@
 import { MIDHEAVEN_VERSION, MIDHEAVEN_READING_VERSION } from './reconstruction/midheaven-facts';
+import { canonical } from './reconstruction/canonical';
+export { canonical } from './reconstruction/canonical';
 import {
 	composeReconstructedMidheaven,
 	reviewReconstructedMidheaven
 } from './reconstruction/midheaven';
 import { composeLegacyTrialReading } from './legacy-reading';
-import { PILLARS_VERSION, PILLARS_READING_VERSION } from './reconstruction/pillars-facts';
+import {
+	PILLARS_VERSION,
+	PILLARS_READING_VERSION,
+	PILLARS_READING_V5_VERSION
+} from './reconstruction/pillars-facts';
+import { verifyPillarsOrigin } from './reconstruction/pillars-origin';
 import { ASCENDANT_VERSION, ASCENDANT_READING_VERSION } from './reconstruction/ascendant-facts';
 import {
 	composeReconstructedAscendant,
@@ -18,6 +25,10 @@ import {
 	COMPASS_READING_VERSION,
 	COMPASS_READING_VERSION_V5
 } from './reconstruction/compass-facts';
+import {
+	composeReconstructedPillarsV51,
+	reviewReconstructedPillarsV51
+} from './reconstruction/pillars-v51';
 import { composeReconstructedCompass, reviewReconstructedCompass } from './reconstruction/compass';
 import { ATLAS_VERSION } from './reconstruction/atlas-facts';
 import { composeReconstructedAtlas, reviewReconstructedAtlas } from './reconstruction/atlas';
@@ -120,7 +131,7 @@ export function composeTrialReading(
 		return composeReconstructedAscendant(input, calculation);
 	if (calculation.version === BIRTH_VERSION) return composeReconstructedBirth(input, calculation);
 	if (calculation.version === PILLARS_VERSION)
-		return composeReconstructedPillars(input, calculation);
+		return composeReconstructedPillarsV51(input, calculation);
 	if (calculation.version === COMPASS_VERSION)
 		return composeReconstructedCompass(input, calculation);
 	if (calculation.version === ATLAS_VERSION) return composeReconstructedAtlas(input, calculation);
@@ -150,20 +161,6 @@ export function composeTrialReading(
 		: composeV3(input, calculation);
 }
 
-export function canonical(value: unknown): string {
-	if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
-	if (value && typeof value === 'object')
-		return (
-			'{' +
-			Object.entries(value)
-				.sort(([a], [b]) => a.localeCompare(b))
-				.map(([k, v]) => JSON.stringify(k) + ':' + canonical(v))
-				.join(',') +
-			'}'
-		);
-	return JSON.stringify(value);
-}
-
 /** Server-owned deterministic review. Neither a client flag nor a hash authenticates a reading. */
 export async function approveTrialReading(
 	input: WorkflowInput,
@@ -179,6 +176,11 @@ export async function approveTrialReading(
 		calculation.facts.length > 1500 ||
 		!calculation.version ||
 		!calculation.limits.length
+	)
+		return null;
+	if (
+		calculation.version === PILLARS_VERSION &&
+		!(await verifyPillarsOrigin(input, calculation)).ok
 	)
 		return null;
 	const ids = new Set<string>();
@@ -201,6 +203,7 @@ export async function approveTrialReading(
 		candidate.version === COMPASS_READING_VERSION ||
 		candidate.version === COMPASS_READING_VERSION_V5 ||
 		candidate.version === PILLARS_READING_VERSION ||
+		candidate.version === PILLARS_READING_V5_VERSION ||
 		candidate.version === BIRTH_READING_VERSION ||
 		candidate.version === ASCENDANT_READING_VERSION ||
 		candidate.version === MIDHEAVEN_READING_VERSION;
@@ -214,7 +217,10 @@ export async function approveTrialReading(
 				: candidate.version === COMPASS_READING_VERSION_V5 &&
 					  calculation.version === COMPASS_VERSION
 					? composeReconstructedCompass(input, calculation, 'v5')
-					: composeTrialReading(input, calculation);
+					: candidate.version === PILLARS_READING_V5_VERSION &&
+						  calculation.version === PILLARS_VERSION
+						? composeReconstructedPillars(input, calculation)
+						: composeTrialReading(input, calculation);
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		reconstructed &&
@@ -225,7 +231,9 @@ export async function approveTrialReading(
 				: calculation.version === BIRTH_VERSION
 					? reviewReconstructedBirth(input, calculation, candidate)
 					: calculation.version === PILLARS_VERSION
-						? reviewReconstructedPillars(input, calculation, candidate)
+						? candidate.version === PILLARS_READING_V5_VERSION
+							? reviewReconstructedPillars(input, calculation, candidate)
+							: reviewReconstructedPillarsV51(input, calculation, candidate)
 						: calculation.version === COMPASS_VERSION
 							? reviewReconstructedCompass(input, calculation, candidate)
 							: calculation.version === ATLAS_VERSION
