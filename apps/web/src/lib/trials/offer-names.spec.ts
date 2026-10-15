@@ -48,7 +48,8 @@ describe('immutable offer names for new private deliveries', () => {
 		expect(current.nameRevision).toBe(OFFER_NAME_REVISION);
 		expect(original.title).toBe('Mapa Astral — assinaturas e temas de vida');
 		expect(canonical(original)).toBe(before);
-		const { nameRevision: _revision, ...content } = current;
+		const content = { ...current };
+		delete content.nameRevision;
 		expect({ ...content, title: original.title }).toEqual(original);
 		expect(await approveTrialReading(input, calculation, current)).not.toBeNull();
 	});

@@ -4,6 +4,12 @@ import {
 	composeDreamAtlas,
 	reviewDreamAtlas
 } from './dream-atlas-reading';
+import {
+	DREAM_DOSSIER_CALCULATION,
+	DREAM_INTERPRETATION_READING,
+	composeDreamInterpretation,
+	reviewDreamInterpretation
+} from './dream-interpretation';
 import { MIDHEAVEN_VERSION, MIDHEAVEN_READING_VERSION } from './reconstruction/midheaven-facts';
 import { canonical } from './reconstruction/canonical';
 export { canonical } from './reconstruction/canonical';
@@ -143,6 +149,8 @@ export function composeOriginalTrialReading(
 	calculation: CalculationSnapshot
 ): TrialReading {
 	if (calculation.version === DREAM_ATLAS_CALCULATION) return composeDreamAtlas(input, calculation);
+	if (input.productId === 'dream-reading' || calculation.version === DREAM_DOSSIER_CALCULATION)
+		return composeDreamInterpretation(input, calculation);
 	if (calculation.version === PERIOD_VERSION) return composeThirtyDayReading(input, calculation);
 	if (calculation.version === MIDHEAVEN_VERSION)
 		return composeReconstructedMidheaven(input, calculation);
@@ -218,6 +226,7 @@ export async function approveTrialReading(
 	const previous = candidate.version === V2;
 	const v3 = candidate.version === V3;
 	const reconstructed =
+		candidate.version === DREAM_INTERPRETATION_READING ||
 		candidate.version === DREAM_ATLAS_READING ||
 		candidate.version === RECONSTRUCTION_VERSION ||
 		candidate.version === COMPASS_READING_VERSION ||
@@ -256,71 +265,85 @@ export async function approveTrialReading(
 	const reviewedContent = original;
 	if (
 		reconstructed &&
-		(calculation.version === DREAM_ATLAS_CALCULATION
-			? reviewDreamAtlas(input, calculation, reviewedContent)
-			: calculation.version === PERIOD_VERSION
-				? reviewThirtyDayReading(input, calculation, reviewedContent)
-				: calculation.version === MIDHEAVEN_VERSION
-					? reviewReconstructedMidheaven(input, calculation, reviewedContent)
-					: calculation.version === ASCENDANT_VERSION
-						? reviewReconstructedAscendant(input, calculation, reviewedContent)
-						: calculation.version === BIRTH_VERSION
-							? reviewReconstructedBirth(input, calculation, reviewedContent)
-							: calculation.version === PILLARS_VERSION
-								? candidate.version === PILLARS_READING_V5_VERSION
-									? reviewReconstructedPillars(input, calculation, reviewedContent)
-									: reviewReconstructedPillarsV51(input, calculation, reviewedContent)
-								: calculation.version === COMPASS_VERSION
-									? reviewReconstructedCompass(input, calculation, reviewedContent)
-									: calculation.version === ATLAS_VERSION
-										? reviewReconstructedAtlas(input, calculation, reviewedContent)
-										: calculation.version === DIRECTION_VERSION
-											? reviewReconstructedDirection(input, calculation, reviewedContent)
-											: calculation.version === PURPOSE_VERSION
-												? reviewReconstructedPurpose(input, calculation, reviewedContent)
-												: calculation.version === CALENDAR_VERSION
-													? reviewReconstructedCalendar(input, calculation, reviewedContent)
-													: calculation.version === SOLAR_VERSION
-														? reviewReconstructedSolar(input, calculation, reviewedContent)
-														: calculation.version === WEEK_VERSION
-															? reviewReconstructedWeek(input, calculation, reviewedContent)
-															: calculation.version === HOROSCOPE_VERSION
-																? reviewReconstructedHoroscope(input, calculation, reviewedContent)
-																: calculation.version === DOSSIER_VERSION
-																	? reviewReconstructedDossier(input, calculation, reviewedContent)
-																	: calculation.version === SYNASTRY_VERSION
-																		? reviewReconstructedSynastry(
+		(candidate.version === DREAM_INTERPRETATION_READING
+			? reviewDreamInterpretation(input, calculation, reviewedContent)
+			: calculation.version === DREAM_ATLAS_CALCULATION
+				? reviewDreamAtlas(input, calculation, reviewedContent)
+				: calculation.version === PERIOD_VERSION
+					? reviewThirtyDayReading(input, calculation, reviewedContent)
+					: calculation.version === MIDHEAVEN_VERSION
+						? reviewReconstructedMidheaven(input, calculation, reviewedContent)
+						: calculation.version === ASCENDANT_VERSION
+							? reviewReconstructedAscendant(input, calculation, reviewedContent)
+							: calculation.version === BIRTH_VERSION
+								? reviewReconstructedBirth(input, calculation, reviewedContent)
+								: calculation.version === PILLARS_VERSION
+									? candidate.version === PILLARS_READING_V5_VERSION
+										? reviewReconstructedPillars(input, calculation, reviewedContent)
+										: reviewReconstructedPillarsV51(input, calculation, reviewedContent)
+									: calculation.version === COMPASS_VERSION
+										? reviewReconstructedCompass(input, calculation, reviewedContent)
+										: calculation.version === ATLAS_VERSION
+											? reviewReconstructedAtlas(input, calculation, reviewedContent)
+											: calculation.version === DIRECTION_VERSION
+												? reviewReconstructedDirection(input, calculation, reviewedContent)
+												: calculation.version === PURPOSE_VERSION
+													? reviewReconstructedPurpose(input, calculation, reviewedContent)
+													: calculation.version === CALENDAR_VERSION
+														? reviewReconstructedCalendar(input, calculation, reviewedContent)
+														: calculation.version === SOLAR_VERSION
+															? reviewReconstructedSolar(input, calculation, reviewedContent)
+															: calculation.version === WEEK_VERSION
+																? reviewReconstructedWeek(input, calculation, reviewedContent)
+																: calculation.version === HOROSCOPE_VERSION
+																	? reviewReconstructedHoroscope(
+																			input,
+																			calculation,
+																			reviewedContent
+																		)
+																	: calculation.version === DOSSIER_VERSION
+																		? reviewReconstructedDossier(
 																				input,
 																				calculation,
 																				reviewedContent
 																			)
-																		: calculation.version === PAIR_VERSION
-																			? reviewReconstructedPair(input, calculation, reviewedContent)
-																			: calculation.version === DATE_VERSION
-																				? reviewReconstructedDate(
+																		: calculation.version === SYNASTRY_VERSION
+																			? reviewReconstructedSynastry(
+																					input,
+																					calculation,
+																					reviewedContent
+																				)
+																			: calculation.version === PAIR_VERSION
+																				? reviewReconstructedPair(
 																						input,
 																						calculation,
 																						reviewedContent
 																					)
-																				: calculation.version ===
-																					  'atv-tarot-method-calculation/2.0.0'
-																					? reviewReconstructedTarot(
+																				: calculation.version === DATE_VERSION
+																					? reviewReconstructedDate(
 																							input,
 																							calculation,
 																							reviewedContent
 																						)
 																					: calculation.version ===
-																						  'atv-private-natal-synthesis/4.0.0'
-																						? reviewReconstructedNatal(
+																						  'atv-tarot-method-calculation/2.0.0'
+																						? reviewReconstructedTarot(
 																								input,
 																								calculation,
 																								reviewedContent
 																							)
-																						: reviewReconstructedCareer(
-																								input,
-																								calculation,
-																								reviewedContent
-																							)
+																						: calculation.version ===
+																							  'atv-private-natal-synthesis/4.0.0'
+																							? reviewReconstructedNatal(
+																									input,
+																									calculation,
+																									reviewedContent
+																								)
+																							: reviewReconstructedCareer(
+																									input,
+																									calculation,
+																									reviewedContent
+																								)
 		).length
 	)
 		return null;

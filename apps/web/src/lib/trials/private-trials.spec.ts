@@ -379,7 +379,7 @@ describe('private free testing of real current and historical calculations and e
 			trialText({ ...saved.get('dream-reading')!, input, calculation: calc, reading })
 		).toContain(input.dream!.narrative);
 		expect((await approveTrialReading(input, calc, reading))?.policy).toBe(
-			'atv-private-trial-approval/3.0.0'
+			'atv-private-interpretation-review/4.0.0'
 		);
 	});
 	it('PDF and TXT preserve the full saved reading; SVG contains only saved valid geometry', async () => {

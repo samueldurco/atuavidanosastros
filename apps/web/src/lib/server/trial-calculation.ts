@@ -1,8 +1,8 @@
+import { calculateDreamDossier } from '../trials/dream-interpretation';
 import { calculateDreamAtlasSnapshot } from '../trials/dream-atlas-reading';
 import { projectMidheavenReading } from '../trials/reconstruction/midheaven-facts';
 import { calculateAspects, type AspectPolicy, type AspectPosition } from '@atv/astrology';
 import {
-	calculateDreamRecord,
 	calculateTarot,
 	calculateTarotMethod,
 	tarotMethodFor,
@@ -191,55 +191,7 @@ export async function calculateTrial(
 	}
 	if (input.productId === 'dream-atlas')
 		return calculateDreamAtlasSnapshot(input.dreamAtlas!.startDate, sources);
-	if (input.productId === 'dream-dossier') {
-		if (!sources.length)
-			throw new Error('Salve e selecione ao menos um registro anterior para o dossiê.');
-		if (sources.length && !input.consent.continuity)
-			throw new Error('Autorize o uso dos registros selecionados.');
-		const base = calculateDreamRecord({ ...input, productId: 'dream-reading' });
-		const facts = [...base.facts];
-		for (const entry of sources)
-			facts.push({
-				id: `history-${entry.id}`,
-				kind: 'reported',
-				display: `${entry.dreamDate}: ${entry.narrative}; emoções: ${entry.emotions.join(', ') || 'não informadas'}; associações: ${entry.associations.join(', ') || 'não informadas'}`,
-				source: `private-diary:${entry.id}@${entry.revision}`
-			});
-		const reported = new Map<string, Set<string>>();
-		for (const entry of sources)
-			for (const label of [...entry.emotions, ...entry.associations]) {
-				const key = label.trim().normalize('NFKC').toLocaleLowerCase('pt-BR');
-				const set = reported.get(key) ?? new Set<string>();
-				set.add(entry.id);
-				reported.set(key, set);
-			}
-		for (const [label, ids] of reported)
-			if (ids.size > 1)
-				facts.push({
-					id: `dossier-recurrence-${facts.length}`,
-					kind: 'reported',
-					display: `${label}: informado em ${ids.size} registros históricos selecionados`,
-					source: [...ids].join(',')
-				});
-		return {
-			...base,
-			version: 'atv-private-dream-dossier/1.0.0',
-			facts,
-			data: {
-				...base.data,
-				sourceIds: sources.map((e) => e.id),
-				continuity: {
-					consent: input.consent.continuity,
-					historyLoaded: sources.length > 0,
-					recurrenceAssessed: true
-				}
-			},
-			limits: [
-				...base.limits.filter((l) => !l.includes('Nenhum histórico')),
-				`Histórico: ${sources.length} registros selecionados; recorrências literais de emoções e associações, sem inferência clínica.`
-			]
-		};
-	}
+	if (input.productId === 'dream-dossier') return calculateDreamDossier(input, sources);
 	const calculate = calculators[input.productId];
 	if (!calculate) throw new Error('Produto sem método de teste.');
 	const base = (await calculate(input, context)) as CalculationSnapshot;
