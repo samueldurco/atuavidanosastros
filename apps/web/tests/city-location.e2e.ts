@@ -8,7 +8,7 @@ test('city resolves coordinates and historical daylight saving without technical
 	page
 }) => {
 	let submitted: Record<string, unknown> | undefined;
-	await page.route('**/api/astrology/midheaven', async (route) => {
+	await page.route('**/api/free-tools/meio-do-ceu', async (route) => {
 		submitted = route.request().postDataJSON();
 		await route.fulfill({ status: 400, json: { error: 'fixture' } });
 	});
@@ -17,7 +17,12 @@ test('city resolves coordinates and historical daylight saving without technical
 	await expect(page.getByLabel('Deslocamento UTC', { exact: true })).toHaveCount(0);
 	await page.getByLabel('Data de nascimento').fill('2000-01-01');
 	await page.getByLabel('Hora de nascimento').fill('09:00');
-	await selectCity(page, '#birth-city', 'Sao Paulo', 'São Paulo, São Paulo, Brasil');
+	await selectCity(
+		page,
+		'#meio-do-ceu-first-birth-city',
+		'Sao Paulo',
+		'São Paulo, São Paulo, Brasil'
+	);
 	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect
 		.poll(() => submitted)
@@ -28,22 +33,25 @@ test('city resolves coordinates and historical daylight saving without technical
 			longitude: -46.63611,
 			locationSource: 'geonames:3448439/cities500-v1'
 		});
-	await page.locator('#birth-city').fill('São Pa');
+	await page.locator('#meio-do-ceu-first-birth-city').fill('São Pa');
 	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect(
-		page.getByText('Selecione sua cidade nos resultados da busca.', { exact: true })
+		page.getByText('Selecione a cidade de nascimento nos resultados da busca.', { exact: true })
 	).toBeVisible();
 });
 test('keyboard selection and mobile layout preserve city labels', async ({ page }) => {
 	await page.setViewportSize({ width: 390, height: 844 });
-	await page.locator('#birth-city').fill('Lisboa');
+	await page.locator('#meio-do-ceu-first-birth-city').fill('Lisboa');
 	await expect(page.getByRole('option').first()).toContainText('Portugal');
-	await page.locator('#birth-city').press('ArrowUp');
+	await page.locator('#meio-do-ceu-first-birth-city').press('ArrowUp');
 	const lastOptionId = await page.getByRole('option').last().getAttribute('id');
-	await expect(page.locator('#birth-city')).toHaveAttribute('aria-activedescendant', lastOptionId!);
-	await page.locator('#birth-city').press('ArrowDown');
-	await page.locator('#birth-city').press('Enter');
-	await expect(page.locator('#birth-city')).toHaveValue(/Lisbon.*Portugal/);
+	await expect(page.locator('#meio-do-ceu-first-birth-city')).toHaveAttribute(
+		'aria-activedescendant',
+		lastOptionId!
+	);
+	await page.locator('#meio-do-ceu-first-birth-city').press('ArrowDown');
+	await page.locator('#meio-do-ceu-first-birth-city').press('Enter');
+	await expect(page.locator('#meio-do-ceu-first-birth-city')).toHaveValue(/Lisbon.*Portugal/);
 	await expect(page.getByRole('listbox')).toBeHidden();
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
 		true
@@ -51,10 +59,10 @@ test('keyboard selection and mobile layout preserve city labels', async ({ page 
 	await page.screenshot({ path: '../../test-results/city-mobile.png', fullPage: true });
 });
 test('missing city and unavailable search have recovery messages', async ({ page }) => {
-	await page.locator('#birth-city').fill('zzzzzzzzzz');
+	await page.locator('#meio-do-ceu-first-birth-city').fill('zzzzzzzzzz');
 	await expect(page.getByText('Cidade não encontrada.', { exact: false })).toBeVisible();
 	await page.route('**/locations/*.json', (route) => route.fulfill({ status: 503 }));
-	await page.locator('#birth-city').fill('London');
+	await page.locator('#meio-do-ceu-first-birth-city').fill('London');
 	await expect(
 		page.getByText('Não foi possível buscar as cidades. Tente novamente.')
 	).toBeVisible();
@@ -62,11 +70,18 @@ test('missing city and unavailable search have recovery messages', async ({ page
 test('ambiguous birth hour requires choosing the recorded occurrence', async ({ page }) => {
 	await page.getByLabel('Data de nascimento').fill('2020-11-01');
 	await page.getByLabel('Hora de nascimento').fill('01:30');
-	await selectCity(page, '#birth-city', 'New York City', 'New York City, New York, Estados Unidos');
-	await expect(page.locator('#birth-city-occurrence')).toBeVisible();
-	await page.locator('#birth-city-occurrence').selectOption('2020-11-01T06:30:00.000Z');
+	await selectCity(
+		page,
+		'#meio-do-ceu-first-birth-city',
+		'New York City',
+		'New York City, New York, Estados Unidos'
+	);
+	await expect(page.locator('#meio-do-ceu-first-birth-city-occurrence')).toBeVisible();
+	await page
+		.locator('#meio-do-ceu-first-birth-city-occurrence')
+		.selectOption('2020-11-01T06:30:00.000Z');
 	let utc = '';
-	await page.route('**/api/astrology/midheaven', (route) => {
+	await page.route('**/api/free-tools/meio-do-ceu', (route) => {
 		utc = route.request().postDataJSON().utcInstant;
 		return route.fulfill({ status: 400, json: {} });
 	});
