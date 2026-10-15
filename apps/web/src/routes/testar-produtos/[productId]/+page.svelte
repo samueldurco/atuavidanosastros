@@ -34,8 +34,7 @@
 		partnerConsent = $state(false),
 		historyConsent = $state(false);
 	let dossierQuestions = $state(['', '', '']);
-	let targetDate = $state(new Date().toISOString().slice(0, 10)),
-		month = $state(new Date().toISOString().slice(0, 7));
+	let targetDate = $state(new Date().toISOString().slice(0, 10));
 	let returnYear = $state(new Date().getFullYear());
 	const tarotMethod = $derived(tarotMethodFor(data.product.id));
 	let focus = $state(''),
@@ -81,7 +80,6 @@
 			priorities = old.atlas.priorities.map((label) => atlasPriorityFor(label)?.label ?? '');
 		if (old.targetDate) {
 			targetDate = old.targetDate;
-			month = old.targetDate.slice(0, 7);
 		}
 		if (old.returnYear) returnYear = old.returnYear;
 		if (old.returnLocation)
@@ -166,8 +164,11 @@
 						: {})
 				};
 			}
-			if (data.product.kind === 'cycles')
-				input.targetDate = data.product.id === 'personal-calendar' ? month + '-01' : targetDate;
+			if (data.product.kind === 'cycles') input.targetDate = targetDate;
+			if (['personal-calendar', 'career-forecast-30d'].includes(data.product.id)) {
+				input.forecastPeriod = 'rolling-30-days';
+				input.targetDate = new Date().toISOString().slice(0, 10);
+			}
 			if (data.product.id === 'solar-return') {
 				if (!returnCity.source)
 					throw Error('Selecione a cidade onde deseja calcular a revolução solar.');
@@ -207,7 +208,8 @@
 			if (context.trim()) input.context = context.trim();
 			if (data.product.id === 'couple-dossier')
 				input.questions = dossierQuestions.map((q) => q.trim()).filter(Boolean);
-			const payload = JSON.stringify({ input, sourceIds });
+			const atvPlusCycleId = data.plusCycle?.id ?? null;
+			const payload = JSON.stringify({ input, sourceIds, atvPlusCycleId });
 			if (payload !== lastPayload) {
 				requestKey = crypto.randomUUID();
 				lastPayload = payload;
@@ -216,7 +218,7 @@
 			const result = await fetch('/api/private-trials', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ input, sourceIds, requestKey })
+				body: JSON.stringify({ input, sourceIds, requestKey, atvPlusCycleId })
 			});
 			const value = await trialResponse<{ message?: string; id?: string }>(result);
 			if (!value.id) throw Error('Não foi possível recuperar a leitura salva.');
@@ -242,6 +244,12 @@
 		title={data.product.name}
 		description="Crie uma leitura com seus dados. A revisão automática verifica os critérios antes de salvar; depois você pode aprovar ou rejeitar o produto."
 	/>
+	{#if data.plusCycle}
+		<p role="status">
+			Esta leitura faz parte do seu teste do {data.plusCycle.planName} e será contada depois de salva.
+			<a href="/atv-mais">Ver as opções do ciclo</a>.
+		</p>
+	{/if}
 	<form onsubmit={generate} aria-busy={busy}>
 		<fieldset class="intake-fields" disabled={!ready || busy}>
 			{#if data.previous}<p>
@@ -257,15 +265,11 @@
 				>
 			{/if}
 			{#if data.product.kind === 'cycles'}
-				{#if data.product.id === 'personal-calendar'}<label
-						>Mês do calendário<input
-							type="month"
-							min="1900-01"
-							max="2099-12"
-							required
-							bind:value={month}
-						/></label
-					>
+				{#if ['personal-calendar', 'career-forecast-30d'].includes(data.product.id)}
+					<p>
+						Esta leitura acompanha os próximos 30 dias a partir da geração. As datas do período
+						aparecem no resultado.
+					</p>
 				{:else if data.product.id === 'solar-return'}<label
 						>Ano da revolução solar<input
 							type="number"
@@ -426,9 +430,8 @@
 				</fieldset>
 			{/if}
 			<p>
-				Conteúdo original gerado com IA e revisado editorialmente, combinado com os fatos desta
-				leitura. Seus dados ficam na biblioteca privada; esta geração não envia seu relato a um
-				modelo externo.
+				A leitura considera os dados que você informou. Você poderá conferir o resultado e registrar
+				sua avaliação na biblioteca privada.
 			</p>
 			<label class="check"
 				><input type="checkbox" required bind:checked={storage} />Autorizo salvar os dados e o

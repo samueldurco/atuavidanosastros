@@ -19,7 +19,7 @@
 {:else if data.view === 'library'}<TrialLibrary library={data.library} />
 {:else if data.view === 'download'}<Download data={{ ...data, ...data.download }} />
 {:else if data.view === 'intake'}<Intake
-		data={{ ...data, ...data.intake }}
+		data={{ ...data, ...data.intake, plusCycle: null }}
 	/>{:else if data.view === 'club'}<Club data={{ ...data, ...data.club }} />{:else}<Result
 		data={{ ...data, ...data.result }}
 	/>{/if}

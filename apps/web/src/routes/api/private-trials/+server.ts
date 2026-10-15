@@ -2,6 +2,8 @@ import { error, json } from '@sveltejs/kit';
 import { isRetiredTarot, parseWorkflowInput, tarotMethodFor } from '@atv/domain';
 import { preparePrivateTarotDraw } from '$lib/server/private-tarot-draw';
 import { computeTrial } from '$lib/server/trial-runtime';
+import { plusWriteError, requirePlusSelection } from '$lib/server/atv-plus';
+import { anchorForecastInput } from '$lib/server/forecast-input';
 import {
 	trialDreamSources,
 	trialIdentity,
@@ -39,13 +41,9 @@ async function saveDiary(saved: SavedTrial, ownerId: string) {
 export const POST: RequestHandler = async (event) => {
 	const identity = (await trialIdentity(event.locals))!;
 	const body = await trialJson(event);
-	const input = parseWorkflowInput(body?.input);
-	if (!input || isRetiredTarot(input.productId) || !validTrialId(body?.requestKey))
-		error(400, 'Confira os dados e consentimentos da leitura.');
-	const sources = await trialDreamSources(event.locals, body.sourceIds ?? []);
-	const sourceIds = sources.map((s) => s.id).sort();
-	if (sources.length && !['dream-dossier', 'dream-atlas'].includes(input.productId))
-		error(400, 'Este produto não utiliza histórico de sonhos.');
+	const cycleId = body?.atvPlusCycleId ?? null;
+	if (cycleId !== null && !validTrialId(cycleId)) error(400, 'Ciclo de avaliação inválido.');
+	if (!validTrialId(body?.requestKey)) error(400, 'Confira os dados e consentimentos da leitura.');
 	const previous = await identity.supabase
 		.from('atv_trial_readings')
 		.select('*')
@@ -53,10 +51,18 @@ export const POST: RequestHandler = async (event) => {
 		.eq('request_key', body.requestKey)
 		.maybeSingle();
 	if (previous.error) error(503, 'O salvamento está indisponível. Tente novamente.');
+	const input = parseWorkflowInput(anchorForecastInput(body?.input, previous.data?.input));
+	if (!input || isRetiredTarot(input.productId))
+		error(400, 'Confira os dados e consentimentos da leitura.');
+	const sources = await trialDreamSources(event.locals, body.sourceIds ?? []);
+	const sourceIds = sources.map((s) => s.id).sort();
+	if (sources.length && !['dream-dossier', 'dream-atlas'].includes(input.productId))
+		error(400, 'Este produto não utiliza histórico de sonhos.');
 	if (previous.data) {
 		const saved = previous.data as SavedTrial;
 		if (
 			canonical(saved.input) !== canonical(input) ||
+			(previous.data.atv_plus_cycle_id ?? null) !== cycleId ||
 			canonical(previous.data.source_ids.slice().sort()) !== canonical(sourceIds)
 		)
 			error(
@@ -66,6 +72,7 @@ export const POST: RequestHandler = async (event) => {
 		await saveDiary(saved, identity.ownerId);
 		return json({ id: saved.id }, { headers: { 'cache-control': 'private, no-store' } });
 	}
+	if (cycleId) await requirePlusSelection(event.locals, cycleId, input.productId);
 	const draw = tarotMethodFor(input.productId)
 		? await preparePrivateTarotDraw(identity.ownerId, body.requestKey, input)
 		: null;
@@ -84,7 +91,8 @@ export const POST: RequestHandler = async (event) => {
 		input,
 		calculation,
 		reading,
-		approval
+		approval,
+		...(cycleId ? { atv_plus_cycle_id: cycleId } : {})
 	};
 	const inserted = await trialWriter().from('atv_trial_readings').insert(row).select('*').single();
 	if (inserted.error?.code === '23505') {
@@ -96,6 +104,7 @@ export const POST: RequestHandler = async (event) => {
 			.single();
 		if (
 			retry.error ||
+			(retry.data.atv_plus_cycle_id ?? null) !== cycleId ||
 			canonical(retry.data.input) !== canonical(input) ||
 			canonical(retry.data.source_ids.slice().sort()) !== canonical(sourceIds)
 		)
@@ -103,6 +112,8 @@ export const POST: RequestHandler = async (event) => {
 		await saveDiary(retry.data as SavedTrial, identity.ownerId);
 		return json({ id: retry.data.id });
 	}
+	if (inserted.error && cycleId && ['42501', 'P0001', '22023'].includes(inserted.error.code))
+		plusWriteError(inserted.error);
 	if (inserted.error)
 		error(503, 'Não foi possível salvar. Tente novamente com a mesma solicitação.');
 	await saveDiary(inserted.data as SavedTrial, identity.ownerId);

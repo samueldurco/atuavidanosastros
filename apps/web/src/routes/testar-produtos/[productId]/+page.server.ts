@@ -2,13 +2,16 @@ import { error, redirect } from '@sveltejs/kit';
 import { loginHref } from '$lib/auth-return';
 import { workflows } from '@atv/domain';
 import { trialIdentity } from '$lib/server/private-trials';
+import { requirePlusSelection } from '$lib/server/atv-plus';
 import type { WorkflowInput } from '@atv/domain';
 import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
-	if (!(await parent()).user) redirect(303, loginHref(`/testar-produtos/${params.productId}`));
+	if (!(await parent()).user) redirect(303, loginHref(`${url.pathname}${url.search}`));
 	const identity = (await trialIdentity(locals))!;
 	const product = workflows.find((p) => p.id === params.productId);
 	if (!product) error(404, 'Produto não encontrado.');
+	const cycleId = url.searchParams.get('atvPlusCycle');
+	const plusCycle = cycleId ? await requirePlusSelection(locals, cycleId, product.id) : null;
 	let dreams: { id: string; date: string; preview: string }[] = [];
 	if (['dream-dossier', 'dream-atlas'].includes(product.id)) {
 		const result = await identity.supabase
@@ -39,5 +42,5 @@ export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
 		if (!result.data) error(404, 'Leitura de origem não encontrada.');
 		previous = result.data as { id: string; input: WorkflowInput };
 	}
-	return { product, dreams, previous };
+	return { product, dreams, previous, plusCycle };
 };
