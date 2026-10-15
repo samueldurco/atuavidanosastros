@@ -16,7 +16,10 @@ import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
-import { careerCompassBirthBinding, createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
+import {
+	careerCompassBirthBinding,
+	createPurposeCalculators
+} from '../../../../worker/src/purpose-calculators';
 import { createPurposeCareerCalculators } from '../../../../worker/src/purpose-career-calculators';
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
