@@ -92,8 +92,8 @@ const evidenceCue: Record<string, string> = {
 	moon: 'a condição de apoio',
 	mercury: 'a pergunta respondida',
 	venus: 'o acordo aceito pelas partes',
-	mars: 'o passo dado e o limite respeitado',
-	jupiter: 'os recursos para ampliar',
+	mars: 'a iniciativa com limite',
+		jupiter: 'o alcance da proposta',
 	saturn: 'o prazo e a capacidade disponíveis',
 	uranus: 'a alternativa comparada com a rotina',
 	neptune: 'o observado separado da impressão',
@@ -120,15 +120,22 @@ const aspectPriority = (g: FactGraph, aspect: Aspect | undefined) => {
 	const a = position(g, aspect.first),
 		b = position(g, aspect.second);
 	const pair = `${bodyNames[a.body]}–${bodyNames[b.body]} em ${aspectNames[aspect.kind]}`;
-	return aspect.kind === 'square' || aspect.kind === 'opposition'
-		? `${pair} acrescenta uma tensão concreta: ${evidenceCue[a.body]} pode avançar sem acomodar ${evidenceCue[b.body]}.`
-		: `${pair} oferece uma passagem possível: ${evidenceCue[a.body]} pode abrir espaço para ${evidenceCue[b.body]} na situação.`;
+	if (aspect.kind === 'conjunction')
+		return `${pair} reúne ${evidenceCue[a.body]} e ${evidenceCue[b.body]} no mesmo momento; uma função não comprova a outra.`;
+	if (aspect.kind === 'square' || aspect.kind === 'opposition')
+		return `${pair} acrescenta uma fricção possível entre ${evidenceCue[a.body]} e ${evidenceCue[b.body]}; uma parte pode avançar sem acomodar a outra.`;
+	return `${pair} sugere uma passagem possível entre ${evidenceCue[a.body]} e ${evidenceCue[b.body]}, caso haja condições para as duas funções.`;
 };
 const priorityDiscovery = (aspect: Aspect | undefined) => {
 	if (!aspect) return 'Nenhum outro aspecto selecionado desloca essa pergunta inicial.';
 	const first = evidenceCue[aspect.first],
 		second = evidenceCue[aspect.second];
-	return `${bodyNames[aspect.first]}–${bodyNames[aspect.second]} em ${aspectNames[aspect.kind]} põe um detalhe em foco: ${['square', 'opposition'].includes(aspect.kind) ? `${first} pode disputar lugar com ${second}` : `${first} pode abrir passagem para ${second}`}.`;
+	const pair = `${bodyNames[aspect.first]}–${bodyNames[aspect.second]} em ${aspectNames[aspect.kind]}`;
+	if (aspect.kind === 'conjunction')
+		return `${pair} destaca uma diferença: ${first} não comprova por si só ${second}.`;
+	if (aspect.kind === 'square' || aspect.kind === 'opposition')
+		return `${pair} põe uma distância em foco entre ${first} e ${second}.`;
+	return `${pair} põe em foco uma possível cooperação entre ${first} e ${second}.`;
 };
 type PillarPair = 'sun-moon' | 'sun-ascendant' | 'moon-ascendant';
 export function pillarsPairV51(pair: PillarPair, firstSign: number, secondSign: number): string {
@@ -180,9 +187,9 @@ export function pillarsIntegrationV51(g: FactGraph, input: WorkflowInput): Integ
 		rulerHouse = ruler.house,
 		scene = scenes[binding.key],
 		angle = contact
-			? `O contato de ${bodyNames[contact.body]} com o Ascendente (${aspectNames[contact.kind]}, orbe ${contact.orb.toFixed(2)}°) pode tornar ${evidenceCue[contact.body]} mais visível na entrada.`
+			? `O contato de ${bodyNames[contact.body]} com o Ascendente (${aspectNames[contact.kind]}, orbe ${contact.orb.toFixed(2)}°) pode trazer ${evidenceCue[contact.body]} para a primeira impressão.`
 			: 'Nenhum contato angular selecionado muda essa primeira impressão.';
-	const text = `${scene.setting}, ${ways[g.asc.sign].start} pode ser entendido como uma decisão já tomada. ${scene.turn} Aqui está o intervalo deste trio: a entrada por Ascendente em ${signs[g.asc.sign]} acontece antes de se confirmar se a escolha de ${ways[sun.sign].choose}, ligada a ${label(sun)}, pode contar com ${ways[moon.sign].need}, condição indicada por ${label(moon)}.\n\n${luminary ? `O vínculo Sol–Lua calculado é ${aspectNames[luminary.kind]} (orbe ${luminary.orb.toFixed(2)}°); ${['square', 'opposition'].includes(luminary.kind) ? 'a ordem entre decidir e obter apoio ganha importância' : 'escolha e apoio podem aproximar-se se a condição existir'}.` : 'Sem aspecto maior Sol–Lua, a relação entre decidir e obter apoio permanece uma hipótese de uso, sem qualidade geométrica atribuída.'} O regente do Ascendente, ${label(ruler)}${rulerHouse === null ? ', sem casa calculável' : `, na casa ${rulerHouse} (${houseAreas[rulerHouse - 1]})`}, oferece um caminho para tornar o início concreto: ${roles[ruler.body].work}. ${aspectPriority(g, selected[0]?.aspect)} ${angle}\n\nNesta situação, o tamanho da promessa depende deste dado: ${scene.priority}. A hipótese perde força se o gesto inicial não tiver sido tomado como compromisso, se a condição lunar não importar ao resultado ou se ${selected[0] ? 'a relação selecionada' : 'a distinção entre escolha e apoio'} não aparecer no episódio.`;
+	const text = `${scene.setting}, ${ways[g.asc.sign].start} pode ser entendido como uma decisão já tomada. ${scene.turn} Aqui está o intervalo deste trio: a entrada por Ascendente em ${signs[g.asc.sign]} acontece antes de se confirmar se a escolha de ${ways[sun.sign].choose}, ligada a ${label(sun)}, pode contar com ${ways[moon.sign].need}, condição indicada por ${label(moon)}.\n\n${luminary ? `O vínculo Sol–Lua calculado é ${aspectNames[luminary.kind]} (orbe ${luminary.orb.toFixed(2)}°); ${luminary.kind === 'conjunction' ? 'escolha e apoio aparecem juntos no desenho do mapa, sem que um comprove o outro' : ['square', 'opposition'].includes(luminary.kind) ? 'a ordem entre decidir e obter apoio ganha importância' : 'escolha e apoio podem aproximar-se se a condição existir'}.` : 'Sem aspecto maior Sol–Lua, a relação entre decidir e obter apoio permanece uma hipótese de uso, sem qualidade geométrica atribuída.'} O regente do Ascendente, ${label(ruler)}${rulerHouse === null ? ', sem casa calculável' : `, na casa ${rulerHouse} (${houseAreas[rulerHouse - 1]})`}, oferece um caminho para tornar o início concreto: ${roles[ruler.body].work}. ${aspectPriority(g, selected[0]?.aspect)} ${angle}\n\nNesta situação, o tamanho da promessa depende deste dado: ${scene.priority}. A hipótese perde força se o gesto inicial não tiver sido tomado como compromisso, se a condição lunar não importar ao resultado ou se ${selected[0] ? 'a relação selecionada' : 'a distinção entre escolha e apoio'} não aparecer no episódio.`;
 	return {
 		text,
 		factIds: unique([
@@ -237,7 +244,7 @@ export function composeReconstructedPillarsV51(
 	);
 	replace(
 		1,
-		`Considere a cena em pequena escala. ${scene.setting}, ela pode começar assim: ${scene.turn} O gesto de ${ways[g.asc.sign].start} é algo que os outros podem perceber; a intenção de ${ways[sun.sign].choose} depende da sua escolha; ${ways[moon.sign].need} descreve uma condição que talvez ninguém veja.\n\nPor isso, a reação ao gesto não informa sozinha quanto você quer participar nem quanto apoio existe. Essas informações pertencem a momentos diferentes da mesma cena, e a diferença entre elas é o que esta leitura vai examinar.`,
+		`A cena pode começar com um detalhe: ${scene.turn} O gesto de ${ways[g.asc.sign].start} é algo que os outros podem perceber; a decisão de ${ways[sun.sign].choose} depende de você; o apoio para continuar talvez envolva ${ways[moon.sign].need}, algo menos visível.\n\nPor isso, a reação ao gesto não informa sozinha quanto você quer participar nem quanto apoio existe. Essas informações pertencem a momentos diferentes da mesma cena, e a diferença entre elas é o que esta leitura vai examinar.`,
 		unique([sun.factId, moon.factId, ...g.asc.factIds])
 	);
 	replace(
@@ -247,7 +254,7 @@ export function composeReconstructedPillarsV51(
 	);
 	replace(
 		3,
-		`${sunMoonLine(luminary)} Na cena proposta, ${ways[sun.sign].choose} só se torna uma escolha sustentável se houver espaço para ${ways[moon.sign].need}. ${luminary && ['square', 'opposition'].includes(luminary.kind) ? 'Se as duas necessidades pedirem respostas simultâneas, pode ser preciso diminuir o compromisso ou mudar a ordem antes de agir.' : luminary ? 'Se a cooperação sugerida aparecer, use-a para explicitar a condição que já ajuda a escolha, sem supor que ela estará sempre disponível.' : 'A ausência de aspecto maior impede chamar essa relação de tensão ou fluidez calculada; a utilidade da comparação depende da situação.'}\n\nA pergunta que fica é concreta: ao fazer esse primeiro movimento, que condição precisaria estar presente para você realmente continuar? Uma resposta diferente da imaginada muda o tamanho da escolha, sem mudar os dados do mapa.`,
+		`${sunMoonLine(luminary)} Na cena proposta, ${ways[sun.sign].choose} só se torna uma escolha sustentável se houver espaço para ${ways[moon.sign].need}. ${luminary?.kind === 'conjunction' ? 'Mesmo quando decisão e necessidade aparecem juntas, a participação escolhida não informa sozinha se existe apoio para continuar.' : luminary && ['square', 'opposition'].includes(luminary.kind) ? 'Se escolha e apoio pedirem respostas simultâneas, pode ser preciso diminuir o compromisso ou mudar a ordem antes de agir.' : luminary ? 'Se a cooperação sugerida aparecer, ela pode tornar visível a condição que ajuda a escolha, sem garantir que estará sempre disponível.' : 'Sem vínculo geométrico maior, a disponibilidade desse apoio precisa ser conhecida na situação.'}\n\nA pergunta que fica é concreta: ao fazer esse primeiro movimento, que condição precisaria estar presente para você realmente continuar? Uma resposta diferente da imaginada muda o tamanho da escolha, sem mudar os dados do mapa.`,
 		unique([sun.factId, moon.factId, ...g.asc.factIds, ...(luminary ? [luminary.factId] : [])])
 	);
 	replace(
@@ -257,12 +264,12 @@ export function composeReconstructedPillarsV51(
 	);
 	replace(
 		5,
-		`${label(ruler)} é o regente moderno do Ascendente em ${signs[g.asc.sign]}. Sua função é ${roles[ruler.body].work}; em ${signs[ruler.sign]}, uma maneira possível de começar é ${ways[ruler.sign].start}. ${ruler.house === null ? 'Sem casa calculável, a leitura não atribui um campo específico a essa via.' : `A casa ${ruler.house} (${houseAreas[ruler.house - 1]}) sugere onde essa via pode ser observada, sem afirmar que um acontecimento ocorrerá ali.`}\n\nNa cena, o regente oferece um meio para dizer o que ${label(sun)} quer assumir e pedir o que ${label(moon)} precisa para continuar; ${roles[ruler.body].evidence}. Se essa via não ajudar a entrada, procure um gesto mais simples.`,
+		`${label(ruler)} rege o Ascendente em ${signs[g.asc.sign]} neste método. Sua função é ${roles[ruler.body].work}; em ${signs[ruler.sign]}, uma maneira possível de começar é ${ways[ruler.sign].start}. ${ruler.house === null ? 'Sem casa calculável, a leitura não atribui um campo específico a essa via.' : `A casa ${ruler.house} (${houseAreas[ruler.house - 1]}) sugere onde essa via pode ser observada, sem afirmar que um acontecimento ocorrerá ali.`}\n\nNa cena, o regente oferece um meio para dizer o que ${label(sun)} quer assumir e pedir o que ${label(moon)} precisa para continuar; ${roles[ruler.body].evidence}.`,
 		integration.factIds
 	);
 	replace(
 		6,
-		`${selected.length ? selected.map((s) => pillarsRelationV51(g, s.aspect)).join('\n\n') : 'Nenhum outro aspecto maior de Sol, Lua ou regente foi selecionado dentro dos orbes; a leitura permanece centrada na relação entre escolha, apoio e entrada.'}\n\n${contacts.length ? contacts.map((a) => `${bodyNames[a.body]} faz ${aspectNames[a.kind]} ao Ascendente, orbe ${a.orb.toFixed(2)}°. ${a.kind === 'conjunction' ? 'Há proximidade ao ângulo.' : 'Há contato angular sem proximidade ao ângulo.'} Esse contato sugere que ${evidenceCue[a.body]} pode aparecer no primeiro gesto.`).join(' ') : 'Não há contato maior ao Ascendente dentro de 3°.'}\n\n${selected.length ? 'A primeira relação acima ganha prioridade porque toca diretamente os pilares da pergunta. As demais só acrescentam nuances se tiverem correspondência na situação vivida.' : 'A ausência de outro vínculo selecionado mantém a prioridade na relação entre os três pilares e no que foi relatado.'}`,
+		`${selected.length ? selected.map((s) => pillarsRelationV51(g, s.aspect)).join('\n\n') : 'Nenhum outro aspecto maior de Sol, Lua ou regente foi selecionado dentro dos orbes; a leitura permanece centrada na relação entre escolha, apoio e entrada.'}\n\n${contacts.length ? contacts.map((a) => `${bodyNames[a.body]} faz ${aspectNames[a.kind]} ao Ascendente, orbe ${a.orb.toFixed(2)}°. Esse contato pode trazer ${evidenceCue[a.body]} para o primeiro gesto; o cálculo não informa o que de fato ocorreu.`).join(' ') : 'Não há contato maior ao Ascendente dentro de 3°.'}\n\n${selected.length ? 'A primeira relação acima ganha prioridade porque toca diretamente os pilares da pergunta. As demais só acrescentam nuances se tiverem correspondência na situação vivida.' : 'A ausência de outro vínculo selecionado mantém a prioridade na relação entre os três pilares e no que foi relatado.'}`,
 		reading.sections[6].factIds
 	);
 	const quote = input.context
@@ -275,12 +282,12 @@ export function composeReconstructedPillarsV51(
 	);
 	replace(
 		8,
-		`Faça uma tentativa sem despesa, de até vinte minutos, na situação que você trouxe: ${scene.move}. Diga qual parte cabe agora (${ways[sun.sign].choose}) e de que condição dependeria a continuidade (${ways[moon.sign].need}). O gesto de ${ways[g.asc.sign].start} pode apresentar esse passo; ${roles[ruler.body].work} pode ajudar a torná-lo claro.\n\n${selected[0] ? `Na resposta, procure um sinal de ${evidenceCue[selected[0].aspect.first]} e outro de ${evidenceCue[selected[0].aspect.second]}.` : 'Na resposta, procure um sinal da escolha e outro do apoio.'} Anote o que ocorreu e o custo real. Uma evidência contrária é a condição esperada não ter importância no resultado. Se o custo for maior que o previsto, reduza ou abandone a tentativa.`,
+		`Faça uma tentativa sem despesa, de até vinte minutos, na situação que você trouxe: ${scene.move}. Separe o que você escolhe agora do apoio de que dependeria continuar. O gesto de ${ways[g.asc.sign].start} pode apresentar esse passo; ${roles[ruler.body].work} pode ajudar a torná-lo claro.\n\n${selected[0] ? `Na resposta, procure algo que mostre ${evidenceCue[selected[0].aspect.first]} e algo que mostre ${evidenceCue[selected[0].aspect.second]}.` : 'Na resposta, procure um sinal da escolha e outro do apoio.'} Anote o que ocorreu e o custo real. Uma evidência contrária é a condição esperada não ter importância no resultado. Se o custo for maior que o previsto, reduza ou abandone a tentativa.`,
 		integration.factIds
 	);
 	replace(
 		9,
-		`Depois da tentativa, compare a resposta obtida com a que você esperava. ${luminary ? `O aspecto de ${aspectNames[luminary.kind]} entre Sol e Lua encontrou algum equivalente na ordem em que escolha e apoio apareceram?` : 'A diferença entre escolha e apoio apareceu mesmo sem aspecto maior calculado?'} ${selected[0] ? `A relação de ${bodyNames[selected[0].aspect.first]} com ${bodyNames[selected[0].aspect.second]} acrescentou algo que o trio sozinho não explicava?` : 'A ausência de outro vínculo selecionado deixou alguma parte importante sem explicação?'} O regente ${label(ruler)} só ganha peso se sua via ajudou a entender esse resultado.\n\nRegistre um caso que apoia a hipótese e outro que a contraria. Se a resposta da outra pessoa ou uma condição material explicou melhor o ocorrido, dê prioridade a esse fato. A leitura pode mudar de uso na próxima situação.`,
+		`Depois da tentativa, compare a resposta obtida com a que você esperava. ${luminary ? `O aspecto de ${aspectNames[luminary.kind]} entre Sol e Lua encontrou algum equivalente na ordem em que escolha e apoio apareceram?` : 'A diferença entre escolha e apoio apareceu mesmo sem aspecto maior calculado?'} ${selected[0] ? `A relação de ${bodyNames[selected[0].aspect.first]} com ${bodyNames[selected[0].aspect.second]} acrescentou algo que o trio sozinho não explicava?` : 'A ausência de outro vínculo selecionado deixou alguma parte importante sem explicação?'} O regente ${label(ruler)} só ganha peso se sua via ajudou a entender esse resultado.\n\nSe a resposta da outra pessoa ou uma condição material explicou melhor o ocorrido, dê prioridade a esse fato. Guarde também qualquer caso que contrarie a hipótese para a próxima situação.`,
 		integration.factIds
 	);
 	reading.version = PILLARS_READING_VERSION;
@@ -372,7 +379,7 @@ export function reviewReconstructedPillarsV51(
 		!r.sections[7]?.text.includes(integration.text) ||
 		JSON.stringify(r.sections[7]?.factIds) !== JSON.stringify(integration.factIds) ||
 		!r.sections[8]?.text.includes('até vinte minutos') ||
-		!r.sections[9]?.text.includes('Registre um caso')
+		!r.sections[9]?.text.includes('caso que contrarie a hipótese')
 	)
 		errors.push('pillars-integrated-hypothesis');
 	if (

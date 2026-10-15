@@ -169,6 +169,63 @@ describe('Três Pilares 5: integração, fonte e contrapontos', () => {
 		expect(texts[2]).toContain('iniciar ação e marcar um limite');
 		expect(texts.every((text) => text.includes('Capricórnio'))).toBe(true);
 	});
+	it('keeps conjunction distinct from facilitation and reads naturally in two captured synthetic profiles', async () => {
+		for (const { date, local, context, name } of [
+			{
+				date: '1998-05-12T12:00:00Z',
+				local: '1998-05-12T09:00:00',
+				context: 'Estou com sobrecarga e preciso preservar descanso.',
+				name: 'Lia Exemplo'
+			},
+			{
+				date: '1992-06-15T08:30:00Z',
+				local: '1992-06-15T05:30:00',
+				context: 'Quero observar como inicio uma conversa e apresento minhas necessidades.',
+				name: 'Caio Exemplo'
+			}
+		]) {
+			const i = input(context);
+			i.birth = {
+				localDateTime: local,
+				utcInstant: date,
+				timezone: 'America/Sao_Paulo',
+				latitude: -23.55,
+				longitude: -46.63,
+				locationSource: 'synthetic-review'
+			};
+			i.presentation = { version: 'atv-reading-identity/1', name, city: 'São Paulo' };
+			const c = await calculateTrial(i, runId);
+			const g = normalizeFactGraph(c);
+			expect(pillarsSelection(g)[0].aspect.kind).toBe('conjunction');
+			const r = composeTrialReading(i, c);
+			const all = r.sections.map((section) => section.text).join('\n');
+			expect(r.sections[0].text).toContain('não comprova por si só');
+			expect(r.sections[7].text).toContain('uma função não comprova a outra');
+			expect(r.sections[7].text).not.toContain('conjunção oferece uma passagem');
+			expect(all).not.toMatch(/descreve uma condição|um sinal de a |regente moderno|sem proximidade ao ângulo|os recursos para ampliar pode/);
+			expect(reviewReconstructedPillarsV51(i, c, r)).toEqual([]);
+			expect(await approveTrialReading(i, c, r)).not.toBeNull();
+		}
+	});
+	it('does not turn a calculated Sun–Moon conjunction into guaranteed cooperation', async () => {
+		const i = input('Quero decidir quanto trabalho cabe sem perder o descanso.');
+		i.birth = {
+			localDateTime: '2000-01-06T18:00:00',
+			utcInstant: '2000-01-06T18:00:00Z',
+			timezone: 'UTC',
+			latitude: 0,
+			longitude: 0,
+			locationSource: 'synthetic-review'
+		};
+		const c = await calculateTrial(i, runId);
+		const g = normalizeFactGraph(c);
+		expect(g.aspects.find((a) => [a.first, a.second].includes('sun') && [a.first, a.second].includes('moon'))?.kind).toBe('conjunction');
+		const r = composeTrialReading(i, c);
+		expect(r.sections[3].text).toContain('não informa sozinha se existe apoio');
+		expect(r.sections[3].text).not.toContain('Se a cooperação sugerida aparecer');
+		expect(r.sections[7].text).toContain('sem que um comprove o outro');
+		expect(reviewReconstructedPillarsV51(i, c, r)).toEqual([]);
+	});
 	it('changes an integrated hypothesis when a selected aspect is removed from the editorial graph', async () => {
 		const g = normalizeFactGraph(await sample()),
 			selected = pillarsSelection(g);
