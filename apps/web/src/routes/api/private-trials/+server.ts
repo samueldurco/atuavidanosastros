@@ -64,7 +64,11 @@ export const POST: RequestHandler = async (event) => {
 			? previous.data
 				? []
 				: await trialAtlasSelection(event.locals, atlasCycleId, input.dreamAtlas!.startDate)
-			: await trialDreamSources(event.locals, body.sourceIds ?? []);
+			: await trialDreamSources(
+					event.locals,
+					body.sourceIds ?? [],
+					input.productId === 'dream-dossier' && !previous.data
+				);
 	const sourceIds: string[] =
 		input.productId === 'dream-atlas' && previous.data
 			? previous.data.source_ids.slice().sort()

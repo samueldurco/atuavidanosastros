@@ -81,6 +81,51 @@ describe('private trial authority and request boundaries', () => {
 		}
 		expect(await trialJson(event('{"decision":"approved"}'))).toEqual({ decision: 'approved' });
 	});
+	it('requires one to three owned sources for new dossiers without changing legacy selection', async () => {
+		const { locals, supabase } = identity();
+		for (const ids of [
+			[],
+			Array.from({ length: 4 }, (_, i) => `00000000-0000-4000-8000-00000000004${i}`)
+		]) {
+			await expect(trialDreamSources(locals, ids, true)).rejects.toMatchObject({
+				status: 400,
+				body: { message: 'Selecione de um a três registros anteriores para aprofundar este sonho.' }
+			});
+		}
+		expect(supabase.from).not.toHaveBeenCalled();
+		expect(await trialDreamSources(locals, [])).toEqual([]);
+		await expect(trialDreamSources(locals, [reading, reading], true)).rejects.toMatchObject({
+			status: 400
+		});
+		expect(supabase.from).not.toHaveBeenCalled();
+		for (const count of [1, 3]) {
+			const ids = Array.from(
+				{ length: count },
+				(_, i) => `00000000-0000-4000-8000-00000000004${i}`
+			);
+			const query = { select: vi.fn(), eq: vi.fn(), in: vi.fn() };
+			query.select.mockReturnValue(query);
+			query.eq.mockReturnValue(query);
+			query.in.mockResolvedValue({
+				data: ids.map((id) => ({
+					id,
+					revision: 1,
+					data: {
+						version: 'atv-dream-atlas-entry/1',
+						dreamDate: '2026-10-01',
+						narrative: 'Caminhei pelo jardim e encontrei um pequeno lago.',
+						emotions: ['curiosidade'],
+						associations: ['casa'],
+						includeInSynthesis: true
+					}
+				})),
+				error: null
+			});
+			supabase.from.mockReturnValue(query);
+			expect(await trialDreamSources(locals, ids, true)).toHaveLength(count);
+			expect(query.eq).toHaveBeenCalledWith('owner_id', owner);
+		}
+	});
 	it('rejects malformed JSON and enforces size with and without a length header', async () => {
 		await expect(trialJson(event('{'))).rejects.toMatchObject({ status: 400 });
 		await expect(trialJson(event('{}', 'https://example.test', '35001'))).rejects.toMatchObject({

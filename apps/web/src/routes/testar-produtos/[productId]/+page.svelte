@@ -139,6 +139,12 @@
 		message = '';
 		try {
 			if (!storage) throw Error('Autorize o salvamento privado para gerar sua leitura.');
+			if (data.product.id === 'dream-dossier') {
+				if (sourceIds.length < 1 || sourceIds.length > 3)
+					throw Error('Selecione de um a três registros anteriores para aprofundar este sonho.');
+				if (!historyConsent)
+					throw Error('Autorize o uso dos registros selecionados nesta leitura.');
+			}
 			const input: WorkflowInput = {
 				version: WORKFLOW_VERSION,
 				productId: data.product.id,
@@ -392,15 +398,22 @@
 					<fieldset>
 						<legend>Registros do seu diário que você deseja incluir</legend>
 						<p>
-							Somente os registros selecionados serão usados. <a
+							Escolha de um a três registros anteriores. Somente eles serão usados nesta leitura. <a
 								href="/testar-produtos/dream-journal">Adicionar um sonho ao diário</a
 							>.
 						</p>
 						{#if !data.dreams.length}<p>
-								Seu diário ainda está vazio. Salve um primeiro sonho para usar o Atlas de Sonhos.
+								Seu diário ainda está vazio. Salve um primeiro sonho para usar esta leitura.
 							</p>{/if}
 						{#each data.dreams as dream (dream.id)}<label class="check"
-								><input type="checkbox" value={dream.id} bind:group={sourceIds} />{dream.date} — {dream.preview}</label
+								><input
+									type="checkbox"
+									value={dream.id}
+									bind:group={sourceIds}
+									disabled={data.product.id === 'dream-dossier' &&
+										sourceIds.length >= 3 &&
+										!sourceIds.includes(dream.id)}
+								/>{dream.date} — {dream.preview}</label
 							>{/each}
 					</fieldset>
 					{#if data.product.id === 'dream-dossier'}<label class="check"

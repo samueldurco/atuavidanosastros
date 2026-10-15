@@ -50,8 +50,11 @@ export async function privateTrial(locals: App.Locals, id: string): Promise<Save
 }
 export async function trialDreamSources(
 	locals: App.Locals,
-	ids: unknown
+	ids: unknown,
+	dossier = false
 ): Promise<DreamAtlasFactSource[]> {
+	if (dossier && (!Array.isArray(ids) || ids.length < 1 || ids.length > 3))
+		error(400, 'Selecione de um a três registros anteriores para aprofundar este sonho.');
 	if (
 		!Array.isArray(ids) ||
 		ids.length > 150 ||
