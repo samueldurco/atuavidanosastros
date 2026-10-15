@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { productDefinitionForID, tarotMethods } from '@atv/domain';
+import { productDefinitionFor, tarotMethods } from '@atv/domain';
 
 for (const width of [390, 1440])
 	for (const method of tarotMethods) {
@@ -9,7 +9,7 @@ for (const width of [390, 1440])
 			await page.goto(`/testar-produtos/_spec?product=${method.id}`);
 			await expect(
 				page.getByRole('heading', {
-					name: productDefinitionForID(method.id)!.name,
+					name: productDefinitionFor(method.id)!.name,
 					exact: true
 				})
 			).toBeVisible();
