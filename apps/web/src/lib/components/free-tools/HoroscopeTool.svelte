@@ -45,12 +45,12 @@
 	>
 		<label
 			>Seu signo<select bind:value={sign} disabled={pending}
-				>{#each signs as item}<option value={item}>{signNames[item]}</option>{/each}</select
+				>{#each signs as item (item)}<option value={item}>{signNames[item]}</option>{/each}</select
 			></label
 		>
 		<label
 			>Período<select bind:value={period} disabled={pending}
-				>{#each horoscopePeriods as item}<option value={item}>{periodNames[item]}</option
+				>{#each horoscopePeriods as item (item)}<option value={item}>{periodNames[item]}</option
 					>{/each}</select
 			></label
 		>
@@ -65,9 +65,11 @@
 				<article>
 					<p class="period">{horoscopeRange(result.current)}</p>
 					<h3>{result.current.title}</h3>
-					{#each result.current.sections as section}<section>
+					{#each result.current.sections as section, sectionIndex (sectionIndex)}<section>
 							<h4>{section.heading}</h4>
-							{#each section.paragraphs as paragraph}<p>{paragraph}</p>{/each}
+							{#each section.paragraphs as paragraph, paragraphIndex (paragraphIndex)}<p>
+									{paragraph}
+								</p>{/each}
 						</section>{/each}
 					<a href={result.current.path}>Abrir esta leitura</a>
 				</article>
