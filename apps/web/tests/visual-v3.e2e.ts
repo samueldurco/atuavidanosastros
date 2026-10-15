@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { productCatalog } from '@atv/domain';
+import { productOffers, productSlugAliases } from '@atv/domain';
 import { scanAccessibility } from './fixtures/accessibility';
 
 const surfaces = [
@@ -11,7 +11,7 @@ const surfaces = [
 	'/proposito',
 	'/tarot',
 	'/sonhos',
-	'/produtos/bussola-de-carreira',
+	'/produtos/mapa-astral-dinheiro-carreira',
 	'/bussola-de-carreira',
 	'/entrar',
 	'/privacidade',
@@ -99,7 +99,7 @@ for (const width of [320, 360, 390, 430, 768, 820, 1024, 1280, 1440]) {
 			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 			await expectDeliveredBrandImages(page, path);
 			await expectNoOverflow(page, path);
-			if (path === '/' || path === '/produtos/bussola-de-carreira') {
+			if (path === '/' || path === '/produtos/mapa-astral-dinheiro-carreira') {
 				await page.screenshot({
 					path: testInfo.outputPath(`${path === '/' ? 'home' : 'career'}-${width}.png`),
 					fullPage: true
@@ -116,18 +116,16 @@ for (const width of [320, 1440]) {
 		test.setTimeout(180_000);
 		await page.setViewportSize({ width, height: 1000 });
 		const compositions = new Set<string>();
-		for (const product of productCatalog) {
+		for (const product of productOffers) {
 			const response = await page.goto(`/produtos/${product.slug}`);
 			expect(response?.status(), product.id).toBe(200);
 			await page.evaluate(() => document.fonts.ready);
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(product.name);
 			const shell = page.locator('.mvp-experience');
-			if (product.id === 'atv-plus') expect(await shell.getAttribute('data-universe')).toBeNull();
-			else
-				await expect(shell).toHaveAttribute(
-					'data-universe',
-					/^(meu-ceu|ciclos|amor|proposito|tarot|sonhos)$/
-				);
+			await expect(shell).toHaveAttribute(
+				'data-universe',
+				/^(meu-ceu|ciclos|amor|proposito|tarot|sonhos)$/
+			);
 			const art = page.locator('.product-offer-art .product-art');
 			await expectProductIllustration(art, product.id);
 			compositions.add(
@@ -153,7 +151,7 @@ for (const width of [320, 1440]) {
 			});
 		}
 		expect(compositions.size, 'Products must not silently share a generic composition').toBe(
-			productCatalog.length
+			productOffers.length
 		);
 	});
 
@@ -164,7 +162,7 @@ for (const width of [320, 1440]) {
 		await page.setViewportSize({ width, height: 1000 });
 		await page.goto('/leituras');
 		await page.evaluate(() => document.fonts.ready);
-		const products = productCatalog.filter((product) => product.universe !== 'global');
+		const products = productOffers;
 		const cards = page.locator('article.public-product-card');
 		await expect(cards).toHaveCount(products.length);
 		for (const product of products) {
@@ -197,18 +195,18 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 		return route.abort();
 	});
 	await page.setViewportSize({ width: 1440, height: 1000 });
-	await page.goto('/produtos/bussola-de-carreira');
+	await page.goto('/produtos/mapa-astral-dinheiro-carreira');
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
 	await expect(page.locator('.product-offer-art .product-art')).toHaveCount(1);
 	await page.evaluate(() => {
 		document.documentElement.style.zoom = '2';
 	});
 	const heading = page.getByRole('heading', { level: 1 });
-	await expect(heading).toHaveText('Bússola de Carreira');
+	await expect(heading).toHaveText('Mapa Astral de Dinheiro e Carreira');
 	await expect(heading).toHaveCSS('opacity', '1');
 	await heading.evaluate((element) => {
 		element.textContent =
-			'Bússola de Carreira: possibilidades profissionais, escolhas e próximos passos com tempo para refletir';
+			'Mapa Astral de Dinheiro e Carreira: possibilidades profissionais, escolhas e próximos passos com tempo para refletir';
 	});
 	await expect(heading).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Ver disponibilidade', exact: false })).toBeVisible();
@@ -230,9 +228,7 @@ test('MVP: printing retains the complete catalog and private reading text', asyn
 	await page.goto('/leituras');
 	await page.emulateMedia({ media: 'print' });
 	const cards = page.locator('article.public-product-card');
-	await expect(cards).toHaveCount(
-		productCatalog.filter((product) => product.universe !== 'global').length
-	);
+	await expect(cards).toHaveCount(productOffers.length);
 	for (const card of await cards.all()) {
 		await expect(card).toBeVisible();
 		await expect(card.getByRole('heading')).toBeVisible();
@@ -240,4 +236,20 @@ test('MVP: printing retains the complete catalog and private reading text', asyn
 	}
 	await page.goto('/testar-produtos/_spec?product=career-compass');
 	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+});
+
+test('MVP: public offer aliases redirect to the current catalog without exposing historical-only products', async ({
+	request
+}) => {
+	for (const [oldSlug, productId] of Object.entries(productSlugAliases)) {
+		const product = productOffers.find((offer) => offer.id === productId);
+		expect(product, oldSlug).toBeDefined();
+		const response = await request.get(`/produtos/${oldSlug}`, { maxRedirects: 0 });
+		expect(response.status(), oldSlug).toBe(308);
+		expect(response.headers().location, oldSlug).toBe(`/produtos/${product!.slug}`);
+	}
+	const compass = await request.get('/bussola-de-carreira', { maxRedirects: 0 });
+	expect(compass.status()).toBe(308);
+	expect(compass.headers().location).toBe('/ferramentas/meio-do-ceu');
+	expect((await request.get('/produtos/bussola-de-carreira')).status()).toBe(404);
 });

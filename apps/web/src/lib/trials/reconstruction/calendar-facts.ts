@@ -6,7 +6,10 @@ import {
 } from '@atv/astrology';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { inspectBirthChartProjection } from '../../../../../worker/src/natal-calculators';
-import { personalCalendarProductContract } from '../../../../../worker/src/personal-calendar-calculators';
+import {
+	personalCalendarProductContract,
+	PERIOD_BASE_VERSION
+} from '../../../../../worker/src/personal-calendar-calculators';
 import {
 	assertCalendarSamples,
 	type CalendarSamples
@@ -17,6 +20,8 @@ import { aspectNames } from './date-facts';
 
 export const CALENDAR_VERSION = 'atv-private-calendar-synthesis/4.0.0';
 export const CALENDAR_POLICY = 'atv-calendar-observed-major-aspects/1.0.0';
+export const PERIOD_VERSION = 'atv-private-thirty-day-synthesis/1.0.0';
+export const PERIOD_POLICY = 'atv-thirty-day-observed-major-aspects/1.0.0';
 const angles: Record<MajorAspect, number> = {
 	conjunction: 0,
 	sextile: 60,
@@ -73,15 +78,17 @@ export function projectCalendarReading(
 	natal: CalculationSnapshot,
 	samples: CalendarSamples
 ): CalculationSnapshot {
+	const rolling = input.forecastPeriod === 'rolling-30-days';
+	const policy = rolling ? PERIOD_POLICY : CALENDAR_POLICY;
 	if (
 		!parseWorkflowInput(input) ||
-		input.productId !== 'personal-calendar' ||
-		base.version !== personalCalendarProductContract.version ||
-		base.data.productId !== 'personal-calendar' ||
+		!['personal-calendar', 'career-forecast-30d'].includes(input.productId) ||
+		base.version !== (rolling ? PERIOD_BASE_VERSION : personalCalendarProductContract.version) ||
+		base.data.productId !== input.productId ||
 		!inspectBirthChartProjection(natal)
 	)
 		throw Error('Base mensal ou natal inválida.');
-	assertCalendarSamples(samples, input.targetDate!);
+	assertCalendarSamples(samples, input.targetDate!, rolling);
 	const n = natal.data.positions as AspectPosition[],
 		p = natal.data.provenance as CalculationProvenance;
 	const dates = Array.from({ length: samples.rows.length / 4 }, (_, i) =>
@@ -177,14 +184,14 @@ export function projectCalendarReading(
 		positions: bodies.map((body, j) => ({ body, longitude: samples.rows[i * 4 + 2][j + 1] })),
 		eventIds: events.filter((e) => e.date === date).map((e) => e.id)
 	}));
-	const source = `${samples.source};${CALENDAR_POLICY};orb<=2deg`,
+	const source = `${samples.source};${policy};orb<=2deg`,
 		names = {
 			entry: 'primeira observação dentro de 2°',
 			peak: 'mínimo observado na grade',
 			exit: 'primeira observação fora de 2°'
 		};
 	return {
-		version: CALENDAR_VERSION,
+		version: rolling ? PERIOD_VERSION : CALENDAR_VERSION,
 		kind: 'cycles',
 		status: 'experimental',
 		facts: [
@@ -193,7 +200,7 @@ export function projectCalendarReading(
 			{
 				id: 'calendar-period',
 				kind: 'calculated',
-				display: `Mês UTC: ${input.targetDate} até ${samples.endDateExclusive}, extremo excluído; ${days.length} dias, ${samples.rows.length} observações, espaçadas por seis horas.`,
+				display: `${rolling ? 'Período de 30 dias UTC' : 'Mês UTC'}: ${input.targetDate} até ${samples.endDateExclusive}, extremo excluído; ${days.length} dias, ${samples.rows.length} observações, espaçadas por seis horas.`,
 				source
 			},
 			...days.flatMap((d) => [
@@ -224,7 +231,7 @@ export function projectCalendarReading(
 			}))
 		],
 		data: {
-			productId: 'personal-calendar',
+			productId: input.productId,
 			base,
 			natal,
 			samples,
@@ -236,34 +243,44 @@ export function projectCalendarReading(
 			angles: natal.data.angles,
 			provenance: natal.data.provenance,
 			policy: {
-				id: CALENDAR_POLICY,
+				id: policy,
 				orbDegrees: 2,
 				aspects: Object.keys(angles),
-				maximumSignalsPerDay: 3,
-				selection:
-					'context-relevance-then-observed-peak-then-orb; persistent-background-separated; no-fillers'
+				maximumSignalsPerDay: rolling ? 2 : 3,
+				selection: rolling
+					? 'top-quartile-prominence-with-minimum-floor; scoped-natal-receivers; observed-peaks; maximum-two; zero-allowed; persistent-background-separated'
+					: 'context-relevance-then-observed-peak-then-orb; persistent-background-separated; no-fillers'
 			},
 			updatePolicy: {
 				version: 'atv-calendar-immutable-input-revision/1.0.0',
 				mode: 'immutable-saved-snapshot',
 				changedInput: 'new-request-and-new-calculation',
-				missingObservation: 'reject-whole-month; retain-existing-saved-reading',
+				missingObservation: rolling
+					? 'reject-whole-period; retain-existing-saved-reading'
+					: 'reject-whole-month; retain-existing-saved-reading',
 				timezone: 'UTC; birth-timezone-retained; no-silent-local-date-conversion'
 			}
 		},
 		limits: [
-			'O calendário acompanha um mês civil em UTC, com observações às 00h, 06h, 12h e 18h. A data local pode ser diferente.',
+			rolling
+				? 'A leitura acompanha 30 dias consecutivos em UTC, com observações às 00h, 06h, 12h e 18h. A data local pode ser diferente.'
+				: 'O calendário acompanha um mês civil em UTC, com observações às 00h, 06h, 12h e 18h. A data local pode ser diferente.',
 			'Entradas, saídas e picos descrevem a grade de seis horas e os cinco aspectos maiores até 2°. Não certificam hora exata nem ausência de um contato breve entre observações.',
-			'Até três sinais por data são selecionados por relevância ao contexto e mudança observada; movimentos persistentes ficam no panorama. Uma data sem sinal selecionado não é um dia sem acontecimentos.',
+			rolling
+				? 'Até dois sinais por data são selecionados por destaque relativo no período e relação com o tema; uma data pode ter zero sinais. Movimentos persistentes ficam no panorama.'
+				: 'Até três sinais por data são selecionados por relevância ao contexto e mudança observada; movimentos persistentes ficam no panorama. Uma data sem sinal selecionado não é um dia sem acontecimentos.',
 			'Marcos pessoais são relatos consentidos. Não alteram o céu calculado nem comprovam a hipótese simbólica. Nenhum sinal define dia favorável, obrigação ou resultado.',
-			'A leitura salva conserva os dados usados. Corrigir nascimento, mês, fuso ou contexto exige uma nova leitura; dados incompletos impedem gerar o mês. O motor permanece experimental.'
+			rolling
+				? 'A leitura salva conserva os dados usados. Corrigir nascimento, período, fuso ou contexto exige uma nova leitura; dados incompletos impedem gerar o período.'
+				: 'A leitura salva conserva os dados usados. Corrigir nascimento, mês, fuso ou contexto exige uma nova leitura; dados incompletos impedem gerar o mês. O motor permanece experimental.'
 		]
 	};
 }
 export function assertCalendarProjection(input: WorkflowInput, c: CalculationSnapshot) {
 	const d = c.data as unknown as CalendarData;
 	if (
-		c.version !== CALENDAR_VERSION ||
+		c.version !==
+			(input.forecastPeriod === 'rolling-30-days' ? PERIOD_VERSION : CALENDAR_VERSION) ||
 		canonical(projectCalendarReading(input, d.base, d.natal, d.samples)) !== canonical(c)
 	)
 		throw Error('Calendário sem correspondência integral às bases preservadas.');

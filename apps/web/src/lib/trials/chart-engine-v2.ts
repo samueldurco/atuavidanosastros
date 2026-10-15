@@ -1,4 +1,5 @@
 import { longitudePoint } from '../product-cartography';
+import { mvpThemes } from '../data/mvp-visual';
 import { bodyGlyphs, bodyNames, signNames, trialGeometry } from './cartography';
 import type { SavedTrial } from './reading';
 import {
@@ -54,6 +55,16 @@ export const chartColors = {
 	muted: '#596674',
 	blue: '#365d7d',
 	red: '#99513d'
+};
+// Career readings retain the shared factual geometry and the approved universe palette.
+// Thin chart lines use a darker ochre for legibility on paper; the frame uses the approved accent.
+export const careerChartColors = {
+	...chartColors,
+	ink: mvpThemes.proposito.ink,
+	paper: '#f6efdf',
+	accent: mvpThemes.proposito.accent,
+	gold: '#a77c2e',
+	muted: '#596365'
 };
 // Original vector outlines keep zodiac symbols identical in browser, SVG and PDF.
 export const zodiacGlyphs = [
@@ -210,16 +221,21 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	)
 		return buildDateChartScene(saved, options);
 	if (
-		['atv-private-week-synthesis/4.0.0', 'atv-private-calendar-synthesis/4.0.0'].includes(
-			saved.calculation.version
-		) &&
+		[
+			'atv-private-week-synthesis/4.0.0',
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0'
+		].includes(saved.calculation.version) &&
 		options.mode !== 'natal'
 	) {
 		const days = saved.calculation.data.days as WeekDay[];
 		const index = options.weekDay ?? 0;
 		if (!Number.isInteger(index) || !days[index]) throw Error('week_chart_day_invalid');
 		const base = saved.calculation.data.base as SavedTrial['calculation'];
-		const calendar = saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0';
+		const calendar = [
+			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0'
+		].includes(saved.calculation.version);
 		const policy: AspectPolicy = calendar
 			? {
 					id: 'atv-calendar-observed-major-aspects',
@@ -242,10 +258,14 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		});
 	}
 	const g = trialGeometry(saved, options.person);
-	const { paper, ink, gold, muted, blue, red } = chartColors;
-	const career = ['career-compass', 'purpose-career', 'midheaven', 'direction-journey'].includes(
-		saved.product_id
-	);
+	const career = [
+		'career-compass',
+		'purpose-career',
+		'midheaven',
+		'direction-journey',
+		'career-forecast-30d'
+	].includes(saved.product_id);
+	const { paper, ink, gold, muted, blue, red } = career ? careerChartColors : chartColors;
 	const scene: ChartScene = {
 		version: CHART_ENGINE_VERSION,
 		width: 900,
@@ -281,8 +301,8 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		h: 1064,
 		rx: 26,
 		fill: paper,
-		stroke: gold,
-		width: 1,
+		stroke: career ? careerChartColors.accent : gold,
+		width: career ? 2 : 1,
 		layer: 'paper'
 	});
 	text(450, 62, scene.title, 24, 'heading');

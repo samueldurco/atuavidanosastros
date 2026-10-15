@@ -8,8 +8,9 @@ import { validDate } from "@atv/domain";
 
 export const CALENDAR_SAMPLES_VERSION =
   "atv-personal-calendar-six-hour-samples/1.0.0";
+export const PERIOD_SAMPLES_VERSION = "atv-thirty-day-six-hour-samples/1.0.0";
 export type CalendarSamples = {
-  version: typeof CALENDAR_SAMPLES_VERSION;
+  version: typeof CALENDAR_SAMPLES_VERSION | typeof PERIOD_SAMPLES_VERSION;
   startDate: string;
   endDateExclusive: string;
   stepHours: 6;
@@ -38,17 +39,21 @@ const identity = (p: CalculationProvenance) =>
     contract: p.contract,
     accuracyStatus: p.accuracyStatus,
   });
-export function calendarBounds(start: string) {
+export function calendarBounds(start: string, rolling = false) {
   if (
     !validDate(start) ||
-    !start.endsWith("-01") ||
+    (!rolling && !start.endsWith("-01")) ||
     start < "1900-01-01" ||
-    start > "2099-12-01"
+    start > (rolling ? "2099-12-02" : "2099-12-01")
   )
     throw Error(
-      "O calendário exige o primeiro dia de um mês entre 1900 e 2099.",
+      rolling
+        ? "O período de 30 dias deve começar entre 1900-01-01 e 2099-12-02."
+        : "O calendário exige o primeiro dia de um mês entre 1900 e 2099.",
     );
   const d = new Date(`${start}T00:00:00.000Z`);
+  if (rolling)
+    return new Date(d.valueOf() + 30 * 86400000).toISOString().slice(0, 10);
   return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1))
     .toISOString()
     .slice(0, 10);
@@ -57,8 +62,10 @@ export async function calculateCalendarSamples(
   startDate: string,
   signal: AbortSignal,
   provider: EphemerisProvider = new CaelusEphemerisProvider(),
+  rolling = false,
 ): Promise<CalendarSamples> {
-  const endDateExclusive = calendarBounds(startDate),
+  const version = rolling ? PERIOD_SAMPLES_VERSION : CALENDAR_SAMPLES_VERSION;
+  const endDateExclusive = calendarBounds(startDate, rolling),
     first = Date.parse(startDate + "T00:00:00.000Z"),
     end = Date.parse(endDateExclusive + "T00:00:00.000Z");
   const rows: number[][] = [],
@@ -80,7 +87,7 @@ export async function calculateCalendarSamples(
       utcInstant,
     });
     signal.throwIfAborted();
-    const current = `${chart.provenance.provider}/${chart.provenance.providerVersion};${chart.provenance.algorithmVersion};${CALENDAR_SAMPLES_VERSION}`;
+    const current = `${chart.provenance.provider}/${chart.provenance.providerVersion};${chart.provenance.algorithmVersion};${version}`;
     if (
       chart.provenance.temporal.utcInstant !== utcInstant ||
       (provenance && identity(provenance) !== identity(chart.provenance)) ||
@@ -100,7 +107,7 @@ export async function calculateCalendarSamples(
     rows.push(row);
   }
   const result: CalendarSamples = {
-    version: CALENDAR_SAMPLES_VERSION,
+    version,
     startDate,
     endDateExclusive,
     stepHours: 6,
@@ -112,16 +119,21 @@ export async function calculateCalendarSamples(
     inputTemplate,
     rows,
   };
-  assertCalendarSamples(result, startDate);
+  assertCalendarSamples(result, startDate, rolling);
   return result;
 }
-export function assertCalendarSamples(value: CalendarSamples, start: string) {
-  const end = calendarBounds(start),
+export function assertCalendarSamples(
+  value: CalendarSamples,
+  start: string,
+  rolling = false,
+) {
+  const version = rolling ? PERIOD_SAMPLES_VERSION : CALENDAR_SAMPLES_VERSION;
+  const end = calendarBounds(start, rolling),
     first = Date.parse(start + "T00:00:00.000Z"),
     count = (Date.parse(end + "T00:00:00.000Z") - first) / step;
   if (
     !value ||
-    value.version !== CALENDAR_SAMPLES_VERSION ||
+    value.version !== version ||
     value.startDate !== start ||
     value.endDateExclusive !== end ||
     value.stepHours !== 6 ||
@@ -132,7 +144,7 @@ export function assertCalendarSamples(value: CalendarSamples, start: string) {
     !value.provenance ||
     value.provenance.temporal?.utcInstant !== new Date(first).toISOString() ||
     value.source !==
-      `${value.provenance.provider}/${value.provenance.providerVersion};${value.provenance.algorithmVersion};${CALENDAR_SAMPLES_VERSION}` ||
+      `${value.provenance.provider}/${value.provenance.providerVersion};${value.provenance.algorithmVersion};${version}` ||
     JSON.stringify(value.inputTemplate) !==
       JSON.stringify({
         timezone: "UTC",

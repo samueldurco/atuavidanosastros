@@ -146,6 +146,55 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 			)
 		).rejects.toMatchObject({ code: 'ascendant_unavailable' });
 	});
+	it('calcula o Meio do Céu sem depender da disponibilidade das casas polares', async () => {
+		const result = await calculateFreeToolResult(
+			'meio-do-ceu',
+			{ ...input, latitude: 66 },
+			{ provider: provider(), uuid, now }
+		);
+		expect(result.facts).toHaveLength(1);
+		expect(result.facts[0]).toMatchObject({ id: 'midheaven', kind: 'calculated' });
+		expect(result.summary).toContain('Meio do Céu');
+		expect(result.sections.map((section) => section.id)).toEqual(['contribution', 'environment']);
+		expect(result.sections[1]!.body).toContain('não determina uma profissão');
+	});
+	it('dinheiro usa a Casa 2 real e seu regente, e rejeita casas indisponíveis', async () => {
+		const sample = structuredClone(chart);
+		if (sample.houses.status !== 'ok') throw new Error('Expected a non-polar fixture');
+		sample.houses = {
+			...sample.houses,
+			cusps: sample.houses.cusps.map((cusp, index) => (index === 1 ? 40 : cusp))
+		};
+		const result = await calculateFreeToolResult('dinheiro-no-mapa', input, {
+			provider: provider(sample),
+			uuid,
+			now
+		});
+		expect(result.summary).toBe('Sua Casa 2 começa em Touro.');
+		expect(result.facts[0]).toMatchObject({ id: 'house-2', kind: 'calculated' });
+		expect(result.facts[1]).toMatchObject({ id: 'venus', kind: 'calculated' });
+		expect(result.limits.join(' ')).toContain('não prevê renda');
+		await expect(
+			calculateFreeToolResult(
+				'dinheiro-no-mapa',
+				{ ...input, latitude: 66 },
+				{ provider: provider() }
+			)
+		).rejects.toMatchObject({ code: 'houses_unavailable' });
+	});
+	it('a carta do amor traz o conteúdo de relacionamentos da carta sorteada, sem atribuir sentimentos a terceiros', async () => {
+		const result = await calculateFreeToolResult('carta-do-amor', {}, { uuid, now });
+		expect(result.draw).toBeDefined();
+		expect(result.sections.find((section) => section.id === 'relationship')?.body).toBe(
+			tarotCanon[result.draw!.cardId]!.relationship
+		);
+		expect(result.facts[0]!.kind).toBe('drawn');
+		expect(result).not.toHaveProperty('binaryVerdict');
+		expect(result.limits.join(' ')).toContain('sentimentos');
+		await expect(
+			calculateFreeToolResult('carta-do-amor', { cardId: 'major-0' })
+		).rejects.toMatchObject({ code: 'invalid_input' });
+	});
 	it('compara somente seis fatores, sem score, aspectos ou inferência sobre terceiros', async () => {
 		const result = await calculateFreeToolResult(
 			'combinacao-do-casal',

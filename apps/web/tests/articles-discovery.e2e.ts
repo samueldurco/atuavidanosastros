@@ -15,10 +15,11 @@ for (const width of [390, 1440]) {
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
 		await page
 			.getByRole('navigation', { name: 'Navegação principal' })
-			.getByRole('link', { name: 'Revista', exact: true })
+			.getByRole('link', { name: 'Revista ATVNA', exact: true })
 			.click();
 		await expect(page).toHaveURL(/\/revista$/);
-		await expect(page.locator('.published-guide')).toHaveCount(12);
+		const articleCards = page.locator('main article.featured, main article.article-card');
+		await expect(articleCards).toHaveCount(12);
 		await page.screenshot({ path: testInfo.outputPath(`artigos-${width}.png`), fullPage: true });
 		const accessibility = await new AxeBuilder({ page })
 			.include('main')
@@ -27,14 +28,20 @@ for (const width of [390, 1440]) {
 		expect(accessibility.violations).toEqual([]);
 		for (const item of interestNavigation) {
 			await page
-				.getByRole('navigation', { name: 'Assuntos dos artigos' })
+				.getByRole('navigation', { name: 'Assuntos da Revista' })
 				.getByRole('link', { name: item.label, exact: true })
 				.click();
 			await expect(page).toHaveURL(new RegExp(`/revista\\?tema=${item.id}$`));
-			await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-				`Revista ATVNA: ${item.label}`
-			);
-			const cards = page.locator('.published-guide');
+			await expect(page.getByRole('heading', { level: 1 })).toHaveText('Revista ATVNA');
+			await expect(
+				page.getByRole('heading', { level: 2, name: item.label, exact: true })
+			).toBeVisible();
+			await expect(
+				page
+					.getByRole('navigation', { name: 'Assuntos da Revista' })
+					.getByRole('link', { name: item.label, exact: true })
+			).toHaveAttribute('aria-current', 'page');
+			const cards = articleCards;
 			await expect(cards).toHaveCount(editorialTopicPaths[item.id].length);
 			const destinations = await cards
 				.locator('h3 a')
@@ -42,20 +49,19 @@ for (const width of [390, 1440]) {
 			expect(destinations.sort()).toEqual([...editorialTopicPaths[item.id]].sort());
 			for (const path of editorialTopicPaths[item.id])
 				expect((await request.get(path)).status(), path).toBe(200);
-			await cards.first().getByRole('link').click();
+			await cards.first().getByRole('heading', { level: 3 }).getByRole('link').click();
 			const breadcrumb = page.getByRole('navigation', { name: 'Caminho do artigo' });
-			await expect(breadcrumb.getByRole('link', { name: 'Revista', exact: true })).toHaveAttribute(
-				'href',
-				'/revista'
-			);
+			await expect(
+				breadcrumb.getByRole('link', { name: 'Revista ATVNA', exact: true })
+			).toHaveAttribute('href', '/revista');
 			await breadcrumb.getByRole('link', { name: item.label, exact: true }).click();
 			await expect(page).toHaveURL(new RegExp(`/revista\\?tema=${item.id}$`));
 			await page
-				.getByRole('navigation', { name: 'Assuntos dos artigos' })
-				.getByRole('link', { name: 'Todos os temas' })
+				.getByRole('navigation', { name: 'Assuntos da Revista' })
+				.getByRole('link', { name: 'Todos os assuntos' })
 				.click();
 			await expect(page).toHaveURL(/\/revista$/);
-			await expect(page.locator('.published-guide')).toHaveCount(12);
+			await expect(articleCards).toHaveCount(12);
 		}
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)

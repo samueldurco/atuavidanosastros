@@ -69,7 +69,7 @@ export function freeToolsRuntimeHandler(secret: string | undefined) {
       if (error instanceof FreeToolInputError)
         return respond(
           { code: error.code },
-          error.code === "ascendant_unavailable" ? 422 : 400,
+          error.code === "ascendant_unavailable" || error.code === "houses_unavailable" ? 422 : 400,
         );
       if (error instanceof SyntaxError || error instanceof TypeError)
         return respond({ code: "invalid_input" }, 400);

@@ -1,5 +1,5 @@
 import { calculateTarotMethod, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
-import { error } from '@sveltejs/kit';
+import { error, type RequestEvent } from '@sveltejs/kit';
 import { canonical } from '$lib/trials/reading';
 import { trialWriter } from './private-trials';
 
@@ -22,9 +22,10 @@ function row(value: unknown): DrawRow | null {
 export async function preparePrivateTarotDraw(
 	ownerId: string,
 	requestKey: string,
-	input: WorkflowInput
+	input: WorkflowInput,
+	event: Pick<RequestEvent, 'platform'>
 ) {
-	const writer = trialWriter();
+	const writer = trialWriter(event);
 	const reserved = await writer.rpc('reserve_atv_tarot_draw', {
 		p_owner: ownerId,
 		p_request_key: requestKey,

@@ -7,6 +7,7 @@ import type { PageServerLoad } from './$types';
 import { customerProducts } from '$lib/data/product-copy';
 import { productDetails } from '$lib/data/product-details';
 import { prepareClubContinuity, type ClubState } from '$lib/trials/club-continuity';
+import { dreamAtlasExample } from '$lib/server/dream-atlas-example';
 
 // Local rendering evidence. Never grants access or persists a reading/approval.
 export const load: PageServerLoad = async ({ url, setHeaders }) => {
@@ -19,7 +20,17 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	if (
 		!workflow ||
 		!product ||
-		!['result', 'download', 'intake', 'club', 'catalog', 'index', 'library'].includes(view)
+		(view === 'atlas-example' && productId !== 'dream-atlas') ||
+		![
+			'result',
+			'download',
+			'intake',
+			'club',
+			'catalog',
+			'index',
+			'library',
+			'atlas-example'
+		].includes(view)
 	)
 		error(404);
 	const birth = {
@@ -98,6 +109,36 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			url.searchParams.get('pillarsContext') === 'workload'
 				? 'Estou com sobrecarga e preciso preservar descanso.'
 				: 'Quero observar como inicio uma conversa e apresento minhas necessidades.';
+	// Whitelisted, wholly synthetic identities for private side-by-side review.
+	// They exercise the same calculation and reading path as the real trial form.
+	if (productId === 'three-pillars') {
+		const profile = url.searchParams.get('pillarsProfile');
+		if (profile === 'lia' || profile === 'caio') {
+			input.birth =
+				profile === 'lia'
+					? {
+							localDateTime: '1998-05-12T09:00:00',
+							utcInstant: '1998-05-12T12:00:00Z',
+							timezone: 'America/Sao_Paulo',
+							latitude: -23.55,
+							longitude: -46.63,
+							locationSource: 'synthetic-review'
+						}
+					: {
+							localDateTime: '1992-06-15T05:30:00',
+							utcInstant: '1992-06-15T08:30:00Z',
+							timezone: 'America/Sao_Paulo',
+							latitude: -23.55,
+							longitude: -46.63,
+							locationSource: 'synthetic-review'
+						};
+			input.presentation = {
+				version: 'atv-reading-identity/1',
+				name: profile === 'lia' ? 'Lia Exemplo' : 'Caio Exemplo',
+				city: 'São Paulo'
+			};
+		}
+	}
 	if (productId === 'birth-chart')
 		input.context =
 			url.searchParams.get('birthContext') === 'workload'
@@ -147,7 +188,8 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 							'Aprendizado e expressão'
 						]
 		};
-	if (workflow.kind === 'dream')
+	if (productId === 'dream-atlas') input.dreamAtlas = { startDate: '2026-09-01' };
+	if (workflow.kind === 'dream' && productId !== 'dream-atlas')
 		input.dream = {
 			date: '2026-10-06',
 			narrative: '<script>window.pwned=true</script> Vi uma ponte e uma pessoa amiga.',
@@ -157,7 +199,7 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	if (productId === 'tarot-journey') input.tarotJourney = { goal: 'Organizar um projeto pessoal.' };
 	const id = '00000000-0000-4000-8000-000000000031';
 	// Intakes do not need a result; use an actual MC calculation for the shared result shape.
-	const calcInput: WorkflowInput = ['result', 'download'].includes(view)
+	const calcInput: WorkflowInput = ['result', 'download', 'atlas-example'].includes(view)
 		? input
 		: {
 				version: input.version,
@@ -165,7 +207,10 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 				birth,
 				consent: { ...input.consent, partner: false, continuity: false }
 			};
-	const calculation = await calculateTrial(calcInput, id);
+	const calculation =
+		calcInput.productId === 'dream-atlas'
+			? (await dreamAtlasExample()).calculation
+			: await calculateTrial(calcInput, id);
 	const reading = composeTrialReading(calcInput, calculation),
 		approval = await approveTrialReading(calcInput, calculation, reading);
 	if (!approval) error(500, 'Falha na prova local.');

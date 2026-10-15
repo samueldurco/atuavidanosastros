@@ -6,6 +6,9 @@ scripts/generate-house-reference.py text eol=lf
 packages/astrology/fixtures/aspects/*.json text eol=lf
 packages/astrology/fixtures/horizons/manifest.json text eol=lf
 scripts/generate-aspect-reference.py text eol=lf
+# Career reference manifests also attest the generator and fixture bytes.
+packages/astrology/fixtures/career-envelope-erfa/*.json text eol=lf
+scripts/generate-career-envelope-erfa.py text eol=lf
 packages/astrology/fixtures/coverage/*.txt text eol=lf whitespace=-blank-at-eol
 packages/astrology/fixtures/coverage/*.json text eol=lf
 # Frozen editorial evidence hashes bind UTF-8 LF bytes on every platform.

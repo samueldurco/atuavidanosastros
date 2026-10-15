@@ -33,8 +33,11 @@ export async function calculatePublicFreeTool(
 		const code = detail && typeof detail === 'object' && 'code' in detail ? detail.code : null;
 		if (response.status === 400 && code === 'invalid_input')
 			throw new FreeToolInputError('invalid_input');
-		if (response.status === 422 && code === 'ascendant_unavailable')
-			throw new FreeToolInputError('ascendant_unavailable');
+		if (
+			response.status === 422 &&
+			(code === 'ascendant_unavailable' || code === 'houses_unavailable')
+		)
+			throw new FreeToolInputError(code);
 		throw Object.assign(new Error('public_runtime_unavailable'), { status: 503 });
 	}
 	const raw = await response.text();

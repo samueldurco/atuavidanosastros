@@ -1,29 +1,71 @@
-import { SCHEMA_VERSION } from '../../../../packages/ai/src/contracts';
+import {
+	CaelusEphemerisProvider,
+	type EphemerisProvider
+} from '../../../../packages/astrology/src';
+import { prepareCareerCompassCandidate } from '../../../worker/src/career-compass-candidate';
 import { createPurposeCalculators } from '../../../worker/src/purpose-calculators';
 import { prepareProductFacts } from '../../../worker/src/product-editorial';
-import { prepareProductDelivery } from '../../../worker/src/product-delivery';
-import { careerEditorialTestFixture } from '../../../../scripts/helpers/career-editorial-test-fixture.mjs';
+import { CAREER_COMPASS_READER_VERSION } from '../../../worker/src/product-delivery';
 import type { WorkflowReaderData } from '../../src/lib/product-run';
 
-/** Local-only rendering proof: actual experimental MC, synthetic text, no review authority. */
+/** Local-only fictional inputs shared with the private free-reading review samples. */
+const profiles = {
+	'ana-carga': {
+		id: '00000000-0000-4000-8000-000000000101',
+		name: 'Ana',
+		time: '00:00:00',
+		context: 'Estou sobrecarregada e quero reduzir a carga.'
+	},
+	'bruno-transicao': {
+		id: '00000000-0000-4000-8000-000000000102',
+		name: 'Bruno',
+		time: '08:00:00',
+		context: 'Quero mudar de carreira.'
+	},
+	'lia-territorio': {
+		id: '00000000-0000-4000-8000-000000000103',
+		name: 'Lia',
+		time: '16:00:00',
+		context: 'Quero mudar de cidade por oportunidades de trabalho.'
+	}
+} as const;
+
+const reviewClock = '2026-10-15T00:00:00.000Z';
+const engine = new CaelusEphemerisProvider();
+const reviewProvider: EphemerisProvider = {
+	name: engine.name,
+	version: engine.version,
+	async calculate(input) {
+		const chart = await engine.calculate(input);
+		return {
+			...chart,
+			provenance: { ...chart.provenance, calculatedAt: reviewClock }
+		};
+	}
+};
+const calculate = createPurposeCalculators(reviewProvider)['career-compass'];
+
+/** Preview the engine's blocked reader projection, without creating a release or receipt. */
 export async function careerCompassReaderFixture(
-	state: string | null
+	state: string | null,
+	profileId: string | null
 ): Promise<WorkflowReaderData> {
-	const id = '00000000-0000-4000-8000-000000000117';
-	const at = '2026-09-28T12:00:00Z';
-	const calculation = await createPurposeCalculators()['career-compass'](
+	const profile = profiles[(profileId ?? 'ana-carga') as keyof typeof profiles];
+	if (!profile) throw new Error('career_fixture_unknown_profile');
+	const localDateTime = `2000-01-01T${profile.time}`;
+	const calculation = await calculate(
 		{
 			version: 'atv-workflow/1.0.0',
 			productId: 'career-compass',
 			birth: {
-				localDateTime: '2000-01-01T12:00:00',
-				utcInstant: '2000-01-01T12:00:00Z',
+				localDateTime,
+				utcInstant: `${localDateTime}Z`,
 				timezone: 'UTC',
 				latitude: 0,
 				longitude: 0,
 				locationSource: 'synthetic'
 			},
-			context: 'Contexto profissional sintético para testar a apresentação.',
+			context: profile.context,
 			consent: {
 				storage: true,
 				policyVersion: 'atv-input-consent/1',
@@ -31,27 +73,35 @@ export async function careerCompassReaderFixture(
 				continuity: false
 			}
 		},
-		{ runId: id, signal: new AbortController().signal }
+		{ runId: profile.id, signal: new AbortController().signal }
 	);
-	const facts = prepareProductFacts('career-compass', calculation);
-	if (facts.status !== 'prepared') throw new Error('career_fixture_facts_invalid');
-	const delivery = await prepareProductDelivery({
-		runId: id,
-		revision: 4,
-		productId: 'career-compass',
+	const candidate = await prepareCareerCompassCandidate({
+		runId: profile.id,
+		revision: 1,
 		tier: 'free',
-		calculation,
-		output: {
-			schemaVersion: SCHEMA_VERSION,
-			capability: 'purpose-direction',
-			scope: 'partial',
-			title: 'Bússola de Carreira — exemplo sintético',
-			relations: [],
-			limits: ['Fixture de apresentação; interpretação e motor não homologados.'],
-			...careerEditorialTestFixture(facts.facts)
-		}
+		calculation
 	});
-	if (delivery.status !== 'prepared_for_review') throw new Error('career_fixture_delivery_invalid');
+	if (
+		candidate.status !== 'prepared_for_review' ||
+		candidate.publication !== 'blocked' ||
+		candidate.delivery.status !== 'prepared_for_review' ||
+		candidate.delivery.publication !== 'blocked' ||
+		candidate.delivery.content.version !== CAREER_COMPASS_READER_VERSION
+	)
+		throw new Error('career_fixture_candidate_not_blocked_for_review');
+	const prepared = prepareProductFacts('career-compass', calculation);
+	if (prepared.status !== 'prepared') throw new Error('career_fixture_calculation_invalid');
+	const midheaven = prepared.calculation.facts.find((fact) => fact.id === 'angle-midheaven');
+	const claim = candidate.reading.claims.find((item) => item.id === 'midheaven-fact');
+	if (
+		!midheaven ||
+		!claim ||
+		claim.text !== midheaven.display ||
+		candidate.delivery.content.sections.length !== 6 ||
+		candidate.delivery.content.sections[0].evidence[0] !== 'angle-midheaven'
+	)
+		throw new Error('career_fixture_reader_diverged_from_engine');
+
 	const ready = state === 'ready';
 	const states =
 		state === 'failed'
@@ -63,30 +113,34 @@ export async function careerCompassReaderFixture(
 		state: 'workflow',
 		synthetic: true,
 		item: {
-			id,
-			title: 'Bússola de Carreira — referência sintética',
+			id: profile.id,
+			title: `Bússola de Carreira — ${profile.name}, perfil fictício`,
 			universe: 'proposito-prosperidade',
-			created_at: at
+			created_at: reviewClock
 		},
 		run: {
-			id,
+			id: profile.id,
 			productId: 'career-compass',
 			state: states.at(-1)!,
 			revision: states.length,
 			parentId: null,
-			createdAt: at,
-			updatedAt: at,
+			createdAt: reviewClock,
+			updatedAt: reviewClock,
 			released: ready,
 			canReprocess: false,
-			libraryItemId: id,
-			history: states.map((state, i) => ({ revision: i + 1, state, at })),
+			libraryItemId: profile.id,
+			history: states.map((state, i) => ({ revision: i + 1, state, at: reviewClock })),
 			calculation: {
-				version: facts.calculation.version,
-				facts: facts.calculation.facts,
-				limits: facts.calculation.limits
+				version: prepared.calculation.version,
+				facts: prepared.calculation.facts,
+				limits: prepared.calculation.limits
 			},
 			editorial: ready
-				? { ...delivery.content, promotionId: 'fixture-not-approved', reviewDigest: '0'.repeat(64) }
+				? {
+						...candidate.delivery.content,
+						promotionId: 'fixture-not-approved',
+						reviewDigest: '0'.repeat(64)
+					}
 				: null
 		}
 	};

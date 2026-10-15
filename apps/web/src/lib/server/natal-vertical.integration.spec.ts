@@ -16,7 +16,10 @@ import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
-import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
+import {
+	careerCompassBirthBinding,
+	createPurposeCalculators
+} from '../../../../worker/src/purpose-calculators';
 import { createPurposeCareerCalculators } from '../../../../worker/src/purpose-career-calculators';
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
@@ -50,6 +53,10 @@ const profileProducts = [
 	'synastry',
 	'couple-dossier'
 ] as const;
+// Intake stays covered for Three Pillars; new paid processing is gated while v5.1 is reviewed.
+const processableProfileProducts = profileProducts.filter(
+	(productId) => productId !== 'three-pillars'
+);
 const isPair = (productId: string) =>
 	productId === 'pair-preview' || productId === 'synastry' || productId === 'couple-dossier';
 const synastryContext = 'Contexto sintético privado: conversar sobre autonomia e reparação.';
@@ -952,7 +959,7 @@ it.each([
 	}
 );
 
-it.each(profileProducts)(
+it.each(processableProfileProducts)(
 	'%s: consented profile → controller → SQL → deterministic calculation → pending Library',
 	async (productId) => {
 		await save();
@@ -1066,7 +1073,7 @@ it.each(profileProducts)(
 				if (candidate.status !== 'prepared_for_review')
 					throw new Error('missing_dossier_candidate');
 				expect(candidate.publication).toBe('blocked');
-				expect(candidate.content.version).toBe('atv-product-delivery/1.18.0');
+				expect(candidate.content.version).toBe('atv-product-delivery/1.20.0');
 				expect(candidate.content.sections).toHaveLength(35);
 				expect(candidate.content.sections.at(-2)!.evidence).toEqual([
 					...new Set(output.claims.flatMap((claim) => claim.evidence))
@@ -1091,23 +1098,6 @@ it.each(profileProducts)(
 					])
 				).rows
 			).toEqual([{ engine_approved: false }]);
-		}
-		if (productId === 'three-pillars') {
-			const snapshot = calculated.calculation as CalculationSnapshot;
-			const prepared = prepareProductFacts(productId, snapshot);
-			expect(prepared.status).toBe('prepared');
-			if (prepared.status === 'prepared') {
-				expect(prepared.facts.editorialProfile).toBe('atv-three-pillars-editorial/1.0.0');
-				expect(prepared.facts.facts).toEqual(snapshot.facts);
-			}
-			const altered = structuredClone(snapshot);
-			const ascendant = altered.facts.find((fact) => fact.id === 'angle-ascendant')!;
-			ascendant.display = 'Ascendente: 0.000000° de Áries';
-			expect(prepareProductFacts(productId, altered)).toEqual({
-				status: 'blocked',
-				reason: 'calculation_invalid'
-			});
-			expect(await stored(run.id)).toEqual(calculated);
 		}
 		if (
 			productId === 'career-compass' ||
@@ -1182,34 +1172,58 @@ it.each(profileProducts)(
 	}
 );
 
-it('three-pillars: persisted polar calculation withholds preparation and publication', async () => {
+it('three-pillars: new processing is gated and historical v1 fixtures stay inspectable', async () => {
 	await save(0, { latitude: 70 });
 	await enable('three-pillars');
 	const s = browser('three-pillars');
 	const result = await s.client.perform(true, await command('three-pillars'));
 	expect(result.href).toMatch(/^\/biblioteca\/[0-9a-f-]{36}$/);
-	await process('three-pillars');
 	const run = await stored();
-	expect(run).toMatchObject({ state: 'AWAITING_EDITORIAL', revision: 3 });
-	const snapshot = run.calculation as CalculationSnapshot;
-	expect(snapshot.data.angles).toEqual({ ascendant: null, midheaven: null });
-	expect(snapshot.facts.map((fact) => fact.id)).toEqual([
+	expect(run).toMatchObject({ state: 'QUEUED', calculation: null });
+	const historicalCalculator = createNatalCalculators()['three-pillars']!;
+	const context = { signal: new AbortController().signal, runId: run.id };
+	const historicalPolar = (await historicalCalculator(run.input, context)) as CalculationSnapshot;
+	expect(historicalPolar.version).toBe('atv-natal-product-calculation/1.0.0');
+	expect(historicalPolar.data.angles).toEqual({ ascendant: null, midheaven: null });
+	expect(historicalPolar.facts.map((fact) => fact.id)).toEqual([
 		'position-sun',
 		'position-moon',
 		'ascendant-unavailable'
 	]);
-	expect(prepareProductFacts('three-pillars', snapshot)).toEqual({
+	expect(prepareProductFacts('three-pillars', historicalPolar)).toEqual({
 		status: 'blocked',
 		reason: 'insufficient_facts'
 	});
+	const historicalStandard = (await historicalCalculator(
+		{ ...run.input, birth },
+		context
+	)) as CalculationSnapshot;
+	const prepared = prepareProductFacts('three-pillars', historicalStandard);
+	expect(prepared.status).toBe('prepared');
+	if (prepared.status === 'prepared') {
+		expect(prepared.facts.editorialProfile).toBe('atv-three-pillars-editorial/1.0.0');
+		expect(prepared.facts.facts).toEqual(historicalStandard.facts);
+	}
+	const altered = structuredClone(historicalStandard);
+	const ascendant = altered.facts.find((fact) => fact.id === 'angle-ascendant')!;
+	ascendant.display = 'Ascendente: 0.000000° de Áries';
+	expect(prepareProductFacts('three-pillars', altered)).toEqual({
+		status: 'blocked',
+		reason: 'calculation_invalid'
+	});
+	const before = await counts();
+	expect(() => createProductProcessor(workerRpc, { enabledProducts: ['three-pillars'] })).toThrow(
+		'invalid_product_configuration'
+	);
 	expect(
 		await createProductPublisher(workerRpc, { enabledProducts: ['three-pillars'] }).step()
 	).toBe('idle');
-	expect(await counts()).toEqual({ runs: 1, events: 3, items: 1, receipts: 1 });
+	expect(await stored(run.id)).toEqual(run);
+	expect(await counts()).toEqual(before);
 	expect((await db.query('select count(*) n from editorial_promotions')).rows).toEqual([{ n: 0 }]);
 });
 
-it.each(profileProducts)(
+it.each(processableProfileProducts)(
 	'%s: edit then forget cannot change queued snapshot; lost acknowledgement recovers without replay',
 	async (productId) => {
 		await save();
@@ -1238,7 +1252,7 @@ it.each(profileProducts)(
 	}
 );
 
-it.each(profileProducts)(
+it.each(processableProfileProducts)(
 	'%s: session ownership fences profile, recovery, Library, calculation and downloads',
 	async (productId) => {
 		await save();
@@ -1309,7 +1323,7 @@ it.each(profileProducts)(
 	}
 );
 
-it.each(profileProducts)(
+it.each(processableProfileProducts)(
 	'%s: explicit reprocessing recalculates parent snapshot, never the edited or forgotten profile',
 	async (productId) => {
 		await save();
@@ -1336,9 +1350,21 @@ it.each(profileProducts)(
 			state: 'QUEUED'
 		});
 		await process(productId);
-		expect(deterministicSnapshot((await stored(runId)).calculation)).toEqual(
-			deterministicSnapshot(original.calculation)
-		);
+		const recalculated = (await stored(runId)).calculation;
+		const expected = structuredClone(original.calculation);
+		if (productId === 'career-compass') {
+			// The astronomical result is stable, but the birth fingerprint is bound to each run.
+			expect(original.input.birth).toBeDefined();
+			expect(expected).not.toBeNull();
+			const sourceBinding = expected!.data.birthBinding as Record<string, unknown>;
+			expected!.data.birthBinding = {
+				...sourceBinding,
+				sha256: await careerCompassBirthBinding(original.input.birth!, runId)
+			};
+			expect(recalculated?.data.birthBinding).toEqual(expected!.data.birthBinding);
+			expect(recalculated?.data.birthBinding).not.toEqual(original.calculation?.data.birthBinding);
+		}
+		expect(deterministicSnapshot(recalculated)).toEqual(deterministicSnapshot(expected));
 		expect(await stored(first.id)).toEqual(original);
 		expect(await counts()).toEqual({ runs: 2, events: 6, items: 2, receipts: 1 });
 	}

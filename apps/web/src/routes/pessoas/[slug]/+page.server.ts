@@ -1,15 +1,20 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { publishedEditorial } from '$lib/server/editorial-registry';
 import { SITE } from '$lib/data/site';
+import { publicEditorialAuthor } from '$lib/data/editorial-author';
 import { safeJsonLd, type PageSeo } from '$lib/seo';
 import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ params }) => {
 	const documents = (await publishedEditorial()).filter(
-		(document) => document.author.id === params.slug
+		(document) =>
+			document.author.id === params.slug ||
+			publicEditorialAuthor(document.author).id === params.slug
 	);
-	const author = documents[0]?.author;
-	if (!author) error(404, 'Este perfil ainda não está publicado.');
+	const sourceAuthor = documents[0]?.author;
+	if (!sourceAuthor) error(404, 'Este perfil ainda não está publicado.');
+	const author = publicEditorialAuthor(sourceAuthor);
 	const path = `/pessoas/${author.id}`;
+	if (params.slug !== author.id) redirect(308, path);
 	const seo: PageSeo = {
 		title: `${author.name} — ${SITE.name}`,
 		description: author.bio,

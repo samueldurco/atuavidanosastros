@@ -3,12 +3,18 @@ import fontkit from '@pdf-lib/fontkit';
 import { productDefinitionFor } from '@atv/domain';
 import { parseProductRun, runLabels } from '../product-run';
 import { productFactLabel } from '../product-fact-label';
+import {
+	careerCompassFactValue,
+	careerCompassReaderLimits
+} from '../career-compass-fact-presentation';
 import { weekTemporalFacts } from '../week-temporal-facts';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
+import careerCover from '../../../static/brand/mvp/assets/revisao/bussola-gravada-pdf.png?inline';
 import { pdfBrandMark, pdfCoverFor } from '../data/visual-v4-pdf';
 import { visualExportPalette } from '../data/visual-v4-export';
+import { mvpProductDesign } from '../data/mvp-visual';
 
 export const PDF_EXPORT_VERSION = 'atv-pdf-export/1.4.0';
 export const PDF_LIMITS = Object.freeze({
@@ -46,7 +52,10 @@ export async function renderProductPdf(value: unknown) {
 		const display = await doc.embedFont(displayData, { subset: true });
 		const body = await doc.embedFont(bodyData, { subset: true });
 		const label = await doc.embedFont(labelData, { subset: true });
-		const palette = visualExportPalette(product.id);
+		const careerDesign = product.id === 'career-compass' ? mvpProductDesign(product.id) : null;
+		const palette = careerDesign
+			? { ink: careerDesign.ink, line: careerDesign.accent }
+			: visualExportPalette(product.id);
 		const color = (hex: string) =>
 			rgb(
 				...([1, 3, 5].map((n) => parseInt(hex.slice(n, n + 2), 16) / 255) as [
@@ -100,7 +109,7 @@ export async function renderProductPdf(value: unknown) {
 			});
 		};
 		decorate();
-		const engraving = await doc.embedPng(pdfCoverFor(product.id));
+		const engraving = await doc.embedPng(careerDesign ? careerCover : pdfCoverFor(product.id));
 		const coverSize = engraving.scaleToFit(270, 198);
 		page.drawImage(engraving, {
 			x: (width - coverSize.width) / 2,
@@ -259,11 +268,29 @@ export async function renderProductPdf(value: unknown) {
 		for (const fact of calculation.facts) {
 			ensure(65);
 			paragraph(productFactLabel(run.productId, fact.id), label, 10, 15, 4);
-			paragraph(fact.display, body, 12, 17, 4);
-			paragraph(fact.source, label, 9, 14, 14);
+			paragraph(
+				run.productId === 'career-compass'
+					? careerCompassFactValue(fact.id, fact.display)
+					: fact.display,
+				body,
+				12,
+				17,
+				4
+			);
+			if (run.productId !== 'career-compass') paragraph(fact.source, label, 9, 14, 14);
 		}
-		paragraph(`Método: ${calculation.version}. Edição: ${editorial.version}.`, label, 9, 14);
-		for (const limit of [...calculation.limits, ...editorial.limits]) paragraph(limit);
+		paragraph(
+			run.productId === 'career-compass'
+				? 'Os fatos calculados foram preservados no registro auditável desta versão.'
+				: `Método: ${calculation.version}. Edição: ${editorial.version}.`,
+			label,
+			9,
+			14
+		);
+		for (const limit of run.productId === 'career-compass'
+			? careerCompassReaderLimits(calculation.limits, editorial.limits)
+			: [...calculation.limits, ...editorial.limits])
+			paragraph(limit);
 
 		// Keep the compact version history and provenance together when possible.
 		ensure(200 + run.history.length * 20);
@@ -276,13 +303,14 @@ export async function renderProductPdf(value: unknown) {
 				14,
 				6
 			);
-		paragraph(
-			`Registro: ${run.id}\nExportador: ${PDF_EXPORT_VERSION}\nRevisão editorial: ${editorial.reviewDigest}`,
-			label,
-			9,
-			14,
-			16
-		);
+		if (run.productId !== 'career-compass')
+			paragraph(
+				`Registro: ${run.id}\nExportador: ${PDF_EXPORT_VERSION}\nRevisão editorial: ${editorial.reviewDigest}`,
+				label,
+				9,
+				14,
+				16
+			);
 		paragraph(
 			'Consulte a Biblioteca para acompanhar atualizações ou solicitar uma nova versão. Este PDF guarda a versão que você baixou.'
 		);

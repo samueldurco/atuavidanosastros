@@ -32,7 +32,11 @@ export const POST: RequestHandler = async (event) => {
 		reading,
 		approval
 	};
-	const inserted = await trialWriter().from('atv_trial_readings').insert(row).select('id').single();
+	const inserted = await trialWriter(event)
+		.from('atv_trial_readings')
+		.insert(row)
+		.select('id')
+		.single();
 	if (inserted.error?.code === '23505') {
 		const retry = await identity.supabase
 			.from('atv_trial_readings')

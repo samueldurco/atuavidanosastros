@@ -20,8 +20,16 @@
 	let {
 		runId,
 		access,
-		synthetic = false
-	}: { runId: string; access: IntakeAccess; synthetic?: boolean } = $props();
+		synthetic = false,
+		privateCycle = false,
+		onchange
+	}: {
+		runId: string;
+		access: IntakeAccess;
+		synthetic?: boolean;
+		privateCycle?: boolean;
+		onchange?: () => void;
+	} = $props();
 	let entries = $state<Entry[]>([]);
 	let startDate = $state<string | null>(null);
 	let pendingEntryId = $state<string | null>(null);
@@ -36,13 +44,17 @@
 	let includeInSynthesis = $state(false);
 	let confirmDelete = $state<string | null>(null);
 	let alive = false;
-	const writable = $derived(!synthetic && access === 'AVAILABLE');
+	let periodClosed = $state(false);
+	let today = $state(new Date().toISOString().slice(0, 10));
+	const writable = $derived(!synthetic && access === 'AVAILABLE' && !periodClosed);
 	const endDate = $derived(
 		startDate
 			? new Date(Date.parse(`${startDate}T00:00:00Z`) + 29 * 86_400_000).toISOString().slice(0, 10)
 			: null
 	);
-	const facts = $derived(startDate ? prepareDreamAtlasFacts(startDate, entries) : null);
+	const facts = $derived(
+		startDate ? prepareDreamAtlasFacts(startDate, $state.snapshot(entries)) : null
+	);
 	const lines = (value: string) =>
 		value
 			.split(/\r?\n/)
@@ -73,18 +85,27 @@
 		notice = '';
 	}
 	async function request(action: 'read' | 'save' | 'delete', body: object): Promise<unknown> {
-		const response = await fetch(`/api/dream-atlas/entries/${action}`, {
-			method: 'POST',
-			credentials: 'same-origin',
-			cache: 'no-store',
-			headers: { 'content-type': 'application/json' },
-			body: JSON.stringify(body),
-			signal: AbortSignal.timeout(15000)
-		});
+		const response = await fetch(
+			privateCycle ? `/api/private-dream-atlas/${action}` : `/api/dream-atlas/entries/${action}`,
+			{
+				method: 'POST',
+				credentials: 'same-origin',
+				cache: 'no-store',
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify(body),
+				signal: AbortSignal.timeout(15000)
+			}
+		);
 		const payload: unknown = await response.json();
 		if (!response.ok) {
 			const code =
-				payload && typeof payload === 'object' && 'error' in payload ? payload.error : '';
+				payload && typeof payload === 'object'
+					? 'error' in payload
+						? payload.error
+						: 'message' in payload
+							? payload.message
+							: ''
+					: '';
 			throw new Error(typeof code === 'string' ? code : 'atlas_service_unavailable');
 		}
 		return payload;
@@ -138,9 +159,20 @@
 		const payload = await request('read', { runId });
 		const next = parseEntries(payload);
 		if (alive) {
+			if (
+				privateCycle &&
+				payload &&
+				typeof payload === 'object' &&
+				'readyAt' in payload &&
+				'serverNow' in payload
+			) {
+				periodClosed = Date.parse(String(payload.serverNow)) >= Date.parse(String(payload.readyAt));
+				today = String(payload.serverNow).slice(0, 10);
+			}
 			entries = next.entries;
 			startDate = next.startDate;
 			loaded = true;
+			onchange?.();
 		}
 	}
 	async function refresh() {
@@ -241,9 +273,13 @@
 					notice =
 						error instanceof Error && error.message === 'atlas_unreleased'
 							? 'Novos registros estão indisponíveis enquanto o Atlas não está liberado.'
-							: refreshed
-								? 'Gravação não confirmada. Confira a lista antes de tentar novamente.'
-								: 'Gravação não confirmada. Atualize a lista antes de tentar novamente.';
+							: privateCycle &&
+								  error instanceof Error &&
+								  !['invalid_response', 'atlas_service_unavailable'].includes(error.message)
+								? error.message
+								: refreshed
+									? 'Gravação não confirmada. Confira a lista antes de tentar novamente.'
+									: 'Gravação não confirmada. Atualize a lista antes de tentar novamente.';
 				}
 			}
 		} finally {
@@ -306,11 +342,17 @@
 	<h2 id="diary-title">Diário privado do período</h2>
 	<p>
 		Registre seus sonhos durante os 30 dias deste diário. Só você pode ver os relatos. Em cada
-		registro, escolha se ele poderá entrar em uma síntese quando essa função estiver disponível.
+		registro, escolha se ele poderá entrar {privateCycle
+			? 'na análise integrada ao fim do período.'
+			: 'em uma síntese futura, quando estiver disponível.'}
 	</p>
 	{#if synthetic}
 		<p>Referência sintética: o diário privado não é carregado aqui.</p>
 	{:else}
+		{#if periodClosed}<p>
+				Os 30 dias terminaram. Os registros podem ser consultados ou excluídos. A análise final
+				reúne os relatos que você autorizou.
+			</p>{/if}
 		{#if access !== 'AVAILABLE'}
 			<p>
 				Você não pode adicionar sonhos agora. Os registros salvos continuam disponíveis para leitura
@@ -330,7 +372,7 @@
 			{#if facts}
 				<p>
 					{facts.recordedCount} registros no diário; {facts.includedEntryIds.length} incluídos para uma
-					possível síntese e {facts.excludedCount} excluídos dela.
+					análise integrada e {facts.excludedCount} excluídos dela.
 				</p>
 				{#if facts.recurrences.length}
 					<h3>Emoções e associações repetidas</h3>
@@ -366,8 +408,8 @@
 							</p>{/if}
 						<p>
 							{entry.includeInSynthesis
-								? 'Incluído em futura síntese, se ela estiver disponível.'
-								: 'Fora de futuras sínteses.'}
+								? 'Autorizado para a análise integrada.'
+								: 'Fora da análise integrada.'}
 						</p>
 						{#if writable}<button type="button" onclick={() => edit(entry)} disabled={!!busy}
 								>Editar registro</button
@@ -375,6 +417,7 @@
 						{#if confirmDelete === entry.id}
 							<p id={`delete-dream-${entry.id}`}>
 								Esta exclusão remove definitivamente este relato do diário.
+								{#if privateCycle}Uma análise já salva preserva os relatos usados naquela edição.{/if}
 							</p>
 							<button
 								type="button"
@@ -402,7 +445,11 @@
 						type="date"
 						bind:value={dreamDate}
 						min={startDate ?? undefined}
-						max={endDate ?? undefined}
+						max={privateCycle && endDate
+							? today < endDate
+								? today
+								: endDate
+							: (endDate ?? undefined)}
 						required
 						disabled={!!busy}
 					/>
@@ -422,7 +469,7 @@
 					></textarea>
 					<label class="check"
 						><input type="checkbox" bind:checked={includeInSynthesis} disabled={!!busy} /> Incluir este
-						relato em uma síntese futura, se disponível</label
+						relato na análise integrada ao final dos 30 dias</label
 					>
 					<div class="form-actions">
 						<button type="submit" disabled={!!busy}>Guardar registro</button>

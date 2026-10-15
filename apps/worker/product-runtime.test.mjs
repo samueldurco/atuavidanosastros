@@ -6,13 +6,14 @@ import {
   createProductProcessor,
   productCalculationCoverage,
 } from "./src/product-runtime.ts";
+import { CAREER_COMPASS_CANDIDATE_VERSION } from "./src/career-compass-candidate.ts";
 
 test("coverage distinguishes active coverage from thirteen historical calculation bases from releases", () => {
   const calculators = createProductCalculators(),
     coverage = productCalculationCoverage();
   assert.ok(Object.isFrozen(calculators));
   assert.equal(Object.keys(calculators).length, 13);
-  assert.equal(coverage.length, 26);
+  assert.equal(coverage.length, workflows.length);
   assert.deepEqual(
     coverage.map((p) => p.productId),
     workflows.map((p) => p.id),
@@ -42,6 +43,34 @@ test("default runtime never contacts RPC, emits only aggregate idle metrics and 
   ]);
   assert.equal(events[0].outcome, "idle");
   assert.ok(Object.isFrozen(runtime));
+});
+
+test("selected career compass runtime requests the current private candidate version", async () => {
+  const calls = [];
+  const runtime = createProductProcessor(async (name, args) => {
+    calls.push({ name, args });
+    return null;
+  }, { enabledProducts: ["career-compass"] });
+  assert.equal(await runtime.step(), "idle");
+  assert.deepEqual(calls, [
+    { name: "claim_product_run_work", args: { p_products: ["career-compass"], p_lease_seconds: 60 } },
+    { name: "select_next_career_compass_candidate", args: { p_candidate_version: CAREER_COMPASS_CANDIDATE_VERSION } },
+  ]);
+  assert.equal(CAREER_COMPASS_CANDIDATE_VERSION, "atv-career-compass-candidate/1.8.7");
+});
+
+test("new Three Pillars runs fail closed while the historical v1 calculator remains available", () => {
+  assert.equal(typeof createProductCalculators()["three-pillars"], "function");
+  const rpc = async () => assert.fail("rejected configuration must not contact RPC");
+  for (const enabledProducts of [
+    ["three-pillars"],
+    ["daily-card", "three-pillars"],
+  ]) {
+    assert.throws(
+      () => createProductProcessor(rpc, { enabledProducts }),
+      /invalid_product_configuration/,
+    );
+  }
 });
 
 const synastryPolicy = () => ({

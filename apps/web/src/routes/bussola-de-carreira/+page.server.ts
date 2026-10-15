@@ -1,6 +1,4 @@
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ parent }) => {
-	const { authConfigured, user } = await parent();
-	return { canSave: authConfigured && Boolean(user) };
-};
+export const load: PageServerLoad = () => redirect(308, '/ferramentas/meio-do-ceu');

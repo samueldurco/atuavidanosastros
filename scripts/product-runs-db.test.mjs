@@ -25,7 +25,7 @@ test('PostgreSQL workflow persistence, authorization, gates and recovery',async(
     const definitions=(await db.query('select product_id,enabled,engine_approved from workflow_releases')).rows;
     // This fixture stops at the September migrations. The October retirement/addition
     // is exercised separately in private-tarot-methods-db.test.mjs.
-    const historical=[...workflows.filter(p=>p.kind!=='tarot'),...retiredTarotProducts];
+    const historical=[...workflows.filter(p=>p.kind!=='tarot'&&p.id!=='career-forecast-30d'),...retiredTarotProducts];
     assert.deepEqual(definitions.map(p=>p.product_id).sort(),historical.map(p=>p.id).sort());
     assert.ok(definitions.every(p=>!p.enabled&&!p.engine_approved));
     assert.equal((await db.query('select * from editorial_promotions')).rows.length,0);

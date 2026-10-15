@@ -6,13 +6,13 @@ import { normalizeFactGraph, type Aspect, type FactGraph, type Position } from '
 import { houseAreas } from './natal-canon';
 import {
 	assertPillarsProjection,
-	PILLARS_READING_VERSION,
+	PILLARS_READING_V5_VERSION,
 	pillarsMethod,
 	type PillarsData
 } from './pillars-facts';
 
 // Function-specific vocabulary: these are symbolic possibilities, not personality diagnoses.
-const ways = [
+export const ways = [
 	{
 		choose: 'assumir uma iniciativa delimitada',
 		need: 'espaço para reagir e recuperar autonomia',
@@ -300,7 +300,7 @@ export function composeReconstructedPillars(
 		'technical-reference'
 	);
 	return {
-		version: PILLARS_READING_VERSION,
+		version: PILLARS_READING_V5_VERSION,
 		productId: 'three-pillars',
 		title: 'Três Pilares',
 		opening: `Uma cena integra três movimentos: ${solar.choose}, preservar ${lunar.need} e ${asc.start}. ${binding.focus}`,
@@ -315,7 +315,7 @@ export function composeReconstructedPillars(
 		practice: `Experimento privado de até vinte minutos, sem despesa: ${binding.task}. Compare intenção, necessidade e entrada; registre resultado, custo e evidência contrária.`,
 		limits: c.limits,
 		editorial: {
-			version: PILLARS_READING_VERSION,
+			version: PILLARS_READING_V5_VERSION,
 			canon: CANON_VERSION,
 			graph: 'atv-pillars-integrated-graph/1.0.0',
 			selection: selected.map((s) => ({
@@ -355,7 +355,7 @@ export function reviewReconstructedPillars(
 	const errors: string[] = [];
 	if (
 		r.productId !== 'three-pillars' ||
-		r.version !== PILLARS_READING_VERSION ||
+		r.version !== PILLARS_READING_V5_VERSION ||
 		r.editorial?.canon !== CANON_VERSION ||
 		r.editorial.graph !== 'atv-pillars-integrated-graph/1.0.0'
 	)

@@ -1,7 +1,6 @@
 import { dev } from '$app/environment';
-import { env as privateEnv } from '$env/dynamic/private';
-import { env as publicEnv } from '$env/dynamic/public';
 import { error, type RequestEvent } from '@sveltejs/kit';
+import { trialRuntimeConfigured, trialServiceBindings } from './runtime-bindings';
 import type { WorkflowInput, DreamAtlasFactSource, CalculationSnapshot } from '@atv/domain';
 import type {
 	TrialEdition,
@@ -11,19 +10,24 @@ import type {
 } from './trial-computation';
 
 async function run(
-	event: Pick<RequestEvent, 'url' | 'fetch'>,
+	event: Pick<RequestEvent, 'url' | 'fetch' | 'platform'>,
 	request: TrialRuntimeRequest
 ): Promise<TrialRuntimeResult> {
 	// Local fixtures stay local. Hosted requests never fall back to a CPU-heavy Pages function.
 	if (dev || ['localhost', '127.0.0.1', '[::1]'].includes(event.url.hostname)) {
 		const { executeTrialRuntime } = await import('./trial-computation');
-		return executeTrialRuntime(request);
+		try {
+			return await executeTrialRuntime(request);
+		} catch (e) {
+			if (e instanceof Error && e.message.startsWith('Origem dos Três Pilares:'))
+				error(422, e.message);
+			throw e;
+		}
 	}
-	const base = publicEnv.PUBLIC_SUPABASE_URL;
-	const key = privateEnv.SUPABASE_SERVICE_ROLE_KEY;
-	const runtimeKey = privateEnv.ATV_TRIAL_RUNTIME_KEY;
-	if (!base || !key || !runtimeKey || !base.startsWith('https://'))
+	const config = trialServiceBindings(event);
+	if (!trialRuntimeConfigured(config))
 		error(503, 'O serviço de leituras está indisponível. Tente novamente.');
+	const { url: base, serviceRoleKey: key, runtimeKey } = config;
 	try {
 		const response = await event.fetch(`${base}/functions/v1/atv-trial-runtime`, {
 			method: 'POST',
@@ -44,7 +48,7 @@ async function run(
 		if (
 			response.status === 422 &&
 			typeof body.error === 'string' &&
-			/^(Confira|Salve|Autorize|Produto sem)/.test(body.error)
+			/^(Confira|Salve|Autorize|Produto sem|Origem dos Três Pilares:)/.test(body.error)
 		)
 			error(422, body.error);
 		if (!response.ok || body.protocol !== 'atv-trial-runtime/1' || !Object.hasOwn(body, 'result'))

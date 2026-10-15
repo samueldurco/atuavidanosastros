@@ -1,3 +1,5 @@
+import { careerCompassFactLabel } from './career-compass-fact-presentation';
+
 const birthChartLabels: Record<string, string> = {
 	'position-sun': 'Sol',
 	'position-moon': 'Lua',
@@ -16,6 +18,9 @@ const birthChartLabels: Record<string, string> = {
 
 /** Presentation only: retains each persisted identifier and never infers a placement. */
 export function productFactLabel(productId: string, id: string): string {
+	if (productId === 'career-compass') {
+		return careerCompassFactLabel(id);
+	}
 	if (productId === 'week-reading') {
 		if (id === 'week-temporal-summary') return `Resumo da busca temporal experimental (${id})`;
 		const temporal =

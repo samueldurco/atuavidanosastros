@@ -176,7 +176,7 @@ describe('Meio do Céu 5: regente, modificadores e integração', () => {
 			expect(() => assertMidheavenProjection(input(), c)).toThrow();
 			await expect(
 				approveTrialReading(input(), c, composeTrialReading(input(), await sample()))
-			).rejects.toThrow();
+			).resolves.toBeNull();
 		}
 	);
 	it('rejects source edits, forged displays and mismatched birth/context', async () => {

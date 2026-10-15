@@ -127,7 +127,7 @@ describe('Calendário Pessoal reconstruído', () => {
 			expect(() => assertCalendarProjection(input(), c)).toThrow();
 			await expect(
 				approveTrialReading(input(), c, composeTrialReading(input(), await sample()))
-			).rejects.toThrow();
+			).resolves.toBeNull();
 		}
 	);
 	it('stops on abort or a provider that changes the requested observation time', async () => {

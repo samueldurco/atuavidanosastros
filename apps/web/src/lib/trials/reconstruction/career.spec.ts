@@ -205,7 +205,7 @@ describe('reconstructed career: semantic dependence and durable editions', () =>
 		expect(await executeTrialRuntime({ operation: 'verify', saved })).toBe(true);
 		const revised = await executeTrialRuntime({ operation: 'revise', saved });
 		expect(revised && typeof revised === 'object' && revised.reading.version).toBe(
-			'atv-career-compass-editorial/5.0.0'
+			'atv-career-compass-editorial/6.0.0'
 		);
 		expect(saved.reading.version).toBe('atv-ai-editorial-trials/3.0.0');
 		expect(saved.calculation.version).toBe('atv-private-career-synthesis/3.0.0');

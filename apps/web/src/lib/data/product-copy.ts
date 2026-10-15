@@ -1,4 +1,4 @@
-import { productCatalog, tarotMethods } from '@atv/domain';
+import { offeredProductIds, productCatalog, tarotMethods } from '@atv/domain';
 
 /** Customer language. IDs, publication state and delivery rights stay in the domain catalog. */
 export const productCopy = {
@@ -9,8 +9,9 @@ export const productCopy = {
 		])
 	),
 	'birth-chart': {
-		summary: 'Conheça seu mapa astral: personalidade, emoções, relacionamentos e trabalho.',
-		action: 'Fazer meu mapa astral'
+		summary:
+			'Conheça os planetas, as casas e os aspectos do seu mapa, com uma leitura integrada sobre você.',
+		action: 'Conhecer meu mapa completo'
 	},
 	'three-pillars': {
 		summary: 'Entenda o que Sol, Lua e Ascendente mostram no seu mapa.',
@@ -29,15 +30,16 @@ export const productCopy = {
 		action: 'Ver meu horóscopo'
 	},
 	'date-reading': {
-		summary: 'Consulte os trânsitos do seu mapa para uma data específica.',
-		action: 'Ver previsões para uma data'
+		summary:
+			'Veja os trânsitos do seu mapa para uma data importante e relacione a leitura ao seu momento.',
+		action: 'Consultar uma data especial'
 	},
 	'week-reading': {
 		summary: 'Veja os principais trânsitos da sua semana e os dias em destaque.',
 		action: 'Ver previsões da semana'
 	},
 	'personal-calendar': {
-		summary: 'Organize as datas e os trânsitos do seu período em um calendário pessoal.',
+		summary: 'Acompanhe os trânsitos do seu mapa nos 30 dias seguintes à geração da leitura.',
 		action: 'Criar meu calendário'
 	},
 	'solar-return': {
@@ -77,8 +79,13 @@ export const productCopy = {
 		action: 'Consultar o Tarot'
 	},
 	'purpose-career': {
-		summary: 'Explore vocação, trabalho e sua relação com dinheiro no mapa astral.',
-		action: 'Conhecer meu mapa de carreira'
+		summary:
+			'Explore sua relação com dinheiro, trabalho e vida profissional a partir do mapa de nascimento.',
+		action: 'Conhecer meu mapa de dinheiro e carreira'
+	},
+	'career-forecast-30d': {
+		summary: 'Acompanhe os trânsitos ligados a dinheiro, trabalho e carreira nos próximos 30 dias.',
+		action: 'Ver minhas previsões de dinheiro e carreira'
 	},
 	midheaven: {
 		summary: 'Descubra seu Meio do Céu e entenda sua relação com a vida profissional.',
@@ -105,11 +112,13 @@ export const productCopy = {
 		action: 'Conhecer a leitura do sonho'
 	},
 	'dream-atlas': {
-		summary: 'Reúna seus sonhos por 30 dias e observe os temas que se repetem.',
+		summary:
+			'Registre seus sonhos por 30 dias e receba uma análise integrada dos relatos ao final.',
 		action: 'Começar meu diário de sonhos'
 	},
 	'atv-plus': {
-		summary: 'Acompanhe suas leituras e gerencie os registros que você autorizar guardar.',
+		summary:
+			'Escolha entre Essencial, Ampliado e Premium para acompanhar previsões e leituras a cada 30 dias.',
 		action: 'Conhecer o ATV+'
 	}
 } satisfies Record<string, { summary: string; action: string }>;
@@ -128,3 +137,6 @@ export function customerProduct(id: string) {
 }
 
 export const customerProducts = productCatalog.map((item) => customerProduct(item.id)!);
+
+/** Public offers exclude free tools, historical experiences and the separate ATV+ subscription. */
+export const customerOffers = offeredProductIds.map((id) => customerProduct(id)!);

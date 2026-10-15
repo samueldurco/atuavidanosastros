@@ -32,6 +32,11 @@ describe('saved cartography contract and inert SVG', () => {
 				run.cartography!.houses.cusps.length
 			);
 			expect(first.svg).toContain('data:font/woff2;base64,');
+			expect(first.svg).toContain('fill="#f6efdf"');
+			expect(first.svg).toContain('stroke="#cf9a44"');
+			expect(first.svg).toContain('font-family:ATVEditorial');
+			expect(first.svg).toContain('stroke:#174c69');
+			expect(first.svg).not.toContain('#fcfbf8');
 			expect(first.svg).not.toMatch(/<(script|image|use|foreignObject|a)\b|\bhref=|\bonload=/);
 			expect(first.svg).toContain(
 				'Posições tropicais geocêntricas preservadas do cálculo experimental'

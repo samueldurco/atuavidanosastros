@@ -1,0 +1,12 @@
+{
+  "collection": "P04 — Ciclo Zodiacal e Lunar",
+  "source": "docs/20-produto/loja-signos-v1-seis-projetos/execucao/P04-ciclo-zodiacal-lunar/piloto-digital",
+  "approvalSource": "ACEITE_ARTES_E_PAINEL.json",
+  "ownerArtApprovalRecordedAt": "2026-10-07T13:59:03.599Z",
+  "displayPurpose": "Approved artwork previews; no inventory, sales or physical quality claim.",
+  "physicalQuality": "not-tested",
+  "assets": [
+    { "id": "P04-CICLO-A001", "file": "percurso-dos-doze.png", "sourceFile": "previews/P04-CICLO-A001-prova.png", "sha256": "5094a1b3832d195a78e0b9798dd5d8182a3762504c69947278321808fdb10635" },
+    { "id": "P04-CICLO-A003", "file": "ciclo-lunar.png", "sourceFile": "previews/P04-CICLO-A003-prova.png", "sha256": "e8747439fe9d8c8ef15b1e88b4377a1b7748d161e531af78c422a881e7b26c47" }
+  ]
+}

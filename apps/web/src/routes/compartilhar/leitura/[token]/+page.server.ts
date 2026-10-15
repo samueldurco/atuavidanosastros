@@ -4,14 +4,14 @@ import { sharedReading, shareTokenHash, validShareToken } from '$lib/trials/shar
 import type { SavedTrial } from '$lib/trials/reading';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params, setHeaders }) => {
+export const load: PageServerLoad = async ({ params, setHeaders, platform }) => {
 	setHeaders({
 		'cache-control': 'private, no-store',
 		'x-robots-tag': 'noindex, nofollow',
 		'referrer-policy': 'no-referrer'
 	});
 	if (!validShareToken(params.token)) error(404, 'Este link não está disponível.');
-	const client = trialWriter();
+	const client = trialWriter({ platform });
 	const link = await client
 		.from('atv_trial_shares')
 		.select('owner_id,reading_id')

@@ -11,7 +11,8 @@ import { bodyNames, modernRulers } from './canon';
 import { purposeHouseAt } from './purpose-facts';
 
 export const COMPASS_VERSION = 'atv-private-career-compass/5.0.0';
-export const COMPASS_READING_VERSION = 'atv-career-compass-editorial/5.0.0';
+export const COMPASS_READING_VERSION_V5 = 'atv-career-compass-editorial/5.0.0';
+export const COMPASS_READING_VERSION = 'atv-career-compass-editorial/6.0.0';
 export const compassAspectPolicy: AspectPolicy = {
 	id: 'atv-compass-major-aspects',
 	version: '1.0.0',

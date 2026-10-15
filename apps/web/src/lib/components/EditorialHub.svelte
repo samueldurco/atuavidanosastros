@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { EditorialDocument } from '$lib/server/editorial';
 	import type { PageSeo } from '$lib/seo';
+	import { publicEditorialAuthor } from '$lib/data/editorial-author';
 	let { documents, seo }: { documents: EditorialDocument[]; seo: PageSeo } = $props();
 </script>
 
@@ -11,6 +12,7 @@
 		<p class="lead">{seo.description}</p>
 		{#if documents.length}
 			{#each documents as document (document.id)}
+				{@const author = publicEditorialAuthor(document.author)}
 				<article class="card">
 					<p class="eyebrow">
 						{document.kind === 'reporting'
@@ -23,7 +25,7 @@
 					</p>
 					<h2><a href={document.path}>{document.title}</a></h2>
 					<p>{document.description}</p>
-					<p>Por <a href={`/pessoas/${document.author.id}`}>{document.author.name}</a></p>
+					<p>Por <a href={`/pessoas/${author.id}`}>{author.name}</a></p>
 				</article>
 			{/each}
 		{:else}

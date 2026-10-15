@@ -5,8 +5,20 @@ import { asRole } from './helpers/artifact-fixture.mjs';
 const migration='supabase/migrations/20261013115721_public_free_tool_results.sql';
 const resultId='10000000-0000-4000-8000-000000000001';
 const snapshot={version:'atv-free-tool-result/1.0.0',id:resultId,tool:'carta-do-dia',createdAt:'2026-10-13T12:00:00.000Z',title:'Carta sintética para QA',summary:'Somente isolamento do banco.',facts:[],sections:[],limits:['Fixture de teste, sem aprovação de conteúdo.']};
-async function fixture(){const db=await setupProductDatabase();await db.exec(await file(migration));return db;}
+async function fixture(){const db=await setupProductDatabase();await db.exec(await file(migration));await db.exec(await file('supabase/migrations/20261015145634_expanded_free_tool_result_ids.sql'));return db;}
 const insert=(db,user=owner,value=snapshot)=>db.query('insert into free_tool_results(user_id,id,tool,result) values ($1,$2,$3,$4) on conflict(user_id,id) do nothing',[user,resultId,'carta-do-dia',value]);
+
+test('all nine tools retain private persistence and unknown tools remain denied',async()=>{
+ const db=await fixture();try{
+  for(const tool of ['ascendente','mapa-astral','carta-do-dia','tarot-sim-ou-nao','combinacao-do-casal','registro-de-sonho','meio-do-ceu','dinheiro-no-mapa','carta-do-amor']){
+   const id=crypto.randomUUID(),value={...snapshot,id,tool};
+   await asRole(db,'service_role',null,()=>db.query('insert into free_tool_results(user_id,id,tool,result) values($1,$2,$3,$4)',[owner,id,tool,value]));
+  }
+  assert.equal((await asRole(db,'authenticated',owner,()=>db.query('select * from free_tool_results'))).rows.length,9);
+  assert.equal((await asRole(db,'authenticated',other,()=>db.query('select * from free_tool_results'))).rows.length,0);
+  await assert.rejects(asRole(db,'service_role',null,()=>db.query('insert into free_tool_results(user_id,id,tool,result) values($1,$2,$3,$4)',[owner,resultId,'unknown',{...snapshot,tool:'unknown'}])),/check constraint/);
+ }finally{await db.close();}
+});
 
 test('direct writes denied; trusted save links one owner-only library item and preserves replay',async()=>{
  const db=await fixture();try{

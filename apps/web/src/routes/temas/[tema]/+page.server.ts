@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import { interestNavigation } from '$lib/data/public-navigation';
 import { freeTools } from '$lib/data/free-tools';
-import { customerProducts } from '$lib/data/product-copy';
+import { customerOffers } from '$lib/data/product-copy';
 import { productDetails } from '$lib/data/product-details';
 import { editorialTopic } from '$lib/data/editorial-topics';
 import { publishedEditorial } from '$lib/server/editorial-registry';
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ params }) => {
 	const topic = interestNavigation.find((item) => item.slug === params.tema);
 	if (!topic) error(404, 'Tema não encontrado.');
 	const tools = freeTools.filter((tool) => tool.topicId === topic.id);
-	const products = customerProducts
+	const products = customerOffers
 		.filter((product) => product.universe === topic.productUniverse)
 		.map((product) => ({
 			...product,

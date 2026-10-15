@@ -87,6 +87,9 @@ describe('AstroChartEngineV2 saved geometry', () => {
 		).toHaveLength(4);
 		expect(scene.nodes.filter((n) => n.type === 'text' && n.layer === 'houses')).toHaveLength(12);
 		expect(svg).toContain('AstroChartEngineV2/2.0.0');
+		expect(svg).toContain('#f6efdf');
+		expect(svg).toContain('#4d6231');
+		expect(svg).toContain('#ce9b45');
 		expect(svg).toContain('stroke-dasharray');
 		expect(svg).toContain('<desc');
 		expect(JSON.stringify(saved.calculation)).toBe(before);

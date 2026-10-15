@@ -6,12 +6,13 @@ import {
 } from '@atv/astrology';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { inspectBirthChartProjection } from '../../../../../worker/src/natal-calculators';
-import { canonical } from '../reading';
+import { canonical } from './canonical';
 import { aspectNames, bodyNames, modernRulers } from './canon';
 import { purposeHouseAt } from './purpose-facts';
 
 export const PILLARS_VERSION = 'atv-private-three-pillars/5.0.0';
-export const PILLARS_READING_VERSION = 'atv-three-pillars-editorial/5.0.0';
+export const PILLARS_READING_V5_VERSION = 'atv-three-pillars-editorial/5.0.0';
+export const PILLARS_READING_VERSION = 'atv-three-pillars-editorial/5.1.0';
 export const pillarsAspectPolicy: AspectPolicy = {
 	id: 'atv-pillars-major-aspects',
 	version: '1.0.0',

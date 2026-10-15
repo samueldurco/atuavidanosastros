@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "atv-career-six-erfa/1",
+  "reference": {
+    "pyerfa": "2.0.1.5",
+    "erfa": "2.0.1",
+    "numpy": "2.2.6",
+    "orientation": "IAU 2006/2000A; gst06a + obl06 + nut06a",
+    "solver": "ATV independent vector intersection and bracketed Placidus semi-arc QA oracle v1",
+    "dut1Seconds": 0,
+    "limitations": [
+      "No historical IERS DUT1 measurement",
+      "No independent validation of the user's civil-time zone conversion",
+      "Finite two-birth sample; no global or polar precision claim"
+    ]
+  },
+  "tolerancesArcsec": {
+    "midheaven": 60,
+    "ascendant": 60,
+    "cusp": 120
+  },
+  "cases": [
+    {
+      "id": "shared-five",
+      "utcInstant": "1992-05-17T11:40:00Z",
+      "latitude": -19.9167,
+      "longitude": -43.9345,
+      "orientation": {
+        "armcDegrees": 6.488598225135322,
+        "trueObliquityDegrees": 23.440323474577564
+      },
+      "expectedStatus": "ok",
+      "midheaven": 7.066574350326683,
+      "ascendant": 87.66868812204093,
+      "cusps": [
+        87.66868812204093,
+        119.20072122609193,
+        153.30131319386152,
+        187.06657435032668,
+        217.11954557215398,
+        243.24649425624503,
+        267.6686881220409,
+        299.2007212260919,
+        333.3013131938615,
+        7.066574350326683,
+        37.119545572154,
+        63.246494256245036
+      ]
+    },
+    {
+      "id": "different-birth",
+      "utcInstant": "1985-08-21T17:20:00Z",
+      "latitude": 0,
+      "longitude": 0,
+      "orientation": {
+        "armcDegrees": 229.97086293890544,
+        "trueObliquityDegrees": 23.443104250090148
+      },
+      "expectedStatus": "ok",
+      "midheaven": 232.38100147185617,
+      "ascendant": 317.5246741868184,
+      "cusps": [
+        317.5246741868184,
+        349.0893251366025,
+        21.607993576389692,
+        52.381001471856166,
+        80.78388643988323,
+        108.43829650718993,
+        137.52467418681846,
+        169.0893251366025,
+        201.6079935763897,
+        232.38100147185617,
+        260.78388643988325,
+        288.43829650718993
+      ]
+    }
+  ]
+}

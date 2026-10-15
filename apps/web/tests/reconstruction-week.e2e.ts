@@ -9,7 +9,7 @@ for (const width of [390, 1440]) {
 		await page.goto('/testar-produtos/_spec?product=week-reading');
 		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 		await expect(
-			page.getByRole('heading', { name: 'Previsões da Semana', exact: true })
+			page.getByRole('heading', { name: 'Horóscopo Semanal Pessoal', exact: true })
 		).toBeVisible();
 		await expect(page.getByText('Há uma nova edição desta leitura', { exact: true })).toHaveCount(
 			0

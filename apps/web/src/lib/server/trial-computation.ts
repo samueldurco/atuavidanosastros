@@ -16,6 +16,8 @@ import {
 	type TrialReading
 } from '../trials/reading';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
+import { PILLARS_VERSION } from '../trials/reconstruction/pillars-facts';
+import { verifyPillarsOrigin } from '../trials/reconstruction/pillars-origin';
 
 export type TrialEdition = {
 	calculation: CalculationSnapshot;
@@ -83,6 +85,10 @@ export async function executeTrialRuntime(value: unknown): Promise<TrialRuntimeR
 		} else {
 			if (request.recordedCalculation) throw new Error('Solicitação inválida.');
 			calculation = await calculateTrial(input, request.runId, sources);
+		}
+		if (calculation.version === PILLARS_VERSION) {
+			const origin = await verifyPillarsOrigin(input, calculation);
+			if (!origin.ok) throw new Error(origin.message);
 		}
 		const reading = composeTrialReading(input, calculation);
 		const approval = await approveTrialReading(input, calculation, reading);

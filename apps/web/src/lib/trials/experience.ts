@@ -67,6 +67,11 @@ export const experiences: Record<string, Experience> = {
 		8,
 		'calendar'
 	),
+	'career-forecast-30d': contract(
+		'Acompanhe recursos, rotina e direção profissional ao longo de 30 dias.',
+		12,
+		'calendar'
+	),
 	'solar-return': contract(
 		'Escolha uma intenção para o novo ciclo e acompanhe como ela encontra a vida real.',
 		15,

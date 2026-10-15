@@ -1,7 +1,7 @@
-import { env } from '$env/dynamic/public';
 import { createServerClient } from '@supabase/ssr';
 import type { Handle } from '@sveltejs/kit';
 import { permanentPublicDestination } from '$lib/server/public-redirects';
+import { supabaseAuthBindings } from '$lib/server/runtime-bindings';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const destination = ['GET', 'HEAD'].includes(event.request?.method ?? '')
@@ -13,9 +13,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 			headers.set('x-robots-tag', 'noindex, nofollow');
 		return new Response(null, { status: 301, headers });
 	}
-	const supabaseKey = env.PUBLIC_SUPABASE_PUBLISHABLE_KEY || env.PUBLIC_SUPABASE_ANON_KEY;
-	if (env.PUBLIC_SUPABASE_URL && supabaseKey) {
-		event.locals.supabase = createServerClient(env.PUBLIC_SUPABASE_URL, supabaseKey, {
+	const { url: supabaseUrl, key: supabaseKey } = supabaseAuthBindings(event);
+	if (supabaseUrl && supabaseKey) {
+		event.locals.supabase = createServerClient(supabaseUrl, supabaseKey, {
 			cookies: {
 				getAll: () => event.cookies.getAll(),
 				setAll: (cookiesToSet) => {
