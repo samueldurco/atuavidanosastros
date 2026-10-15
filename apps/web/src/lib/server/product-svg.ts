@@ -1,10 +1,9 @@
 import { productDefinitionFor } from '@atv/domain';
-import { visualExportPalette } from '../data/visual-v4-export';
+import { mvpTheme, mvpThemes } from '../data/mvp-visual';
 import { parseProductRun } from '../product-run';
 import type { CartographyBody } from '../product-cartography';
 import { longitudePoint } from '../product-cartography';
 export { longitudePoint } from '../product-cartography';
-import displayData from '../../../static/brand/fonts/bodoni-moda-variable.woff2?inline';
 import bodyData from '../../../static/brand/fonts/newsreader-variable.woff2?inline';
 import labelData from '../../../static/brand/fonts/onest-variable.woff2?inline';
 
@@ -65,7 +64,15 @@ export function renderProductSvg(value: unknown) {
 		!product?.delivery.includes('svg')
 	)
 		return null;
-	const palette = visualExportPalette(run.productId);
+	const theme = mvpThemes[mvpTheme(product.universe)];
+	const palette = {
+		ink: '#183746',
+		line: '#c7bfac',
+		paper: '#f6efdf',
+		light: '#fff8e9',
+		accent: theme.ink,
+		ornament: theme.accent
+	};
 	const pieces: string[] = [];
 	for (let i = 0; i < 360; i += 5)
 		pieces.push(line(i, i % 30 === 0 ? 272 : i % 10 === 0 ? 281 : 286, 290, 'tick'));
@@ -143,14 +150,16 @@ export function renderProductSvg(value: unknown) {
 <title id="chart-title">${escape(product.name)} — posições no mapa astral</title>
 <desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Trilhas radiais separam os corpos, não representam distância. Linhas de casas e ângulos não são aspectos. Coordenadas também constam na legenda. Este desenho mostra os dados do cálculo experimental.</desc>
 <metadata>${escape(JSON.stringify(metadata))}</metadata>
-<style>@font-face{font-family:ATVDisplay;src:url('${displayData}') format('woff2')}@font-face{font-family:ATVBody;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}
-text{fill:${palette.ink};font-family:ATVLabel,sans-serif;font-size:16px}.title{font-family:ATVDisplay,serif;font-size:42px}.sign{font-family:ATVBody,serif;font-size:21px}.label{font-size:13px;letter-spacing:2px;fill:${palette.ink}}.note,.house-label{font-size:15px;fill:${palette.ink}}.legend{font-size:17px}.tick{stroke:#8791a2;stroke-width:1}.cusp{stroke:#abb2bd;stroke-width:1;stroke-dasharray:3 5}.angle{stroke:${palette.line};stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:${palette.ink};stroke:#fffdf7;stroke-width:2}.body-number{fill:#fffdf7;font-size:11px}.center{font-family:ATVBody,serif;font-size:22px}</style>
-<rect width="1000" height="1360" fill="#fcfbf8"/>
-<g transform="translate(64 18) scale(.34)" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="#bf9153" stroke-width="1.4"/><path d="M50 15C51.9 28 53.2 30.9 65 33C53.2 35.1 51.9 38 50 51C48.1 38 46.8 35.1 35 33C46.8 30.9 48.1 28 50 15Z" fill="#bf9153"/><path d="M17 58C28 53 40 58 50 70C60 58 72 53 83 58M21 70C32 67 41 73 50 82C59 73 68 67 79 70" fill="none" stroke="#bf9153" stroke-width="3.8" stroke-linecap="round"/></g>
-${text(112, 47, 'A TUA VIDA NOS ASTROS · CARTOGRAFIA', 'label')}
+<style>@font-face{font-family:ATVEditorial;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}
+text{fill:${palette.ink};font-family:ATVLabel,sans-serif;font-size:16px}.brand,.title,.sign,.center{font-family:ATVEditorial,serif}.brand{font-size:19px;letter-spacing:1px}.title{font-size:42px}.sign{font-size:21px}.label{font-size:13px;letter-spacing:2px}.note,.house-label{font-size:15px}.legend{font-size:17px}.tick{stroke:${palette.line};stroke-width:1}.cusp{stroke:${palette.accent};stroke-opacity:.65;stroke-width:1.2;stroke-dasharray:3 5}.angle{stroke:${palette.accent};stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:${palette.accent};stroke:${palette.light};stroke-width:2}.body-number{fill:${palette.light};font-size:11px}.center{font-size:22px}</style>
+<rect width="1000" height="1360" fill="${palette.paper}"/>
+<rect x="32" y="22" width="936" height="1316" fill="none" stroke="${palette.line}" stroke-width="1"/>
+<path d="M64 122H288" fill="none" stroke="${palette.ornament}" stroke-width="2"/>
+<g transform="translate(64 18) scale(.34)" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="${palette.ornament}" stroke-width="1.4"/><path d="M50 15C51.9 28 53.2 30.9 65 33C53.2 35.1 51.9 38 50 51C48.1 38 46.8 35.1 35 33C46.8 30.9 48.1 28 50 15Z" fill="${palette.ornament}"/><path d="M17 58C28 53 40 58 50 70C60 58 72 53 83 58M21 70C32 67 41 73 50 82C59 73 68 67 79 70" fill="none" stroke="${palette.ornament}" stroke-width="3.8" stroke-linecap="round"/></g>
+${text(112, 47, 'A TUA VIDA NOS ASTROS · CARTOGRAFIA', 'brand')}
 ${text(64, 96, product.name, 'title')}
 ${text(936, 47, `Revisão ${run.revision}`, 'note', 'end')}
-<circle cx="500" cy="430" r="290" fill="none" stroke="${palette.line}" stroke-width="1.2"/>
+<circle cx="500" cy="430" r="290" fill="none" stroke="${palette.accent}" stroke-width="1.2"/>
 ${pieces.join('')}
 ${text(500, 424, 'Base preservada', 'center', 'middle')}${text(500, 450, 'experimental', 'note', 'middle')}
 ${text(64, 785, 'POSIÇÕES · GRAUS DE EXIBIÇÃO NÃO GARANTEM PRECISÃO', 'label')}

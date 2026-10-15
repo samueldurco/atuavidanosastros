@@ -88,9 +88,10 @@ export const productDetails = {
 		scope: 'O Meio do Céu e sua relação com carreira e reconhecimento profissional.'
 	},
 	'career-compass': {
-		input: 'Data, hora e local de nascimento.',
+		input:
+			'Data, hora e local de nascimento; a leitura personalizada também considera o contexto profissional que você informar.',
 		scope:
-			'O cálculo do Meio do Céu. A ferramenta gratuita já pode ser consultada; a leitura personalizada está em preparação.'
+			'Uma leitura contextual do Meio do Céu, com signo, grau, direção pública, ambientes e tensões possíveis, além de três perguntas práticas. O cálculo gratuito mostra apenas o signo e o grau; a leitura personalizada está em preparação.'
 	},
 	'direction-journey': {
 		input: 'Um objetivo profissional, a data de início e o que você quer desenvolver.',

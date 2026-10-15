@@ -16,7 +16,7 @@ test('career complete reading, provenance, personal approval and recoverable not
 	await expect(
 		page.getByRole('heading', { name: 'Ambientes: condições que permitem contribuir' })
 	).toBeVisible();
-	await page.getByText('Origem e versão', { exact: true }).click();
+	await page.getByText('Dados usados nesta leitura', { exact: true }).click();
 	await expect(page.locator('details ul li').first()).toBeVisible();
 	let body: Record<string, unknown> = {};
 	await page.route('**/api/private-trials/*', async (route) => {

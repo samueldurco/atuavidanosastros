@@ -16,7 +16,10 @@ import { createProductProcessor } from '../../../../worker/src/product-runtime';
 import { createProductPublisher } from '../../../../worker/src/product-publication';
 import { createNatalCalculators } from '../../../../worker/src/natal-calculators';
 import { createContextCalculators } from '../../../../worker/src/context-calculators';
-import { createPurposeCalculators } from '../../../../worker/src/purpose-calculators';
+import {
+	careerCompassBirthBinding,
+	createPurposeCalculators
+} from '../../../../worker/src/purpose-calculators';
 import { createPurposeCareerCalculators } from '../../../../worker/src/purpose-career-calculators';
 import { createSynastryCalculators } from '../../../../worker/src/synastry-calculators';
 import { createCoupleDossierCalculators } from '../../../../worker/src/couple-dossier-calculators';
@@ -1066,7 +1069,7 @@ it.each(profileProducts)(
 				if (candidate.status !== 'prepared_for_review')
 					throw new Error('missing_dossier_candidate');
 				expect(candidate.publication).toBe('blocked');
-				expect(candidate.content.version).toBe('atv-product-delivery/1.18.0');
+				expect(candidate.content.version).toBe('atv-product-delivery/1.20.0');
 				expect(candidate.content.sections).toHaveLength(35);
 				expect(candidate.content.sections.at(-2)!.evidence).toEqual([
 					...new Set(output.claims.flatMap((claim) => claim.evidence))
@@ -1336,9 +1339,21 @@ it.each(profileProducts)(
 			state: 'QUEUED'
 		});
 		await process(productId);
-		expect(deterministicSnapshot((await stored(runId)).calculation)).toEqual(
-			deterministicSnapshot(original.calculation)
-		);
+		const recalculated = (await stored(runId)).calculation;
+		const expected = structuredClone(original.calculation);
+		if (productId === 'career-compass') {
+			// The astronomical result is stable, but the birth fingerprint is bound to each run.
+			expect(original.input.birth).toBeDefined();
+			expect(expected).not.toBeNull();
+			const sourceBinding = expected!.data.birthBinding as Record<string, unknown>;
+			expected!.data.birthBinding = {
+				...sourceBinding,
+				sha256: await careerCompassBirthBinding(original.input.birth!, runId)
+			};
+			expect(recalculated?.data.birthBinding).toEqual(expected!.data.birthBinding);
+			expect(recalculated?.data.birthBinding).not.toEqual(original.calculation?.data.birthBinding);
+		}
+		expect(deterministicSnapshot(recalculated)).toEqual(deterministicSnapshot(expected));
 		expect(await stored(first.id)).toEqual(original);
 		expect(await counts()).toEqual({ runs: 2, events: 6, items: 2, receipts: 1 });
 	}

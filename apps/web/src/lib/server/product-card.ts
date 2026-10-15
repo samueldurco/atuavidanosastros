@@ -1,6 +1,7 @@
 import fontkit, { type Font } from '@pdf-lib/fontkit';
 import { productDefinitionFor } from '@atv/domain';
 import { visualExportPalette } from '../data/visual-v4-export';
+import { productFactLabel } from '../product-fact-label';
 import { parseProductRun } from '../product-run';
 import displayData from './pdf-fonts/bodoni-moda-regular.ttf?inline';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
@@ -28,11 +29,15 @@ class CardUnavailable extends Error {}
 export function renderProductCard(value: unknown, sectionIndex: number) {
 	const run = parseProductRun(value);
 	const product = productDefinitionFor(run?.productId ?? '');
-	const palette = visualExportPalette(run?.productId ?? '');
+	const career = run?.productId === 'career-compass';
+	const palette = career
+		? { ink: '#183746', line: '#c7bfac', paper: '#f6efdf', accent: '#ce9b45' }
+		: { ...visualExportPalette(run?.productId ?? ''), paper: '#fcfbf8', accent: '' };
 	if (
 		!run?.released ||
 		!run.editorial ||
 		!run.calculation ||
+		run.productId === 'career-compass' ||
 		!product?.delivery.includes('web') ||
 		!Number.isInteger(sectionIndex) ||
 		sectionIndex < 0 ||
@@ -139,23 +144,26 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 			y += gap;
 		};
 		paragraph('A TUA VIDA NOS ASTROS · SUA LEITURA', 'label', 22, 32, 32);
+		if (career) paragraph('UM PRIMEIRO PONTO DE ORIENTAÇÃO', 'label', 19, 30, 16);
 		paragraph(product.name, 'label', 24, 34, 18);
-		paragraph(run.editorial.title, 'display', 52, 64, 26);
+		paragraph(run.editorial.title, career ? 'body' : 'display', 52, 64, 26);
 		paragraph(
-			`Seção ${sectionIndex + 1} de ${run.editorial.sections.length} · revisão ${run.revision}`,
+			career
+				? `Parte ${sectionIndex + 1} de ${run.editorial.sections.length} · revisão ${run.revision}`
+				: `Seção ${sectionIndex + 1} de ${run.editorial.sections.length} · revisão ${run.revision}`,
 			'label',
 			22,
 			32,
 			32
 		);
-		paragraph(section.title, 'display', 42, 54, 24);
+		paragraph(section.title, career ? 'body' : 'display', 42, 54, 24);
 		paragraph(section.text);
 		elements.push(`<path d="M80 ${y}H1000" stroke="${palette.line}"/>`);
 		y += 50;
 		paragraph('BASES DESTA SEÇÃO', 'label', 22, 32, 12);
 		for (const fact of facts) {
 			paragraph(
-				`${fact.id} · ${fact.kind === 'reported' ? 'Relatado' : fact.kind === 'drawn' ? 'Sorteado' : 'Calculado'}`,
+				`${career ? productFactLabel(run.productId, fact.id) : fact.id} · ${fact.kind === 'reported' ? 'Relatado' : fact.kind === 'drawn' ? 'Sorteado' : 'Calculado'}`,
 				'label',
 				22,
 				32,
@@ -174,15 +182,25 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 			18
 		);
 		paragraph('Excluir ou revogar o registro não apaga cópias já baixadas.', 'label', 22, 32, 18);
-		paragraph(`Registro ${run.id} · r${run.revision}`, 'label', 18, 28, 8);
-		paragraph(
-			`Método: ${run.calculation.version} · Edição: ${run.editorial.version}`,
-			'label',
-			18,
-			28,
-			8
-		);
-		paragraph(CARD_EXPORT_VERSION, 'label', 18, 28, 0);
+		if (career) {
+			paragraph(
+				`Método: ${run.calculation.version} · Edição: ${run.editorial.version}`,
+				'label',
+				18,
+				28,
+				8
+			);
+		} else {
+			paragraph(`Registro ${run.id} · r${run.revision}`, 'label', 18, 28, 8);
+			paragraph(
+				`Método: ${run.calculation.version} · Edição: ${run.editorial.version}`,
+				'label',
+				18,
+				28,
+				8
+			);
+			paragraph(CARD_EXPORT_VERSION, 'label', 18, 28, 0);
+		}
 		check();
 		const height = Math.max(1350, y + 60);
 		const metadata = {
@@ -190,7 +208,14 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 			runId: run.id,
 			revision: run.revision,
 			sectionIndex,
-			reviewDigest: run.editorial.reviewDigest
+			reviewDigest: run.editorial.reviewDigest,
+			...(career
+				? {
+						calculationVersion: run.calculation.version,
+						readingVersion: run.editorial.version,
+						facts: facts.map((fact) => ({ id: fact.id, source: fact.source }))
+					}
+				: {})
 		};
 		const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="${height}" viewBox="0 0 1080 ${height}" role="img" aria-labelledby="card-title card-desc" lang="pt-BR">
@@ -198,7 +223,7 @@ export function renderProductCard(value: unknown, sectionIndex: number) {
 <metadata>${escape(JSON.stringify(metadata))}</metadata>
 <style>@font-face{font-family:ATVDisplay;src:url('${displayData}') format('truetype')}@font-face{font-family:ATVBody;src:url('${bodyData}') format('truetype')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('truetype')}
 text{fill:${palette.ink};font-kerning:normal;font-variant-ligatures:normal}.display{font-family:ATVDisplay,serif}.body{font-family:ATVBody,serif}.label{font-family:ATVLabel,sans-serif;fill:${palette.ink}}</style>
-<rect width="1080" height="${height}" fill="#fcfbf8"/><path d="M80 28H1000" stroke="${palette.line}"/>
+<rect width="1080" height="${height}" fill="${palette.paper}"/><path d="M80 28H1000" stroke="${career ? palette.accent : palette.line}" stroke-width="${career ? 4 : 1}"/>
 ${elements.join('')}</svg>`;
 		if (new TextEncoder().encode(svg).length > CARD_LIMITS.bytes) return null;
 		return {

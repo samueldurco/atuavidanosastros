@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "atv-career-six-erfa-manifest/1",
+  "generatedAt": "2026-10-15T11:21:36.483061+00:00",
+  "fixtureSha256": "1d5e08ac621d1460aadd2f09318c8dbf077ef547e942994790bf6da10c0a40c0",
+  "generatorSha256": "fc6e7ab4b717aaad5a77349d98d99c9964a159402742cd2709349c333c74d92e",
+  "geometrySourceSha256": "6ebb1b7d341aeb5a92946838197923c75b7bfa8f51e1a0fdbff33fe32605e8cb",
+  "sources": [
+    "https://pypi.org/project/pyerfa/2.0.1.5/",
+    "https://github.com/liberfa/erfa/blob/v2.0.1/src/gst06a.c",
+    "https://github.com/liberfa/erfa/blob/v2.0.1/src/obl06.c",
+    "https://github.com/liberfa/erfa/blob/v2.0.1/src/nut06a.c",
+    "https://ncgrastrology.org/wp-content/uploads/publications/geocosmic-journal-archive/2006_NCGR_Journal_Spring_2006.pdf"
+  ],
+  "promotion": false
+}

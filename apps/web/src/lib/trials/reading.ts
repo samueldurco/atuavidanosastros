@@ -13,7 +13,11 @@ import {
 import { BIRTH_VERSION, BIRTH_READING_VERSION } from './reconstruction/birth-facts';
 import { composeReconstructedBirth, reviewReconstructedBirth } from './reconstruction/birth';
 import { composeReconstructedPillars, reviewReconstructedPillars } from './reconstruction/pillars';
-import { COMPASS_VERSION, COMPASS_READING_VERSION } from './reconstruction/compass-facts';
+import {
+	COMPASS_VERSION,
+	COMPASS_READING_VERSION,
+	COMPASS_READING_VERSION_V5
+} from './reconstruction/compass-facts';
 import { composeReconstructedCompass, reviewReconstructedCompass } from './reconstruction/compass';
 import { ATLAS_VERSION } from './reconstruction/atlas-facts';
 import { composeReconstructedAtlas, reviewReconstructedAtlas } from './reconstruction/atlas';
@@ -195,6 +199,7 @@ export async function approveTrialReading(
 	const reconstructed =
 		candidate.version === RECONSTRUCTION_VERSION ||
 		candidate.version === COMPASS_READING_VERSION ||
+		candidate.version === COMPASS_READING_VERSION_V5 ||
 		candidate.version === PILLARS_READING_VERSION ||
 		candidate.version === BIRTH_READING_VERSION ||
 		candidate.version === ASCENDANT_READING_VERSION ||
@@ -206,7 +211,10 @@ export async function approveTrialReading(
 			? composeV2(input, calculation)
 			: v3
 				? composeV3(input, calculation)
-				: composeTrialReading(input, calculation);
+				: candidate.version === COMPASS_READING_VERSION_V5 &&
+					  calculation.version === COMPASS_VERSION
+					? composeReconstructedCompass(input, calculation, 'v5')
+					: composeTrialReading(input, calculation);
 	if (canonical(candidate) !== canonical(expected)) return null;
 	if (
 		reconstructed &&

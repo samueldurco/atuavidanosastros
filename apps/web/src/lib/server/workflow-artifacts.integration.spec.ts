@@ -18,6 +18,7 @@ it('renders a real report, stores its bytes and recovers through the owner API; 
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
 		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
 		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
+		await db.exec(await file('supabase/migrations/20261015125547_career_web_export_1_4.sql'));
 		const reading = await readyArtifactFixture(db);
 		await db.exec('update product_artifact_policy set enabled=true');
 		const query = async (

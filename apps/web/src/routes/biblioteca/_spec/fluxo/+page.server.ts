@@ -76,7 +76,10 @@ export const load: PageServerLoad = async ({ url }) => {
 	if (url.searchParams.get('product') === 'daily-card')
 		return dailyCardReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'career-compass')
-		return careerCompassReaderFixture(url.searchParams.get('state'));
+		return careerCompassReaderFixture(
+			url.searchParams.get('state'),
+			url.searchParams.get('profile')
+		);
 	if (url.searchParams.get('product') === 'three-pillars')
 		return threePillarsReaderFixture(url.searchParams.get('state'));
 	if (url.searchParams.get('product') === 'ascendant')

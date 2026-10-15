@@ -19,6 +19,12 @@ export {
   prepareProductFacts,
   evaluateProductDraft,
 } from "./product-editorial.ts";
+export {
+  CAREER_COMPASS_CANDIDATE_VERSION,
+  composeCareerCompassCandidate,
+  prepareCareerCompassCandidate,
+} from "./career-compass-candidate.ts";
+export { processNextCareerCompassCandidate } from "./career-compass-persistence.ts";
 
 export type WorkerJobName =
   "hotmart.reconcile" | "delivery.render" | "email.dispatch" | "account.erase";

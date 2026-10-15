@@ -18,6 +18,7 @@ import {
 } from "./contracts.ts";
 import { buildPrompt } from "./prompt.ts";
 import { BIRTH_CHART_EDITORIAL_VERSION } from "./birth-chart.ts";
+import { CAREER_COMPASS_FULL_EDITORIAL_VERSION } from "./career-compass-full.ts";
 import {
   SYNASTRY_EDITORIAL_VERSION,
   SYNASTRY_MAX_INPUT_CHARS,
@@ -164,7 +165,8 @@ export class EditorialGateway {
     if (
       (input.facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION &&
         input.tier === "free") ||
-      ([SYNASTRY_EDITORIAL_VERSION, COUPLE_DOSSIER_EDITORIAL_VERSION].includes(
+      ([SYNASTRY_EDITORIAL_VERSION, COUPLE_DOSSIER_EDITORIAL_VERSION,
+        CAREER_COMPASS_FULL_EDITORIAL_VERSION].includes(
         input.facts.editorialProfile ?? "",
       ) &&
         input.tier !== "premium")

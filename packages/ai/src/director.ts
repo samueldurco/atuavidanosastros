@@ -56,6 +56,10 @@ import {
   inspectCareerCompass,
 } from "./career-compass.ts";
 import {
+  CAREER_COMPASS_FULL_EDITORIAL_VERSION,
+  inspectCareerCompassFull,
+} from "./career-compass-full.ts";
+import {
   THREE_PILLARS_EDITORIAL_VERSION,
   inspectThreePillars,
 } from "./three-pillars.ts";
@@ -214,6 +218,8 @@ export function inspectReading(
   }
   if (facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION)
     findings.push(...inspectCareerCompass(reading));
+  if (facts.editorialProfile === CAREER_COMPASS_FULL_EDITORIAL_VERSION)
+    findings.push(...inspectCareerCompassFull(reading, facts));
   if (facts.editorialProfile === THREE_PILLARS_EDITORIAL_VERSION)
     findings.push(...inspectThreePillars(reading));
   if (facts.editorialProfile === BIRTH_CHART_EDITORIAL_VERSION)

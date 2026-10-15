@@ -1,0 +1,3 @@
+# Preserve the generator bytes recorded in the Career Compass oracle manifest.
+fetch-career-six-oracle.mjs text eol=lf
+generate-career-six-erfa.py text eol=lf

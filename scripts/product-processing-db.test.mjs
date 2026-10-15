@@ -290,7 +290,14 @@ test('commercial runtime crosses its five active universes through SQL and stops
     'midheaven','career-compass','dream-reading','dream-journal'
   ].sort());
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
-  assert.ok(metrics.every(e=>Object.keys(e).sort().join(',')==='attempt,durationMs,event,outcome'));
+  assert.ok(metrics.some(e=>e.event==='product.processing'));
+  assert.ok(metrics.some(e=>e.event==='product.career_compass_candidate'));
+  assert.ok(metrics.every(e=>{
+    const keys=Object.keys(e).sort().join(',');
+    return e.event==='product.processing'
+      ? keys==='attempt,durationMs,event,outcome'
+      : e.event==='product.career_compass_candidate' && keys==='durationMs,event,outcome';
+  }));
   assert.ok(!JSON.stringify(metrics).includes(owner));assert.ok(!JSON.stringify(metrics).includes('sintético'));
 });
 
