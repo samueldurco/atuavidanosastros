@@ -27,6 +27,12 @@ Escopo autorizado nesta conversa: registros independentes ao longo de 30 dias re
 - PDF final do exemplo: **5 páginas** renderizadas com Poppler e inspecionadas; texto extraído com pypdf confirmou o aviso em todas as páginas e os oito relatos. Sem corte ou sobreposição observados. As páginas preservam capa, capítulos, pergunta/prática, método e paginação.
 - Logs e artefatos locais: `test-results/private-dream-atlas-db.log`, `test-results/dream-atlas-final-unit.log`, `test-results/dream-atlas-reading-final.log` e `test-results/dream-atlas/` (PDF, extração e pranchas). São evidências sintéticas; não são diários de usuários nem aceite do proprietário.
 
+### Verificação no navegador integrado
+
+A primeira execução no servidor local integrado (`127.0.0.1:4182`) aprovou três dos quatro cenários: demonstração em 390 e 1440 px, com navegação, marcador temporário, ausência de escrita, acessibilidade automatizada, ausência de rolagem horizontal e download real do PDF, além da recusa de acesso anônimo nas rotas privadas. Os testes usam fixtures declaradas. O fluxo de registro usa respostas de API simuladas; não substitui os testes de persistência e autorização no banco.
+
+O cenário de registro detectou uma falha real de renderização após o primeiro sonho: `prepareDreamAtlasFacts` recebia os proxies reativos do Svelte, incompatíveis com o `structuredClone` usado na validação do domínio. O componente agora passa um snapshot simples para esse cálculo, mantendo os mesmos validadores e a mesma persistência. O teste passou a capturar erros de JavaScript também nesse fluxo. A correção foi formatada e aprovada pelo ESLint focal; a repetição no build integrado permanece pendente nesta revisão. Evidência da detecção: `test-results/architecture-dream-e2e.txt` e trace de `architecture-dream-e2e/`.
+
 ## Limites desta revisão
 
 Esta evidência cobre implementação e validação local. A execução principal coordena check/lint/build, integração hospedada, aplicação da migração e autorização real da conta. A verificação visual interativa será complementada sobre o servidor integrado estável. Nenhuma concessão real ou preço foi cadastrado por esta frente. O período real nunca foi abreviado; somente fixtures declaradas usam datas anteriores.

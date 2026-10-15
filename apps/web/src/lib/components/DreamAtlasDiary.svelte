@@ -52,7 +52,9 @@
 			? new Date(Date.parse(`${startDate}T00:00:00Z`) + 29 * 86_400_000).toISOString().slice(0, 10)
 			: null
 	);
-	const facts = $derived(startDate ? prepareDreamAtlasFacts(startDate, entries) : null);
+	const facts = $derived(
+		startDate ? prepareDreamAtlasFacts(startDate, $state.snapshot(entries)) : null
+	);
 	const lines = (value: string) =>
 		value
 			.split(/\r?\n/)

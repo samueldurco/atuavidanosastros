@@ -20,6 +20,7 @@ for (const width of [390, 1440]) {
 		});
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto(exampleUrl);
+		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 		await expect(
 			page.getByRole('heading', { name: 'Veja como fica a análise dos 30 dias' })
 		).toBeVisible();
@@ -72,6 +73,8 @@ test('mocked diary UI stores a record without interpretation, then exposes synth
 	page
 }, testInfo) => {
 	await page.setViewportSize({ width: 390, height: 844 });
+	const errors: string[] = [];
+	page.on('pageerror', (problem) => errors.push(problem.message));
 	const id = '11111111-1111-4111-8111-111111111111';
 	const start = new Date().toISOString().slice(0, 10);
 	const startedAt = `${start}T12:00:00.000Z`;
@@ -121,10 +124,11 @@ test('mocked diary UI stores a record without interpretation, then exposes synth
 		});
 	});
 	await page.goto(intakeUrl);
+	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 	await expect(
 		page.getByRole('button', { name: 'Iniciar meus 30 dias', exact: true })
 	).toBeDisabled();
-	await page.getByLabel(/Autorizo guardar meus relatos nesta conta/).check();
+	await page.getByRole('checkbox', { name: /Autorizo guardar meus relatos/ }).check();
 	await page.getByRole('button', { name: 'Iniciar meus 30 dias', exact: true }).click();
 	await expect(
 		page.getByText('Nenhum sonho registrado neste período.', { exact: true })
@@ -140,7 +144,7 @@ test('mocked diary UI stores a record without interpretation, then exposes synth
 		);
 	await page.getByLabel(/Emoções relatadas/).fill('curiosidade');
 	await page.getByLabel(/Suas associações pessoais/).fill('um projeto de escrita');
-	await page.getByLabel(/Incluir este relato na análise integrada/).check();
+	await page.getByRole('checkbox', { name: /Incluir este relato na análise integrada/ }).check();
 	await page.getByRole('button', { name: 'Guardar registro', exact: true }).click();
 	await expect(
 		page.getByText('Registro guardado no seu diário privado.', { exact: true })
@@ -173,6 +177,7 @@ test('mocked diary UI stores a record without interpretation, then exposes synth
 			.violations
 	).toEqual([]);
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+	expect(errors).toEqual([]);
 });
 
 test('anonymous requests cannot open the real owner example or start a real diary', async ({
