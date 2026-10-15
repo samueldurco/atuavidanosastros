@@ -1,5 +1,17 @@
 begin;
 
+-- Self-contained: the older continuity migration is not a hosted prerequisite.
+-- Count UTF-16 units to match the JavaScript domain budget, including emoji.
+create function public.private_dream_atlas_text_valid(p_text text,p_max integer)
+returns boolean language sql immutable set search_path='' as $$
+  select coalesce(octet_length(p_text)<=p_max*4 and p_text ~ '[^[:space:]]'
+    and translate(p_text,chr(9)||chr(10)||chr(13),'') !~ '[[:cntrl:]]'
+    and (select coalesce(sum(case when ascii(c)>65535 then 2 else 1 end),0)
+      from regexp_split_to_table(p_text,'') c)<=p_max,false)
+$$;
+revoke all on function public.private_dream_atlas_text_valid(text,integer)
+  from public,anon,authenticated,service_role;
+
 -- Private evaluation only. No commercial release or entitlement is created.
 create table public.atv_trial_dream_cycles (
   id uuid primary key default gen_random_uuid(),
@@ -65,15 +77,15 @@ begin
      p_entry->>'version' is distinct from 'atv-dream-atlas-entry/1' or
      jsonb_typeof(p_entry->'includeInSynthesis') is distinct from 'boolean' or
      jsonb_typeof(p_entry->'narrative') is distinct from 'string' or
-     not public.product_continuity_text_valid(p_entry->>'narrative',6000) or
+     not public.private_dream_atlas_text_valid(p_entry->>'narrative',6000) or
      jsonb_typeof(p_entry->'emotions') is distinct from 'array' or
      jsonb_typeof(p_entry->'associations') is distinct from 'array' or
      coalesce(p_entry->>'dreamDate','') !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' then
     raise exception 'invalid_atlas_entry' using errcode='22023';
   end if;
   if jsonb_array_length(p_entry->'emotions')>8 or jsonb_array_length(p_entry->'associations')>8 or
-    exists(select 1 from jsonb_array_elements(p_entry->'emotions') v where jsonb_typeof(v)<>'string' or not public.product_continuity_text_valid(v#>>'{}',80)) or
-    exists(select 1 from jsonb_array_elements(p_entry->'associations') v where jsonb_typeof(v)<>'string' or not public.product_continuity_text_valid(v#>>'{}',200)) then
+    exists(select 1 from jsonb_array_elements(p_entry->'emotions') v where jsonb_typeof(v)<>'string' or not public.private_dream_atlas_text_valid(v#>>'{}',80)) or
+    exists(select 1 from jsonb_array_elements(p_entry->'associations') v where jsonb_typeof(v)<>'string' or not public.private_dream_atlas_text_valid(v#>>'{}',200)) then
     raise exception 'invalid_atlas_entry' using errcode='22023';
   end if;
   day:=(p_entry->>'dreamDate')::date;

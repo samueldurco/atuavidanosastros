@@ -18,13 +18,22 @@ const insertReading=(cycle,ids,revisions,options={})=>asRole(db,'service_role',n
 before(async()=>{
   db=await setupProductDatabase();
   await db.exec(await file('supabase/migrations/20261006140000_private_product_trials.sql'));
-  const continuity=await file('supabase/migrations/20260928130000_product_continuity.sql');
-  await db.exec(continuity.slice(continuity.indexOf('create function public.product_continuity_text_valid'),continuity.indexOf('revoke all on function public.product_continuity_text_valid')));
+  // Match the hosted baseline: the historical continuity helper is absent.
+  assert.equal((await db.query("select to_regprocedure('public.product_continuity_text_valid(text,integer)') as helper")).rows[0].helper,null);
   await db.exec(await file('supabase/migrations/20261015152322_private_dream_atlas_cycles.sql'));
   await db.query('insert into atv_trial_grants(owner_id) values($1),($2)',[owner,other]);
   today=(await db.query("select (now() at time zone 'UTC')::date::text as day")).rows[0].day;
 });
 after(async()=>{await db?.close();});
+test('migration is self-contained and its UTF-16 text validator is internal only',async()=>{
+  assert.equal((await db.query("select to_regprocedure('public.product_continuity_text_valid(text,integer)') as helper")).rows[0].helper,null);
+  for(const [value,limit,expected] of [['🌙'.repeat(40),80,true],['🌙'.repeat(41),80,false],['a\nb\tc',80,true],[' \n\t',80,false],['a\u0001b',80,false]]) {
+    assert.equal((await db.query('select public.private_dream_atlas_text_valid($1,$2) as valid',[value,limit])).rows[0].valid,expected);
+  }
+  for(const role of ['anon','authenticated','service_role']) {
+    assert.equal((await db.query("select has_function_privilege($1,'public.private_dream_atlas_text_valid(text,integer)','EXECUTE') as allowed",[role])).rows[0].allowed,false);
+  }
+});
 test('server owns the start and 30-day duration; retries reuse the same active cycle',async()=>{
   const key=randomUUID(); active=(await start(key)).rows[0];
   assert.equal(active.start_date.toISOString?.().slice(0,10)??active.start_date,today);
