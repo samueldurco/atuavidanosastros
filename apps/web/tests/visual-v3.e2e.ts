@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { productOffers, productSlugAliases } from '@atv/domain';
+import { productCatalog, productOffers, productSlugAliases } from '@atv/domain';
 import { scanAccessibility } from './fixtures/accessibility';
 
 const surfaces = [
@@ -35,9 +35,14 @@ async function expectDeliveredBrandImages(page: Page, context: string) {
 		.poll(
 			() =>
 				images.evaluateAll((nodes) => {
-					const required = (nodes as HTMLImageElement[]).filter(
-						(image) => image.loading !== 'lazy' || image.getBoundingClientRect().top < innerHeight
-					);
+					const required = (nodes as HTMLImageElement[]).filter((image) => {
+						const box = image.getBoundingClientRect();
+						const rendered = box.width > 0 && box.height > 0;
+						const inViewport =
+							box.bottom > 0 && box.top < innerHeight && box.right > 0 && box.left < innerWidth;
+						// Responsive ornaments may be hidden; offscreen carousel cards stay lazy.
+						return rendered && (image.loading !== 'lazy' || inViewport);
+					});
 					return (
 						required.length > 0 &&
 						required.every((image) => image.complete && image.naturalWidth > 0)
@@ -198,6 +203,7 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await page.goto('/produtos/mapa-astral-dinheiro-carreira');
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
 	await expect(page.locator('.product-offer-art .product-art')).toHaveCount(1);
+	await expect(page.getByRole('navigation', { name: 'Atalhos principais' })).toBeVisible();
 	await page.evaluate(() => {
 		document.documentElement.style.zoom = '2';
 	});
@@ -211,6 +217,15 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await expect(heading).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Ver disponibilidade', exact: false })).toBeVisible();
 	await expectNoOverflow(page, 'artwork failure at 200% zoom');
+	await expect(page.getByRole('navigation', { name: 'Atalhos principais' })).toBeHidden();
+	const menu = page.getByRole('button', { name: 'Menu', exact: true });
+	await menu.click();
+	await expect(
+		page.getByRole('navigation', { name: 'Navegação principal', exact: true })
+	).toBeVisible();
+	await expectNoOverflow(page, 'open navigation at 200% zoom');
+	await page.keyboard.press('Escape');
+	await expect(menu).toBeFocused();
 	await scanAccessibility(page, testInfo);
 });
 
@@ -251,5 +266,10 @@ test('MVP: public offer aliases redirect to the current catalog without exposing
 	const compass = await request.get('/bussola-de-carreira', { maxRedirects: 0 });
 	expect(compass.status()).toBe(308);
 	expect(compass.headers().location).toBe('/ferramentas/meio-do-ceu');
-	expect((await request.get('/produtos/bussola-de-carreira')).status()).toBe(404);
+	const offeredIds = new Set(productOffers.map((product) => product.id));
+	for (const product of productCatalog) {
+		if (offeredIds.has(product.id) || Object.hasOwn(productSlugAliases, product.slug)) continue;
+		const path = `/produtos/${product.slug}`;
+		expect((await request.get(path, { maxRedirects: 0 })).status(), path).toBe(404);
+	}
 });

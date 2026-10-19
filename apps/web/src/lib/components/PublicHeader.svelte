@@ -115,6 +115,9 @@
 </header>
 
 <style>
+	.site-header {
+		container: public-header / inline-size;
+	}
 	.topic-icon {
 		width: 21px;
 		height: 21px;
@@ -154,6 +157,11 @@
 		text-underline-offset: 0.3em;
 	}
 	@media (max-width: 1199px) {
+		.intent-links {
+			display: none;
+		}
+	}
+	@container public-header (max-width: 1199px) {
 		.intent-links {
 			display: none;
 		}
