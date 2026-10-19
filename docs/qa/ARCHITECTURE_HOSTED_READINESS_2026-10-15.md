@@ -45,3 +45,11 @@ A revisão encontrou leitura direta de `$env/dynamic/private` no runtime privado
 O evento também é propagado no sorteio persistido de Tarot, na atualização de leituras e na abertura de links compartilhados. A mudança mantém autenticação, consentimento, RLS, grants, geração idempotente, protocolo do runtime e gates de aprovação existentes.
 
 Validação local: 118 testes em seis arquivos focais, ESLint focal e `svelte-check` sem erros ou avisos. Evidências em `test-results/runtime-bindings-20261015.txt`, `test-results/runtime-bindings-eslint-20261015.txt` e `test-results/runtime-bindings-svelte-check-20261015.txt`. Os testes cobrem prioridade da plataforma, fallback, isolamento entre requisições, desativação explícita, ausência de vazamento e indisponibilidade do banco. Esta correção ainda não foi publicada; a causa efetiva e a resolução do 503 remoto precisam de novo probe após o deployment coordenado. Nenhum segredo foi alterado.
+
+## Diagnóstico posterior à publicação — 19/10/2026
+
+A reforma foi publicada no deployment `9e6436ef-90fd-4e68-aee2-18468b60e4cc`, SHA `f2320742f70bd298e01ed981bc28c6d38845d237`, cuja árvore corresponde ao candidato aprovado `861a858e082a1f085ebc1628a441f7df7d875106`. O health privado continua retornando 503 e `configurationReady:false`. A API autenticada confirma a URL correta e os dois nomes de segredos tanto na configuração de produção quanto no deployment; seus valores permanecem omitidos. Isso não identifica qual verificação de configuração falha. Evidência sanitizada: `test-results/private-health-bindings-20261019.json`.
+
+O probe passa a devolver somente três booleanos adicionais: `urlValid`, `serviceRolePresent` e `runtimeKeyPresent`. São os mesmos critérios do guard existente; a disponibilidade continua exigindo configuração completa e consulta ao banco bem-sucedida. A resposta não inclui valores, comprimentos, hashes, registros nem erros do provedor. Nenhum segredo ou configuração hospedada foi alterado nesta investigação.
+
+Validação focal: 14 testes passaram, incluindo ausência, string vazia e espaços para cada binding, URL sem HTTPS e contrato fechado da resposta sem conteúdo privado. Prettier e ESLint focais passaram; `svelte-check` terminou sem erros ou avisos. A publicação deste diagnóstico depende do CI e do fluxo Pages coordenado; o 503 permanece pendente até o próximo probe hospedado.
