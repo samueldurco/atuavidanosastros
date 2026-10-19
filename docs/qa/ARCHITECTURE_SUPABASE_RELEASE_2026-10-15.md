@@ -55,6 +55,18 @@ pnpm exec supabase functions deploy atv-free-tools-runtime --project-ref irgnhvo
 
 Não usar o CLI como substituto silencioso quando o MCP retorna erro de autorização. A publicação de migrations segue [a orientação de migrações Supabase](https://supabase.com/docs/guides/deployment/database-migrations), mas nesta entrega aplica somente a lista explícita acima.
 
+## Revalidação somente leitura em 19/10/2026
+
+Preflight às 09:07 UTC: projeto `ACTIVE_HEALTHY`, PostgreSQL `17.6.1.166`, mesmas 13 migrações e mesma última versão `20261013145855`. As duas funções permanecem ACTIVE, com as versões, JWT e hashes ezbr de 15/10 acima. As três migrações da reforma continuam pendentes: a coluna `owner_evaluation` e as três tabelas novas ainda não existem. O guard legado de testes existe; o helper histórico de texto permanece ausente, conforme o baseline já coberto pela migração do Diário.
+
+A identidade foi reconciliada com o arquivo operacional nominal da concessão original, preservado fora do Git; a consulta retornou uma conta correspondente, Google confirmado e grant ativo. Não se presumiu titularidade apenas por haver uma única concessão. Nenhum UUID/email foi incluído nesta nota. Nenhuma concessão ou dado foi alterado.
+
+Backups completos dos dois runtimes, payloads prontos para redeploy de recuperação, estado remoto e manifest com SHA-256 estão no diretório ignorado `test-results/supabase-preflight-20261019/`. `manifest.json` registra os arquivos e hashes; `nominal-owner.private.json` é evidência privada e não deve ser exibido ou versionado. A preservação em disco e a exclusão pelo Git foram verificadas. O backup não constitui publicação dos novos runtimes.
+
+Advisors de segurança e performance têm exatamente os mesmos tipos, severidades e contagens do baseline de 15/10. Não apareceu regressão de schema entre as datas. O changelog oficial foi conferido: a remoção futura de cifras TLS legadas em novembro e os avisos da atualização PostgreSQL não alteram esta sequência de release; não houve upgrade de banco, mudança de TLS ou extensão nesta etapa. Referências: [TLS](https://supabase.com/changelog/cbc-tls-ciphers-deprecated) e [PostgreSQL](https://supabase.com/changelog/postgres-15-19-17-11-breaking-changes).
+
+Próximo passo: aguardar CI do SHA final, congelar o candidato com o preparador local e seguir a sequência hospedada acima. Nenhuma mutação hospedada foi executada neste preflight.
+
 ## Recuperação sem apagar dados
 
 Se houver falha em uma migration, interromper a sequência, consultar o estado real e executar correção aditiva; não aplicar as seguintes por tentativa. Se o resultado da chamada for desconhecido, investigar antes de repetir. Para incidente de avaliação, executar em transação `supabase/rollback/20261015145546_atv_plus_owner_simulation.sql`: revoga a marca de avaliação, cancela ciclos e fecha RPC de abertura, mantendo leituras recebidas. Para fechar escrita do Diário, usar `supabase/rollbacks/20261015152322_private_dream_atlas_cycles.sql`: preserva ciclos, relatos e leituras, revogando as três RPCs de mutação. Os guards de síntese permanecem.
