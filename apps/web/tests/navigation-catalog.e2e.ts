@@ -5,8 +5,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, testInfo) => {
-	await page.setViewportSize({ width: 1440, height: 1000 });
+	await page.setViewportSize({ width: 1920, height: 1080 });
 	await page.goto('/leituras');
+	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
+	await page.screenshot({ path: testInfo.outputPath('cabecalho-desktop-simples.png') });
 	const button = page.getByRole('button', { name: 'Menu', exact: true });
 	await expect(button).toBeEnabled();
 	await button.click();

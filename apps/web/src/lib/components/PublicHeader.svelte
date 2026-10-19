@@ -4,7 +4,6 @@
 	import {
 		interestNavigation,
 		navigationGroups,
-		primaryNavigation,
 		secondaryNavigation
 	} from '$lib/data/public-navigation';
 	import BrandLogo from './BrandLogo.svelte';
@@ -42,18 +41,6 @@
 			<BrandLogo />
 		</a>
 		<div class="header-actions">
-			<nav class="intent-links" aria-label="Atalhos principais">
-				{#each primaryNavigation as item (item.href)}
-					<a
-						href={item.href}
-						aria-current={page.url.pathname === item.href ||
-						page.url.pathname.startsWith(`${item.href}/`)
-							? 'page'
-							: undefined}
-						onclick={dismiss}>{item.label}</a
-					>
-				{/each}
-			</nav>
 			<a class="header-account" href={page.data.user ? '/dashboard' : '/entrar'}
 				>{page.data.user ? 'Minha área' : 'Entrar'}</a
 			>
@@ -129,9 +116,6 @@
 </header>
 
 <style>
-	.site-header {
-		container: public-header / inline-size;
-	}
 	.topic-icon {
 		width: 21px;
 		height: 21px;
@@ -154,31 +138,6 @@
 	.topic-title {
 		margin: 1.5rem 0 0;
 		color: inherit;
-	}
-	.intent-links {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-	}
-	.intent-links a {
-		display: inline-flex;
-		align-items: center;
-		min-height: 48px;
-		text-decoration: none;
-	}
-	.intent-links a[aria-current='page'] {
-		text-decoration: underline;
-		text-underline-offset: 0.3em;
-	}
-	@media (max-width: 1399px) {
-		.intent-links {
-			display: none;
-		}
-	}
-	@container public-header (max-width: 1399px) {
-		.intent-links {
-			display: none;
-		}
 	}
 	.menu-title {
 		font: 500 1.7rem/1.15 var(--atv-font-display);

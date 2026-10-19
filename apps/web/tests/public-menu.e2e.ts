@@ -7,7 +7,7 @@ test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
 
-for (const width of [320, 390, 820, 1440]) {
+for (const width of [320, 390, 820, 1440, 1920]) {
 	test(`menu por intenção: destinos, teclado e reflow em ${width}px`, async ({
 		page,
 		request
@@ -16,6 +16,11 @@ for (const width of [320, 390, 820, 1440]) {
 		await page.goto('/');
 		const button = page.getByRole('button', { name: 'Menu', exact: true });
 		await expect(button).toBeEnabled();
+		const header = page.locator('header.site-header');
+		await expect(header.getByRole('link')).toHaveCount(2);
+		await expect(header.getByRole('link', { name: 'Entrar', exact: true })).toBeInViewport();
+		await expect(button).toBeInViewport();
+		await expect(header.locator('.header-actions a')).toHaveCount(1);
 		await button.focus();
 		await page.keyboard.press('Enter');
 		const nav = page.getByRole('navigation', { name: 'Navegação principal' });
