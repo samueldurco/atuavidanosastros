@@ -92,9 +92,7 @@
 					Conheça a proposta de acompanhamento das suas leituras e dos registros que você autorizar
 					guardar.
 				</p>
-				<a class="text-link" href="/produtos/atv-plus"
-					>Conhecer o ATV+ <span aria-hidden="true">→</span></a
-				>
+				<a class="text-link" href="/atv-mais">Conhecer o ATV+ <span aria-hidden="true">→</span></a>
 			</div>
 			<MvpProductArt productId="atv-plus" />
 		</div>

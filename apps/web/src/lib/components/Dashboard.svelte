@@ -7,8 +7,10 @@
 	import StatePanel from '$lib/components/ui/StatePanel.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import { natalSummaryCopy, type DashboardData } from '$lib/dashboard';
+	import type { AccountRights } from '$lib/account-rights';
+	import AccountRightsPanel from '$lib/components/AccountRightsPanel.svelte';
 	import DashboardContinuity from '$lib/components/DashboardContinuity.svelte';
-	let { data }: { data: DashboardData } = $props();
+	let { data, rights }: { data: DashboardData; rights: AccountRights } = $props();
 	const natalCopy = $derived(natalSummaryCopy(data.natal));
 </script>
 
@@ -55,6 +57,7 @@
 			<a href={natalCopy.href}>{natalCopy.action} →</a>
 		</div>
 	</section>
+	{#if !data.preview}<AccountRightsPanel {rights} compact />{/if}
 	<div class="dashboard-grid">
 		<div>
 			<section aria-labelledby="resume-title">

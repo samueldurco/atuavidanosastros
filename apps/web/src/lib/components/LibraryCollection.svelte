@@ -10,10 +10,17 @@
 	import ContinuityAccess from '$lib/components/ContinuityAccess.svelte';
 	import { customerProducts } from '$lib/data/product-copy';
 	import { libraryItemHref, libraryPageHref, type LibraryPageData } from '$lib/library-page';
+	import type { AccountRights } from '$lib/account-rights';
+	import AccountRightsPanel from '$lib/components/AccountRightsPanel.svelte';
 	let {
 		data,
+		rights,
 		pageHref = libraryPageHref
-	}: { data: LibraryPageData; pageHref?: (before: string | null) => string } = $props();
+	}: {
+		data: LibraryPageData;
+		rights: AccountRights;
+		pageHref?: (before: string | null) => string;
+	} = $props();
 	let query = $state('');
 	let universe = $state('all');
 	let sort = $state('recent');
@@ -69,6 +76,7 @@
 			? 'Entre para acessar as leituras salvas na sua conta.'
 			: 'Abra suas leituras salvas, consulte pedidos ou escolha uma nova leitura.'}
 	/>
+	{#if !data.preview && !data.pagination.expired}<AccountRightsPanel {rights} />{/if}
 	<details class="intake-options">
 		<summary>Conhecer as leituras e consultar disponibilidade</summary>
 		<p>Confira a disponibilidade de cada produto antes de fazer um pedido.</p>
