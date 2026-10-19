@@ -6,6 +6,8 @@ import type { LibraryPageData } from '$lib/library-page';
 import { readTrialLibrary } from '$lib/server/trial-library';
 import { readAccountRights } from '$lib/server/account-rights';
 import type { AccountRights } from '$lib/account-rights';
+import { readAccountOrders } from '$lib/server/account-orders';
+import type { AccountOrders } from '$lib/account-orders';
 
 export const load: PageServerLoad = async ({ parent, locals, url, setHeaders }) => {
 	setHeaders({
@@ -22,8 +24,13 @@ export const load: PageServerLoad = async ({ parent, locals, url, setHeaders }) 
 			libraryError: false,
 			pagination: { before: null, next: null, expired: false },
 			trialLibrary: null,
-			accountRights: { status: 'ready', items: [] }
-		} satisfies LibraryPageData & { trialLibrary: null; accountRights: AccountRights };
+			accountRights: { status: 'ready', items: [] },
+			accountOrders: { status: 'ready', items: [] }
+		} satisfies LibraryPageData & {
+			trialLibrary: null;
+			accountRights: AccountRights;
+			accountOrders: AccountOrders;
+		};
 	const cursors = url.searchParams.getAll('before');
 	const library = await readLibraryPage(
 		locals.supabase,
@@ -34,11 +41,13 @@ export const load: PageServerLoad = async ({ parent, locals, url, setHeaders }) 
 		return {
 			...library,
 			trialLibrary: null,
-			accountRights: { status: 'ready', items: [] } satisfies AccountRights
+			accountRights: { status: 'ready', items: [] } satisfies AccountRights,
+			accountOrders: { status: 'ready', items: [] } satisfies AccountOrders
 		};
-	const [trialLibrary, accountRights] = await Promise.all([
+	const [trialLibrary, accountRights, accountOrders] = await Promise.all([
 		trialAccess ? readTrialLibrary(locals.supabase, user.id) : null,
-		readAccountRights(locals.supabase, user.id)
+		readAccountRights(locals.supabase, user.id),
+		readAccountOrders(locals.supabase, user.id)
 	]);
-	return { ...library, trialLibrary, accountRights };
+	return { ...library, trialLibrary, accountRights, accountOrders };
 };

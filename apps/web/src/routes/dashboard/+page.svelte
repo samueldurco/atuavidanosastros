@@ -5,4 +5,4 @@
 </script>
 
 {#if data.trialLibrary}<TrialLibrary library={data.trialLibrary} />{/if}
-<Dashboard {data} rights={data.accountRights} />
+<Dashboard {data} rights={data.accountRights} orders={data.accountOrders} />

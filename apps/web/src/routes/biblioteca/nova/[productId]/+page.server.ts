@@ -19,9 +19,8 @@ export const load: PageServerLoad = async ({ parent, params, locals, setHeaders 
 		)
 	)
 		error(404, 'Produto não encontrado');
-	const { user, trialAccess } = await parent();
+	const { user } = await parent();
 	if (!user || !isUuid(user.id)) redirect(303, loginHref(`/biblioteca/nova/${params.productId}`));
-	if (trialAccess) redirect(303, `/testar-produtos/${params.productId}`);
 	if (
 		!symbolicProduct(params.productId) &&
 		!natalProducts.includes(params.productId as NatalProduct) &&

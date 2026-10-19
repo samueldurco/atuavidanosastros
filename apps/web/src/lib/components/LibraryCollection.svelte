@@ -11,14 +11,18 @@
 	import { customerProducts } from '$lib/data/product-copy';
 	import { libraryItemHref, libraryPageHref, type LibraryPageData } from '$lib/library-page';
 	import type { AccountRights } from '$lib/account-rights';
+	import type { AccountOrders } from '$lib/account-orders';
 	import AccountRightsPanel from '$lib/components/AccountRightsPanel.svelte';
+	import AccountOrdersPanel from '$lib/components/AccountOrdersPanel.svelte';
 	let {
 		data,
 		rights,
+		orders,
 		pageHref = libraryPageHref
 	}: {
 		data: LibraryPageData;
 		rights: AccountRights;
+		orders: AccountOrders;
 		pageHref?: (before: string | null) => string;
 	} = $props();
 	let query = $state('');
@@ -77,6 +81,7 @@
 			: 'Abra suas leituras salvas, consulte pedidos ou escolha uma nova leitura.'}
 	/>
 	{#if !data.preview && !data.pagination.expired}<AccountRightsPanel {rights} />{/if}
+	{#if !data.preview && !data.pagination.expired}<AccountOrdersPanel {orders} />{/if}
 	<details class="intake-options">
 		<summary>Conhecer as leituras e consultar disponibilidade</summary>
 		<p>Confira a disponibilidade de cada produto antes de fazer um pedido.</p>

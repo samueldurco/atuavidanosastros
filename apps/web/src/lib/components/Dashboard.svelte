@@ -8,9 +8,15 @@
 	import Button from '$lib/components/ui/Button.svelte';
 	import { natalSummaryCopy, type DashboardData } from '$lib/dashboard';
 	import type { AccountRights } from '$lib/account-rights';
+	import type { AccountOrders } from '$lib/account-orders';
 	import AccountRightsPanel from '$lib/components/AccountRightsPanel.svelte';
+	import AccountOrdersPanel from '$lib/components/AccountOrdersPanel.svelte';
 	import DashboardContinuity from '$lib/components/DashboardContinuity.svelte';
-	let { data, rights }: { data: DashboardData; rights: AccountRights } = $props();
+	let {
+		data,
+		rights,
+		orders
+	}: { data: DashboardData; rights: AccountRights; orders: AccountOrders } = $props();
 	const natalCopy = $derived(natalSummaryCopy(data.natal));
 </script>
 
@@ -58,6 +64,7 @@
 		</div>
 	</section>
 	{#if !data.preview}<AccountRightsPanel {rights} compact />{/if}
+	{#if !data.preview}<AccountOrdersPanel {orders} compact />{/if}
 	<div class="dashboard-grid">
 		<div>
 			<section aria-labelledby="resume-title">
