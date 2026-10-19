@@ -61,13 +61,14 @@
 				bind:this={menuButton}
 				class="menu-button"
 				disabled={!ready}
+				aria-label={open ? 'Fechar menu' : 'Menu'}
 				aria-expanded={open}
 				aria-controls="primary-navigation"
 				onclick={() => {
 					open = !open;
 				}}
 			>
-				{open ? 'Fechar menu' : 'Menu'}
+				{open ? 'Fechar' : 'Menu'}
 				<svg
 					aria-hidden="true"
 					viewBox="0 0 24 24"

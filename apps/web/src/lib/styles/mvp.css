@@ -294,11 +294,16 @@ body {
 	}
 	.mvp-experience .header-actions {
 		gap: 12px;
+		min-width: 0;
+		flex-wrap: wrap;
+		justify-content: flex-end;
 	}
 	.mvp-experience .menu-button {
 		padding: 8px;
 		gap: 8px;
 		font-size: 12px;
+		flex-shrink: 0;
+		white-space: nowrap;
 	}
 	.mvp-experience .header-account {
 		font-size: 12px;

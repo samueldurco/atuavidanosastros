@@ -52,9 +52,11 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
 		const menu = page.getByRole('navigation', { name: 'Navegação principal', exact: true });
 		await expect(menu).toBeVisible();
-		expect(
-			await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)
-		).toBe(true);
+		await expect
+			.poll(() => page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth), {
+				message: `O menu deve caber na tela de ${width}px`
+			})
+			.toBeLessThanOrEqual(0);
 		await menu.locator('a[href="/loja"]').scrollIntoViewIfNeeded();
 		await expect(menu.locator('a[href="/loja"]')).toBeInViewport();
 		await menu.locator('a[href="/loja"]').click({ trial: true });
@@ -64,6 +66,24 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 		await expect(menu.getByRole('link', { name: 'Fale conosco', exact: true })).toBeInViewport();
 		await page.keyboard.press('Escape');
 		await expect(menu).toBeHidden();
+	}
+});
+
+test('cabeçalho e menu cabem em telas pequenas quando as fontes não carregam', async ({ page }) => {
+	await page.route(/\.(woff2?|ttf)(\?|$)/, (route) => route.abort());
+	for (const width of [320, 390]) {
+		await page.setViewportSize({ width, height: 900 });
+		await page.goto('/');
+		await page.getByRole('button', { name: 'Menu', exact: true }).click();
+		await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toBeInViewport();
+		await expect(page.locator('.header-account')).toBeInViewport();
+		await expect
+			.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
+			.toBeLessThanOrEqual(0);
+		await page.getByRole('button', { name: 'Fechar menu', exact: true }).click();
+		await expect(
+			page.getByRole('navigation', { name: 'Navegação principal', exact: true })
+		).toBeHidden();
 	}
 });
 

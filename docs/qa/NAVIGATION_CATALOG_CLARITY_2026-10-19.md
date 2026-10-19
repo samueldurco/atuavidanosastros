@@ -13,6 +13,8 @@ As 19 ofertas digitais, três planos ATV+, preços, slugs, direitos e estados co
 - 24 verificações de acessibilidade pública aprovadas; após corrigir um seletor ambíguo antigo de Tarot, os nove testes de menu e catálogo passaram na execução final.
 - Navegação por teclado, Escape com restauração de foco, identificação da página atual, seis universos, 19 cards digitais, assinatura e preservação da loja física sem venda verificados.
 - Refluxo e alcance dos links em 320, 390, 768 e 1280 px; inspeção visual de menu desktop em 1440 px, menu móvel, home, loja física e rodapé.
+- A execução hospedada identificou transbordamento do cabeçalho em 320 px. A reprodução local com fontes bloqueadas confirmou o problema na fonte de reserva: 325 px de conteúdo em uma tela de 320 px. O cabeçalho móvel permite acomodar as ações em mais de uma linha; o botão aberto mostra “Fechar”, com nome acessível “Fechar menu”. O teste mantém a exigência de transbordamento zero e cobre também a falha de carregamento das fontes.
+- Após esse ajuste, os dez testes de menu e catálogo passaram. A medição adicional confirmou largura sem transbordamento de 320 a 1280 px com fontes normais e bloqueadas; evidências: `navigation-responsive-final.log`, `menu-width-diagnostic.json` e `menu-mobile-fonte-reserva.png`.
 - `git diff --check` aprovado.
 
 Evidências extensas locais: `C:/ATVNA/docs/30-execucao/evidencias/navigation-catalog-20261019/`. Arquivos de referência: `navigation-browser-final.log`, `navigation-browser.log`, `navigation-check.log`, `navigation-lint.log`, `navigation-types-check.log`, `navigation-unit.log`, `menu-desktop.png`, `menu-mobile-produtos.png`, `home-catalogos.png`, `loja-produtos-fisicos.png` e `rodape-catalogos.png`.
