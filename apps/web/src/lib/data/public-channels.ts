@@ -57,13 +57,17 @@ export const publicChannels = [
 
 export const contactSubjects = [
 	{ id: 'acesso', label: 'Conta e acesso', subject: 'Ajuda com minha conta ATVNA' },
-	{ id: 'leitura', label: 'Minhas leituras', subject: 'Ajuda com uma leitura ATVNA' },
+	{ id: 'leitura', label: 'Leituras digitais', subject: 'Ajuda com uma leitura digital ATVNA' },
 	{
 		id: 'correcao',
 		label: 'Correção de conteúdo',
 		subject: 'Correção de conteúdo da Revista ATVNA'
 	},
-	{ id: 'loja', label: 'Loja dos Signos', subject: 'Contato sobre a Loja dos Signos' },
+	{
+		id: 'loja',
+		label: 'Produtos físicos · Loja dos Signos',
+		subject: 'Contato sobre produtos físicos da Loja dos Signos'
+	},
 	{ id: 'parceria', label: 'Parcerias e imprensa', subject: 'Parcerias e imprensa — ATVNA' },
 	{ id: 'outro', label: 'Outro assunto', subject: 'Contato com a ATVNA' }
 ] as const;

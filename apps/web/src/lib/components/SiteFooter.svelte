@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { primaryNavigation } from '$lib/data/public-navigation';
+	import { navigationGroups } from '$lib/data/public-navigation';
 	import BrandLogo from './BrandLogo.svelte';
 	import SocialPresence from './SocialPresence.svelte';
 </script>
@@ -11,13 +11,12 @@
 			<p>Astrologia para conhecer você.</p>
 			<a href="/fale-conosco">Fale com a ATVNA <span aria-hidden="true">↗</span></a>
 		</div>
-		<nav class="footer-links" aria-label="Explore a ATVNA">
-			<p class="eyebrow">Explore</p>
-			{#each primaryNavigation as item (item.href)}<a href={item.href}>{item.label}</a>{/each}
-			{#if !primaryNavigation.some((item) => item.href === '/loja')}<a href="/loja"
-					>Loja dos Signos</a
-				>{/if}
-		</nav>
+		{#each navigationGroups as group (group.id)}
+			<nav class="footer-links" aria-label={group.label}>
+				<p class="eyebrow">{group.label}</p>
+				{#each group.links as item (item.href)}<a href={item.href}>{item.label}</a>{/each}
+			</nav>
+		{/each}
 		<nav class="footer-links" aria-label="Informações e atendimento">
 			<p class="eyebrow">Sobre a ATVNA</p>
 			<a href="/metodo">Nosso método</a>
@@ -49,7 +48,7 @@
 <style>
 	.footer-main {
 		display: grid;
-		grid-template-columns: 1.3fr 1fr 1fr;
+		grid-template-columns: 1.15fr 1fr 1fr 1fr;
 		gap: 2.5rem;
 		padding-block: 3.5rem 2rem;
 	}
@@ -105,7 +104,7 @@
 	button:hover {
 		text-decoration: underline;
 	}
-	@media (max-width: 760px) {
+	@media (max-width: 1000px) {
 		.footer-main {
 			grid-template-columns: 1fr 1fr;
 			gap: 2rem;

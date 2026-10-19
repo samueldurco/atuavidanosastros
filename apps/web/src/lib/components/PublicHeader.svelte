@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import {
 		interestNavigation,
+		navigationGroups,
 		primaryNavigation,
 		secondaryNavigation
 	} from '$lib/data/public-navigation';
@@ -81,20 +82,28 @@
 		</div>
 		<nav bind:this={navigation} id="primary-navigation" aria-label="Navegação principal" class:open>
 			<p class="menu-title">Encontre seu caminho</p>
-			<div class="nav-main">
-				{#each primaryNavigation as item (item.href)}
-					<a
-						class="direct"
-						href={item.href}
-						aria-current={page.url.pathname === item.href ||
-						page.url.pathname.startsWith(`${item.href}/`)
-							? 'page'
-							: undefined}
-						onclick={dismiss}>{item.label}</a
-					>
+			<div class="navigation-groups">
+				{#each navigationGroups as group (group.id)}
+					<section aria-labelledby={'menu-' + group.id}>
+						<h2 class="navigation-heading" id={'menu-' + group.id}>{group.label}</h2>
+						{#each group.links as item (item.href)}
+							<a
+								class="navigation-choice"
+								href={item.href}
+								onclick={dismiss}
+								aria-current={page.url.pathname === item.href ||
+								page.url.pathname.startsWith(`${item.href}/`)
+									? 'page'
+									: undefined}
+							>
+								<span class="choice-label">{item.label}<span aria-hidden="true">↗</span></span>
+								<span class="choice-description">{item.description}</span>
+							</a>
+						{/each}
+					</section>
 				{/each}
 			</div>
-			<p class="topic-title">Os seis temas</p>
+			<h2 class="navigation-heading topic-title">Explore por assunto</h2>
 			<div class="nav-interests">
 				{#each interestNavigation as item (item.id)}
 					<a class="topic-link" href={item.href} onclick={dismiss}>
@@ -106,6 +115,10 @@
 				{/each}
 			</div>
 			<div class="nav-secondary">
+				<a href={page.data.user ? '/dashboard' : '/entrar'} onclick={dismiss}
+					>{page.data.user ? 'Minha área' : 'Entrar na minha conta'}</a
+				>
+				<a href="/biblioteca" onclick={dismiss}>Minhas leituras</a>
 				{#each secondaryNavigation as item (item.href)}<a href={item.href} onclick={dismiss}
 						>{item.label}</a
 					>{/each}
@@ -144,7 +157,7 @@
 	.intent-links {
 		display: flex;
 		align-items: center;
-		gap: 1.4rem;
+		gap: 1rem;
 	}
 	.intent-links a {
 		display: inline-flex;
@@ -156,12 +169,12 @@
 		text-decoration: underline;
 		text-underline-offset: 0.3em;
 	}
-	@media (max-width: 1199px) {
+	@media (max-width: 1399px) {
 		.intent-links {
 			display: none;
 		}
 	}
-	@container public-header (max-width: 1199px) {
+	@container public-header (max-width: 1399px) {
 		.intent-links {
 			display: none;
 		}
@@ -169,5 +182,50 @@
 	.menu-title {
 		font: 500 1.7rem/1.15 var(--atv-font-display);
 		margin: 0 0 1rem;
+	}
+	.navigation-groups {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 2rem;
+	}
+	.navigation-heading {
+		font: 600 0.8rem/1.4 var(--atv-font-ui);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		margin: 0 0 0.5rem;
+		color: #e6c294;
+	}
+	.topic-title {
+		margin-top: 1.5rem;
+	}
+	.navigation-choice {
+		display: block;
+		padding: 0.85rem 0;
+		border-bottom: 1px solid rgb(247 233 206 / 16%);
+		text-decoration: none;
+	}
+	.choice-label {
+		display: flex;
+		justify-content: space-between;
+		gap: 0.5rem;
+		font-weight: 600;
+	}
+	.choice-description {
+		display: block;
+		font-size: 0.85rem;
+		line-height: 1.5;
+		margin-top: 0.25rem;
+		color: #e1d9c9;
+	}
+	.navigation-choice:hover .choice-label,
+	.navigation-choice[aria-current='page'] .choice-label {
+		text-decoration: underline;
+		text-underline-offset: 0.25em;
+	}
+	@media (max-width: 680px) {
+		.navigation-groups {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
 	}
 </style>

@@ -36,6 +36,7 @@
 		aria-hidden="true"><MvpProductArt productId={product.id} /></a
 	>
 	<div class="card-body">
+		<p class="eyebrow">Leitura digital</p>
 		<p class="badge">{status}</p>
 		{#if design}<p class="product-card-caption">{design.caption}</p>{/if}
 		<h3><a href={product.href}>{product.name}</a></h3>

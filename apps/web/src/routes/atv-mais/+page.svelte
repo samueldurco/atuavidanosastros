@@ -60,7 +60,7 @@
 </script>
 
 <svelte:head>
-	<title>ATV+ — leituras para acompanhar seu momento</title>
+	<title>ATV+ · Assinatura de leituras digitais</title>
 	<meta
 		name="description"
 		content="Conheça os três planos do ATV+: uma previsão pessoal a cada 30 dias e opções de Tarot e sonhos para acompanhar seu momento."
@@ -70,12 +70,12 @@
 <ContentShell kind="commercial">
 	<header class="plus-intro">
 		<div>
-			<p class="eyebrow">Acompanhe seu momento</p>
+			<p class="eyebrow">Assinatura de leituras digitais</p>
 			<h1>ATV<span>+</span></h1>
 			<p class="lead">Previsões, Tarot e sonhos<br />para acompanhar seu momento.</p>
 			<p>
-				Escolha como quer acompanhar os próximos 30 dias: previsões pessoais, Tarot e sonhos, com
-				suas leituras reunidas na biblioteca.
+				Escolha seu plano para acompanhar os próximos 30 dias: previsões pessoais, Tarot e sonhos,
+				com suas leituras reunidas na biblioteca.
 			</p>
 		</div>
 		<div class="intro-note">
@@ -193,7 +193,7 @@
 				Mapa Astral, Sinastria, Revolução Solar e os demais produtos avulsos têm entregas próprias.
 				Você pode escolhê-los sem assinar o ATV+.
 			</p>
-			<a href="/leituras">Explorar todas as leituras ↗</a>
+			<a href="/leituras">Ver o catálogo de leituras digitais avulsas ↗</a>
 		</div>
 		<details>
 			<summary>Quais leituras ficam fora dos planos?</summary>

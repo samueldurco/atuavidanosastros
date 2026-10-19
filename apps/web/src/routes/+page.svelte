@@ -46,7 +46,7 @@
 		<header class="chapter-opening">
 			<p class="eyebrow">Um assunto, diferentes formas de explorar</p>
 			<h2 class="chapter-title" id="universes-heading">Explore os<br /><em>seis universos</em></h2>
-			<p>Ferramentas, leituras e artigos para o que interessa a você agora.</p>
+			<p>Ferramentas, leituras digitais e artigos para o que interessa a você agora.</p>
 		</header>
 		<div class="grid grid-3">
 			{#each universes as universe (universe.slug)}
@@ -59,6 +59,20 @@
 				/>
 			{/each}
 		</div>
+		<nav class="catalog-paths" aria-label="Catálogos de produtos">
+			<a href="/leituras">
+				<span class="eyebrow">Leituras digitais</span>
+				<strong>Uma leitura para você <span aria-hidden="true">↗</span></strong>
+				<span
+					>Compare leituras avulsas de mapa astral, previsões, amor, carreira, Tarot e sonhos.</span
+				>
+			</a>
+			<a href="/loja">
+				<span class="eyebrow">Produtos físicos · Loja dos Signos</span>
+				<strong>Astrologia no seu espaço <span aria-hidden="true">↗</span></strong>
+				<span>Conheça as primeiras artes da coleção de pôsteres, ainda em preparação.</span>
+			</a>
+		</nav>
 		<div class="micro-pause" aria-hidden="true">
 			<img src={mvpArt('fases-lunares')} alt="" width="320" height="90" loading="lazy" />
 		</div>
@@ -103,14 +117,14 @@
 	<section class="membership-section section" aria-labelledby="membership-heading">
 		<div class="wrap membership-grid">
 			<div>
-				<p class="eyebrow">Uma companhia para cada novo ciclo</p>
+				<p class="eyebrow">Assinatura de leituras digitais</p>
 				<h2 class="chapter-title" id="membership-heading">Seu momento.<br /><em>ATV+</em></h2>
 				<p class="membership-intro">
 					Escolha como acompanhar seus próximos 30 dias, com previsões e leituras que fazem sentido
 					para você.
 				</p>
 				<a class="button light" href="/atv-mais"
-					>Conhecer os três planos <span aria-hidden="true">↗</span></a
+					>Conhecer a assinatura ATV+ <span aria-hidden="true">↗</span></a
 				>
 			</div>
 			<div class="membership-levels">
@@ -152,6 +166,41 @@
 	}
 	.chapter-title em {
 		font-weight: 400;
+	}
+	.catalog-paths {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.5rem;
+		margin-top: 2.5rem;
+	}
+	.catalog-paths a {
+		display: grid;
+		gap: 0.75rem;
+		padding: clamp(1.25rem, 3vw, 2rem);
+		border: 1px solid #c7bfac;
+		border-radius: 4px;
+		color: inherit;
+		text-decoration: none;
+	}
+	.catalog-paths a:hover {
+		background: #fff8e9;
+	}
+	.catalog-paths strong {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+		font: 500 1.8rem/1.15 var(--atv-font-display);
+	}
+	.catalog-paths .eyebrow {
+		margin: 0;
+	}
+	.catalog-paths a > span:last-child {
+		line-height: 1.6;
+	}
+	@media (max-width: 680px) {
+		.catalog-paths {
+			grid-template-columns: 1fr;
+		}
 	}
 	.micro-pause {
 		display: flex;

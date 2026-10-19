@@ -89,14 +89,48 @@ export const interestNavigation = [
 	}
 ] as const;
 
-export const primaryNavigation = [
-	{ href: '/temas', label: 'Seis universos' },
-	{ href: '/ferramentas', label: 'Ferramentas grátis' },
-	{ href: '/leituras', label: 'Leituras' },
-	{ href: '/revista', label: 'Revista ATVNA' },
-	{ href: '/loja', label: 'Loja dos Signos' },
-	{ href: '/atv-mais', label: 'ATV+' }
+export const explorationNavigation = [
+	{
+		href: '/temas',
+		label: 'Seis universos',
+		description: 'Encontre ferramentas, leituras digitais e artigos por assunto.'
+	},
+	{
+		href: '/ferramentas',
+		label: 'Ferramentas grátis',
+		description: 'Experimente e veja seu resultado antes de criar uma conta.'
+	},
+	{
+		href: '/revista',
+		label: 'Revista ATVNA',
+		description: 'Leia artigos e guias sobre astrologia, Tarot e sonhos.'
+	}
 ] as const;
+
+export const offerNavigation = [
+	{
+		href: '/leituras',
+		label: 'Leituras digitais',
+		description: 'Compare as leituras avulsas e confira conteúdo, formatos e disponibilidade.'
+	},
+	{
+		href: '/loja',
+		label: 'Produtos físicos',
+		description: 'Loja dos Signos · conheça as artes da coleção em preparação.'
+	},
+	{
+		href: '/atv-mais',
+		label: 'ATV+ · Assinatura',
+		description: 'Compare os três planos de leituras digitais a cada 30 dias.'
+	}
+] as const;
+
+export const navigationGroups = [
+	{ id: 'produtos', label: 'Produtos e assinatura', links: offerNavigation },
+	{ id: 'explorar', label: 'Comece e explore', links: explorationNavigation }
+] as const;
+
+export const primaryNavigation = [...explorationNavigation, ...offerNavigation];
 
 export const secondaryNavigation = [
 	{ href: '/', label: 'Início' },

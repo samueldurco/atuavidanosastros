@@ -103,12 +103,12 @@ export function legacySeo(path: string): PageSeo | null {
 				'Conheça a leitura de carreira, trabalho e dinheiro no mapa astral. Produto em preparação.'
 		},
 		'/leituras': {
-			title: 'Leituras e experiências',
+			title: 'Leituras digitais',
 			description:
 				'Explore os produtos digitais da ATVNA: mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos. Confira o conteúdo e a disponibilidade de cada leitura.'
 		},
 		'/loja': {
-			title: 'Loja dos signos — em preparação',
+			title: 'Produtos físicos · Loja dos Signos — em preparação',
 			description:
 				'Conheça as primeiras artes da coleção de pôsteres da Loja dos Signos. Produtos físicos em preparação.'
 		}
@@ -120,8 +120,9 @@ export function legacySeo(path: string): PageSeo | null {
 		page ??
 		(shopSign
 			? {
-					title: `Coleção ${signNames[shopSign]} — em preparação`,
-					description: 'Coleção em preparação, sem produtos, preços ou estoque publicados.'
+					title: `Produtos físicos de ${signNames[shopSign]} — em preparação`,
+					description:
+						'Conheça a coleção de produtos físicos da Loja dos Signos, ainda em preparação.'
 				}
 			: null);
 	if (!entry) return null;
@@ -142,7 +143,7 @@ export function discoverySeo(path: string): PageSeo | null {
 		'/temas': {
 			title: 'Explore os seis temas',
 			description:
-				'Mapa astral, previsões, amor, carreira, Tarot e sonhos: encontre uma ferramenta grátis, compare leituras e leia artigos de cada tema.'
+				'Mapa astral, previsões, amor, carreira, Tarot e sonhos: encontre uma ferramenta grátis, compare leituras digitais e leia artigos de cada tema.'
 		},
 		'/ferramentas': {
 			title: 'Ferramentas grátis',
@@ -150,7 +151,7 @@ export function discoverySeo(path: string): PageSeo | null {
 				'Descubra seu Ascendente, calcule seu mapa astral e Meio do Céu, explore Tarot, relações e sonhos. Consulte a disponibilidade do horóscopo por signo.'
 		},
 		'/atv-mais': {
-			title: 'ATV+ — Essencial, Ampliado e Premium',
+			title: 'ATV+ · Assinatura de leituras digitais',
 			description:
 				'Compare os três planos do ATV+: previsões para os próximos 30 dias e leituras de Tarot ou sonhos conforme o plano.'
 		},
@@ -162,7 +163,7 @@ export function discoverySeo(path: string): PageSeo | null {
 		'/fale-conosco': {
 			title: 'Fale conosco',
 			description:
-				'Entre em contato com a ATVNA para tirar dúvidas sobre sua conta, leituras, conteúdos ou Loja dos Signos.'
+				'Entre em contato com a ATVNA para tirar dúvidas sobre sua conta, leituras digitais, conteúdos ou produtos físicos da Loja dos Signos.'
 		},
 		'/revista': {
 			title: 'Revista ATVNA',
