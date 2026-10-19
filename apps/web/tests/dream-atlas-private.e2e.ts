@@ -149,7 +149,11 @@ test('mocked diary UI stores a record without interpretation, then exposes synth
 	await expect(
 		page.getByText('Registro guardado no seu diário privado.', { exact: true })
 	).toBeVisible();
-	await expect(page.getByText('1 registros no diário;', { exact: false })).toBeVisible();
+	await expect(
+		page.getByText('1 registro no diário; 1 incluído na análise integrada e 0 excluídos dela.', {
+			exact: true
+		})
+	).toBeVisible();
 	await expect(
 		page.getByRole('button', { name: 'Gerar análise integrada', exact: true })
 	).toHaveCount(0);

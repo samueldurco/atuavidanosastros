@@ -33,6 +33,12 @@ A primeira execução no servidor local integrado (`127.0.0.1:4182`) aprovou tr�
 
 O cenário de registro detectou uma falha real de renderização após o primeiro sonho: `prepareDreamAtlasFacts` recebia os proxies reativos do Svelte, incompatíveis com o `structuredClone` usado na validação do domínio. O componente agora passa um snapshot simples para esse cálculo, mantendo os mesmos validadores e a mesma persistência. O teste passou a capturar erros de JavaScript também nesse fluxo. A correção foi formatada e aprovada pelo ESLint focal; a repetição no build integrado permanece pendente nesta revisão. Evidência da detecção: `test-results/architecture-dream-e2e.txt` e trace de `architecture-dream-e2e/`.
 
+### Retomada em 19/10/2026
+
+No build integrado `997763d`, que inclui a correção `0094bf2`, os **4/4 cenários passaram em 35,6 s**. O registro voltou a renderizar após o salvamento, sem erro de JavaScript; a análise permaneceu ausente antes do prazo informado pelo servidor. Após a mudança explícita do relógio da fixture, o formulário de registro foi fechado e a tentativa de análise apresentou o erro recuperável previsto. O leitor em 390 e 1440 px manteve navegação, marcador temporário, ausência de escrita e download válido do PDF. Os cenários passaram sem violações Axe ou rolagem horizontal; as rotas reais recusaram as requisições anônimas.
+
+As capturas do registro móvel e do leitor de 1440 px foram inspecionadas, sem corte ou sobreposição observados. A revisão encontrou a concordância incorreta “1 registros / 1 incluídos”; o resumo agora escolhe singular e plural conforme cada contagem, com a asserção existente atualizada. Essa alteração de texto será conferida no próximo build integrado. Evidências locais: `test-results/architecture-dream-e2e-20261019.txt` e `apps/web/test-results/architecture-dream-e2e-20261019/`. A fixture é sintética e não encurta o prazo nem concede acesso a qualquer conta real.
+
 ## Limites desta revisão
 
-Esta evidência cobre implementação e validação local. A execução principal coordena check/lint/build, integração hospedada, aplicação da migração e autorização real da conta. A verificação visual interativa será complementada sobre o servidor integrado estável. Nenhuma concessão real ou preço foi cadastrado por esta frente. O período real nunca foi abreviado; somente fixtures declaradas usam datas anteriores.
+Esta evidência cobre implementação e validação local. A execução principal coordena check/lint/build, integração hospedada, aplicação da migração e autorização real da conta. Nenhuma concessão real ou preço foi cadastrado por esta frente. O período real nunca foi abreviado; somente fixtures declaradas usam datas anteriores.

@@ -371,8 +371,12 @@
 			{/if}
 			{#if facts}
 				<p>
-					{facts.recordedCount} registros no diário; {facts.includedEntryIds.length} incluídos para uma
-					análise integrada e {facts.excludedCount} excluídos dela.
+					{facts.recordedCount}
+					{facts.recordedCount === 1 ? 'registro' : 'registros'} no diário;
+					{facts.includedEntryIds.length}
+					{facts.includedEntryIds.length === 1 ? 'incluído' : 'incluídos'} na análise integrada e
+					{facts.excludedCount}
+					{facts.excludedCount === 1 ? 'excluído' : 'excluídos'} dela.
 				</p>
 				{#if facts.recurrences.length}
 					<h3>Emoções e associações repetidas</h3>
