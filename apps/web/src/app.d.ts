@@ -4,6 +4,9 @@ declare global {
 	interface Env {
 		FREE_TOOL_RECEIPT_KEY?: string;
 		SUPABASE_SERVICE_ROLE_KEY?: string;
+		ATV_TRIAL_RUNTIME_KEY?: string;
+		PUBLIC_SUPABASE_PUBLISHABLE_KEY?: string;
+		PUBLIC_SUPABASE_ANON_KEY?: string;
 	}
 	namespace App {
 		interface Platform {

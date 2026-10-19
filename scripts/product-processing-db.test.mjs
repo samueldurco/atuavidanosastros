@@ -257,7 +257,9 @@ test('invalid partner UTC is a durable failure with no single-person fallback',a
 
 test('commercial runtime crosses its five active universes through SQL and stops every product at editorial review',async(t)=>{
   const db=await boot(t),metrics=[];
-  const coverage=productCalculationCoverage().filter(p=>p.calculation==='partial-base');
+  // Three Pillars v1 remains readable historically but is blocked for new paid runs.
+  assert.throws(()=>createProductProcessor(transport(db),{enabledProducts:['three-pillars']}),/invalid_product_configuration/);
+  const coverage=productCalculationCoverage().filter(p=>p.calculation==='partial-base'&&p.productId!=='three-pillars');
   const runtime=createProductProcessor(transport(db),{enabledProducts:coverage.map(p=>p.productId),emit:e=>metrics.push(e)});
   assert.equal(await runtime.step(),'idle');
   assert.equal((await db.query('select count(*)::int as n from workflow_releases where enabled')).rows[0].n,0);
@@ -286,11 +288,18 @@ test('commercial runtime crosses its five active universes through SQL and stops
   // historical commercial processor. Retired methods cannot be enabled here.
   assert.equal(universes.size,5);
   assert.deepEqual(coverage.map(p=>p.productId).sort(),[
-    'birth-chart','three-pillars','ascendant','date-reading','pair-preview',
+    'birth-chart','ascendant','date-reading','pair-preview',
     'midheaven','career-compass','dream-reading','dream-journal'
   ].sort());
   assert.equal((await db.query('select count(*)::int as n from editorial_promotions')).rows[0].n,0);
-  assert.ok(metrics.every(e=>Object.keys(e).sort().join(',')==='attempt,durationMs,event,outcome'));
+  assert.ok(metrics.some(e=>e.event==='product.processing'));
+  assert.ok(metrics.some(e=>e.event==='product.career_compass_candidate'));
+  assert.ok(metrics.every(e=>{
+    const keys=Object.keys(e).sort().join(',');
+    return e.event==='product.processing'
+      ? keys==='attempt,durationMs,event,outcome'
+      : e.event==='product.career_compass_candidate' && keys==='durationMs,event,outcome';
+  }));
   assert.ok(!JSON.stringify(metrics).includes(owner));assert.ok(!JSON.stringify(metrics).includes('sintético'));
 });
 

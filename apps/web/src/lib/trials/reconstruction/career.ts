@@ -15,6 +15,8 @@ export const RECONSTRUCTION_VERSION = 'atv-product-reconstruction/4.0.0';
 export const RECONSTRUCTION_POLICY = 'atv-private-interpretation-review/4.0.0';
 type ContextKey =
 	'transition' | 'leadership' | 'study' | 'independent' | 'workload' | 'relationships' | 'general';
+export type PeriodContextKey =
+	'resources' | 'routine' | 'career' | 'relationship' | 'work' | 'personal';
 type ContextBinding = {
 	key: ContextKey;
 	criteria: string;
@@ -22,14 +24,14 @@ type ContextBinding = {
 	question: string;
 	title: string;
 };
-export type EditorialTrace = {
+export type EditorialTrace<Context extends string = ContextKey> = {
 	version: string;
 	canon: string;
 	graph: string;
 	selection: { factId: string; score: number; reason: string }[];
 	patterns: { kind: string; factIds: string[] }[];
 	themes: { id: string; factIds: string[] }[];
-	context: { key: ContextKey; factId: string | null };
+	context: { key: Context; factId: string | null };
 	plan: { title: string; factIds: string[]; role: string }[];
 };
 const distinct = (ids: readonly string[]) => [...new Set(ids)];

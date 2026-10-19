@@ -245,7 +245,9 @@ describe('owner-scoped web deliverable', () => {
 	it('covers every workflow product with web eligibility, not the unrelated club', () => {
 		for (const product of productCatalog.filter((entry) => entry.id !== 'atv-plus')) {
 			const artifact = renderProductWebExport({ ...exportFixture(), productId: product.id });
-			expect(artifact?.filename).toContain(`atv-${product.id}-`);
+			expect(artifact?.filename).toContain(
+				product.id === 'career-compass' ? 'atv-bussola-de-carreira-' : `atv-${product.id}-`
+			);
 		}
 		expect(renderProductWebExport({ ...exportFixture(), productId: 'atv-plus' })).toBeNull();
 	});

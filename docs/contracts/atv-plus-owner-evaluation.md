@@ -1,0 +1,17 @@
+# ATV+ — avaliação privada dos planos
+
+Os três planos e suas combinações seguem `architecture-offers-20261015.md` e `packages/domain/src/atv-plus-plans.ts`. Não existem preço, checkout, cobrança, renovação automática ou assinatura comercial nesta entrega.
+
+`/atv-mais` apresenta os planos publicamente. Somente uma identidade autenticada com concessão ativa em `atv_trial_grants` **e** `owner_evaluation=true` vê e utiliza a simulação. A nova flag começa falsa para todas as contas; nenhum testador é promovido automaticamente. Conceder a flag exige confirmar administrativamente a identidade Google do proprietário e atualizar somente essa linha, via operação privilegiada, sem salvar identidade pessoal no repositório. A autorização existente de avaliação integral dos produtos continua independente.
+
+Uma simulação dura 30 dias. Iniciar ou reiniciar um plano encerra a simulação ativa anterior; as leituras entregues continuam na biblioteca. A troca é explícita e exclusiva da avaliação proprietária. Não representa uma regra comercial de upgrade. Utilizações não acumulam entre ciclos.
+
+O formulário de produto recebe `atvPlusCycle` e o POST privado recebe `atvPlusCycleId`. O servidor verifica sessão, concessão, proprietário, ciclo ativo e a combinação disponível antes de calcular. A inserção da leitura aprovada dispara uma transação que bloqueia a concessão e o ciclo, verifica novamente os limites e registra o consumo. Falhas editoriais ou de salvamento não consomem. A mesma chave de solicitação retorna a leitura anterior; tentar reutilizá-la com outro ciclo é rejeitado. Sem ciclo, o teste integral continua sem a cota do plano.
+
+O registro de consumo preserva somente ID de produto, ciclo, datas e referência opcional à leitura. A exclusão da leitura limpa essa referência e mantém a cota consumida. Arquivar também não repõe a cota. Não há escrita direta de cliente nas tabelas de ciclos e consumo, nem permissões diretas de `service_role`; as funções privilegiadas ficam no schema não exposto `atv_private`, com `search_path=''`, identidade verificada e EXECUTE restrito. As RPCs públicas são SECURITY INVOKER. RLS filtra o proprietário e a concessão ativa.
+
+Os testes PGlite exercitam PostgreSQL, permissões, RLS, quotas, idempotência, cancelamento, expiração, revogação, exclusão e forward-fix. Não certificam JWT hospedado, PostgREST nem concorrência entre conexões; os bloqueios transacionais devem ser incluídos na validação hospedada. A migração e o grant nominal precisam ser aplicados antes do teste real no domínio principal. O forward-fix em `supabase/rollback/20261015145546_atv_plus_owner_simulation.sql` desativa novas simulações sem apagar leituras.
+
+Referências técnicas consultadas: changelog Supabase em 15/10/2026 (incluindo retirada futura de cifras TLS antigas, sem mudança necessária neste fluxo), documentação oficial de RLS e Database Functions. Nenhum gate de produto ou publicação foi alterado.
+
+Validação local em 15/10/2026: 12 testes de banco (planos e ferramentas), 13 testes de autorização e ancoragem temporal, e página pública em 390, 768 e 1440 px sem overflow horizontal, erro JavaScript ou violação axe detectada. A rota alternativa preserva a query no redirecionamento 308. Evidência visual local em `apps/web/test-results/atv-plus/`. O POST anônimo retornou 503 no Vite sem Supabase configurado; esse resultado não certifica sessão/JWT hospedado. A suíte web geral encontrou sete falhas em outras frentes em integração; elas não foram tratadas como aprovação da entrega hospedada.

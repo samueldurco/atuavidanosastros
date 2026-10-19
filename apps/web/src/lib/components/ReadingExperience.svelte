@@ -11,7 +11,11 @@
 	import ReadingTarot from './ReadingTarot.svelte';
 	import ReadingCalendar from './ReadingCalendar.svelte';
 	import { tarotMethodFor } from '@atv/domain';
-	let { saved, initial }: { saved: SavedTrial; initial: ReaderState } = $props();
+	let {
+		saved,
+		initial,
+		ephemeral = false
+	}: { saved: SavedTrial; initial: ReaderState; ephemeral?: boolean } = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
 	let status = $state(''),
@@ -29,6 +33,12 @@
 	);
 	const current = $derived(chapters.find((s) => s.index === chapter) ?? chapters[0]);
 	const currentIndex = $derived(chapters.findIndex((s) => s.index === current.index));
+	const currentParagraphs = $derived(
+		current.text
+			.split(/\n\s*\n/)
+			.map((paragraph) => paragraph.trim())
+			.filter(Boolean)
+	);
 	const contract = $derived(experienceFor(saved.product_id));
 	const minutes = $derived(
 		[
@@ -40,6 +50,7 @@
 			'atv-private-life-atlas/4.0.0',
 			'atv-private-direction-journey/4.0.0',
 			'atv-private-calendar-synthesis/4.0.0',
+			'atv-private-thirty-day-synthesis/1.0.0',
 			'atv-private-purpose-synthesis/4.0.0'
 		].includes(saved.calculation.version)
 			? Math.max(
@@ -79,6 +90,10 @@
 	async function persist(next: number, marked: number[]) {
 		chapter = next;
 		bookmarks = [...marked];
+		if (ephemeral) {
+			status = 'Posição e marcadores ficam somente enquanto este exemplo está aberto.';
+			return;
+		}
 		pending = { chapter: next, bookmarks: [...marked] };
 		if (saving) return;
 		saving = true;
@@ -120,6 +135,7 @@
 <section
 	class="experience mvp-private"
 	data-mvp-private="experience"
+	data-product={saved.product_id}
 	aria-label="Percorra sua leitura"
 >
 	{#if saved.input.presentation?.name || saved.input.birth}
@@ -143,6 +159,7 @@
 			{saved}
 		/>{/if}
 	{#if saved.product_id === 'three-pillars'}
+		<p class="pillars-heading">Três funções do seu mapa</p>
 		<div class="pillars" role="group" aria-label="Três funções do seu mapa">
 			{#each [['position-sun', 'Sol · expressão'], ['position-moon', 'Lua · necessidades'], ['angle-ascendant', 'Ascendente · primeiro movimento']] as [id, label] (id)}
 				{@const fact = saved.calculation.facts.find((f) => f.id === id)}
@@ -155,7 +172,10 @@
 				{@const target =
 					chapters.find((s) => saved.reading.editorial?.plan[s.index]?.role === preferredRole) ??
 					chapters.find((s) => s.factIds.includes(id))}
-				{#if fact && target}<button disabled={!interactive} onclick={() => open(target.index)}
+				{#if fact && target}<button
+						disabled={!interactive}
+						aria-controls="selected-chapter"
+						onclick={() => open(target.index)}
 						><strong>{label}</strong><span>{fact.display}</span></button
 					>{/if}
 			{/each}
@@ -183,7 +203,7 @@
 	</div>
 	<progress value={currentIndex + 1} max={chapters.length} aria-label="Posição na leitura"
 	></progress>
-	{#if saved.calculation.version === 'atv-private-calendar-synthesis/4.0.0'}
+	{#if ['atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(saved.calculation.version)}
 		<ReadingCalendar {saved} chapter={current.index} {interactive} onopen={open} />
 	{/if}
 	{#if hasChart}
@@ -217,6 +237,7 @@
 					{#each chapters as item (item.index)}<li>
 							<button
 								disabled={!interactive}
+								aria-controls="selected-chapter"
 								aria-current={item.index === current.index ? 'step' : undefined}
 								onclick={() => open(item.index)}
 								>{bookmarks.includes(item.index) ? '★ ' : ''}{item.title}</button
@@ -225,7 +246,7 @@
 				</ol>
 			</details>
 		</nav>
-		<article aria-label="Capítulo selecionado">
+		<article id="selected-chapter" aria-label="Capítulo selecionado">
 			<div class="chapter-heading">
 				<p class="eyebrow">{String(currentIndex + 1).padStart(2, '0')} · Sua leitura</p>
 				<button class="bookmark" aria-pressed={bookmarks.includes(current.index)} onclick={mark}
@@ -233,7 +254,15 @@
 				>
 			</div>
 			<h2>{current.title}</h2>
-			<p class="prose">{current.text}</p>
+			{#if saved.product_id === 'three-pillars'}
+				<div class="chapter-prose">
+					{#each currentParagraphs as paragraph, index (`${current.index}-${index}`)}
+						<p class="prose">{paragraph}</p>
+					{/each}
+				</div>
+			{:else}
+				<p class="prose">{current.text}</p>
+			{/if}
 			<div class="chapter-navigation">
 				<button disabled={currentIndex === 0} onclick={() => open(chapters[currentIndex - 1].index)}
 					>← Anterior</button
@@ -295,6 +324,10 @@
 		flex-wrap: wrap;
 		gap: 1rem;
 		margin: 1.5rem 0;
+	}
+	.pillars-heading {
+		margin: 1.5rem 0 0.25rem;
+		font: 500 1.25rem/1.3 var(--atv-font-display, Georgia);
 	}
 	.pillars button {
 		flex: 1 1 12rem;
@@ -405,6 +438,14 @@
 		line-height: 1.85;
 		overflow-wrap: anywhere;
 		max-width: 70ch;
+	}
+	.chapter-prose .prose {
+		max-width: 68ch;
+		margin: 0 0 1.2em;
+		white-space: pre-wrap;
+	}
+	.chapter-prose .prose:last-child {
+		margin-bottom: 0;
 	}
 	.eyebrow {
 		font-size: 0.75rem;

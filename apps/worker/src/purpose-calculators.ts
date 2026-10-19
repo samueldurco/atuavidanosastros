@@ -1,5 +1,5 @@
 import { CaelusEphemerisProvider, engineContract, type EphemerisProvider } from '@atv/astrology';
-import { parseWorkflowInput, type CalculationSnapshot } from '@atv/domain';
+import { parseWorkflowInput, type BirthInput, type CalculationSnapshot } from '@atv/domain';
 import { calculateValidatedChart, zodiacPosition } from './natal-calculators.ts';
 import { ProcessingError, type ProductCalculator } from './product-processing.ts';
 
@@ -10,6 +10,17 @@ export const careerCompassContract = Object.freeze({
   zodiac: 'tropical', presentation: 'zodiac-half-open-sectors/truncated-6-decimals/1',
   aspects: 'not-assessed', interpretation: 'not-produced', status: 'experimental'
 });
+export const CAREER_COMPASS_BIRTH_BINDING_VERSION = 'atv-career-compass-birth-binding/1.0.0';
+
+/** A run-scoped fingerprint of every birth field, without placing the fields in the projection. */
+export async function careerCompassBirthBinding(birth: BirthInput, runId: string): Promise<string> {
+  const source = JSON.stringify([CAREER_COMPASS_BIRTH_BINDING_VERSION, runId,
+    birth.localDateTime, birth.utcInstant, birth.timezone, birth.latitude,
+    birth.longitude, birth.locationSource]);
+  const bytes = new TextEncoder().encode(source);
+  return Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', bytes)), byte =>
+    byte.toString(16).padStart(2, '0')).join('');
+}
 
 const record = (value: unknown): value is Record<string, unknown> =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -23,10 +34,15 @@ const matchesContract = (value: unknown, expected: Record<string, unknown>): boo
  * JSONB key order is irrelevant. No provider call or recalculation occurs at this boundary. */
 export function validCareerCompassProjection(value: CalculationSnapshot): boolean {
   const { data } = value;
-  const { angles, houses, provenance } = data;
+  const { angles, houses, provenance, birthBinding } = data;
+  const hasBirthBinding = birthBinding !== undefined;
   if (value.version !== careerCompassContract.version || value.kind !== 'purpose' ||
       value.status !== 'experimental' || data.productId !== 'career-compass' ||
-      Object.keys(data).length !== 6 || !Array.isArray(data.positions) || data.positions.length ||
+      Object.keys(data).length !== (hasBirthBinding ? 7 : 6) ||
+      (hasBirthBinding && (!record(birthBinding) || Object.keys(birthBinding).length !== 2 ||
+        birthBinding.version !== CAREER_COMPASS_BIRTH_BINDING_VERSION ||
+        typeof birthBinding.sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(birthBinding.sha256))) ||
+      !Array.isArray(data.positions) || data.positions.length ||
       !record(angles) || Object.keys(angles).length !== 2 || angles.ascendant !== null ||
       typeof angles.midheaven !== 'number' || !Number.isFinite(angles.midheaven) ||
       angles.midheaven < 0 || angles.midheaven >= 360 ||
@@ -50,11 +66,13 @@ export function validCareerCompassProjection(value: CalculationSnapshot): boolea
 }
 
 export function createPurposeCalculators(provider: EphemerisProvider = new CaelusEphemerisProvider()): Readonly<Record<string, ProductCalculator>> {
-  const calculate: ProductCalculator = async (value, {signal}) => {
+  const calculate: ProductCalculator = async (value, {runId, signal}) => {
     signal.throwIfAborted();
     const input = parseWorkflowInput(value);
     if (!input?.birth || input.productId !== 'career-compass') throw new ProcessingError('input_invalid');
     const chart = await calculateValidatedChart(provider, input.birth, signal);
+    signal.throwIfAborted();
+    const birthDigest = await careerCompassBirthBinding(input.birth, runId);
     const midheaven = chart.houses.midheaven;
     const source = `${chart.provenance.provider}@${chart.provenance.providerVersion};${chart.provenance.algorithmVersion};${careerCompassContract.version}`;
     const facts: CalculationSnapshot['facts'] = [{id:'angle-midheaven',kind:'calculated',
@@ -64,7 +82,8 @@ export function createPurposeCalculators(provider: EphemerisProvider = new Caelu
       version:careerCompassContract.version,kind:'purpose',status:'experimental',facts,
       data:{productId:input.productId,positions:[],angles:{ascendant:null,midheaven},
         houses:{system:'placidus',status:'not-requested',cusps:[]},
-        provenance:structuredClone(chart.provenance),projection:careerCompassContract},
+        provenance:structuredClone(chart.provenance),projection:careerCompassContract,
+        birthBinding:{version:CAREER_COMPASS_BIRTH_BINDING_VERSION,sha256:birthDigest}},
       limits:[...chart.provenance.warnings,
         'Somente signo e grau experimentais do Meio do Céu; casas decimais de exibição não garantem precisão nem homologação.',
         'Ascendente, casas, regências e aspectos não foram projetados; nenhum sistema substituto foi usado.',

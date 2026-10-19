@@ -25,10 +25,14 @@
 >
 	<p class="eyebrow">Seu acesso gratuito está ativo</p>
 	<h2 id="free-trials-heading">Suas leituras de teste</h2>
-	<p>Os 25 produtos e o ATV+ estão disponíveis para você testar e avaliar.</p>
+	<p>
+		Reabra suas leituras e escolha a próxima oferta para avaliar. Seu acesso de teste é independente
+		dos planos do ATV+.
+	</p>
 	<div class="actions">
 		<Button href="/testar-produtos">Escolher produto para testar</Button>
-		<Button href="/testar-produtos/atv-plus" variant="secondary">Entrar no ATV+ gratuito</Button>
+		<Button href="/atv-mais" variant="secondary">Conhecer os planos do ATV+</Button>
+		<Button href="/testar-produtos/atv-plus" variant="secondary">Leituras e anotações</Button>
 	</div>
 	{#if library.unavailable}
 		<p role="alert">

@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
+// Historical civil-month fixture: preserve its 31 dates and title after the rolling-30-day offer.
+
 for (const width of [390, 1440]) {
 	test(`Calendário: 31 accessible dates, corresponding chapters and actual noon skies at ${width}px`, async ({
 		page

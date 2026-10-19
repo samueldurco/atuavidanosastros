@@ -2,13 +2,19 @@
 export type FreeToolId =
 	| 'ascendente'
 	| 'mapa-astral'
+	| 'meio-do-ceu'
+	| 'dinheiro-no-mapa'
+	| 'carta-do-amor'
 	| 'carta-do-dia'
 	| 'tarot-sim-ou-nao'
 	| 'combinacao-do-casal'
 	| 'registro-de-sonho';
 
 export class FreeToolInputError extends Error {
-	constructor(public readonly code: 'invalid_tool' | 'invalid_input' | 'ascendant_unavailable') {
+	constructor(
+		public readonly code:
+			'invalid_tool' | 'invalid_input' | 'ascendant_unavailable' | 'houses_unavailable'
+	) {
 		super(code);
 	}
 }
@@ -16,6 +22,9 @@ export function isFreeToolId(value: string): value is FreeToolId {
 	return [
 		'ascendente',
 		'mapa-astral',
+		'meio-do-ceu',
+		'dinheiro-no-mapa',
+		'carta-do-amor',
 		'carta-do-dia',
 		'tarot-sim-ou-nao',
 		'combinacao-do-casal',

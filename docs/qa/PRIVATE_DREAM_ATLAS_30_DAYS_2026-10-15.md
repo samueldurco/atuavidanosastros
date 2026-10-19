@@ -1,0 +1,44 @@
+# Diário de Sonhos — 30 Dias: implementação e revisão privada
+
+Data: 2026-10-15. Checkout: `arquitetura-integral-20261015`.
+
+Escopo autorizado nesta conversa: registros independentes ao longo de 30 dias reais e uma análise integrada ao final. Interpretações individuais continuam como ofertas próprias. A decisão atual substitui a exclusão de Sonhos da reconstrução anterior; não modifica os contratos históricos já salvos.
+
+## Entrega e acesso
+
+- `/testar-produtos/dream-atlas` permite iniciar um ciclo com consentimento, guardar, editar, recuperar, selecionar e remover relatos, sem comprar ou gerar uma interpretação individual. Usa a autorização privada existente.
+- O início e a liberação após 30 × 24 horas são definidos no servidor. As datas dos relatos seguem o calendário UTC informado na interface. Campos de datas, IDs, revisão, seleção e limites são conferidos novamente no banco.
+- `/testar-produtos/dream-atlas/exemplo` exige acesso privado e a concessão `owner_evaluation`. Contém oito relatos inteiramente fictícios em um período de exemplo. Não cria ciclo, relato, leitura, aceite ou cobrança na conta. Capítulos e marcadores são temporários. O PDF declara a demonstração em todas as páginas.
+- A demonstração usa o mesmo compositor e o mesmo avaliador da análise final. Seu período fixo nunca é usado para retroagir um diário real. A autorização comercial e o aceite pessoal E5 continuam pendentes.
+
+## E1–E4: evidência finita
+
+**E1 — Entrada, método e contrato.** Relatos consentidos são a fonte; emoções e associações são declarações do usuário. O cálculo organiza cinco intervalos, datas, quantidade e recorrências literais. A síntese compara o conjunto, diferenças de contexto e limites de inferência; mantém os relatos completos como apêndice. Não aplica dicionário universal de sonhos, diagnóstico ou previsão. Edição de cálculo e leitura `atv-private-dream-atlas/2.0.0`; nomes canônicos têm revisão de apresentação separada. Edições anteriores permanecem reconhecidas.
+
+**E2 — Dependência dos fatos e qualidade.** Os testes demonstram que trocar as associações muda a comparação e que alterações em datas, revisões, fatos ou texto final invalidam a aprovação. Uma amostra concentrada em um intervalo recusa descrever evolução de 30 dias. Registros excluídos não entram nos fatos, entrega ou PDF. Revisão manual do exemplo verificou correspondência de todas as oito cenas, datas, emoções e associações; recorrências não são tratadas como prova de causa comum. Orientações repetidas foram condensadas para uma única passagem. Os cinco intervalos e os relatos usados são consultáveis separadamente.
+
+**E3 — Persistência e autorização.** A migração `20261015152322_private_dream_atlas_cycles.sql` adiciona ciclos e vínculo opcional dos relatos sem reescrever dados anteriores. A RLS restringe leitura ao proprietário com acesso vigente; mutações passam por RPCs. Chaves de repetição e revisões evitam duplicações e edições obsoletas. O trigger de inserção da análise recusa antecipação mesmo pela escrita administrativa, valida o snapshot completo contra os relatos autorizados sob lock e permite uma única análise por ciclo. Apagar o relato original após concluir não altera o snapshot histórico; a interface informa esse efeito.
+
+**E4 — Verificação local.**
+
+- PGlite com migração real: **10/10** casos aprovados, incluindo isolamento entre contas, revogação, autorização por relato, persistência independente, limites de texto, datas, revisão, antecipação, snapshot, duplicação e preservação da análise após excluir o original. A primeira execução de 9 casos importava o helper de uma migração histórica ausente em produção. A correção torna esta migração autossuficiente, com `private_dream_atlas_text_valid` exclusivo e execução revogada para clientes; o baseline do teste agora comprova a ausência do helper histórico antes e depois. O novo caso verifica limites UTF-16, emoji, controles e permissões. Uma segunda revisão independente confirmou os 9 casos anteriores e inspecionou locks/índice único. Os testes são sequenciais; não alegam prova com duas conexões concorrentes.
+- Testes de leitura/PDF: **6/6**; seleção no servidor: **3/3**; demonstração privada: **2/2**. Com os dois arquivos editoriais ajustados, a execução focal teve **22/22** aprovações. Após a redução final de copy, os **11** casos de Diário foram repetidos e aprovados.
+- A autorização do exemplo recusa anônimo, falta/revogação da concessão e falha de infraestrutura. Não acessa tabelas pessoais. A aprovação normal cobre a demonstração; texto fictício consta de todas as fontes.
+- PDF final do exemplo: **5 páginas** renderizadas com Poppler e inspecionadas; texto extraído com pypdf confirmou o aviso em todas as páginas e os oito relatos. Sem corte ou sobreposição observados. As páginas preservam capa, capítulos, pergunta/prática, método e paginação.
+- Logs e artefatos locais: `test-results/private-dream-atlas-db.log`, `test-results/dream-atlas-final-unit.log`, `test-results/dream-atlas-reading-final.log` e `test-results/dream-atlas/` (PDF, extração e pranchas). São evidências sintéticas; não são diários de usuários nem aceite do proprietário.
+
+### Verificação no navegador integrado
+
+A primeira execução no servidor local integrado (`127.0.0.1:4182`) aprovou três dos quatro cenários: demonstração em 390 e 1440 px, com navegação, marcador temporário, ausência de escrita, acessibilidade automatizada, ausência de rolagem horizontal e download real do PDF, além da recusa de acesso anônimo nas rotas privadas. Os testes usam fixtures declaradas. O fluxo de registro usa respostas de API simuladas; não substitui os testes de persistência e autorização no banco.
+
+O cenário de registro detectou uma falha real de renderização após o primeiro sonho: `prepareDreamAtlasFacts` recebia os proxies reativos do Svelte, incompatíveis com o `structuredClone` usado na validação do domínio. O componente agora passa um snapshot simples para esse cálculo, mantendo os mesmos validadores e a mesma persistência. O teste passou a capturar erros de JavaScript também nesse fluxo. A correção foi formatada e aprovada pelo ESLint focal; a repetição no build integrado permanece pendente nesta revisão. Evidência da detecção: `test-results/architecture-dream-e2e.txt` e trace de `architecture-dream-e2e/`.
+
+### Retomada em 19/10/2026
+
+No build integrado `997763d`, que inclui a correção `0094bf2`, os **4/4 cenários passaram em 35,6 s**. O registro voltou a renderizar após o salvamento, sem erro de JavaScript; a análise permaneceu ausente antes do prazo informado pelo servidor. Após a mudança explícita do relógio da fixture, o formulário de registro foi fechado e a tentativa de análise apresentou o erro recuperável previsto. O leitor em 390 e 1440 px manteve navegação, marcador temporário, ausência de escrita e download válido do PDF. Os cenários passaram sem violações Axe ou rolagem horizontal; as rotas reais recusaram as requisições anônimas.
+
+As capturas do registro móvel e do leitor de 1440 px foram inspecionadas, sem corte ou sobreposição observados. A revisão encontrou a concordância incorreta “1 registros / 1 incluídos”; o resumo agora escolhe singular e plural conforme cada contagem, com a asserção existente atualizada. Após reconstruir o servidor com a correção `1e1507e`, o cenário de registro foi repetido e **passou 1/1 em 21,8 s**, confirmando o texto “1 registro no diário; 1 incluído na análise integrada e 0 excluídos dela.” e preservando prazo, erro recuperável, acessibilidade e ausência de erro JavaScript. Evidências locais: `test-results/architecture-dream-e2e-20261019.txt`, `test-results/architecture-dream-wording-20261019.txt` e capturas em `apps/web/test-results/architecture-dream-e2e-20261019/` e `apps/web/test-results/architecture-dream-wording-20261019/`. A fixture é sintética e não encurta o prazo nem concede acesso a qualquer conta real.
+
+## Limites desta revisão
+
+Esta evidência cobre implementação e validação local. A execução principal coordena check/lint/build, integração hospedada, aplicação da migração e autorização real da conta. Nenhuma concessão real ou preço foi cadastrado por esta frente. O período real nunca foi abreviado; somente fixtures declaradas usam datas anteriores.

@@ -3,8 +3,8 @@ import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
 	for (const [product, title] of [
-		['three-pillars', 'Três Pilares'],
-		['birth-chart', 'Mapa Astral — assinaturas e temas de vida'],
+		['three-pillars', 'Sol, Lua e Ascendente'],
+		['birth-chart', 'Mapa Astral Completo'],
 		['ascendant', 'Ascendente — aproximação, regente e resposta'],
 		['midheaven', 'Meio do Céu — direção pública e responsabilidade']
 	]) {

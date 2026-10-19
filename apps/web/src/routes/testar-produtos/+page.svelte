@@ -1,11 +1,14 @@
 <script lang="ts">
+	import { offeredProductIds } from '@atv/domain';
 	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import Card from '$lib/components/ui/Card.svelte';
 	import { loginHref } from '$lib/auth-return';
 	let { data } = $props();
-	const products = $derived(data.products.filter((product) => product.universe !== 'global'));
+	const products = $derived(
+		data.products.filter((product) => offeredProductIds.some((id) => id === product.id))
+	);
 	const approvedProducts = $derived(
 		products.filter((product) =>
 			data.feedback.some(
@@ -40,7 +43,7 @@
 			</p>
 			<p>
 				<a href="/testar-produtos/career-compass">Testar Bússola de Carreira</a> ·
-				<a href="/testar-produtos/atv-plus">Entrar no ATV+ gratuito</a>
+				<a href="/atv-mais">Conhecer os planos do ATV+</a>
 			</p>
 		</Card>
 		{#if data.libraryUnavailable}<p role="alert">
@@ -86,8 +89,8 @@
 			variant="attention"
 		>
 			<p>
-				O acesso aos {products.length} produtos e ao ATV+ é liberado por conta. Use a mesma conta Google
-				autorizada para seus testes.
+				O acesso aos {products.length} produtos é liberado por conta. Use a mesma conta Google autorizada
+				para seus testes. A simulação do ATV+ é exclusiva da conta proprietária.
 			</p>
 			<p>
 				<a href={loginHref('/testar-produtos')}>Entrar com Google para testar</a>
@@ -108,22 +111,20 @@
 			</div>
 		</section>
 	{/if}
-	<Card
-		title="A Tua Vida nos Astros+"
-		eyebrow={data.trialAccess ? 'Teste gratuito disponível' : 'Teste privado'}
-	>
+	<Card title="Os três planos do ATV+" eyebrow="Essencial, Ampliado e Premium">
 		<p>
-			{data.trialAccess
-				? 'Seu clube de teste está liberado gratuitamente. Explore os produtos e registre sua avaliação do ATV+.'
-				: 'Entre com a conta autorizada para testar o clube gratuitamente.'}
+			Conheça as escolhas de cada ciclo de 30 dias. A conta proprietária pode simular os planos sem
+			cobrança, mantendo seu acesso completo aos produtos para avaliação.
 		</p>
 		<p>
-			<a href="/testar-produtos/atv-plus"
-				>{data.trialAccess ? 'Testar ATV+ grátis' : 'Acessar teste do ATV+'}</a
-			>
+			<a href="/atv-mais">Explorar os planos do ATV+</a>
 		</p>
 	</Card>
-	<p><a href="/biblioteca">Abrir a Biblioteca</a> · <a href="/dashboard">Abrir minha conta</a></p>
+	<p>
+		<a href="/biblioteca">Abrir a Biblioteca</a> ·
+		<a href="/testar-produtos/atv-plus">Leituras e anotações</a>
+		· <a href="/dashboard">Abrir minha conta</a>
+	</p>
 </ContentShell>
 
 <style>

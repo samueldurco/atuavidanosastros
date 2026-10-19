@@ -1,0 +1,771 @@
+{
+  "schemaVersion": "atv-career-envelope-erfa/1",
+  "reference": {
+    "pyerfa": "2.0.1.5",
+    "erfa": "2.0.1",
+    "numpy": "2.2.6",
+    "orientation": "IAU 2006/2000A; gst06a + obl06 + nut06a",
+    "solver": "ATV independent vector intersection and bracketed Placidus semi-arc QA oracle v1",
+    "dut1Seconds": 0,
+    "limitations": [
+      "DUT1=0 is an approximation, not historical IERS evidence",
+      "ERFA's bundled UTC model extrapolates before 1972 and after its leap-second table",
+      "No independent civil-time-zone resolution",
+      "Finite date and latitude samples; no global precision claim"
+    ]
+  },
+  "tolerancesArcsec": {
+    "midheaven": 60,
+    "ascendant": 60,
+    "cusp": 120
+  },
+  "cases": [
+    {
+      "id": "1900-01-01T00:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "1900-01-01T00:00:00",
+        "utcInstant": "1900-01-01T00:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 56.25379758769272,
+        "trueObliquityDegrees": 23.4516527190194
+      },
+      "midheaven": 58.49600891861214,
+      "ascendant": 138.07666506984535,
+      "cusps": [
+        138.07666506984535,
+        175.4404859418727,
+        209.727413216213,
+        238.49600891861215,
+        263.8125945571973,
+        289.0385609129382,
+        318.0766650698454,
+        355.4404859418727,
+        29.727413216212994,
+        58.49600891861214,
+        83.81259455719729,
+        109.03856091293818
+      ]
+    },
+    {
+      "id": "1900-01-01T00:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "1900-01-01T00:00:00",
+        "utcInstant": "1900-01-01T00:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 100.08829758769274,
+        "trueObliquityDegrees": 23.4516527190194
+      },
+      "midheaven": 99.27006457345882,
+      "ascendant": 187.1139100364216,
+      "cusps": [
+        187.1139100364216,
+        211.82190226752576,
+        242.6922707473539,
+        279.2700645734588,
+        314.8534098702468,
+        344.113965329004,
+        7.113910036421632,
+        31.82190226752576,
+        62.6922707473539,
+        99.27006457345882,
+        134.85340987024682,
+        164.113965329004
+      ]
+    },
+    {
+      "id": "1900-01-01T00:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "1900-01-01T00:00:00",
+        "utcInstant": "1900-01-01T00:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 119.08829758769272,
+        "trueObliquityDegrees": 23.4516527190194
+      },
+      "midheaven": 117.03843867396377,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "1925-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "1925-01-01T12:00:00",
+        "utcInstant": "1925-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 236.6851237198085,
+        "trueObliquityDegrees": 23.447083707278495
+      },
+      "midheaven": 238.9109236060062,
+      "ascendant": 328.9096462659371,
+      "cusps": [
+        328.9096462659371,
+        356.72983474694195,
+        27.361596394022307,
+        58.91092360600621,
+        89.7236993199398,
+        119.63422696478804,
+        148.90964626593703,
+        176.72983474694198,
+        207.3615963940223,
+        238.9109236060062,
+        269.7236993199398,
+        299.634226964788
+      ]
+    },
+    {
+      "id": "1925-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "1925-01-01T12:00:00",
+        "utcInstant": "1925-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 280.51962371980846,
+        "trueObliquityDegrees": 23.447083707278495
+      },
+      "midheaven": 279.668105305446,
+      "ascendant": 24.437619650047314,
+      "cusps": [
+        24.437619650047314,
+        61.250492863432065,
+        82.0953239232085,
+        99.66810530544599,
+        119.11386493905269,
+        147.77470877837078,
+        204.4376196500473,
+        241.25049286343207,
+        262.09532392320847,
+        279.668105305446,
+        299.1138649390527,
+        327.7747087783708
+      ]
+    },
+    {
+      "id": "1925-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "1925-01-01T12:00:00",
+        "utcInstant": "1925-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 299.51962371980846,
+        "trueObliquityDegrees": 23.447083707278495
+      },
+      "midheaven": 297.4505520450475,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "1950-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "1950-01-01T12:00:00",
+        "utcInstant": "1950-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 236.6332272924907,
+        "trueObliquityDegrees": 23.44809210826295
+      },
+      "midheaven": 238.86111446864538,
+      "ascendant": 328.86203495999365,
+      "cusps": [
+        328.86203495999365,
+        356.67864174414325,
+        27.309509772744867,
+        58.8611144686454,
+        89.67621035408779,
+        119.58709314308528,
+        148.86203495999365,
+        176.67864174414322,
+        207.30950977274486,
+        238.86111446864538,
+        269.6762103540878,
+        299.58709314308527
+      ]
+    },
+    {
+      "id": "1950-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "1950-01-01T12:00:00",
+        "utcInstant": "1950-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 280.4677272924907,
+        "trueObliquityDegrees": 23.44809210826295
+      },
+      "midheaven": 279.6201706477393,
+      "ascendant": 24.325616617360954,
+      "cusps": [
+        24.325616617360954,
+        61.18886316313927,
+        82.04656352387055,
+        99.62017064773927,
+        119.05750247913541,
+        147.69344156578796,
+        204.32561661736096,
+        241.18886316313927,
+        262.04656352387053,
+        279.6201706477393,
+        299.0575024791354,
+        327.69344156578796
+      ]
+    },
+    {
+      "id": "1950-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "1950-01-01T12:00:00",
+        "utcInstant": "1950-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 299.4677272924907,
+        "trueObliquityDegrees": 23.44809210826295
+      },
+      "midheaven": 297.40086206320836,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "1975-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "1975-01-01T12:00:00",
+        "utcInstant": "1975-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 236.5843558866881,
+        "trueObliquityDegrees": 23.441479205897746
+      },
+      "midheaven": 238.81274981198942,
+      "ascendant": 328.8172009456466,
+      "cusps": [
+        328.8172009456466,
+        356.63051003384584,
+        27.2595863628173,
+        58.81274981198941,
+        89.6304584473702,
+        119.54242311764646,
+        148.81720094564662,
+        176.63051003384587,
+        207.2595863628173,
+        238.81274981198942,
+        269.6304584473702,
+        299.5424231176465
+      ]
+    },
+    {
+      "id": "1975-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "1975-01-01T12:00:00",
+        "utcInstant": "1975-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 280.4188558866881,
+        "trueObliquityDegrees": 23.441479205897746
+      },
+      "midheaven": 279.5755709192848,
+      "ascendant": 24.20917745890388,
+      "cusps": [
+        24.20917745890388,
+        61.12053284891522,
+        81.9959770881246,
+        99.57557091928489,
+        119.00973828590551,
+        147.6245125848456,
+        204.2091774589039,
+        241.12053284891522,
+        261.9959770881246,
+        279.5755709192848,
+        299.0097382859055,
+        327.6245125848456
+      ]
+    },
+    {
+      "id": "1975-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "1975-01-01T12:00:00",
+        "utcInstant": "1975-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 299.4188558866881,
+        "trueObliquityDegrees": 23.441479205897746
+      },
+      "midheaven": 297.3554131601654,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 236.52257236053677,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "midheaven": 238.75247171132986,
+      "ascendant": 328.7605250392474,
+      "cusps": [
+        328.7605250392474,
+        356.5696179348357,
+        27.196990654591122,
+        58.75247171132987,
+        89.57323152765865,
+        119.48612317106021,
+        148.76052503924734,
+        176.5696179348357,
+        207.19699065459113,
+        238.75247171132986,
+        269.57323152765866,
+        299.4861231710602
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 280.3570723605368,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "midheaven": 279.51886228342653,
+      "ascendant": 24.06847355000188,
+      "cusps": [
+        24.06847355000188,
+        61.04028180342392,
+        81.93481236030273,
+        99.51886228342656,
+        118.94618542477731,
+        147.53288376493077,
+        204.0684735500019,
+        241.0402818034239,
+        261.9348123603027,
+        279.51886228342653,
+        298.9461854247773,
+        327.5328837649308
+      ]
+    },
+    {
+      "id": "2000-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "2000-01-01T12:00:00",
+        "utcInstant": "2000-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 299.3570723605368,
+        "trueObliquityDegrees": 23.437676829365177
+      },
+      "midheaven": 297.29715490585625,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2025-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2025-01-01T12:00:00",
+        "utcInstant": "2025-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 237.4579443248266,
+        "trueObliquityDegrees": 23.43839618698838
+      },
+      "midheaven": 239.65308758910857,
+      "ascendant": 329.6190562028313,
+      "cusps": [
+        329.6190562028313,
+        357.49216371383324,
+        28.137317277641387,
+        59.653087589108566,
+        90.43152349848174,
+        120.33671232178712,
+        149.61905620283133,
+        177.49216371383324,
+        208.1373172776414,
+        239.65308758910857,
+        270.43152349848174,
+        300.3367123217871
+      ]
+    },
+    {
+      "id": "2025-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2025-01-01T12:00:00",
+        "utcInstant": "2025-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 281.2924443248266,
+        "trueObliquityDegrees": 23.43839618698838
+      },
+      "midheaven": 280.3818230744998,
+      "ascendant": 26.10238610377667,
+      "cusps": [
+        26.10238610377667,
+        62.172172025701315,
+        82.82395290652728,
+        100.38182307449976,
+        119.9509180401077,
+        148.98300735166686,
+        206.10238610377667,
+        242.17217202570131,
+        262.82395290652727,
+        280.3818230744998,
+        299.9509180401077,
+        328.98300735166686
+      ]
+    },
+    {
+      "id": "2025-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "2025-01-01T12:00:00",
+        "utcInstant": "2025-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 300.2924443248266,
+        "trueObliquityDegrees": 23.43839618698838
+      },
+      "midheaven": 298.1901763925976,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2050-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2050-01-01T12:00:00",
+        "utcInstant": "2050-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 237.4078950442159,
+        "trueObliquityDegrees": 23.43128885095806
+      },
+      "midheaven": 239.60361719745583,
+      "ascendant": 329.57310045919087,
+      "cusps": [
+        329.57310045919087,
+        357.44285085758315,
+        28.08622396098275,
+        59.60361719745584,
+        90.38469612488295,
+        120.29094203604531,
+        149.57310045919093,
+        177.44285085758315,
+        208.08622396098275,
+        239.60361719745583,
+        270.38469612488296,
+        300.2909420360453
+      ]
+    },
+    {
+      "id": "2050-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2050-01-01T12:00:00",
+        "utcInstant": "2050-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 281.2423950442159,
+        "trueObliquityDegrees": 23.43128885095806
+      },
+      "midheaven": 280.33616817452645,
+      "ascendant": 25.983615394830004,
+      "cusps": [
+        25.983615394830004,
+        62.1023458540805,
+        82.77216836220127,
+        100.33616817452643,
+        119.90195299644554,
+        148.91194476878331,
+        205.98361539483,
+        242.10234585408048,
+        262.7721683622013,
+        280.33616817452645,
+        299.9019529964455,
+        328.9119447687833
+      ]
+    },
+    {
+      "id": "2050-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "2050-01-01T12:00:00",
+        "utcInstant": "2050-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 300.24239504421587,
+        "trueObliquityDegrees": 23.43128885095806
+      },
+      "midheaven": 298.14361503851296,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2075-01-01T12:00:00Z/south-tropical",
+      "input": {
+        "localDateTime": "2075-01-01T12:00:00",
+        "utcInstant": "2075-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 237.34632334546293,
+        "trueObliquityDegrees": 23.42830871816534
+      },
+      "midheaven": 239.54383719470516,
+      "ascendant": 329.51656044195215,
+      "cusps": [
+        329.51656044195215,
+        357.38214300994815,
+        28.024033954727333,
+        59.543837194705155,
+        90.3278319939711,
+        120.23482668799642,
+        149.51656044195215,
+        177.38214300994818,
+        208.02403395472732,
+        239.54383719470516,
+        270.3278319939711,
+        300.2348266879964
+      ]
+    },
+    {
+      "id": "2075-01-01T12:00:00Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2075-01-01T12:00:00",
+        "utcInstant": "2075-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 281.18082334546295,
+        "trueObliquityDegrees": 23.42830871816534
+      },
+      "midheaven": 280.2795608433761,
+      "ascendant": 25.846200910274426,
+      "cusps": [
+        25.846200910274426,
+        62.02421008501853,
+        82.711955220346,
+        100.27956084337609,
+        119.83770581981197,
+        148.8190051745234,
+        205.84620091027443,
+        242.02421008501852,
+        262.711955220346,
+        280.2795608433761,
+        299.83770581981196,
+        328.8190051745234
+      ]
+    },
+    {
+      "id": "2075-01-01T12:00:00Z/placidus-boundary",
+      "input": {
+        "localDateTime": "2075-01-01T12:00:00",
+        "utcInstant": "2075-01-01T12:00:00Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 300.1808233454629,
+        "trueObliquityDegrees": 23.42830871816534
+      },
+      "midheaven": 298.08530083053836,
+      "ascendant": null,
+      "cusps": []
+    },
+    {
+      "id": "2099-12-31T23:59:59.999Z/south-tropical",
+      "input": {
+        "localDateTime": "2099-12-31T23:59:59.999",
+        "utcInstant": "2099-12-31T23:59:59.999Z",
+        "timezone": "UTC",
+        "latitude": -19.9167,
+        "longitude": -43.9345,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 56.80449612018801,
+        "trueObliquityDegrees": 23.42864890165094
+      },
+      "midheaven": 59.022387227596745,
+      "ascendant": 138.72512208080445,
+      "cusps": [
+        138.72512208080445,
+        176.1114565832784,
+        210.325879993225,
+        239.0223872275967,
+        264.3178681195225,
+        289.58362318651444,
+        318.72512208080445,
+        356.1114565832784,
+        30.325879993225,
+        59.022387227596745,
+        84.31786811952246,
+        109.58362318651444
+      ]
+    },
+    {
+      "id": "2099-12-31T23:59:59.999Z/north-midlatitude",
+      "input": {
+        "localDateTime": "2099-12-31T23:59:59.999",
+        "utcInstant": "2099-12-31T23:59:59.999Z",
+        "timezone": "UTC",
+        "latitude": 51.5,
+        "longitude": -0.1,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "ok",
+      "orientation": {
+        "armcDegrees": 100.63899612018803,
+        "trueObliquityDegrees": 23.42864890165094
+      },
+      "midheaven": 99.7795461617569,
+      "ascendant": 187.50363517261795,
+      "cusps": [
+        187.50363517261795,
+        212.2587559485922,
+        243.17504987675719,
+        279.7795461617569,
+        315.33432624119985,
+        344.54977399411234,
+        7.503635172617952,
+        32.2587559485922,
+        63.17504987675718,
+        99.7795461617569,
+        135.33432624119988,
+        164.54977399411237
+      ]
+    },
+    {
+      "id": "2099-12-31T23:59:59.999Z/placidus-boundary",
+      "input": {
+        "localDateTime": "2099-12-31T23:59:59.999",
+        "utcInstant": "2099-12-31T23:59:59.999Z",
+        "timezone": "UTC",
+        "latitude": 66,
+        "longitude": 18.9,
+        "locationSource": "synthetic-erfa-envelope"
+      },
+      "expectedStatus": "not-applicable",
+      "orientation": {
+        "armcDegrees": 119.63899612018801,
+        "trueObliquityDegrees": 23.42864890165094
+      },
+      "midheaven": 117.56774074870106,
+      "ascendant": null,
+      "cusps": []
+    }
+  ]
+}

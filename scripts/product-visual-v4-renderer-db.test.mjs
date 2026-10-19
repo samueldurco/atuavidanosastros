@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import {
   setupProductDatabase,
   owner,
@@ -86,6 +87,33 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     /artifact_unavailable/,
   );
   await db.exec("update product_artifact_policy set enabled=true");
+  const currentWebInput = {
+    ...input,
+    format: "web",
+    rendererVersion: "atv-web-export/1.4.0",
+    bytes: new TextEncoder().encode("<html>Version 1.4.0</html>"),
+  };
+  await assert.rejects(
+    () => rpc("persist_product_artifact", {
+      p_run_id: reading.id,
+      p_owner: owner,
+      p_revision: reading.revision,
+      p_review_digest: reading.reviewDigest,
+      p_format: "web",
+      p_section: -1,
+      p_renderer: currentWebInput.rendererVersion,
+      p_body_base64: Buffer.from(currentWebInput.bytes).toString("base64"),
+      p_sha256: createHash("sha256").update(currentWebInput.bytes).digest("hex"),
+    }, new AbortController().signal),
+    /artifact_invalid/,
+  );
+  await assert.rejects(
+    () => persistRenderedProductArtifact(rpc, currentWebInput),
+    /artifact_unavailable/,
+  );
+  await db.exec(
+    await file("supabase/migrations/20261015125547_career_web_export_1_4.sql"),
+  );
   const saved = [];
   for (const version of ["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"]) {
     const candidate = {
@@ -196,7 +224,7 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     savedSvg.push(manifest);
   }
   const savedWeb = [];
-  for (const version of ["1.0.0", "1.1.0", "1.2.0", "1.3.0"]) {
+  for (const version of ["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"]) {
     const candidate = {
       ...input,
       format: "web",
@@ -212,6 +240,14 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     );
     savedWeb.push(manifest);
   }
+  await assert.rejects(
+    () =>
+      persistRenderedProductArtifact(rpc, {
+        ...currentWebInput,
+        rendererVersion: "atv-web-export/1.5.0",
+      }),
+    /artifact_invalid/,
+  );
   await db.exec(
     await file("supabase/forward-fixes/disable_visual_v4_pdf_renderer.sql"),
   );
@@ -237,7 +273,7 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     {
       ...input,
       format: "web",
-      rendererVersion: "atv-web-export/1.3.0",
+      rendererVersion: "atv-web-export/1.4.0",
       bytes: new TextEncoder().encode("<html>V4</html>"),
     },
     {
@@ -252,6 +288,9 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     );
   await db.exec(
     await file("supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql"),
+  );
+  await db.exec(
+    await file("supabase/migrations/20261015125547_career_web_export_1_4.sql"),
   );
   assert.deepEqual(await persistRenderedProductArtifact(rpc, input), saved[4]);
   assert.deepEqual(

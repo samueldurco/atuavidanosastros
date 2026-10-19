@@ -5,7 +5,7 @@ export const SITE = {
 	tagline: 'Astrologia para conhecer você.',
 	url: 'https://atuavidanosastros.com.br',
 	description:
-		'Mapa astral, previsões, amor, carreira, Tarot e sonhos. Conheça os temas e as leituras da A Tua Vida nos Astros.'
+		'Mapa astral, previsões, amor, dinheiro e carreira, Tarot e sonhos. Explore as ferramentas, leituras e artigos da A Tua Vida nos Astros.'
 } as const;
 
 export const navigation = interestNavigation.map(({ href, label }) => ({ href, label }));
@@ -43,19 +43,20 @@ export const universes = [
 	{
 		slug: 'proposito',
 		href: '/temas/carreira',
-		eyebrow: 'Trabalho',
-		title: 'Carreira e propósito',
+		eyebrow: 'Dinheiro e trabalho',
+		title: 'Dinheiro e carreira',
 		description:
 			'Explore sua vocação, sua vida profissional e sua relação com dinheiro no mapa astral.',
-		cta: 'Conhecer as leituras de carreira',
+		cta: 'Conhecer as leituras de dinheiro e carreira',
 		productUniverse: 'proposito-prosperidade'
 	},
 	{
 		slug: 'tarot',
 		href: '/temas/tarot',
-		eyebrow: 'Sua pergunta',
+		eyebrow: 'As cartas',
 		title: 'Tarot',
-		description: 'Tire uma carta, faça suas perguntas e conheça as leituras de Tarot.',
+		description:
+			'Tire uma carta e conheça métodos de leitura para explorar situações, relações e áreas da vida.',
 		cta: 'Conhecer as leituras de Tarot',
 		productUniverse: 'tarot-arcanos'
 	},

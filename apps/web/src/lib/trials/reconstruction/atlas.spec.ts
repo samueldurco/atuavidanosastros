@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import {
+	approveTrialReading,
+	composeOriginalTrialReading,
+	composeTrialReading,
+	type SavedTrial
+} from '../reading';
 import { atlasPriorities, validAtlasChoices } from '../../atlas-priorities';
 import { ATLAS_VERSION, assertAtlasProjection, type AtlasData } from './atlas-facts';
 import { reviewReconstructedAtlas, selectAtlasCluster } from './atlas';
@@ -42,7 +47,9 @@ const saved = async (): Promise<SavedTrial> => {
 		calculation = await sample(),
 		reading = composeTrialReading(i, calculation),
 		approval = await approveTrialReading(i, calculation, reading);
-	expect(reviewReconstructedAtlas(i, calculation, reading)).toEqual([]);
+	expect(
+		reviewReconstructedAtlas(i, calculation, composeOriginalTrialReading(i, calculation))
+	).toEqual([]);
 	expect(approval).not.toBeNull();
 	return {
 		id: runId,

@@ -3,6 +3,7 @@ import {
   type EphemerisProvider,
 } from "@atv/astrology";
 import { parseWorkflowInput, type CalculationSnapshot } from "@atv/domain";
+import { calendarBounds } from "./personal-calendar-samples.ts";
 import {
   calculateValidatedChart,
   zodiacPosition,
@@ -25,24 +26,26 @@ export const personalCalendarProductContract = Object.freeze({
 });
 
 const dayMs = 86_400_000;
+export const PERIOD_BASE_VERSION = "atv-thirty-day-calculation/1.0.0";
 
 export function createPersonalCalendarCalculators(
   provider: EphemerisProvider = new CaelusEphemerisProvider(),
+  productId: 'personal-calendar' | 'career-forecast-30d' = 'personal-calendar',
 ): Readonly<Record<string, ProductCalculator>> {
   const calculate: ProductCalculator = async (value, { signal }) => {
     signal.throwIfAborted();
     const input = parseWorkflowInput(value);
     if (
-      input?.productId !== "personal-calendar" ||
+      input?.productId !== productId ||
       !input.birth ||
       !input.targetDate
     )
       throw new ProcessingError("input_invalid");
 
     const start = new Date(`${input.targetDate}T00:00:00.000Z`);
-    const end = new Date(
-      Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 1, 1),
-    );
+    const rolling = input.forecastPeriod === 'rolling-30-days';
+    const version = rolling ? PERIOD_BASE_VERSION : personalCalendarProductContract.version;
+    const end = new Date(calendarBounds(input.targetDate, rolling) + 'T00:00:00.000Z');
     const dates = Array.from(
       { length: Math.round((end.valueOf() - start.valueOf()) / dayMs) },
       (_, index) =>
@@ -62,7 +65,7 @@ export function createPersonalCalendarCalculators(
       natalSun >= 360
     )
       throw new ProcessingError("calculation_invalid");
-    const source = `${chart.provenance.provider}@${chart.provenance.providerVersion};${chart.provenance.algorithmVersion};${personalCalendarProductContract.version}`;
+    const source = `${chart.provenance.provider}@${chart.provenance.providerVersion};${chart.provenance.algorithmVersion};${version}`;
     const facts: CalculationSnapshot["facts"] = [
       {
         id: "natal-sun",
@@ -74,7 +77,7 @@ export function createPersonalCalendarCalculators(
         id: `civil-day-${date}`,
         kind: "calculated" as const,
         display: `Dia civil: ${date}`,
-        source: personalCalendarProductContract.version,
+        source: version,
       })),
       ...(input.context
         ? [
@@ -94,12 +97,12 @@ export function createPersonalCalendarCalculators(
       })) ?? []),
     ];
     const snapshot: CalculationSnapshot = {
-      version: personalCalendarProductContract.version,
+      version,
       kind: "cycles",
       status: "experimental",
       facts,
       data: {
-        productId: "personal-calendar",
+        productId,
         natalInput: structuredClone(chart.input),
         monthStart: input.targetDate,
         monthEndExclusive: end.toISOString().slice(0, 10),
@@ -120,9 +123,9 @@ export function createPersonalCalendarCalculators(
         "Base experimental sem aprovação de método temporal, leitura editorial ou liberação.",
       ],
     };
-    const checked = validateCalculation(snapshot, "personal-calendar");
+    const checked = validateCalculation(snapshot, productId);
     if (!checked) throw new ProcessingError("calculation_invalid");
     return checked;
   };
-  return Object.freeze({ "personal-calendar": calculate });
+  return Object.freeze({ [productId]: calculate });
 }

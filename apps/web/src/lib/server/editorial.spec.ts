@@ -350,9 +350,19 @@ describe('public content integrity', () => {
 	});
 });
 describe('feeds and search surfaces', () => {
-	it('keeps the 25 canonical public pages, including discovery and excluding candidate and empty hubs', () => {
+	it('indexes the approved public architecture and excludes redirects, candidate and empty hubs', () => {
 		const body = pagesSitemap([]);
-		expect(body.match(/<url>/g)).toHaveLength(25);
+		for (const path of [
+			'/atv-mais',
+			'/canais-oficiais',
+			'/fale-conosco',
+			'/ferramentas/meio-do-ceu',
+			'/ferramentas/dinheiro-no-mapa',
+			'/ferramentas/carta-do-amor'
+		])
+			expect(body).toContain(`https://atuavidanosastros.com.br${path}</loc>`);
+		for (const path of ['/atv-plus', '/bussola-de-carreira'])
+			expect(body).not.toContain(`https://atuavidanosastros.com.br${path}</loc>`);
 		expect(body).toContain('https://atuavidanosastros.com.br/mapa-de-proposito</loc>');
 		expect(body).toContain('https://atuavidanosastros.com.br/leituras');
 		expect(body).toContain('https://atuavidanosastros.com.br/temas</loc>');

@@ -1,8 +1,11 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { productCatalog } from '@atv/domain';
-test('all 26 catalog pages open the free trial for an authorized account', async ({ page }) => {
-	for (const product of productCatalog.filter((p) => p.universe !== 'global')) {
+import { offeredProductIds, productOffers } from '@atv/domain';
+test('all 19 offered catalog pages open the free trial for an authorized account', async ({
+	page
+}) => {
+	expect(productOffers).toHaveLength(19);
+	for (const product of productOffers) {
 		await page.goto(`/testar-produtos/_spec?view=catalog&product=${product.id}`);
 		await expect(page.getByRole('heading', { name: 'Teste gratuito disponível' })).toBeVisible();
 		await expect(page.getByRole('link', { name: /Testar .* grátis/ })).toHaveAttribute(
@@ -18,12 +21,20 @@ test('the authorized test index and library expose products, ATV+ and saved read
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?view=index');
-	await expect(page.locator('.products').getByRole('link', { name: /^Testar / })).toHaveCount(26);
-	await expect(
-		page
-			.getByRole('region', { name: 'Suas leituras de teste' })
-			.getByRole('link', { name: 'Entrar no ATV+ gratuito' })
-	).toHaveAttribute('href', '/testar-produtos/atv-plus');
+	const offeredLinks = page.locator('.products').getByRole('link', { name: /^Testar / });
+	await expect(offeredLinks).toHaveCount(19);
+	expect(
+		await offeredLinks.evaluateAll((links) => links.map((link) => link.getAttribute('href')).sort())
+	).toEqual(offeredProductIds.map((id) => `/testar-produtos/${id}`).sort());
+	const library = page.getByRole('region', { name: 'Suas leituras de teste' });
+	await expect(library.getByRole('link', { name: 'Conhecer os planos do ATV+' })).toHaveAttribute(
+		'href',
+		'/atv-mais'
+	);
+	await expect(library.getByRole('link', { name: 'Leituras e anotações' })).toHaveAttribute(
+		'href',
+		'/testar-produtos/atv-plus'
+	);
 	await page.goto('/testar-produtos/_spec?view=library');
 	const edition = page
 		.getByRole('article')

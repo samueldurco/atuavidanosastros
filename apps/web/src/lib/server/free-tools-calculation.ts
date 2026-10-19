@@ -17,7 +17,7 @@ import type {
 import { FreeToolInputError, isFreeToolId } from '../free-tools';
 export { FreeToolInputError, isFreeToolId } from '../free-tools';
 import { longitudePoint } from '../product-cartography';
-import { CANON_VERSION, signs } from '../trials/reconstruction/canon';
+import { CANON_VERSION, signs, signMeanings, modernRulers } from '../trials/reconstruction/canon';
 import { natalStyles } from '../trials/reconstruction/natal-canon';
 import { TAROT_CANON_VERSION, tarotCanon } from '../trials/reconstruction/tarot-canon';
 import { parseCalculationInput } from './midheaven';
@@ -55,7 +55,10 @@ const names: Record<string, string> = {
 const titles: Record<FreeToolId, string> = {
 	ascendente: 'Seu Ascendente',
 	'mapa-astral': 'Seu mapa astral grátis',
+	'meio-do-ceu': 'Seu Meio do Céu',
+	'dinheiro-no-mapa': 'Dinheiro no seu mapa',
 	'carta-do-dia': 'Sua Carta do Dia',
+	'carta-do-amor': 'Sua Carta do Amor',
 	'tarot-sim-ou-nao': 'Tarot para uma pergunta',
 	'combinacao-do-casal': 'Combinação do casal',
 	'registro-de-sonho': 'Seu registro de sonho'
@@ -210,7 +213,7 @@ function renderChart(chart: NatalChart, input: CalculationInput): FreeToolChart 
 	};
 }
 
-async function drawCard(tool: 'carta-do-dia' | 'tarot-sim-ou-nao', id: string) {
+async function drawCard(tool: 'carta-do-dia' | 'carta-do-amor' | 'tarot-sim-ou-nao', id: string) {
 	// Same bounded rejection sampler as the existing Tarot method, with its own public method namespace.
 	// UUID is server-created; focus, client IDs and card names never participate in the seed.
 	const seed = [DRAW_ALGORITHM, DECK_VERSION, TAROT_METHOD, tool, id.toLowerCase()].join('|');
@@ -316,7 +319,7 @@ export async function calculateFreeToolResult(
 		];
 		return result;
 	}
-	if (tool === 'carta-do-dia' || tool === 'tarot-sim-ou-nao') {
+	if (tool === 'carta-do-dia' || tool === 'carta-do-amor' || tool === 'tarot-sim-ou-nao') {
 		if (
 			!record(value) ||
 			!keysOnly(value, ['focus']) ||
@@ -349,6 +352,9 @@ export async function calculateFreeToolResult(
 					])
 		];
 		result.sections = [
+			...(tool === 'carta-do-amor'
+				? [{ id: 'relationship', title: 'Para olhar seus vínculos', body: meaning.relationship }]
+				: []),
 			{ id: 'resource', title: 'Um recurso para observar', body: meaning.resource },
 			{ id: 'excess', title: 'Um ponto de atenção', body: meaning.excess },
 			{ id: 'action', title: 'Uma reflexão prática', body: meaning.action },
@@ -371,6 +377,11 @@ export async function calculateFreeToolResult(
 		};
 		result.limits = [
 			`Cânone ${TAROT_CANON_VERSION}. Leitura simbólica para reflexão; não comprova acontecimentos.`,
+			...(tool === 'carta-do-amor'
+				? [
+						'A carta não revela sentimentos ou intenções de outra pessoa. Considere seus próprios relatos e o que foi conversado entre vocês.'
+					]
+				: []),
 			'A carta não decide por você e não calcula uma resposta binária. O resultado não afirma um sim ou um não.',
 			'Uma carta de um baralho de 78, sorteada no servidor, sem carta invertida. Sua pergunta não altera o sorteio.',
 			'Este resultado conserva a carta desta execução. Solicitar outra consulta inicia um novo sorteio.'
@@ -434,6 +445,65 @@ export async function calculateFreeToolResult(
 	const chart = await (options.provider ?? new CaelusEphemerisProvider()).calculate(input);
 	const asc = ascendant(chart, input);
 	result.limits = natalLimits(chart);
+	if (tool === 'meio-do-ceu') {
+		const mc = chart.houses.midheaven;
+		if (!angle(mc)) throw new Error('invalid_chart_midheaven');
+		const { name, sign } = zodiac(mc);
+		const meaning = signMeanings[sign]!;
+		result.summary = `Seu Meio do Céu está em ${name}.`;
+		result.facts = [natalFact(chart, 'midheaven', mc)];
+		result.sections = [
+			{
+				id: 'contribution',
+				title: 'Sua contribuição no trabalho',
+				body: `Na astrologia, o Meio do Céu em ${name} se associa a ${meaning.contribution}. Compare essa possibilidade com as atividades em que você já se envolve.`
+			},
+			{
+				id: 'environment',
+				title: 'Um ambiente a explorar',
+				body: `Observe como você se sente em situações que oferecem ${meaning.environment}. Isso ajuda a formular perguntas sobre seu trabalho; não determina uma profissão.`
+			}
+		];
+		return result;
+	}
+	if (tool === 'dinheiro-no-mapa') {
+		if (!houseAvailability(chart, input)) throw new FreeToolInputError('houses_unavailable');
+		const cusp = chart.houses.cusps[1];
+		if (!angle(cusp)) throw new Error('invalid_chart_second_house');
+		const { name, sign } = zodiac(cusp);
+		const ruler = modernRulers[sign]!;
+		const meaning = signMeanings[sign]!;
+		result.summary = `Sua Casa 2 começa em ${name}.`;
+		result.facts = [
+			{
+				id: 'house-2',
+				label: 'Início da Casa 2',
+				value: zodiac(cusp).position,
+				kind: 'calculated',
+				source: source(chart)
+			},
+			{
+				...natalFact(chart, ruler, longitude(chart, ruler)),
+				label: `${names[ruler]} · regente moderno de ${name}`
+			}
+		];
+		result.sections = [
+			{
+				id: 'values',
+				title: 'Como você cuida dos seus recursos',
+				body: `A Casa 2 representa recursos e valores pessoais na leitura astrológica. Em ${name}, ela traz como tema ${meaning.contribution}. Em que situações esse jeito de agir aparece no uso do seu tempo, das suas habilidades ou do seu dinheiro?`
+			},
+			{
+				id: 'attention',
+				title: 'Um hábito para observar',
+				body: `O ponto de atenção deste signo é ${meaning.cost}. Escolha uma situação recente e observe se isso aconteceu, sem tratar o mapa como uma descrição obrigatória de você.`
+			}
+		];
+		result.limits.push(
+			'Esta introdução à Casa 2 não prevê renda, ganhos ou perdas e não orienta investimentos. O mapa completo reúne outros fatores.'
+		);
+		return result;
+	}
 	if (tool === 'ascendente') {
 		if (asc === null) throw new FreeToolInputError('ascendant_unavailable');
 		result.summary = `Seu Ascendente está em ${zodiac(asc).name}.`;

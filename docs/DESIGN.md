@@ -22,8 +22,8 @@ Base: tinta `#183746`, noite `#102c3d`, papel `#f6efdf`, papel claro `#fff8e9`, 
 | --- | --- | --- |
 | Mapa astral | `#174c69` / `#cf9a44` | Mandala astrológica, relações entre posições |
 | Previsões | `#22647b` / `#e8bd6b` | Fases da Lua, passagem e ciclos |
-| Amor | `#983e4b` / `#de765d` | Encontro, vínculos e botânica |
-| Carreira | `#4d6231` / `#ce9b45` | Orientação, bússola e caminhos |
+| Amor e Relacionamentos | `#983e4b` / `#de765d` | Encontro, vínculos e botânica |
+| Dinheiro e Carreira | `#4d6231` / `#ce9b45` | Orientação, bússola e caminhos |
 | Tarot | `#92501f` / `#ddb168` | Cartas e composição de cada método |
 | Sonhos | `#625096` / `#bea7e2` | Figura onírica, nuvens e mariposa |
 
@@ -33,13 +33,15 @@ Cor diferencia o assunto; traço, papel, tipografia e composição unem a marca.
 
 Newsreader organiza títulos, marca e leitura editorial; Onest organiza interface, navegação, campos e instruções. Fontes locais e licenças preservadas. Coluna de leitura até 68 caracteres; conteúdo público em torno de 1160 px; ritmo de 4, 8, 12, 16, 24, 32, 48, 64 e 96 px, ajustado à tela.
 
-A abertura da home explica a proposta: “Conheça seu mapa. Explore seu momento.” O lettering artístico tem área própria em momentos de mudança de assunto: Descoberta apresenta os universos; Caminhos acompanha carreira e orientação; Encontros acompanha vínculos; Sonhar acompanha sonhos. Não substitui o H1 informativo, labels ou controles. Cada arte tem equivalente textual acessível e espaço suficiente para respirar.
+A abertura da home explica a proposta: “Conheça seu mapa. Explore seu momento.” Pela revisão aprovada em 15/10/2026, o lettering artístico apresenta grandes blocos com títulos explícitos, como “Explore os seis universos”, “Revista ATVNA” e “Loja dos Signos”. “Caminhos” deixa de nomear ou dominar uma ferramenta de carreira. As gravuras existentes continuam válidas como arte; o título informa o conteúdo real. O lettering não substitui labels ou controles. Cada arte tem equivalente textual acessível e espaço suficiente para respirar.
 
 Microartes participam da composição com função: ramo para vínculo, pausa botânica para intervalo, horizonte para orientação. Não se distribuem como ruído uniforme. No celular, reduzir escala ou deslocar a arte preserva a hierarquia; esconder texto ou ação não é solução.
 
 ## Produtos e entregas
 
-O catálogo real é a autoridade sobre IDs, nomes, métodos, disponibilidade e rotas. A família pública atual contém 27 entradas, incluindo ATV+ e seis métodos de Tarot. As composições individuais vivem em `mvp-product-design.json`; não reintroduzir os cinco métodos antigos do protótipo. Cada apresentação tem gravura, composição e assunto próprios, mantendo proporção, papel, assinatura e hierarquia comuns. Um ícone isolado não substitui a apresentação de um produto.
+O catálogo real é a autoridade sobre IDs, nomes, métodos, disponibilidade e rotas. A revisão aprovada em 15/10/2026 apresenta 19 ofertas avulsas, 9 ferramentas gratuitas e ATV+ em três planos: Essencial, Ampliado e Premium. Use `productOffers`/`customerOffers` para ofertas públicas; o catálogo técnico conserva IDs e entregas históricas. O sexto método de Tarot, Carta Única, permanece técnico; as cinco ofertas de Tarot são métodos independentes, sem uma sequência obrigatória de compra. As composições individuais vivem em `mvp-product-design.json`. Cada apresentação tem gravura, composição e assunto próprios, mantendo proporção, papel, assinatura e hierarquia comuns. Um ícone isolado não substitui a apresentação de um produto.
+
+As ferramentas têm blocos próprios com instrução, entrada e resultado dentro do mesmo bloco. No celular, a coleção pode ser explorada horizontalmente, com indicação visível das demais ferramentas, controles acessíveis e alternativa para ver todas. Preserve o estado ao alternar blocos. Não transforme cada ferramenta em uma seção extensa de página. Os seis universos são Mapa Astral, Previsões, Amor e Relacionamentos, Dinheiro e Carreira, Tarot e Sonhos. A Loja dos Signos apresenta produtos físicos, separada das leituras digitais; sua vitrine não inventa itens ou disponibilidade.
 
 Conta, Biblioteca, Clube e entregas continuam em dashboards e leitores existentes. Preservar ações, estados, continuidade, histórico e rotas. A identidade também acompanha leituras do motor e exportações PDF/SVG elegíveis. Fatos, interpretação, método, fontes e incertezas mantêm suas distinções. Nenhuma gravura decorativa altera um gráfico real.
 

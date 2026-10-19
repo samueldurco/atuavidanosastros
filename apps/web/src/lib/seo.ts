@@ -27,7 +27,10 @@ export const legacyPublicPaths = [
 	'/carreira-no-mapa-astral',
 	'/casa-10',
 	'/loja',
-	'/leituras'
+	'/leituras',
+	'/atv-mais',
+	'/canais-oficiais',
+	'/fale-conosco'
 ] as const;
 export const editorialHubs = {
 	'/noticias': {
@@ -106,7 +109,8 @@ export function legacySeo(path: string): PageSeo | null {
 		},
 		'/loja': {
 			title: 'Loja dos signos — em preparação',
-			description: 'A coleção está em preparação. Nenhum produto, preço ou estoque foi publicado.'
+			description:
+				'Conheça as primeiras artes da coleção de pôsteres da Loja dos Signos. Produtos físicos em preparação.'
 		}
 	};
 	const sign = path.match(/^\/loja\/signo\/([a-z]+)$/)?.[1];
@@ -144,6 +148,21 @@ export function discoverySeo(path: string): PageSeo | null {
 			title: 'Ferramentas grátis',
 			description:
 				'Descubra seu Ascendente, calcule seu mapa astral e Meio do Céu, explore Tarot, relações e sonhos. Consulte a disponibilidade do horóscopo por signo.'
+		},
+		'/atv-mais': {
+			title: 'ATV+ — Essencial, Ampliado e Premium',
+			description:
+				'Compare os três planos do ATV+: previsões para os próximos 30 dias e leituras de Tarot ou sonhos conforme o plano.'
+		},
+		'/canais-oficiais': {
+			title: 'ATVNA nas redes — canais oficiais',
+			description:
+				'Encontre os perfis oficiais da ATVNA no Instagram, Facebook, YouTube, Threads, X, TikTok e outras redes.'
+		},
+		'/fale-conosco': {
+			title: 'Fale conosco',
+			description:
+				'Entre em contato com a ATVNA para tirar dúvidas sobre sua conta, leituras, conteúdos ou Loja dos Signos.'
 		},
 		'/revista': {
 			title: 'Revista ATVNA',

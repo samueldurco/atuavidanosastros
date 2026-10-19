@@ -22,6 +22,11 @@ import {
   type WorkflowRpc,
   type ProcessingEvent,
 } from "./product-processing.ts";
+import {
+  processNextCareerCompassCandidate,
+  type CareerCompassCandidateRpc,
+  type CareerCompassCandidateEvent,
+} from "./career-compass-persistence.ts";
 
 /** Calculation availability is not entitlement, release or editorial/motor approval. */
 export interface ProductCalculationOptions {
@@ -41,6 +46,8 @@ export interface ProductCalculationOptions {
   experimentalSolarReturnBase?: true;
   /** Independent civil-month scaffold with natal reference; no temporal or editorial approval. */
   experimentalPersonalCalendarBase?: true;
+  /** Independent private 30-day career forecast; never a public release switch. */
+  experimentalCareerForecastBase?: true;
   /** Independent MC and 2/6/10 cusp projection; no paid release or editorial approval. */
   experimentalPurposeCareerBase?: true;
   /** Independent goal and civil-check-in scaffold; no interpretation or release approval. */
@@ -51,6 +58,8 @@ export interface ProductCalculationOptions {
 export function createProductCalculators(
   options: ProductCalculationOptions = {},
 ): Readonly<Record<string, ProductCalculator>> {
+  if (options.experimentalCareerForecastBase !== undefined && options.experimentalCareerForecastBase !== true)
+    throw new Error('invalid_product_configuration');
   if (
     options.experimentalWeekBase !== undefined &&
     options.experimentalWeekBase !== true
@@ -119,6 +128,9 @@ export function createProductCalculators(
     ...(options.experimentalPersonalCalendarBase === true
       ? createPersonalCalendarCalculators()
       : {}),
+    ...(options.experimentalCareerForecastBase === true
+      ? createPersonalCalendarCalculators(undefined, 'career-forecast-30d')
+      : {}),
     ...(options.experimentalPurposeCareerBase === true
       ? createPurposeCareerCalculators()
       : {}),
@@ -150,11 +162,11 @@ export function productCalculationCoverage() {
  * Even configured products must pass the database release/contract and ownership gates.
  * RPC transport/authentication/deadline enforcement belongs to the hosting integration. */
 export function createProductProcessor(
-  rpc: WorkflowRpc,
+  rpc: WorkflowRpc & CareerCompassCandidateRpc,
   options: ProductCalculationOptions & {
     enabledProducts?: readonly string[];
     timeoutMs?: number;
-    emit?: (event: ProcessingEvent) => void;
+    emit?: (event: ProcessingEvent | CareerCompassCandidateEvent) => void;
   } = {},
 ) {
   const all = createProductCalculators(options),
@@ -164,7 +176,14 @@ export function createProductProcessor(
     !Array.isArray(requested) ||
     requested.length > Object.keys(all).length ||
     new Set(requested).size !== requested.length ||
-    requested.some((id) => typeof id !== "string" || !Object.hasOwn(all, id))
+    // The legacy v1 calculator remains available for historical snapshots, but
+    // cannot produce a new paid Three Pillars delivery until the v5.1 gate exists.
+    requested.some(
+      (id) =>
+        typeof id !== "string" ||
+        id === "three-pillars" ||
+        !Object.hasOwn(all, id),
+    )
   )
     throw new Error("invalid_product_configuration");
   if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 25000)
@@ -179,13 +198,25 @@ export function createProductProcessor(
   );
   const repository = createWorkflowRepository(rpc),
     emit = options.emit;
+  const careerCandidateEnabled = Object.hasOwn(selected, "career-compass");
   return Object.freeze({
     products: Object.freeze(Object.keys(selected)),
     // Capture configuration now; mutations to the caller's options never broaden later claims.
-    step: () =>
-      processNextProductRun(repository, selected, {
+    step: async () => {
+      const outcome = await processNextProductRun(repository, selected, {
         timeoutMs,
         ...(emit ? { emit } : {}),
-      }),
+      });
+      if (careerCandidateEnabled) {
+        // AWAITING_EDITORIAL is persisted by the calculation RPC before this
+        // stage runs. Each later invocation also retries one pending draft.
+        // Candidate errors cannot alter the calculation outcome or run state.
+        await processNextCareerCompassCandidate(
+          rpc,
+          { timeoutMs, ...(emit ? { emit } : {}) },
+        );
+      }
+      return outcome;
+    },
   });
 }

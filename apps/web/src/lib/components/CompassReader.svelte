@@ -109,7 +109,7 @@
 				<h2 id="limits-heading">Um ponto, não o mapa inteiro.</h2>
 				<p class="editorial">
 					Este resultado contém apenas o Meio do Céu. Não inclui síntese natal, recomendação de
-					carreira ou interpretação individual por inteligência artificial.
+					carreira ou interpretação individual.
 				</p>
 				<p class="editorial">
 					Uma leitura de propósito exige relacionar fatores e contexto. Até que essa camada esteja

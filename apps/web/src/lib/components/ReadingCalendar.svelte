@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { SavedTrial } from '$lib/trials/reading';
-	import type { CalendarData } from '$lib/trials/reconstruction/calendar-facts';
+	import { PERIOD_VERSION, type CalendarData } from '$lib/trials/reconstruction/calendar-facts';
 	let {
 		saved,
 		chapter,
@@ -9,6 +9,8 @@
 	}: { saved: SavedTrial; chapter: number; interactive: boolean; onopen: (index: number) => void } =
 		$props();
 	const data = $derived(saved.calculation.data as unknown as CalendarData);
+	const rolling = $derived(saved.calculation.version === PERIOD_VERSION);
+	const formatDate = (value: string) => value.slice(0, 10).split('-').reverse().join('/');
 	const offset = $derived((new Date(data.days[0].startInstant).getUTCDay() + 6) % 7);
 	const month = $derived(
 		new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(
@@ -17,11 +19,13 @@
 	);
 	const dates = $derived(
 		data.days.map((day) => {
-			const index = saved.reading.editorial!.plan.findIndex(
-				(p) => p.role === `calendar-day-${day.date}`
+			const index = saved.reading.sections.findIndex((p) =>
+				p.factIds.includes(`calendar-day-${day.date}`)
 			);
-			const signals = saved.reading.sections[index].factIds.filter((id) =>
-				saved.reading.editorial!.selection.some((s) => s.factId === id)
+			const signals = data.events.filter(
+				(event) =>
+					event.date === day.date &&
+					saved.reading.editorial!.selection.some((s) => s.factId === event.id)
 			).length;
 			const marked = saved.input.calendarMarks?.entries.some((m) => m.date === day.date) ?? false;
 			return { date: day.date, number: Number(day.date.slice(8)), index, signals, marked };
@@ -29,8 +33,13 @@
 	);
 </script>
 
-<section class="calendar" aria-label="Calendário do mês">
-	<h2>{month}</h2>
+<section
+	class="calendar"
+	aria-label={rolling ? 'Calendário dos próximos 30 dias' : 'Calendário do mês'}
+>
+	<h2>
+		{rolling ? `${formatDate(data.days[0].date)} a ${formatDate(data.days.at(-1)!.date)}` : month}
+	</h2>
 	<p>Abra uma data para acompanhar seus sinais e marcos. Dias e horários usam UTC.</p>
 	<div class="grid">
 		{#each ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'] as weekday (weekday)}<span
@@ -40,20 +49,20 @@
 		{#each [...Array(offset).keys()] as spacer (spacer)}<span aria-hidden="true"></span>{/each}
 		{#each dates as day (day.date)}
 			<button
-				disabled={!interactive}
+				disabled={!interactive || day.index < 0}
 				aria-current={chapter === day.index ? 'date' : undefined}
-				aria-label={`${day.number} de ${month}: ${day.signals} ${day.signals === 1 ? 'sinal' : 'sinais'}${day.marked ? ', marco informado' : ''}`}
+				aria-label={`${formatDate(day.date)}: ${day.signals} ${day.signals === 1 ? 'sinal' : 'sinais'}${day.marked ? ', marco informado' : ''}`}
 				onclick={() => onopen(day.index)}
 			>
-				<strong>{day.number}</strong><span
+				<strong>{rolling ? formatDate(day.date).slice(0, 5) : day.number}</strong><span
 					>{day.signals} {day.signals === 1 ? 'sinal' : 'sinais'}</span
 				>{#if day.marked}<span class="mark" aria-hidden="true">●</span>{/if}
 			</button>
 		{/each}
 	</div>
 	<p class="legend">
-		● Marco informado por você. Até três mudanças selecionadas por data; zero sinais permite um
-		registro livre. Movimentos que atravessam o mês aparecem no capítulo próprio.
+		● Marco informado por você. Até {rolling ? 'duas' : 'três'} mudanças selecionadas por data; zero sinais
+		permite um registro livre. Movimentos que atravessam o período aparecem no capítulo próprio.
 	</p>
 </section>
 

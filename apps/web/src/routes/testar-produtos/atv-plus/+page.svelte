@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { offeredProductIds } from '@atv/domain';
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
@@ -15,11 +16,11 @@
 		message = $state(''),
 		busy = $state(false);
 	const universes = [
-		['meu-ceu', 'Mapa e identidade'],
-		['ciclos-tempo', 'Ciclos e datas'],
-		['amor-relacoes', 'Vínculos'],
+		['meu-ceu', 'Mapa Astral'],
+		['ciclos-tempo', 'Previsões'],
+		['amor-relacoes', 'Amor e Relacionamentos'],
 		['tarot-arcanos', 'Tarot'],
-		['proposito-prosperidade', 'Direção e trabalho'],
+		['proposito-prosperidade', 'Dinheiro e Carreira'],
 		['sonhos-simbolos', 'Sonhos']
 	];
 	async function decide(decision: 'approved' | 'rejected') {
@@ -34,7 +35,7 @@
 			const body = await trialResponse<{ message?: string }>(response);
 			if (!response.ok) throw Error(body.message ?? 'Não foi possível salvar.');
 			await invalidateAll();
-			message = 'Sua avaliação do ATV+ foi salva.';
+			message = 'Sua avaliação desta área foi salva.';
 		} catch (e) {
 			message = e instanceof Error ? e.message : 'Não foi possível salvar.';
 		} finally {
@@ -44,7 +45,7 @@
 </script>
 
 <svelte:head
-	><title>ATV+ — clube de teste gratuito</title><meta
+	><title>Leituras e anotações — A Tua Vida nos Astros</title><meta
 		name="robots"
 		content="noindex,nofollow"
 	/></svelte:head
@@ -52,10 +53,14 @@
 <ContentShell kind="product">
 	<a href="/testar-produtos">← Testar produtos</a>
 	<PageIntro
-		eyebrow="ATV+ · teste privado gratuito"
+		eyebrow="Sua área de leituras"
 		title="Um lugar para acompanhar suas leituras"
-		description="Explore os seis universos, retome o que você salvou e acompanhe suas anotações. O acesso desta fase é gratuito, sem cobrança ou renovação."
+		description="Retome suas leituras, acompanhe suas anotações e escolha o que deseja guardar para uma próxima conversa."
 	/>
+	<p>
+		Conheça também os <a href="/atv-mais">três planos do ATV+</a>. Sua biblioteca e seus registros
+		não dependem de assinatura.
+	</p>
 	{#if data.trialAccess}<section aria-labelledby="ritual">
 			<h2 id="ritual">Seu ritmo de acompanhamento</h2>
 			<p>
@@ -64,20 +69,19 @@
 				formular possibilidades; suas decisões continuam com você.
 			</p>
 			<ol>
-				<li><a href="/testar-produtos/tarot-single-card">Carta Única: um tema para observar</a></li>
+				<li><a href="/ferramentas/carta-do-dia">Carta do Dia: um tema para observar</a></li>
 				<li>
 					<a href="/testar-produtos/week-reading"
 						>Nesta semana: uma leitura e um registro do cotidiano</a
 					>
 				</li>
 				<li>
-					<a href="/testar-produtos/direction-journey"
-						>Em 30 dias: acompanhe um objetivo e suas revisões</a
+					<a href="/testar-produtos/personal-calendar">Próximos 30 dias: acompanhe suas previsões</a
 					>
 				</li>
 				<li>
-					<a href="/testar-produtos/dream-journal"
-						>Ao despertar: registre um sonho para sua biblioteca</a
+					<a href="/testar-produtos/dream-atlas"
+						>Ao despertar: registre seus sonhos ao longo de 30 dias</a
 					>
 				</li>
 			</ol>
@@ -85,7 +89,8 @@
 		{#each universes as [kind, label] (kind)}<section aria-label={label}>
 				<h2>{label}</h2>
 				<ul>
-					{#each data.products.filter((p) => p.universe === kind) as product (product.id)}<li>
+					{#each data.products.filter((p) => p.universe === kind && offeredProductIds.some((id) => id === p.id)) as product (product.id)}<li
+						>
 							<a href={`/testar-produtos/${product.id}`}>{product.name}</a>
 						</li>{/each}
 				</ul>
@@ -97,7 +102,11 @@
 		</p>{/if}
 	<ClubContinuity initial={data.continuity ?? null} readings={data.continuityReadings ?? []} />
 	{#if data.trialAccess}<section aria-labelledby="decision">
-			<h2 id="decision">Sua avaliação do ATV+</h2>
+			<h2 id="decision">Sua avaliação desta área</h2>
+			<p>
+				Este parecer se refere à biblioteca, às anotações e à organização das leituras. Os testes
+				dos planos ficam na página do ATV+.
+			</p>
 			{#if data.feedback}<p>
 					Decisão atual: {data.feedback.decision === 'approved'
 						? 'aprovado por você'
@@ -107,7 +116,8 @@
 				></textarea></label
 			>
 			<div class="actions">
-				<button onclick={() => decide('approved')} disabled={!ready || busy}>Aprovar ATV+</button
+				<button onclick={() => decide('approved')} disabled={!ready || busy}
+					>Aprovar esta área</button
 				><button onclick={() => decide('rejected')} disabled={!ready || busy}
 					>Solicitar revisão</button
 				>

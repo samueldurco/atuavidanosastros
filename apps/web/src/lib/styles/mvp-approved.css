@@ -2696,6 +2696,7 @@
 	box-shadow: 0 12px 32px #1733441a;
 }
 .mvp-public .product-offer-copy {
+	min-width: 0;
 	padding: 46px 42px;
 	position: relative;
 	z-index: 1;
@@ -2717,6 +2718,7 @@
 }
 .mvp-public .product-offer-copy h1 {
 	font-size: clamp(38px, 4.4vw, 64px);
+	overflow-wrap: anywhere;
 	line-height: 1.02;
 	letter-spacing: -0.035em;
 	margin: 0 0 22px;
@@ -2747,6 +2749,7 @@
 	color: #fff9ec;
 }
 .mvp-public .product-offer-art {
+	min-width: 0;
 	align-self: stretch;
 	display: grid;
 	place-items: center;
@@ -2929,7 +2932,7 @@
 		order: 2 !important;
 	}
 	.mvp-public .product-offer-copy h1 {
-		font-size: 43px;
+		font-size: clamp(32px, 10vw, 43px);
 	}
 	.mvp-public .product-offer-copy .lead {
 		font-size: 17px;

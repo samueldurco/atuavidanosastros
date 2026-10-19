@@ -65,7 +65,7 @@ test('menu público aberto por teclado no celular', async ({ page }, testInfo) =
 });
 
 for (const width of [320, 1440]) {
-	test(`home destaca Ascendente, seis temas, revista e método em ${width}px`, async ({
+	test(`home integra ferramentas, seis temas, revista, loja e assinatura em ${width}px`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 1000 });
@@ -73,13 +73,14 @@ for (const width of [320, 1440]) {
 		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 		await page.screenshot({ path: testInfo.outputPath(`home-${width}.png`), fullPage: true });
 		const main = page.getByRole('main');
-		await expect(main.getByRole('heading', { level: 2 })).toHaveText([
+		for (const name of [
+			'Experimente uma ferramenta',
 			'Explore os seis universos',
-			'Bússola de Carreira',
-			'Descubra seu Ascendente',
 			'Revista ATVNA',
-			'Entenda suas leituras'
-		]);
+			'Loja dos Signos'
+		]) {
+			await expect(main.getByRole('heading', { level: 2, name, exact: true })).toBeVisible();
+		}
 		const themes = page.getByRole('region', { name: 'Explore os seis universos' });
 		const themeCards = themes.getByRole('article');
 		await expect(themeCards).toHaveCount(6);
@@ -88,7 +89,7 @@ for (const width of [320, 1440]) {
 			'Mapa astral',
 			'Previsões',
 			'Amor e relacionamentos',
-			'Carreira e propósito',
+			'Dinheiro e carreira',
 			'Tarot',
 			'Sonhos'
 		]);
@@ -104,20 +105,27 @@ for (const width of [320, 1440]) {
 			'/temas/tarot',
 			'/temas/sonhos'
 		]);
-		await expect(main.getByRole('link', { name: 'Entender as leituras' })).toHaveAttribute(
+		await expect(main.getByRole('link', { name: 'Conheça nosso método' })).toHaveAttribute(
 			'href',
 			'/metodo'
 		);
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
 		);
-		const free = page.getByRole('region', { name: 'Descubra seu Ascendente' });
-		await expect(
-			free.getByRole('link', { name: 'Explorar todas as ferramentas gratuitas' })
-		).toHaveAttribute('href', '/ferramentas');
-		await free.getByRole('link', { name: 'Calcular meu Ascendente grátis' }).click();
-		await expect(page).toHaveURL('/ferramentas/ascendente');
-		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+		const free = page.getByRole('region', { name: 'Experimente uma ferramenta' });
+		await expect(free.getByRole('article')).toHaveCount(9);
+		await expect(free.getByRole('link', { name: 'Ver todas as ferramentas' })).toHaveAttribute(
+			'href',
+			'/ferramentas'
+		);
+		const firstTool = free.getByRole('article').first();
+		await firstTool.locator('button.tool-open').click();
+		await expect(firstTool.getByLabel('Data de nascimento')).toBeVisible();
+		await expect(page).toHaveURL('/');
+		await expect(main.getByRole('link', { name: 'Compare o que está incluído' })).toHaveAttribute(
+			'href',
+			'/atv-mais'
+		);
 		await page.goto('/');
 		const magazine = page.getByRole('region', { name: 'Revista ATVNA' });
 		await expect(magazine.locator('article')).toHaveCount(3);
@@ -127,10 +135,10 @@ for (const width of [320, 1440]) {
 			.getByRole('link', { name: 'Leituras', exact: true })
 			.click();
 		await expect(page).toHaveURL('/leituras');
-		await expect(page.locator('.public-product-card')).toHaveCount(26);
+		await expect(page.locator('.public-product-card')).toHaveCount(19);
 		await expect(
 			page.locator('.public-product-card').getByText('Em preparação', { exact: true })
-		).toHaveCount(26);
+		).toHaveCount(19);
 		const topic = page.getByRole('navigation', { name: 'Temas das leituras' });
 		await topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true }).click();
 		await expect(page).toHaveURL('/leituras?tema=amor');

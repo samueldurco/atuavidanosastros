@@ -6,7 +6,7 @@ import {
 } from '@atv/astrology';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { inspectBirthChartProjection } from '../../../../../worker/src/natal-calculators';
-import { canonical } from '../reading';
+import { canonical } from './canonical';
 import { bodyNames, modernRulers } from './canon';
 
 export const PURPOSE_VERSION = 'atv-private-purpose-synthesis/4.0.0';

@@ -260,23 +260,31 @@ test("career compass delivers recognizable headings while preserving every claim
   assert.deepEqual(
     result.content.sections.map((section) => section.title),
     [
-      "Seu Meio do Céu — Fato [mc]",
-      "Direção pública e contribuição — Hipótese [public-direction]",
-      "Ambientes e modos de trabalhar — Hipótese [work-possibilities]",
-      "Tensão ou excesso possível — Hipótese [tension-or-excess]",
-      "Síntese (1) e três perguntas práticas",
+      "Seu Meio do Céu",
+      "Uma direção para experimentar",
+      "Onde testar essa direção",
+      "O que observar antes de decidir",
+      "Um próximo passo para considerar",
     ],
+  );
+  assert.ok(
+    result.content.sections.every(
+      (section) => !/\[[\w-]+\]/.test(section.title),
+    ),
   );
   for (const [index, claim] of captured.output.claims.entries()) {
     assert.equal(result.content.sections[index].text, claim.text);
     assert.deepEqual(result.content.sections[index].evidence, claim.evidence);
   }
   const all = contentTexts(result.content);
+  assert.ok(all.includes("Três perguntas para pensar:"));
+  assert.ok(!all.includes("não são afirmações factuais"));
+  assert.ok(!all.includes("Afirmações de base:"));
   for (const question of captured.output.reflections)
     assert.equal(all.split(question).length, 2);
   assert.ok(all.includes(captured.output.synthesis[0].text));
   assert.ok(
-    all.includes("public-direction, work-possibilities, tension-or-excess"),
+    !all.includes("public-direction, work-possibilities, tension-or-excess"),
   );
   // The new version requires a new final-delivery review, even when content otherwise matches.
   const legacy = { ...result.content, version: "atv-product-delivery/1.0.0" };

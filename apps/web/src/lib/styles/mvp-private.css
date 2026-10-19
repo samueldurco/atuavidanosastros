@@ -252,6 +252,60 @@
 	color: var(--private-ink);
 	border-radius: 2px;
 }
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] {
+	--private-ink: #213b59;
+	--private-line: #c8c5ba;
+	--private-gold: #bb9556;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-shell {
+	--private-ink: #213b59;
+	--private-line: #c8c5ba;
+	--private-gold: #bb9556;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index {
+	border-top-color: #397da2;
+	max-height: calc(100dvh - 4rem);
+	overflow-y: auto;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index ol {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: 0;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index a {
+	display: flex;
+	align-items: center;
+	min-height: 2.75rem;
+	padding-block: 0.4rem;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-content {
+	border-top-color: #397da2;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] #leitura {
+	color: #213b59;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars']
+	#leitura
+	.reading-intro,
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] #leitura .editorial {
+	max-width: 68ch;
+	line-height: 1.72;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] #leitura article {
+	border-top: 1px solid #c8c5ba;
+	padding-top: clamp(1.25rem, 3vw, 2rem);
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] #leitura article h3 {
+	max-width: 30ch;
+	color: #213b59;
+}
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars']
+	#leitura
+	.chapter-prose
+	p
+	+ p {
+	margin-top: 1.25rem;
+}
 .mvp-private[data-mvp-private='compass-reader'] .position-card {
 	background:
 		var(--private-grain) center / 1000px auto,
@@ -317,11 +371,95 @@
 	border-color: var(--private-line);
 	border-radius: 2px;
 }
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] {
+	--private-ink: #213b59;
+	--private-line: #c8c5ba;
+	--private-gold: #bb9556;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0.75rem;
+	margin: 0.75rem 0 1.75rem;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars button {
+	min-width: 0;
+	min-height: 5.5rem;
+	border-top: 3px solid #397da2;
+	padding: 0.9rem 1rem;
+	color: #213b59;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars strong,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars span {
+	display: block;
+	overflow-wrap: anywhere;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars span {
+	margin-top: 0.35rem;
+	font-size: 0.94rem;
+	line-height: 1.45;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid {
+	grid-template-columns: minmax(0, 14.5rem) minmax(0, 1fr);
+	gap: clamp(1rem, 3vw, 2rem);
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid > nav {
+	border-top-color: #397da2;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars']
+	.reader-grid
+	> nav
+	summary,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .map summary,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .references summary {
+	display: flex;
+	align-items: center;
+	min-height: 2.75rem;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid > nav button,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars']
+	.chapter-navigation
+	button,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .bookmark {
+	min-height: 2.75rem;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid > nav li {
+	margin: 0.15rem 0;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid > article {
+	border-top-color: #397da2;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars']
+	.reader-grid
+	> article
+	h2 {
+	max-width: 30ch;
+	margin-bottom: 1.25rem;
+}
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .chapter-prose .prose {
+	max-width: 68ch;
+	line-height: 1.72;
+}
 .mvp-private[data-mvp-private] :is(a, button, input, select, textarea, summary):focus-visible {
 	outline: 3px solid #237c8a;
 	outline-offset: 3px;
 }
+.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars']
+	:is(a, button, input, select, textarea, summary):focus-visible,
+.mvp-private[data-mvp-private='experience'][data-product='three-pillars']
+	:is(a, button, input, select, textarea, summary):focus-visible {
+	outline-color: #183746;
+	outline-offset: 4px;
+}
 @media (max-width: 1100px) {
+	.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index {
+		max-height: none;
+		overflow: visible;
+	}
+	.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index ol {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0 1.5rem;
+	}
 	.mvp-private[data-mvp-private='shell'] .member-layout {
 		grid-template-columns: 208px minmax(0, 1fr);
 	}
@@ -338,6 +476,19 @@
 	}
 }
 @media (max-width: 740px) {
+	.mvp-private[data-mvp-private='product-reader'][data-product='three-pillars'] .reader-index ol {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .pillars {
+		grid-template-columns: 1fr;
+	}
+	.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+	.mvp-private[data-mvp-private='experience'][data-product='three-pillars'] .reader-grid > nav ol {
+		max-height: none;
+		overflow: visible;
+	}
 	.mvp-private[data-mvp-private='experience'] .reader-grid > nav {
 		border: 1px solid var(--private-line);
 		border-top: 4px solid #6f7950;

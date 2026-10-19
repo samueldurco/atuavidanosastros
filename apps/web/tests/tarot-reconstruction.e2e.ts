@@ -1,13 +1,18 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { tarotMethods } from '@atv/domain';
+import { productDefinitionFor, tarotMethods } from '@atv/domain';
 
 for (const width of [390, 1440])
 	for (const method of tarotMethods) {
 		test(`${method.id}: complete positions and reader at ${width}px`, async ({ page }) => {
 			await page.setViewportSize({ width, height: 900 });
 			await page.goto(`/testar-produtos/_spec?product=${method.id}`);
-			await expect(page.getByRole('heading', { name: method.name, exact: true })).toBeVisible();
+			await expect(
+				page.getByRole('heading', {
+					name: productDefinitionFor(method.id)!.name,
+					exact: true
+				})
+			).toBeVisible();
 			const positions = page.getByRole('list', { name: 'Cartas e funções das posições' });
 			await expect(positions.getByRole('button')).toHaveCount(method.positions.length);
 			const last = positions.getByRole('button').last();

@@ -7,7 +7,9 @@ for (const width of [390, 1440]) {
 	}) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/testar-produtos/_spec?product=date-reading');
-		await expect(page.getByRole('heading', { name: 'Leitura da Data', exact: true })).toBeVisible();
+		await expect(
+			page.getByRole('heading', { name: 'Horóscopo para uma Data Especial', exact: true })
+		).toBeVisible();
 		await page.getByText('Explore seu mapa e os capítulos relacionados', { exact: true }).click();
 		const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.0.0"]');
 		await expect(svg).toBeVisible();

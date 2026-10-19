@@ -56,7 +56,6 @@ import { workflowArtifacts } from './workflow-artifacts';
 // decoding remains covered by the artifact and recovery suites.
 const products = [
 	'birth-chart',
-	'three-pillars',
 	'ascendant',
 	'date-reading',
 	'pair-preview',
@@ -138,6 +137,7 @@ async function fixture(productId: string) {
 		await db.exec(await file('supabase/migrations/20260915180000_product_artifacts.sql'));
 		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
 		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
+		await db.exec(await file('supabase/migrations/20261015125547_career_web_export_1_4.sql'));
 		await db.exec(
 			await file('supabase/migrations/20260923110000_product_editorial_publication.sql')
 		);
@@ -351,8 +351,18 @@ it('vertical integration covers every active registered partial calculator', () 
 	expect([...products].sort()).toEqual(
 		Object.keys(createProductCalculators())
 			.filter((id) => !retiredTarotProducts.some((product) => product.id === id))
+			.filter((id) => id !== 'three-pillars')
 			.sort()
 	);
+});
+
+it('keeps historical Three Pillars calculation available without issuing a new legacy paid reading', () => {
+	expect(createProductCalculators()).toHaveProperty('three-pillars');
+	// Current v5.1 is exercised by private-trial origin/review/persistence suites.
+	// The public paid v1 pipeline must remain closed until its migration is reviewed.
+	expect(() =>
+		createProductProcessor(async () => null, { enabledProducts: ['three-pillars'] })
+	).toThrow('invalid_product_configuration');
 });
 
 for (const productId of products)
@@ -616,7 +626,11 @@ for (const productId of products)
 				expect(html).toContain('Síntese sintética, sem interpretação homologada.');
 				expect(html).toContain('Que associação pessoal aparece nesse recorte?');
 			}
-			expect(html).toContain('Escopo declarado: parcial.');
+			expect(html).toContain(
+				productId === 'career-compass'
+					? 'Esta leitura usa uma base parcial do mapa.'
+					: 'Escopo declarado: parcial.'
+			);
 			expect((await workflowArtifacts(f.event(other), runId, artifact.id)).status).toBe(404);
 			const svg = productId === 'ascendant' ? await f.store(runId, 'svg') : null;
 			if (svg) {

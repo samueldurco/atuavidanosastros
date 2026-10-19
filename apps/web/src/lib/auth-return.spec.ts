@@ -3,7 +3,7 @@ import { authCallbackHref, authReturnPath, loginHref } from './auth-return';
 import { productCatalog } from '@atv/domain';
 
 describe('continuity through authentication', () => {
-	it('keeps all 25 private trials through login and the callback', () => {
+	it('keeps every registered private trial through login and the callback', () => {
 		for (const product of productCatalog.filter((item) => item.universe !== 'global')) {
 			const destination = `/testar-produtos/${product.id}`;
 			const login = new URL(loginHref(destination), 'https://example.test');

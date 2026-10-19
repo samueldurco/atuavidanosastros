@@ -10,6 +10,17 @@ const release = JSON.parse(
 ) as { packages: { document: EditorialDocument }[] };
 const published = release.packages.map((entry) => entry.document);
 const news = published.filter((document) => document.path.startsWith('/noticias/'));
+const expectedFreeToolPaths = [
+	'/ferramentas/ascendente',
+	'/ferramentas/mapa-astral',
+	'/ferramentas/horoscopo',
+	'/ferramentas/combinacao-do-casal',
+	'/ferramentas/meio-do-ceu',
+	'/ferramentas/dinheiro-no-mapa',
+	'/ferramentas/carta-do-dia',
+	'/ferramentas/carta-do-amor',
+	'/ferramentas/registro-de-sonho'
+];
 
 test('the purpose landing keeps its existing URL and one canonical without a redirect', async ({
 	request
@@ -98,14 +109,19 @@ test('sign horoscope indexes exist without claiming an admitted forecast', async
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
 	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
 });
-test('all eight free tools emit one primary metadata set in SSR and the browser', async ({
+test('all nine free tools emit one primary metadata set in SSR and the browser', async ({
 	page,
 	request
 }) => {
-	expect(freeTools).toHaveLength(8);
-	expect(freeTools.find((tool) => tool.id === 'bussola-de-carreira')?.href).toBe(
-		'/bussola-de-carreira'
-	);
+	expect(freeTools.map((tool) => tool.href).sort()).toEqual([...expectedFreeToolPaths].sort());
+	for (const [legacyPath, canonicalPath] of [
+		['/bussola-de-carreira', '/ferramentas/meio-do-ceu'],
+		['/ferramentas/tarot-sim-ou-nao', '/ferramentas/carta-do-amor']
+	]) {
+		const response = await request.get(legacyPath, { maxRedirects: 0 });
+		expect(response.status(), legacyPath).toBe(308);
+		expect(response.headers()['location'], legacyPath).toBe(canonicalPath);
+	}
 	for (const tool of freeTools) {
 		const response = await request.get(tool.href, { headers: { accept: 'text/html' } });
 		expect(response.status(), tool.href).toBe(200);
@@ -142,9 +158,34 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 		expect(body).not.toContain('/signos/aries');
 		expect(body).not.toContain('/dashboard');
 		if (path === '/sitemap-pages.xml') {
-			expect(body).toContain('https://atuavidanosastros.com.br/leituras');
-			expect(body.match(/<url>/g)).toHaveLength(25 + (news.length > 0 ? 1 : 0));
-			expect(body).toContain('https://atuavidanosastros.com.br/mapa-de-proposito</loc>');
+			const expectedPaths = [
+				'',
+				'/temas',
+				'/temas/mapa-astral',
+				'/temas/previsoes',
+				'/temas/amor',
+				'/temas/carreira',
+				'/temas/tarot',
+				'/temas/sonhos',
+				'/ferramentas',
+				...expectedFreeToolPaths,
+				'/revista',
+				'/meio-do-ceu',
+				'/mapa-de-proposito',
+				'/vocacao-no-mapa-astral',
+				'/carreira-no-mapa-astral',
+				'/casa-10',
+				'/loja',
+				'/leituras',
+				'/atv-mais',
+				'/canais-oficiais',
+				'/fale-conosco',
+				...(news.length > 0 ? ['/noticias'] : [])
+			];
+			const locations = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+			expect(locations.sort()).toEqual(
+				expectedPaths.map((path) => `https://atuavidanosastros.com.br${path}`).sort()
+			);
 		} else if (path === '/sitemap-editorial.xml') {
 			expect(body.match(/<url>/g) ?? []).toHaveLength(
 				published.length + (published.length ? 1 : 0)

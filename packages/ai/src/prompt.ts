@@ -79,6 +79,10 @@ import {
   careerCompassInstructions,
 } from "./career-compass.ts";
 import {
+  CAREER_COMPASS_FULL_EDITORIAL_VERSION,
+  careerCompassFullInstructions,
+} from "./career-compass-full.ts";
+import {
   THREE_PILLARS_EDITORIAL_VERSION,
   threePillarsInstructions,
 } from "./three-pillars.ts";
@@ -112,6 +116,9 @@ export function buildPrompt(request: EditorialRequest) {
     `Especialização: ${specialization.focus} Exigência: ${specialization.required} Evitar: ${specialization.avoid}`,
     ...(request.facts.editorialProfile === CAREER_COMPASS_EDITORIAL_VERSION
       ? [careerCompassInstructions]
+      : []),
+    ...(request.facts.editorialProfile === CAREER_COMPASS_FULL_EDITORIAL_VERSION
+      ? [careerCompassFullInstructions]
       : []),
     `Nível: ${request.tier}. Máximo de ${outputLimits.maxClaims} afirmações e ${outputLimits.maxRelations} relações. Não preencha o máximo sem necessidade.`,
     "Responda somente com JSON válido no schema fornecido. Sem ferramentas nem estado comercial. IDs de evidência apontam para fatos; claimIds apontam para afirmações.",

@@ -8,7 +8,7 @@ const kinds: Record<UniverseSlug, WorkflowKind> = {
   'tarot-arcanos': 'tarot', 'proposito-prosperidade': 'purpose', 'sonhos-simbolos': 'dream'
 };
 export const workflows = productCatalog.filter((p) => p.universe !== 'global').map((p) => ({
-  ...p, kind: kinds[p.universe as UniverseSlug], version: WORKFLOW_VERSION,
+  ...p, kind: p.id === 'career-forecast-30d' ? 'cycles' as const : kinds[p.universe as UniverseSlug], version: WORKFLOW_VERSION,
   // All are release-gated; catalog preparation does not authorize processing or sale.
   release: 'blocked' as const
 }));
@@ -40,6 +40,8 @@ export interface WorkflowInput {
   birth?: BirthInput;
   partner?: BirthInput;
   targetDate?: string;
+  /** New period editions; omission preserves historical civil-month inputs. */
+  forecastPeriod?: 'rolling-30-days';
   returnYear?: number;
   returnLocation?: ReturnLocationInput;
   importantDates?: ImportantDatesInput;
@@ -94,11 +96,11 @@ function importantDates(v: unknown, targetDate: unknown): v is ImportantDatesInp
     return true;
   });
 }
-function calendarMarks(v: unknown, targetDate: unknown): v is CalendarMarksInput {
+function calendarMarks(v: unknown, targetDate: unknown, rolling = false): v is CalendarMarksInput {
   if (!object(v) || !keysOnly(v, ['authorization', 'entries']) || Object.keys(v).length !== 2 ||
       v.authorization !== 'atv-personal-calendar-marks/1' || !Array.isArray(v.entries) ||
-      v.entries.length < 1 || v.entries.length > 5 || !validDate(targetDate) || targetDate.slice(8) !== '01') return false;
-  const nextMonth = new Date(Date.UTC(Number(targetDate.slice(0, 4)), Number(targetDate.slice(5, 7)), 1))
+      v.entries.length < 1 || v.entries.length > 5 || !validDate(targetDate) || (!rolling && targetDate.slice(8) !== '01')) return false;
+  const nextMonth = new Date(rolling ? Date.parse(targetDate + 'T00:00:00Z') + 30 * 86400000 : Date.UTC(Number(targetDate.slice(0, 4)), Number(targetDate.slice(5, 7)), 1))
     .toISOString().slice(0, 10);
   const seen = new Set<string>();
   return v.entries.every((entry) => {
@@ -131,9 +133,10 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
   if (product.id === 'tarot-journey') fields.push('tarotJourney');
   if (product.id === 'life-atlas') fields.push('atlas');
   if (product.id === 'dream-atlas') fields.push('dreamAtlas');
+  if (['personal-calendar', 'career-forecast-30d'].includes(product.id)) fields.push('forecastPeriod');
   if (product.kind === 'relationship') fields.push('partner');
   if (product.id === 'couple-dossier') fields.push('questions');
-  if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(product.id === 'personal-calendar' ? ['calendarMarks'] : []));
+  if (product.kind === 'cycles') fields.push('targetDate', ...(product.id === 'solar-return' ? ['returnYear', 'returnLocation', 'importantDates'] : []), ...(['personal-calendar', 'career-forecast-30d'].includes(product.id) ? ['calendarMarks'] : []));
   if (product.kind === 'tarot') fields.push(tarotMethodFor(product.id) ? 'focus' : 'questions');
   if (product.kind === 'dream' && product.id !== 'dream-atlas') fields.push('dream');
   if (!keysOnly(v, fields) || (v.context !== undefined && !text(v.context, 1200))) return null;
@@ -163,9 +166,11 @@ export function parseWorkflowInput(v: unknown): WorkflowInput | null {
       (product.id === 'solar-return' && (!Number.isInteger(v.returnYear) || Number(v.returnYear) < 1901 || Number(v.returnYear) > 2098 ||
         !returnLocation(v.returnLocation) || String(v.targetDate).slice(0, 4) !== String(v.returnYear))))) return null;
   // A calendar request names one complete civil month, never an implicit rolling interval.
-  if (product.id === 'personal-calendar' && String(v.targetDate).slice(8) !== '01') return null;
+  if (v.forecastPeriod !== undefined && (v.forecastPeriod !== 'rolling-30-days' || String(v.targetDate) > '2099-12-02')) return null;
+  if (product.id === 'career-forecast-30d' && v.forecastPeriod !== 'rolling-30-days') return null;
+  if (product.id === 'personal-calendar' && v.forecastPeriod === undefined && String(v.targetDate).slice(8) !== '01') return null;
   if (product.id === 'solar-return' && v.importantDates !== undefined && !importantDates(v.importantDates, v.targetDate)) return null;
-  if (product.id === 'personal-calendar' && v.calendarMarks !== undefined && !calendarMarks(v.calendarMarks, v.targetDate)) return null;
+  if (['personal-calendar', 'career-forecast-30d'].includes(product.id) && v.calendarMarks !== undefined && !calendarMarks(v.calendarMarks, v.targetDate, v.forecastPeriod === 'rolling-30-days')) return null;
   if (tarotMethodFor(product.id) && v.focus !== undefined && (!text(v.focus, 400) || /[\u007f-\u009f]/.test(v.focus))) return null;
   if (product.kind === 'tarot' && !tarotMethodFor(product.id) && (!strings(v.questions, 3, 400) ||
       v.questions.length !== (product.id === 'three-questions' ? 3 : 1))) return null;

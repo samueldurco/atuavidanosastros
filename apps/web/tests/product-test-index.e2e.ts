@@ -1,23 +1,24 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { offeredProductIds } from '@atv/domain';
 
 test('test index preserves all private login return paths', async ({ page }) => {
 	const response = await page.goto('/testar-produtos');
 	expect(response?.status()).toBe(200);
 	expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow');
 	await expect(page.getByRole('heading', { name: 'Teste os produtos' })).toBeVisible();
-	const links = page.locator('a[href^="/testar-produtos/"]').filter({ hasNotText: 'ATV+' });
-	await expect(links).toHaveCount(26);
+	const links = page.locator('.products a[href^="/testar-produtos/"]');
+	await expect(links).toHaveCount(19);
 	const targets = await links.evaluateAll((nodes) =>
 		nodes.map((node) => node.getAttribute('href'))
 	);
-	expect(new Set(targets).size).toBe(26);
+	expect(targets.sort()).toEqual(offeredProductIds.map((id) => `/testar-produtos/${id}`).sort());
 	await expect(
 		page.getByRole('heading', { name: 'Entre para acessar seus testes gratuitos' })
 	).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Acessar teste do ATV+' })).toHaveAttribute(
+	await expect(page.getByRole('link', { name: 'Explorar os planos do ATV+' })).toHaveAttribute(
 		'href',
-		'/testar-produtos/atv-plus'
+		'/atv-mais'
 	);
 	await links.filter({ hasText: 'Sol, Lua e Ascendente' }).click();
 	await expect(page).toHaveURL(

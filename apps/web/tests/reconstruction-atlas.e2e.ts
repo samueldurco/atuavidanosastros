@@ -8,7 +8,7 @@ for (const width of [390, 1440]) {
 		await page.goto('/testar-produtos/_spec?product=life-atlas');
 		await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 		await expect(
-			page.getByRole('heading', { name: 'Atlas da Vida 360', exact: true })
+			page.getByRole('heading', { name: 'Mapa Astral por Temas', exact: true })
 		).toBeVisible();
 		await expect(page.getByText('Há uma nova edição desta leitura', { exact: true })).toHaveCount(
 			0

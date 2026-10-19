@@ -28,7 +28,9 @@ test('offset endpoints, civil year crossings and non-hour offsets preserve the e
   for (const timezone of ['UTC+15:00', 'UTC-14:01', 'UTC+5:00', 'UTC+00:60', 'GMT', 'America/Does_Not_Exist']) assert.throws(() => validateCalculationInput({ ...at('2000-01-01T00:00:00Z'), timezone }));
 });
 
-test('runtime IANA handles half-hour folds, skipped days and historical second offsets without claiming pinned rules', () => {
+test('runtime IANA handles half-hour folds, skipped days and historical second offsets without claiming pinned rules', (context) => {
+  for (const component of ['node', 'icu', 'cldr', 'tz'] as const) assert.match(process.versions[component] ?? '', /^\S+$/, `${component} version must be recorded for this test runtime`);
+  context.diagnostic(`IANA runtime: ${JSON.stringify({ node: process.versions.node, icu: process.versions.icu, cldr: process.versions.cldr, tz: process.versions.tz })}`);
   const lordHowe = { ...at('2024-04-06T14:45:00Z'), timezone: 'Australia/Lord_Howe', localDateTime: '2024-04-07T01:45:00' };
   assert.equal(validateCalculationInput(lordHowe).offsetSeconds, 39600);
   assert.equal(validateCalculationInput({ ...lordHowe, utcInstant: '2024-04-06T15:15:00Z' }).offsetSeconds, 37800);
@@ -37,6 +39,28 @@ test('runtime IANA handles half-hour folds, skipped days and historical second o
   assert.equal(paris.offsetSeconds, 561);
   assert.equal(paris.timezoneRules, 'runtime-intl/unpinned');
   assert.throws(() => validateCalculationInput({ ...lordHowe, localDateTime: '2024-04-07T01:45:00.001' }));
+});
+
+test('observed IANA transition profile is explicit and detects runtime rule drift', () => {
+  // These historical fixtures characterize the runtime used for a build. They do not
+  // certify every region or future law, and the product still records an explicit UTC instant.
+  for (const [timezone, utcInstant, localDateTime, offsetSeconds] of [
+    ['America/Sao_Paulo', '2018-11-04T03:30:00Z', '2018-11-04T01:30:00', -7200],
+    ['America/Sao_Paulo', '2019-11-04T03:30:00Z', '2019-11-04T00:30:00', -10800],
+    ['America/New_York', '2024-03-10T07:30:00Z', '2024-03-10T03:30:00', -14400],
+    ['America/New_York', '2024-11-03T05:30:00Z', '2024-11-03T01:30:00', -14400],
+    ['America/New_York', '2024-11-03T06:30:00Z', '2024-11-03T01:30:00', -18000],
+    ['Australia/Lord_Howe', '2024-04-06T14:45:00Z', '2024-04-07T01:45:00', 39600],
+    ['Australia/Lord_Howe', '2024-04-06T15:15:00Z', '2024-04-07T01:45:00', 37800],
+    ['Pacific/Apia', '2011-12-30T12:00:00Z', '2011-12-31T02:00:00', 50400],
+    ['Europe/Paris', '1900-01-01T00:00:00Z', '1900-01-01T00:09:21', 561]
+  ] as const) {
+    const result = validateCalculationInput({ ...at(utcInstant), timezone, localDateTime });
+    assert.equal(result.instant.toISOString(), new Date(utcInstant).toISOString());
+    assert.equal(result.offsetSeconds, offsetSeconds, `${timezone} at ${utcInstant}`);
+    assert.equal(result.timezoneRules, 'runtime-intl/unpinned');
+    assert.throws(() => validateCalculationInput({ ...at(utcInstant), timezone, localDateTime: utcInstant.slice(0, -1) }), TypeError);
+  }
 });
 
 test('latitude cutoff and antimeridian have explicit, consistent domain behavior', () => {
