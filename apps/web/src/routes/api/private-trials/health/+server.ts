@@ -6,7 +6,8 @@ import type { RequestHandler } from './$types';
 
 // Deployment probe: no account, key, record or provider error is exposed.
 export const GET: RequestHandler = async (event) => {
-	const configurationReady = trialRuntimeConfigured(trialServiceBindings(event));
+	const bindings = trialServiceBindings(event);
+	const configurationReady = trialRuntimeConfigured(bindings);
 	let available: boolean;
 	try {
 		const result = await trialWriter(event)
@@ -22,6 +23,9 @@ export const GET: RequestHandler = async (event) => {
 		{
 			available,
 			configurationReady,
+			urlValid: Boolean(bindings.url?.startsWith('https://')),
+			serviceRolePresent: Boolean(bindings.serviceRoleKey?.trim()),
+			runtimeKeyPresent: Boolean(bindings.runtimeKey?.trim()),
 			scope: 'private-free-test',
 			version: POLICY_VERSION
 		},

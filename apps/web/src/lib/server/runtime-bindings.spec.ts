@@ -143,7 +143,28 @@ it('health confirma bindings e consulta real sem devolver chaves ou dados', asyn
 		configurationReady: true,
 		scope: 'private-free-test'
 	});
-	expect(Object.keys(body).sort()).toEqual(['available', 'configurationReady', 'scope', 'version']);
+	expect(Object.keys(body).sort()).toEqual([
+		'available',
+		'configurationReady',
+		'runtimeKeyPresent',
+		'scope',
+		'serviceRolePresent',
+		'urlValid',
+		'version'
+	]);
+	expect(body).toMatchObject({
+		urlValid: true,
+		serviceRolePresent: true,
+		runtimeKeyPresent: true
+	});
+	// The response is restricted to booleans and these two public constants,
+	// so values, lengths, fingerprints and hashes cannot be serialized.
+	for (const [key, value] of Object.entries(body)) {
+		if (key !== 'scope' && key !== 'version') expect(typeof value).toBe('boolean');
+	}
+	for (const value of Object.values(platformValues)) {
+		expect(JSON.stringify(body)).not.toContain(value);
+	}
 	expect(mocks.query).toHaveBeenCalledOnce();
 });
 
@@ -162,4 +183,45 @@ it('health falha fechado se falta o binding de runtime', async () => {
 	);
 	expect(response.status).toBe(503);
 	expect(await response.json()).toMatchObject({ available: false, configurationReady: false });
+});
+
+it.each([
+	['PUBLIC_SUPABASE_URL', 'urlValid'],
+	['SUPABASE_SERVICE_ROLE_KEY', 'serviceRolePresent'],
+	['ATV_TRIAL_RUNTIME_KEY', 'runtimeKeyPresent']
+] as const)(
+	'health identifica somente a configuração ausente ou vazia de %s',
+	async (key, field) => {
+		for (const value of [undefined, '', '   ']) {
+			const bindings: Record<string, string> = { ...platformValues };
+			if (value === undefined) delete bindings[key];
+			else bindings[key] = value;
+			const response = await GET(request(bindings) as Parameters<typeof GET>[0]);
+			expect(response.status).toBe(503);
+			expect(await response.json()).toMatchObject({
+				available: false,
+				configurationReady: false,
+				urlValid: true,
+				serviceRolePresent: true,
+				runtimeKeyPresent: true,
+				[field]: false
+			});
+		}
+	}
+);
+
+it('health distingue URL insegura de chaves presentes sem enfraquecer o guard', async () => {
+	const response = await GET(
+		request({ ...platformValues, PUBLIC_SUPABASE_URL: 'http://synthetic.test' }) as Parameters<
+			typeof GET
+		>[0]
+	);
+	expect(response.status).toBe(503);
+	expect(await response.json()).toMatchObject({
+		available: false,
+		configurationReady: false,
+		urlValid: false,
+		serviceRolePresent: true,
+		runtimeKeyPresent: true
+	});
 });
