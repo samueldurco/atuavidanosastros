@@ -203,7 +203,9 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await page.goto('/produtos/mapa-astral-dinheiro-carreira');
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
 	await expect(page.locator('.product-offer-art .product-art')).toHaveCount(1);
-	await expect(page.getByRole('navigation', { name: 'Atalhos principais' })).toBeVisible();
+	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
+	await expect(page.locator('.header-account')).toBeInViewport();
+	await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeInViewport();
 	await page.evaluate(() => {
 		document.documentElement.style.zoom = '2';
 	});
@@ -217,7 +219,7 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await expect(heading).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Ver disponibilidade', exact: false })).toBeVisible();
 	await expectNoOverflow(page, 'artwork failure at 200% zoom');
-	await expect(page.getByRole('navigation', { name: 'Atalhos principais' })).toBeHidden();
+	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
 	const menu = page.getByRole('button', { name: 'Menu', exact: true });
 	await menu.click();
 	await expect(

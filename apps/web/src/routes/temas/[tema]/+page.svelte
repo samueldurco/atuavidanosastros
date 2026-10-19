@@ -15,7 +15,7 @@
 					<h1>{data.topic.label}</h1>
 					<p class="lead">{data.topic.description}</p>
 					<a class="button primary" href="#leituras"
-						>Conhecer as leituras <span aria-hidden="true">↗</span></a
+						>Conhecer as leituras digitais <span aria-hidden="true">↗</span></a
 					>
 				</div>
 				<div class="universe-hero-emblem" aria-hidden="true">
@@ -45,7 +45,7 @@
 		<section class="universe-readings section" id="leituras" aria-labelledby="readings-title">
 			<div class="wrap">
 				<p class="eyebrow">Escolha o que faz sentido para você</p>
-				<h2 id="readings-title">Leituras de {data.topic.label}</h2>
+				<h2 id="readings-title">Leituras digitais de {data.topic.label}</h2>
 				<p class="section-intro">
 					Compare o foco de cada leitura e os dados necessários. Cada página informa o conteúdo e a
 					disponibilidade.
@@ -54,7 +54,7 @@
 					{#each data.products as product (product.id)}<MvpProductCard {product} showInput />{/each}
 				</div>
 				<a class="back-link" href="/leituras"
-					>Ver todas as leituras <span aria-hidden="true">→</span></a
+					>Ver o catálogo de leituras digitais <span aria-hidden="true">→</span></a
 				>
 			</div>
 		</section>

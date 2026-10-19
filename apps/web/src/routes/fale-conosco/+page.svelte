@@ -13,7 +13,7 @@
 	<title>Fale conosco — A Tua Vida nos Astros</title>
 	<meta
 		name="description"
-		content="Entre em contato com a ATVNA para dúvidas sobre sua conta, leituras, Loja dos Signos, correções de conteúdo e parcerias."
+		content="Entre em contato com a ATVNA para dúvidas sobre sua conta, leituras digitais, produtos físicos da Loja dos Signos, correções de conteúdo e parcerias."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/fale-conosco" />
 </svelte:head>
