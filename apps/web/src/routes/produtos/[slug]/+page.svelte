@@ -257,7 +257,7 @@
 						<h3>{data.product.name}</h3>
 						<p>{data.details.scope}</p>
 						<a class="text-link" href="#disponibilidade"
-							>Ver disponibilidade <span aria-hidden="true">↗</span></a
+							>Consultar acesso à leitura <span aria-hidden="true">↗</span></a
 						>
 					</article>
 					<article class="product-journey-card">

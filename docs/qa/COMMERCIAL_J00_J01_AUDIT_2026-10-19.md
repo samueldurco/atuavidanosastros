@@ -2,6 +2,8 @@
 
 Data: 19/10/2026. Escopo: inventário técnico local do catálogo e dos contratos disponíveis; nenhuma oferta foi ativada. Esta evidência não equivale à aprovação comercial J01 nem ao aceite do produto E5.
 
+Atualização da mesma data: o proprietário confirmou que “Mapa Astral Aprofundado” é `life-atlas` e definiu a apresentação contextual imediatamente após a compra de `birth-chart`. O inventário completo das seis escadas históricas, com a situação de cada aresta, está em [FUNNEL_SOURCE_RECONCILIATION_2026-10-19.md](FUNNEL_SOURCE_RECONCILIATION_2026-10-19.md). Essa decisão prepara a copy de uma página contextual distinta da página pública; ainda não cria uma oferta ativa, preço, checkout nem gatilho de elegibilidade no servidor. O piloto de Carreira descrito abaixo permanece sem aresta aprovada.
+
 ## Conclusão executável
 
 Não há contrato suficiente para implementar ou publicar a página de upsell J08 de `purpose-career`. O plano de jornadas chama esse produto de *candidato comercial* e exige J01/J07 antes de J08. A sequência Carreira com `career-forecast-30d` ainda precisa de decisão; o tema comum não cria uma relação de upsell. Preço, condições, ID de checkout, elegibilidade e direito concedido não foram fixados. Todas as 19 ofertas do catálogo de domínio estão `PREPARING`, e a política de ATV+ mantém cobrança desativada. Construir uma etapa de aceite agora exigiria inventar o que o cliente compra.
@@ -46,7 +48,7 @@ ATV+ tem três planos de ciclo de 30 dias em `atv-plus-plans.ts`: Essencial (uma
 
 | Sequência anterior | Destino documentado agora |
 |---|---|
-| Três Pilares → Mapa Completo; Mapa Completo → Atlas | Candidatas a `three-pillars` → `birth-chart` e `birth-chart` → `life-atlas`; confirmar escopo, momento e propriedade anterior. |
+| Três Pilares → Mapa Completo; Mapa Completo → Atlas | `three-pillars` → `birth-chart` é candidata histórica. `birth-chart` → `life-atlas` foi decidido para apresentação pós-compra imediata, sem pressupor leitura anterior aberta; a variante pós-consumo é candidata separada. Ambas dependem de contexto e propriedade verificados antes de ativação. |
 | Atlas / Revolução Solar / Atlas de Sonhos → clube antigo | Retirar vínculo automático ao clube anterior; reavaliar só pelos benefícios atuais do ATV+. |
 | Leitura do Dia → Semana; Semana → Revolução Solar | Reconciliar o escopo de `date-reading`; segunda ligação candidata quando pertinente. |
 | Faísca do Par → Sinastria → Dossiê | Entrada atual gratuita; `synastry` → `couple-dossier` é candidata, não oferta ativa. |
