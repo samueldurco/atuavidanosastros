@@ -2,8 +2,6 @@
 	import { SITE, universes } from '$lib/data/site';
 	import MvpProductCard from '$lib/components/MvpProductCard.svelte';
 	import MvpProductArt from '$lib/components/MvpProductArt.svelte';
-	import { interestNavigation } from '$lib/data/public-navigation';
-	import { freeTools } from '$lib/data/free-tools';
 	import { mvpArt, mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
 	let { data } = $props();
 	const count = $derived(data.groups.reduce((sum, group) => sum + group.products.length, 0));
@@ -29,11 +27,6 @@
 				disponibilidade.
 			</p>
 			<p>
-				Quer começar gratuitamente? <a href="/ferramentas/ascendente">Descubra seu Ascendente</a> ou
-				<a href="/ferramentas">explore as ferramentas grátis</a>. Você recebe o resultado antes de
-				criar a conta.
-			</p>
-			<p>
 				Procura pôsteres e objetos? <a href="/loja"
 					>Conheça os produtos físicos da Loja dos Signos</a
 				>.
@@ -54,9 +47,6 @@
 	<div class="public-catalog-groups">
 		{#each data.groups as group (group.slug)}
 			{@const theme = mvpTheme(group.slug)}
-			{@const topic = interestNavigation.find(
-				(item) => item.productUniverse === group.productUniverse
-			)}
 			<section class="universe-catalog-group theme-{theme}" aria-labelledby={'group-' + group.slug}>
 				<div class="wrap">
 					<header class="catalog-group-header">
@@ -66,9 +56,6 @@
 							<p>{group.description}</p>
 							<div class="topic-path">
 								<a href={group.href}>Explorar este tema <span aria-hidden="true">↗</span></a>
-								{#each freeTools.filter((tool) => tool.topicId === topic?.id) as tool (tool.id)}<a
-										href={tool.href}>{tool.label} grátis <span aria-hidden="true">↗</span></a
-									>{/each}
 							</div>
 						</div>
 						<img
@@ -80,10 +67,7 @@
 						/>
 					</header>
 					<div class="grid grid-3">
-						{#each group.products as product (product.id)}<MvpProductCard
-								{product}
-								trialAccess={Boolean(data.trialAccess)}
-							/>{/each}
+						{#each group.products as product (product.id)}<MvpProductCard {product} />{/each}
 					</div>
 				</div>
 			</section>
