@@ -33,7 +33,7 @@ export interface EditorialDocument {
 	automationDisclosure?: {
 		generatedWithAI: true;
 		humanReview: false;
-		reviewMode: 'separate-pass';
+		reviewMode: 'separate-pass' | 'reviewed-corpus-and-runtime-verification';
 	};
 	publishedAt: string;
 	modifiedAt: string;
@@ -56,6 +56,10 @@ export interface EditorialDocument {
 		coverageEnd: string;
 	};
 }
+/** Metadata for navigation; text is loaded and verified only when a reading is opened. */
+export type EditorialSummary = Omit<EditorialDocument, 'sections'> & {
+	sections?: EditorialDocument['sections'];
+};
 export interface EditorialApproval {
 	keyId: string;
 	documentId: string;
@@ -371,16 +375,16 @@ export async function approvedDocuments(
 	);
 }
 export function hubDocuments(
-	documents: readonly EditorialDocument[],
+	documents: readonly EditorialSummary[],
 	path: EditorialHub
-): EditorialDocument[] {
+): EditorialSummary[] {
 	return documents.filter((document) =>
 		editorialHubs[path].kind === 'news'
 			? document.path.startsWith('/noticias/')
 			: document.kind === editorialHubs[path].kind
 	);
 }
-export function hubSeo(path: EditorialHub, documents: readonly EditorialDocument[]): PageSeo {
+export function hubSeo(path: EditorialHub, documents: readonly EditorialSummary[]): PageSeo {
 	const hub = editorialHubs[path];
 	return {
 		title: `${hub.title} — ${SITE.name}`,

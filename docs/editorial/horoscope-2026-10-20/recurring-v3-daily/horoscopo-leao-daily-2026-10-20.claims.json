@@ -1,0 +1,347 @@
+{
+  "documentId": "horoscopo-leao-daily-2026-10-20",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "sign": "leao",
+  "factsDigest": "2d886dca4f3f4e059f2becdb4f6a254deedaa76d2eb09056bfeb6a831f9c140f",
+  "claims": [
+    {
+      "section": 0,
+      "paragraph": 0,
+      "factorIds": [
+        "aspect:venus:pluto:square"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:venus:pluto:square": [
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z"
+        ]
+      },
+      "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e as parcerias e os acordos a dois. Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao proteger a familiaridade mesmo quando ela já deixou de acolher, você pode comprometer o espaço de cada pessoa dentro de uma escolha compartilhada. O ajuste interpretado é dar à escolha um limite compreensível: um acordo de convivência que preserve espaço pessoal precisa comportar também um acordo que permita discordar sem desfazer toda a parceria. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 4 e 7. A relação aparece em amostras das duas metades do dia UTC.",
+      "sampledFactors": [
+        {
+          "id": "aspect:venus:pluto:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "venus",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-20T00:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "score": 89.88801442680753,
+          "aspect": {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 89.9776028853615,
+            "orbDegrees": 0.02239711463849403
+          }
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 1,
+      "factorIds": [
+        "aspect:neptune:pluto:sextile"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "neptune": 9,
+            "pluto": 7
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "neptune": 9,
+            "pluto": 7
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "neptune": 9,
+            "pluto": 7
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "neptune": 9,
+            "pluto": 7
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:neptune:pluto:sextile": [
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z"
+        ]
+      },
+      "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e as parcerias e os acordos a dois. Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um plano maior que aceite uma primeira experiência pequena e verificável abre caminho para um acordo que permita discordar sem desfazer toda a parceria. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 9 e 7. A relação aparece em amostras das duas metades do dia UTC. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+      "sampledFactors": [
+        {
+          "id": "aspect:neptune:pluto:sextile",
+          "kind": "aspect",
+          "category": "background",
+          "bodies": [
+            "neptune",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-20T00:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T00:00:00.000Z",
+          "score": 106.43590033339365,
+          "aspect": {
+            "first": "neptune",
+            "second": "pluto",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.28718006667873,
+            "orbDegrees": 0.7128199333212706
+          }
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 2,
+      "factorIds": [
+        "aspect:moon:mercury:square"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "moon": 7,
+            "mercury": 4
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "moon": 7,
+            "mercury": 4
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "moon": 7,
+            "mercury": 4
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "moon": 7,
+            "mercury": 4
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:moon:mercury:square": [
+          "2026-10-20T18:00:00.000Z"
+        ]
+      },
+      "interpretation": "Dar nome a uma sensação pode tornar uma conversa mais clara. O cuidado está em não tratar toda emoção como um problema que desaparece assim que recebe uma explicação. Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a intimidade e a vida de casa. Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. O atrito aparece quando a tendência a responder ao desconforto antes de entender o que está pedindo cuidado dificulta compreender, nomear e trocar informações. Esse caminho tem um custo: ao confundir um acordo com a obrigação de concordar em tudo, você pode comprometer o direito de ter uma base íntima que acolha você. O ajuste interpretado é dar à escolha um limite compreensível: um acordo que permita discordar sem desfazer toda a parceria precisa comportar também um acordo de convivência que preserve espaço pessoal. Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 7 e 4. A relação aparece em amostras da segunda metade do dia UTC.",
+      "sampledFactors": [
+        {
+          "id": "aspect:moon:mercury:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "moon",
+            "mercury"
+          ],
+          "firstObservedAt": "2026-10-20T18:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T18:00:00.000Z",
+          "score": 79.25280839012714,
+          "aspect": {
+            "first": "moon",
+            "second": "mercury",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 90.14943832197457,
+            "orbDegrees": 0.1494383219745714
+          }
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 3,
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "aspect:neptune:pluto:sextile",
+        "aspect:moon:mercury:square"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7,
+            "neptune": 9,
+            "moon": 7,
+            "mercury": 4
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7,
+            "neptune": 9,
+            "moon": 7,
+            "mercury": 4
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7,
+            "neptune": 9,
+            "moon": 7,
+            "mercury": 4
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 4,
+            "pluto": 7,
+            "neptune": 9,
+            "moon": 7,
+            "mercury": 4
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:venus:pluto:square": [
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z"
+        ],
+        "aspect:neptune:pluto:sextile": [
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z"
+        ],
+        "aspect:moon:mercury:square": [
+          "2026-10-20T18:00:00.000Z"
+        ]
+      },
+      "interpretation": "As duas primeiras relações se encontram em Plutão: rever dependências e relações de poder participa das duas escolhas. Encantamento e sensibilidade podem enriquecer uma aproximação. Conhecer melhor o que existe ajuda a preservar o afeto sem exigir que a pessoa ou a experiência sustente uma imagem ideal. Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; um acordo de convivência que preserve espaço pessoal ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação. O contato em quadratura entre Lua e Mercúrio acrescenta reconhecer o que traz acolhimento e segurança a essa conclusão. Responder ao desconforto antes de entender o que está pedindo cuidado pode acentuar o impasse, porque torna mais difícil escolher o que tem valor e cultivar reciprocidade. Assim, um acordo que permita discordar sem desfazer toda a parceria dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha. No recorte diário, essa combinação dá medida a uma resposta próxima, sem exigir uma solução para todos os assuntos de uma vez.",
+      "sampledFactors": [
+        {
+          "id": "aspect:venus:pluto:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "venus",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-20T00:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "score": 89.88801442680753,
+          "aspect": {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 89.9776028853615,
+            "orbDegrees": 0.02239711463849403
+          }
+        },
+        {
+          "id": "aspect:neptune:pluto:sextile",
+          "kind": "aspect",
+          "category": "background",
+          "bodies": [
+            "neptune",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-20T00:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T00:00:00.000Z",
+          "score": 106.43590033339365,
+          "aspect": {
+            "first": "neptune",
+            "second": "pluto",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.28718006667873,
+            "orbDegrees": 0.7128199333212706
+          }
+        },
+        {
+          "id": "aspect:moon:mercury:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "moon",
+            "mercury"
+          ],
+          "firstObservedAt": "2026-10-20T18:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T18:00:00.000Z",
+          "score": 79.25280839012714,
+          "aspect": {
+            "first": "moon",
+            "second": "mercury",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 90.14943832197457,
+            "orbDegrees": 0.1494383219745714
+          }
+        }
+      ]
+    }
+  ]
+}

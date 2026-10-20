@@ -1,0 +1,25 @@
+{
+  "schema": "atv-dated-horoscope-runtime-v1",
+  "documentId": "horoscopo-aries-monthly-2026-10-01",
+  "documentDigest": "7705e05e7f9edd6212c6468909b9eb4f74411796c0a18ffd75b52c707df0222e",
+  "factsDigest": "aa132e6dae486d25a09b2bca88d2b5050357d4f814d6456b9a4c04d5c42f86be",
+  "claimsDigest": "360544f9b9aa979d69deac2effeacc5357958b9b265f10e7dcfe16f1b0d70a85",
+  "scopeDigest": "f01bfc638a9596b245818de33e39f4e53df4956ab176336f1134bcbbf23af96d",
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "verifiedAt": "2026-10-20T10:37:33.310Z",
+  "checks": {
+    "facts": "PASS",
+    "claims": "PASS",
+    "composition": "PASS",
+    "coverage": "PASS",
+    "disclosure": "PASS",
+    "differentiation": "PASS"
+  },
+  "decision": "PASS"
+}

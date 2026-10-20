@@ -1,0 +1,944 @@
+{
+  "period": "weekly",
+  "startDate": "2026-10-19",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "requiredFactors": [
+    "aspect:venus:pluto:square",
+    "sign:venus:1792929600000",
+    "aspect:neptune:pluto:sextile"
+  ],
+  "readings": [
+    {
+      "sign": "aries",
+      "name": "Áries",
+      "title": "Dividir sem perder a clareza e participar sem perder sua voz",
+      "description": "Uma leitura simbólica para Áries sobre a partilha e os compromissos que envolvem confiança e suas relações com os grupos, as amizades e os projetos em comum.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e os grupos, as amizades e os projetos em comum. Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao deixar expectativas implícitas acumularem peso no vínculo, você pode comprometer o pertencimento que permite contribuir sem apagar sua posição. O ajuste interpretado é dar à escolha um limite compreensível: uma combinação clara sobre o que cada pessoa oferece e pode pedir precisa comportar também uma contribuição cujos limites sejam compreensíveis para o grupo. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 8 e 11. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a partilha e os compromissos que envolvem confiança e as parcerias e os acordos a dois. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a confiança necessária para dividir algo sem perder a clareza dos limites pode precisar de ajustes quando está em jogo o espaço de cada pessoa dentro de uma escolha compartilhada. Por exemplo, uma combinação clara sobre o que cada pessoa oferece e pode pedir não resolve automaticamente o que aparece ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e os grupos, as amizades e os projetos em comum. Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma iniciativa que possa ser corrigida depois da primeira resposta abre caminho para uma contribuição cujos limites sejam compreensíveis para o grupo. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 1 e 11. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a partilha e os compromissos que envolvem confiança e passa ao tema que envolve as parcerias e os acordos a dois. Um acordo que permita discordar sem desfazer toda a parceria torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma iniciativa que possa ser corrigida depois da primeira resposta oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A iniciativa própria e a escolha compartilhada precisam caber na mesma decisão. Um acordo ganha qualidade quando a sua posição está presente e ainda pode escutar uma resposta. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 8,
+            "pluto": 11
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e os grupos, as amizades e os projetos em comum. Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao deixar expectativas implícitas acumularem peso no vínculo, você pode comprometer o pertencimento que permite contribuir sem apagar sua posição. O ajuste interpretado é dar à escolha um limite compreensível: uma combinação clara sobre o que cada pessoa oferece e pode pedir precisa comportar também uma contribuição cujos limites sejam compreensíveis para o grupo. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 8 e 11. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 7
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a partilha e os compromissos que envolvem confiança e as parcerias e os acordos a dois. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a confiança necessária para dividir algo sem perder a clareza dos limites pode precisar de ajustes quando está em jogo o espaço de cada pessoa dentro de uma escolha compartilhada. Por exemplo, uma combinação clara sobre o que cada pessoa oferece e pode pedir não resolve automaticamente o que aparece ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 1,
+            "pluto": 11
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e os grupos, as amizades e os projetos em comum. Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma iniciativa que possa ser corrigida depois da primeira resposta abre caminho para uma contribuição cujos limites sejam compreensíveis para o grupo. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 1 e 11. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 8,
+              "pluto": 11
+            },
+            "sign:venus:1792929600000": {
+              "venus": 7
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 1,
+              "pluto": 11
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a partilha e os compromissos que envolvem confiança e passa ao tema que envolve as parcerias e os acordos a dois. Um acordo que permita discordar sem desfazer toda a parceria torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma iniciativa que possa ser corrigida depois da primeira resposta oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A iniciativa própria e a escolha compartilhada precisam caber na mesma decisão. Um acordo ganha qualidade quando a sua posição está presente e ainda pode escutar uma resposta. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "touro",
+      "name": "Touro",
+      "title": "Negociar sem desaparecer do encontro e assumir uma direção que faça sentido",
+      "description": "Uma leitura simbólica para Touro sobre as parcerias e os acordos a dois e suas relações com a direção profissional e as responsabilidades públicas.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a direção profissional e as responsabilidades públicas. Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao confundir um acordo com a obrigação de concordar em tudo, você pode comprometer o compromisso com uma direção que possa ser sustentada publicamente. O ajuste interpretado é dar à escolha um limite compreensível: um acordo que permita discordar sem desfazer toda a parceria precisa comportar também uma responsabilidade com critérios claros para o que é suficiente. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 7 e 10. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: as parcerias e os acordos a dois e o trabalho cotidiano e os cuidados de rotina. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço de cada pessoa dentro de uma escolha compartilhada pode precisar de ajustes quando está em jogo a possibilidade de manter uma rotina que caiba na vida. Por exemplo, um acordo que permita discordar sem desfazer toda a parceria não resolve automaticamente o que aparece ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e a direção profissional e as responsabilidades públicas. Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma pausa que ajude a voltar ou a concluir abre caminho para uma responsabilidade com critérios claros para o que é suficiente. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 12 e 10. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as parcerias e os acordos a dois e passa ao tema que envolve o trabalho cotidiano e os cuidados de rotina. Uma tarefa com tempo e responsabilidade bem definidos torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma pausa que ajude a voltar ou a concluir oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Constância e recolhimento se sustentam melhor quando um não chega apenas depois do esgotamento do outro. Uma pausa pode preservar a continuidade; uma rotina delimitada pode tornar a pausa possível. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 7,
+            "pluto": 10
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a direção profissional e as responsabilidades públicas. Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao confundir um acordo com a obrigação de concordar em tudo, você pode comprometer o compromisso com uma direção que possa ser sustentada publicamente. O ajuste interpretado é dar à escolha um limite compreensível: um acordo que permita discordar sem desfazer toda a parceria precisa comportar também uma responsabilidade com critérios claros para o que é suficiente. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 7 e 10. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 6
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: as parcerias e os acordos a dois e o trabalho cotidiano e os cuidados de rotina. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço de cada pessoa dentro de uma escolha compartilhada pode precisar de ajustes quando está em jogo a possibilidade de manter uma rotina que caiba na vida. Por exemplo, um acordo que permita discordar sem desfazer toda a parceria não resolve automaticamente o que aparece ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 12,
+            "pluto": 10
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e a direção profissional e as responsabilidades públicas. Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma pausa que ajude a voltar ou a concluir abre caminho para uma responsabilidade com critérios claros para o que é suficiente. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 12 e 10. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 7,
+              "pluto": 10
+            },
+            "sign:venus:1792929600000": {
+              "venus": 6
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 12,
+              "pluto": 10
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as parcerias e os acordos a dois e passa ao tema que envolve o trabalho cotidiano e os cuidados de rotina. Uma tarefa com tempo e responsabilidade bem definidos torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma pausa que ajude a voltar ou a concluir oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Constância e recolhimento se sustentam melhor quando um não chega apenas depois do esgotamento do outro. Uma pausa pode preservar a continuidade; uma rotina delimitada pode tornar a pausa possível. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "gemeos",
+      "name": "Gêmeos",
+      "title": "Dar uma forma possível à rotina e ampliar a visão sem perder o chão",
+      "description": "Uma leitura simbólica para Gêmeos sobre o trabalho cotidiano e os cuidados de rotina e suas relações com os estudos, as convicções e os projetos de expansão.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e os estudos, as convicções e os projetos de expansão. Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao acrescentar exigências até que a organização se torne outra fonte de desgaste, você pode comprometer a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta. O ajuste interpretado é dar à escolha um limite compreensível: uma tarefa com tempo e responsabilidade bem definidos precisa comportar também um plano maior que aceite uma primeira experiência pequena e verificável. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 6 e 9. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: o trabalho cotidiano e os cuidados de rotina e a criação, o prazer e a expressão pessoal. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de manter uma rotina que caiba na vida pode precisar de ajustes quando está em jogo a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro. Por exemplo, uma tarefa com tempo e responsabilidade bem definidos não resolve automaticamente o que aparece ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e os estudos, as convicções e os projetos de expansão. Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma contribuição cujos limites sejam compreensíveis para o grupo abre caminho para um plano maior que aceite uma primeira experiência pequena e verificável. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 11 e 9. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve o trabalho cotidiano e os cuidados de rotina e passa ao tema que envolve a criação, o prazer e a expressão pessoal. Uma experiência criativa que possa existir antes de ser avaliada torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma contribuição cujos limites sejam compreensíveis para o grupo oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Participar de algo maior não precisa apagar a contribuição pessoal. A criação ganha alcance no encontro com outras pessoas, desde que pertencer não exija abandonar tudo o que a torna sua. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 6,
+            "pluto": 9
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e os estudos, as convicções e os projetos de expansão. Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao acrescentar exigências até que a organização se torne outra fonte de desgaste, você pode comprometer a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta. O ajuste interpretado é dar à escolha um limite compreensível: uma tarefa com tempo e responsabilidade bem definidos precisa comportar também um plano maior que aceite uma primeira experiência pequena e verificável. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 6 e 9. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 5
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: o trabalho cotidiano e os cuidados de rotina e a criação, o prazer e a expressão pessoal. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de manter uma rotina que caiba na vida pode precisar de ajustes quando está em jogo a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro. Por exemplo, uma tarefa com tempo e responsabilidade bem definidos não resolve automaticamente o que aparece ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 11,
+            "pluto": 9
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e os estudos, as convicções e os projetos de expansão. Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma contribuição cujos limites sejam compreensíveis para o grupo abre caminho para um plano maior que aceite uma primeira experiência pequena e verificável. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 11 e 9. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 6,
+              "pluto": 9
+            },
+            "sign:venus:1792929600000": {
+              "venus": 5
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 11,
+              "pluto": 9
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve o trabalho cotidiano e os cuidados de rotina e passa ao tema que envolve a criação, o prazer e a expressão pessoal. Uma experiência criativa que possa existir antes de ser avaliada torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma contribuição cujos limites sejam compreensíveis para o grupo oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Participar de algo maior não precisa apagar a contribuição pessoal. A criação ganha alcance no encontro com outras pessoas, desde que pertencer não exija abandonar tudo o que a torna sua. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "cancer",
+      "name": "Câncer",
+      "title": "Abrir espaço para criar e gostar e dividir sem perder a clareza",
+      "description": "Uma leitura simbólica para Câncer sobre a criação, o prazer e a expressão pessoal e suas relações com a partilha e os compromissos que envolvem confiança.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e a partilha e os compromissos que envolvem confiança. Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao depender da resposta alheia para continuar algo que tem valor para você, você pode comprometer a confiança necessária para dividir algo sem perder a clareza dos limites. O ajuste interpretado é dar à escolha um limite compreensível: uma experiência criativa que possa existir antes de ser avaliada precisa comportar também uma combinação clara sobre o que cada pessoa oferece e pode pedir. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 5 e 8. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a criação, o prazer e a expressão pessoal e a intimidade e a vida de casa. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro pode precisar de ajustes quando está em jogo o direito de ter uma base íntima que acolha você. Por exemplo, uma experiência criativa que possa existir antes de ser avaliada não resolve automaticamente o que aparece ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e a partilha e os compromissos que envolvem confiança. Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma responsabilidade com critérios claros para o que é suficiente abre caminho para uma combinação clara sobre o que cada pessoa oferece e pode pedir. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 10 e 8. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a criação, o prazer e a expressão pessoal e passa ao tema que envolve a intimidade e a vida de casa. Um acordo de convivência que preserve espaço pessoal torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma responsabilidade com critérios claros para o que é suficiente oferece um recurso que modifica a maneira de enfrentar a primeira escolha. O que você sustenta publicamente precisa encontrar apoio na vida íntima. Reconhecimento e responsabilidade ficam mais habitáveis quando não consomem todo o espaço onde você pode simplesmente descansar. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 5,
+            "pluto": 8
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e a partilha e os compromissos que envolvem confiança. Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao depender da resposta alheia para continuar algo que tem valor para você, você pode comprometer a confiança necessária para dividir algo sem perder a clareza dos limites. O ajuste interpretado é dar à escolha um limite compreensível: uma experiência criativa que possa existir antes de ser avaliada precisa comportar também uma combinação clara sobre o que cada pessoa oferece e pode pedir. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 5 e 8. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 4
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a criação, o prazer e a expressão pessoal e a intimidade e a vida de casa. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro pode precisar de ajustes quando está em jogo o direito de ter uma base íntima que acolha você. Por exemplo, uma experiência criativa que possa existir antes de ser avaliada não resolve automaticamente o que aparece ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 10,
+            "pluto": 8
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e a partilha e os compromissos que envolvem confiança. Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma responsabilidade com critérios claros para o que é suficiente abre caminho para uma combinação clara sobre o que cada pessoa oferece e pode pedir. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 10 e 8. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 5,
+              "pluto": 8
+            },
+            "sign:venus:1792929600000": {
+              "venus": 4
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 10,
+              "pluto": 8
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a criação, o prazer e a expressão pessoal e passa ao tema que envolve a intimidade e a vida de casa. Um acordo de convivência que preserve espaço pessoal torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma responsabilidade com critérios claros para o que é suficiente oferece um recurso que modifica a maneira de enfrentar a primeira escolha. O que você sustenta publicamente precisa encontrar apoio na vida íntima. Reconhecimento e responsabilidade ficam mais habitáveis quando não consomem todo o espaço onde você pode simplesmente descansar. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "leao",
+      "name": "Leão",
+      "title": "Cuidar da base que acolhe você e negociar sem desaparecer do encontro",
+      "description": "Uma leitura simbólica para Leão sobre a intimidade e a vida de casa e suas relações com as parcerias e os acordos a dois.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e as parcerias e os acordos a dois. Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao proteger a familiaridade mesmo quando ela já deixou de acolher, você pode comprometer o espaço de cada pessoa dentro de uma escolha compartilhada. O ajuste interpretado é dar à escolha um limite compreensível: um acordo de convivência que preserve espaço pessoal precisa comportar também um acordo que permita discordar sem desfazer toda a parceria. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 4 e 7. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a intimidade e a vida de casa e as conversas e os aprendizados cotidianos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o direito de ter uma base íntima que acolha você pode precisar de ajustes quando está em jogo a possibilidade de compreender e ser compreendido. Por exemplo, um acordo de convivência que preserve espaço pessoal não resolve automaticamente o que aparece ao explicar uma ideia, pedir uma informação ou retomar uma conversa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e as parcerias e os acordos a dois. Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um plano maior que aceite uma primeira experiência pequena e verificável abre caminho para um acordo que permita discordar sem desfazer toda a parceria. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 9 e 7. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a intimidade e a vida de casa e passa ao tema que envolve as conversas e os aprendizados cotidianos. Uma conversa em que o pedido fique compreensível para os dois lados torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, um plano maior que aceite uma primeira experiência pequena e verificável oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A visão maior precisa conversar com a informação concreta. Uma boa pergunta pode preservar o sentido de uma ideia e, ao mesmo tempo, mudar a forma como você pretende colocá-la em prática. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 4,
+            "pluto": 7
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e as parcerias e os acordos a dois. Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao proteger a familiaridade mesmo quando ela já deixou de acolher, você pode comprometer o espaço de cada pessoa dentro de uma escolha compartilhada. O ajuste interpretado é dar à escolha um limite compreensível: um acordo de convivência que preserve espaço pessoal precisa comportar também um acordo que permita discordar sem desfazer toda a parceria. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 4 e 7. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 3
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a intimidade e a vida de casa e as conversas e os aprendizados cotidianos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o direito de ter uma base íntima que acolha você pode precisar de ajustes quando está em jogo a possibilidade de compreender e ser compreendido. Por exemplo, um acordo de convivência que preserve espaço pessoal não resolve automaticamente o que aparece ao explicar uma ideia, pedir uma informação ou retomar uma conversa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 9,
+            "pluto": 7
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e as parcerias e os acordos a dois. Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um plano maior que aceite uma primeira experiência pequena e verificável abre caminho para um acordo que permita discordar sem desfazer toda a parceria. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 9 e 7. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 4,
+              "pluto": 7
+            },
+            "sign:venus:1792929600000": {
+              "venus": 3
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 9,
+              "pluto": 7
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a intimidade e a vida de casa e passa ao tema que envolve as conversas e os aprendizados cotidianos. Uma conversa em que o pedido fique compreensível para os dois lados torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, um plano maior que aceite uma primeira experiência pequena e verificável oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A visão maior precisa conversar com a informação concreta. Uma boa pergunta pode preservar o sentido de uma ideia e, ao mesmo tempo, mudar a forma como você pretende colocá-la em prática. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "virgem",
+      "name": "Virgem",
+      "title": "Encontrar palavras que aproximam e dar uma forma possível à rotina",
+      "description": "Uma leitura simbólica para Virgem sobre as conversas e os aprendizados cotidianos e suas relações com o trabalho cotidiano e os cuidados de rotina.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e o trabalho cotidiano e os cuidados de rotina. Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao multiplicar explicações sem chegar ao ponto que precisa ser entendido, você pode comprometer a possibilidade de manter uma rotina que caiba na vida. O ajuste interpretado é dar à escolha um limite compreensível: uma conversa em que o pedido fique compreensível para os dois lados precisa comportar também uma tarefa com tempo e responsabilidade bem definidos. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 3 e 6. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: as conversas e os aprendizados cotidianos e suas prioridades e recursos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de compreender e ser compreendido pode precisar de ajustes quando está em jogo a segurança de ter recursos e prioridades próprios. Por exemplo, uma conversa em que o pedido fique compreensível para os dois lados não resolve automaticamente o que aparece ao distribuir tempo, dinheiro e atenção entre o que importa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e o trabalho cotidiano e os cuidados de rotina. Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma combinação clara sobre o que cada pessoa oferece e pode pedir abre caminho para uma tarefa com tempo e responsabilidade bem definidos. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 8 e 6. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as conversas e os aprendizados cotidianos e passa ao tema que envolve suas prioridades e recursos. Uma prioridade que caiba nos recursos realmente disponíveis torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Ter uma base própria muda a maneira de compartilhar. A confiança fica mais clara quando contribuição, expectativa e limite deixam de depender de suposições. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e o trabalho cotidiano e os cuidados de rotina. Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao multiplicar explicações sem chegar ao ponto que precisa ser entendido, você pode comprometer a possibilidade de manter uma rotina que caiba na vida. O ajuste interpretado é dar à escolha um limite compreensível: uma conversa em que o pedido fique compreensível para os dois lados precisa comportar também uma tarefa com tempo e responsabilidade bem definidos. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 3 e 6. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 2
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: as conversas e os aprendizados cotidianos e suas prioridades e recursos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de compreender e ser compreendido pode precisar de ajustes quando está em jogo a segurança de ter recursos e prioridades próprios. Por exemplo, uma conversa em que o pedido fique compreensível para os dois lados não resolve automaticamente o que aparece ao distribuir tempo, dinheiro e atenção entre o que importa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e o trabalho cotidiano e os cuidados de rotina. Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma combinação clara sobre o que cada pessoa oferece e pode pedir abre caminho para uma tarefa com tempo e responsabilidade bem definidos. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 8 e 6. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 3,
+              "pluto": 6
+            },
+            "sign:venus:1792929600000": {
+              "venus": 2
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 8,
+              "pluto": 6
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as conversas e os aprendizados cotidianos e passa ao tema que envolve suas prioridades e recursos. Uma prioridade que caiba nos recursos realmente disponíveis torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Ter uma base própria muda a maneira de compartilhar. A confiança fica mais clara quando contribuição, expectativa e limite deixam de depender de suposições. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "libra",
+      "name": "Libra",
+      "title": "Dar valor ao que sustenta você e abrir espaço para criar e gostar",
+      "description": "Uma leitura simbólica para Libra sobre suas prioridades e recursos e suas relações com a criação, o prazer e a expressão pessoal.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: suas prioridades e recursos e a criação, o prazer e a expressão pessoal. Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao conservar algo apenas porque já custou esforço, você pode comprometer a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro. O ajuste interpretado é dar à escolha um limite compreensível: uma prioridade que caiba nos recursos realmente disponíveis precisa comportar também uma experiência criativa que possa existir antes de ser avaliada. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 2 e 5. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: suas prioridades e recursos e sua maneira de se apresentar e começar. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a segurança de ter recursos e prioridades próprios pode precisar de ajustes quando está em jogo a liberdade de escolher por si. Por exemplo, uma prioridade que caiba nos recursos realmente disponíveis não resolve automaticamente o que aparece ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a criação, o prazer e a expressão pessoal. Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um acordo que permita discordar sem desfazer toda a parceria abre caminho para uma experiência criativa que possa existir antes de ser avaliada. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 7 e 5. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve suas prioridades e recursos e passa ao tema que envolve sua maneira de se apresentar e começar. Uma iniciativa que possa ser corrigida depois da primeira resposta torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, um acordo que permita discordar sem desfazer toda a parceria oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A iniciativa própria e a escolha compartilhada precisam caber na mesma decisão. Um acordo ganha qualidade quando a sua posição está presente e ainda pode escutar uma resposta. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 2,
+            "pluto": 5
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: suas prioridades e recursos e a criação, o prazer e a expressão pessoal. Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao conservar algo apenas porque já custou esforço, você pode comprometer a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro. O ajuste interpretado é dar à escolha um limite compreensível: uma prioridade que caiba nos recursos realmente disponíveis precisa comportar também uma experiência criativa que possa existir antes de ser avaliada. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 2 e 5. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 1
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: suas prioridades e recursos e sua maneira de se apresentar e começar. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a segurança de ter recursos e prioridades próprios pode precisar de ajustes quando está em jogo a liberdade de escolher por si. Por exemplo, uma prioridade que caiba nos recursos realmente disponíveis não resolve automaticamente o que aparece ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 7,
+            "pluto": 5
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a criação, o prazer e a expressão pessoal. Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um acordo que permita discordar sem desfazer toda a parceria abre caminho para uma experiência criativa que possa existir antes de ser avaliada. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 7 e 5. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 2,
+              "pluto": 5
+            },
+            "sign:venus:1792929600000": {
+              "venus": 1
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 7,
+              "pluto": 5
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve suas prioridades e recursos e passa ao tema que envolve sua maneira de se apresentar e começar. Uma iniciativa que possa ser corrigida depois da primeira resposta torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, um acordo que permita discordar sem desfazer toda a parceria oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A iniciativa própria e a escolha compartilhada precisam caber na mesma decisão. Um acordo ganha qualidade quando a sua posição está presente e ainda pode escutar uma resposta. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "escorpiao",
+      "name": "Escorpião",
+      "title": "Escolher sua própria posição e cuidar da base que acolhe você",
+      "description": "Uma leitura simbólica para Escorpião sobre sua maneira de se apresentar e começar e suas relações com a intimidade e a vida de casa.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e a intimidade e a vida de casa. Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao decidir depressa e deixar pouco espaço para ajustar o caminho, você pode comprometer o direito de ter uma base íntima que acolha você. O ajuste interpretado é dar à escolha um limite compreensível: uma iniciativa que possa ser corrigida depois da primeira resposta precisa comportar também um acordo de convivência que preserve espaço pessoal. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 1 e 4. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: sua maneira de se apresentar e começar e o recolhimento e os assuntos que pedem encerramento. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de escolher por si pode precisar de ajustes quando está em jogo o espaço para elaborar algo antes de responder ao mundo. Por exemplo, uma iniciativa que possa ser corrigida depois da primeira resposta não resolve automaticamente o que aparece ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e a intimidade e a vida de casa. Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma tarefa com tempo e responsabilidade bem definidos abre caminho para um acordo de convivência que preserve espaço pessoal. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 6 e 4. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve sua maneira de se apresentar e começar e passa ao tema que envolve o recolhimento e os assuntos que pedem encerramento. Uma pausa que ajude a voltar ou a concluir torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma tarefa com tempo e responsabilidade bem definidos oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Constância e recolhimento se sustentam melhor quando um não chega apenas depois do esgotamento do outro. Uma pausa pode preservar a continuidade; uma rotina delimitada pode tornar a pausa possível. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 1,
+            "pluto": 4
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e a intimidade e a vida de casa. Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao decidir depressa e deixar pouco espaço para ajustar o caminho, você pode comprometer o direito de ter uma base íntima que acolha você. O ajuste interpretado é dar à escolha um limite compreensível: uma iniciativa que possa ser corrigida depois da primeira resposta precisa comportar também um acordo de convivência que preserve espaço pessoal. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 1 e 4. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 12
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: sua maneira de se apresentar e começar e o recolhimento e os assuntos que pedem encerramento. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de escolher por si pode precisar de ajustes quando está em jogo o espaço para elaborar algo antes de responder ao mundo. Por exemplo, uma iniciativa que possa ser corrigida depois da primeira resposta não resolve automaticamente o que aparece ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 6,
+            "pluto": 4
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e a intimidade e a vida de casa. Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma tarefa com tempo e responsabilidade bem definidos abre caminho para um acordo de convivência que preserve espaço pessoal. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 6 e 4. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 1,
+              "pluto": 4
+            },
+            "sign:venus:1792929600000": {
+              "venus": 12
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 6,
+              "pluto": 4
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve sua maneira de se apresentar e começar e passa ao tema que envolve o recolhimento e os assuntos que pedem encerramento. Uma pausa que ajude a voltar ou a concluir torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma tarefa com tempo e responsabilidade bem definidos oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Constância e recolhimento se sustentam melhor quando um não chega apenas depois do esgotamento do outro. Uma pausa pode preservar a continuidade; uma rotina delimitada pode tornar a pausa possível. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "sagitario",
+      "name": "Sagitário",
+      "title": "Respeitar o tempo de recolher e encontrar palavras que aproximam",
+      "description": "Uma leitura simbólica para Sagitário sobre o recolhimento e os assuntos que pedem encerramento e suas relações com as conversas e os aprendizados cotidianos.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e as conversas e os aprendizados cotidianos. Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao adiar indefinidamente uma conversa ou um encerramento por precisar de mais silêncio, você pode comprometer a possibilidade de compreender e ser compreendido. O ajuste interpretado é dar à escolha um limite compreensível: uma pausa que ajude a voltar ou a concluir precisa comportar também uma conversa em que o pedido fique compreensível para os dois lados. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 12 e 3. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: o recolhimento e os assuntos que pedem encerramento e os grupos, as amizades e os projetos em comum. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço para elaborar algo antes de responder ao mundo pode precisar de ajustes quando está em jogo o pertencimento que permite contribuir sem apagar sua posição. Por exemplo, uma pausa que ajude a voltar ou a concluir não resolve automaticamente o que aparece ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e as conversas e os aprendizados cotidianos. Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma experiência criativa que possa existir antes de ser avaliada abre caminho para uma conversa em que o pedido fique compreensível para os dois lados. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 5 e 3. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve o recolhimento e os assuntos que pedem encerramento e passa ao tema que envolve os grupos, as amizades e os projetos em comum. Uma contribuição cujos limites sejam compreensíveis para o grupo torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma experiência criativa que possa existir antes de ser avaliada oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Participar de algo maior não precisa apagar a contribuição pessoal. A criação ganha alcance no encontro com outras pessoas, desde que pertencer não exija abandonar tudo o que a torna sua. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 12,
+            "pluto": 3
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e as conversas e os aprendizados cotidianos. Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao adiar indefinidamente uma conversa ou um encerramento por precisar de mais silêncio, você pode comprometer a possibilidade de compreender e ser compreendido. O ajuste interpretado é dar à escolha um limite compreensível: uma pausa que ajude a voltar ou a concluir precisa comportar também uma conversa em que o pedido fique compreensível para os dois lados. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 12 e 3. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 11
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: o recolhimento e os assuntos que pedem encerramento e os grupos, as amizades e os projetos em comum. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço para elaborar algo antes de responder ao mundo pode precisar de ajustes quando está em jogo o pertencimento que permite contribuir sem apagar sua posição. Por exemplo, uma pausa que ajude a voltar ou a concluir não resolve automaticamente o que aparece ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 5,
+            "pluto": 3
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e as conversas e os aprendizados cotidianos. Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma experiência criativa que possa existir antes de ser avaliada abre caminho para uma conversa em que o pedido fique compreensível para os dois lados. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 5 e 3. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 12,
+              "pluto": 3
+            },
+            "sign:venus:1792929600000": {
+              "venus": 11
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 5,
+              "pluto": 3
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve o recolhimento e os assuntos que pedem encerramento e passa ao tema que envolve os grupos, as amizades e os projetos em comum. Uma contribuição cujos limites sejam compreensíveis para o grupo torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma experiência criativa que possa existir antes de ser avaliada oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Participar de algo maior não precisa apagar a contribuição pessoal. A criação ganha alcance no encontro com outras pessoas, desde que pertencer não exija abandonar tudo o que a torna sua. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "capricornio",
+      "name": "Capricórnio",
+      "title": "Participar sem perder sua voz e dar valor ao que sustenta você",
+      "description": "Uma leitura simbólica para Capricórnio sobre os grupos, as amizades e os projetos em comum e suas relações com suas prioridades e recursos.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e suas prioridades e recursos. Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao aceitar expectativas coletivas sem conferir o lugar que você deseja ocupar, você pode comprometer a segurança de ter recursos e prioridades próprios. O ajuste interpretado é dar à escolha um limite compreensível: uma contribuição cujos limites sejam compreensíveis para o grupo precisa comportar também uma prioridade que caiba nos recursos realmente disponíveis. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 11 e 2. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: os grupos, as amizades e os projetos em comum e a direção profissional e as responsabilidades públicas. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o pertencimento que permite contribuir sem apagar sua posição pode precisar de ajustes quando está em jogo o compromisso com uma direção que possa ser sustentada publicamente. Por exemplo, uma contribuição cujos limites sejam compreensíveis para o grupo não resolve automaticamente o que aparece ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e suas prioridades e recursos. Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um acordo de convivência que preserve espaço pessoal abre caminho para uma prioridade que caiba nos recursos realmente disponíveis. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 4 e 2. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve os grupos, as amizades e os projetos em comum e passa ao tema que envolve a direção profissional e as responsabilidades públicas. Uma responsabilidade com critérios claros para o que é suficiente torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, um acordo de convivência que preserve espaço pessoal oferece um recurso que modifica a maneira de enfrentar a primeira escolha. O que você sustenta publicamente precisa encontrar apoio na vida íntima. Reconhecimento e responsabilidade ficam mais habitáveis quando não consomem todo o espaço onde você pode simplesmente descansar. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 11,
+            "pluto": 2
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e suas prioridades e recursos. Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao aceitar expectativas coletivas sem conferir o lugar que você deseja ocupar, você pode comprometer a segurança de ter recursos e prioridades próprios. O ajuste interpretado é dar à escolha um limite compreensível: uma contribuição cujos limites sejam compreensíveis para o grupo precisa comportar também uma prioridade que caiba nos recursos realmente disponíveis. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 11 e 2. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 10
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: os grupos, as amizades e os projetos em comum e a direção profissional e as responsabilidades públicas. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o pertencimento que permite contribuir sem apagar sua posição pode precisar de ajustes quando está em jogo o compromisso com uma direção que possa ser sustentada publicamente. Por exemplo, uma contribuição cujos limites sejam compreensíveis para o grupo não resolve automaticamente o que aparece ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 4,
+            "pluto": 2
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e suas prioridades e recursos. Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um acordo de convivência que preserve espaço pessoal abre caminho para uma prioridade que caiba nos recursos realmente disponíveis. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 4 e 2. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 11,
+              "pluto": 2
+            },
+            "sign:venus:1792929600000": {
+              "venus": 10
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 4,
+              "pluto": 2
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve os grupos, as amizades e os projetos em comum e passa ao tema que envolve a direção profissional e as responsabilidades públicas. Uma responsabilidade com critérios claros para o que é suficiente torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, um acordo de convivência que preserve espaço pessoal oferece um recurso que modifica a maneira de enfrentar a primeira escolha. O que você sustenta publicamente precisa encontrar apoio na vida íntima. Reconhecimento e responsabilidade ficam mais habitáveis quando não consomem todo o espaço onde você pode simplesmente descansar. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "aquario",
+      "name": "Aquário",
+      "title": "Assumir uma direção que faça sentido e escolher sua própria posição",
+      "description": "Uma leitura simbólica para Aquário sobre a direção profissional e as responsabilidades públicas e suas relações com sua maneira de se apresentar e começar.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e sua maneira de se apresentar e começar. Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao medir todas as escolhas pelo reconhecimento que elas podem trazer, você pode comprometer a liberdade de escolher por si. O ajuste interpretado é dar à escolha um limite compreensível: uma responsabilidade com critérios claros para o que é suficiente precisa comportar também uma iniciativa que possa ser corrigida depois da primeira resposta. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 10 e 1. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a direção profissional e as responsabilidades públicas e os estudos, as convicções e os projetos de expansão. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o compromisso com uma direção que possa ser sustentada publicamente pode precisar de ajustes quando está em jogo a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta. Por exemplo, uma responsabilidade com critérios claros para o que é suficiente não resolve automaticamente o que aparece ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e sua maneira de se apresentar e começar. Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma conversa em que o pedido fique compreensível para os dois lados abre caminho para uma iniciativa que possa ser corrigida depois da primeira resposta. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 3 e 1. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a direção profissional e as responsabilidades públicas e passa ao tema que envolve os estudos, as convicções e os projetos de expansão. Um plano maior que aceite uma primeira experiência pequena e verificável torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma conversa em que o pedido fique compreensível para os dois lados oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A visão maior precisa conversar com a informação concreta. Uma boa pergunta pode preservar o sentido de uma ideia e, ao mesmo tempo, mudar a forma como você pretende colocá-la em prática. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 10,
+            "pluto": 1
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e sua maneira de se apresentar e começar. Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao medir todas as escolhas pelo reconhecimento que elas podem trazer, você pode comprometer a liberdade de escolher por si. O ajuste interpretado é dar à escolha um limite compreensível: uma responsabilidade com critérios claros para o que é suficiente precisa comportar também uma iniciativa que possa ser corrigida depois da primeira resposta. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 10 e 1. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 9
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a direção profissional e as responsabilidades públicas e os estudos, as convicções e os projetos de expansão. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o compromisso com uma direção que possa ser sustentada publicamente pode precisar de ajustes quando está em jogo a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta. Por exemplo, uma responsabilidade com critérios claros para o que é suficiente não resolve automaticamente o que aparece ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 3,
+            "pluto": 1
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e sua maneira de se apresentar e começar. Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma conversa em que o pedido fique compreensível para os dois lados abre caminho para uma iniciativa que possa ser corrigida depois da primeira resposta. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 3 e 1. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 10,
+              "pluto": 1
+            },
+            "sign:venus:1792929600000": {
+              "venus": 9
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 3,
+              "pluto": 1
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a direção profissional e as responsabilidades públicas e passa ao tema que envolve os estudos, as convicções e os projetos de expansão. Um plano maior que aceite uma primeira experiência pequena e verificável torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma conversa em que o pedido fique compreensível para os dois lados oferece um recurso que modifica a maneira de enfrentar a primeira escolha. A visão maior precisa conversar com a informação concreta. Uma boa pergunta pode preservar o sentido de uma ideia e, ao mesmo tempo, mudar a forma como você pretende colocá-la em prática. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    },
+    {
+      "sign": "peixes",
+      "name": "Peixes",
+      "title": "Ampliar a visão sem perder o chão e respeitar o tempo de recolher",
+      "description": "Uma leitura simbólica para Peixes sobre os estudos, as convicções e os projetos de expansão e suas relações com o recolhimento e os assuntos que pedem encerramento.",
+      "paragraphs": [
+        "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e o recolhimento e os assuntos que pedem encerramento. Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao defender uma explicação antes de conhecer suas consequências concretas, você pode comprometer o espaço para elaborar algo antes de responder ao mundo. O ajuste interpretado é dar à escolha um limite compreensível: um plano maior que aceite uma primeira experiência pequena e verificável precisa comportar também uma pausa que ajude a voltar ou a concluir. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 9 e 12. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: os estudos, as convicções e os projetos de expansão e a partilha e os compromissos que envolvem confiança. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta pode precisar de ajustes quando está em jogo a confiança necessária para dividir algo sem perder a clareza dos limites. Por exemplo, um plano maior que aceite uma primeira experiência pequena e verificável não resolve automaticamente o que aparece ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: suas prioridades e recursos e o recolhimento e os assuntos que pedem encerramento. Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma prioridade que caiba nos recursos realmente disponíveis abre caminho para uma pausa que ajude a voltar ou a concluir. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 2 e 12. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+        "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve os estudos, as convicções e os projetos de expansão e passa ao tema que envolve a partilha e os compromissos que envolvem confiança. Uma combinação clara sobre o que cada pessoa oferece e pode pedir torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma prioridade que caiba nos recursos realmente disponíveis oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Ter uma base própria muda a maneira de compartilhar. A confiança fica mais clara quando contribuição, expectativa e limite deixam de depender de suposições. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "aspect:venus:pluto:square"
+          ],
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "sectors": {
+            "venus": 9,
+            "pluto": 12
+          },
+          "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e o recolhimento e os assuntos que pedem encerramento. Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao defender uma explicação antes de conhecer suas consequências concretas, você pode comprometer o espaço para elaborar algo antes de responder ao mundo. O ajuste interpretado é dar à escolha um limite compreensível: um plano maior que aceite uma primeira experiência pequena e verificável precisa comportar também uma pausa que ajude a voltar ou a concluir. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 9 e 12. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC)."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 8
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: os estudos, as convicções e os projetos de expansão e a partilha e os compromissos que envolvem confiança. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta pode precisar de ajustes quando está em jogo a confiança necessária para dividir algo sem perder a clareza dos limites. Por exemplo, um plano maior que aceite uma primeira experiência pequena e verificável não resolve automaticamente o que aparece ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "aspect:neptune:pluto:sextile"
+          ],
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "sectors": {
+            "neptune": 2,
+            "pluto": 12
+          },
+          "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: suas prioridades e recursos e o recolhimento e os assuntos que pedem encerramento. Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma prioridade que caiba nos recursos realmente disponíveis abre caminho para uma pausa que ajude a voltar ou a concluir. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 2 e 12. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "aspect:venus:pluto:square",
+            "sign:venus:1792929600000",
+            "aspect:neptune:pluto:sextile"
+          ],
+          "sectorsByFactor": {
+            "aspect:venus:pluto:square": {
+              "venus": 9,
+              "pluto": 12
+            },
+            "sign:venus:1792929600000": {
+              "venus": 8
+            },
+            "aspect:neptune:pluto:sextile": {
+              "neptune": 2,
+              "pluto": 12
+            }
+          },
+          "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve os estudos, as convicções e os projetos de expansão e passa ao tema que envolve a partilha e os compromissos que envolvem confiança. Uma combinação clara sobre o que cada pessoa oferece e pode pedir torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma prioridade que caiba nos recursos realmente disponíveis oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Ter uma base própria muda a maneira de compartilhar. A confiança fica mais clara quando contribuição, expectativa e limite deixam de depender de suposições. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,661 @@
+{
+  "schemaVersion": "atv-independent-horoscope-corpus-checks-v1",
+  "reviewedAt": "2026-10-20T10:40:56.101Z",
+  "reviewerAgent": "/root/temporal_final",
+  "batches": [
+    {
+      "directory": "docs/editorial/horoscope-2026-10-20/recurring-v3-daily",
+      "period": "daily",
+      "startDate": "2026-10-20",
+      "endDateExclusive": "2026-10-21",
+      "scopeDigest": "d5cd01d4cd6190e4b953240d2a43d9c277d6f33c41f8449f0f0d6ce1ad730a9c",
+      "factsDigest": "2d886dca4f3f4e059f2becdb4f6a254deedaa76d2eb09056bfeb6a831f9c140f",
+      "composition": {
+        "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+        "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+        "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+        "reviewMode": "reviewed-corpus-and-runtime-verification",
+        "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+      },
+      "rowsReproduced": 4,
+      "longitudesReproduced": 40,
+      "selectedFactors": [
+        {
+          "id": "aspect:venus:pluto:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "venus",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-20T00:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "score": 89.88801442680753,
+          "aspect": {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 89.9776028853615,
+            "orbDegrees": 0.02239711463849403
+          }
+        },
+        {
+          "id": "aspect:neptune:pluto:sextile",
+          "kind": "aspect",
+          "category": "background",
+          "bodies": [
+            "neptune",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-20T00:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T00:00:00.000Z",
+          "score": 106.43590033339365,
+          "aspect": {
+            "first": "neptune",
+            "second": "pluto",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.28718006667873,
+            "orbDegrees": 0.7128199333212706
+          }
+        },
+        {
+          "id": "aspect:moon:mercury:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "moon",
+            "mercury"
+          ],
+          "firstObservedAt": "2026-10-20T18:00:00.000Z",
+          "lastObservedAt": "2026-10-20T18:00:00.000Z",
+          "representativeAt": "2026-10-20T18:00:00.000Z",
+          "score": 79.25280839012714,
+          "aspect": {
+            "first": "moon",
+            "second": "mercury",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 90.14943832197457,
+            "orbDegrees": 0.1494383219745714
+          }
+        }
+      ],
+      "distinctInterpretiveParagraphs": 48,
+      "documents": [
+        {
+          "id": "horoscopo-aries-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "83dd702195c5dc3f93c3583d3a4fa439e709c728e5761069a050b9557554ea40",
+          "claimsDigest": "b8683ac900c364a929494ec1c9fad3d1c10d22a7af204afa43be776d3864baea",
+          "words": 797,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-touro-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "a20a518c5acac41e9cb1d77d009171e053bfc670f7feba1d8d8d9b10e8b4d31b",
+          "claimsDigest": "bdfc8f216e85b1a485bb48c98d291f938060ef93f5b429442db59dc123381fdb",
+          "words": 781,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-gemeos-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "114c06312232f7c4d6a55e040407122ca5156c621bd94b5c40639a3ccbd55c87",
+          "claimsDigest": "89cf8cb099f308a30406fce36bd722ac48baab52cfe767634ac492a0cccf1ab4",
+          "words": 800,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-cancer-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "ec798ff1939a38b6322ad6b267fa535c18afee167b1a3860cab4af641a49eeb8",
+          "claimsDigest": "4a10bc1069c69e48da7a738db944c1513b10edd0c4d4553086d0141522284b3a",
+          "words": 800,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-leao-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "e0496ec20737b1ed2d29de9a738644ec2622ce73b6befc6541ca5855de543c28",
+          "claimsDigest": "55a9665c5e2cb4d888421b2ad554133613f10cdfa44f89408b5614f8ecff2b72",
+          "words": 783,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-virgem-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "366a43c511b62195d5b7ffe23717f911144806b15be8c73be252519750455293",
+          "claimsDigest": "3db7aa09288012919d078089a597b396956709a74cc1e1238b09ff56ab229973",
+          "words": 779,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-libra-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "b41c3e5e89755d11c05b3bcacb8b6a23537acb857053a9ae6f78890d0cf9e404",
+          "claimsDigest": "478cf9cbf76478505f574b4adc72aad4baac68bb5e144d81ad8cf708c8387ad9",
+          "words": 769,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-escorpiao-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "edfd81fd73d4966c3e9fe5505013bc6464a3913c9bd72b30720ae4ba7647efcd",
+          "claimsDigest": "3f24f48be452f22e16c81c129e2e49d758c5d6a7b2b6ed22e09dd5b1dcfc6865",
+          "words": 778,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-sagitario-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "ded68f3b5432803c940574c5eb2286ec47ca4b52cc27a9af800cc8956288b931",
+          "claimsDigest": "3fcd1cae118c576eadd6cbcf7da9d9a75e7e2458a74e663702dde7e2776e1329",
+          "words": 779,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-capricornio-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "e4877c8bb64822a9538a8dddb7cecca6c490ccfeb02a7df66fe48a63075fce4d",
+          "claimsDigest": "7fdbc7daeaa01f89d6d21346975ae639ce5c3d31e172470ee36ab68a3f5ee90e",
+          "words": 753,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-aquario-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "6c26369a71dfb608cc9291f2e323de31e8b47772a24ef5545b0c18d1c6b3f092",
+          "claimsDigest": "256b3abec4bbe8b3487ed045f2a1bcf98a8b4b68b9d336e78ba3874866c29457",
+          "words": 786,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-peixes-daily-2026-10-20",
+          "revision": 1,
+          "documentDigest": "21c7501093610714a6fa8874e7020f989956a848378ccf66fe25d774b47e1f52",
+          "claimsDigest": "cc0dbd7de4dbf178d6bc48f69a9a7619f2c20f02050a3a1ee52a4b81f0a71887",
+          "words": 785,
+          "claimCount": 4
+        }
+      ]
+    },
+    {
+      "directory": "docs/editorial/horoscope-2026-10-20/recurring-v3-weekly",
+      "period": "weekly",
+      "startDate": "2026-10-19",
+      "endDateExclusive": "2026-10-26",
+      "scopeDigest": "933c39af2c926d9dc795a5d92a55dd0016286b0f937db8f0958397c8bd5dd8e4",
+      "factsDigest": "c9827b83824fb027b9700820a9a7fa88bda7fe79bad08ac43b6c82d2b0d5bdda",
+      "composition": {
+        "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+        "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+        "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+        "reviewMode": "reviewed-corpus-and-runtime-verification",
+        "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+      },
+      "rowsReproduced": 28,
+      "longitudesReproduced": 280,
+      "selectedFactors": [
+        {
+          "id": "aspect:venus:pluto:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "venus",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-19T00:00:00.000Z",
+          "lastObservedAt": "2026-10-23T12:00:00.000Z",
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "score": 89.88801442680753,
+          "aspect": {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 89.9776028853615,
+            "orbDegrees": 0.02239711463849403
+          }
+        },
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-25T06:00:00.000Z",
+          "lastObservedAt": "2026-10-25T12:00:00.000Z",
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "id": "sign:venus:1792929600000",
+          "kind": "sign-change",
+          "score": 115,
+          "fromSign": 7,
+          "toSign": 6
+        },
+        {
+          "id": "aspect:neptune:pluto:sextile",
+          "kind": "aspect",
+          "category": "background",
+          "bodies": [
+            "neptune",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-19T00:00:00.000Z",
+          "lastObservedAt": "2026-10-25T18:00:00.000Z",
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "score": 106.56789283094128,
+          "aspect": {
+            "first": "neptune",
+            "second": "pluto",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.313578566188255,
+            "orbDegrees": 0.6864214338117449
+          }
+        }
+      ],
+      "distinctInterpretiveParagraphs": 48,
+      "documents": [
+        {
+          "id": "horoscopo-aries-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "2ace4a1b60326369b61f114e4f688629ce6b4732f137cd318933366cfd8e6046",
+          "claimsDigest": "f6045d046e68a9e65b8025fba0c341a8034df935aa95f093d3914bb321ecaa46",
+          "words": 758,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-touro-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "35d65325d79817bfed6e4c9c6207113f89d86ac6d8d40d118381adc8afbf884b",
+          "claimsDigest": "1155faeba3c2995149ec86d61f6968fdaf971a6860dcba86e5072f261a447c06",
+          "words": 746,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-gemeos-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "dea9eaaa3a6fdfed59c2fae3912bdb52a41c14085e0946cd1b64cc3500f4a8d3",
+          "claimsDigest": "11903548624cba3a0b5fab813caee58326e280a12b8f72d656e8817a7514abf1",
+          "words": 769,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-cancer-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "2c63dc1530b2824914fdc9121d130250f807d986d421480fc065464060a7d4d4",
+          "claimsDigest": "72ad25b0b9aee3655008653a894c9eecb31e5feac771c1abb56873af93e6b598",
+          "words": 761,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-leao-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "4568fb0ac6db0f289fd06d39ad83a5f1fdf5ac11e3f871cbc4ced56d2042bbdd",
+          "claimsDigest": "ed755aaf554ed1229123003ccbed6d857ed98982675be6d6c08cb91e1e369cc3",
+          "words": 748,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-virgem-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "f07420a0964e2cc5d10d62dc6639047390ea72c0f2585ac4011953b05d4f16a3",
+          "claimsDigest": "e3490f853ad5a492cfc2fd9b796f38413f07290e50b038b5e6f6e57c57424ba3",
+          "words": 728,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-libra-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "de52dfa8d7581267f3921ce69d01d926addcaf0bc385396002b045fd3a00f596",
+          "claimsDigest": "edd16961f212d55789c94b348d30ab01179484dedd416da12398ac50921845ca",
+          "words": 730,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-escorpiao-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "92eeaabe25095193bec2bc42df1ca49ab93aee83effc01340c7f5dcfe510bca2",
+          "claimsDigest": "346004898b9d16d6b210ad335ce0ca1f163d85b93509f4461c1faca320112a52",
+          "words": 742,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-sagitario-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "2cfd17e56b774b5c4b943fc4f995f42603f18ce2043d06fc08765f55736d528f",
+          "claimsDigest": "3f7dfe1c48ca933e3dbab1b263c5d382248abac31e745d044ff1b766f54a9511",
+          "words": 751,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-capricornio-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "8b72adab459628f39948bab32f7f57208cca1cb074ad18c9494fb324a2a5008a",
+          "claimsDigest": "0ae85e2f6af3977587b142fd822d56c75f7f2607623085cd296c3c794aaa7db4",
+          "words": 730,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-aquario-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "5c6cc679dba48a87967de59046daad6b30108d5f2a192e08d99cfdf8b34e8946",
+          "claimsDigest": "ab6fa94807439ff880bd358f9ae46d13556b1e62db6efb6cc123935f236115db",
+          "words": 763,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-peixes-weekly-2026-10-19",
+          "revision": 1,
+          "documentDigest": "4d3d8fd70c890a060ff4470d850f1b9cfad9a63df0ede2a0159a338642cecf6b",
+          "claimsDigest": "9c4a613888d94cf3b21a78293a2eb776f76431d119413233ce80d4b4ebebf79d",
+          "words": 748,
+          "claimCount": 4
+        }
+      ]
+    },
+    {
+      "directory": "docs/editorial/horoscope-2026-10-20/recurring-v3-monthly",
+      "period": "monthly",
+      "startDate": "2026-10-01",
+      "endDateExclusive": "2026-11-01",
+      "scopeDigest": "f01bfc638a9596b245818de33e39f4e53df4956ab176336f1134bcbbf23af96d",
+      "factsDigest": "aa132e6dae486d25a09b2bca88d2b5050357d4f814d6456b9a4c04d5c42f86be",
+      "composition": {
+        "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+        "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+        "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+        "reviewMode": "reviewed-corpus-and-runtime-verification",
+        "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+      },
+      "rowsReproduced": 124,
+      "longitudesReproduced": 1240,
+      "selectedFactors": [
+        {
+          "category": "fast",
+          "bodies": [
+            "mercury"
+          ],
+          "firstObservedAt": "2026-10-24T06:00:00.000Z",
+          "lastObservedAt": "2026-10-24T12:00:00.000Z",
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "id": "motion:mercury:1792843200000",
+          "kind": "motion-change",
+          "score": 120,
+          "retrograde": true
+        },
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-03T06:00:00.000Z",
+          "lastObservedAt": "2026-10-03T12:00:00.000Z",
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "id": "motion:venus:1791028800000",
+          "kind": "motion-change",
+          "score": 120,
+          "retrograde": true
+        },
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-25T06:00:00.000Z",
+          "lastObservedAt": "2026-10-25T12:00:00.000Z",
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "id": "sign:venus:1792929600000",
+          "kind": "sign-change",
+          "score": 115,
+          "fromSign": 7,
+          "toSign": 6
+        }
+      ],
+      "distinctInterpretiveParagraphs": 48,
+      "documents": [
+        {
+          "id": "horoscopo-aries-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "7705e05e7f9edd6212c6468909b9eb4f74411796c0a18ffd75b52c707df0222e",
+          "claimsDigest": "360544f9b9aa979d69deac2effeacc5357958b9b265f10e7dcfe16f1b0d70a85",
+          "words": 664,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-touro-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "1ff39df1aac583931617b3eba882c7a9539e757a67279375018d7dabcaab0717",
+          "claimsDigest": "e912c16fa0a9fdad3471248ba1984deea59e14e2f8f4895823f396af5f9fbfd0",
+          "words": 649,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-gemeos-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "d561031323cd21dad7821b2a013ecbc03f22a28c0de0ba9a0889635b205dad34",
+          "claimsDigest": "0163b93d47d0c4c41295500a8e6cb001f92ce03216dc49128e208a3e55ac1044",
+          "words": 653,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-cancer-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "24d8f3f5b9e382873e749aece6c8e9b9583fa14ea4d102c7b92134b7a06f2903",
+          "claimsDigest": "1a0323fb080070700e2bf1e47345516d702aa8e60f09cddb585e129ba68370a2",
+          "words": 658,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-leao-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "a5882e51e5e5e6e38e8dd29550abad18b3708a891e7494654ed98cad4dfb22a5",
+          "claimsDigest": "842349afcd88b617115b794be0e9885ce7e3cd95fbcdee27ac72d2840369e3b6",
+          "words": 639,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-virgem-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "03660a496073f00d28c61d6ced064d53a065806e4a81302b1d1be4e1ecc24bb7",
+          "claimsDigest": "c70a630dba10d3c4e5f3df6794d6ac2a6c3358a915929db914d2d8a1cae5c06b",
+          "words": 629,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-libra-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "53a70b505d095e0729e08b4e59ecc21db7bda4ce267ef63b27d7c0788213aff6",
+          "claimsDigest": "9de984dd55d47ff1a1794e1ef3ab9a7be775eea06c3c09860a8979945b32678e",
+          "words": 620,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-escorpiao-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "bd51cd5123d052c3b198578818210593d65191c9fa562f31c904b76b6a9e1384",
+          "claimsDigest": "14d527f115eb4596824a3dfd22f214b34e40b5b3e893b82deb5abf4ed1bc3aec",
+          "words": 644,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-sagitario-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "29f1b60a385e820169708c89f39f31b64852e60d5b50187399c9f8af45711bf3",
+          "claimsDigest": "7cd2f41a24e685b0cb902050896f6a0e1d136fad0348537eb38c7a436fa482be",
+          "words": 653,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-capricornio-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "c7e42062b521873d21e84db53b5a855ab7d6f34c0cedf31775b2381654c6660f",
+          "claimsDigest": "8e4627a19d308d733d9c4b2c7c56d798f7b34f4911aae045ba5a06283936c4bb",
+          "words": 655,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-aquario-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "9b1c6ba6f64c4980805022712e936f6f1b5beaadf3c5aad594b63c0ae19791d0",
+          "claimsDigest": "d1da1a04df5e18c43d8af539b3c38e4f82e1a67a9234ca09398be1d3fd6f7e19",
+          "words": 659,
+          "claimCount": 4
+        },
+        {
+          "id": "horoscopo-peixes-monthly-2026-10-01",
+          "revision": 1,
+          "documentDigest": "6fb5dc0ff364c8ccb79dfb668c42bf6d3debcb18d6c8790706c5dc8b08ce1a76",
+          "claimsDigest": "0d7b1630949185b7723653f8d1690b9e4c95fe8b4bd3fa81805fff77907d8f13",
+          "words": 676,
+          "claimCount": 4
+        }
+      ]
+    }
+  ],
+  "rejections": [
+    {
+      "label": "daily: rewritten conclusion",
+      "rejected": true
+    },
+    {
+      "label": "daily: invented sector",
+      "rejected": true
+    },
+    {
+      "label": "daily: falsified coverage",
+      "rejected": true
+    },
+    {
+      "label": "daily: human review invented",
+      "rejected": true
+    },
+    {
+      "label": "daily: scope missing sign",
+      "rejected": true
+    },
+    {
+      "label": "daily: insufficient factors",
+      "rejected": true
+    },
+    {
+      "label": "daily: unsupported sign",
+      "rejected": true
+    },
+    {
+      "label": "daily: unsupported body",
+      "rejected": true
+    },
+    {
+      "label": "daily: unsupported relation",
+      "rejected": true
+    },
+    {
+      "label": "daily: unsupported movement",
+      "rejected": true
+    },
+    {
+      "label": "daily: only background factors",
+      "rejected": true
+    },
+    {
+      "label": "weekly: rewritten conclusion",
+      "rejected": true
+    },
+    {
+      "label": "weekly: invented sector",
+      "rejected": true
+    },
+    {
+      "label": "weekly: falsified coverage",
+      "rejected": true
+    },
+    {
+      "label": "weekly: human review invented",
+      "rejected": true
+    },
+    {
+      "label": "weekly: scope missing sign",
+      "rejected": true
+    },
+    {
+      "label": "weekly: insufficient factors",
+      "rejected": true
+    },
+    {
+      "label": "weekly: unsupported sign",
+      "rejected": true
+    },
+    {
+      "label": "weekly: unsupported body",
+      "rejected": true
+    },
+    {
+      "label": "weekly: unsupported relation",
+      "rejected": true
+    },
+    {
+      "label": "weekly: unsupported movement",
+      "rejected": true
+    },
+    {
+      "label": "weekly: only background factors",
+      "rejected": true
+    },
+    {
+      "label": "monthly: rewritten conclusion",
+      "rejected": true
+    },
+    {
+      "label": "monthly: invented sector",
+      "rejected": true
+    },
+    {
+      "label": "monthly: falsified coverage",
+      "rejected": true
+    },
+    {
+      "label": "monthly: human review invented",
+      "rejected": true
+    },
+    {
+      "label": "monthly: scope missing sign",
+      "rejected": true
+    },
+    {
+      "label": "monthly: insufficient factors",
+      "rejected": true
+    },
+    {
+      "label": "monthly: unsupported sign",
+      "rejected": true
+    },
+    {
+      "label": "monthly: unsupported body",
+      "rejected": true
+    },
+    {
+      "label": "monthly: unsupported relation",
+      "rejected": true
+    },
+    {
+      "label": "monthly: unsupported movement",
+      "rejected": true
+    },
+    {
+      "label": "monthly: only background factors",
+      "rejected": true
+    }
+  ],
+  "errors": [],
+  "decision": "PASS",
+  "limits": [
+    "Factual consistency uses the same authorized Caelus adapter; this is not independent astronomical precision certification.",
+    "Digest and replay checks do not establish narrative value. Editorial judgment is documented separately.",
+    "No external signature, admission, hosted check, visual/a11y approval or release is performed."
+  ]
+}

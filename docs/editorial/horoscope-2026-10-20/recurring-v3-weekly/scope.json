@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "atv-dated-horoscope-preparation-v1",
+  "status": "PREPARED_NOT_REVIEWED_NOT_SIGNED_NOT_ADMITTED",
+  "policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "period": "weekly",
+  "startDate": "2026-10-19",
+  "endDateExclusive": "2026-10-26",
+  "frozenAt": "2026-10-20T10:37:26.612Z",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "factsDigest": "c9827b83824fb027b9700820a9a7fa88bda7fe79bad08ac43b6c82d2b0d5bdda",
+  "documentDigests": {
+    "horoscopo-aries-weekly-2026-10-19": "2ace4a1b60326369b61f114e4f688629ce6b4732f137cd318933366cfd8e6046",
+    "horoscopo-touro-weekly-2026-10-19": "35d65325d79817bfed6e4c9c6207113f89d86ac6d8d40d118381adc8afbf884b",
+    "horoscopo-gemeos-weekly-2026-10-19": "dea9eaaa3a6fdfed59c2fae3912bdb52a41c14085e0946cd1b64cc3500f4a8d3",
+    "horoscopo-cancer-weekly-2026-10-19": "2c63dc1530b2824914fdc9121d130250f807d986d421480fc065464060a7d4d4",
+    "horoscopo-leao-weekly-2026-10-19": "4568fb0ac6db0f289fd06d39ad83a5f1fdf5ac11e3f871cbc4ced56d2042bbdd",
+    "horoscopo-virgem-weekly-2026-10-19": "f07420a0964e2cc5d10d62dc6639047390ea72c0f2585ac4011953b05d4f16a3",
+    "horoscopo-libra-weekly-2026-10-19": "de52dfa8d7581267f3921ce69d01d926addcaf0bc385396002b045fd3a00f596",
+    "horoscopo-escorpiao-weekly-2026-10-19": "92eeaabe25095193bec2bc42df1ca49ab93aee83effc01340c7f5dcfe510bca2",
+    "horoscopo-sagitario-weekly-2026-10-19": "2cfd17e56b774b5c4b943fc4f995f42603f18ce2043d06fc08765f55736d528f",
+    "horoscopo-capricornio-weekly-2026-10-19": "8b72adab459628f39948bab32f7f57208cca1cb074ad18c9494fb324a2a5008a",
+    "horoscopo-aquario-weekly-2026-10-19": "5c6cc679dba48a87967de59046daad6b30108d5f2a192e08d99cfdf8b34e8946",
+    "horoscopo-peixes-weekly-2026-10-19": "4d3d8fd70c890a060ff4470d850f1b9cfad9a63df0ede2a0159a338642cecf6b"
+  },
+  "claimsDigests": {
+    "horoscopo-aries-weekly-2026-10-19": "f6045d046e68a9e65b8025fba0c341a8034df935aa95f093d3914bb321ecaa46",
+    "horoscopo-touro-weekly-2026-10-19": "1155faeba3c2995149ec86d61f6968fdaf971a6860dcba86e5072f261a447c06",
+    "horoscopo-gemeos-weekly-2026-10-19": "11903548624cba3a0b5fab813caee58326e280a12b8f72d656e8817a7514abf1",
+    "horoscopo-cancer-weekly-2026-10-19": "72ad25b0b9aee3655008653a894c9eecb31e5feac771c1abb56873af93e6b598",
+    "horoscopo-leao-weekly-2026-10-19": "ed755aaf554ed1229123003ccbed6d857ed98982675be6d6c08cb91e1e369cc3",
+    "horoscopo-virgem-weekly-2026-10-19": "e3490f853ad5a492cfc2fd9b796f38413f07290e50b038b5e6f6e57c57424ba3",
+    "horoscopo-libra-weekly-2026-10-19": "edd16961f212d55789c94b348d30ab01179484dedd416da12398ac50921845ca",
+    "horoscopo-escorpiao-weekly-2026-10-19": "346004898b9d16d6b210ad335ce0ca1f163d85b93509f4461c1faca320112a52",
+    "horoscopo-sagitario-weekly-2026-10-19": "3f7dfe1c48ca933e3dbab1b263c5d382248abac31e745d044ff1b766f54a9511",
+    "horoscopo-capricornio-weekly-2026-10-19": "0ae85e2f6af3977587b142fd822d56c75f7f2607623085cd296c3c794aaa7db4",
+    "horoscopo-aquario-weekly-2026-10-19": "ab6fa94807439ff880bd358f9ae46d13556b1e62db6efb6cc123935f236115db",
+    "horoscopo-peixes-weekly-2026-10-19": "9c4a613888d94cf3b21a78293a2eb776f76431d119413233ce80d4b4ebebf79d"
+  },
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "algorithmManifest": {
+    "scripts/lib/public-horoscope-compose.mjs": "4bda72201716a04b9de587676f2f8c505536659b0b73ae451ed2cd374f9075d2",
+    "scripts/prepare-dated-horoscope.mjs": "b96275e379de7be9dae058db4e0e5aed4065369ba90379804c2ae1626417b088"
+  },
+  "evidence": [
+    {
+      "path": "facts.json",
+      "sha256": "97adb55d0a8473fe6805e7ea05a2e66a282a26bcac11b6f63dda9d8fd63579ca"
+    },
+    {
+      "path": "method.md",
+      "sha256": "4a250c750b85500a10e661e53ef16076688543cb156e0e9678e1862fab70c425"
+    },
+    {
+      "path": "authored-copy.json",
+      "sha256": "0ae81790de518ade3046dd9de5a2c94551f1c936a110ec280957aa349e941f91"
+    }
+  ],
+  "remainingGates": [
+    "independent-corpus-and-algorithm-review",
+    "real-external-signature",
+    "admission",
+    "visual-a11y-ci",
+    "hosted-verification"
+  ]
+}

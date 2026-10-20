@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { EditorialDocument } from '$lib/server/editorial';
+	import type { EditorialSummary } from '$lib/server/editorial';
 	import type { PageSeo } from '$lib/seo';
 	import { publicEditorialAuthor } from '$lib/data/editorial-author';
-	let { documents, seo }: { documents: EditorialDocument[]; seo: PageSeo } = $props();
+	let { documents, seo }: { documents: EditorialSummary[]; seo: PageSeo } = $props();
 </script>
 
 <section class="section">

@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "atv-dated-horoscope-preparation-v1",
+  "status": "PREPARED_NOT_REVIEWED_NOT_SIGNED_NOT_ADMITTED",
+  "policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "period": "daily",
+  "startDate": "2026-10-20",
+  "endDateExclusive": "2026-10-21",
+  "frozenAt": "2026-10-20T10:37:17.394Z",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "factsDigest": "2d886dca4f3f4e059f2becdb4f6a254deedaa76d2eb09056bfeb6a831f9c140f",
+  "documentDigests": {
+    "horoscopo-aries-daily-2026-10-20": "83dd702195c5dc3f93c3583d3a4fa439e709c728e5761069a050b9557554ea40",
+    "horoscopo-touro-daily-2026-10-20": "a20a518c5acac41e9cb1d77d009171e053bfc670f7feba1d8d8d9b10e8b4d31b",
+    "horoscopo-gemeos-daily-2026-10-20": "114c06312232f7c4d6a55e040407122ca5156c621bd94b5c40639a3ccbd55c87",
+    "horoscopo-cancer-daily-2026-10-20": "ec798ff1939a38b6322ad6b267fa535c18afee167b1a3860cab4af641a49eeb8",
+    "horoscopo-leao-daily-2026-10-20": "e0496ec20737b1ed2d29de9a738644ec2622ce73b6befc6541ca5855de543c28",
+    "horoscopo-virgem-daily-2026-10-20": "366a43c511b62195d5b7ffe23717f911144806b15be8c73be252519750455293",
+    "horoscopo-libra-daily-2026-10-20": "b41c3e5e89755d11c05b3bcacb8b6a23537acb857053a9ae6f78890d0cf9e404",
+    "horoscopo-escorpiao-daily-2026-10-20": "edfd81fd73d4966c3e9fe5505013bc6464a3913c9bd72b30720ae4ba7647efcd",
+    "horoscopo-sagitario-daily-2026-10-20": "ded68f3b5432803c940574c5eb2286ec47ca4b52cc27a9af800cc8956288b931",
+    "horoscopo-capricornio-daily-2026-10-20": "e4877c8bb64822a9538a8dddb7cecca6c490ccfeb02a7df66fe48a63075fce4d",
+    "horoscopo-aquario-daily-2026-10-20": "6c26369a71dfb608cc9291f2e323de31e8b47772a24ef5545b0c18d1c6b3f092",
+    "horoscopo-peixes-daily-2026-10-20": "21c7501093610714a6fa8874e7020f989956a848378ccf66fe25d774b47e1f52"
+  },
+  "claimsDigests": {
+    "horoscopo-aries-daily-2026-10-20": "b8683ac900c364a929494ec1c9fad3d1c10d22a7af204afa43be776d3864baea",
+    "horoscopo-touro-daily-2026-10-20": "bdfc8f216e85b1a485bb48c98d291f938060ef93f5b429442db59dc123381fdb",
+    "horoscopo-gemeos-daily-2026-10-20": "89cf8cb099f308a30406fce36bd722ac48baab52cfe767634ac492a0cccf1ab4",
+    "horoscopo-cancer-daily-2026-10-20": "4a10bc1069c69e48da7a738db944c1513b10edd0c4d4553086d0141522284b3a",
+    "horoscopo-leao-daily-2026-10-20": "55a9665c5e2cb4d888421b2ad554133613f10cdfa44f89408b5614f8ecff2b72",
+    "horoscopo-virgem-daily-2026-10-20": "3db7aa09288012919d078089a597b396956709a74cc1e1238b09ff56ab229973",
+    "horoscopo-libra-daily-2026-10-20": "478cf9cbf76478505f574b4adc72aad4baac68bb5e144d81ad8cf708c8387ad9",
+    "horoscopo-escorpiao-daily-2026-10-20": "3f24f48be452f22e16c81c129e2e49d758c5d6a7b2b6ed22e09dd5b1dcfc6865",
+    "horoscopo-sagitario-daily-2026-10-20": "3fcd1cae118c576eadd6cbcf7da9d9a75e7e2458a74e663702dde7e2776e1329",
+    "horoscopo-capricornio-daily-2026-10-20": "7fdbc7daeaa01f89d6d21346975ae639ce5c3d31e172470ee36ab68a3f5ee90e",
+    "horoscopo-aquario-daily-2026-10-20": "256b3abec4bbe8b3487ed045f2a1bcf98a8b4b68b9d336e78ba3874866c29457",
+    "horoscopo-peixes-daily-2026-10-20": "cc0dbd7de4dbf178d6bc48f69a9a7619f2c20f02050a3a1ee52a4b81f0a71887"
+  },
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "algorithmManifest": {
+    "scripts/lib/public-horoscope-compose.mjs": "4bda72201716a04b9de587676f2f8c505536659b0b73ae451ed2cd374f9075d2",
+    "scripts/prepare-dated-horoscope.mjs": "b96275e379de7be9dae058db4e0e5aed4065369ba90379804c2ae1626417b088"
+  },
+  "evidence": [
+    {
+      "path": "facts.json",
+      "sha256": "7ee5c34dfad18f9db396bef5c83d7dabd717a15e157853a57f56268df2e8b7d6"
+    },
+    {
+      "path": "method.md",
+      "sha256": "4a250c750b85500a10e661e53ef16076688543cb156e0e9678e1862fab70c425"
+    },
+    {
+      "path": "authored-copy.json",
+      "sha256": "db08f8ba7ed9b9bb4ba35ad3c1b76224dbbf15459d6b3b471c60a46e2b21b163"
+    }
+  ],
+  "remainingGates": [
+    "independent-corpus-and-algorithm-review",
+    "real-external-signature",
+    "admission",
+    "visual-a11y-ci",
+    "hosted-verification"
+  ]
+}

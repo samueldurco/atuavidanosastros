@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "atv-dated-horoscope-preparation-v1",
+  "status": "PREPARED_NOT_REVIEWED_NOT_SIGNED_NOT_ADMITTED",
+  "policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "keyId": "github-actions-editorial-20261006-01",
+  "reviewerId": "atvna-editorial-service",
+  "period": "monthly",
+  "startDate": "2026-10-01",
+  "endDateExclusive": "2026-11-01",
+  "frozenAt": "2026-10-20T10:37:33.310Z",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "factsDigest": "aa132e6dae486d25a09b2bca88d2b5050357d4f814d6456b9a4c04d5c42f86be",
+  "documentDigests": {
+    "horoscopo-aries-monthly-2026-10-01": "7705e05e7f9edd6212c6468909b9eb4f74411796c0a18ffd75b52c707df0222e",
+    "horoscopo-touro-monthly-2026-10-01": "1ff39df1aac583931617b3eba882c7a9539e757a67279375018d7dabcaab0717",
+    "horoscopo-gemeos-monthly-2026-10-01": "d561031323cd21dad7821b2a013ecbc03f22a28c0de0ba9a0889635b205dad34",
+    "horoscopo-cancer-monthly-2026-10-01": "24d8f3f5b9e382873e749aece6c8e9b9583fa14ea4d102c7b92134b7a06f2903",
+    "horoscopo-leao-monthly-2026-10-01": "a5882e51e5e5e6e38e8dd29550abad18b3708a891e7494654ed98cad4dfb22a5",
+    "horoscopo-virgem-monthly-2026-10-01": "03660a496073f00d28c61d6ced064d53a065806e4a81302b1d1be4e1ecc24bb7",
+    "horoscopo-libra-monthly-2026-10-01": "53a70b505d095e0729e08b4e59ecc21db7bda4ce267ef63b27d7c0788213aff6",
+    "horoscopo-escorpiao-monthly-2026-10-01": "bd51cd5123d052c3b198578818210593d65191c9fa562f31c904b76b6a9e1384",
+    "horoscopo-sagitario-monthly-2026-10-01": "29f1b60a385e820169708c89f39f31b64852e60d5b50187399c9f8af45711bf3",
+    "horoscopo-capricornio-monthly-2026-10-01": "c7e42062b521873d21e84db53b5a855ab7d6f34c0cedf31775b2381654c6660f",
+    "horoscopo-aquario-monthly-2026-10-01": "9b1c6ba6f64c4980805022712e936f6f1b5beaadf3c5aad594b63c0ae19791d0",
+    "horoscopo-peixes-monthly-2026-10-01": "6fb5dc0ff364c8ccb79dfb668c42bf6d3debcb18d6c8790706c5dc8b08ce1a76"
+  },
+  "claimsDigests": {
+    "horoscopo-aries-monthly-2026-10-01": "360544f9b9aa979d69deac2effeacc5357958b9b265f10e7dcfe16f1b0d70a85",
+    "horoscopo-touro-monthly-2026-10-01": "e912c16fa0a9fdad3471248ba1984deea59e14e2f8f4895823f396af5f9fbfd0",
+    "horoscopo-gemeos-monthly-2026-10-01": "0163b93d47d0c4c41295500a8e6cb001f92ce03216dc49128e208a3e55ac1044",
+    "horoscopo-cancer-monthly-2026-10-01": "1a0323fb080070700e2bf1e47345516d702aa8e60f09cddb585e129ba68370a2",
+    "horoscopo-leao-monthly-2026-10-01": "842349afcd88b617115b794be0e9885ce7e3cd95fbcdee27ac72d2840369e3b6",
+    "horoscopo-virgem-monthly-2026-10-01": "c70a630dba10d3c4e5f3df6794d6ac2a6c3358a915929db914d2d8a1cae5c06b",
+    "horoscopo-libra-monthly-2026-10-01": "9de984dd55d47ff1a1794e1ef3ab9a7be775eea06c3c09860a8979945b32678e",
+    "horoscopo-escorpiao-monthly-2026-10-01": "14d527f115eb4596824a3dfd22f214b34e40b5b3e893b82deb5abf4ed1bc3aec",
+    "horoscopo-sagitario-monthly-2026-10-01": "7cd2f41a24e685b0cb902050896f6a0e1d136fad0348537eb38c7a436fa482be",
+    "horoscopo-capricornio-monthly-2026-10-01": "8e4627a19d308d733d9c4b2c7c56d798f7b34f4911aae045ba5a06283936c4bb",
+    "horoscopo-aquario-monthly-2026-10-01": "d1da1a04df5e18c43d8af539b3c38e4f82e1a67a9234ca09398be1d3fd6f7e19",
+    "horoscopo-peixes-monthly-2026-10-01": "0d7b1630949185b7723653f8d1690b9e4c95fe8b4bd3fa81805fff77907d8f13"
+  },
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "algorithmManifest": {
+    "scripts/lib/public-horoscope-compose.mjs": "4bda72201716a04b9de587676f2f8c505536659b0b73ae451ed2cd374f9075d2",
+    "scripts/prepare-dated-horoscope.mjs": "b96275e379de7be9dae058db4e0e5aed4065369ba90379804c2ae1626417b088"
+  },
+  "evidence": [
+    {
+      "path": "facts.json",
+      "sha256": "a906337af4ac164bfb66ce89d63335c8bae6484c663a8169e3490bd641ac9e93"
+    },
+    {
+      "path": "method.md",
+      "sha256": "4a250c750b85500a10e661e53ef16076688543cb156e0e9678e1862fab70c425"
+    },
+    {
+      "path": "authored-copy.json",
+      "sha256": "cfb0a7f5b8d2d377acc1c5aff4475e96184aa334d040a9a8c2d2e338ee1c57db"
+    }
+  ],
+  "remainingGates": [
+    "independent-corpus-and-algorithm-review",
+    "real-external-signature",
+    "admission",
+    "visual-a11y-ci",
+    "hosted-verification"
+  ]
+}

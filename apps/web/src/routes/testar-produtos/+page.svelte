@@ -38,11 +38,11 @@
 	{#if data.trialAccess}
 		<Card title="Seu acesso de testes está ativo" variant="attention">
 			<p>
-				Comece pela Bússola de Carreira. Cada leitura passa por revisão automática antes de ser
+				Comece pelo Mapa Astral Completo. Cada leitura passa por revisão automática antes de ser
 				salva. Sua aprovação do produto fica registrada separadamente.
 			</p>
 			<p>
-				<a href="/testar-produtos/career-compass">Testar Bússola de Carreira</a> ·
+				<a href="/testar-produtos/birth-chart">Testar Mapa Astral Completo</a> ·
 				<a href="/atv-mais">Conhecer os planos do ATV+</a>
 			</p>
 		</Card>

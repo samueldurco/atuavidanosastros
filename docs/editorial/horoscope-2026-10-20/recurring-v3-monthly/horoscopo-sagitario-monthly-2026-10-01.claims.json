@@ -1,0 +1,3265 @@
+{
+  "documentId": "horoscopo-sagitario-monthly-2026-10-01",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "sign": "sagitario",
+  "factsDigest": "aa132e6dae486d25a09b2bca88d2b5050357d4f814d6456b9a4c04d5c42f86be",
+  "claims": [
+    {
+      "section": 0,
+      "paragraph": 0,
+      "factorIds": [
+        "motion:mercury:1792843200000"
+      ],
+      "positionObservations": [
+        {
+          "at": 1790812800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790834400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790856000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790877600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790899200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790920800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790942400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790964000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1790985600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791007200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791028800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791050400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791072000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791093600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791115200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791136800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791158400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791180000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791201600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791223200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791244800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791266400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791288000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791309600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791331200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791352800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791374400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791396000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791417600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791439200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791460800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791482400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791504000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791525600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791547200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791568800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791590400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791612000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791633600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791655200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791676800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791698400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791720000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791741600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791763200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791784800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791806400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791828000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791849600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791871200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791892800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791914400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791936000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791957600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1791979200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792000800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792022400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792044000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792065600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792087200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792108800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792130400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792152000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792173600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792195200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792216800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792238400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792260000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792281600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792303200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792324800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792346400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792972800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1792994400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793016000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793037600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793059200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793080800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793102400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793124000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793145600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793167200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793188800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793210400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793232000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793253600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793275200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793296800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793318400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793340000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793361600000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793383200000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793404800000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793426400000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793448000000,
+          "sectors": {
+            "mercury": 12
+          }
+        },
+        {
+          "at": 1793469600000,
+          "sectors": {
+            "mercury": 12
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "motion:mercury:1792843200000": [
+          "2026-10-24T12:00:00.000Z"
+        ]
+      },
+      "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem o recolhimento e os assuntos que pedem encerramento, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma pausa que ajude a voltar ou a concluir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "sampledFactors": [
+        {
+          "category": "fast",
+          "bodies": [
+            "mercury"
+          ],
+          "firstObservedAt": "2026-10-24T06:00:00.000Z",
+          "lastObservedAt": "2026-10-24T12:00:00.000Z",
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "id": "motion:mercury:1792843200000",
+          "kind": "motion-change",
+          "score": 120,
+          "retrograde": true
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 1,
+      "factorIds": [
+        "motion:venus:1791028800000"
+      ],
+      "positionObservations": [
+        {
+          "at": 1790812800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790834400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790856000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790877600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790899200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790920800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790942400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790964000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790985600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791007200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791028800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791050400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791072000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791093600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791115200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791136800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791158400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791180000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791201600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791223200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791244800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791266400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791288000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791309600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791331200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791352800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791374400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791396000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791417600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791439200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791460800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791482400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791504000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791525600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791547200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791568800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791590400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791612000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791633600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791655200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791676800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791698400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791720000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791741600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791763200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791784800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791806400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791828000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791849600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791871200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791892800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791914400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791936000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791957600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791979200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792000800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792022400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792044000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792065600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792087200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792108800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792130400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792152000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792173600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792195200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792216800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792238400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792260000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792281600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792303200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792324800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792346400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792972800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792994400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793016000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793037600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793059200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793080800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793102400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793124000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793145600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793167200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793188800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793210400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793232000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793253600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793275200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793296800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793318400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793340000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793361600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793383200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793404800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793426400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793448000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793469600000,
+          "sectors": {
+            "venus": 11
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "motion:venus:1791028800000": [
+          "2026-10-03T12:00:00.000Z"
+        ]
+      },
+      "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve o recolhimento e os assuntos que pedem encerramento, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma pausa que ajude a voltar ou a concluir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "sampledFactors": [
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-03T06:00:00.000Z",
+          "lastObservedAt": "2026-10-03T12:00:00.000Z",
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "id": "motion:venus:1791028800000",
+          "kind": "motion-change",
+          "score": 120,
+          "retrograde": true
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 2,
+      "factorIds": [
+        "sign:venus:1792929600000"
+      ],
+      "positionObservations": [
+        {
+          "at": 1790812800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790834400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790856000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790877600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790899200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790920800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790942400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790964000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790985600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791007200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791028800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791050400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791072000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791093600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791115200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791136800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791158400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791180000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791201600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791223200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791244800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791266400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791288000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791309600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791331200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791352800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791374400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791396000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791417600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791439200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791460800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791482400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791504000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791525600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791547200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791568800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791590400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791612000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791633600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791655200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791676800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791698400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791720000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791741600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791763200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791784800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791806400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791828000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791849600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791871200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791892800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791914400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791936000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791957600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791979200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792000800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792022400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792044000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792065600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792087200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792108800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792130400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792152000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792173600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792195200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792216800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792238400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792260000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792281600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792303200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792324800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792346400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792972800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792994400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793016000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793037600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793059200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793080800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793102400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793124000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793145600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793167200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793188800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793210400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793232000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793253600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793275200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793296800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793318400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793340000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793361600000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793383200000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793404800000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793426400000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793448000000,
+          "sectors": {
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793469600000,
+          "sectors": {
+            "venus": 11
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "sign:venus:1792929600000": [
+          "2026-10-25T12:00:00.000Z"
+        ]
+      },
+      "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: o recolhimento e os assuntos que pedem encerramento e os grupos, as amizades e os projetos em comum. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço para elaborar algo antes de responder ao mundo pode precisar de ajustes quando está em jogo o pertencimento que permite contribuir sem apagar sua posição. Por exemplo, uma pausa que ajude a voltar ou a concluir não resolve automaticamente o que aparece ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "sampledFactors": [
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-25T06:00:00.000Z",
+          "lastObservedAt": "2026-10-25T12:00:00.000Z",
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "id": "sign:venus:1792929600000",
+          "kind": "sign-change",
+          "score": 115,
+          "fromSign": 7,
+          "toSign": 6
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 3,
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "positionObservations": [
+        {
+          "at": 1790812800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790834400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790856000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790877600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790899200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790920800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790942400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790964000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1790985600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791007200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791028800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791050400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791072000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791093600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791115200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791136800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791158400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791180000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791201600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791223200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791244800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791266400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791288000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791309600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791331200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791352800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791374400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791396000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791417600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791439200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791460800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791482400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791504000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791525600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791547200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791568800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791590400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791612000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791633600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791655200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791676800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791698400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791720000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791741600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791763200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791784800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791806400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791828000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791849600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791871200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791892800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791914400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791936000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791957600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1791979200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792000800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792022400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792044000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792065600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792087200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792108800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792130400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792152000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792173600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792195200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792216800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792238400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792260000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792281600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792303200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792324800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792346400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 12
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792972800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1792994400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793016000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793037600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793059200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793080800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793102400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793124000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793145600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793167200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793188800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793210400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793232000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793253600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793275200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793296800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793318400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793340000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793361600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793383200000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793404800000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793426400000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793448000000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        },
+        {
+          "at": 1793469600000,
+          "sectors": {
+            "mercury": 12,
+            "venus": 11
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "motion:mercury:1792843200000": [
+          "2026-10-24T12:00:00.000Z"
+        ],
+        "motion:venus:1791028800000": [
+          "2026-10-03T12:00:00.000Z"
+        ],
+        "sign:venus:1792929600000": [
+          "2026-10-25T12:00:00.000Z"
+        ]
+      },
+      "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem o recolhimento e os assuntos que pedem encerramento: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o recolhimento e os assuntos que pedem encerramento para o tema que envolve os grupos, as amizades e os projetos em comum. A preocupação anterior era o espaço para elaborar algo antes de responder ao mundo; agora, uma contribuição cujos limites sejam compreensíveis para o grupo oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade.",
+      "sampledFactors": [
+        {
+          "category": "fast",
+          "bodies": [
+            "mercury"
+          ],
+          "firstObservedAt": "2026-10-24T06:00:00.000Z",
+          "lastObservedAt": "2026-10-24T12:00:00.000Z",
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "id": "motion:mercury:1792843200000",
+          "kind": "motion-change",
+          "score": 120,
+          "retrograde": true
+        },
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-03T06:00:00.000Z",
+          "lastObservedAt": "2026-10-03T12:00:00.000Z",
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "id": "motion:venus:1791028800000",
+          "kind": "motion-change",
+          "score": 120,
+          "retrograde": true
+        },
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-25T06:00:00.000Z",
+          "lastObservedAt": "2026-10-25T12:00:00.000Z",
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "id": "sign:venus:1792929600000",
+          "kind": "sign-change",
+          "score": 115,
+          "fromSign": 7,
+          "toSign": 6
+        }
+      ]
+    }
+  ]
+}

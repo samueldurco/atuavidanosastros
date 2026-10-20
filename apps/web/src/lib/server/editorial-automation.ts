@@ -1,6 +1,11 @@
 // Public evergreen guide admission only. No authority is provisioned by this module.
 import { hash } from 'node:crypto';
 import type { EditorialDocument } from './editorial';
+import {
+	DATED_PROTOCOL,
+	verifyDatedHoroscopeApproval,
+	type DatedHoroscopePackage
+} from './dated-horoscope-automation.ts';
 export interface EvidenceRow {
 	id: string;
 	reason: string;
@@ -59,6 +64,7 @@ export interface EditorialEvidenceManifest {
 }
 export interface AutomatedApprovalInput {
 	document: EditorialDocument;
+	dated?: DatedHoroscopePackage;
 	report: EditorialReviewReport | null;
 	evidenceManifest: EditorialEvidenceManifest | null;
 	evidenceFiles: ReadonlyMap<string, Uint8Array<ArrayBuffer>>;
@@ -332,6 +338,8 @@ async function verifyAutomatedApprovalWithDigests(
 	input: AutomatedApprovalInput,
 	digests: VerificationDigests
 ) {
+	if (input.dated || input.attestation?.protocol === DATED_PROTOCOL)
+		return verifyDatedHoroscopeApproval(input);
 	const reject = (reason: string) => ({ approved: false, reason, publicationGate: GATE });
 	try {
 		const {

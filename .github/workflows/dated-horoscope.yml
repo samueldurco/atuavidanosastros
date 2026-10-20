@@ -1,0 +1,92 @@
+name: dated-horoscope
+
+on:
+  schedule:
+    # Prepare the next UTC day well before midnight, then retry two hours later.
+    - cron: "15 20,22 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Bootstrap current day/week/month, or prepare the next UTC period
+        required: true
+        default: bootstrap
+        type: choice
+        options: [bootstrap, next]
+      delivery:
+        description: Signed artifact for owner CLI, or the separately enabled GitHub token publisher
+        required: true
+        default: signed-artifact
+        type: choice
+        options: [signed-artifact, github-token]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dated-horoscope-publication
+  cancel-in-progress: false
+
+jobs:
+  sign:
+    if: github.repository == 'samueldurco/atuavidanosastros' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: atvna-editorial-signing
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Prepare finite period batch
+        env:
+          BATCH_MODE: ${{ inputs.mode || 'next' }}
+        run: node scripts/prepare-dated-horoscope.mjs --schedule "$BATCH_MODE" "$(date -u +%F)" output/dated-horoscope-prepared
+      - name: Reproduce, verify and sign with existing external custody
+        env:
+          ATVNA_EDITORIAL_SIGNING_KEY: ${{ secrets.ATVNA_EDITORIAL_SIGNING_KEY }}
+        run: node --experimental-strip-types scripts/dated-horoscope-authority.mjs output/dated-horoscope-prepared/index.json
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: signed-dated-horoscope
+          path: output/dated-horoscope-signed.json
+          retention-days: 7
+
+  publish:
+    needs: sign
+    # Repository policy currently disallows token-created PRs. Remain artifact-only
+    # until an explicitly reviewed operational authorization enables this variable.
+    if: vars.ATVNA_DATED_HOROSCOPE_AUTOPUBLISH == 'true' && (github.event_name == 'schedule' || inputs.delivery == 'github-token')
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Download public signed package from this exact run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name signed-dated-horoscope --dir output
+      - name: Admit, request exact CI, merge and verify hosted documents
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node --experimental-strip-types scripts/publish-dated-horoscope.mjs output/dated-horoscope-signed.json

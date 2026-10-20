@@ -1,0 +1,896 @@
+{
+  "period": "monthly",
+  "startDate": "2026-10-01",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "requiredFactors": [
+    "motion:mercury:1792843200000",
+    "motion:venus:1791028800000",
+    "sign:venus:1792929600000"
+  ],
+  "readings": [
+    {
+      "sign": "aries",
+      "name": "Áries",
+      "title": "Dividir sem perder a clareza",
+      "description": "Uma leitura simbólica para Áries sobre as diferentes escolhas que envolvem a partilha e os compromissos que envolvem confiança.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a partilha e os compromissos que envolvem confiança, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma combinação clara sobre o que cada pessoa oferece e pode pedir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 8; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a partilha e os compromissos que envolvem confiança, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma combinação clara sobre o que cada pessoa oferece e pode pedir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 8; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a partilha e os compromissos que envolvem confiança e as parcerias e os acordos a dois. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a confiança necessária para dividir algo sem perder a clareza dos limites pode precisar de ajustes quando está em jogo o espaço de cada pessoa dentro de uma escolha compartilhada. Por exemplo, uma combinação clara sobre o que cada pessoa oferece e pode pedir não resolve automaticamente o que aparece ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a partilha e os compromissos que envolvem confiança: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a partilha e os compromissos que envolvem confiança para o tema que envolve as parcerias e os acordos a dois. A preocupação anterior era a confiança necessária para dividir algo sem perder a clareza dos limites; agora, um acordo que permita discordar sem desfazer toda a parceria oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 8
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a partilha e os compromissos que envolvem confiança, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma combinação clara sobre o que cada pessoa oferece e pode pedir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 8; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 8
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a partilha e os compromissos que envolvem confiança, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma combinação clara sobre o que cada pessoa oferece e pode pedir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 8; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 7
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a partilha e os compromissos que envolvem confiança e as parcerias e os acordos a dois. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a confiança necessária para dividir algo sem perder a clareza dos limites pode precisar de ajustes quando está em jogo o espaço de cada pessoa dentro de uma escolha compartilhada. Por exemplo, uma combinação clara sobre o que cada pessoa oferece e pode pedir não resolve automaticamente o que aparece ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 8
+            },
+            "motion:venus:1791028800000": {
+              "venus": 8
+            },
+            "sign:venus:1792929600000": {
+              "venus": 7
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a partilha e os compromissos que envolvem confiança: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a partilha e os compromissos que envolvem confiança para o tema que envolve as parcerias e os acordos a dois. A preocupação anterior era a confiança necessária para dividir algo sem perder a clareza dos limites; agora, um acordo que permita discordar sem desfazer toda a parceria oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "touro",
+      "name": "Touro",
+      "title": "Negociar sem desaparecer do encontro",
+      "description": "Uma leitura simbólica para Touro sobre as diferentes escolhas que envolvem as parcerias e os acordos a dois.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem as parcerias e os acordos a dois, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de um acordo que permita discordar sem desfazer toda a parceria depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 7; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve as parcerias e os acordos a dois, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Um acordo que permita discordar sem desfazer toda a parceria ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 7; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: as parcerias e os acordos a dois e o trabalho cotidiano e os cuidados de rotina. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço de cada pessoa dentro de uma escolha compartilhada pode precisar de ajustes quando está em jogo a possibilidade de manter uma rotina que caiba na vida. Por exemplo, um acordo que permita discordar sem desfazer toda a parceria não resolve automaticamente o que aparece ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem as parcerias e os acordos a dois: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve as parcerias e os acordos a dois para o tema que envolve o trabalho cotidiano e os cuidados de rotina. A preocupação anterior era o espaço de cada pessoa dentro de uma escolha compartilhada; agora, uma tarefa com tempo e responsabilidade bem definidos oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 7
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem as parcerias e os acordos a dois, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de um acordo que permita discordar sem desfazer toda a parceria depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 7; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 7
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve as parcerias e os acordos a dois, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Um acordo que permita discordar sem desfazer toda a parceria ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 7; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 6
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: as parcerias e os acordos a dois e o trabalho cotidiano e os cuidados de rotina. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço de cada pessoa dentro de uma escolha compartilhada pode precisar de ajustes quando está em jogo a possibilidade de manter uma rotina que caiba na vida. Por exemplo, um acordo que permita discordar sem desfazer toda a parceria não resolve automaticamente o que aparece ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 7
+            },
+            "motion:venus:1791028800000": {
+              "venus": 7
+            },
+            "sign:venus:1792929600000": {
+              "venus": 6
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem as parcerias e os acordos a dois: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve as parcerias e os acordos a dois para o tema que envolve o trabalho cotidiano e os cuidados de rotina. A preocupação anterior era o espaço de cada pessoa dentro de uma escolha compartilhada; agora, uma tarefa com tempo e responsabilidade bem definidos oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "gemeos",
+      "name": "Gêmeos",
+      "title": "Dar uma forma possível à rotina",
+      "description": "Uma leitura simbólica para Gêmeos sobre as diferentes escolhas que envolvem o trabalho cotidiano e os cuidados de rotina.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem o trabalho cotidiano e os cuidados de rotina, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma tarefa com tempo e responsabilidade bem definidos depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 6; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve o trabalho cotidiano e os cuidados de rotina, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma tarefa com tempo e responsabilidade bem definidos ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 6; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: o trabalho cotidiano e os cuidados de rotina e a criação, o prazer e a expressão pessoal. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de manter uma rotina que caiba na vida pode precisar de ajustes quando está em jogo a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro. Por exemplo, uma tarefa com tempo e responsabilidade bem definidos não resolve automaticamente o que aparece ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem o trabalho cotidiano e os cuidados de rotina: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o trabalho cotidiano e os cuidados de rotina para o tema que envolve a criação, o prazer e a expressão pessoal. A preocupação anterior era a possibilidade de manter uma rotina que caiba na vida; agora, uma experiência criativa que possa existir antes de ser avaliada oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 6
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem o trabalho cotidiano e os cuidados de rotina, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma tarefa com tempo e responsabilidade bem definidos depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 6; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 6
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve o trabalho cotidiano e os cuidados de rotina, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma tarefa com tempo e responsabilidade bem definidos ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 6; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 5
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: o trabalho cotidiano e os cuidados de rotina e a criação, o prazer e a expressão pessoal. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de manter uma rotina que caiba na vida pode precisar de ajustes quando está em jogo a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro. Por exemplo, uma tarefa com tempo e responsabilidade bem definidos não resolve automaticamente o que aparece ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 6
+            },
+            "motion:venus:1791028800000": {
+              "venus": 6
+            },
+            "sign:venus:1792929600000": {
+              "venus": 5
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem o trabalho cotidiano e os cuidados de rotina: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o trabalho cotidiano e os cuidados de rotina para o tema que envolve a criação, o prazer e a expressão pessoal. A preocupação anterior era a possibilidade de manter uma rotina que caiba na vida; agora, uma experiência criativa que possa existir antes de ser avaliada oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "cancer",
+      "name": "Câncer",
+      "title": "Abrir espaço para criar e gostar",
+      "description": "Uma leitura simbólica para Câncer sobre as diferentes escolhas que envolvem a criação, o prazer e a expressão pessoal.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a criação, o prazer e a expressão pessoal, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma experiência criativa que possa existir antes de ser avaliada depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 5; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a criação, o prazer e a expressão pessoal, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma experiência criativa que possa existir antes de ser avaliada ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 5; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a criação, o prazer e a expressão pessoal e a intimidade e a vida de casa. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro pode precisar de ajustes quando está em jogo o direito de ter uma base íntima que acolha você. Por exemplo, uma experiência criativa que possa existir antes de ser avaliada não resolve automaticamente o que aparece ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a criação, o prazer e a expressão pessoal: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a criação, o prazer e a expressão pessoal para o tema que envolve a intimidade e a vida de casa. A preocupação anterior era a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro; agora, um acordo de convivência que preserve espaço pessoal oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 5
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a criação, o prazer e a expressão pessoal, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma experiência criativa que possa existir antes de ser avaliada depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 5; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 5
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a criação, o prazer e a expressão pessoal, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma experiência criativa que possa existir antes de ser avaliada ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 5; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 4
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a criação, o prazer e a expressão pessoal e a intimidade e a vida de casa. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro pode precisar de ajustes quando está em jogo o direito de ter uma base íntima que acolha você. Por exemplo, uma experiência criativa que possa existir antes de ser avaliada não resolve automaticamente o que aparece ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 5
+            },
+            "motion:venus:1791028800000": {
+              "venus": 5
+            },
+            "sign:venus:1792929600000": {
+              "venus": 4
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a criação, o prazer e a expressão pessoal: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a criação, o prazer e a expressão pessoal para o tema que envolve a intimidade e a vida de casa. A preocupação anterior era a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro; agora, um acordo de convivência que preserve espaço pessoal oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "leao",
+      "name": "Leão",
+      "title": "Cuidar da base que acolhe você",
+      "description": "Uma leitura simbólica para Leão sobre as diferentes escolhas que envolvem a intimidade e a vida de casa.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a intimidade e a vida de casa, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de um acordo de convivência que preserve espaço pessoal depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 4; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a intimidade e a vida de casa, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Um acordo de convivência que preserve espaço pessoal ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 4; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a intimidade e a vida de casa e as conversas e os aprendizados cotidianos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o direito de ter uma base íntima que acolha você pode precisar de ajustes quando está em jogo a possibilidade de compreender e ser compreendido. Por exemplo, um acordo de convivência que preserve espaço pessoal não resolve automaticamente o que aparece ao explicar uma ideia, pedir uma informação ou retomar uma conversa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a intimidade e a vida de casa: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a intimidade e a vida de casa para o tema que envolve as conversas e os aprendizados cotidianos. A preocupação anterior era o direito de ter uma base íntima que acolha você; agora, uma conversa em que o pedido fique compreensível para os dois lados oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 4
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a intimidade e a vida de casa, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de um acordo de convivência que preserve espaço pessoal depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 4; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 4
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a intimidade e a vida de casa, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Um acordo de convivência que preserve espaço pessoal ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 4; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 3
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a intimidade e a vida de casa e as conversas e os aprendizados cotidianos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o direito de ter uma base íntima que acolha você pode precisar de ajustes quando está em jogo a possibilidade de compreender e ser compreendido. Por exemplo, um acordo de convivência que preserve espaço pessoal não resolve automaticamente o que aparece ao explicar uma ideia, pedir uma informação ou retomar uma conversa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 4
+            },
+            "motion:venus:1791028800000": {
+              "venus": 4
+            },
+            "sign:venus:1792929600000": {
+              "venus": 3
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a intimidade e a vida de casa: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a intimidade e a vida de casa para o tema que envolve as conversas e os aprendizados cotidianos. A preocupação anterior era o direito de ter uma base íntima que acolha você; agora, uma conversa em que o pedido fique compreensível para os dois lados oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "virgem",
+      "name": "Virgem",
+      "title": "Encontrar palavras que aproximam",
+      "description": "Uma leitura simbólica para Virgem sobre as diferentes escolhas que envolvem as conversas e os aprendizados cotidianos.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem as conversas e os aprendizados cotidianos, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao explicar uma ideia, pedir uma informação ou retomar uma conversa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma conversa em que o pedido fique compreensível para os dois lados depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 3; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve as conversas e os aprendizados cotidianos, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma conversa em que o pedido fique compreensível para os dois lados ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 3; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: as conversas e os aprendizados cotidianos e suas prioridades e recursos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de compreender e ser compreendido pode precisar de ajustes quando está em jogo a segurança de ter recursos e prioridades próprios. Por exemplo, uma conversa em que o pedido fique compreensível para os dois lados não resolve automaticamente o que aparece ao distribuir tempo, dinheiro e atenção entre o que importa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem as conversas e os aprendizados cotidianos: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve as conversas e os aprendizados cotidianos para o tema que envolve suas prioridades e recursos. A preocupação anterior era a possibilidade de compreender e ser compreendido; agora, uma prioridade que caiba nos recursos realmente disponíveis oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 3
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem as conversas e os aprendizados cotidianos, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao explicar uma ideia, pedir uma informação ou retomar uma conversa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma conversa em que o pedido fique compreensível para os dois lados depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 3; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 3
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve as conversas e os aprendizados cotidianos, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma conversa em que o pedido fique compreensível para os dois lados ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 3; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 2
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: as conversas e os aprendizados cotidianos e suas prioridades e recursos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de compreender e ser compreendido pode precisar de ajustes quando está em jogo a segurança de ter recursos e prioridades próprios. Por exemplo, uma conversa em que o pedido fique compreensível para os dois lados não resolve automaticamente o que aparece ao distribuir tempo, dinheiro e atenção entre o que importa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 3
+            },
+            "motion:venus:1791028800000": {
+              "venus": 3
+            },
+            "sign:venus:1792929600000": {
+              "venus": 2
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem as conversas e os aprendizados cotidianos: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve as conversas e os aprendizados cotidianos para o tema que envolve suas prioridades e recursos. A preocupação anterior era a possibilidade de compreender e ser compreendido; agora, uma prioridade que caiba nos recursos realmente disponíveis oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "libra",
+      "name": "Libra",
+      "title": "Dar valor ao que sustenta você",
+      "description": "Uma leitura simbólica para Libra sobre as diferentes escolhas que envolvem suas prioridades e recursos.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem suas prioridades e recursos, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao distribuir tempo, dinheiro e atenção entre o que importa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma prioridade que caiba nos recursos realmente disponíveis depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 2; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve suas prioridades e recursos, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma prioridade que caiba nos recursos realmente disponíveis ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 2; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: suas prioridades e recursos e sua maneira de se apresentar e começar. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a segurança de ter recursos e prioridades próprios pode precisar de ajustes quando está em jogo a liberdade de escolher por si. Por exemplo, uma prioridade que caiba nos recursos realmente disponíveis não resolve automaticamente o que aparece ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem suas prioridades e recursos: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve suas prioridades e recursos para o tema que envolve sua maneira de se apresentar e começar. A preocupação anterior era a segurança de ter recursos e prioridades próprios; agora, uma iniciativa que possa ser corrigida depois da primeira resposta oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 2
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem suas prioridades e recursos, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao distribuir tempo, dinheiro e atenção entre o que importa, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma prioridade que caiba nos recursos realmente disponíveis depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 2; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 2
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve suas prioridades e recursos, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma prioridade que caiba nos recursos realmente disponíveis ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 2; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 1
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: suas prioridades e recursos e sua maneira de se apresentar e começar. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a segurança de ter recursos e prioridades próprios pode precisar de ajustes quando está em jogo a liberdade de escolher por si. Por exemplo, uma prioridade que caiba nos recursos realmente disponíveis não resolve automaticamente o que aparece ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 2
+            },
+            "motion:venus:1791028800000": {
+              "venus": 2
+            },
+            "sign:venus:1792929600000": {
+              "venus": 1
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem suas prioridades e recursos: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve suas prioridades e recursos para o tema que envolve sua maneira de se apresentar e começar. A preocupação anterior era a segurança de ter recursos e prioridades próprios; agora, uma iniciativa que possa ser corrigida depois da primeira resposta oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "escorpiao",
+      "name": "Escorpião",
+      "title": "Escolher sua própria posição",
+      "description": "Uma leitura simbólica para Escorpião sobre as diferentes escolhas que envolvem sua maneira de se apresentar e começar.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem sua maneira de se apresentar e começar, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma iniciativa que possa ser corrigida depois da primeira resposta depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 1; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve sua maneira de se apresentar e começar, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma iniciativa que possa ser corrigida depois da primeira resposta ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 1; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: sua maneira de se apresentar e começar e o recolhimento e os assuntos que pedem encerramento. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de escolher por si pode precisar de ajustes quando está em jogo o espaço para elaborar algo antes de responder ao mundo. Por exemplo, uma iniciativa que possa ser corrigida depois da primeira resposta não resolve automaticamente o que aparece ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem sua maneira de se apresentar e começar: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve sua maneira de se apresentar e começar para o tema que envolve o recolhimento e os assuntos que pedem encerramento. A preocupação anterior era a liberdade de escolher por si; agora, uma pausa que ajude a voltar ou a concluir oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 1
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem sua maneira de se apresentar e começar, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma iniciativa que possa ser corrigida depois da primeira resposta depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 1; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 1
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve sua maneira de se apresentar e começar, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma iniciativa que possa ser corrigida depois da primeira resposta ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 1; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 12
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: sua maneira de se apresentar e começar e o recolhimento e os assuntos que pedem encerramento. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de escolher por si pode precisar de ajustes quando está em jogo o espaço para elaborar algo antes de responder ao mundo. Por exemplo, uma iniciativa que possa ser corrigida depois da primeira resposta não resolve automaticamente o que aparece ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 1
+            },
+            "motion:venus:1791028800000": {
+              "venus": 1
+            },
+            "sign:venus:1792929600000": {
+              "venus": 12
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem sua maneira de se apresentar e começar: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve sua maneira de se apresentar e começar para o tema que envolve o recolhimento e os assuntos que pedem encerramento. A preocupação anterior era a liberdade de escolher por si; agora, uma pausa que ajude a voltar ou a concluir oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "sagitario",
+      "name": "Sagitário",
+      "title": "Respeitar o tempo de recolher",
+      "description": "Uma leitura simbólica para Sagitário sobre as diferentes escolhas que envolvem o recolhimento e os assuntos que pedem encerramento.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem o recolhimento e os assuntos que pedem encerramento, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma pausa que ajude a voltar ou a concluir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve o recolhimento e os assuntos que pedem encerramento, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma pausa que ajude a voltar ou a concluir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: o recolhimento e os assuntos que pedem encerramento e os grupos, as amizades e os projetos em comum. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço para elaborar algo antes de responder ao mundo pode precisar de ajustes quando está em jogo o pertencimento que permite contribuir sem apagar sua posição. Por exemplo, uma pausa que ajude a voltar ou a concluir não resolve automaticamente o que aparece ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem o recolhimento e os assuntos que pedem encerramento: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o recolhimento e os assuntos que pedem encerramento para o tema que envolve os grupos, as amizades e os projetos em comum. A preocupação anterior era o espaço para elaborar algo antes de responder ao mundo; agora, uma contribuição cujos limites sejam compreensíveis para o grupo oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 12
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem o recolhimento e os assuntos que pedem encerramento, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma pausa que ajude a voltar ou a concluir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 12
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve o recolhimento e os assuntos que pedem encerramento, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma pausa que ajude a voltar ou a concluir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 11
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: o recolhimento e os assuntos que pedem encerramento e os grupos, as amizades e os projetos em comum. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o espaço para elaborar algo antes de responder ao mundo pode precisar de ajustes quando está em jogo o pertencimento que permite contribuir sem apagar sua posição. Por exemplo, uma pausa que ajude a voltar ou a concluir não resolve automaticamente o que aparece ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 12
+            },
+            "motion:venus:1791028800000": {
+              "venus": 12
+            },
+            "sign:venus:1792929600000": {
+              "venus": 11
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem o recolhimento e os assuntos que pedem encerramento: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o recolhimento e os assuntos que pedem encerramento para o tema que envolve os grupos, as amizades e os projetos em comum. A preocupação anterior era o espaço para elaborar algo antes de responder ao mundo; agora, uma contribuição cujos limites sejam compreensíveis para o grupo oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "capricornio",
+      "name": "Capricórnio",
+      "title": "Participar sem perder sua voz",
+      "description": "Uma leitura simbólica para Capricórnio sobre as diferentes escolhas que envolvem os grupos, as amizades e os projetos em comum.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem os grupos, as amizades e os projetos em comum, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma contribuição cujos limites sejam compreensíveis para o grupo depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 11; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve os grupos, as amizades e os projetos em comum, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma contribuição cujos limites sejam compreensíveis para o grupo ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 11; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: os grupos, as amizades e os projetos em comum e a direção profissional e as responsabilidades públicas. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o pertencimento que permite contribuir sem apagar sua posição pode precisar de ajustes quando está em jogo o compromisso com uma direção que possa ser sustentada publicamente. Por exemplo, uma contribuição cujos limites sejam compreensíveis para o grupo não resolve automaticamente o que aparece ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem os grupos, as amizades e os projetos em comum: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve os grupos, as amizades e os projetos em comum para o tema que envolve a direção profissional e as responsabilidades públicas. A preocupação anterior era o pertencimento que permite contribuir sem apagar sua posição; agora, uma responsabilidade com critérios claros para o que é suficiente oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 11
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem os grupos, as amizades e os projetos em comum, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma contribuição cujos limites sejam compreensíveis para o grupo depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 11; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 11
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve os grupos, as amizades e os projetos em comum, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma contribuição cujos limites sejam compreensíveis para o grupo ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 11; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 10
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: os grupos, as amizades e os projetos em comum e a direção profissional e as responsabilidades públicas. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o pertencimento que permite contribuir sem apagar sua posição pode precisar de ajustes quando está em jogo o compromisso com uma direção que possa ser sustentada publicamente. Por exemplo, uma contribuição cujos limites sejam compreensíveis para o grupo não resolve automaticamente o que aparece ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 11
+            },
+            "motion:venus:1791028800000": {
+              "venus": 11
+            },
+            "sign:venus:1792929600000": {
+              "venus": 10
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem os grupos, as amizades e os projetos em comum: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve os grupos, as amizades e os projetos em comum para o tema que envolve a direção profissional e as responsabilidades públicas. A preocupação anterior era o pertencimento que permite contribuir sem apagar sua posição; agora, uma responsabilidade com critérios claros para o que é suficiente oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "aquario",
+      "name": "Aquário",
+      "title": "Assumir uma direção que faça sentido",
+      "description": "Uma leitura simbólica para Aquário sobre as diferentes escolhas que envolvem a direção profissional e as responsabilidades públicas.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a direção profissional e as responsabilidades públicas, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma responsabilidade com critérios claros para o que é suficiente depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 10; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a direção profissional e as responsabilidades públicas, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma responsabilidade com critérios claros para o que é suficiente ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 10; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: a direção profissional e as responsabilidades públicas e os estudos, as convicções e os projetos de expansão. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o compromisso com uma direção que possa ser sustentada publicamente pode precisar de ajustes quando está em jogo a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta. Por exemplo, uma responsabilidade com critérios claros para o que é suficiente não resolve automaticamente o que aparece ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a direção profissional e as responsabilidades públicas: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a direção profissional e as responsabilidades públicas para o tema que envolve os estudos, as convicções e os projetos de expansão. A preocupação anterior era o compromisso com uma direção que possa ser sustentada publicamente; agora, um plano maior que aceite uma primeira experiência pequena e verificável oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 10
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem a direção profissional e as responsabilidades públicas, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de uma responsabilidade com critérios claros para o que é suficiente depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 10; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 10
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve a direção profissional e as responsabilidades públicas, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Uma responsabilidade com critérios claros para o que é suficiente ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 10; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 9
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: a direção profissional e as responsabilidades públicas e os estudos, as convicções e os projetos de expansão. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para o compromisso com uma direção que possa ser sustentada publicamente pode precisar de ajustes quando está em jogo a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta. Por exemplo, uma responsabilidade com critérios claros para o que é suficiente não resolve automaticamente o que aparece ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 10
+            },
+            "motion:venus:1791028800000": {
+              "venus": 10
+            },
+            "sign:venus:1792929600000": {
+              "venus": 9
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem a direção profissional e as responsabilidades públicas: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a direção profissional e as responsabilidades públicas para o tema que envolve os estudos, as convicções e os projetos de expansão. A preocupação anterior era o compromisso com uma direção que possa ser sustentada publicamente; agora, um plano maior que aceite uma primeira experiência pequena e verificável oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    },
+    {
+      "sign": "peixes",
+      "name": "Peixes",
+      "title": "Ampliar a visão sem perder o chão",
+      "description": "Uma leitura simbólica para Peixes sobre as diferentes escolhas que envolvem os estudos, as convicções e os projetos de expansão.",
+      "paragraphs": [
+        "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem os estudos, as convicções e os projetos de expansão, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de um plano maior que aceite uma primeira experiência pequena e verificável depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 9; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve os estudos, as convicções e os projetos de expansão, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Um plano maior que aceite uma primeira experiência pequena e verificável ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 9; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "A mudança de signo de Vênus desloca o foco entre dois temas: os estudos, as convicções e os projetos de expansão e a partilha e os compromissos que envolvem confiança. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta pode precisar de ajustes quando está em jogo a confiança necessária para dividir algo sem perder a clareza dos limites. Por exemplo, um plano maior que aceite uma primeira experiência pequena e verificável não resolve automaticamente o que aparece ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+        "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem os estudos, as convicções e os projetos de expansão: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve os estudos, as convicções e os projetos de expansão para o tema que envolve a partilha e os compromissos que envolvem confiança. A preocupação anterior era a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta; agora, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+      ],
+      "selectionNote": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus. Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "factorIds": [
+        "motion:mercury:1792843200000",
+        "motion:venus:1791028800000",
+        "sign:venus:1792929600000"
+      ],
+      "claims": [
+        {
+          "paragraph": 0,
+          "factorIds": [
+            "motion:mercury:1792843200000"
+          ],
+          "representativeAt": "2026-10-24T12:00:00.000Z",
+          "sectors": {
+            "mercury": 9
+          },
+          "interpretation": "A revisão recai sobre a maneira de entender e comunicar. Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras. Nos assuntos que envolvem os estudos, as convicções e os projetos de expansão, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu. Ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance, uma condição omitida pode pesar mais do que a quantidade de explicações. O sentido de um plano maior que aceite uma primeira experiência pequena e verificável depende de tornar essa condição compreensível, para que concordar seja uma escolha informada. A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 9; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 1,
+          "factorIds": [
+            "motion:venus:1791028800000"
+          ],
+          "representativeAt": "2026-10-03T12:00:00.000Z",
+          "sectors": {
+            "venus": 9
+          },
+          "interpretation": "A revisão recai sobre o valor que sustenta uma escolha. Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar. Quando a escolha envolve os estudos, as convicções e os projetos de expansão, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo. Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante. Um plano maior que aceite uma primeira experiência pequena e verificável ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade. A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 9; ela não impõe uma regra de parar ou avançar. A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 2,
+          "factorIds": [
+            "sign:venus:1792929600000"
+          ],
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "sectors": {
+            "venus": 8
+          },
+          "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: os estudos, as convicções e os projetos de expansão e a partilha e os compromissos que envolvem confiança. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta pode precisar de ajustes quando está em jogo a confiança necessária para dividir algo sem perder a clareza dos limites. Por exemplo, um plano maior que aceite uma primeira experiência pequena e verificável não resolve automaticamente o que aparece ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem."
+        },
+        {
+          "paragraph": 3,
+          "factorIds": [
+            "motion:mercury:1792843200000",
+            "motion:venus:1791028800000",
+            "sign:venus:1792929600000"
+          ],
+          "sectorsByFactor": {
+            "motion:mercury:1792843200000": {
+              "mercury": 9
+            },
+            "motion:venus:1791028800000": {
+              "venus": 9
+            },
+            "sign:venus:1792929600000": {
+              "venus": 8
+            }
+          },
+          "interpretation": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção. Entender os termos de uma escolha não basta para desejar sustentá-la. Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro. Essa diferença modifica a leitura das situações que envolvem os estudos, as convicções e os projetos de expansão: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes. Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC). A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve os estudos, as convicções e os projetos de expansão para o tema que envolve a partilha e os compromissos que envolvem confiança. A preocupação anterior era a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta; agora, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece outro modo de responder. Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados. Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade."
+        }
+      ]
+    }
+  ]
+}
