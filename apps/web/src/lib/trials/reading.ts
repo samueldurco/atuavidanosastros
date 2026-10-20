@@ -99,6 +99,13 @@ import {
 	reviewReconstructedSynastry
 } from './reconstruction/synastry';
 import { nameCurrentOffer, OFFER_NAME_REVISION } from './offer-names';
+import {
+	composeCurrentReading,
+	isCurrentReadingProduct,
+	reviewCurrentReading,
+	CURRENT_READING_VERSION,
+	CURRENT_REVIEW_POLICY
+} from './current';
 
 export type TrialReading = {
 	version: string;
@@ -111,6 +118,11 @@ export type TrialReading = {
 	questions: string[];
 	practice: string;
 	limits: string[];
+	interpretation?: {
+		version: 'atv-interpretation-evidence/1';
+		family: string;
+		conclusions: Array<{ section: number; claim: string; factIds: string[]; relation: string }>;
+	};
 	editorial?: EditorialTrace | EditorialTrace<import('./reconstruction/career').PeriodContextKey>;
 };
 export type TrialApproval = {
@@ -140,7 +152,12 @@ export function composeTrialReading(
 	input: WorkflowInput,
 	calculation: CalculationSnapshot
 ): TrialReading {
-	return nameCurrentOffer(input, composeOriginalTrialReading(input, calculation));
+	return nameCurrentOffer(
+		input,
+		isCurrentReadingProduct(input.productId)
+			? composeCurrentReading(input, calculation)
+			: composeOriginalTrialReading(input, calculation)
+	);
 }
 
 /** Versioned content before offer naming, retained to verify historical saved payloads. */
@@ -223,6 +240,7 @@ export async function approveTrialReading(
 		ids.add(fact.id);
 	}
 	const legacy = candidate.version === TRIAL_CONTENT_VERSION;
+	const current = candidate.version === CURRENT_READING_VERSION;
 	const previous = candidate.version === V2;
 	const v3 = candidate.version === V3;
 	const reconstructed =
@@ -236,24 +254,26 @@ export async function approveTrialReading(
 		candidate.version === BIRTH_READING_VERSION ||
 		candidate.version === ASCENDANT_READING_VERSION ||
 		candidate.version === MIDHEAVEN_READING_VERSION;
-	if (!legacy && !previous && !v3 && !reconstructed) return null;
+	if (!legacy && !previous && !v3 && !reconstructed && !current) return null;
 	const named = Object.hasOwn(candidate, 'nameRevision');
 	if (named && candidate.nameRevision !== OFFER_NAME_REVISION) return null;
 	let original: TrialReading;
 	try {
-		original = legacy
-			? composeLegacyTrialReading(input, calculation)
-			: previous
-				? composeV2(input, calculation)
-				: v3
-					? composeV3(input, calculation)
-					: candidate.version === COMPASS_READING_VERSION_V5 &&
-						  calculation.version === COMPASS_VERSION
-						? composeReconstructedCompass(input, calculation, 'v5')
-						: candidate.version === PILLARS_READING_V5_VERSION &&
-							  calculation.version === PILLARS_VERSION
-							? composeReconstructedPillars(input, calculation)
-							: composeOriginalTrialReading(input, calculation);
+		original = current
+			? composeCurrentReading(input, calculation)
+			: legacy
+				? composeLegacyTrialReading(input, calculation)
+				: previous
+					? composeV2(input, calculation)
+					: v3
+						? composeV3(input, calculation)
+						: candidate.version === COMPASS_READING_VERSION_V5 &&
+							  calculation.version === COMPASS_VERSION
+							? composeReconstructedCompass(input, calculation, 'v5')
+							: candidate.version === PILLARS_READING_V5_VERSION &&
+								  calculation.version === PILLARS_VERSION
+								? composeReconstructedPillars(input, calculation)
+								: composeOriginalTrialReading(input, calculation);
 	} catch {
 		// Invalid factual projections are rejected by the gate, never promoted to a server error.
 		return null;
@@ -263,6 +283,7 @@ export async function approveTrialReading(
 	// Only after the full named payload matches, verify its original content with the
 	// historical method reviewers. The final digest below still covers the new title/revision.
 	const reviewedContent = original;
+	if (current && reviewCurrentReading(calculation, reviewedContent).length) return null;
 	if (
 		reconstructed &&
 		(candidate.version === DREAM_INTERPRETATION_READING
@@ -356,22 +377,25 @@ export async function approveTrialReading(
 			candidate.sections.some(
 				(s) => !s.title.trim() || /nenhum aspecto|fora do orbe nominal/i.test(s.title)
 			) ||
-			candidate.questions.length < 2 ||
-			!candidate.practice.trim() ||
+			(!current && (candidate.questions.length < 2 || !candidate.practice.trim())) ||
 			!candidate.source.trim())
 	)
 		return null;
-	const policy = legacy
-		? TRIAL_POLICY_VERSION
-		: previous
-			? POLICY_V2
-			: v3
-				? POLICY_V3
-				: RECONSTRUCTION_POLICY;
+	const policy = current
+		? CURRENT_REVIEW_POLICY
+		: legacy
+			? TRIAL_POLICY_VERSION
+			: previous
+				? POLICY_V2
+				: v3
+					? POLICY_V3
+					: RECONSTRUCTION_POLICY;
 	if (candidate.sections.some((s) => !s.text.trim() || s.factIds.some((id) => !ids.has(id))))
 		return null;
 	const covered = new Set(candidate.sections.flatMap((s) => s.factIds));
-	if ([...ids].some((id) => !covered.has(id))) return null;
+	// New editions select relevant facts; the full calculation remains available as reference.
+	// Historical versions retain their original total-coverage contract.
+	if (!current && [...ids].some((id) => !covered.has(id))) return null;
 	const payload = canonical({
 		policy,
 		input,

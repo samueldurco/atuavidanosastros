@@ -4,7 +4,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createCareerCompassFullBasisCalculator } from '../../../../../worker/src/career-compass-full-basis';
 import { calculateTrial } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { latestReadingVersion } from '../versions';
 import {
 	assertCompassProjection,

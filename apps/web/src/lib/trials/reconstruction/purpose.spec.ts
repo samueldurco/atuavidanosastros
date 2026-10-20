@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import {
 	PURPOSE_VERSION,
 	assertPurposeProjection,

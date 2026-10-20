@@ -8,6 +8,7 @@
 		type PublicPeriod
 	} from '$lib/public-horoscope';
 	import { customerProduct } from '$lib/data/product-copy';
+	const weeklyProduct = customerProduct('week-reading');
 	let { embedded = false }: { embedded?: boolean } = $props();
 	let sign = $state<SignSlug>('aries');
 	let period = $state<PublicPeriod>('daily');
@@ -17,6 +18,8 @@
 		sign: SignSlug;
 		period: PublicPeriod;
 		current: (HoroscopeEntry & { sections: { heading: string; paragraphs: string[] }[] }) | null;
+		hasHistory: boolean;
+		supportingGuides: { path: string; title: string; description: string }[];
 		archive: string;
 	} | null>(null);
 	async function read() {
@@ -55,7 +58,7 @@
 			></label
 		>
 		<button type="submit" disabled={pending}
-			>{pending ? 'Consultando…' : 'Ler meu horóscopo'}</button
+			>{pending ? 'Consultando…' : 'Consultar meu signo'}</button
 		>
 	</form>
 	{#if error}<p role="alert">{error}</p>{/if}
@@ -75,16 +78,37 @@
 				</article>
 			{:else}<p>
 					A leitura de {periodNames[result.period].toLowerCase()} para {signNames[result.sign]} ainda
-					não está disponível. Você pode consultar as publicações anteriores.
+					não está disponível.
+					{#if result.hasHistory}Você pode consultar as publicações anteriores.{/if}
 				</p>{/if}
-			<p><a href={result.archive}>Ver o histórico de {signNames[result.sign]}</a></p>
-			<aside>
-				<h4>Uma previsão com o seu mapa</h4>
-				<p>O Horóscopo Semanal Pessoal considera seus dados de nascimento.</p>
-				<a href={`/produtos/${customerProduct('week-reading')?.slug}`}
-					>Conhecer a leitura pessoal →</a
+			<p>
+				<a href={result.archive}
+					>{result.hasHistory ? 'Ver o histórico' : 'Consultar a disponibilidade'} de {signNames[
+						result.sign
+					]}</a
 				>
-			</aside>
+			</p>
+			{#if result.supportingGuides.length}
+				<section class="supporting-guides" aria-label="Para entender os ciclos">
+					<h3>Para entender os ciclos</h3>
+					<p>
+						Guias educativos sobre os movimentos do céu. Não são previsões para o período escolhido.
+					</p>
+					{#each result.supportingGuides as guide (guide.path)}
+						<div class="guide">
+							<h4><a href={guide.path}>{guide.title}</a></h4>
+							<p>{guide.description}</p>
+						</div>
+					{/each}
+				</section>
+			{/if}
+			{#if weeklyProduct}<aside>
+					<h4>Uma previsão com o seu mapa</h4>
+					<p>
+						{weeklyProduct.name} considera seus dados de nascimento para interpretar os trânsitos da semana.
+					</p>
+					<a href={`/produtos/${weeklyProduct.slug}`}>Conhecer a leitura pessoal →</a>
+				</aside>{/if}
 		{/if}
 	</div>
 </div>
@@ -126,7 +150,8 @@
 		cursor: wait;
 	}
 	article,
-	aside {
+	aside,
+	.supporting-guides {
 		margin-top: 1.5rem;
 		border-top: 1px solid #153b4d33;
 		padding-top: 1rem;

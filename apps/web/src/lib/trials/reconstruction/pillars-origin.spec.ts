@@ -4,7 +4,8 @@ import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from
 import { bodyLabels, zodiacPosition } from '../../../../../worker/src/natal-calculators';
 import { calculateTrial } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
-import { approveTrialReading, canonical, composeTrialReading } from '../reading';
+import { approveTrialReading, canonical } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { assertPillarsProjection, projectPillarsReading } from './pillars-facts';
 import { PILLARS_ORIGIN_POLICY, verifyPillarsOrigin } from './pillars-origin';
 

@@ -15,9 +15,10 @@ for (const width of [390, 1440]) {
 			0
 		);
 		const timeline = page.getByRole('navigation', { name: 'Linha do tempo da semana' });
-		await expect(timeline.getByRole('button')).toHaveCount(7);
 		const dates = (await timeline.getByRole('button').allTextContents()).map((t) => t.trim());
-		expect(new Set(dates).size).toBe(7);
+		expect(dates.length).toBeGreaterThan(0);
+		expect(dates.length).toBeLessThanOrEqual(3);
+		expect(new Set(dates).size).toBe(dates.length);
 		for (const button of await timeline.getByRole('button').all()) {
 			const title = await button.innerText();
 			await button.click();
@@ -39,7 +40,7 @@ for (const width of [390, 1440]) {
 			.locator('[data-layer="positions"]')
 			.evaluateAll((nodes) => nodes.map((n) => n.outerHTML).join(''));
 		await picker.selectOption('6');
-		await expect(page.getByRole('heading', { name: dates[6], exact: true })).toBeVisible();
+		await expect(page.getByRole('heading', { name: dates.at(-1), exact: true })).toBeVisible();
 		expect(
 			await svg
 				.locator('[data-layer="positions"]')
@@ -57,11 +58,9 @@ for (const width of [390, 1440]) {
 		}
 		const navigation = page.getByRole('navigation', { name: 'Capítulos da leitura' });
 		const titles = (await navigation.getByRole('button').allTextContents()).map((t) => t.trim());
-		expect(titles[0]).toBe('O tema que atravessa a semana');
-		expect(titles).toContain('Continuidade e mudanças de ritmo');
-		expect(titles).toContain('Prioridades e realização');
-		expect(titles).toContain('Relações e acordos');
-		expect(titles).toContain('Cuidado e sustentação');
+		expect(titles[0]).toMatch(/O que permanece em pauta|Uma mudança de acento/);
+		for (const phase of dates) expect(titles).toContain(phase);
+		expect(titles).toContain('Onde a semana encontra sua prioridade');
 		expect(titles).not.toContain('Referências desta leitura');
 		expect(new Set(titles).size).toBe(titles.length);
 		for (const button of await navigation.getByRole('button').all()) {

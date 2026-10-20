@@ -19,8 +19,8 @@
 			{data.sign ? `Horóscopo de ${signNames[data.sign]}` : 'Horóscopo dos 12 signos'}
 		</h1>
 		<p class="lead">
-			Escolha o signo e acompanhe as leituras do dia, da semana e do mês. São leituras gerais: seu
-			mapa natal acrescenta uma perspectiva pessoal.
+			Consulte as publicações por signo e período. Cada leitura reúne uma interpretação geral do
+			céu, com a data a que se refere. Seu mapa natal acrescenta uma perspectiva pessoal.
 		</p>
 		<nav class="periods" aria-label="Período da leitura">
 			{#each horoscopePeriods as period (period)}<a
@@ -29,6 +29,19 @@
 				>{/each}
 		</nav>
 		{#if !data.sign}
+			{#if !data.currentSigns.length}
+				<section class="current card" aria-labelledby="availability-heading">
+					<p class="eyebrow">{periodNames[data.period]} atual · períodos em UTC</p>
+					<h2 id="availability-heading">A leitura deste período ainda não foi publicada</h2>
+					<p>
+						Você pode consultar a disponibilidade de cada signo ou guardar sua preferência neste
+						navegador.
+						{#if data.supportingGuides.length}
+							Os guias sobre ciclos, mais abaixo, são conteúdos educativos que você já pode ler.
+						{/if}
+					</p>
+				</section>
+			{/if}
 			<div class="sign-grid">
 				{#each signs as sign (sign)}
 					<a
@@ -36,7 +49,12 @@
 						href={`/horoscopo/${sign}?period=${data.period}&year=${data.year}`}
 					>
 						<h2>{signNames[sign]}</h2>
-						<span>Ver leitura e histórico <span aria-hidden="true">→</span></span>
+						<span>
+							{data.currentSigns.includes(sign)
+								? 'Ler a publicação atual'
+								: 'Consultar disponibilidade e histórico'}
+							<span aria-hidden="true">→</span>
+						</span>
 					</a>
 				{/each}
 			</div>
@@ -51,9 +69,25 @@
 					<p>{data.current.description}</p>
 					<a class="button" href={data.current.path}>Ler o horóscopo completo</a>
 				{:else}<p>
-						Quando houver uma leitura aprovada para {signNames[data.sign]}, ela aparecerá aqui. Você
-						pode consultar o histórico ou acompanhar os avisos abaixo.
+						Não há uma leitura atual de {signNames[data.sign]} para este período. Você pode consultar
+						publicações anteriores, quando disponíveis, ou guardar sua preferência neste navegador.
 					</p>{/if}
+			</section>
+		{/if}
+		{#if data.supportingGuides.length}
+			<section class="supporting-guides" aria-labelledby="guides-heading">
+				<h2 id="guides-heading">Para entender os ciclos</h2>
+				<p>
+					Guias educativos sobre os movimentos do céu. Não são previsões para o período escolhido.
+				</p>
+				<div class="guide-grid">
+					{#each data.supportingGuides as guide (guide.path)}
+						<article class="card guide-card">
+							<h3><a href={guide.path}>{guide.title}</a></h3>
+							<p>{guide.description}</p>
+						</article>
+					{/each}
+				</div>
 			</section>
 		{/if}
 		<section class="history" aria-labelledby="history-heading">
@@ -97,7 +131,7 @@
 			/>{/key}
 		<p class="method">
 			<a href="/metodo">Método e limites das leituras</a> ·
-			<a href="/testar-produtos/horoscope">Conhecer a leitura personalizada</a>
+			<a href="/testar-produtos/week-reading">Conhecer a leitura personalizada da semana</a>
 		</p>
 	</div>
 </section>
@@ -133,6 +167,7 @@
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: 1rem;
+		margin-top: 1.5rem;
 	}
 	.sign-card {
 		display: block;
@@ -151,6 +186,20 @@
 	}
 	.history {
 		margin-top: 3rem;
+	}
+	.supporting-guides {
+		margin-top: 2rem;
+	}
+	.guide-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+		gap: 1rem;
+	}
+	.guide-card {
+		padding: 1.5rem;
+	}
+	.guide-card h3 {
+		margin-top: 0;
 	}
 	.year-form {
 		display: flex;

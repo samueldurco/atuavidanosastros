@@ -312,8 +312,13 @@ export async function trialPdf(saved: SavedTrial) {
 					color: ink
 				}
 			);
-			const count = saved.reading.editorial!.selection.filter((s) =>
-				data.events.some((e) => e.id === s.factId && e.date === day.date)
+			const selectedIds = new Set(
+				saved.reading.interpretation
+					? saved.reading.sections.flatMap((section) => section.factIds)
+					: (saved.reading.editorial?.selection.map((selection) => selection.factId) ?? [])
+			);
+			const count = data.events.filter(
+				(event) => event.date === day.date && selectedIds.has(event.id)
 			).length;
 			page.drawText(`${count} ${count === 1 ? 'sinal' : 'sinais'}`, {
 				x: x + 6,
@@ -327,7 +332,9 @@ export async function trialPdf(saved: SavedTrial) {
 		});
 		y = top - 20 - Math.ceil((offset + data.days.length) / 7) * 72 - 20;
 		paragraph(
-			'Zero sinais não descreve a qualidade do dia. Registre também experiências que contrariaram uma hipótese. As observações ocorrem a cada seis horas; picos não certificam o instante exato.',
+			saved.reading.interpretation
+				? 'Os sinais remetem aos movimentos desenvolvidos na leitura. A quantidade não indica dias melhores ou piores. As observações ocorrem a cada seis horas; os picos são aproximações.'
+				: 'Zero sinais não descreve a qualidade do dia. Registre também experiências que contrariaram uma hipótese. As observações ocorrem a cada seis horas; picos não certificam o instante exato.',
 			label,
 			10
 		);
@@ -387,7 +394,7 @@ export async function trialPdf(saved: SavedTrial) {
 	if (book) {
 		heading('Índice da sua leitura', 23);
 		paragraph(
-			'Comece pela síntese e aprofunde os temas que deseja investigar. Compare os capítulos com uma situação concreta; suas observações podem confirmar ou contrariar a interpretação.'
+			'A síntese apresenta as relações centrais desta leitura. O índice permite voltar aos temas e consultar os dados que sustentam a interpretação.'
 		);
 		chapters.forEach((s, index) => {
 			if (y < 105) newPage();
@@ -436,21 +443,28 @@ export async function trialPdf(saved: SavedTrial) {
 			size: 10,
 			color: muted
 		});
-	// Keep the brief reflection/practice closing together; avoid a page with only two lines.
-	heading(
-		'Perguntas para refletir',
-		17,
-		Math.min(
-			height - 148,
-			headingHeight('Perguntas para refletir') +
-				r.questions.reduce((sum, q, i) => sum + paragraphHeight(`${i + 1}. ${q}`), 0) +
-				headingHeight('Experimento prático') +
-				paragraphHeight(r.practice)
-		)
-	);
-	r.questions.forEach((q, i) => paragraph(`${i + 1}. ${q}`));
-	heading('Experimento prático', 17, 0);
-	paragraph(r.practice);
+	// Reflection is optional; a complete interpretation does not depend on an exercise.
+	if (r.questions.length) {
+		heading(
+			'Perguntas para refletir',
+			17,
+			Math.min(
+				height - 148,
+				headingHeight('Perguntas para refletir') +
+					r.questions.reduce((sum, q, i) => sum + paragraphHeight(`${i + 1}. ${q}`), 0)
+			)
+		);
+		r.questions.forEach((q, i) => paragraph(`${i + 1}. ${q}`));
+	}
+	if (r.practice.trim()) {
+		heading(
+			r.version === 'atv-current-reading/1.0.0'
+				? 'Para levar desta leitura'
+				: 'Experimento prático',
+			17
+		);
+		paragraph(r.practice);
+	}
 	if ([PAIR_VERSION, SYNASTRY_VERSION, DOSSIER_VERSION].includes(saved.calculation.version)) {
 		const references = r.sections.find((s) => s.title === 'Referências desta leitura');
 		if (references) {

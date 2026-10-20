@@ -83,6 +83,31 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_ENABLE_COMMENTS: "false"
 
+  current-readings:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: 11.19.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --dir apps/web exec playwright install --with-deps chromium
+      - name: All current offers on mobile and desktop, calendar navigation and free tools
+        env:
+          ATV_E2E_EVIDENCE_DIR: test-results/current-reading-evidence
+        run: pnpm --dir apps/web exec playwright test current-readings-matrix.e2e.ts reconstruction-calendar.e2e.ts free-tools.e2e.ts --workers=1
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: current-reading-results
+          path: apps/web/test-results/
+          retention-days: 7
+
   sbom:
     runs-on: ubuntu-latest
     timeout-minutes: 10

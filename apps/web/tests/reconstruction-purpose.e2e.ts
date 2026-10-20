@@ -16,21 +16,24 @@ for (const width of [390, 1440]) {
 		);
 		const navigation = page.getByRole('navigation', { name: 'Capítulos da leitura' });
 		const titles = (await navigation.getByRole('button').allTextContents()).map((t) => t.trim());
-		expect(titles.length).toBeGreaterThanOrEqual(15);
+		expect(titles).toHaveLength(7);
 		expect(new Set(titles).size).toBe(titles.length);
-		expect(titles).toContain('A direção pública e o caminho de seu regente');
-		expect(titles).toContain('Recursos: o que sustenta sua margem de escolha');
+		expect(titles).toContain('Uma direção de contribuição, várias formas de realizá-la');
+		expect(titles).toContain('Preservar o que tem valor sem fechar espaço para o prazer');
 		for (const button of await navigation.getByRole('button').all()) {
 			const title = await button.innerText();
 			await button.click();
 			await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
 		}
 		await navigation
-			.getByRole('button', { name: 'Rever uma direção sem perder o chão', exact: true })
+			.getByRole('button', {
+				name: 'Mudar de direção sem transformar a escolha numa prova de valor',
+				exact: true
+			})
 			.click();
-		await expect(
-			page.getByText(/Quero mudar de área e testar uma contribuição/).first()
-		).toBeVisible();
+		await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
+			/descanso/
+		);
 		await page
 			.locator('summary')
 			.filter({ hasText: 'Explore seu mapa e os capítulos relacionados' })

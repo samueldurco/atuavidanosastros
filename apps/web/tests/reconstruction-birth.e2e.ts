@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
-	test(`Mapa Astral: seis assinaturas, quinze capítulos, formatos e contexto em ${width}px`, async ({
+	test(`Mapa Astral: interpretação integrada, formatos e contexto em ${width}px`, async ({
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
@@ -15,7 +15,7 @@ for (const width of [390, 1440]) {
 			0
 		);
 		const nav = page.getByRole('navigation', { name: 'Capítulos da leitura' });
-		expect(await nav.getByRole('button').count()).toBe(15);
+		expect(await nav.getByRole('button').count()).toBe(10);
 		let chapter = 0;
 		for (const button of await nav.getByRole('button').all()) {
 			const title = await button.innerText();
@@ -72,13 +72,14 @@ for (const width of [390, 1440]) {
 			fullPage: true
 		});
 		await page.goto('/testar-produtos/_spec?product=birth-chart&birthContext=workload');
-		await nav.getByRole('button').nth(12).click();
+		await nav
+			.getByRole('button', {
+				name: 'Quando continuar exige rever o tamanho do esforço',
+				exact: true
+			})
+			.click();
 		await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
-			'Estou com sobrecarga e preciso preservar descanso.'
-		);
-		await nav.getByRole('button').nth(13).click();
-		await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
-			'tempo disponível'
+			/sobrecarga|descanso/
 		);
 		await page.screenshot({
 			path: testInfo.outputPath(`reconstruction-birth-${width}-workload.png`),

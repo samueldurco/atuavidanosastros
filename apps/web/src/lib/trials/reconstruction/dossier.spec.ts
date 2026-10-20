@@ -8,7 +8,8 @@ import {
 	type WorkflowInput
 } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { latestReadingVersion } from '../versions';
 import { buildChartScene } from '../chart-engine-v2';
 import { trialGeometry } from '../cartography';
@@ -68,7 +69,7 @@ describe('Dossiê do Casal — maps, situated answers and voluntary priorities',
 		v.questions = ['Como organizar as despesas?'];
 		const b = await saved(v);
 		expect(a.calculation.version).toBe(DOSSIER_VERSION);
-		expect(latestReadingVersion('couple-dossier')).toBe(a.reading.version);
+		expect(latestReadingVersion('couple-dossier')).toBe('atv-current-reading/1.0.0');
 		for (const key of ['relationshipGeometry', 'houseOverlays', 'crossAspectStability'])
 			expect(a.calculation.data[key]).toEqual(b.calculation.data[key]);
 		expect(a.calculation.data.compatibilityScore).toBeNull();

@@ -9,7 +9,8 @@ import {
 	DREAM_ATLAS_CALCULATION,
 	DREAM_ATLAS_READING
 } from './dream-atlas-reading';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from './reading';
+import { approveTrialReading, type SavedTrial } from './reading';
+import { composeHistoricalReading as composeTrialReading } from './reconstruction/historical-reading.test-helper';
 import { latestReadingVersion } from './versions';
 import { trialPdf } from './pdf';
 import { trialText } from './exports';
@@ -69,7 +70,7 @@ describe('Diário de Sonhos — synthesis from a real 30-day source contract', (
 		const s = await saved();
 		expect(s.calculation.version).toBe(DREAM_ATLAS_CALCULATION);
 		expect(s.reading.version).toBe(DREAM_ATLAS_READING);
-		expect(latestReadingVersion('dream-atlas')).toBe(s.reading.version);
+		expect(latestReadingVersion('dream-atlas')).toBe('atv-current-reading/1.0.0');
 		expect(JSON.stringify(s)).not.toContain('SEGREDO_EXCLUIDO');
 		expect(s.calculation.data.sourceIds).toEqual([id(1), id(2), id(3), id(4)]);
 		expect(s.calculation.data.sourceRevisions).toEqual({

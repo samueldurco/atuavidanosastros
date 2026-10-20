@@ -2,6 +2,43 @@ import { expect, test } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
 const HOROSCOPE_FOLLOW_KEY = 'atv.public-horoscope.follow.v1';
 
+test('free tool offers admitted guides without presenting them as dated readings', async ({
+	page,
+	request
+}, testInfo) => {
+	const response = await request.get('/api/free-tools/horoscopo?sign=aries&period=daily');
+	expect(response.status()).toBe(200);
+	const result = await response.json();
+	expect(result.current).toBeNull();
+	expect(result.hasHistory).toBe(false);
+	expect(result.supportingGuides.map((guide: { path: string }) => guide.path)).toEqual([
+		'/noticias/2026/10/fases-da-lua',
+		'/mercurio-retrogrado'
+	]);
+	await page.setViewportSize({ width: 390, height: 900 });
+	await page.goto('/ferramentas/horoscopo');
+	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
+	await page.getByRole('button', { name: 'Consultar meu signo', exact: true }).click();
+	await expect(
+		page.getByText('A leitura de dia para Áries ainda não está disponível.')
+	).toBeVisible();
+	const guides = page.getByRole('region', { name: 'Para entender os ciclos' });
+	await expect(guides.getByRole('link')).toHaveCount(2);
+	await expect(guides).toContainText('Não são previsões para o período escolhido.');
+	await expect(page.getByText('Você pode consultar as publicações anteriores.')).toHaveCount(0);
+	await expect(
+		page.getByRole('link', { name: 'Conhecer a leitura pessoal →' })
+	).not.toHaveAttribute('href', /undefined|horoscope/);
+	await scanAccessibility(page, testInfo);
+	expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
+		true
+	);
+	await page.screenshot({
+		path: testInfo.outputPath('horoscope-free-tool-390.png'),
+		fullPage: true
+	});
+});
+
 for (const width of [320, 390, 1440]) {
 	test(`public horoscope navigation, consent and history at ${width}px`, async ({
 		page
@@ -12,6 +49,19 @@ for (const width of [320, 390, 1440]) {
 			page.getByRole('heading', { name: 'Horóscopo dos 12 signos', exact: true })
 		).toBeVisible();
 		await expect(page.locator('.sign-card')).toHaveCount(12);
+		await expect(
+			page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
+		).toBeVisible();
+		await expect(
+			page.locator('.sign-card').filter({ hasText: 'Ler a publicação atual' })
+		).toHaveCount(0);
+		const guides = page.getByRole('region', { name: 'Para entender os ciclos' });
+		await expect(guides.getByRole('link')).toHaveCount(2);
+		await expect(guides).toContainText('Não são previsões para o período escolhido.');
+		await expect(
+			page.getByRole('link', { name: 'Conhecer a leitura personalizada da semana' })
+		).toHaveAttribute('href', '/testar-produtos/week-reading');
+		await expect(page.locator('a[href="/testar-produtos/horoscope"]')).toHaveCount(0);
 		await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
 		expect(
 			await page.evaluate((key) => localStorage.getItem(key), HOROSCOPE_FOLLOW_KEY)

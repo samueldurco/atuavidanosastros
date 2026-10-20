@@ -186,7 +186,7 @@ test('three pillars have distinct navigation and horoscope remains a web reading
 	await page.goto('/testar-produtos/_spec?product=three-pillars');
 	await page.getByRole('button', { name: /Lua · necessidades/ }).click();
 	await expect(page.locator('article[aria-label="Capítulo selecionado"] h2')).toContainText(
-		'Afinidades'
+		'O que faz sentido precisa também caber na sua vida'
 	);
 	await expect(page.getByRole('link', { name: 'Guardar leitura em PDF', exact: true })).toHaveCount(
 		0

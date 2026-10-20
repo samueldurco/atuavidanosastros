@@ -2,7 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { CaelusEphemerisProvider, type EphemerisProvider } from '@atv/astrology';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
-import { composeTrialReading, approveTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import {
 	calendarBounds,
 	calculateCalendarSamples,

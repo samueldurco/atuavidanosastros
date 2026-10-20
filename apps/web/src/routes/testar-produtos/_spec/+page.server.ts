@@ -71,6 +71,8 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		};
 	}
 	if (workflow.kind === 'cycles') input.targetDate = '2026-10-06';
+	if (productId === 'personal-calendar' || productId === 'career-forecast-30d')
+		input.forecastPeriod = 'rolling-30-days';
 	if (productId === 'personal-calendar') {
 		input.targetDate = '2026-01-01';
 		input.context = 'Quero negociar responsabilidades de trabalho e reservar tempo para estudar.';
@@ -196,6 +198,7 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			emotions: ['curiosidade'],
 			associations: ['travessia']
 		};
+	if (productId === 'dream-dossier') input.consent.continuity = true;
 	if (productId === 'tarot-journey') input.tarotJourney = { goal: 'Organizar um projeto pessoal.' };
 	const id = '00000000-0000-4000-8000-000000000031';
 	// Intakes do not need a result; use an actual MC calculation for the shared result shape.
@@ -210,7 +213,24 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	const calculation =
 		calcInput.productId === 'dream-atlas'
 			? (await dreamAtlasExample()).calculation
-			: await calculateTrial(calcInput, id);
+			: await calculateTrial(
+					calcInput,
+					id,
+					calcInput.productId === 'dream-dossier'
+						? [
+								{
+									version: 'atv-dream-atlas-entry/1',
+									id: '00000000-0000-4000-8000-000000000032',
+									revision: 1,
+									dreamDate: '2026-10-01',
+									narrative: 'Eu parei diante de uma ponte. Depois esperei uma pessoa amiga.',
+									emotions: ['curiosidade'],
+									associations: ['travessia'],
+									includeInSynthesis: true
+								}
+							]
+						: []
+				);
 	const reading = composeTrialReading(calcInput, calculation),
 		approval = await approveTrialReading(calcInput, calculation, reading);
 	if (!approval) error(500, 'Falha na prova local.');

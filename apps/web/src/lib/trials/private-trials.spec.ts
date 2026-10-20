@@ -8,7 +8,8 @@ import {
 	type DreamAtlasFactSource
 } from '@atv/domain';
 import { calculateTrial } from '../server/trial-calculation';
-import { approveTrialReading, canonical, composeTrialReading, type SavedTrial } from './reading';
+import { approveTrialReading, canonical, type SavedTrial } from './reading';
+import { composeHistoricalReading as composeTrialReading } from './reconstruction/historical-reading.test-helper';
 import { trialSvg, trialText } from './exports';
 import { trialPdf } from './pdf';
 import { PDFDocument } from 'pdf-lib';
@@ -116,7 +117,7 @@ function inputFor(productId: string): WorkflowInput {
 }
 const saved = new Map<string, SavedTrial>();
 const measurements: unknown[] = [];
-describe('private free testing of real current and historical calculations and editorial corpus', () => {
+describe('preserved historical editions against real calculations and editorial corpus', () => {
 	for (const product of cases)
 		it(`${product.id}: complete fact-bound reading receives private approval`, async () => {
 			const input = inputFor(product.id),

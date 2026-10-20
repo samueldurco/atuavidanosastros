@@ -10,7 +10,7 @@ import { canonical } from '$lib/trials/reading';
 import { reissueTrial } from '$lib/server/trial-runtime';
 import type { RequestHandler } from './$types';
 
-/** A new editorial edition reuses the private, authenticated calculation; it never redraws cards. */
+/** Persist the calculation approved for this edition; the runtime never redraws stored cards. */
 export const POST: RequestHandler = async (event) => {
 	const body = await trialJson(event);
 	if (!validTrialId(body?.requestKey)) error(400, 'Solicitação inválida.');
@@ -18,7 +18,7 @@ export const POST: RequestHandler = async (event) => {
 	const result = await reissueTrial(event, saved);
 	if (!result)
 		error(422, 'A leitura original ou a nova edição precisa ser revisada antes da liberação.');
-	const { reading, approval } = result;
+	const { calculation, reading, approval } = result;
 	const identity = (await trialIdentity(event.locals))!;
 	const sourceIds = (saved as typeof saved & { source_ids: string[] }).source_ids;
 	const row = {
@@ -28,7 +28,7 @@ export const POST: RequestHandler = async (event) => {
 		request_key: body.requestKey,
 		source_ids: sourceIds,
 		input: saved.input,
-		calculation: saved.calculation,
+		calculation,
 		reading,
 		approval
 	};

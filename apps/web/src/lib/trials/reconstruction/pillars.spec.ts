@@ -4,7 +4,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { latestReadingVersion } from '../versions';
 import { normalizeFactGraph } from './fact-graph';
 import {
@@ -22,7 +23,6 @@ import {
 import {
 	assertPillarsProjection,
 	pillarsAngularContacts,
-	PILLARS_READING_VERSION,
 	PILLARS_READING_V5_VERSION,
 	PILLARS_VERSION,
 	type PillarsData
@@ -66,7 +66,7 @@ describe('Três Pilares 5: integração, fonte e contrapontos', () => {
 		);
 		expect(d.method.angularOrb).toBe(3);
 		expect(d.method.applyingSeparating).toBe(false);
-		expect(latestReadingVersion('three-pillars')).toBe(PILLARS_READING_VERSION);
+		expect(latestReadingVersion('three-pillars')).toBe('atv-current-reading/1.0.0');
 		assertPillarsProjection(input(), c);
 	});
 	it('distinguishes exact conjunction proximity from other major angle contacts at the boundary', async () => {
