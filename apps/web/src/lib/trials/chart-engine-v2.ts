@@ -11,7 +11,8 @@ import {
 import type { WeekContact, WeekDay } from './reconstruction/week-facts';
 import type { CalendarDay, CalendarWindow, CalendarEvent } from './reconstruction/calendar-facts';
 
-export const CHART_ENGINE_VERSION = 'AstroChartEngineV2/2.0.0';
+export const CHART_ENGINE_VERSION = 'AstroChartEngineV2/2.1.0';
+export const NATAL_ASPECT_RADIUS = 152;
 type Style = { stroke?: string; fill?: string; width?: number; dash?: number[]; opacity?: number };
 type Base = Style & { layer: string; factId?: string };
 export type ChartNode = Base &
@@ -49,11 +50,11 @@ export type ChartOptions = {
 	solarView?: 'return' | 'natal';
 };
 export const chartColors = {
-	paper: '#fcf8ef',
-	ink: '#193549',
-	gold: '#967536',
+	paper: '#f6efdf',
+	ink: '#183746',
+	gold: '#a36632',
 	muted: '#596674',
-	blue: '#365d7d',
+	blue: '#174c69',
 	red: '#99513d'
 };
 // Career readings retain the shared factual geometry and the approved universe palette.
@@ -104,7 +105,8 @@ export const boxesOverlap = (a: Box, b: Box) =>
 export function placeChartMarkers(
 	positions: { body: string; longitude: number }[],
 	protectedBoxes: Box[] = [],
-	radii: number[] = [225, 160, 95, 30]
+	radii: number[] = [225, 160, 95, 30],
+	compact = false
 ) {
 	const placed: ChartScene['markers'] = [];
 	for (const p of [...positions].sort(
@@ -115,12 +117,14 @@ export function placeChartMarkers(
 		for (const radius of radii) {
 			for (const offset of [
 				0,
-				...Array.from({ length: 9 }, (_, i) => (i + 1) * 20).flatMap((a) => [a, -a])
+				...Array.from({ length: compact ? 36 : 9 }, (_, i) => (i + 1) * (compact ? 5 : 20)).flatMap(
+					(a) => [a, -a]
+				)
 			])
 				candidates.push({
 					radius,
 					offset,
-					cost: Math.abs(offset) * 3 + Math.abs(radii[0] - radius)
+					cost: Math.abs(offset) * (compact ? 8 : 3) + Math.abs(radii[0] - radius)
 				});
 		}
 		for (const candidate of candidates.sort((a, b) => a.cost - b.cost)) {
@@ -130,7 +134,9 @@ export function placeChartMarkers(
 				450,
 				450
 			);
-			const box = { x: x - 40, y: y - 17, w: 80, h: 59 };
+			const box = compact
+				? { x: x - 23, y: y - 17, w: 46, h: 43 }
+				: { x: x - 40, y: y - 17, w: 80, h: 59 };
 			if (
 				placed.every((q) => !boxesOverlap(box, q.box)) &&
 				protectedBoxes.every((q) => !boxesOverlap(box, q))
@@ -183,8 +189,8 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		for (const node of scene.nodes) {
 			if (node.factId) node.factId = mapFact(node.factId);
 			if (node.type === 'text' && node.layer === 'heading') {
-				if (node.size === 24) node.text = scene.title;
-				else if (!natalView)
+				if (node.size === 25) node.text = scene.title;
+				else if (!natalView && node.y === 84)
 					node.text = `Retorno em ${String(data.returnInstant).replace('T', ' ').replace('Z', ' UTC')}`;
 			}
 		}
@@ -207,7 +213,7 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		scene.title = `Mapa da pessoa ${i === 0 ? 'A' : 'B'}`;
 		for (const node of scene.nodes) {
 			if (node.factId) node.factId = `person-${i === 0 ? 'a' : 'b'}-${node.factId}`;
-			if (node.type === 'text' && node.layer === 'heading' && node.size === 24)
+			if (node.type === 'text' && node.layer === 'heading' && node.size === 25)
 				node.text = scene.title;
 		}
 		return scene;
@@ -265,16 +271,31 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		'direction-journey',
 		'career-forecast-30d'
 	].includes(saved.product_id);
-	const { paper, ink, gold, muted, blue, red } = career ? careerChartColors : chartColors;
-	const scene: ChartScene = {
-		version: CHART_ENGINE_VERSION,
-		width: 900,
-		height: 1100,
+	return buildNatalChartScene(g, options, {
+		career,
 		title: options.person
 			? `Mapa individual · ${options.person === 'first' ? 'Pessoa A' : 'Pessoa B'}`
 			: career
 				? 'Seu mapa · contribuição e trabalho'
-				: 'Seu mapa natal',
+				: 'Seu mapa natal'
+	});
+}
+
+/** One calculated scene for the reader, free tools, SVG and PDF. */
+export function buildNatalChartScene(
+	g: ReturnType<typeof trialGeometry>,
+	options: ChartOptions = {},
+	presentation: { career?: boolean; title?: string; subtitle?: string } = {}
+): ChartScene {
+	const career = presentation.career ?? false;
+	const { paper, ink, gold, muted, blue, red } = career ? careerChartColors : chartColors;
+	const light = '#fff8e9';
+	const rule = '#c7bfac';
+	const scene: ChartScene = {
+		version: CHART_ENGINE_VERSION,
+		width: 900,
+		height: 1160,
+		title: presentation.title ?? 'Seu mapa astral',
 		nodes: [],
 		markers: []
 	};
@@ -298,53 +319,77 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		x: 18,
 		y: 18,
 		w: 864,
-		h: 1064,
-		rx: 26,
+		h: 1124,
+		rx: 8,
 		fill: paper,
 		stroke: career ? careerChartColors.accent : gold,
 		width: career ? 2 : 1,
 		layer: 'paper'
 	});
-	text(450, 62, scene.title, 24, 'heading');
-	text(450, 87, 'Zodíaco tropical · posições do cálculo salvo', 12, 'heading', muted);
-	for (const r of [280, 297, 337])
+	text(450, 37, 'ATVNA  ·  A TUA VIDA NOS ASTROS', 10, 'heading', '#815027');
+	text(450, 64, scene.title, 25, 'heading');
+	text(
+		450,
+		84,
+		presentation.subtitle ?? 'Zodíaco tropical · posições do cálculo salvo',
+		11,
+		'heading',
+		muted
+	);
+	add({ type: 'circle', x: 450, y: 450, r: 337, fill: light, layer: 'zodiac' });
+	for (let i = 0; i < 12; i++) {
+		const outerA = longitudePoint(i * 30, 337, 450, 450);
+		const outerB = longitudePoint((i + 1) * 30, 337, 450, 450);
+		const innerA = longitudePoint(i * 30, 297, 450, 450);
+		const innerB = longitudePoint((i + 1) * 30, 297, 450, 450);
+		add({
+			type: 'path',
+			x: 0,
+			y: 0,
+			scale: 1,
+			d: `M ${outerA.x} ${outerA.y} A 337 337 0 0 0 ${outerB.x} ${outerB.y} L ${innerB.x} ${innerB.y} A 297 297 0 0 1 ${innerA.x} ${innerA.y} Z`,
+			fill: i % 2 ? '#eee4d0' : '#f4ead6',
+			layer: 'zodiac'
+		});
+	}
+	for (const r of [NATAL_ASPECT_RADIUS, 280, 297, 337, 342])
 		add({
 			type: 'circle',
 			x: 450,
 			y: 450,
 			r,
-			stroke: gold,
+			stroke: r === NATAL_ASPECT_RADIUS ? rule : gold,
 			fill: 'none',
-			width: r === 280 ? 1.3 : 0.65,
+			width: r === 297 ? 1.4 : 0.65,
 			layer: 'zodiac'
 		});
 	for (let a = 0; a < 360; a++)
 		line(
 			a,
-			a % 30 === 0 ? 280 : a % 5 === 0 ? 286 : 292,
+			a % 30 === 0 ? 280 : a % 10 === 0 ? 283 : a % 5 === 0 ? 287 : 293,
 			297,
 			'degrees',
 			gold,
-			a % 30 === 0 ? 1.2 : 0.65
+			a % 30 === 0 ? 1.4 : a % 5 === 0 ? 0.8 : 0.45
 		);
 	signNames.forEach((name, i) => {
 		line(i * 30, 297, 337, 'zodiac');
 		const p = longitudePoint(i * 30 + 15, 316, 450, 450),
-			q = longitudePoint(i * 30 + 15, 358, 450, 450);
+			q = longitudePoint(i * 30 + 15, 362, 450, 450);
 		add({
 			type: 'path',
 			...p,
 			d: zodiacGlyphs[i],
 			scale: 1.2,
-			stroke: ink,
-			width: 1.4,
+			stroke: career ? ink : blue,
+			width: 1.65,
 			layer: 'zodiac'
 		});
 		text(q.x, q.y + 4, name, 13, 'zodiac');
 	});
 	if (options.houses !== false && g.houses.status === 'ok')
 		g.houses.cusps.forEach((a, i) => {
-			line(a, 35, 279, 'houses', gold, 0.6);
+			line(a, NATAL_ASPECT_RADIUS, 279, 'houses', rule, 0.75);
 			const next = g.houses.cusps[(i + 1) % 12],
 				p = longitudePoint((a + ((next - a + 360) % 360) / 2) % 360, 265, 450, 450);
 			text(p.x, p.y + 4, String(i + 1), 12, 'houses', muted);
@@ -363,8 +408,8 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 		.forEach((a) => {
 			const p = g.positions.find((p) => p.body === a.first)!,
 				q = g.positions.find((p) => p.body === a.second)!;
-			const start = longitudePoint(p.longitude, 278, 450, 450),
-				end = longitudePoint(q.longitude, 278, 450, 450);
+			const start = longitudePoint(p.longitude, NATAL_ASPECT_RADIUS, 450, 450),
+				end = longitudePoint(q.longitude, NATAL_ASPECT_RADIUS, 450, 450);
 			const tense = ['square', 'opposition'].includes(a.kind);
 			add({
 				type: 'line',
@@ -372,9 +417,9 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 				x2: end.x,
 				y2: end.y,
 				stroke: tense ? red : a.kind === 'conjunction' ? gold : blue,
-				width: 0.9,
+				width: tense ? 1 : 1.2,
 				dash: tense ? [5, 4] : undefined,
-				opacity: 0.62,
+				opacity: 0.65,
 				layer: 'aspects'
 			});
 		});
@@ -390,7 +435,14 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 			{ name: 'IC', longitude: (g.angles.midheaven + 180) % 360, factId: 'angle-midheaven' }
 		);
 	axes.forEach((a) => {
-		line(a.longitude, 0, 280, 'angles', gold, a.name === 'MC' && career ? 2 : 1.3);
+		line(
+			a.longitude,
+			NATAL_ASPECT_RADIUS,
+			297,
+			'angles',
+			gold,
+			a.name === 'ASC' || a.name === 'MC' ? 1.8 : 0.9
+		);
 		const p = longitudePoint(a.longitude, 255, 450, 450);
 		add({
 			type: 'rect',
@@ -399,10 +451,10 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 			w: 36,
 			h: 18,
 			rx: 4,
-			fill: paper,
+			fill: ink,
 			layer: 'angles'
 		});
-		text(p.x, p.y + 4, a.name, 12, 'angles', ink);
+		text(p.x, p.y + 4, a.name, 11, 'angles', light);
 	});
 	const protectedBoxes = scene.nodes.flatMap((n): Box[] =>
 		n.type === 'rect' && n.layer === 'angles' ? [{ x: n.x, y: n.y, w: n.w, h: n.h }] : []
@@ -413,7 +465,7 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 				p = longitudePoint((a + ((next - a + 360) % 360) / 2) % 360, 265, 450, 450);
 			protectedBoxes.push({ x: p.x - 8, y: p.y - 9, w: 16, h: 18 });
 		});
-	scene.markers = placeChartMarkers(g.positions, protectedBoxes);
+	scene.markers = placeChartMarkers(g.positions, protectedBoxes, [232, 190], true);
 	for (const p of scene.markers) {
 		const truePoint = longitudePoint(p.longitude, 280, 450, 450),
 			factId = `position-${p.body}`;
@@ -422,19 +474,19 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 			...truePoint,
 			x2: p.x,
 			y2: p.y,
-			stroke: gold,
-			width: 0.85,
+			stroke: muted,
+			width: 0.65,
 			layer: 'leaders',
 			factId
 		});
-		add({ type: 'circle', ...truePoint, r: 2.6, fill: ink, layer: 'positions', factId });
+		add({ type: 'circle', ...truePoint, r: 3, fill: ink, layer: 'positions', factId });
 		add({
 			type: 'rect',
 			...p.box,
-			rx: 9,
-			fill: paper,
-			stroke: options.selectedFactId === factId ? ink : gold,
-			width: options.selectedFactId === factId ? 2 : 0.5,
+			rx: 5,
+			fill: light,
+			stroke: options.selectedFactId === factId ? ink : undefined,
+			width: options.selectedFactId === factId ? 2 : undefined,
 			layer: 'markers',
 			factId
 		});
@@ -443,18 +495,17 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 			x: p.x,
 			y: p.y,
 			d: bodyGlyphs[p.body],
-			scale: 0.8,
+			scale: 0.9,
 			stroke: ink,
 			width: 1.6,
 			layer: 'markers',
 			factId
 		});
-		text(p.x, p.y + 22, bodyNames[p.body], 11, 'markers');
 		if (options.degrees !== false) {
 			const d = displayDegree(p.longitude);
 			text(
 				p.x,
-				p.y + 36,
+				p.y + 22,
 				`${d.degree}°${String(d.minute).padStart(2, '0')}′`,
 				10,
 				'markers',
@@ -462,10 +513,27 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 			);
 		}
 	}
-	text(450, 835, 'Posições e referências', 18, 'legend');
+	add({ type: 'line', x: 64, y: 822, x2: 836, y2: 822, stroke: gold, width: 1, layer: 'legend' });
+	text(64, 849, 'POSIÇÕES DO SEU MAPA', 12, 'legend', ink, 'start');
+	text(64, 870, 'Planeta', 10, 'legend', muted, 'start');
+	text(199, 870, 'Signo · grau', 10, 'legend', muted, 'start');
+	text(403, 870, 'Casa', 10, 'legend', muted);
+	text(468, 870, 'Planeta', 10, 'legend', muted, 'start');
+	text(603, 870, 'Signo · grau', 10, 'legend', muted, 'start');
+	text(807, 870, 'Casa', 10, 'legend', muted);
 	g.positions.forEach((p, i) => {
-		const x = i % 2 === 0 ? 76 : 466,
-			y = 867 + Math.floor(i / 2) * 29;
+		const x = i < 5 ? 64 : 468,
+			y = 896 + (i % 5) * 30;
+		add({
+			type: 'line',
+			x,
+			y: y + 9,
+			x2: x + 368,
+			y2: y + 9,
+			stroke: rule,
+			width: 0.4,
+			layer: 'legend'
+		});
 		add({
 			type: 'path',
 			x: x + 9,
@@ -476,25 +544,36 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 			width: 1.5,
 			layer: 'legend'
 		});
-		const retro = (p as { retrograde?: boolean }).retrograde ? ' · retrógrado' : '';
+		const retro = (p as { retrograde?: boolean }).retrograde ? ' R' : '';
+		const d = displayDegree(p.longitude);
+		text(x + 27, y, `${bodyNames[p.body]}${retro}`, 12, 'legend', ink, 'start');
 		text(
-			x + 28,
+			x + 135,
 			y,
-			`${bodyNames[p.body]} · ${chartDegree(p.longitude)}${retro}`,
-			13,
+			`${signNames[d.sign]} · ${d.degree}°${String(d.minute).padStart(2, '0')}′`,
+			12,
 			'legend',
 			ink,
 			'start'
 		);
+		const house =
+			g.houses.status === 'ok'
+				? g.houses.cusps.findIndex(
+						(cusp, index) =>
+							(p.longitude - cusp + 360) % 360 <
+							(g.houses.cusps[(index + 1) % 12] - cusp + 360) % 360
+					) + 1
+				: 0;
+		text(x + 339, y, house ? String(house) : '—', 12, 'legend');
 	});
-	const y = 867 + Math.ceil(g.positions.length / 2) * 29;
+	const y = 1044;
 	if (g.angles.ascendant !== null)
 		text(76, y, `ASC · ${chartDegree(g.angles.ascendant)}`, 12, 'legend', ink, 'start');
 	if (g.angles.midheaven !== null)
 		text(466, y, `MC · ${chartDegree(g.angles.midheaven)}`, 12, 'legend', ink, 'start');
 	text(
 		450,
-		1030,
+		1072,
 		'Azul: sextil / trígono · tracejado terracota: quadratura / oposição · ouro: conjunção',
 		11,
 		'legend',
@@ -502,7 +581,7 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	);
 	text(
 		450,
-		1050,
+		1092,
 		'Os traços-guia preservam a posição real quando os símbolos precisam ser afastados.',
 		11,
 		'legend',
@@ -510,8 +589,18 @@ export function buildChartScene(saved: SavedTrial, options: ChartOptions = {}): 
 	);
 	text(
 		450,
-		1068,
+		1126,
 		'Graus arredondados só na apresentação. Precisão do cálculo ainda experimental.',
+		10,
+		'legend',
+		muted
+	);
+	text(
+		450,
+		1110,
+		g.houses.status === 'ok'
+			? 'Casas Placidus · números no anel interno e na tabela · R: retrógrado.'
+			: 'Casas indisponíveis · nenhum sistema substituto.',
 		10,
 		'legend',
 		muted
@@ -788,18 +877,48 @@ const xml = (s: string) =>
 		(c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!
 	);
 export function chartSceneSvg(scene: ChartScene) {
-	const nodes = scene.nodes
+	// Round only drawing coordinates, never saved longitudes or calculation facts.
+	const coordinate = (value: number) => Math.round(value * 1000) / 1000;
+	const drawingNodes: ChartNode[] = [];
+	// Consecutive graduation strokes share paths so a detailed map still fits saved-result budgets.
+	for (let i = 0; i < scene.nodes.length; i++) {
+		const n = scene.nodes[i];
+		if (n.type !== 'line' || n.layer !== 'degrees') {
+			drawingNodes.push(n);
+			continue;
+		}
+		const groups = new Map<string, ChartNode & { type: 'path' }>();
+		for (; i < scene.nodes.length; i++) {
+			const tick = scene.nodes[i];
+			if (tick.type !== 'line' || tick.layer !== 'degrees') {
+				i--;
+				break;
+			}
+			const key = JSON.stringify([tick.stroke, tick.width, tick.opacity, tick.dash]);
+			const path = groups.get(key) ?? { ...tick, type: 'path', x: 0, y: 0, scale: 1, d: '' };
+			path.d += `M${coordinate(tick.x)} ${coordinate(tick.y)}L${coordinate(tick.x2)} ${coordinate(tick.y2)}`;
+			groups.set(key, path);
+		}
+		drawingNodes.push(...groups.values());
+	}
+	const nodes = drawingNodes
 		.map((n) => {
-			const style = `fill="${n.fill ?? 'none'}" stroke="${n.stroke ?? 'none'}" stroke-width="${n.width ?? 1}"${n.dash ? ` stroke-dasharray="${n.dash.join(' ')}"` : ''}${n.opacity ? ` opacity="${n.opacity}"` : ''} data-layer="${n.layer}"${n.factId ? ` data-fact-id="${xml(n.factId)}"` : ''}`;
-			if (n.type === 'circle') return `<circle cx="${n.x}" cy="${n.y}" r="${n.r}" ${style}/>`;
+			const position =
+				n.layer === 'positions'
+					? scene.markers.find((p) => n.factId === `position-${p.body}`)
+					: undefined;
+			const style = `${n.fill ? `fill="${n.fill}" ` : ''}${n.stroke ? `stroke="${n.stroke}" ` : ''}${n.width !== undefined ? `stroke-width="${n.width}" ` : ''}${n.dash ? `stroke-dasharray="${n.dash.join(' ')}" ` : ''}${n.opacity !== undefined ? `opacity="${n.opacity}" ` : ''}data-layer="${n.layer}"${n.factId ? ` data-fact-id="${xml(n.factId)}"` : ''}${position ? ` data-body="${xml(position.body)}" data-longitude="${position.longitude}"` : ''}`;
+			const x = coordinate(n.x),
+				y = coordinate(n.y);
+			if (n.type === 'circle') return `<circle cx="${x}" cy="${y}" r="${n.r}" ${style}/>`;
 			if (n.type === 'line')
-				return `<line x1="${n.x}" y1="${n.y}" x2="${n.x2}" y2="${n.y2}" ${style}/>`;
+				return `<line x1="${x}" y1="${y}" x2="${coordinate(n.x2)}" y2="${coordinate(n.y2)}" ${style}/>`;
 			if (n.type === 'rect')
-				return `<rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="${n.rx ?? 0}" ${style}/>`;
+				return `<rect x="${x}" y="${y}" width="${n.w}" height="${n.h}" rx="${n.rx ?? 0}" ${style}/>`;
 			if (n.type === 'path')
-				return `<path d="${n.d}" transform="translate(${n.x} ${n.y}) scale(${n.scale})" stroke-linecap="round" stroke-linejoin="round" ${style}/>`;
-			return `<text x="${n.x}" y="${n.y}" font-size="${n.size}" text-anchor="${n.anchor ?? 'middle'}" ${style}>${xml(n.text)}</text>`;
+				return `<path d="${n.d}" transform="translate(${x} ${y}) scale(${n.scale})" stroke-linecap="round" stroke-linejoin="round" ${style}/>`;
+			return `<text x="${x}" y="${y}" font-size="${n.size}" text-anchor="${n.anchor ?? 'middle'}" ${style}>${xml(n.text)}</text>`;
 		})
 		.join('');
-	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${scene.width} ${scene.height}" role="img" aria-labelledby="chart-title chart-description" data-engine="${scene.version}" style="font-family:Onest,Arial,sans-serif"><title id="chart-title">${xml(scene.title)}</title><desc id="chart-description">Zodíaco tropical com zero de Áries à esquerda. Planetas quando disponíveis, signos e graus. As posições constam também na legenda textual. Linhas tracejadas distinguem tensões sem depender da cor.</desc>${nodes}</svg>`;
+	return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${scene.width} ${scene.height}" fill="none" role="img" aria-labelledby="chart-title chart-description" data-engine="${scene.version}" style="font-family:Onest,Arial,sans-serif"><title id="chart-title">${xml(scene.title)}</title><desc id="chart-description">Zodíaco tropical. Zero de Áries à esquerda; longitudes crescem em sentido anti-horário. Planetas quando disponíveis, signos e graus. As posições constam também na legenda textual. Linhas tracejadas distinguem tensões sem depender da cor. Traços-guia unem os glifos à sua longitude real.</desc>${nodes}</svg>`;
 }

@@ -1,9 +1,4 @@
-import {
-	calculateAspects,
-	engineContract,
-	type AspectPolicy,
-	type AspectPosition
-} from '@atv/astrology';
+import { calculateAspects, engineContract, type AspectPosition } from '@atv/astrology';
 import { parseWorkflowInput, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
 import { inspectBirthChartProjection } from '../../../../../worker/src/natal-calculators';
 import { canonical } from '../reading';
@@ -12,17 +7,8 @@ import { purposeHouseAt } from './purpose-facts';
 
 export const BIRTH_VERSION = 'atv-private-birth-chart/5.0.0';
 export const BIRTH_READING_VERSION = 'atv-birth-chart-editorial/5.0.0';
-export const birthAspectPolicy: AspectPolicy = {
-	id: 'atv-birth-major-aspects',
-	version: '1.0.0',
-	aspects: [
-		{ kind: 'conjunction', orbDegrees: 6 },
-		{ kind: 'sextile', orbDegrees: 4 },
-		{ kind: 'square', orbDegrees: 6 },
-		{ kind: 'trine', orbDegrees: 6 },
-		{ kind: 'opposition', orbDegrees: 6 }
-	]
-};
+export { birthAspectPolicy } from '../../natal-aspect-policy';
+import { birthAspectPolicy } from '../../natal-aspect-policy';
 export const birthMethod = {
 	version: 'atv-birth-life-signatures/1.0.0',
 	zodiac: 'tropical',

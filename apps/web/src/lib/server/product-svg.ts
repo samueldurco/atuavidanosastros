@@ -1,13 +1,12 @@
 import { productDefinitionFor } from '@atv/domain';
 import { mvpTheme, mvpThemes } from '../data/mvp-visual';
 import { parseProductRun } from '../product-run';
-import type { CartographyBody } from '../product-cartography';
-import { longitudePoint } from '../product-cartography';
+import { buildNatalChartScene, chartSceneSvg } from '../trials/chart-engine-v2';
 export { longitudePoint } from '../product-cartography';
 import bodyData from '../../../static/brand/fonts/newsreader-variable.woff2?inline';
 import labelData from '../../../static/brand/fonts/onest-variable.woff2?inline';
 
-export const SVG_EXPORT_VERSION = 'atv-svg-export/1.2.0';
+export const SVG_EXPORT_VERSION = 'atv-svg-export/1.3.0';
 export const SVG_CSP =
 	"default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";
 const escape = (value: string) =>
@@ -15,18 +14,6 @@ const escape = (value: string) =>
 		/[&<>"']/g,
 		(c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!
 	);
-const labels: Record<CartographyBody, string> = {
-	sun: 'Sol',
-	moon: 'Lua',
-	mercury: 'Mercúrio',
-	venus: 'Vênus',
-	mars: 'Marte',
-	jupiter: 'Júpiter',
-	saturn: 'Saturno',
-	uranus: 'Urano',
-	neptune: 'Netuno',
-	pluto: 'Plutão'
-};
 const signs = [
 	'Áries',
 	'Touro',
@@ -43,15 +30,10 @@ const signs = [
 ];
 const pos = (longitude: number) =>
 	`${(Math.floor((longitude % 30) * 1e6) / 1e6).toFixed(6)}° ${signs[Math.floor(longitude / 30)]}`;
-const line = (longitude: number, r1: number, r2: number, css = '') => {
-	const a = longitudePoint(longitude, r1),
-		b = longitudePoint(longitude, r2);
-	return `<line class="${css}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`;
-};
-const text = (x: number, y: number, value: string, css = '', anchor = 'start') =>
-	`<text x="${x}" y="${y}" class="${css}" text-anchor="${anchor}">${escape(value)}</text>`;
+const text = (x: number, y: number, value: string, attrs = '') =>
+	`<text x="${x}" y="${y}" font-size="12" fill="#183746" ${attrs}>${escape(value)}</text>`;
 
-/** Geometry is copied from the gated saved projection. No ephemeris, AI, house fallback or display-text parsing. */
+/** The released, saved projection supplies all geometry. Missing aspects stay absent. */
 export function renderProductSvg(value: unknown) {
 	const run = parseProductRun(value),
 		product = productDefinitionFor(run?.productId ?? '');
@@ -65,79 +47,63 @@ export function renderProductSvg(value: unknown) {
 	)
 		return null;
 	const theme = mvpThemes[mvpTheme(product.universe)];
-	const palette = {
-		ink: '#183746',
-		line: '#c7bfac',
-		paper: '#f6efdf',
-		light: '#fff8e9',
-		accent: theme.ink,
-		ornament: theme.accent
-	};
-	const pieces: string[] = [];
-	for (let i = 0; i < 360; i += 5)
-		pieces.push(line(i, i % 30 === 0 ? 272 : i % 10 === 0 ? 281 : 286, 290, 'tick'));
-	for (let i = 0; i < 12; i++) {
-		const point = longitudePoint(i * 30 + 15, 328);
-		pieces.push(text(point.x, point.y + 6, signs[i], 'sign', 'middle'));
+	const scene = buildNatalChartScene(
+		{
+			positions: geo.positions,
+			angles: geo.angles,
+			houses: geo.houses,
+			aspects: [],
+			tracks: new Map()
+		},
+		{ aspects: 'none' },
+		{ title: product.name, subtitle: 'Posições preservadas do cálculo salvo · zodíaco tropical' }
+	);
+	// This saved contract does not carry aspects; adapt the explanatory caption without deriving any.
+	for (const node of scene.nodes) {
+		if (node.type !== 'text' || node.layer !== 'legend') continue;
+		if (node.y === 1072)
+			node.text =
+				'Este registro não inclui aspectos; o desenho preserva posições, eixos e casas disponíveis.';
+		if (node.y === 1110 && geo.houses.status === 'not-requested')
+			node.text = 'Casas não solicitadas neste produto; nenhum sistema substituto.';
 	}
-	geo.houses.cusps.forEach((cusp, i) =>
-		pieces.push(
-			`<g data-house="${i + 1}" data-longitude="${cusp}">${line(cusp, 85, 272, 'cusp')}</g>`
-		)
-	);
-	for (const [name, angle] of Object.entries(geo.angles))
-		if (angle !== null) {
-			pieces.push(
-				`<g data-angle="${name}" data-longitude="${angle}">${line(angle, 85, 303, name === 'midheaven' ? 'angle mc' : 'angle')}</g>`
-			);
-		}
-	geo.positions.forEach((p, i) => {
-		const point = longitudePoint(p.longitude, 270 - i * 19);
-		pieces.push(
-			`<g data-body="${p.body}" data-longitude="${p.longitude}" data-radius="${270 - i * 19}"><title>${escape(`${labels[p.body]}: ${pos(p.longitude)}`)}</title><circle cx="${point.x}" cy="${point.y}" r="9" class="body"/>${text(point.x, point.y + 4, String(i + 1), 'body-number', 'middle')}</g>`
+	if (!geo.positions.length) {
+		scene.nodes = scene.nodes.filter(
+			(node) => !(node.layer === 'legend' && node.type === 'text' && node.y >= 849 && node.y < 1044)
 		);
-	});
-	const legend: string[] = [];
-	geo.positions.forEach((p, i) =>
-		legend.push(
-			text(
-				64 + Math.floor(i / 5) * 450,
-				835 + (i % 5) * 29,
-				`${i + 1}. ${labels[p.body]} · ${pos(p.longitude)}`,
-				'legend'
-			)
-		)
-	);
-	const row = 1002;
-	legend.push(
-		text(
-			64,
-			row,
-			`ASC: ${geo.angles.ascendant === null ? 'não disponibilizado' : pos(geo.angles.ascendant)}   |   MC: ${geo.angles.midheaven === null ? 'não solicitado' : pos(geo.angles.midheaven)}`,
-			'note'
-		)
-	);
-	if (geo.houses.status === 'ok') {
-		for (let i = 0; i < 12; i++)
-			legend.push(
-				text(
-					64 + Math.floor(i / 4) * 304,
-					row + 36 + (i % 4) * 25,
-					`Casa ${i + 1}: ${pos(geo.houses.cusps[i])}`,
-					'house-label'
-				)
-			);
-	} else
-		legend.push(
-			text(
-				64,
-				row + 36,
-				geo.houses.status === 'not-applicable'
-					? 'Casas e ASC indisponíveis no contrato; nenhum sistema substituto.'
-					: 'Casas não solicitadas neste produto; nenhum sistema substituto.',
-				'note'
-			)
-		);
+		scene.nodes.push({
+			type: 'text',
+			x: 64,
+			y: 864,
+			text: 'O desenho deste produto destaca o Ascendente calculado.',
+			size: 14,
+			anchor: 'start',
+			fill: '#183746',
+			layer: 'legend'
+		});
+	}
+	const drawing = chartSceneSvg(scene)
+		.replace(/^<svg[^>]*><title[^>]*>[\s\S]*?<\/title><desc[^>]*>[\s\S]*?<\/desc>/, '')
+		.replace(/<\/svg>$/, '');
+	const houses =
+		geo.houses.status === 'ok'
+			? geo.houses.cusps
+					.map((cusp, i) =>
+						text(
+							64 + Math.floor(i / 4) * 267,
+							1214 + (i % 4) * 23,
+							`Casa ${i + 1}: ${pos(cusp)}`,
+							`data-house="${i + 1}" data-longitude="${cusp}"`
+						)
+					)
+					.join('')
+			: text(
+					64,
+					1214,
+					geo.houses.status === 'not-applicable'
+						? 'Casas e ASC indisponíveis no contrato; nenhum sistema substituto.'
+						: 'Casas não solicitadas neste produto; nenhum sistema substituto.'
+				);
 	const metadata = {
 		exporter: SVG_EXPORT_VERSION,
 		runId: run.id,
@@ -146,33 +112,22 @@ export function renderProductSvg(value: unknown) {
 		geometry: geo
 	};
 	const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1360" viewBox="0 0 1000 1360" role="img" aria-labelledby="chart-title chart-desc" lang="pt-BR">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1450" viewBox="0 0 900 1450" fill="none" role="img" aria-labelledby="chart-title chart-desc" lang="pt-BR" data-engine="${scene.version}">
 <title id="chart-title">${escape(product.name)} — posições no mapa astral</title>
-<desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Trilhas radiais separam os corpos, não representam distância. Linhas de casas e ângulos não são aspectos. Coordenadas também constam na legenda. Este desenho mostra os dados do cálculo experimental.</desc>
+<desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Traços-guia ligam os glifos às posições reais quando precisam ser afastados. Linhas de casas e ângulos não são aspectos; este registro não inclui aspectos. Coordenadas completas preservadas nos metadados, com posições e cúspides nas legendas.</desc>
 <metadata>${escape(JSON.stringify(metadata))}</metadata>
-<style>@font-face{font-family:ATVEditorial;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}
-text{fill:${palette.ink};font-family:ATVLabel,sans-serif;font-size:16px}.brand,.title,.sign,.center{font-family:ATVEditorial,serif}.brand{font-size:19px;letter-spacing:1px}.title{font-size:42px}.sign{font-size:21px}.label{font-size:13px;letter-spacing:2px}.note,.house-label{font-size:15px}.legend{font-size:17px}.tick{stroke:${palette.line};stroke-width:1}.cusp{stroke:${palette.accent};stroke-opacity:.65;stroke-width:1.2;stroke-dasharray:3 5}.angle{stroke:${palette.accent};stroke-width:1.6}.mc{stroke-dasharray:7 4}.body{fill:${palette.accent};stroke:${palette.light};stroke-width:2}.body-number{fill:${palette.light};font-size:11px}.center{font-size:22px}</style>
-<rect width="1000" height="1360" fill="${palette.paper}"/>
-<rect x="32" y="22" width="936" height="1316" fill="none" stroke="${palette.line}" stroke-width="1"/>
-<path d="M64 122H288" fill="none" stroke="${palette.ornament}" stroke-width="2"/>
-<g transform="translate(64 18) scale(.34)" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="none" stroke="${palette.ornament}" stroke-width="1.4"/><path d="M50 15C51.9 28 53.2 30.9 65 33C53.2 35.1 51.9 38 50 51C48.1 38 46.8 35.1 35 33C46.8 30.9 48.1 28 50 15Z" fill="${palette.ornament}"/><path d="M17 58C28 53 40 58 50 70C60 58 72 53 83 58M21 70C32 67 41 73 50 82C59 73 68 67 79 70" fill="none" stroke="${palette.ornament}" stroke-width="3.8" stroke-linecap="round"/></g>
-${text(112, 47, 'A TUA VIDA NOS ASTROS · CARTOGRAFIA', 'brand')}
-${text(64, 96, product.name, 'title')}
-${text(936, 47, `Revisão ${run.revision}`, 'note', 'end')}
-<circle cx="500" cy="430" r="290" fill="none" stroke="${palette.accent}" stroke-width="1.2"/>
-${pieces.join('')}
-${text(500, 424, 'Base preservada', 'center', 'middle')}${text(500, 450, 'experimental', 'note', 'middle')}
-${text(64, 785, 'POSIÇÕES · GRAUS DE EXIBIÇÃO NÃO GARANTEM PRECISÃO', 'label')}
-${legend.join('')}
-<path d="M64 1157H936" fill="none" stroke="${palette.line}"/>
-${text(64, 1188, 'Zero de Áries à esquerda; longitudes em sentido anti-horário.', 'note')}
-${text(64, 1213, 'Trilhas separam os corpos; raio não representa distância. MC tracejado; ASC contínuo.', 'note')}
-${text(64, 1238, 'Cópia pessoal: excluir na Biblioteca não apaga arquivos já baixados.', 'note')}
-${text(64, 1275, `Registro ${run.id} · r${run.revision}`, 'note')}
-${text(64, 1300, `${SVG_EXPORT_VERSION} · ${geo.sourceVersion}`, 'note')}
-${text(64, 1325, 'Consulte a leitura na Biblioteca para proveniência, limites completos e histórico.', 'note')}
+<style>@font-face{font-family:ATVEditorial;src:url('${bodyData}') format('woff2')}@font-face{font-family:ATVLabel;src:url('${labelData}') format('woff2')}text{font-family:ATVLabel,sans-serif}[data-layer="heading"]{font-family:ATVEditorial,serif}.export-rule{stroke:${theme.ink}}</style>
+<rect width="900" height="1450" fill="#f6efdf"/>
+${drawing}
+<rect x="22" y="18" width="856" height="1414" fill="none" stroke="${theme.accent}" stroke-width="1"/>
+<path d="M64 1165H836" class="export-rule" fill="none" stroke-width="1"/>
+${text(64, 1190, 'CÚSPIDES · COORDENADAS DO REGISTRO')}
+${houses}
+${text(64, 1320, 'Cópia pessoal: excluir na Biblioteca não apaga arquivos já baixados.')}
+${text(64, 1350, `Registro ${run.id} · r${run.revision}`)}
+${text(64, 1374, `${SVG_EXPORT_VERSION} · ${geo.sourceVersion}`)}
+${text(64, 1398, 'Consulte a leitura na Biblioteca para proveniência, limites completos e histórico.')}
 </svg>`;
-	const bytes = new TextEncoder().encode(svg);
-	if (bytes.length > 2_000_000) return null;
+	if (new TextEncoder().encode(svg).length > 2_000_000) return null;
 	return { svg, filename: `atv-${product.id}-${run.id}-r${run.revision}.svg` };
 }

@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import {
   setupProductDatabase,
   owner,
+  other,
   file,
 } from "./helpers/product-database.mjs";
 import { asRole, readyArtifactFixture } from "./helpers/artifact-fixture.mjs";
@@ -196,6 +197,65 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     svgReading.id,
   ]);
   const svgInput = { ...input, reading: svgReading, format: "svg" };
+  const currentSvgInput = {
+    ...svgInput,
+    rendererVersion: "atv-svg-export/1.3.0",
+    bytes: new TextEncoder().encode("<svg>Version 1.3.0</svg>"),
+  };
+  const svgArgs = {
+    p_run_id: svgReading.id,
+    p_owner: owner,
+    p_revision: svgReading.revision,
+    p_review_digest: svgReading.reviewDigest,
+    p_format: "svg",
+    p_section: -1,
+    p_renderer: currentSvgInput.rendererVersion,
+    p_body_base64: Buffer.from(currentSvgInput.bytes).toString("base64"),
+    p_sha256: createHash("sha256").update(currentSvgInput.bytes).digest("hex"),
+  };
+  const writeSvg = (overrides = {}) =>
+    rpc("persist_product_artifact", { ...svgArgs, ...overrides }, new AbortController().signal);
+  const functionDefinition = () =>
+    db.query("select pg_get_functiondef('public.persist_product_artifact(uuid,uuid,integer,text,text,integer,text,text,text)'::regprocedure) as definition")
+      .then((r) => r.rows[0].definition.replaceAll("\r\n", "\n"));
+  const priorDefinition = await functionDefinition();
+  await assert.rejects(() => writeSvg(), /artifact_invalid/);
+  await db.exec(
+    await file("supabase/migrations/20261020112347_mandala_svg_renderer_1_3.sql"),
+  );
+  // Only the SVG allowlist changes; every existing gate is identical after normalizing line endings.
+  assert.equal(
+    await functionDefinition(),
+    priorDefinition.replace(
+      "'atv-svg-export/1.1.0','atv-svg-export/1.2.0'",
+      "'atv-svg-export/1.1.0','atv-svg-export/1.2.0','atv-svg-export/1.3.0'",
+    ),
+  );
+  for (const role of ["anon", "authenticated", "service_role"]) {
+    const result = await db.query(
+      "select has_function_privilege($1, 'public.persist_product_artifact(uuid,uuid,integer,text,text,integer,text,text,text)', 'EXECUTE') as allowed",
+      [role],
+    );
+    assert.equal(result.rows[0].allowed, role === "service_role");
+  }
+  for (const overrides of [
+    { p_owner: other },
+    { p_revision: svgReading.revision - 1 },
+    { p_review_digest: "c".repeat(64) },
+  ]) await assert.rejects(() => writeSvg(overrides), /artifact_unavailable/);
+  for (const overrides of [
+    { p_renderer: "atv-svg-export/1.4.0" },
+    { p_section: 0 },
+    { p_sha256: "0".repeat(64) },
+    { p_body_base64: "invalid!" },
+    { p_body_base64: Buffer.alloc(2_000_001).toString("base64") },
+  ]) await assert.rejects(() => writeSvg(overrides), /artifact_invalid/);
+  await db.exec("update product_artifact_policy set enabled=false");
+  await assert.rejects(() => writeSvg(), /artifact_unavailable/);
+  await db.exec("update product_artifact_policy set enabled=true");
+  await db.query("update product_runs set calculation=$1 where id=$2", [{}, svgReading.id]);
+  await assert.rejects(() => writeSvg(), /artifact_invalid/);
+  await db.query("update product_runs set calculation=$1 where id=$2", [svgCalculation, svgReading.id]);
   const readSvg = (id) =>
     asRole(db, "authenticated", owner, () =>
       db.query("select read_product_artifact($1,$2) as data", [
@@ -204,7 +264,7 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
       ]),
     ).then((r) => r.rows[0].data);
   const savedSvg = [];
-  for (const version of ["1.0.0", "1.1.0", "1.2.0"]) {
+  for (const version of ["1.0.0", "1.1.0", "1.2.0", "1.3.0"]) {
     const candidate = {
       ...svgInput,
       rendererVersion: `atv-svg-export/${version}`,
@@ -223,6 +283,32 @@ test("V4 renderers preserve historical bytes, access gates and reversible new wr
     );
     savedSvg.push(manifest);
   }
+  await db.exec(
+    await file("supabase/forward-fixes/disable_mandala_svg_renderer_1_3.sql"),
+  );
+  assert.equal(await functionDefinition(), priorDefinition);
+  await assert.rejects(() => writeSvg(), /artifact_invalid/);
+  for (const svg of savedSvg)
+    assert.equal((await readSvg(svg.id)).sha256, svg.sha256);
+  assert.deepEqual(
+    await persistRenderedProductArtifact(rpc, {
+      ...currentSvgInput,
+      rendererVersion: "atv-svg-export/1.2.0",
+      bytes: new TextEncoder().encode("<svg>Version 1.2.0</svg>"),
+    }),
+    savedSvg[2],
+  );
+  await db.exec(
+    await file("supabase/migrations/20261020112347_mandala_svg_renderer_1_3.sql"),
+  );
+  assert.deepEqual(await persistRenderedProductArtifact(rpc, currentSvgInput), savedSvg[3]);
+  await assert.rejects(
+    () => writeSvg({
+      p_body_base64: Buffer.from("<svg>changed</svg>").toString("base64"),
+      p_sha256: createHash("sha256").update("<svg>changed</svg>").digest("hex"),
+    }),
+    /artifact_conflict/,
+  );
   const savedWeb = [];
   for (const version of ["1.0.0", "1.1.0", "1.2.0", "1.3.0", "1.4.0"]) {
     const candidate = {

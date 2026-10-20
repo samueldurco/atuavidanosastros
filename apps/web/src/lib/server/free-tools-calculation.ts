@@ -1,5 +1,6 @@
 import {
 	CaelusEphemerisProvider,
+	calculateAspects,
 	engineContract,
 	type CalculationInput,
 	type EphemerisProvider,
@@ -15,7 +16,8 @@ import type {
 } from '../free-tools';
 import { FreeToolInputError, isFreeToolId } from '../free-tools';
 export { FreeToolInputError, isFreeToolId } from '../free-tools';
-import { longitudePoint } from '../product-cartography';
+import { buildNatalChartScene, chartSceneSvg } from '../trials/chart-engine-v2';
+import { birthAspectPolicy } from '../natal-aspect-policy';
 import { CANON_VERSION, signs, modernRulers } from '../trials/reconstruction/canon';
 import {
 	freeNatalPortrait,
@@ -140,13 +142,7 @@ function natalLimits(chart: NatalChart) {
 	];
 }
 
-const escape = (value: string) =>
-	value.replace(
-		/[&<>"']/g,
-		(character) =>
-			({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!
-	);
-/** Uses the same longitudePoint geometry as saved maps. Every mark comes from a calculated longitude. */
+/** Shared vector scene, built only from calculated positions and the natal aspect policy. */
 function renderChart(chart: NatalChart, input: CalculationInput): FreeToolChart {
 	const available = houseAvailability(chart, input);
 	const positions = chart.positions.map((position) => ({
@@ -162,45 +158,19 @@ function renderChart(chart: NatalChart, input: CalculationInput): FreeToolChart 
 	const asc = ascendant(chart, input);
 	const mc = chart.houses.midheaven;
 	if (!angle(mc)) throw new Error('invalid_chart_midheaven');
-	const point = (value: number, radius: number) => longitudePoint(value, radius, 360, 345);
-	const line = (value: number, from: number, to: number, css: string) => {
-		const a = point(value, from),
-			b = point(value, to);
-		return `<line class="${css}" x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}"/>`;
-	};
-	const pieces: string[] = [];
-	for (let i = 0; i < 360; i += 5) pieces.push(line(i, i % 30 === 0 ? 239 : 246, 253, 'tick'));
-	for (let i = 0; i < 12; i++) {
-		const p = point(i * 30 + 15, 283);
-		pieces.push(`<text x="${p.x}" y="${p.y + 5}" text-anchor="middle">${signs[i]}</text>`);
-	}
-	cusps.forEach((cusp, i) =>
-		pieces.push(
-			`<g data-house="${i + 1}" data-longitude="${cusp}">${line(cusp, 62, 239, 'cusp')}</g>`
-		)
+	const aspects = calculateAspects(chart.positions, birthAspectPolicy).aspects;
+	const scene = buildNatalChartScene(
+		{
+			positions,
+			angles: { ascendant: asc, midheaven: mc },
+			houses: { status: available ? 'ok' : 'not-applicable', cusps },
+			aspects: [...aspects],
+			tracks: new Map()
+		},
+		{},
+		{ title: 'Seu mapa astral', subtitle: 'Signos, planetas, casas e aspectos · zodíaco tropical' }
 	);
-	if (asc !== null)
-		pieces.push(
-			`<g data-angle="ascendant" data-longitude="${asc}">${line(asc, 62, 263, 'angle')}</g>`
-		);
-	pieces.push(
-		`<g data-angle="midheaven" data-longitude="${mc}">${line(mc, 62, 263, 'angle mc')}</g>`
-	);
-	positions.forEach((p, i) => {
-		const coordinate = point(p.longitude, 232 - i * 15);
-		pieces.push(
-			`<g data-body="${p.body}" data-longitude="${p.longitude}"><title>${escape(`${p.name}: ${zodiac(p.longitude).position}`)}</title><circle cx="${coordinate.x}" cy="${coordinate.y}" r="9" class="body"/><text class="number" x="${coordinate.x}" y="${coordinate.y + 4}" text-anchor="middle">${i + 1}</text></g>`
-		);
-	});
-	positions.forEach((p, i) =>
-		pieces.push(
-			`<text class="legend" x="${45 + Math.floor(i / 5) * 335}" y="${690 + (i % 5) * 26}">${escape(`${i + 1}. ${p.name} · ${zodiac(p.longitude).position}`)}</text>`
-		)
-	);
-	pieces.push(
-		`<text class="legend" x="45" y="840">${escape(`ASC: ${asc === null ? 'indisponível' : zodiac(asc).position} · MC: ${zodiac(mc).position}`)}</text>`
-	);
-	const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="720" height="920" viewBox="0 0 720 920" role="img" aria-labelledby="title desc"><title id="title">Mandala do mapa astral — posições calculadas</title><desc id="desc">Zodíaco tropical experimental. Zero de Áries à esquerda; longitudes crescem em sentido anti-horário. Trilhas radiais separam os corpos e não representam distância. Linhas de casas e ângulos não são aspectos. ${available ? 'Casas Placidus calculadas.' : 'Casas e Ascendente indisponíveis; nenhum sistema substituto.'}</desc><style>text{font:14px sans-serif;fill:#292531}.legend{font-size:13px}.tick{stroke:#bbb6c0}.cusp{stroke:#ccc4d0;stroke-dasharray:3 5}.angle{stroke:#7f426b;stroke-width:1.8}.mc{stroke-dasharray:7 4}.body{fill:#292531;stroke:#fffdf7;stroke-width:2}.number{font-size:11px;fill:#fffdf7}</style><rect width="720" height="920" fill="#fcfbf8"/><text x="360" y="34" text-anchor="middle">MAPA ASTRAL · BASE EXPERIMENTAL</text><circle cx="360" cy="345" r="253" fill="none" stroke="#a38b9b"/>${pieces.join('')}<text class="legend" x="45" y="875">${available ? 'Casas Placidus. ASC contínuo; MC tracejado.' : 'Casas e ASC indisponíveis; nenhum sistema substituto.'}</text><text class="legend" x="45" y="900">Graus de exibição não garantem precisão; raio não representa distância.</text></svg>`;
+	const svg = chartSceneSvg(scene);
 	return {
 		svg,
 		positions,

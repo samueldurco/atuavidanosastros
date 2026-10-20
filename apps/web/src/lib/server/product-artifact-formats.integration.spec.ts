@@ -49,6 +49,7 @@ async function fixture(
 		await db.exec(await file('supabase/migrations/20260929020000_product_pdf_renderer_1_2.sql'));
 		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
 		await db.exec(await file('supabase/migrations/20261015125547_career_web_export_1_4.sql'));
+		await db.exec(await file('supabase/migrations/20261020112347_mandala_svg_renderer_1_3.sql'));
 		const query = async (
 			role: string,
 			user: string | null,
@@ -299,6 +300,9 @@ for (const withContext of [true, false]) {
 			expect(new Uint8Array(await savedAfterFix.arrayBuffer())).toEqual(pdf.bytes);
 			await f.db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
 			await f.db.exec(await file('supabase/migrations/20261015125547_career_web_export_1_4.sql'));
+			await f.db.exec(
+				await file('supabase/migrations/20261020112347_mandala_svg_renderer_1_3.sql')
+			);
 			expect(await f.producer.produce(f.job('pdf'))).toEqual(stored);
 			await f.db.exec("update workflow_releases set enabled=false where product_id='week-reading'");
 			expect((await workflowArtifacts(f.event(), f.id, stored.artifact.id)).status).toBe(404);
@@ -408,7 +412,11 @@ it('recovers the full birth editorial projection and exact web, PDF and SVG arti
 		expect(web.html).toContain('Síntese do Mapa Astral (1) e três perguntas práticas');
 		expect(svg.svg.match(/data-body=/g)).toHaveLength(10);
 		expect(svg.svg.match(/data-house=/g)).toHaveLength(12);
-		expect(svg.svg.match(/data-angle=/g)).toHaveLength(2);
+		expect(
+			svg.svg.match(/<text[^>]*data-layer="angles"[^>]*>(?:ASC|DSC|MC|IC)<\/text>/g)
+		).toHaveLength(4);
+		for (const axis of ['ASC', 'DSC', 'MC', 'IC'])
+			expect(svg.svg).toMatch(new RegExp(`<text[^>]*data-layer="angles"[^>]*>${axis}</text>`));
 		if (process.env.ATV_BIRTH_QA === '1') {
 			await mkdir('../../test-results/wu124', { recursive: true });
 			await writeFile('../../test-results/wu124/birth-chart.pdf', pdf.bytes);
@@ -496,8 +504,10 @@ it('preserves polar geometry exclusions in stored SVG instead of inventing house
 		expect(response.status).toBe(200);
 		const svg = await response.text();
 		expect(svg).not.toContain('data-house=');
-		expect(svg).not.toContain('data-angle="ascendant"');
-		expect(svg).toContain('data-angle="midheaven"');
+		for (const axis of ['ASC', 'DSC'])
+			expect(svg).not.toMatch(new RegExp(`<text[^>]*data-layer="angles"[^>]*>${axis}</text>`));
+		for (const axis of ['MC', 'IC'])
+			expect(svg).toMatch(new RegExp(`<text[^>]*data-layer="angles"[^>]*>${axis}</text>`));
 		expect(svg.match(/data-body=/g)).toHaveLength(10);
 		expect(f.calculation.status).toBe('experimental');
 		expect(f.calculation.data.provenance).toMatchObject({
