@@ -32,6 +32,7 @@ describe('saved cartography contract and inert SVG', () => {
 				run.cartography!.houses.cusps.length
 			);
 			expect(first.svg).toContain('data:font/woff2;base64,');
+			expect(first.svg.match(/<svg\b[^>]*>/)?.[0]).toContain('fill="none"');
 			expect(first.svg).toContain('fill="#f6efdf"');
 			expect(first.svg).toContain('stroke="#cf9a44"');
 			expect(first.svg).toContain('font-family:ATVEditorial');

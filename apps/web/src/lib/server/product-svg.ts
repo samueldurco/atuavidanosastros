@@ -112,7 +112,7 @@ export function renderProductSvg(value: unknown) {
 		geometry: geo
 	};
 	const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1450" viewBox="0 0 900 1450" role="img" aria-labelledby="chart-title chart-desc" lang="pt-BR" data-engine="${scene.version}">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1450" viewBox="0 0 900 1450" fill="none" role="img" aria-labelledby="chart-title chart-desc" lang="pt-BR" data-engine="${scene.version}">
 <title id="chart-title">${escape(product.name)} — posições no mapa astral</title>
 <desc id="chart-desc">Posições tropicais geocêntricas preservadas do cálculo experimental. Zero de Áries à esquerda; longitudes crescem no sentido anti-horário. Traços-guia ligam os glifos às posições reais quando precisam ser afastados. Linhas de casas e ângulos não são aspectos; este registro não inclui aspectos. Coordenadas completas preservadas nos metadados, com posições e cúspides nas legendas.</desc>
 <metadata>${escape(JSON.stringify(metadata))}</metadata>

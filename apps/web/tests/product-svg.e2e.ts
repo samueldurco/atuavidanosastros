@@ -15,6 +15,16 @@ for (const variant of ['birth-chart', 'cluster', 'polar', 'ascendant']) {
 			true
 		);
 		await expect(page.locator('script, image, use, foreignObject, a, parsererror')).toHaveCount(0);
+		const inheritedFills = await page
+			.locator('path:not([fill])')
+			.evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node).fill));
+		expect(inheritedFills.length).toBeGreaterThan(0);
+		expect([...new Set(inheritedFills)]).toEqual(['none']);
+		// The inherited default must not suppress explicitly painted labels or backgrounds.
+		await expect(page.locator('text[data-layer="angles"]').first()).toHaveCSS(
+			'fill',
+			'rgb(255, 248, 233)'
+		);
 		const fixture = svgFixture(variant),
 			geo = fixture.cartography!;
 		const metadata = JSON.parse((await page.locator('metadata').textContent())!);
