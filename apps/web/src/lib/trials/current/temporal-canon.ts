@@ -1,6 +1,7 @@
 import { bodyNames, signs } from '../reconstruction/canon';
 import { aspectNames } from '../reconstruction/date-facts';
 import type { Position } from '../reconstruction/fact-graph';
+import { natalStyles, type NatalStyle } from '../reconstruction/natal-canon';
 
 /** Versioned editorial vocabulary. These are symbolic relations, never event predictions. */
 export const temporalTargets: Record<string, { subject: string; choice: string; risk: string }> = {
@@ -761,7 +762,7 @@ export function temporalPairMeaning(c: TemporalContact, explainAspect = true): s
 				: pair.cooperation;
 	const aspect =
 		c.aspect === 'opposition'
-			? 'A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. Isso não identifica quem, numa relação real, representa cada polo.'
+			? 'A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação.'
 			: c.aspect === 'square'
 				? 'Na quadratura, a questão pede uma mudança de maneira: insistir no mesmo ritmo para atender às duas exigências pode aumentar o atrito.'
 				: c.aspect === 'sextile'
@@ -775,7 +776,19 @@ export function temporalPairMeaning(c: TemporalContact, explainAspect = true): s
 export function temporalNatalModifier(p: Position, aspect: string, includeHouse = true): string {
 	const s = signsInExperience[p.sign];
 	const house = p.house ? temporalHouses[p.house] : null;
-	const modifier = `${bodyNames[p.body]} natal em ${signs[p.sign]} associa ${temporalTargets[p.body].subject} à disposição para ${s.strength}. ${hard(aspect) ? `Com o atrito deste aspecto, ${s.friction}; ${s.route}.` : `Há uma forma de dar alcance a essa disposição: ${s.route}.`}`;
+	const styles: Record<string, keyof NatalStyle> = {
+		sun: 'aim',
+		moon: 'need',
+		mercury: 'thought',
+		venus: 'affection',
+		mars: 'action',
+		jupiter: 'aim',
+		saturn: 'action'
+	};
+	const style = styles[p.body];
+	const modifier = style
+		? `${bodyNames[p.body]} natal em ${signs[p.sign]} associa ${temporalTargets[p.body].subject} à disposição para ${natalStyles[p.sign][style]}. ${hard(aspect) ? `O atrito pode aumentar a insistência nesse caminho; ${natalStyles[p.sign].adjustment} permite responder à exigência sem abandonar o que importa.` : `Essa disposição encontra apoio no contato e pode ajudar você a ${temporalTargets[p.body].choice}.`}`
+		: `${bodyNames[p.body]} natal em ${signs[p.sign]} associa ${temporalTargets[p.body].subject} à disposição para ${s.strength}. ${hard(aspect) ? `Com o atrito deste aspecto, ${s.friction}; ${s.route}.` : `Há uma forma de dar alcance a essa disposição: ${s.route}.`}`;
 	if (!includeHouse) return modifier;
 	return `${modifier} ${house ? `Na casa ${p.house}, essa dinâmica se relaciona com ${house.area}. Um exemplo possível é ${house.example}.` : 'Sem casas disponíveis, a leitura não fixa uma área da vida para essa dinâmica.'}`;
 }
@@ -791,7 +804,7 @@ export function temporalContactReading(
 	return {
 		title,
 		claim,
-		text: `${bodyNames[c.transit]} em ${aspectNames[c.aspect]} com ${bodyNames[c.natal]} natal. ${claim}${c.transitSign ? ` Nesse retrato da data, ${bodyNames[c.transit]} em ${signs[c.transitSign.sign]} dá ao movimento uma inclinação para ${signsInExperience[c.transitSign.sign].strength}. Essa forma de agir encontra o modo natal de responder descrito acima.` : ''}`,
+		text: `${bodyNames[c.transit]} em ${aspectNames[c.aspect]} com ${bodyNames[c.natal]} natal. ${claim}${c.transitSign ? ` Nesse retrato da data, ${bodyNames[c.transit]} em ${signs[c.transitSign.sign]} acrescenta uma inclinação para ${signsInExperience[c.transitSign.sign].strength}.` : ''}`,
 		factIds: [
 			c.id,
 			p.factId,

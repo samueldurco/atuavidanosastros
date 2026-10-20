@@ -7,6 +7,7 @@ import { buildChartScene } from './chart-engine-v2';
 import { drawChartScenePdf } from './chart-pdf';
 import { tarotMethodFor } from '@atv/domain';
 import { buildTarotScene } from './tarot-diagram';
+import { tarotArtwork } from './tarot-artwork';
 import { PAIR_VERSION } from './reconstruction/pair-facts';
 import { SYNASTRY_VERSION } from './reconstruction/synastry-facts';
 import { DOSSIER_VERSION } from './reconstruction/dossier-facts';
@@ -55,8 +56,45 @@ export function pdfDisplayText(value: string) {
 	return value.normalize('NFC').replace(/ΔT/g, 'delta T');
 }
 
+/** Present the facts that support the reading; the unabridged record stays in TXT. */
+export function pdfReferenceFacts(saved: SavedTrial) {
+	const version = saved.calculation.version;
+	const calendar = [CALENDAR_VERSION, PERIOD_VERSION].includes(version);
+	const relationship = [SYNASTRY_VERSION, DOSSIER_VERSION].includes(version);
+	const selected = new Set(
+		saved.reading.sections
+			.filter((section) => section.title !== 'Referências desta leitura')
+			.flatMap((section) => section.factIds)
+	);
+	return saved.calculation.facts
+		.filter(
+			(fact) =>
+				(!calendar || !/^calendar-(window|position|day)-/.test(fact.id)) &&
+				(!(relationship || version === SOLAR_VERSION) || selected.has(fact.id)) &&
+				!/^day-\d+-|series$/.test(fact.id) &&
+				!/(?:nenhum|sem) aspecto/i.test(fact.display) &&
+				fact.display.length <= 650
+		)
+		.map((fact) => ({
+			...fact,
+			// The same precision qualification already appears once in the method appendix.
+			display: relationship
+				? fact.display.replace(/ Precisão não certificada; estabilidade desconhecida\./g, '')
+				: fact.display
+		}));
+}
+
 /** Local book export. This module is dynamically imported only by the download page. */
-export async function trialPdf(saved: SavedTrial) {
+export async function trialPdf(
+	saved: SavedTrial,
+	loadTarotArtwork: (cardId: string) => Promise<Uint8Array> = async (cardId) => {
+		const response = await fetch(tarotArtwork(cardId), {
+			signal: AbortSignal.timeout(15000)
+		});
+		if (!response.ok) throw Error('tarot_pdf_artwork_unavailable');
+		return new Uint8Array(await response.arrayBuffer());
+	}
+) {
 	const deadline = Date.now() + 20000;
 	if (trialText(saved).length > 650000) throw Error('pdf_too_large');
 	const doc = await PDFDocument.create();
@@ -119,7 +157,7 @@ export async function trialPdf(saved: SavedTrial) {
 		page.drawText(value, { x: margin, y, font, size, color: ink });
 		y -= size * 1.5;
 	};
-	const wrap = (value: string, font: PDFFont, size: number) => {
+	const wrap = (value: string, font: PDFFont, size: number, maxWidth = available) => {
 		const lines: string[] = [];
 		const measure = (value: string) => {
 			const key = `${size}:${value}`,
@@ -137,7 +175,7 @@ export async function trialPdf(saved: SavedTrial) {
 				w = 0;
 			for (const word of safe(raw, font).split(/\s+/)) {
 				const ww = measure(word);
-				if (ww > available) {
+				if (ww > maxWidth) {
 					if (current) {
 						lines.push(current);
 						current = '';
@@ -145,7 +183,7 @@ export async function trialPdf(saved: SavedTrial) {
 					}
 					for (const c of word) {
 						const cw = measure(c);
-						if (w + cw > available) {
+						if (w + cw > maxWidth) {
 							lines.push(current);
 							current = '';
 							w = 0;
@@ -153,7 +191,7 @@ export async function trialPdf(saved: SavedTrial) {
 						current += c;
 						w += cw;
 					}
-				} else if (current && w + space + ww > available) {
+				} else if (current && w + space + ww > maxWidth) {
 					lines.push(current);
 					current = word;
 					w = ww;
@@ -376,19 +414,73 @@ export async function trialPdf(saved: SavedTrial) {
 	if (tarotMethodFor(saved.product_id)) {
 		if (!book) newPage();
 		const scene = buildTarotScene(saved);
-		drawChartScenePdf(page, scene, label, margin, height - margin, available);
-		y = height - margin - (scene.height * available) / scene.width - 25;
-		paragraph(
-			scene.cards.length === 1
-				? 'A carta e sua função correspondem ao capítulo da posição. O diagrama preserva a tiragem salva.'
-				: 'A numeração corresponde aos capítulos das posições. A síntese relaciona as cartas; o diagrama preserva a tiragem salva.',
-			label,
-			11
+		const legendColumns = scene.cards.length > 10 ? 2 : 1;
+		const legendColumnWidth = (available - (legendColumns - 1) * 20) / legendColumns;
+		const legendRows = Math.ceil(scene.cards.length / legendColumns);
+		const legend = scene.cards.map((card, index) => ({
+			column: Math.floor(index / legendRows),
+			lines: wrap(
+				`${card.position}. ${card.positionName}: ${card.name}`,
+				label,
+				9.5,
+				legendColumnWidth
+			)
+		}));
+		const legendHeight = Math.max(
+			...Array.from({ length: legendColumns }, (_, column) =>
+				legend
+					.filter((entry) => entry.column === column)
+					.reduce((total, entry) => total + entry.lines.length * 9.5 * 1.5, 0)
+			)
 		);
-		if (scene.cards.length > 3) {
-			for (const card of scene.cards)
-				paragraph(`${card.position}. ${card.positionName}: ${card.name}`, label, 9.5, 0);
+		const diagramWidth = Math.min(
+			available,
+			((height - margin - 70 - 25 - legendHeight) * scene.width) / scene.height
+		);
+		const diagramX = margin + (available - diagramWidth) / 2;
+		drawChartScenePdf(page, scene, label, diagramX, height - margin, diagramWidth);
+		// Download only the drawn cards from this site; never bundle the entire deck
+		// into the PDF client module or send the reading to an external image service.
+		const artwork = new Map(
+			await Promise.all(
+				[...new Set(scene.images.map((item) => item.cardId))].map(
+					async (cardId) => [cardId, await doc.embedJpg(await loadTarotArtwork(cardId))] as const
+				)
+			)
+		);
+		const scale = diagramWidth / scene.width;
+		for (const item of scene.images) {
+			const image = artwork.get(item.cardId)!;
+			const fit = Math.min(item.w / image.width, item.h / image.height) * scale;
+			const imageWidth = image.width * fit,
+				imageHeight = image.height * fit;
+			page.drawImage(image, {
+				x: diagramX + (item.x + item.w / 2) * scale - imageWidth / 2,
+				y: height - margin - (item.y + item.h / 2) * scale - imageHeight / 2,
+				width: imageWidth,
+				height: imageHeight
+			});
 		}
+		// Keep the full position key on the same page as the spread. Measure it
+		// first so long card names preserve their type size without crossing a footer.
+		const legendTop = height - margin - scene.height * scale - 25;
+		y = legendTop;
+		let lowest = legendTop;
+		for (const [index, entry] of legend.entries()) {
+			if (index % legendRows === 0) y = legendTop;
+			for (const text of entry.lines) {
+				page.drawText(text, {
+					x: margin + entry.column * (legendColumnWidth + 20),
+					y,
+					font: label,
+					size: 9.5,
+					color: ink
+				});
+				y -= 9.5 * 1.5;
+			}
+			lowest = Math.min(lowest, y);
+		}
+		y = lowest;
 		newPage();
 	}
 	if (book) {
@@ -457,11 +549,14 @@ export async function trialPdf(saved: SavedTrial) {
 		r.questions.forEach((q, i) => paragraph(`${i + 1}. ${q}`));
 	}
 	if (r.practice.trim()) {
-		heading(
+		const practiceTitle =
 			r.version === 'atv-current-reading/1.0.0'
 				? 'Para levar desta leitura'
-				: 'Experimento prático',
-			17
+				: 'Experimento prático';
+		heading(
+			practiceTitle,
+			17,
+			Math.min(height - 148, headingHeight(practiceTitle) + paragraphHeight(r.practice))
 		);
 		paragraph(r.practice);
 	}
@@ -472,7 +567,8 @@ export async function trialPdf(saved: SavedTrial) {
 			paragraph(references.text, label, 9);
 		}
 	}
-	if (book && !career) newPage();
+	// A short Tarot closing can share its page with the appendix instead of becoming an orphan.
+	if (book && !career && (!tarotMethodFor(saved.product_id) || y < height - 250)) newPage();
 	const reconstructed = r.version === 'atv-product-reconstruction/4.0.0';
 	heading(
 		reconstructed
@@ -523,25 +619,12 @@ export async function trialPdf(saved: SavedTrial) {
 	else r.limits.forEach((l) => paragraph(l, label, 9));
 	if (book && !career) {
 		heading('Dados para conferir', 15);
-		const compact = saved.calculation.facts.filter(
-			(f) =>
-				(!calendar ||
-					(!f.id.startsWith('calendar-window-') &&
-						!f.id.startsWith('calendar-position-') &&
-						!f.id.startsWith('calendar-day-'))) &&
-				(saved.calculation.version !== SOLAR_VERSION ||
-					r.sections
-						.filter((s) => s.title !== 'Referências desta leitura')
-						.some((s) => s.factIds.includes(f.id))) &&
-				!/^day-\d+-|series$/.test(f.id) &&
-				!/nenhum aspecto/i.test(f.display) &&
-				f.display.length <= 650
-		);
+		const compact = pdfReferenceFacts(saved);
 		compact.forEach((f) => paragraph(f.display, label, 8, 4));
 		const omitted = saved.calculation.facts.length - compact.length;
 		if (omitted)
 			paragraph(
-				`${omitted} registros extensos, amostras diárias ou pares sem aspecto não foram repetidos neste apêndice. A cópia TXT da mesma leitura preserva todos os fatos completos e suas fontes.`,
+				'Este apêndice reúne os dados selecionados para consulta. A cópia TXT da mesma leitura preserva o registro completo e suas fontes.',
 				label,
 				9
 			);

@@ -235,11 +235,27 @@ export function signBridge(a: number, b: number): string {
 export function located(p: Position): string {
 	return `${bodyNames[p.body] ?? p.body} em ${signs[p.sign]}${p.house ? `, na casa ${p.house}` : ''}`;
 }
-function fieldBridge(a: Position, b: Position): string {
+function fieldBridge(a: Position, b: Position, theme: NatalTheme): string {
 	if (!a.house || !b.house) return '';
+	const sharedField: Partial<Record<NatalTheme, string>> = {
+		growth:
+			'O desejo de abrir possibilidades e a necessidade de lhes dar duração encontram as mesmas escolhas. Crescer, aqui, inclui decidir o que merece compromisso antes de espalhar o esforço por todas as oportunidades.',
+		effort:
+			'Agir e regular o próprio esforço passam pelas mesmas situações. O limite pode dar medida à iniciativa; quando se torna uma prova constante de capacidade, porém, consome a energia que deveria organizar.'
+	};
 	if (a.house === b.house)
-		return `A casa ${a.house} reúne os dois movimentos em um mesmo campo: ${houseScenes[a.house - 1]}. Por isso, uma mesma situação pode mobilizar tanto a intenção descrita quanto sua necessidade de ajuste.`;
-	return `As casas dão campos diferentes a essa composição: ${bodyNames[a.body]} leva o primeiro movimento para ${houseScenes[a.house - 1]}; ${bodyNames[b.body]} direciona o segundo para ${houseScenes[b.house - 1]}. Uma escolha feita no primeiro campo pode exigir condições do segundo para ganhar continuidade.`;
+		return `A casa ${a.house} reúne os dois movimentos num campo comum: ${houseScenes[a.house - 1]}. ${sharedField[theme] ?? 'O mesmo campo mobiliza necessidades distintas: participar dele pede espaço tanto para a intenção quanto para a maneira de sustentá-la.'}`;
+	const fields: Record<string, string> = {
+		'10-8':
+			'A direção que se torna visível para outras pessoas precisa conviver com o tempo de confiar e dividir o que importa na intimidade. Reconhecimento público e amparo privado podem apoiar-se, mas pedem formas diferentes de exposição.',
+		'9-1':
+			'Compreender uma ideia até poder sustentá-la e tomar a iniciativa em nome dela têm ritmos diferentes. A aprendizagem ganha alcance quando encontra uma forma própria de participação; a iniciativa ganha consistência quando aceita o trabalho de compreender o que defende.',
+		'8-11':
+			'O envolvimento íntimo e os projetos compartilhados com grupos pedem participações diferentes. Um vínculo pode precisar de confiança e profundidade, enquanto a ação procura circulação e colaboração; abrir espaço para um não resolve automaticamente a necessidade do outro.',
+		'11-1':
+			'O que se quer mover junto de outras pessoas encontra a medida do esforço que cabe assumir pessoalmente. Colaborar pode dar alcance à iniciativa, desde que o projeto comum tenha uma divisão de compromissos que permita continuar.'
+	};
+	return `As casas situam essa relação: ${bodyNames[a.body]} se volta para ${houseScenes[a.house - 1]}; ${bodyNames[b.body]}, para ${houseScenes[b.house - 1]}. ${fields[`${a.house}-${b.house}`] ?? 'Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.'}`;
 }
 function aspectText(a?: Aspect): string {
 	if (!a) return '';
@@ -261,23 +277,21 @@ export function interpretNatalPair(g: FactGraph, theme: NatalTheme): CurrentPass
 	const aspect = pairAspect(g, a.body, b.body),
 		tone = (aspect?.kind ?? 'none') as Tone;
 	const mechanism = r.read[tone] ?? r.read.none;
-	const claim = `${located(a)} e ${located(b)}${aspectText(aspect)} relacionam ${r.roles[0]} com ${r.roles[1]}: ${mechanism}`;
-	const contrast =
-		a.sign === b.sign
-			? `As duas posições em ${signs[a.sign]} partem de uma orientação semelhante, embora cumpram papéis diferentes. ${signBridge(a.sign, b.sign)}`
-			: signBridge(a.sign, b.sign);
-	const styles = `Nesta composição, ${bodyNames[a.body]} busca ${natalStyles[a.sign][r.styles[0]]}; ${bodyNames[b.body]} acrescenta a importância de ${natalStyles[b.sign][r.styles[1]]}. ${contrast}`;
+	const claim = `${located(a)} e ${located(b)}${aspectText(aspect)} relacionam ${r.roles[0]} com ${r.roles[1]}. ${mechanism}`;
+	const styles = `${bodyNames[a.body]} em ${signs[a.sign]} busca ${natalStyles[a.sign][r.styles[0]]}; ${bodyNames[b.body]} em ${signs[b.sign]} acrescenta a importância de ${natalStyles[b.sign][r.styles[1]]}.`;
 	const specific =
 		theme === 'learning' && a.sign === 1 && b.sign === 10
 			? 'Aqui, a distância ganha uma forma específica: Mercúrio em Touro precisa tornar a ideia palpável, enquanto Júpiter em Aquário amplia a pergunta para sistemas, grupos e possibilidades diferentes das habituais. Uma proposta inovadora pode despertar interesse e, ao mesmo tempo, esbarrar na falta de uma aplicação confiável. O ganho está em transformar a visão ampla em um exemplo concreto, sem reduzir a novidade apenas ao que já é conhecido.'
-			: '';
+			: theme === 'learning' && a.sign === 9 && b.sign === 0
+				? 'Mercúrio em Capricórnio dá peso à consistência da explicação; Júpiter em Áries se interessa pela possibilidade de abrir um caminho próprio. Uma hipótese pode parecer promissora antes de estar suficientemente demonstrada. O contraste ajuda a distinguir o que já pode ser defendido do que ainda merece investigação, para que o cuidado com a base não paralise a descoberta e o entusiasmo não tome o lugar do argumento.'
+				: '';
 	const houseIds = [a.house, b.house].flatMap((h) =>
 		h && g.facts.some((f) => f.id === `house-${h}`) ? [`house-${h}`] : []
 	);
 	return {
 		title: r.title,
 		claim,
-		text: [claim, styles, specific, fieldBridge(a, b)].filter(Boolean).join('\n\n'),
+		text: [claim, styles, specific, fieldBridge(a, b, theme)].filter(Boolean).join('\n\n'),
 		factIds: [...new Set([a.factId, b.factId, ...houseIds, ...(aspect ? [aspect.factId] : [])])],
 		relation: `${a.body}/${b.body}; ${aspect ? `${aspect.kind}, orbe ${aspect.orb}` : 'composição temática sem aspecto maior'}; signos ${signs[a.sign]}/${signs[b.sign]} modulam ritmos e necessidades; casas ${a.house ?? 'indisponível'}/${b.house ?? 'indisponível'} delimitam campos. ${mechanism}`
 	};
@@ -314,7 +328,7 @@ export function interpretAngle(g: FactGraph, angle: 'asc' | 'mc'): CurrentPassag
 			emphasis,
 			isAsc
 				? ''
-				: 'Essa composição descreve critérios de identificação com uma contribuição. Não escolhe uma profissão por você, nem mede aptidão, oportunidades, renda ou reconhecimento. Uma mesma direção pode aparecer em trabalhos diferentes, conforme formação, condições e interesses.'
+				: 'Essa direção pode ganhar formas diferentes conforme sua formação, seus interesses e as condições de trabalho. O ponto comum entre elas é a maneira de participar e dar continuidade à contribuição descrita aqui.'
 		]
 			.filter(Boolean)
 			.join('\n\n'),

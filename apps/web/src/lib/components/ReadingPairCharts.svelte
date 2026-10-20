@@ -3,6 +3,7 @@
 	import { buildChartScene, chartSceneSvg } from '$lib/trials/chart-engine-v2';
 	import { SYNASTRY_VERSION } from '$lib/trials/reconstruction/synastry-facts';
 	import { DOSSIER_VERSION } from '$lib/trials/reconstruction/dossier-facts';
+	import AstrologicalChart from './AstrologicalChart.svelte';
 	import {
 		trialGeometry,
 		bodyNames,
@@ -26,17 +27,31 @@
 
 <section aria-label="Fatores natais das duas pessoas" class="pair-charts">
 	{#each people as person (person.key)}
-		{@const geometry = trialGeometry(saved, person.key)}
+		{@const geometry = reconstructed
+			? trialGeometry({
+					...saved,
+					product_id: 'birth-chart',
+					calculation: (saved.calculation.data.sources as SavedTrial['calculation'][])[
+						person.key === 'first' ? 0 : 1
+					]
+				})
+			: trialGeometry(saved, person.key)}
 		<figure>
-			<figcaption>{person.name}</figcaption>
 			{#if reconstructed}
-				{@const svg = chartSceneSvg(buildChartScene(saved, { person: person.key }))
-					.replaceAll('chart-title', `pair-${person.key}-title`)
-					.replaceAll('chart-description', `pair-${person.key}-description`)}
-				<!-- Locally generated SVG from the validated saved calculation. -->
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				<div class="individual-chart">{@html svg}</div>
+				{@const svg = chartSceneSvg(buildChartScene(saved, { person: person.key }))}
+				<AstrologicalChart
+					{svg}
+					title={person.name}
+					positions={geometry.positions.map((planet) => ({
+						...planet,
+						name: bodyNames[planet.body]
+					}))}
+					ascendant={geometry.angles.ascendant}
+					midheaven={geometry.angles.midheaven}
+					cusps={geometry.houses.cusps}
+				/>
 			{:else}
+				<figcaption>{person.name}</figcaption>
 				<svg viewBox="0 0 360 360" role="img" aria-label={`Posições natais de ${person.name}`}>
 					<circle cx="180" cy="180" r="142" fill="#fcf8ef" stroke="#193549" />
 					{#each signNames as name, i (name)}
@@ -62,12 +77,12 @@
 						</g>
 					{/each}
 				</svg>
+				<ul>
+					{#each geometry.positions as planet (planet.body)}<li>
+							{bodyNames[planet.body]} · {nominalDegree(planet.longitude)}
+						</li>{/each}
+				</ul>
 			{/if}
-			<ul>
-				{#each geometry.positions as planet (planet.body)}<li>
-						{bodyNames[planet.body]} · {nominalDegree(planet.longitude)}
-					</li>{/each}
-			</ul>
 		</figure>
 	{/each}
 	<p>
@@ -93,10 +108,7 @@
 	}
 	figure {
 		margin: 0;
-		padding: 1rem;
-		border: 1px solid #c09c73;
-		border-radius: 1rem;
-		background: #fcf8ef;
+		min-width: 0;
 	}
 	figcaption {
 		font: 500 1.6rem var(--atv-font-display, Georgia);
@@ -104,10 +116,6 @@
 		overflow-wrap: anywhere;
 	}
 	svg {
-		width: 100%;
-		height: auto;
-	}
-	.individual-chart :global(svg) {
 		width: 100%;
 		height: auto;
 	}

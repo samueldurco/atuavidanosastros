@@ -87,11 +87,13 @@ describe('current temporal interpretation: semantic dependence', () => {
 	it('the natal sign and house modify the expression and concrete area, not only a technical label', () => {
 		const fastMoney = temporalContactReading(contact(), natal).text;
 		const steadyBond = temporalContactReading(contact(), { ...natal, sign: 1, house: 7 }).text;
-		expect(fastMoney).toContain('começar e descobrir durante a ação');
+		expect(fastMoney).toContain('formular o ponto principal e testar uma resposta direta');
 		expect(fastMoney).toMatch(/dinheiro|recursos/);
-		expect(steadyBond).toContain('construir confiança pela continuidade');
+		expect(steadyBond).toContain(
+			'comparar a ideia com a experiência e procurar uma aplicação concreta'
+		);
 		expect(steadyBond).toMatch(/acordos|parcerias/);
-		expect(steadyBond).not.toContain('começar e descobrir durante a ação');
+		expect(steadyBond).not.toContain('formular o ponto principal e testar uma resposta direta');
 		const withoutHouses = temporalContactReading(contact(), { ...natal, house: null });
 		expect(withoutHouses.text).not.toContain('Na casa');
 		expect(withoutHouses.factIds).not.toContain('house-2');

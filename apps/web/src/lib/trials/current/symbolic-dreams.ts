@@ -221,7 +221,23 @@ function emotions(dream: Dream): string {
 function associations(dream: Dream): string {
 	if (!dream.associations.length)
 		return 'Nenhuma associação pessoal foi informada. Por isso, a leitura se apoia nos acontecimentos e nas emoções descritas; o cenário conserva a possibilidade de ter um significado que este registro ainda não especifica.';
-	return `Você aproximou o sonho de ${listed(dream.associations)}. Essa ligação pessoal dá um campo de sentido à cena: o gesto narrado pode ser lido em relação ao que essas lembranças ou situações representam para você, sem tratar a imagem como tradução literal delas. ${dream.associations.length > 1 ? 'As associações abrem mais de uma ligação possível. Elas podem coexistir, sem que uma precise ser declarada a causa verdadeira do sonho.' : 'A associação oferece uma ligação concreta; ela não prova que o sonho tenha sido causado exclusivamente por essa situação.'}`;
+	const action = story(dream).last?.action;
+	const movingHome = dream.associations.some((a) =>
+		/mudanc.*(?:casa|morad)|(?:casa|morad).*nova/u.test(normal(a))
+	);
+	const homeMeaning: Partial<Record<Action, string>> = {
+		pause:
+			'A associação com mudança de casa aproxima essa pausa do tempo de se ambientar: chegar a um lugar e sentir-se instalado nele são momentos diferentes. Permanecer permite conhecer o espaço antes de exigir que ele já seja familiar.',
+		approach:
+			'Relacionada à mudança de casa que você nomeou, a entrada põe em cena a passagem entre considerar um novo lugar e começar a habitá-lo. O espaço passa a ser conhecido pela participação, e não apenas pela ideia que se fazia dele.',
+		leave:
+			'Na ligação com mudança de casa que você trouxe, sair dá importância à possibilidade de regular a proximidade com o novo lugar. Ter entrado não significa já se sentir pertencente; a distância pode fazer parte desse tempo de aproximação.',
+		search:
+			'Ligada à mudança de casa que você nomeou, a procura aproxima a cena da busca por uma referência no meio da transição. A questão passa a ser o que permite orientar-se quando o lugar conhecido já não organiza tudo.',
+		blocked:
+			'Na associação com mudança de casa que você trouxe, o impedimento dá forma à diferença entre desejar uma passagem e encontrar condições para realizá-la. A cena concentra essa distância, em vez de dizer que falta vontade de mudar.'
+	};
+	return `Você aproximou o sonho de ${listed(dream.associations)}. ${movingHome && action && homeMeaning[action] ? homeMeaning[action] : action ? `Nessa ligação pessoal, ${actionMeaning[action]} oferece uma maneira de experimentar o assunto: o valor da cena está no gesto que ela permite viver, junto das emoções que você nomeou.` : 'Essas referências participam da cena como lembranças ou situações que têm valor para você. O relato as aproxima sem obrigar que todas expressem a mesma questão.'}`;
 }
 function integrated(dream: Dream): string {
 	const s = story(dream);
@@ -280,8 +296,6 @@ function integrated(dream: Dream): string {
 			'O interesse dá a esse gesto uma qualidade de descoberta: o que aparece merece envolvimento, mesmo sem oferecer uma resposta pronta.';
 	else if (dream.emotions.length)
 		meaning += `Você nomeou esse tom como ${listed(dream.emotions)}; essas palavras preservam a maneira particular como a cena foi vivida.`;
-	if (dream.associations.length)
-		meaning += `A ligação que você fez com ${listed(dream.associations)} situa essa dinâmica num campo pessoal concreto. ${action ? `Assim, ${actionMeaning[action]} deixa de ser apenas um movimento na cena e passa a participar da elaboração dessa ligação.` : 'Essa aproximação conserva as lembranças e situações que você escolheu relacionar ao sonho.'} A cena oferece uma forma de viver simbolicamente essa relação, sem ser uma descrição literal do que aconteceu fora dela.`;
 	return meaning.replace(/([.!?])(?=[A-ZÁÀÂÃÉÊÍÓÔÕÚÇ])/gu, '$1 ');
 }
 function compare(previous: Dream, current: Dream): { claim: string; text: string } {
@@ -289,8 +303,9 @@ function compare(previous: Dream, current: Dream): { claim: string; text: string
 		after = story(current),
 		common = shared(previous.associations, current.associations),
 		commonEmotions = shared(previous.emotions, current.emotions);
+	const sameEnding = before.last && after.last && before.last.action === after.last.action;
 	const claim = common.length
-		? `A associação ${listed(common)} retorna, ${before.signature !== after.signature && before.signature !== 'unclassified' && after.signature !== 'unclassified' ? 'mas encontra outra forma de participação no relato mais recente.' : 'dando continuidade a um campo de interesse entre os dois relatos.'}`
+		? `A associação ${listed(common)} retorna, ${sameEnding ? 'junto de uma continuidade no gesto final, embora o caminho até ele tenha diferenças.' : before.last && after.last ? 'mas o gesto final dá outra forma à participação no relato mais recente.' : 'dando continuidade a um campo de interesse entre os dois relatos.'}`
 		: commonEmotions.length
 			? `O tom de ${listed(commonEmotions)} aproxima os relatos, mesmo sem uma associação pessoal repetida que permita afirmar que tratam da mesma situação.`
 			: 'Os relatos apresentam campos pessoais diferentes; sua proximidade no diário permite colocá-los em relação, mas não basta para declarar uma recorrência do mesmo tema.';
@@ -300,7 +315,7 @@ function compare(previous: Dream, current: Dream): { claim: string; text: string
 			: '';
 	const gestures =
 		before.first && after.first
-			? `No relato anterior, ${describe(before)}. No mais recente, ${describe(after)}. ${before.signature === after.signature ? 'A forma de participação se aproxima, enquanto as imagens e circunstâncias de cada relato preservam suas diferenças.' : 'Essa diferença descreve os relatos; não comprova uma evolução linear da pessoa entre as datas.'}`
+			? `No relato anterior, ${describe(before)}. No mais recente, ${describe(after)}.`
 			: 'Nesta comparação, a ligação desenvolvida permanece nas associações e emoções que foram nomeadas, sem atribuir a um relato os gestos presentes apenas no outro.';
 	const priorFeeling = previous.emotions[0];
 	const emotionalContrast = priorFeeling
@@ -519,33 +534,25 @@ export function composeCurrentDream(
 		add(
 			'O movimento que dá forma à cena',
 			s.claim,
-			[
-				s.text,
-				'O sentido desenvolvido aqui pertence à relação entre os acontecimentos. Uma casa, uma pessoa ou um caminho podem participar dessa relação sem receber um significado obrigatório.'
-			],
+			[s.text],
 			narrativeIds,
 			`Gestos explícitos ${s.signature}; interpretação da relação entre ações, sem converter objetos em significados universais.`
 		);
 		add(
 			'Como essa cena é vivida',
 			emotions(dream),
-			[
-				associations(dream),
-				s.first && dream.associations.length
-					? `A ligação pessoal que você trouxe se encontra com o gesto de ${actionMeaning[s.first.action]}. Essa aproximação permite ler o sonho como uma experiência desse campo de sentido, sem declarar que cada personagem represente uma pessoa real.`
-					: 'O alcance da interpretação acompanha o que foi narrado e associado, preservando a diferença entre uma imagem intensa e uma conclusão sobre a vida desperta.'
-			],
+			[associations(dream)],
 			[...narrativeIds, ...emotionIds, ...associationIds],
 			'Tom afetivo declarado modifica a participação narrada; associações são ligações pessoais e não equivalências universais.'
 		);
 		add(
 			'O sentido que esta leitura reúne',
 			integrated(dream),
-			[
-				input.context
-					? `Você situou o sonho neste contexto: ${quote(input.context)}. Essa informação aproxima o relato do que está presente para você, mas não transforma uma semelhança em prova de causa.`
-					: 'O alcance pessoal desta leitura está nas ligações que você trouxe para o sonho. Outros contextos podem acrescentar sentidos, sem apagar a relação que essas cenas já permitem compreender.'
-			],
+			input.context
+				? [
+						`Você situou o sonho neste contexto: ${quote(input.context)}. É junto desse assunto que o contraste entre os gestos e as emoções ganha uma referência pessoal.`
+					]
+				: [],
 			[...currentIds, ...(input.context ? ['dream-context'] : [])],
 			'Síntese relaciona acontecimentos, emoções e associações; contexto informado delimita aplicação sem inventar causalidade.'
 		);
@@ -556,10 +563,7 @@ export function composeCurrentDream(
 				add(
 					`O sonho atual em diálogo com ${date(previous.dreamDate)}`,
 					comparison.claim,
-					[
-						comparison.text,
-						'A ligação desenvolvida aqui depende destes dois relatos e de suas associações. Outros sonhos podem trazer uma organização diferente, sem invalidar o contraste observado.'
-					],
+					[comparison.text],
 					[...currentIds, `history-${previous.id}`],
 					'Comparação de relato autorizado anterior com atual: repetição pessoal, gestos explícitos e mudanças do tom declarado.'
 				);

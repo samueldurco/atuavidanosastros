@@ -12,6 +12,7 @@ import { approveTrialReading, canonical, type SavedTrial } from './reading';
 import { composeHistoricalReading as composeTrialReading } from './reconstruction/historical-reading.test-helper';
 import { trialSvg, trialText } from './exports';
 import { trialPdf } from './pdf';
+import { localTarotArtwork } from './pdf-artwork.test-helper';
 import { PDFDocument } from 'pdf-lib';
 import { composeLegacyTrialReading } from './legacy-reading';
 import { composeTrialReading as composeV2 } from './editorial-reading';
@@ -417,7 +418,7 @@ describe('preserved historical editions against real calculations and editorial 
 	for (const product of cases.filter((p) => privateFormats(p.id, p.delivery).includes('pdf')))
 		it(`${product.id}: complete catalog PDF can be reopened`, async () => {
 			const delivery = saved.get(product.id)!;
-			const pdf = await trialPdf(delivery);
+			const pdf = await trialPdf(delivery, localTarotArtwork);
 			const document = await PDFDocument.load(pdf);
 			expect(document.getPageCount()).toBeGreaterThan(0);
 			expect(document.getTitle()).toBe(delivery.reading.title);

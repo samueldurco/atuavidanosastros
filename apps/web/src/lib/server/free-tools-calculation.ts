@@ -400,6 +400,9 @@ export async function calculateFreeToolResult(
 		result.summary = `Seu Meio do Céu está em ${name}.`;
 		result.facts = [natalFact(chart, 'midheaven', mc)];
 		result.sections = freeCareerSections(mc);
+		result.limits.push(
+			'Esta introdução considera o Meio do Céu por signo. Não determina uma profissão; o mapa completo reúne outros fatores.'
+		);
 		return result;
 	}
 	if (tool === 'dinheiro-no-mapa') {

@@ -303,7 +303,9 @@ function composeWeek(input: WorkflowInput, calculation: CalculationSnapshot): Tr
 				: `entre ${date(w.firstObserved)} e ${date(lastDate)}`;
 		const timing =
 			w.observedHours >= 120
-				? 'A presença deste contato ao longo de boa parte da semana dá continuidade ao tema: há espaço para elaborá-lo em mais de uma situação.'
+				? c === persistent[0]
+					? 'A presença deste contato ao longo de boa parte da semana dá continuidade ao tema: há espaço para elaborá-lo em mais de uma situação.'
+					: `Este contato também aparece ${interval} na grade de observação da semana.`
 				: `Este contato se concentra ${interval} nos registros da semana. Ele acrescenta um acento mais breve ao período, sem definir sozinho o sentido dos demais dias.`;
 		const timingMeaning = {
 			claim: timing,
@@ -506,10 +508,10 @@ function composePeriod(input: WorkflowInput, calculation: CalculationSnapshot): 
 			)[0];
 			const callback = `${returningWindow ? 'Uma nova passagem retoma a dinâmica já apresentada. ' : ''}${reminder} ${
 				event.kind === 'exit'
-					? 'A passagem chega ao fim do recorte calculado; aquilo que ganhou forma pode continuar nas escolhas e nos acordos construídos durante esses dias.'
+					? 'Esta é a saída observada dessa passagem no calendário.'
 					: event.kind === 'entry'
-						? 'O tema volta a aparecer no calendário: a continuidade está na questão que ele coloca, e não na suposição de que os mesmos acontecimentos se repetirão.'
-						: 'A data marca a maior aproximação observada nesta passagem. Vale situá-la dentro do tema em desenvolvimento, sem exigir que uma decisão inteira se resolva neste dia.'
+						? 'O tema volta a aparecer numa nova entrada observada.'
+						: 'A data marca a maior aproximação observada nesta passagem.'
 			}`;
 			meanings.push({
 				claim: callback,
@@ -577,7 +579,7 @@ function composePeriod(input: WorkflowInput, calculation: CalculationSnapshot): 
 		);
 	b.reading.practice = careerSynthesis
 		? ''
-		: 'O calendário pode acompanhar suas escolhas sem ocupar o lugar delas. Uma passagem concentrada oferece um acento; os temas recorrentes ajudam a compreender o que merece tempo para amadurecer.';
+		: 'Uma passagem concentrada oferece um acento; os temas recorrentes ajudam a compreender o que merece tempo para amadurecer.';
 	b.references();
 	return b.reading;
 }

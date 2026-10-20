@@ -46,7 +46,7 @@ describe('complete temporal pair canon', () => {
 		const focused = temporalNatalModifier(natal, 'square', false);
 		expect(full).toContain('Na casa 1');
 		expect(focused).toContain('Sol natal em Áries');
-		expect(focused).toContain('Com o atrito deste aspecto');
+		expect(focused).toContain('O atrito pode aumentar a insistência');
 		expect(full).toContain(focused);
 		expect(focused).not.toMatch(/Na casa|Sem casas/);
 		expect(temporalNatalModifier({ ...natal, house: null }, 'sextile', false)).not.toContain(

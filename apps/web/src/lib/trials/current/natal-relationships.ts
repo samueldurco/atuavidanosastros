@@ -76,7 +76,7 @@ const themes: Record<
 			['mars', 'mars']
 		],
 		opening:
-			'A leitura da aproximação distingue aquilo que desperta interesse da forma como cada pessoa toma iniciativa. Ela não comprova atração ou disponibilidade.'
+			'O que desperta interesse e a maneira de tomar iniciativa podem seguir ritmos diferentes. Reconhecer essa diferença ajuda a aproximar desejo, gesto e disponibilidade.'
 	},
 	commitment: {
 		title: 'Dar continuidade sem transformar o vínculo em obrigação',
@@ -192,29 +192,6 @@ export function relationshipOverlayMeaning(
 	house: number,
 	theme: RelationshipTheme
 ): string {
-	const invitations = [
-		'apresentar uma vontade própria e escolher como entrar nas situações',
-		'reconhecer o que tem valor e o que precisa ser preservado',
-		'conversar, aprender e dar nome ao que acontece no cotidiano',
-		'construir familiaridade e um lugar na convivência privada',
-		'brincar, criar e expressar interesse de uma forma pessoal',
-		'dividir tarefas e tornar o cotidiano possível',
-		'negociar a reciprocidade e o lugar de cada pessoa no encontro',
-		'lidar com confiança, intimidade e responsabilidades compartilhadas',
-		'ampliar perspectivas e conversar sobre o sentido das escolhas',
-		'dar uma forma pública aos compromissos e à direção de vida',
-		'participar de amizades, grupos e projetos em comum',
-		'respeitar o recolhimento e sentimentos que ainda não encontraram palavras'
-	];
-	const movement: Record<string, string> = {
-		sun: 'a maneira de A afirmar uma direção pode tornar mais visível para B a importância de',
-		moon: 'o modo como A procura acolhimento pode mobilizar em B a necessidade de',
-		mercury: 'as perguntas e explicações de A podem abrir para B uma maneira de',
-		venus: 'o modo como A demonstra apreço pode dar, para B, um valor afetivo à experiência de',
-		mars: 'a iniciativa de A pode incentivar B a agir para',
-		jupiter: 'as possibilidades que A apresenta podem ampliar para B o horizonte de',
-		saturn: 'os compromissos e limites trazidos por A podem pedir de B maior definição ao'
-	};
 	const consequence: Record<RelationshipTheme, string> = {
 		care:
 			house === 4
@@ -230,10 +207,10 @@ export function relationshipOverlayMeaning(
 					: 'Conversar sobre esse campo pode aproximar as pessoas quando uma explicação não encerra cedo demais a experiência que B ainda está formulando.',
 		desire:
 			house === 4
-				? 'A familiaridade pode compor a aproximação: sentir lugar na vida privada pode importar tanto quanto a novidade. Isso não transforma conforto em prova de atração, nem convivência em disponibilidade automática.'
+				? 'A familiaridade pode compor a aproximação: sentir lugar na vida privada pode importar tanto quanto a novidade. A atração ganha uma expressão mais íntima quando há espaço tanto para estar à vontade quanto para renovar o interesse.'
 				: house === 5
-					? 'O prazer de brincar e criar junto pode dar uma forma mais pessoal à aproximação. A possibilidade de desejar continua dependendo de resposta livre, não de corresponder à expectativa criada pelo convite.'
-					: 'A aproximação pode ganhar expressão nesse campo quando o convite abre espaço para participação. O interesse de A não informa, por si só, desejo ou consentimento de B.',
+					? 'O prazer de brincar e criar junto pode dar uma forma mais pessoal à aproximação. Um convite que deixa lugar para a resposta de B permite que a troca encontre seu próprio ritmo.'
+					: 'A aproximação pode ganhar expressão nesse campo quando o convite abre espaço para participação. O modo como B responde dá à troca um ritmo próprio, que A precisa poder acompanhar.',
 		commitment:
 			house === 4
 				? 'Construir uma base de convivência pede acordos sobre presença e responsabilidade. O acolhimento perde liberdade quando receber cuidado passa a significar dever permanência ou disponibilidade.'
@@ -247,7 +224,7 @@ export function relationshipOverlayMeaning(
 					? 'Uma direção pública pode aproximar projetos, mas também aumentar expectativas de desempenho. A relação precisa de espaço além do que ambos conseguem realizar ou mostrar juntos.'
 					: 'Esse campo pode oferecer um lugar concreto para o projeto compartilhado. A parceria ganha alcance quando permite uma contribuição própria de cada pessoa, em vez de pedir adesão integral ao caminho da outra.'
 	};
-	return `${bodyNames[body]} de A na casa ${house} de B situa esta parte do encontro ${house === 1 ? 'na maneira de B se apresentar' : `num campo da vida de B: ${houseScenes[house - 1]}`}. Nesse campo, ${movement[body]} ${invitations[house - 1]}. ${consequence[theme]}`;
+	return `${bodyNames[body]} de A na casa ${house} de B leva esse encontro para ${house === 1 ? 'a maneira de B se apresentar' : houseScenes[house - 1]}. ${consequence[theme]}`;
 }
 
 function lunarCare(a: Position, b: Position): string {
@@ -293,7 +270,7 @@ export function interpretRelationship(
 	const mechanism = relationshipMechanism(a.body, b.body, selected?.kind);
 	const claim = `${bodyNames[a.body]} de A em ${signs[a.sign]} ${selected ? `forma ${aspectNames[selected.kind] ?? selected.kind} com` : 'entra nesta leitura ao lado de'} ${bodyNames[b.body]} de B em ${signs[b.sign]}. ${mechanism}`;
 	const style = (p: Position) => natalStyles[p.sign][roles[p.body].style];
-	const direction = `Para A, ${roles[a.body].label} envolve ${style(a)}. Para B, ${roles[b.body].label} envolve ${style(b)}. ${theme === 'commitment' ? 'A continuidade precisa preservar a forma de proximidade que ainda faz sentido e dar uma medida ao que se promete. Um acordo pode ser estável e, ao mesmo tempo, permitir rever como cada pessoa participa dele.' : signBridge(a.sign, b.sign)}`;
+	const direction = `Para A, ${roles[a.body].label} envolve ${style(a)}. Para B, ${roles[b.body].label} envolve ${style(b)}. ${theme === 'commitment' ? 'A continuidade precisa preservar a forma de proximidade que ainda faz sentido e dar uma medida ao que se promete. Um acordo pode ser estável e, ao mesmo tempo, permitir rever como cada pessoa participa dele.' : theme === 'desire' && a.body === 'venus' && b.body === 'venus' && a.sign === 8 && b.sign === 2 ? 'A pode encontrar prazer em compartilhar uma direção que entusiasma, enquanto B pode querer descobrir novas versões da mesma experiência. A diferença pode renovar o interesse quando a curiosidade de B participa do caminho, sem que toda mudança de assunto pareça falta de convicção para A.' : signBridge(a.sign, b.sign)}`;
 	const overlays = calculation.data.houseOverlays as HouseOverlay[];
 	const overlay = overlays.find((o) => o.from === 'person-a' && o.body === a.body);
 	const overlayText = overlay ? relationshipOverlayMeaning(a.body, overlay.house, theme) : '';
@@ -330,9 +307,9 @@ export function relationshipQuestionTheme(text: string): RelationshipTheme | nul
 		.toLowerCase();
 	if (/convers|comunic|discut|entend|escut|dialog/.test(s)) return 'dialogue';
 	if (/desej|sexo|sexual|intim|atra|carinh/.test(s)) return 'desire';
+	if (/futur|projet|casar|morar|mudan|filh|dire|trabalh|continu|termin/.test(s)) return 'direction';
 	if (/cuid|emoc|acolh|sent|ciume|segur|distancia|distante/.test(s)) return 'care';
 	if (/comprom|respons|dinheiro|financ|rotina|tarefa|confi|acordo/.test(s)) return 'commitment';
-	if (/futur|projet|casar|morar|mudan|filh|dire|trabalh|continu|termin/.test(s)) return 'direction';
 	return null;
 }
 
@@ -344,14 +321,54 @@ export function composeRelationshipPassages(
 		theme,
 		passage: interpretRelationship(calculation, theme)
 	}));
+	const context = (input.context ?? '')
+		.normalize('NFD')
+		.replace(/[\u0300-\u036f]/g, '')
+		.toLowerCase();
+	const contextualize = (theme: RelationshipTheme) => {
+		const paragraphs: string[] = [];
+		const factIds: string[] = [];
+		if (/distancia|distante/.test(context) && (theme === 'dialogue' || theme === 'care')) {
+			const graphs = (calculation.data.sources as [CalculationSnapshot, CalculationSnapshot]).map(
+				normalizeFactGraph
+			);
+			const a = graphs[0].positions.find((p) => p.body === 'moon')!,
+				b = graphs[1].positions.find((p) => p.body === 'moon')!;
+			paragraphs.push(
+				`Com a distância que vocês mencionam, o contato precisa tornar o cuidado reconhecível por caminhos diferentes. A procura ${natalStyles[a.sign].need}; B procura ${natalStyles[b.sign].need}. Por isso, aumentar a frequência das mensagens pode ajudar uma necessidade e apertar a outra. Uma conversa com tempo reservado para o que importa pode oferecer presença sem exigir disponibilidade contínua.`
+			);
+			factIds.push(`person-a-${a.factId}`, `person-b-${b.factId}`);
+		}
+		if (
+			/respons|tarefa|rotina/.test(context) &&
+			(theme === 'commitment' || theme === 'direction')
+		) {
+			const commitment = all.find((x) => x.theme === 'commitment')!.passage;
+			paragraphs.push(
+				'As responsabilidades que vocês trouxeram dão uma medida concreta ao projeto futuro: a direção precisa caber no tempo, no esforço e nas tarefas que cada pessoa pode assumir. Sustentar o projeto inclui distribuir seu custo; a afinidade perde espaço quando uma pessoa fica encarregada de tornar possível aquilo que as duas desejam.'
+			);
+			factIds.push(...commitment.factIds);
+		}
+		return { text: paragraphs.join('\n\n'), factIds };
+	};
 	if (input.productId !== 'couple-dossier') {
 		const contextTheme = input.context ? relationshipQuestionTheme(input.context) : null;
-		return contextTheme
+		const ordered = contextTheme
 			? [
 					...all.filter((x) => x.theme === contextTheme),
 					...all.filter((x) => x.theme !== contextTheme)
-				].map((x) => x.passage)
-			: all.map((x) => x.passage);
+				]
+			: all;
+		return ordered.map(({ theme, passage }) => {
+			const application = contextualize(theme);
+			return application.text
+				? {
+						...passage,
+						text: `${passage.text}\n\n${application.text}`,
+						factIds: [...new Set([...passage.factIds, ...application.factIds, 'personal-context'])]
+					}
+				: passage;
+		});
 	}
 	const questions = (input.questions ?? []).map((q, i): CurrentPassage => {
 		const theme = relationshipQuestionTheme(q),
@@ -359,24 +376,32 @@ export function composeRelationshipPassages(
 				? all.find((x) => x.theme === theme)!
 				: all.find((x) => x.theme === 'direction')!;
 		const focus: Record<RelationshipTheme, string> = {
-			care: 'Para o assunto que você trouxe, a distinção central é entre oferecer um gesto e conseguir que ele seja recebido como cuidado. A interpretação localiza essa diferença; a experiência de cada pessoa é necessária para dizer se ela está presente no vínculo.',
+			care: 'Oferecer o gesto que confortaria você pode deixar sem resposta o pedido da outra pessoa. A diferença entre essas necessidades ajuda a compreender por que dedicação e sensação de acolhimento nem sempre chegam juntas.',
 			dialogue:
 				'Para a sua pergunta, a conclusão útil é separar o entendimento de uma frase do efeito que a conversa produz. O contato abaixo mostra por que a mesma troca pode atender a uma necessidade e deixar outra sem resposta.',
 			desire:
-				'Para a sua pergunta, esta leitura distingue o ritmo da aproximação da disponibilidade de cada pessoa. Ela oferece uma interpretação do encontro; desejo, consentimento e satisfação precisam ser expressos por quem os vive.',
+				'O ritmo da aproximação precisa deixar espaço para a disponibilidade de cada pessoa. A atração pode se renovar quando a diferença entre desejar e estar disponível encontra uma forma de conversa.',
 			commitment:
 				'Para o assunto que você trouxe, o compromisso precisa ser entendido pelo que sustenta e pelo que custa a cada pessoa. O contato abaixo ajuda a distinguir apoio de uma distribuição fixa de obrigações.',
 			direction:
-				'Para a sua pergunta, a leitura examina como duas direções podem caber num projeto comum. Ela não decide continuidade, separação ou acontecimentos futuros; esclarece quais diferenças o projeto precisaria conseguir abrigar.'
+				'Um projeto comum precisa abrigar duas direções, além do desejo de permanecerem próximos. A possibilidade de crescer junto depende do espaço que cada pessoa encontra para contribuir com algo próprio.'
 		};
 		const claim = theme
 			? focus[theme]
 			: 'A pergunta informada não tem uma correspondência temática inequívoca nesta edição. A leitura oferece a composição das direções de A e B como referência ampla, sem apresentar essa associação como resposta específica ao que você perguntou.';
+		const application = theme ? contextualize(theme) : { text: '', factIds: [] };
 		return {
 			title: `Sua pergunta ${i + 1}: ${q}`,
 			claim: selected.passage.claim,
-			text: `${claim}\n\n${selected.passage.text}`,
-			factIds: [...selected.passage.factIds, `couple-question-${i + 1}`, 'personal-context'],
+			text: [claim, selected.passage.text, application.text].filter(Boolean).join('\n\n'),
+			factIds: [
+				...new Set([
+					...selected.passage.factIds,
+					...application.factIds,
+					`couple-question-${i + 1}`,
+					'personal-context'
+				])
+			],
 			relation: `Pergunta informada orienta ${theme ?? 'referência ampla com limite explícito'}; ${selected.passage.relation}`
 		};
 	});
