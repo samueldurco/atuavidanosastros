@@ -18,6 +18,7 @@ import { composeTrialReading as composeV2 } from './editorial-reading';
 import { parseReaderState } from './reader-state';
 import { canShareReading, sharedReading, shareTokenHash, validShareToken } from './sharing';
 import { trialGeometry } from './cartography';
+import { CHART_ENGINE_VERSION } from './chart-engine-v2';
 import { privateFormats } from './experience';
 import { positionInterpretation } from './position-interpretation';
 import { offerNames20261015, OFFER_NAME_REVISION } from './offer-names';
@@ -392,7 +393,7 @@ describe('preserved historical editions against real calculations and editorial 
 		expect(trialText(natal)).toContain(natal.reading.sections.at(-1)!.text);
 		const svg = trialSvg(natal);
 		expect(svg.match(/data-fact-id="position-[^"]+"/g)?.length).toBeGreaterThanOrEqual(10);
-		expect(svg).toContain('zero de Áries');
+		expect(svg).toMatch(/<desc\b[^>]*>[^<]*zero de Áries à esquerda/i);
 		expect(trialSvg(saved.get('life-atlas')!)).toContain('data-fact-id="position-sun"');
 		const invalid = structuredClone(natal);
 		(invalid.calculation.data.positions as { longitude: number }[])[0].longitude = 360;
@@ -409,7 +410,7 @@ describe('preserved historical editions against real calculations and editorial 
 		it(`${product.id}: catalog SVG represents its own calculated scope`, () => {
 			const svg = trialSvg(saved.get(product.id)!);
 			expect(svg).toContain('ASC');
-			expect(svg).toContain('AstroChartEngineV2/2.0.0');
+			expect(svg).toContain(`data-engine="${CHART_ENGINE_VERSION}"`);
 			expect(svg).toContain('data-fact-id="position-sun"');
 			expect(svg).not.toContain('undefined');
 		});

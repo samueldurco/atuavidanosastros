@@ -26,7 +26,7 @@ for (const width of [390, 1440]) {
 			await expect(button).toHaveAttribute('aria-current', 'date');
 		}
 		await page.getByText('Explore seu mapa e os capítulos relacionados', { exact: true }).click();
-		const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.0.0"]');
+		const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.1.0"]');
 		await expect(svg).toBeVisible();
 		await expect(svg.locator('[data-layer="positions"]')).toHaveCount(20);
 		await expect(

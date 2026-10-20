@@ -13,7 +13,7 @@ for (const width of [390, 1440]) {
 			await page.goto(`/testar-produtos/_spec?product=${product}`);
 			await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
 			await page.getByText('Explore seu mapa e os capítulos relacionados', { exact: true }).click();
-			const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.0.0"]');
+			const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.1.0"]');
 			await expect(svg).toBeVisible();
 			await expect(svg.locator('[data-layer="positions"]')).toHaveCount(10);
 			expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
@@ -38,7 +38,7 @@ for (const width of [390, 1440]) {
 			page.getByRole('heading', { name: 'Bússola de Carreira', exact: true })
 		).toBeVisible();
 		await page.getByText('Explore seu mapa e os capítulos relacionados', { exact: true }).click();
-		const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.0.0"]');
+		const svg = page.locator('svg[data-engine="AstroChartEngineV2/2.1.0"]');
 		await expect(svg).toBeVisible();
 		const positions = await svg.locator('[data-layer="positions"]').count();
 		expect(positions).toBe(10);

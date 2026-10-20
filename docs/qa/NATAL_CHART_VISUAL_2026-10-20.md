@@ -36,3 +36,11 @@ Revisão local por `/root/temporal_final`, em 20/10/2026. Os dados usados são s
 - `svelte-check`: zero erros e zero avisos. Prettier, ESLint e `git diff --check` passaram nos quatro arquivos desta revisão.
 
 Evidências: `C:/ATVNA/evidence/ATV-20260902-170644Z-01A0630F/current-interpretation-20261019/mandala-ui/qa-ui.json`, script `qa-ui.mjs`, doze PNGs de interface e subdiretório `product-svg-e2e`; logs `test-results/mandala-product-svg-e2e.log` e `test-results/mandala-ui-svelte-check.log`. O ensaio usa o servidor local; a publicação hospedada permanece sob os gates de integração e liberação.
+
+## Compatibilidade e revisão independente
+
+O motor usa `AstroChartEngineV2/2.1.0`; a exportação de artefatos usa `atv-svg-export/1.3.0`. O domínio continua aceitando as três versões anteriores de SVG. A migração `20261020112347_mandala_svg_renderer_1_3.sql` acrescenta somente essa versão à função de persistência de artefatos, acompanhada de forward-fix e prova de preservação das guardas existentes.
+
+Essa migração é destinada ao fluxo de `product_runs`. O projeto hospedado atual não possui esse conjunto de tabelas e funções; o download ativo de testes privados gera o desenho diretamente por `trialSvg`. Portanto, a migração não deve ser aplicada isoladamente nesse projeto nem é pré-requisito para o desenho nas leituras privadas atuais. As duas integrações locais carregam o esquema completo e verificam a compatibilidade do outro fluxo.
+
+A revisão independente conferiu dez posições e respectivas âncoras, dez aspectos, quatro eixos, casas, retrogradação e arredondamento da amostra sintética. SVG e PDF foram inspecionados sem cortes ou colisões nessa amostra. Evidência: `C:/ATVNA/evidence/ATV-20260902-170644Z-01A0630F/current-interpretation-20261019/mandala-independent-review.md`. Esse resultado não substitui a verificação hospedada nem o aceite pessoal.

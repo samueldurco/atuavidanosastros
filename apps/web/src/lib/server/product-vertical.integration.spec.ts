@@ -138,6 +138,7 @@ async function fixture(productId: string) {
 		await db.exec(await file('supabase/migrations/20261005150000_language_renderer_versions.sql'));
 		await db.exec(await file('supabase/migrations/20261009090221_visual_v4_pdf_renderer.sql'));
 		await db.exec(await file('supabase/migrations/20261015125547_career_web_export_1_4.sql'));
+		await db.exec(await file('supabase/migrations/20261020112347_mandala_svg_renderer_1_3.sql'));
 		await db.exec(
 			await file('supabase/migrations/20260923110000_product_editorial_publication.sql')
 		);
