@@ -26,13 +26,15 @@
 				<h2>{section.title}</h2>
 				<p class="prose">{section.text}</p>
 			</section>{/each}
-		<section>
-			<h2>Perguntas para conversar</h2>
-			<ul>
-				{#each data.reading.questions as question, i (i)}<li>{question}</li>{/each}
-			</ul>
-			<p class="prose">{data.reading.practice}</p>
-		</section>
+		{#if data.reading.questions.length || data.reading.practice.trim()}<section>
+				{#if data.reading.questions.length}
+					<h2>Perguntas para conversar</h2>
+					<ul>
+						{#each data.reading.questions as question, i (i)}<li>{question}</li>{/each}
+					</ul>
+				{/if}
+				{#if data.reading.practice.trim()}<p class="prose">{data.reading.practice}</p>{/if}
+			</section>{/if}
 		<p>
 			Leitura simbólica para reflexão. Não determina o futuro da relação. O proprietário pode
 			desativar este link.

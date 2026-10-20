@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { calculateTarotMethod, tarotMethods, type WorkflowInput } from '@atv/domain';
-import { approveTrialReading, composeTrialReading } from '../reading';
+import { approveTrialReading } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { reviewReconstructedTarot } from './tarot';
 import { tarotCanon } from './tarot-canon';
 

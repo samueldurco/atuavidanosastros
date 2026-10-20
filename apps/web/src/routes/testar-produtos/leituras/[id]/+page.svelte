@@ -201,14 +201,24 @@
 			{#if canShareReading(data.saved.product_id)}<ReadingShare id={data.saved.id} />{/if}
 		{/key}
 		<article aria-label="Sua leitura completa">
-			<section class="chapter">
-				<h2>Perguntas para levar com você</h2>
-				<ol>
-					{#each reading.questions as question (question)}<li>{question}</li>{/each}
-				</ol>
-				<h3>Experimente</h3>
-				<p>{reading.practice}</p>
-			</section>
+			{#if reading.questions.length || reading.practice.trim()}
+				<section class="chapter">
+					{#if reading.questions.length}
+						<h2>Perguntas para levar com você</h2>
+						<ol>
+							{#each reading.questions as question (question)}<li>{question}</li>{/each}
+						</ol>
+					{/if}
+					{#if reading.practice.trim()}
+						<h3>
+							{reading.version === 'atv-current-reading/1.0.0'
+								? 'Para levar desta leitura'
+								: 'Experimente'}
+						</h3>
+						<p>{reading.practice}</p>
+					{/if}
+				</section>
+			{/if}
 			<section class="chapter">
 				<h2>Alcance e limites desta leitura</h2>
 				<ul>
@@ -227,10 +237,7 @@
 		{:else}
 			<section class="workspace" aria-labelledby="notes-title">
 				<h2 id="notes-title">Suas anotações e acompanhamento</h2>
-				<p>
-					Registre um exemplo observado, uma possibilidade que você quer testar e o que mudou
-					depois.
-				</p>
+				<p>Este espaço é seu: guarde um trecho, uma lembrança ou algo que gostaria de retomar.</p>
 				{#if checkIns.length > 1}<label
 						>Etapa<select bind:value={step}
 							>{#each checkIns as day (day)}<option value={day}

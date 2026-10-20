@@ -5,9 +5,15 @@
 		saved,
 		chapter,
 		interactive,
+		selectedDate = $bindable<string | null>(null),
 		onopen
-	}: { saved: SavedTrial; chapter: number; interactive: boolean; onopen: (index: number) => void } =
-		$props();
+	}: {
+		saved: SavedTrial;
+		chapter: number;
+		interactive: boolean;
+		selectedDate?: string | null;
+		onopen: (index: number) => void;
+	} = $props();
 	const data = $derived(saved.calculation.data as unknown as CalendarData);
 	const rolling = $derived(saved.calculation.version === PERIOD_VERSION);
 	const formatDate = (value: string) => value.slice(0, 10).split('-').reverse().join('/');
@@ -22,10 +28,11 @@
 			const index = saved.reading.sections.findIndex((p) =>
 				p.factIds.includes(`calendar-day-${day.date}`)
 			);
+			const selected = saved.reading.interpretation
+				? new Set(saved.reading.sections[index]?.factIds ?? [])
+				: new Set(saved.reading.editorial?.selection.map((s) => s.factId) ?? []);
 			const signals = data.events.filter(
-				(event) =>
-					event.date === day.date &&
-					saved.reading.editorial!.selection.some((s) => s.factId === event.id)
+				(event) => event.date === day.date && selected.has(event.id)
 			).length;
 			const marked = saved.input.calendarMarks?.entries.some((m) => m.date === day.date) ?? false;
 			return { date: day.date, number: Number(day.date.slice(8)), index, signals, marked };
@@ -50,9 +57,15 @@
 		{#each dates as day (day.date)}
 			<button
 				disabled={!interactive || day.index < 0}
-				aria-current={chapter === day.index ? 'date' : undefined}
+				aria-current={chapter === day.index &&
+				(!saved.reading.interpretation || day.signals > 0 || selectedDate === day.date)
+					? 'date'
+					: undefined}
 				aria-label={`${formatDate(day.date)}: ${day.signals} ${day.signals === 1 ? 'sinal' : 'sinais'}${day.marked ? ', marco informado' : ''}`}
-				onclick={() => onopen(day.index)}
+				onclick={() => {
+					selectedDate = day.date;
+					onopen(day.index);
+				}}
 			>
 				<strong>{rolling ? formatDate(day.date).slice(0, 5) : day.number}</strong><span
 					>{day.signals} {day.signals === 1 ? 'sinal' : 'sinais'}</span
@@ -61,8 +74,13 @@
 		{/each}
 	</div>
 	<p class="legend">
-		● Marco informado por você. Até {rolling ? 'duas' : 'três'} mudanças selecionadas por data; zero sinais
-		permite um registro livre. Movimentos que atravessam o período aparecem no capítulo próprio.
+		● Marco informado por você. Até {rolling ? 'duas' : 'três'} mudanças selecionadas por data.
+		{#if saved.reading.interpretation}
+			Datas sem um novo destaque compartilham uma leitura sobre a continuidade do período.
+		{:else}
+			Zero sinais permite um registro livre.
+		{/if}
+		Movimentos que atravessam o período aparecem no capítulo próprio.
 	</p>
 </section>
 

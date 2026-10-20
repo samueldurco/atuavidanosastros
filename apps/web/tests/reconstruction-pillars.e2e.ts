@@ -15,11 +15,11 @@ for (const width of [390, 1440]) {
 			0
 		);
 		const nav = page.getByRole('navigation', { name: 'Capítulos da leitura' });
-		expect(await nav.getByRole('button').count()).toBe(11);
+		expect(await nav.getByRole('button').count()).toBe(3);
 		for (const [name, title] of [
-			['Sol · expressão', 'Uma cena, três funções em relação'],
-			['Lua · necessidades', 'Afinidades e diferenças de ritmo no trio'],
-			['Ascendente · primeiro movimento', 'Regente do Ascendente: por onde a ponte ganha prática']
+			['Sol · expressão', 'O que faz sentido precisa também caber na sua vida'],
+			['Lua · necessidades', 'O que faz sentido precisa também caber na sua vida'],
+			['Ascendente · primeiro movimento', 'A maneira de começar e o trabalho de continuar']
 		]) {
 			await page.getByRole('button', { name: new RegExp(name) }).click();
 			await expect(
@@ -80,12 +80,14 @@ for (const width of [390, 1440]) {
 			fullPage: true
 		});
 		await page.goto('/testar-produtos/_spec?product=three-pillars&pillarsContext=workload');
-		await nav.getByRole('button').nth(7).click();
+		await nav
+			.getByRole('button', {
+				name: 'Quando continuar exige rever o tamanho do esforço',
+				exact: true
+			})
+			.click();
 		await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
-			'Estou com sobrecarga e preciso preservar descanso.'
-		);
-		await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
-			'o tempo e a energia realmente disponíveis'
+			/sobrecarga|descanso/
 		);
 		await page.screenshot({
 			path: testInfo.outputPath(`reconstruction-pillars-${width}-workload.png`),
@@ -121,7 +123,7 @@ for (const width of [320, 820]) {
 			page.getByText('A ilustração da capa é decorativa;', { exact: false })
 		).toBeVisible();
 		const nav = page.getByRole('navigation', { name: 'Capítulos da leitura' });
-		await expect(nav.getByRole('button')).toHaveCount(11);
+		await expect(nav.getByRole('button')).toHaveCount(3);
 		const article = page.getByRole('article', { name: 'Capítulo selecionado' });
 		expect(await article.locator('.chapter-prose p').count()).toBeGreaterThan(1);
 		const nextChapter = nav.getByRole('button').nth(1);

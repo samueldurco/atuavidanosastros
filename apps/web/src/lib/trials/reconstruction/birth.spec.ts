@@ -6,7 +6,8 @@ import { join } from 'node:path';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
 import { executeTrialRuntime } from '../../server/trial-computation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { trialText } from '../exports';
 import { latestReadingVersion } from '../versions';
 import { normalizeFactGraph } from './fact-graph';
@@ -15,7 +16,6 @@ import {
 	assertBirthProjection,
 	birthAngularContacts,
 	BIRTH_VERSION,
-	BIRTH_READING_VERSION,
 	type BirthData
 } from './birth-facts';
 import { purposeHouseAt } from './purpose-facts';
@@ -64,7 +64,7 @@ describe('Mapa Astral 5: seis assinaturas, temas e síntese', () => {
 			d = c.data as unknown as BirthData,
 			g = normalizeFactGraph(c);
 		expect(c.version).toBe(BIRTH_VERSION);
-		expect(latestReadingVersion('birth-chart')).toBe(BIRTH_READING_VERSION);
+		expect(latestReadingVersion('birth-chart')).toBe('atv-current-reading/1.0.0');
 		expect(g.positions).toHaveLength(10);
 		expect(g.houses).toHaveLength(12);
 		expect(d.houseRegents).toHaveLength(12);

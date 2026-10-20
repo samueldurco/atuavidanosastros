@@ -34,7 +34,8 @@ export function nameCurrentOffer(input: WorkflowInput, reading: TrialReading): T
 	// The legacy dream collection is not the new, completed 30-day diary.
 	if (
 		input.productId === 'dream-atlas' &&
-		reading.version !== 'atv-private-dream-atlas-reading/2.0.0'
+		reading.version !== 'atv-private-dream-atlas-reading/2.0.0' &&
+		reading.version !== 'atv-current-reading/1.0.0'
 	)
 		return reading;
 	const title = offerNames20261015[input.productId as keyof typeof offerNames20261015];

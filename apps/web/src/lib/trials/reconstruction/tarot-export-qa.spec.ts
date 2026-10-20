@@ -3,7 +3,8 @@ import { join } from 'node:path';
 import { PDFDocument } from 'pdf-lib';
 import { expect, it } from 'vitest';
 import { calculateTarotMethod, tarotMethods, type WorkflowInput } from '@atv/domain';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { trialPdf } from '../pdf';
 import { buildTarotScene, tarotSceneSvg } from '../tarot-diagram';
 

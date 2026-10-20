@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
-	test(`Sinastria: eleven chapters, real biwheel and native maps at ${width}px`, async ({
+	test(`Sinastria: integrated chapters, real biwheel and native maps at ${width}px`, async ({
 		page
 	}) => {
 		await page.setViewportSize({ width, height: 900 });
@@ -39,7 +39,7 @@ for (const width of [390, 1440]) {
 			expect(await download.failure()).toBeNull();
 		}
 		const navigation = page.getByRole('navigation', { name: 'Capítulos da leitura' });
-		await expect(navigation.getByRole('button')).toHaveCount(11);
+		await expect(navigation.getByRole('button')).toHaveCount(5);
 		for (const button of await navigation.getByRole('button').all()) {
 			const title = await button.innerText();
 			await button.click();

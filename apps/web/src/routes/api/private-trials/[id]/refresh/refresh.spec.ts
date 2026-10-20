@@ -76,6 +76,24 @@ it('bloqueia leitura adulterada antes de compor ou gravar', async () => {
 	await expect(POST(event)).rejects.toMatchObject({ status: 422 });
 	expect(inserted).toHaveLength(0);
 });
+it('salva o cálculo atualizado junto da leitura e aprovação emitidas para ele', async () => {
+	const calculation = { version: 'current', facts: [{ id: 'natal.mercury', value: 'synthetic' }] };
+	mocks.reissueTrial.mockResolvedValue({ calculation, reading: revised, approval });
+	await POST(event);
+	expect(inserted[0]).toMatchObject({ calculation, reading: revised, approval });
+	expect(inserted[0].calculation).not.toBe(original.calculation);
+	expect(original.calculation).toEqual({ cards: ['one', 'two'] });
+});
+it('reconhece uma repetição idêntica da edição aprovada com cálculo atualizado', async () => {
+	const calculation = { version: 'current', facts: [{ id: 'natal.mercury', value: 'synthetic' }] };
+	mocks.reissueTrial.mockResolvedValue({ calculation, reading: revised, approval });
+	insertResult = { error: { code: '23505' } };
+	retryResult = {
+		data: { ...original, calculation, reading: revised, approval, id: 'retry-id' },
+		error: null
+	};
+	expect(await (await POST(event)).json()).toEqual({ id: 'retry-id' });
+});
 it('reverifica a concessão e interrompe a escrita quando ela foi revogada', async () => {
 	mocks.trialIdentity.mockImplementation(async () => error(403, 'revoked'));
 	await expect(POST(event)).rejects.toMatchObject({ status: 403 });

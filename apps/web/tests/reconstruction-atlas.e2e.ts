@@ -15,20 +15,20 @@ for (const width of [390, 1440]) {
 		);
 		const navigation = page.getByRole('navigation', { name: 'Capítulos da leitura' });
 		const titles = (await navigation.getByRole('button').allTextContents()).map((t) => t.trim());
-		expect(titles).toHaveLength(14);
-		expect(new Set(titles).size).toBe(14);
-		expect(titles).toContain('1. Autocuidado e rotina: funções que merecem atenção');
-		expect(titles).toContain('3. Trabalho e contribuição: uma experiência possível');
+		expect(titles).toHaveLength(5);
+		expect(new Set(titles).size).toBe(5);
+		expect(titles).toContain('1. Autocuidado e rotina');
+		expect(titles).toContain('3. Trabalho e contribuição');
 		for (const button of await navigation.getByRole('button').all()) {
 			const title = await button.innerText();
 			await button.click();
 			await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
 		}
 		await navigation
-			.getByRole('button', { name: 'Seu percurso de trinta dias', exact: true })
+			.getByRole('button', { name: 'Como suas prioridades se encontram', exact: true })
 			.click();
 		await expect(
-			page.getByRole('heading', { name: 'Seu percurso de trinta dias', exact: true })
+			page.getByRole('heading', { name: 'Como suas prioridades se encontram', exact: true })
 		).toBeVisible();
 		await page
 			.locator('summary')
@@ -87,13 +87,13 @@ for (const width of [390, 1440]) {
 		await page.goto('/testar-produtos/_spec?product=life-atlas&atlasSet=other&atlasNotes=complete');
 		await expect(
 			navigation.getByRole('button', {
-				name: '1. Recursos e autonomia: funções que merecem atenção',
+				name: '1. Recursos e autonomia',
 				exact: true
 			})
 		).toBeVisible();
 		await expect(
 			navigation.getByRole('button', {
-				name: '4. Redes e projetos: uma experiência possível',
+				name: '4. Redes e projetos',
 				exact: true
 			})
 		).toBeVisible();

@@ -35,7 +35,8 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 			version: 'atv-free-tool-result/1.0.0',
 			createdAt: now().toISOString()
 		});
-		expect(result.facts).toHaveLength(1);
+		expect(result.facts).toHaveLength(2);
+		expect(result.sections.some((section) => section.id === 'ruler')).toBe(true);
 		expect(result.facts[0]).toMatchObject({ id: 'ascendant', kind: 'calculated' });
 		expect(result.facts[0]!.source).toContain(chart.provenance.provider);
 		expect(result.limits.join(' ')).toContain('posições experimentais');
@@ -83,7 +84,7 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 			'reconhecer limites, contar com acordos confiáveis'
 		);
 		expect(section(earlier, 'ascendant').body).toContain('avaliar responsabilidades');
-		expect(new Set(earlier.sections.map((part) => part.body)).size).toBe(3);
+		expect(new Set(earlier.sections.map((part) => part.body)).size).toBe(4);
 		for (const id of ['sun', 'moon']) expect(section(earlier, id)).toEqual(section(later, id));
 		expect(section(earlier, 'ascendant').title).not.toBe(section(later, 'ascendant').title);
 		expect(section(earlier, 'ascendant').body).not.toBe(section(later, 'ascendant').body);
@@ -185,7 +186,7 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 	it('a carta do amor traz o conteúdo de relacionamentos da carta sorteada, sem atribuir sentimentos a terceiros', async () => {
 		const result = await calculateFreeToolResult('carta-do-amor', {}, { uuid, now });
 		expect(result.draw).toBeDefined();
-		expect(result.sections.find((section) => section.id === 'relationship')?.body).toBe(
+		expect(result.sections.find((section) => section.id === 'card-context')?.body).toContain(
 			tarotCanon[result.draw!.cardId]!.relationship
 		);
 		expect(result.facts[0]!.kind).toBe('drawn');

@@ -11,20 +11,28 @@ import type {
 	FreeToolDreamInput,
 	FreeToolFact,
 	FreeToolId,
-	FreeToolResult,
-	FreeToolSection
+	FreeToolResult
 } from '../free-tools';
 import { FreeToolInputError, isFreeToolId } from '../free-tools';
 export { FreeToolInputError, isFreeToolId } from '../free-tools';
 import { longitudePoint } from '../product-cartography';
-import { CANON_VERSION, signs, signMeanings, modernRulers } from '../trials/reconstruction/canon';
-import { natalStyles } from '../trials/reconstruction/natal-canon';
+import { CANON_VERSION, signs, modernRulers } from '../trials/reconstruction/canon';
+import {
+	freeNatalPortrait,
+	freeNatalSynthesis,
+	freeRulerSection,
+	freePairSection,
+	freeCareerSections,
+	freeMoneySections,
+	FREE_INTERPRETATION_VERSION
+} from './free-tool-interpretation';
 import { TAROT_CANON_VERSION, tarotCanon } from '../trials/reconstruction/tarot-canon';
 import { parseCalculationInput } from './midheaven';
+import { composeCurrentSingleCard } from '../trials/current/symbolic-tarot';
 
 const VERSION = 'atv-free-tool-result/1.0.0' as const;
-const NATAL_METHOD = 'atv-public-natal-summary/1.0.0';
-const PAIR_METHOD = 'atv-public-pair-three-factors/1.0.0';
+const NATAL_METHOD = FREE_INTERPRETATION_VERSION;
+const PAIR_METHOD = 'atv-public-pair-three-factors/2.0.0';
 const TAROT_METHOD = 'atv-public-single-card/1.0.0';
 const DREAM_METHOD = 'atv-public-dream-record/1.0.0';
 const DECK_VERSION = 'atv-tarot-78/1.0.0';
@@ -122,17 +130,7 @@ function natalFact(
 		source: source(chart, method)
 	};
 }
-function styleSection(body: 'sun' | 'moon' | 'ascendant', value: number): FreeToolSection {
-	const { sign, name } = zodiac(value);
-	const style = natalStyles[sign]!;
-	const content =
-		body === 'sun'
-			? `Como hipótese de reflexão, o Sol em ${name} destaca a busca por ${style.aim}. Que participação você deseja reconhecer como sua?`
-			: body === 'moon'
-				? `Como hipótese de reflexão, a Lua em ${name} sugere a necessidade de ${style.need}. Observe quais condições ajudam você a se sentir acolhido.`
-				: `Como hipótese de reflexão, o Ascendente em ${name} sugere ${style.entry}. Observe como essa forma de começar aparece em uma situação concreta.`;
-	return { id: body, title: `${names[body]} em ${name}`, body: content };
-}
+const styleSection = freeNatalPortrait;
 function natalLimits(chart: NatalChart) {
 	return [
 		...chart.provenance.warnings,
@@ -330,7 +328,12 @@ export async function calculateFreeToolResult(
 		const card = await drawCard(tool, result.id);
 		const meaning = tarotCanon[card.id];
 		if (!meaning || meaning.name !== card.name) throw new Error('invalid_card_canon');
-		result.summary = `${card.name}: ${meaning.core}`;
+		const interpretation = composeCurrentSingleCard(
+			card.id,
+			value.focus as string | undefined,
+			tool === 'carta-do-dia' ? 'day' : tool === 'carta-do-amor' ? 'love' : 'question'
+		);
+		result.summary = interpretation.summary;
 		result.facts = [
 			{
 				id: 'card-1',
@@ -351,23 +354,7 @@ export async function calculateFreeToolResult(
 						}
 					])
 		];
-		result.sections = [
-			...(tool === 'carta-do-amor'
-				? [{ id: 'relationship', title: 'Para olhar seus vínculos', body: meaning.relationship }]
-				: []),
-			{ id: 'resource', title: 'Um recurso para observar', body: meaning.resource },
-			{ id: 'excess', title: 'Um ponto de atenção', body: meaning.excess },
-			{ id: 'action', title: 'Uma reflexão prática', body: meaning.action },
-			...(tool === 'tarot-sim-ou-nao'
-				? [
-						{
-							id: 'decision',
-							title: 'A decisão continua com você',
-							body: 'A carta oferece uma perspectiva simbólica sobre sua pergunta. Que informação concreta ainda falta e qual consequência você precisa considerar antes de decidir?'
-						}
-					]
-				: [])
-		];
+		result.sections = interpretation.sections;
 		result.draw = {
 			cardId: card.id,
 			name: card.name,
@@ -418,22 +405,13 @@ export async function calculateFreeToolResult(
 					)
 				);
 		}
-		result.sections = factors.map((factor) => {
-			const av = factor === 'ascendant' ? a : longitude(charts[0], factor);
-			const bv = factor === 'ascendant' ? b : longitude(charts[1], factor);
-			const key = factor === 'sun' ? 'aim' : factor === 'moon' ? 'need' : 'entry';
-			const topic =
-				factor === 'sun'
-					? 'Direção e participação'
-					: factor === 'moon'
-						? 'Cuidado e segurança'
-						: 'Como vocês se aproximam';
-			return {
-				id: factor,
-				title: topic,
-				body: `Pessoa A · ${names[factor]} em ${zodiac(av).name}: a reflexão sugere ${natalStyles[zodiac(av).sign]![key]}. Pessoa B · ${names[factor]} em ${zodiac(bv).name}: a reflexão sugere ${natalStyles[zodiac(bv).sign]![key]}. Confiram essas hipóteses juntos e perguntem o que cada pessoa precisa nesta situação.`
-			};
-		});
+		result.sections = factors.map((factor) =>
+			freePairSection(
+				factor,
+				factor === 'ascendant' ? a : longitude(charts[0], factor),
+				factor === 'ascendant' ? b : longitude(charts[1], factor)
+			)
+		);
 		result.limits = [
 			...new Set(charts.flatMap(natalLimits)),
 			'Esta comparação introdutória não calcula aspectos entre mapas nem uma pontuação de compatibilidade e não afirma sentimentos, intenções ou destino da relação.',
@@ -448,22 +426,10 @@ export async function calculateFreeToolResult(
 	if (tool === 'meio-do-ceu') {
 		const mc = chart.houses.midheaven;
 		if (!angle(mc)) throw new Error('invalid_chart_midheaven');
-		const { name, sign } = zodiac(mc);
-		const meaning = signMeanings[sign]!;
+		const { name } = zodiac(mc);
 		result.summary = `Seu Meio do Céu está em ${name}.`;
 		result.facts = [natalFact(chart, 'midheaven', mc)];
-		result.sections = [
-			{
-				id: 'contribution',
-				title: 'Sua contribuição no trabalho',
-				body: `Na astrologia, o Meio do Céu em ${name} se associa a ${meaning.contribution}. Compare essa possibilidade com as atividades em que você já se envolve.`
-			},
-			{
-				id: 'environment',
-				title: 'Um ambiente a explorar',
-				body: `Observe como você se sente em situações que oferecem ${meaning.environment}. Isso ajuda a formular perguntas sobre seu trabalho; não determina uma profissão.`
-			}
-		];
+		result.sections = freeCareerSections(mc);
 		return result;
 	}
 	if (tool === 'dinheiro-no-mapa') {
@@ -472,7 +438,6 @@ export async function calculateFreeToolResult(
 		if (!angle(cusp)) throw new Error('invalid_chart_second_house');
 		const { name, sign } = zodiac(cusp);
 		const ruler = modernRulers[sign]!;
-		const meaning = signMeanings[sign]!;
 		result.summary = `Sua Casa 2 começa em ${name}.`;
 		result.facts = [
 			{
@@ -487,18 +452,7 @@ export async function calculateFreeToolResult(
 				label: `${names[ruler]} · regente moderno de ${name}`
 			}
 		];
-		result.sections = [
-			{
-				id: 'values',
-				title: 'Como você cuida dos seus recursos',
-				body: `A Casa 2 representa recursos e valores pessoais na leitura astrológica. Em ${name}, ela traz como tema ${meaning.contribution}. Em que situações esse jeito de agir aparece no uso do seu tempo, das suas habilidades ou do seu dinheiro?`
-			},
-			{
-				id: 'attention',
-				title: 'Um hábito para observar',
-				body: `O ponto de atenção deste signo é ${meaning.cost}. Escolha uma situação recente e observe se isso aconteceu, sem tratar o mapa como uma descrição obrigatória de você.`
-			}
-		];
+		result.sections = freeMoneySections(cusp, names[ruler]!, longitude(chart, ruler));
 		result.limits.push(
 			'Esta introdução à Casa 2 não prevê renda, ganhos ou perdas e não orienta investimentos. O mapa completo reúne outros fatores.'
 		);
@@ -507,8 +461,15 @@ export async function calculateFreeToolResult(
 	if (tool === 'ascendente') {
 		if (asc === null) throw new FreeToolInputError('ascendant_unavailable');
 		result.summary = `Seu Ascendente está em ${zodiac(asc).name}.`;
-		result.facts = [natalFact(chart, 'ascendant', asc)];
-		result.sections = [styleSection('ascendant', asc)];
+		const ruler = modernRulers[zodiac(asc).sign]!;
+		result.facts = [
+			natalFact(chart, 'ascendant', asc),
+			natalFact(chart, ruler, longitude(chart, ruler))
+		];
+		result.sections = [
+			styleSection('ascendant', asc),
+			freeRulerSection(asc, names[ruler]!, longitude(chart, ruler))
+		];
 		return result;
 	}
 	const sun = longitude(chart, 'sun'),
@@ -520,6 +481,7 @@ export async function calculateFreeToolResult(
 	if (asc !== null) result.facts.push(natalFact(chart, 'ascendant', asc));
 	result.facts.push(natalFact(chart, 'midheaven', chart.houses.midheaven));
 	result.sections = [
+		freeNatalSynthesis(sun, moon),
 		styleSection('sun', sun),
 		styleSection('moon', moon),
 		...(asc === null

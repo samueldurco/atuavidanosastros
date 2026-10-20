@@ -13,7 +13,8 @@ import {
 	reviewDreamInterpretation,
 	DREAM_INTERPRETATION_READING
 } from './dream-interpretation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from './reading';
+import { approveTrialReading, type SavedTrial } from './reading';
+import { composeHistoricalReading as composeTrialReading } from './reconstruction/historical-reading.test-helper';
 import { composeTrialReading as composeV3 } from './experience-reading';
 import { latestReadingVersion } from './versions';
 import { trialPdf } from './pdf';
@@ -74,14 +75,14 @@ async function saved(input = inputFor(), sources = [source()]): Promise<SavedTri
 
 describe('two private dream interpretations: facts, personal hypotheses and method review', () => {
 	it.each(['dream-reading', 'dream-dossier'])(
-		'binds every declared fact and the current edition for %s',
+		'preserves every declared fact in the historical edition for %s',
 		async (product) => {
 			const input = inputFor(product);
 			const s = await saved(input);
 			const original = composeDreamInterpretation(input, s.calculation);
 			expect(reviewDreamInterpretation(input, s.calculation, original)).toEqual([]);
 			expect(s.reading.version).toBe(DREAM_INTERPRETATION_READING);
-			expect(latestReadingVersion(product)).toBe(s.reading.version);
+			expect(latestReadingVersion(product)).toBe('atv-current-reading/1.0.0');
 			expect(
 				s.calculation.facts.every((fact) =>
 					s.reading.sections.some((section) => section.factIds.includes(fact.id))

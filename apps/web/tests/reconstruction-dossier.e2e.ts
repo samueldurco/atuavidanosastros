@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 for (const width of [390, 1440]) {
-	test(`Dossiê do Casal: seventeen chapters, real biwheel and native maps at ${width}px`, async ({
+	test(`Dossiê do Casal: perguntas interpretadas, biwheel e mapas individuais em ${width}px`, async ({
 		page
 	}) => {
 		await page.setViewportSize({ width, height: 900 });
@@ -41,23 +41,23 @@ for (const width of [390, 1440]) {
 			expect(await download.failure()).toBeNull();
 		}
 		const navigation = page.getByRole('navigation', { name: 'Capítulos da leitura' });
-		await expect(navigation.getByRole('button')).toHaveCount(17);
 		const titles = (await navigation.getByRole('button').allTextContents()).map((title) =>
 			title.trim()
 		);
-		const lastAnswer = titles.findIndex((title) => title.startsWith('Resposta à pergunta 3'));
-		expect(lastAnswer).toBeGreaterThanOrEqual(0);
-		expect(titles.indexOf('O que vem primeiro e por quê')).toBeGreaterThan(lastAnswer);
+		expect(titles.slice(0, 3)).toEqual([
+			'Sua pergunta 1: Como manter presença à distância?',
+			'Sua pergunta 2: Como conversar quando discordamos?',
+			'Sua pergunta 3: Como combinar espaço individual?'
+		]);
+		expect(titles.length).toBeGreaterThan(3);
 		for (const button of await navigation.getByRole('button').all()) {
 			const title = await button.innerText();
 			await button.click();
 			await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
-			if (title.startsWith('Resposta à pergunta 1'))
-				await expect(
-					page.getByText('Pergunta informada: “Como manter presença à distância?”.', {
-						exact: false
-					})
-				).toBeVisible();
+			if (title.startsWith('Sua pergunta 1:'))
+				await expect(page.getByRole('article', { name: 'Capítulo selecionado' })).toContainText(
+					/cuidado/
+				);
 		}
 		await page.getByRole('button', { name: '☆ Marcar capítulo', exact: true }).click();
 		await expect(page.getByRole('button', { name: '★ Marcado', exact: true })).toHaveAttribute(

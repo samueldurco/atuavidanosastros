@@ -21,6 +21,7 @@
 	let status = $state(''),
 		saving = $state(false);
 	let interactive = $state(false);
+	let selectedCalendarDate = $state<string | null>(null);
 	onMount(() => {
 		interactive = true;
 	});
@@ -33,6 +34,14 @@
 	);
 	const current = $derived(chapters.find((s) => s.index === chapter) ?? chapters[0]);
 	const currentIndex = $derived(chapters.findIndex((s) => s.index === current.index));
+	const weekChapters = $derived(
+		saved.reading.interpretation
+			? chapters.filter((section) => section.factIds.some((id) => /^week-day-\d+$/.test(id)))
+			: (saved.reading.editorial?.plan
+					.filter((entry) => entry.role.startsWith('week-day-'))
+					.map((entry) => chapters.find((section) => section.title === entry.title))
+					.filter((section) => section !== undefined) ?? [])
+	);
 	const currentParagraphs = $derived(
 		current.text
 			.split(/\n\s*\n/)
@@ -183,14 +192,17 @@
 	{/if}
 	{#if saved.calculation.version === 'atv-private-week-synthesis/4.0.0'}
 		<nav class="week-timeline" aria-label="Linha do tempo da semana">
-			<p>Sete datas · destaques e continuidade em UTC</p>
+			<p>
+				{saved.reading.interpretation
+					? 'Momentos da semana · datas em UTC'
+					: 'Sete datas · destaques e continuidade em UTC'}
+			</p>
 			<div>
-				{#each saved.reading.editorial?.plan.filter( (p) => p.role.startsWith('week-day-') ) ?? [] as day (day.role)}
-					{@const index = sections.findIndex((s) => s.title === day.title)}
+				{#each weekChapters as day (day.index)}
 					<button
 						disabled={!interactive}
-						aria-current={current.index === index ? 'date' : undefined}
-						onclick={() => open(index)}>{day.title}</button
+						aria-current={current.index === day.index ? 'date' : undefined}
+						onclick={() => open(day.index)}>{day.title}</button
 					>
 				{/each}
 			</div>
@@ -204,7 +216,13 @@
 	<progress value={currentIndex + 1} max={chapters.length} aria-label="Posição na leitura"
 	></progress>
 	{#if ['atv-private-calendar-synthesis/4.0.0', 'atv-private-thirty-day-synthesis/1.0.0'].includes(saved.calculation.version)}
-		<ReadingCalendar {saved} chapter={current.index} {interactive} onopen={open} />
+		<ReadingCalendar
+			{saved}
+			chapter={current.index}
+			{interactive}
+			bind:selectedDate={selectedCalendarDate}
+			onopen={open}
+		/>
 	{/if}
 	{#if hasChart}
 		<details class="map">
@@ -212,6 +230,8 @@
 			<ReadingChart
 				{saved}
 				onselect={(id) => {
+					if (id.startsWith('calendar-day-'))
+						selectedCalendarDate = id.slice('calendar-day-'.length);
 					const target = chapters.find((s) => s.factIds.includes(id));
 					if (target) open(target.index);
 				}}
@@ -224,7 +244,9 @@
 			{interactive}
 			onselect={(id) => {
 				const number = id.match(/^card-(\d+)$/)?.[1];
-				const target = chapters.find((s) => number && s.title.startsWith(`${number}. `));
+				const target = saved.reading.interpretation
+					? chapters.find((s) => s.factIds.includes(id))
+					: chapters.find((s) => number && s.title.startsWith(`${number}. `));
 				if (target) open(target.index);
 			}}
 		/>
@@ -254,7 +276,7 @@
 				>
 			</div>
 			<h2>{current.title}</h2>
-			{#if saved.product_id === 'three-pillars'}
+			{#if saved.product_id === 'three-pillars' || saved.reading.interpretation}
 				<div class="chapter-prose">
 					{#each currentParagraphs as paragraph, index (`${current.index}-${index}`)}
 						<p class="prose">{paragraph}</p>

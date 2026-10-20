@@ -4,7 +4,8 @@ import { join } from 'node:path';
 import type { CrossAspectCalculation } from '@atv/astrology';
 import type { BirthInput, CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
-import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
+import { approveTrialReading, type SavedTrial } from '../reading';
+import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { buildChartScene, boxesOverlap } from '../chart-engine-v2';
 import { latestReadingVersion } from '../versions';
 import { normalizeFactGraph } from './fact-graph';
@@ -109,7 +110,7 @@ describe('Sinastria — calculated relationships and eleven human chapters', () 
 	});
 	it('selects real evidence for eleven chapters and rejects changed readings or facts', async () => {
 		const s = await saved(input('Queremos melhorar as conversas e os acordos.'));
-		expect(s.reading.version).toBe(latestReadingVersion('synastry'));
+		expect(latestReadingVersion('synastry')).toBe('atv-current-reading/1.0.0');
 		expect(s.reading.sections).toHaveLength(12);
 		expect(duplicates(s.reading)).toEqual([]);
 		expect(reviewReconstructedSynastry(s.input, s.calculation, s.reading)).toEqual([]);

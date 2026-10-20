@@ -43,7 +43,7 @@ describe('immutable offer names for new private deliveries', () => {
 		const calculation = await sample();
 		const original = composeOriginalTrialReading(input, calculation);
 		const before = canonical(original);
-		const current = composeTrialReading(input, calculation);
+		const current = nameCurrentOffer(input, original);
 		expect(current.title).toBe('Mapa Astral Completo');
 		expect(current.nameRevision).toBe(OFFER_NAME_REVISION);
 		expect(original.title).toBe('Mapa Astral — assinaturas e temas de vida');
