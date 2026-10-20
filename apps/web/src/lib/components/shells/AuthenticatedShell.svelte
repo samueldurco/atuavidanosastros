@@ -13,7 +13,7 @@
 		...(page.data.trialAccess
 			? [
 					{ href: '/testar-produtos', label: 'Testes gratuitos' },
-					{ href: '/testar-produtos/atv-plus', label: 'ATV+ gratuito' }
+					{ href: '/testar-produtos/atv-plus', label: 'ATV+ em teste' }
 				]
 			: [])
 	]);

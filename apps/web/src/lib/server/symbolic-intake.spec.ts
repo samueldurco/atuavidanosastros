@@ -92,6 +92,7 @@ it.each([
 	'solar-return',
 	'personal-calendar',
 	'direction-journey',
+	'horoscope',
 	'tarot-celtic-cross',
 	'dream-dossier',
 	'dream-atlas'
@@ -111,6 +112,7 @@ it.each([
 	'solar-return',
 	'personal-calendar',
 	'direction-journey',
+	'horoscope',
 	'tarot-celtic-cross',
 	'dream-dossier',
 	'dream-atlas'

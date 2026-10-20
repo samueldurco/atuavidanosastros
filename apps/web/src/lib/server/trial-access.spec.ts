@@ -1,13 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { productCatalog } from '@atv/domain';
 import { load as rootLoad } from '../../routes/+layout.server';
 import { load as legacyLoad } from '../../routes/biblioteca/nova/[productId]/+page.server';
 import { readTrialLibrary } from './trial-library';
 import { handle } from '../../hooks.server';
 vi.mock('$env/dynamic/public', () => ({ env: {} }));
 vi.mock('$lib/server/symbolic-intake', () => ({
-	readIntakeAccess: vi.fn(async () => ({ state: 'UNAVAILABLE' }))
+	readIntakeAccess: vi.fn(async () => 'UNRELEASED')
 }));
 const owner = '00000000-0000-4000-8000-000000000052';
 describe('nominal trial access in the normal app', () => {
@@ -49,17 +48,17 @@ describe('nominal trial access in the normal app', () => {
 		} as unknown as Parameters<typeof rootLoad>[0]);
 		expect(result).toMatchObject({ trialAccess: false });
 	});
-	it.each(productCatalog.filter((p) => p.universe !== 'global').map((p) => p.id))(
-		'redirects legacy %s to its private trial',
+	it.each(['birth-chart', 'horoscope'])(
+		'keeps the normal %s request explicit even when private trial is granted',
 		async (productId) => {
-			await expect(
-				legacyLoad({
+			expect(
+				await legacyLoad({
 					params: { productId },
 					parent: async () => ({ user: { id: owner }, trialAccess: true }),
 					locals: {},
 					setHeaders: vi.fn()
 				} as unknown as Parameters<typeof legacyLoad>[0])
-			).rejects.toMatchObject({ status: 303, location: `/testar-produtos/${productId}` });
+			).toMatchObject({ productId, ownerId: owner, access: 'UNRELEASED' });
 		}
 	);
 	it('retains the login return path for anonymous legacy visits', async () => {
