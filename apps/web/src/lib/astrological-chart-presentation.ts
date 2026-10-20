@@ -4,9 +4,35 @@ import { signNames } from '$lib/trials/cartography';
 /** The downloadable scene is a poster. Web readers display its wheel and HTML data separately. */
 export function chartWheelSvg(svg: string): string {
 	if (!svg.includes('data-engine="AstroChartEngineV2/')) return svg;
+	// The natal wheel fits in this square; comparison cards can extend beyond it.
+	// Use the exported card bounds, including their stroke, rather than cropping
+	// them to the natal dimensions. Keep the square centered on the actual wheel.
+	let radius = 410;
+	for (const [rect] of svg.matchAll(/<rect\b[^>]*\bdata-layer="markers"[^>]*\/?\s*>/g)) {
+		const attribute = (name: string) => {
+			const value = rect.match(new RegExp(`(?:^|\\s)${name}="([^"]*)"`))?.[1];
+			return value === undefined ? NaN : Number(value);
+		};
+		const x = attribute('x'),
+			y = attribute('y'),
+			width = attribute('width'),
+			height = attribute('height'),
+			stroke = attribute('stroke-width');
+		if (![x, y, width, height].every(Number.isFinite)) continue;
+		const padding = 4 + (Number.isFinite(stroke) ? stroke / 2 : 0);
+		radius = Math.max(
+			radius,
+			450 - x + padding,
+			x + width - 450 + padding,
+			450 - y + padding,
+			y + height - 450 + padding
+		);
+	}
+	radius = Math.ceil(radius);
+	const viewBox = `${450 - radius} ${450 - radius} ${radius * 2} ${radius * 2}`;
 	return (
 		svg
-			.replace(/viewBox="[^"]*"/, 'viewBox="40 40 820 820"')
+			.replace(/viewBox="[^"]*"/, `viewBox="${viewBox}"`)
 			.replace(
 				/<(rect|path|circle|line|text)\b[^>]*\bdata-layer="(?:paper|heading|legend)"[^>]*(?:\/>|>[^<]*<\/\1>)/g,
 				''

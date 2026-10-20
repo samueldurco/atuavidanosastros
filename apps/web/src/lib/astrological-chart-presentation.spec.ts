@@ -1,8 +1,101 @@
 import { describe, expect, it } from 'vitest';
-import { buildNatalChartScene, chartSceneSvg } from './trials/chart-engine-v2';
+import type { WorkflowInput } from '@atv/domain';
+import { calculateTrial } from './server/trial-calculation';
+import { approveTrialReading, composeTrialReading, type SavedTrial } from './trials/reading';
+import { buildChartScene, buildNatalChartScene, chartSceneSvg } from './trials/chart-engine-v2';
 import { chartImageSource, chartPosition, chartWheelSvg } from './astrological-chart-presentation';
 
 describe('web chart presentation', () => {
+	it.each([
+		'date-reading',
+		'synastry',
+		'couple-dossier',
+		'week-reading',
+		'personal-calendar',
+		'career-forecast-30d'
+	])(
+		'keeps every external card inside the web viewBox of the real %s map',
+		async (productId) => {
+			// These are the production calculation inputs used by the final catalogue
+			// exports, whose external cards crossed both sides of the natal crop.
+			const birth = (date = '2000-01-01T12:00:00') => ({
+				localDateTime: date,
+				utcInstant: `${date}Z`,
+				timezone: 'UTC',
+				latitude: 0,
+				longitude: 0,
+				locationSource: 'synthetic'
+			});
+			const relationship = ['synastry', 'couple-dossier'].includes(productId);
+			const input: WorkflowInput = {
+				version: 'atv-workflow/1.0.0',
+				productId,
+				birth: birth(),
+				...(relationship ? { partner: birth('2001-07-12T07:00:00') } : {}),
+				...(productId === 'couple-dossier'
+					? {
+							context: 'Queremos conversar sobre distância e responsabilidades.',
+							questions: [
+								'Como conversar sem transformar diferenças em discussão?',
+								'Como conciliar nossos projetos futuros?'
+							]
+						}
+					: {}),
+				...(!relationship ? { targetDate: '2026-10-15' } : {}),
+				...(['personal-calendar', 'career-forecast-30d'].includes(productId)
+					? { forecastPeriod: 'rolling-30-days' as const }
+					: {}),
+				consent: {
+					storage: true,
+					partner: relationship,
+					continuity: false,
+					policyVersion: 'atv-input-consent/1'
+				}
+			};
+			const id = '00000000-0000-4000-8000-000000000084';
+			const calculation = await calculateTrial(input, id);
+			const reading = composeTrialReading(input, calculation);
+			const approval = await approveTrialReading(input, calculation, reading);
+			expect(approval).not.toBeNull();
+			const saved: SavedTrial = {
+				id,
+				product_id: productId,
+				created_at: '2026-10-20T12:00:00Z',
+				input,
+				calculation,
+				reading,
+				approval: approval!
+			};
+			const scene = buildChartScene(saved);
+			const before = structuredClone(scene);
+			const poster = chartSceneSvg(scene);
+			const wheel = chartWheelSvg(poster);
+			const [x, y, width, height] = wheel
+				.match(/viewBox="([^"]*)"/)![1]
+				.split(' ')
+				.map(Number);
+			expect(width).toBe(height);
+			expect(x + width / 2).toBe(450);
+			expect(y + height / 2).toBe(450);
+			const external = scene.markers.filter((marker) => marker.body.startsWith('sample:'));
+			expect(external).toHaveLength(10);
+			// Confirm the fixture exercises the original left/right clipping defect.
+			expect(external.some(({ box }) => box.x < 40)).toBe(true);
+			expect(external.some(({ box }) => box.x + box.w > 860)).toBe(true);
+			for (const { box } of scene.markers) {
+				expect(box.x - x).toBeGreaterThan(4);
+				expect(box.y - y).toBeGreaterThan(4);
+				expect(x + width - (box.x + box.w)).toBeGreaterThan(4);
+				expect(y + height - (box.y + box.h)).toBeGreaterThan(4);
+			}
+			expect(wheel).not.toMatch(/data-layer="(?:paper|heading|legend)"/);
+			const markerGeometry = (svg: string) =>
+				svg.match(/<(?:rect|line|circle)\b[^>]*data-layer="(?:markers|leaders)"[^>]*>/g);
+			expect(markerGeometry(wheel)).toEqual(markerGeometry(poster));
+			expect(scene).toEqual(before);
+		},
+		15_000
+	);
 	it('keeps calculated wheel geometry and separates poster headings and legend from the web scene', () => {
 		const scene = buildNatalChartScene({
 			positions: [

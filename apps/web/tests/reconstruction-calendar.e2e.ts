@@ -63,9 +63,17 @@ for (const width of [390, 1440]) {
 			'date'
 		);
 		await expect(calendar.locator('[aria-current="date"]')).toHaveCount(1);
-		await expect(
-			page.locator('svg [data-layer="positions"][data-fact-id="calendar-position-2026-01-30-moon"]')
-		).toHaveCount(1);
+		const wheel = page.locator('.astrological-chart img.wheel');
+		await expect(wheel).toBeVisible();
+		await expect
+			.poll(async () => decodeURIComponent((await wheel.getAttribute('src')) ?? ''))
+			.toContain('data-fact-id="calendar-position-2026-01-30-moon"');
+		const finalSky = await wheel.getAttribute('src');
+		await expect
+			.poll(() =>
+				wheel.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)
+			)
+			.toBe(true);
 		const finalDateLabel = await calendar
 			.getByRole('button', { name: /^30\/01\/2026:/ })
 			.getAttribute('aria-label');
@@ -83,9 +91,15 @@ for (const width of [390, 1440]) {
 			'date'
 		);
 		await expect(calendar.locator('[aria-current="date"]')).toHaveCount(1);
-		await expect(
-			page.locator('svg [data-layer="positions"][data-fact-id="calendar-position-2026-01-01-moon"]')
-		).toHaveCount(1);
+		await expect
+			.poll(async () => decodeURIComponent((await wheel.getAttribute('src')) ?? ''))
+			.toContain('data-fact-id="calendar-position-2026-01-01-moon"');
+		expect(await wheel.getAttribute('src')).not.toBe(finalSky);
+		await expect
+			.poll(() =>
+				wheel.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)
+			)
+			.toBe(true);
 		const pending = page.waitForEvent('download');
 		await page.getByRole('button', { name: 'Baixar SVG', exact: true }).click();
 		expect(await (await pending).failure()).toBeNull();
