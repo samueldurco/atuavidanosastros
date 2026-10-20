@@ -4,6 +4,8 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
 import { admitBatch, DATED_INDEX_PATH } from "./admit-dated-horoscope.mjs";
 import { RELEASE_PATH, replayComparableFacts } from "./dated-horoscope-authority.mjs";
 import { digest } from "../apps/web/src/lib/server/editorial-automation.ts";
@@ -12,6 +14,7 @@ import { composeDocumentAndClaims } from "./lib/public-horoscope-compose.mjs";
 import { signedHoroscopeFixture } from "./test-support/dated-horoscope-fixture.mjs";
 
 const runnerEvidence = { syntheticOnly: true, stage: "idempotence-test" };
+const prettier = createRequire(new URL("../apps/web/package.json", import.meta.url))("prettier");
 const write = (root, relative, value) => {
   const destination = path.join(root, relative);
   fs.mkdirSync(path.dirname(destination), { recursive: true });
@@ -68,6 +71,14 @@ async function resignedBatch(fixture, facts, frozenAt = "2026-10-20T17:05:00.000
   }) }];
   return batch;
 }
+
+test("admission formats the derived index with the web application's lint configuration", async (t) => {
+  const fixture = await workspace(t);
+  const indexPath = fileURLToPath(new URL(`../${DATED_INDEX_PATH}`, import.meta.url));
+  assert.equal(await prettier.check(fixture.indexBytes.toString("utf8"), {
+    ...await prettier.resolveConfig(indexPath), plugins: [], parser: "json",
+  }), true);
+});
 
 test("fresh calculation and freeze clocks retain all originally admitted bytes and documents", async (t) => {
   const fixture = await workspace(t);

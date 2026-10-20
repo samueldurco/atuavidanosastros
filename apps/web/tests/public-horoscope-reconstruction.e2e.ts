@@ -1,16 +1,34 @@
 import { expect, test } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
+import { currentForecasts, datedForecasts } from './fixtures/editorial-inventory';
 const HOROSCOPE_FOLLOW_KEY = 'atv.public-horoscope.follow.v1';
+const ariesDaily = currentForecasts.find((document) =>
+	document.path.startsWith('/horoscopo/aries/daily/')
+);
+const ariesDailyHistory = datedForecasts.some((document) =>
+	document.path.startsWith('/horoscopo/aries/daily/')
+);
+const dailySigns = new Set(
+	currentForecasts
+		.filter((document) => document.path.includes('/daily/'))
+		.map((document) => document.path.split('/')[2])
+);
+const ariesWeekly = currentForecasts.find((document) =>
+	document.path.startsWith('/horoscopo/aries/weekly/')
+);
 
-test('free tool offers admitted guides without presenting them as dated readings', async ({
+test('free tool separates admitted dated readings from supporting guides', async ({
 	page,
 	request
 }, testInfo) => {
 	const response = await request.get('/api/free-tools/horoscopo?sign=aries&period=daily');
 	expect(response.status()).toBe(200);
 	const result = await response.json();
-	expect(result.current).toBeNull();
-	expect(result.hasHistory).toBe(false);
+	if (ariesDaily) {
+		expect(result.current).toMatchObject({ path: ariesDaily.path, title: ariesDaily.title });
+		expect(result.current.sections.length).toBeGreaterThan(0);
+	} else expect(result.current).toBeNull();
+	expect(result.hasHistory).toBe(ariesDailyHistory);
 	expect(result.supportingGuides.map((guide: { path: string }) => guide.path)).toEqual([
 		'/noticias/2026/10/fases-da-lua',
 		'/mercurio-retrogrado'
@@ -19,13 +37,24 @@ test('free tool offers admitted guides without presenting them as dated readings
 	await page.goto('/ferramentas/horoscopo');
 	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 	await page.getByRole('button', { name: 'Consultar meu signo', exact: true }).click();
-	await expect(
-		page.getByText('A leitura de dia para Áries ainda não está disponível.')
-	).toBeVisible();
+	if (ariesDaily) {
+		await expect(
+			page.getByRole('heading', { level: 3, name: ariesDaily.title, exact: true })
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', { name: 'Abrir esta leitura', exact: true })
+		).toHaveAttribute('href', ariesDaily.path);
+	} else {
+		await expect(
+			page.getByText('A leitura de dia para Áries ainda não está disponível.')
+		).toBeVisible();
+	}
 	const guides = page.getByRole('region', { name: 'Para entender os ciclos' });
 	await expect(guides.getByRole('link')).toHaveCount(2);
 	await expect(guides).toContainText('Não são previsões para o período escolhido.');
-	await expect(page.getByText('Você pode consultar as publicações anteriores.')).toHaveCount(0);
+	await expect(page.getByText('Você pode consultar as publicações anteriores.')).toHaveCount(
+		!ariesDaily && ariesDailyHistory ? 1 : 0
+	);
 	await expect(
 		page.getByRole('link', { name: 'Conhecer a leitura pessoal →' })
 	).not.toHaveAttribute('href', /undefined|horoscope/);
@@ -51,10 +80,10 @@ for (const width of [320, 390, 1440]) {
 		await expect(page.locator('.sign-card')).toHaveCount(12);
 		await expect(
 			page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
-		).toBeVisible();
+		).toHaveCount(dailySigns.size ? 0 : 1);
 		await expect(
 			page.locator('.sign-card').filter({ hasText: 'Ler a publicação atual' })
-		).toHaveCount(0);
+		).toHaveCount(dailySigns.size);
 		const guides = page.getByRole('region', { name: 'Para entender os ciclos' });
 		await expect(guides.getByRole('link')).toHaveCount(2);
 		await expect(guides).toContainText('Não são previsões para o período escolhido.');
@@ -91,12 +120,21 @@ for (const width of [320, 390, 1440]) {
 			.filter({ has: page.getByRole('heading', { name: 'Áries', exact: true }) })
 			.click();
 		await expect(page).toHaveURL(/\/horoscopo\/aries\?period=weekly&year=\d{4}$/);
-		await expect(
-			page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
-		).toBeVisible();
-		await page.getByLabel('Ano de início da leitura').fill('2025');
+		if (ariesWeekly) {
+			await expect(
+				page.getByRole('heading', { level: 2, name: ariesWeekly.title, exact: true })
+			).toBeVisible();
+			await expect(
+				page.getByRole('link', { name: 'Ler o horóscopo completo', exact: true })
+			).toHaveAttribute('href', ariesWeekly.path);
+		} else {
+			await expect(
+				page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
+			).toBeVisible();
+		}
+		await page.getByLabel('Ano de início da leitura').fill('1900');
 		await page.getByRole('button', { name: 'Ver histórico', exact: true }).click();
-		await expect(page).toHaveURL(/period=weekly&year=2025/);
+		await expect(page).toHaveURL(/period=weekly&year=1900/);
 		await expect(
 			page.getByText('Ainda não há leituras publicadas para este período e ano.')
 		).toBeVisible();
@@ -144,7 +182,7 @@ test('unknown, malformed and unsigned archive URLs fail closed', async ({ page }
 		['/horoscopo/aries?year=2100', 400],
 		['/horoscopo?period=annual', 400],
 		['/horoscopo/aries/daily/2026-02-29', 404],
-		['/horoscopo/aries/daily/2026-10-08', 404]
+		['/horoscopo/aries/daily/1900-01-01', 404]
 	] as const) {
 		const response = await page.goto(path);
 		expect(response?.status()).toBe(status);
