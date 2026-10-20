@@ -67,7 +67,7 @@ for (const width of [390, 1440]) {
 		await expect(wheel).toBeVisible();
 		await expect
 			.poll(async () => decodeURIComponent((await wheel.getAttribute('src')) ?? ''))
-			.toContain('data-fact-id="calendar-position-2026-01-30-moon"');
+			.toContain('data-layer="positions" data-fact-id="calendar-position-2026-01-30-moon"');
 		const finalSky = await wheel.getAttribute('src');
 		await expect
 			.poll(() =>
@@ -93,7 +93,7 @@ for (const width of [390, 1440]) {
 		await expect(calendar.locator('[aria-current="date"]')).toHaveCount(1);
 		await expect
 			.poll(async () => decodeURIComponent((await wheel.getAttribute('src')) ?? ''))
-			.toContain('data-fact-id="calendar-position-2026-01-01-moon"');
+			.toContain('data-layer="positions" data-fact-id="calendar-position-2026-01-01-moon"');
 		expect(await wheel.getAttribute('src')).not.toBe(finalSky);
 		await expect
 			.poll(() =>
