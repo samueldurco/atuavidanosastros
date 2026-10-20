@@ -44,7 +44,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			'/api/integrations',
 			'/api/private-trials',
 			'/testar-produtos',
-			'/compartilhar/leitura'
+			'/compartilhar/leitura',
+			'/ofertas'
 		].some((path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`))
 	) {
 		response.headers.set('cache-control', 'private, no-store');

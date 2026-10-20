@@ -18,20 +18,17 @@
 		<section class="product-offer-hero">
 			<div class="wrap product-offer-hero-inner">
 				<div class="product-offer-copy">
-					<a class="back-link" href="/leituras"
-						>Todas as leituras <span aria-hidden="true">↗</span></a
-					>
 					<p class="eyebrow">{data.presentation.eyebrow}</p>
 					<p class="contextual-badge">
-						{data.presentation.status === 'DECIDED_PREPARING'
-							? 'Contexto definido · Apresentação em preparação'
-							: 'Possibilidade histórica · Em estudo'}
+						Prévia interna · {data.presentation.status === 'DECIDED_PREPARING'
+							? 'Contexto definido'
+							: 'Possibilidade em estudo'}
 					</p>
 					{#if design}<p class="product-offer-caption">{design.caption}</p>{/if}
 					<h1>{data.presentation.headline}</h1>
 					<p class="lead">{data.presentation.opening}</p>
 					<a class="button product-primary" href="#detalhes"
-						>Entender a diferença <span aria-hidden="true">↗</span></a
+						>Entender a proposta <span aria-hidden="true">↓</span></a
 					>
 				</div>
 				<div class="product-offer-art">
@@ -64,34 +61,28 @@
 			<aside class="contextual-next" aria-labelledby="contextual-next-heading">
 				<div>
 					<p class="eyebrow">Para decidir com clareza</p>
-					<h2 id="contextual-next-heading">Conheça a proposta antes de escolher</h2>
+					<h2 id="contextual-next-heading">Uma escolha antes de seguir</h2>
 					<p>{data.presentation.decision}</p>
 					{#if data.presentation.status === 'DECIDED_PREPARING'}
 						<p class="contextual-status" role="status">
-							Este contexto foi definido para a jornada, mas a apresentação ainda está em
-							preparação. A leitura não está disponível para compra; preço e condições serão
-							informados quando houver uma oferta ativa.
+							Esta é uma prévia interna do percurso. A oferta e a compra ainda não estão ativas;
+							preço, condições e confirmação serão apresentados aqui quando o checkout estiver
+							conectado.
 						</p>
 					{:else}
 						<p class="contextual-status" role="status">
-							Este percurso é uma possibilidade histórica em estudo, ainda não adotada na jornada. A
-							leitura não está disponível para compra e não há preço ou condição comercial vigente
-							aqui.
+							Este percurso ainda está em estudo. Ele só aparecerá após um gatilho verificado da
+							jornada, se for aprovado e configurado.
 						</p>
 					{/if}
 				</div>
-				<nav aria-label="Próximos caminhos" class="contextual-links">
-					<a class="button product-primary" href={'/produtos/' + data.product.slug}
-						>Ver a ficha de {data.product.name} <span aria-hidden="true">↗</span></a
+				<nav aria-label="Continuar a jornada" class="contextual-links">
+					<a class="button product-primary" href="/dashboard"
+						>Continuar para Minha Área <span aria-hidden="true">→</span></a
 					>
-					<a class="text-link" href={'/produtos/' + data.source.slug}
-						>Rever {data.source.name} <span aria-hidden="true">↗</span></a
-					>
-					{#if data.presentation.moment === 'post-purchase'}
-						<a class="text-link" href="/biblioteca"
-							>Ir à Minha Biblioteca <span aria-hidden="true">↗</span></a
-						>
-					{/if}
+					<p>
+						Na Minha Área, você acompanha o pedido e completa os dados necessários para sua leitura.
+					</p>
 				</nav>
 			</aside>
 		</section>
@@ -99,13 +90,6 @@
 </div>
 
 <style>
-	.back-link {
-		display: inline-flex;
-		align-items: center;
-		min-height: 44px;
-		margin-bottom: 1.25rem;
-		font-size: 0.8rem;
-	}
 	.contextual-badge {
 		display: inline-block;
 		margin: 0.15rem 0 0.7rem;

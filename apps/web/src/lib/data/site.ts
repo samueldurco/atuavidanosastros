@@ -5,7 +5,7 @@ export const SITE = {
 	tagline: 'Astrologia para conhecer você.',
 	url: 'https://atuavidanosastros.com.br',
 	description:
-		'Mapa astral, previsões, amor, dinheiro e carreira, Tarot e sonhos. Explore as ferramentas, leituras e artigos da A Tua Vida nos Astros.'
+		'Mapa astral, previsões, amor, dinheiro e carreira, Tarot e sonhos. Explore as ferramentas, leituras digitais e artigos da A Tua Vida nos Astros.'
 } as const;
 
 export const navigation = interestNavigation.map(({ href, label }) => ({ href, label }));

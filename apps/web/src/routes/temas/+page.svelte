@@ -11,7 +11,7 @@
 			<h1>Um céu, diferentes caminhos.</h1>
 			<p class="lead">
 				Mapa astral, previsões, amor, carreira, Tarot e sonhos. Cada tema reúne ferramentas grátis,
-				leituras para comparar e artigos para entender melhor o assunto.
+				leituras digitais para comparar e artigos para entender melhor o assunto.
 			</p>
 		</div>
 	</section>
@@ -40,7 +40,7 @@
 		</div>
 		<p class="catalog-link">
 			<a class="text-link" href="/leituras"
-				>Ver todas as leituras <span aria-hidden="true">↗</span></a
+				>Ver o catálogo de leituras digitais <span aria-hidden="true">↗</span></a
 			>
 		</p>
 	</section>

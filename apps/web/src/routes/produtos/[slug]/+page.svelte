@@ -130,14 +130,12 @@
 			<div class="wrap product-offer-hero-inner">
 				<div class="product-offer-copy">
 					<a class="back-link" href="/leituras"
-						>Todas as leituras <span aria-hidden="true">↗</span></a
+						>Catálogo de leituras digitais <span aria-hidden="true">↗</span></a
 					>
-					<p class="eyebrow">
-						{journey
-							? 'Dinheiro e carreira · Mapa natal'
-							: (landing?.eyebrow ?? 'Conheça a leitura')}
-					</p>
-					{#if design}<p class="product-offer-caption">{design.caption}</p>{/if}
+					<p class="eyebrow">Leitura digital · produto avulso</p>
+					{#if journey || landing || design}<p class="product-offer-caption">
+							{journey ? 'Dinheiro e carreira · Mapa natal' : (landing?.eyebrow ?? design?.caption)}
+						</p>{/if}
 					<h1>{data.product.name}</h1>
 					<p class="lead">{data.product.summary}</p>
 					<div class="product-offer-actions">
@@ -173,7 +171,7 @@
 				</section>
 				<section>
 					<p class="eyebrow">A entrega</p>
-					<h2>Formatos previstos</h2>
+					<h2>Formatos digitais previstos</h2>
 					<ul class="product-formats">
 						{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
 					</ul>
@@ -213,7 +211,7 @@
 						<Button href={freeEntry.href}>{freeEntry.label}</Button>
 					</div>{/if}
 				<p class="back">
-					<a href="/dashboard">Ver minhas leituras</a> ·
+					<a href="/biblioteca">Ver minhas leituras</a> ·
 					<a href="/metodo">Como fazemos as leituras</a>
 				</p>
 			</aside>

@@ -122,7 +122,7 @@ for (const width of [320, 1440]) {
 		await firstTool.locator('button.tool-open').click();
 		await expect(firstTool.getByLabel('Data de nascimento')).toBeVisible();
 		await expect(page).toHaveURL('/');
-		await expect(main.getByRole('link', { name: 'Compare o que está incluído' })).toHaveAttribute(
+		await expect(main.getByRole('link', { name: 'Conhecer a assinatura ATV+' })).toHaveAttribute(
 			'href',
 			'/atv-mais'
 		);
@@ -132,7 +132,7 @@ for (const width of [320, 1440]) {
 		await page.locator('button[aria-controls="primary-navigation"]').click();
 		await page
 			.getByRole('navigation', { name: 'Navegação principal', exact: true })
-			.getByRole('link', { name: 'Leituras', exact: true })
+			.locator('a[href="/leituras"]')
 			.click();
 		await expect(page).toHaveURL('/leituras');
 		await expect(page.locator('.public-product-card')).toHaveCount(19);

@@ -7,6 +7,7 @@
 	import { page } from '$app/state';
 	import PublicShell from '$lib/components/shells/PublicShell.svelte';
 	import AuthenticatedShell from '$lib/components/shells/AuthenticatedShell.svelte';
+	import JourneyShell from '$lib/components/shells/JourneyShell.svelte';
 	import SeoHead from '$lib/components/SeoHead.svelte';
 	let { children } = $props();
 	const visual = $derived(
@@ -25,6 +26,7 @@
 				(path) => page.url.pathname === path || page.url.pathname.startsWith(`${path}/`)
 			)
 	);
+	const journey = $derived(page.url.pathname.startsWith('/ofertas/'));
 </script>
 
 <SeoHead seo={page.data.seo} />
@@ -43,8 +45,8 @@
 	class:universe-material={!!visual.universe}
 	data-universe={visual.universe}
 >
-	{#if member}<AuthenticatedShell>{@render children()}</AuthenticatedShell>{:else}<PublicShell
-			>{@render children()}</PublicShell
-		>{/if}
-	<ConsentBanner />
+	{#if journey}<JourneyShell>{@render children()}</JourneyShell>{:else if member}<AuthenticatedShell
+			>{@render children()}</AuthenticatedShell
+		>{:else}<PublicShell>{@render children()}</PublicShell>{/if}
+	{#if !journey}<ConsentBanner />{/if}
 </div>

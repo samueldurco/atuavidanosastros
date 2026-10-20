@@ -26,8 +26,8 @@
 			<svelte:element this={headingLevel} id="shop-showcase-title">Loja dos Signos</svelte:element>
 		</div>
 		<p>
-			Astrologia também pode fazer parte do seu espaço. Conheça as primeiras artes da nossa coleção
-			de pôsteres.
+			Produtos físicos inspirados na astrologia para o seu espaço. Conheça as primeiras artes da
+			nossa coleção de pôsteres.
 		</p>
 	</div>
 	<div class="shop-pieces">
@@ -47,7 +47,7 @@
 	<div class="shop-end">
 		<p>Estas são prévias das artes. A coleção ainda não está à venda.</p>
 		{#if showLink}<a class="button secondary" href="/loja"
-				>Conhecer a Loja dos Signos <span aria-hidden="true">↗</span></a
+				>Conhecer os produtos físicos <span aria-hidden="true">↗</span></a
 			>{:else}<a class="button secondary" href="/fale-conosco?assunto=loja"
 				>Falar sobre a coleção <span aria-hidden="true">↗</span></a
 			>{/if}

@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>Leituras e experiências — {SITE.name}</title>
+	<title>Leituras digitais — {SITE.name}</title>
 	<meta
 		name="description"
 		content="Explore os produtos digitais da ATVNA: mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos. Confira o conteúdo e a disponibilidade de cada leitura."
@@ -21,16 +21,22 @@
 <div class="mvp-public">
 	<section class="section catalog-intro">
 		<div class="wrap">
-			<p class="eyebrow">Produtos digitais</p>
-			<h1>Leituras e experiências</h1>
+			<p class="eyebrow">Catálogo de produtos digitais · leituras avulsas</p>
+			<h1>Leituras digitais</h1>
 			<p class="lead">
-				Escolha um assunto e conheça as leituras para você. Cada página apresenta o conteúdo, os
-				dados necessários e a disponibilidade do produto.
+				Escolha uma leitura de mapa astral, previsões, relacionamentos, dinheiro e carreira, Tarot
+				ou sonhos. Cada página apresenta o conteúdo digital, os dados necessários, os formatos e a
+				disponibilidade.
 			</p>
 			<p>
 				Quer começar gratuitamente? <a href="/ferramentas/ascendente">Descubra seu Ascendente</a> ou
 				<a href="/ferramentas">explore as ferramentas grátis</a>. Você recebe o resultado antes de
 				criar a conta.
+			</p>
+			<p>
+				Procura pôsteres e objetos? <a href="/loja"
+					>Conheça os produtos físicos da Loja dos Signos</a
+				>.
 			</p>
 			<nav class="topics" aria-label="Temas das leituras">
 				<a href="/leituras" aria-current={!data.selected ? 'page' : undefined}>Todos os temas</a>
@@ -41,7 +47,7 @@
 			</nav>
 			<p class="catalog-count" aria-live="polite">
 				{count}
-				{count === 1 ? 'leitura neste catálogo' : 'leituras neste catálogo'}
+				{count === 1 ? 'leitura digital neste catálogo' : 'leituras digitais neste catálogo'}
 			</p>
 		</div>
 	</section>
@@ -86,13 +92,15 @@
 	<aside class="wrap section continuity" aria-label="Continuidade das leituras">
 		<div class="paper continuity-inner">
 			<div>
-				<p class="eyebrow">Suas leituras, em continuidade</p>
+				<p class="eyebrow">Assinatura de leituras digitais</p>
 				<h2>ATV+</h2>
 				<p>
-					Conheça a proposta de acompanhamento das suas leituras e dos registros que você autorizar
-					guardar.
+					Compare os três planos e as leituras incluídas a cada ciclo de 30 dias. Consulte quais
+					leituras continuam avulsas e a disponibilidade da assinatura.
 				</p>
-				<a class="text-link" href="/atv-mais">Conhecer o ATV+ <span aria-hidden="true">→</span></a>
+				<a class="text-link" href="/atv-mais"
+					>Conhecer a assinatura ATV+ <span aria-hidden="true">→</span></a
+				>
 			</div>
 			<MvpProductArt productId="atv-plus" />
 		</div>

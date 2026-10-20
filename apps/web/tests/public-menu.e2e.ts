@@ -3,17 +3,24 @@ import { expect, test } from '@playwright/test';
 import { interestNavigation, primaryNavigation } from '../src/lib/data/public-navigation';
 import { editorialTopicPaths } from '../src/lib/data/editorial-topics';
 
-for (const width of [320, 390, 820, 1440]) {
+test.beforeEach(async ({ page }) => {
+	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
+});
+
+for (const width of [320, 390, 820, 1440, 1920]) {
 	test(`menu por intenção: destinos, teclado e reflow em ${width}px`, async ({
 		page,
 		request
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 844 });
 		await page.goto('/');
-		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
-		if (await consent.isVisible()) await consent.click();
 		const button = page.getByRole('button', { name: 'Menu', exact: true });
 		await expect(button).toBeEnabled();
+		const header = page.locator('header.site-header');
+		await expect(header.getByRole('link')).toHaveCount(2);
+		await expect(header.getByRole('link', { name: 'Entrar', exact: true })).toBeInViewport();
+		await expect(button).toBeInViewport();
+		await expect(header.locator('.header-actions a')).toHaveCount(1);
 		await button.focus();
 		await page.keyboard.press('Enter');
 		const nav = page.getByRole('navigation', { name: 'Navegação principal' });
@@ -22,16 +29,10 @@ for (const width of [320, 390, 820, 1440]) {
 			'/'
 		);
 		for (const item of primaryNavigation)
-			await expect(nav.getByRole('link', { name: item.label, exact: true })).toHaveAttribute(
-				'href',
-				item.href
-			);
+			await expect(nav.locator(`a[href="${item.href}"]`)).toContainText(item.label);
 		await expect(nav.locator('.topic-link')).toHaveCount(6);
 		for (const item of interestNavigation) {
-			await expect(nav.getByRole('link', { name: new RegExp(item.label) })).toHaveAttribute(
-				'href',
-				item.href
-			);
+			await expect(nav.locator(`.topic-link[href="${item.href}"]`)).toContainText(item.label);
 			for (const href of [item.href, `/revista?tema=${item.id}`])
 				expect((await request.get(href)).status(), href).toBe(200);
 		}
@@ -56,7 +57,7 @@ for (const width of [320, 390, 820, 1440]) {
 		await expect(button).toBeFocused();
 		await expect(button).toHaveAttribute('aria-expanded', 'false');
 		await button.click();
-		await nav.getByRole('link', { name: 'Revista ATVNA', exact: true }).click();
+		await nav.locator('a[href="/revista"]').click();
 		await expect(page).toHaveURL(/\/revista$/);
 		await expect(nav).not.toBeVisible();
 	});

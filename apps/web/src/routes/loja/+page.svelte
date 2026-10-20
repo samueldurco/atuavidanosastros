@@ -3,15 +3,20 @@
 </script>
 
 <svelte:head>
-	<title>Loja dos Signos — A Tua Vida nos Astros</title>
+	<title>Produtos físicos · Loja dos Signos — A Tua Vida nos Astros</title>
 	<meta
 		name="description"
-		content="Conheça as primeiras artes da Loja dos Signos: pôsteres inspirados no zodíaco e nas fases da Lua. Coleção em preparação."
+		content="Produtos físicos da Loja dos Signos: conheça as primeiras artes para pôsteres inspirados no zodíaco e nas fases da Lua. Coleção em preparação."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
 </svelte:head>
 
 <div class="container shop-page">
+	<p class="catalog-alternative">
+		Procura mapas astrais, previsões, Tarot ou interpretação de sonhos? <a href="/leituras"
+			>Ver o catálogo de leituras digitais</a
+		>.
+	</p>
 	<ShopShowcase showLink={false} headingLevel="h1" />
 	<aside class="shop-reading" aria-labelledby="shop-reading-title">
 		<div>
@@ -30,6 +35,10 @@
 	.shop-page {
 		padding-top: clamp(1rem, 3vw, 3rem);
 		padding-bottom: clamp(3rem, 6vw, 6rem);
+	}
+	.catalog-alternative {
+		max-width: 48rem;
+		line-height: 1.6;
 	}
 	.shop-reading {
 		display: flex;

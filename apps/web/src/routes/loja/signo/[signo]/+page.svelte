@@ -3,12 +3,12 @@
 </script>
 
 <svelte:head
-	><title>{data.name} na Loja dos Signos — em preparação</title><meta
+	><title>Produtos físicos de {data.name} · Loja dos Signos — em preparação</title><meta
 		name="robots"
 		content="noindex,follow"
 	/><meta
 		name="description"
-		content={`Livros e objetos inspirados em ${data.name}. Loja em preparação.`}
+		content={`Produtos físicos inspirados em ${data.name}. Loja dos Signos em preparação.`}
 	/><link
 		rel="canonical"
 		href={`https://atuavidanosastros.com.br/loja/signo/${data.slug}`}
@@ -16,9 +16,9 @@
 >
 <section class="section sign-page">
 	<div class="reading">
-		<a class="back-link" href="/loja">← Loja dos Signos</a>
+		<a class="back-link" href="/loja">← Produtos físicos · Loja dos Signos</a>
 		<span class="status">Em preparação</span>
-		<p class="eyebrow">Loja dos Signos</p>
+		<p class="eyebrow">Produtos físicos · Loja dos Signos</p>
 		<h1 class="h1">{data.name} na Loja dos Signos</h1>
 		<p class="lead">
 			Estamos preparando uma seleção de livros e objetos inspirados em {data.name}. As compras ainda
@@ -31,7 +31,10 @@
 				disponível.
 			</p>
 		</div>
-		<a class="button secondary" href="/loja">Voltar à Loja dos Signos</a>
+		<a class="button secondary" href="/loja">Ver todos os produtos físicos</a>
+		<p>
+			Para mapas, previsões, Tarot e sonhos, <a href="/leituras">consulte as leituras digitais</a>.
+		</p>
 	</div>
 </section>
 

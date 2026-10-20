@@ -3,6 +3,10 @@ import { expect, test } from '@playwright/test';
 import { interestNavigation } from '../src/lib/data/public-navigation';
 import { editorialTopicPaths } from '../src/lib/data/editorial-topics';
 
+test.beforeEach(async ({ page }) => {
+	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
+});
+
 for (const width of [390, 1440]) {
 	test(`encontrar os 12 guias pelo menu, assunto e retorno em ${width}px`, async ({
 		page,
@@ -10,12 +14,10 @@ for (const width of [390, 1440]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/');
-		const consent = page.getByRole('button', { name: 'Recusar opcionais' });
-		if (await consent.isVisible()) await consent.click();
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
 		await page
 			.getByRole('navigation', { name: 'Navegação principal' })
-			.getByRole('link', { name: 'Revista ATVNA', exact: true })
+			.locator('a[href="/revista"]')
 			.click();
 		await expect(page).toHaveURL(/\/revista$/);
 		const articleCards = page.locator('main article.featured, main article.article-card');
