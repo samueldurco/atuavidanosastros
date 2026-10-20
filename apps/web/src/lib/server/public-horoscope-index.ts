@@ -46,6 +46,23 @@ export function publicHoroscopeIndex(
 		(entry) => entry.period === period && entry.startDate.startsWith(`${year}-`)
 	);
 	const today = now.toISOString().slice(0, 10);
+	const currentSigns = entries
+		.filter(
+			(entry) =>
+				entry.period === period && entry.startDate <= today && today < entry.endDateExclusive
+		)
+		.map((entry) => entry.sign);
+	// Supporting guides retain their own editorial identity and never stand in for a dated reading.
+	const supportingGuides = ['/noticias/2026/10/fases-da-lua', '/mercurio-retrogrado'].flatMap(
+		(guidePath) => {
+			const guide = documents.find(
+				(document) => document.kind === 'guide' && document.path === guidePath
+			);
+			return guide
+				? [{ path: guide.path, title: guide.title, description: guide.description }]
+				: [];
+		}
+	);
 	const current = sign
 		? (own.find(
 				(entry) =>
@@ -70,6 +87,8 @@ export function publicHoroscopeIndex(
 		entries,
 		history,
 		current,
+		currentSigns,
+		supportingGuides,
 		seo
 	};
 }

@@ -233,10 +233,22 @@ function composeDate(input: WorkflowInput, calculation: CalculationSnapshot): Tr
 		`O que merece atenção em ${date(input.targetDate!)}? Esta leitura aproxima o retrato celeste das 12h UTC do seu mapa natal, para compreender como diferentes necessidades podem se encontrar nessa amostra.`
 	);
 	if (!selected.length) {
+		const absence: Meaning = {
+			claim:
+				'Nenhuma relação entre os dez corpos da amostra e os dez corpos natais entrou no orbe de 2° dos cinco aspectos considerados.',
+			factIds: [
+				'sample-instant',
+				...positions.map((position) => `sample-${position.body}`),
+				...graph.positions.map((position) => position.factId)
+			],
+			relation:
+				'A projeção validada compara as vinte posições preservadas com a política da data e retorna zero contatos. A conclusão se limita a essa ausência no instante da amostra.'
+		};
 		b.add(
 			'Uma amostra sem contatos no recorte escolhido',
-			'Nenhuma relação entre os dez corpos da amostra e os dez corpos natais entrou no orbe de 2° dos cinco aspectos considerados. Essa ausência limita a interpretação desta amostra; não descreve como será a data nem permite preenchê-la com uma previsão genérica.',
-			['sample-instant']
+			`${absence.claim} Essa ausência limita a interpretação desta amostra; não descreve como será a data nem permite preenchê-la com uma previsão genérica.`,
+			absence.factIds,
+			[absence]
 		);
 	}
 	for (const c of selected) {

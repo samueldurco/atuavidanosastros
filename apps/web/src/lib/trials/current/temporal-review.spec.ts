@@ -7,6 +7,68 @@ import { temporalNatalModifier, temporalNarrative, temporalSharedTarget } from '
 import { careerAspectNuance } from './temporal-career';
 
 describe('current periods without an optional personal context', () => {
+	it('approves a calculated date with no contacts without inventing significance', async () => {
+		const input: WorkflowInput = {
+			version: 'atv-workflow/1.0.0',
+			productId: 'date-reading',
+			birth: {
+				localDateTime: '1953-09-06T12:00:00',
+				utcInstant: '1953-09-06T12:00:00Z',
+				timezone: 'UTC',
+				latitude: 0,
+				longitude: 0,
+				locationSource: 'synthetic'
+			},
+			targetDate: '2026-08-20',
+			consent: {
+				storage: true,
+				partner: false,
+				continuity: false,
+				policyVersion: 'atv-input-consent/1'
+			}
+		};
+		const calculation = await calculateTrial(input, '00000000-0000-4000-8000-000000004204');
+		expect((calculation.data.transitGeometry as { aspects: unknown[] }).aspects).toEqual([]);
+		const reading = composeTrialReading(input, calculation);
+		expect(reading.sections[0].text).toContain('orbe de 2° dos cinco aspectos considerados');
+		expect(reading.sections[0].text).toContain('não descreve como será a data');
+		expect(reading.interpretation!.conclusions).toHaveLength(1);
+		const conclusion = reading.interpretation!.conclusions[0];
+		expect(reading.sections[conclusion.section].text).toContain(conclusion.claim);
+		expect(conclusion.factIds).toHaveLength(21);
+		expect(conclusion.factIds).toEqual(
+			expect.arrayContaining([
+				'sample-instant',
+				'sample-sun',
+				'sample-moon',
+				'position-sun',
+				'position-moon'
+			])
+		);
+		expect(reviewCurrentReading(calculation, reading)).toEqual([]);
+		expect(await approveTrialReading(input, calculation, reading)).not.toBeNull();
+
+		const inventedMeaning = structuredClone(reading);
+		inventedMeaning.sections[0].text = 'A ausência de contatos garante uma data tranquila.';
+		inventedMeaning.interpretation!.conclusions[0].claim = inventedMeaning.sections[0].text;
+		expect(await approveTrialReading(input, calculation, inventedMeaning)).toBeNull();
+
+		const unsupported = structuredClone(reading);
+		unsupported.interpretation!.conclusions = [];
+		expect(await approveTrialReading(input, calculation, unsupported)).toBeNull();
+
+		const inventedContact = structuredClone(calculation);
+		(inventedContact.data.transitGeometry as { aspects: unknown[] }).aspects.push({
+			first: 'sun',
+			second: 'sun',
+			kind: 'conjunction',
+			orbDegrees: 0
+		});
+		expect(() => composeTrialReading(input, inventedContact)).toThrow(
+			'Relações da data sem correspondência'
+		);
+		expect(await approveTrialReading(input, inventedContact, reading)).toBeNull();
+	});
 	it('does not label a conjunction and a sextile as two easy openings', () => {
 		const meaning = temporalSharedTarget(
 			{ id: 'pluto-neptune', transit: 'pluto', natal: 'neptune', aspect: 'conjunction', orb: 1 },

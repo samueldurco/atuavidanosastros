@@ -85,6 +85,26 @@ describe('public horoscope archives', () => {
 		expect(index.history[0].path).toBe(future.path);
 		expect(project([]).seo.indexable).toBe(false);
 	});
+	it('labels current availability by cadence and exposes only admitted supporting guides', () => {
+		const guide = {
+			id: 'admitted-guide',
+			kind: 'guide',
+			path: '/mercurio-retrogrado',
+			title: 'Guia já admitido',
+			description: 'Conteúdo educativo permanente.'
+		} as EditorialDocument;
+		const index = project([daily, guide], '', null);
+		expect(index.currentSigns).toEqual(['aries']);
+		expect(index.supportingGuides).toEqual([
+			{ path: guide.path, title: guide.title, description: guide.description }
+		]);
+		expect(index.history).toHaveLength(1);
+		const weeklyIndex = project([daily, guide], '?period=weekly', null);
+		expect(weeklyIndex.currentSigns).toEqual([]);
+		expect(weeklyIndex.current).toBeNull();
+		expect(project([]).supportingGuides).toEqual([]);
+		expect(project([{ ...guide, kind: 'reporting' }]).supportingGuides).toEqual([]);
+	});
 	it.each(['?period=annual', '?year=1899', '?year=2100', '?year=2026.0', '?year=26'])(
 		'rejects invalid filters %s',
 		(query) => {

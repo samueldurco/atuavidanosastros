@@ -2,6 +2,14 @@ import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { productDefinitionFor, tarotMethods } from '@atv/domain';
 
+const lastPositionChapters: Record<string, string> = {
+	'tarot-situation-challenge-advice': 'Uma resposta que muda a dinâmica',
+	'tarot-peladan-cross': 'O centro da cruz',
+	'tarot-celtic-cross': 'Expectativa e continuidade não são a mesma coisa',
+	'tarot-aphrodite-temple': 'Como a tensão pode ganhar outra forma',
+	'tarot-astrological-mandala': 'A carta central articula as áreas'
+};
+
 for (const width of [390, 1440])
 	for (const method of tarotMethods) {
 		test(`${method.id}: complete positions and reader at ${width}px`, async ({ page }) => {
@@ -17,10 +25,20 @@ for (const width of [390, 1440])
 			await expect(positions.getByRole('button')).toHaveCount(method.positions.length);
 			const last = positions.getByRole('button').last();
 			await expect(last).toBeEnabled();
+			const cardName = (await last.locator('strong').innerText()).split(' · ')[1];
+			const lastChapter =
+				method.id === 'tarot-single-card'
+					? `1. Tema central — ${cardName}`
+					: lastPositionChapters[method.id];
 			await last.click();
-			await expect(page.locator('article h2').first()).toContainText(
-				`${method.positions.length}. ${method.positions.at(-1)!.name}`
-			);
+			const chapter = page.getByRole('article', { name: 'Capítulo selecionado' });
+			await expect(chapter.getByRole('heading')).toHaveText(lastChapter);
+			await expect(chapter).toContainText(cardName);
+			await expect(
+				page
+					.getByRole('navigation', { name: 'Capítulos da leitura' })
+					.getByRole('button', { name: lastChapter, exact: true })
+			).toHaveAttribute('aria-current', 'step');
 			await expect(
 				page.getByRole('navigation', { name: 'Outros métodos de Tarot' }).getByRole('link')
 			).toHaveCount(method.related.length);

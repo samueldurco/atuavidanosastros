@@ -17,8 +17,8 @@ for (const width of [390, 1440]) {
 		const titles = (await navigation.getByRole('button').allTextContents()).map((t) => t.trim());
 		expect(titles).toHaveLength(5);
 		expect(new Set(titles).size).toBe(5);
-		expect(titles).toContain('1. Autocuidado e rotina');
-		expect(titles).toContain('3. Trabalho e contribuição');
+		expect(titles).toContain('Autocuidado e rotina');
+		expect(titles).toContain('Trabalho e contribuição');
 		for (const button of await navigation.getByRole('button').all()) {
 			const title = await button.innerText();
 			await button.click();
@@ -87,13 +87,13 @@ for (const width of [390, 1440]) {
 		await page.goto('/testar-produtos/_spec?product=life-atlas&atlasSet=other&atlasNotes=complete');
 		await expect(
 			navigation.getByRole('button', {
-				name: '1. Recursos e autonomia',
+				name: 'Recursos e autonomia',
 				exact: true
 			})
 		).toBeVisible();
 		await expect(
 			navigation.getByRole('button', {
-				name: '4. Redes e projetos',
+				name: 'Redes e projetos',
 				exact: true
 			})
 		).toBeVisible();

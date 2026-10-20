@@ -394,7 +394,7 @@ export async function trialPdf(saved: SavedTrial) {
 	if (book) {
 		heading('Índice da sua leitura', 23);
 		paragraph(
-			'Comece pela síntese e aprofunde os temas que deseja investigar. Compare os capítulos com uma situação concreta; suas observações podem confirmar ou contrariar a interpretação.'
+			'A síntese apresenta as relações centrais desta leitura. O índice permite voltar aos temas e consultar os dados que sustentam a interpretação.'
 		);
 		chapters.forEach((s, index) => {
 			if (y < 105) newPage();
