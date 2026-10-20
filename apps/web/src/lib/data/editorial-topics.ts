@@ -20,5 +20,7 @@ export const editorialTopicPaths: Record<string, readonly string[]> = {
 };
 
 export function editorialTopic(path: string): string | undefined {
+	if (/^\/horoscopo\/[a-z]+\/(?:daily|weekly|monthly)\/\d{4}-\d{2}-\d{2}$/.test(path))
+		return 'ciclos';
 	return Object.keys(editorialTopicPaths).find((id) => editorialTopicPaths[id].includes(path));
 }

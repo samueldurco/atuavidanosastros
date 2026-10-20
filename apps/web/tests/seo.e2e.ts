@@ -1,15 +1,20 @@
 import { expect, test } from '@playwright/test';
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
 import { freeTools } from '../src/lib/data/free-tools';
-import type { EditorialDocument } from '../src/lib/server/editorial';
+import { publicEditorialAuthor } from '../src/lib/data/editorial-author';
 import { scanAccessibility } from './fixtures/accessibility';
+import {
+	bundledEditorial,
+	datedForecasts,
+	publishedEditorial
+} from './fixtures/editorial-inventory';
 
-const release = JSON.parse(
-	readFileSync(resolve('src/lib/server/editorial-release/registry.json'), 'utf8')
-) as { packages: { document: EditorialDocument }[] };
-const published = release.packages.map((entry) => entry.document);
-const news = published.filter((document) => document.path.startsWith('/noticias/'));
+const news = publishedEditorial.filter((document) => document.path.startsWith('/noticias/'));
+const today = new Date().toISOString().slice(0, 10);
+const dailyHistory = datedForecasts.filter(
+	(document) =>
+		document.path.includes('/daily/') &&
+		document.path.split('/').at(-1)?.startsWith(today.slice(0, 4))
+);
 const expectedFreeToolPaths = [
 	'/ferramentas/ascendente',
 	'/ferramentas/mapa-astral',
@@ -50,7 +55,9 @@ test('editorial hubs reflect admitted content with one canonical', async ({ page
 			for (const document of news) expect(html).toContain(document.title);
 		} else if (path === '/horoscopo') {
 			expect(html).toContain('Horóscopo dos 12 signos');
-			expect(html).toContain('Ainda não há leituras publicadas para este período e ano.');
+			if (dailyHistory.length)
+				for (const document of dailyHistory) expect(html).toContain(`href="${document.path}"`);
+			else expect(html).toContain('Ainda não há leituras publicadas para este período e ano.');
 		} else expect(html).toContain('Nenhum artigo publicado ainda');
 		expect(html).not.toContain('application/ld+json');
 		await page.goto(path);
@@ -73,12 +80,12 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 }) => {
 	for (const path of [
 		'/signos/aries',
-		'/horoscopo/aries/daily/2026-10-08',
+		'/horoscopo/aries/daily/1900-01-01',
 		'/compatibilidade/aries-touro',
 		'/compatibilidade/touro-aries',
 		'/noticias/2026/10/nao-publicado',
 		'/pessoas/autor-sintetico',
-		...(!published.some((document) => document.path === '/mercurio-retrogrado')
+		...(!publishedEditorial.some((document) => document.path === '/mercurio-retrogrado')
 			? ['/mercurio-retrogrado']
 			: []),
 		'/calendario-astral',
@@ -95,12 +102,31 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 		}
 	}
 });
-test('sign horoscope indexes exist without claiming an admitted forecast', async ({ page }) => {
+test('sign horoscope indexes show only admitted current readings and history', async ({ page }) => {
 	await page.goto('/horoscopo/aries');
 	await expect(page.locator('h1')).toHaveText('Horóscopo de Áries');
-	await expect(
-		page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
-	).toBeVisible();
+	const current = datedForecasts.find(
+		(document) =>
+			document.path.startsWith('/horoscopo/aries/daily/') &&
+			document.path.split('/').at(-1)! <= today &&
+			today < document.calculation!.coverageEnd.slice(0, 10)
+	);
+	if (current) {
+		await expect(
+			page.getByRole('heading', { level: 2, name: current.title, exact: true })
+		).toBeVisible();
+		await expect(
+			page.getByRole('link', { name: 'Ler o horóscopo completo', exact: true })
+		).toHaveAttribute('href', current.path);
+	} else {
+		await expect(
+			page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
+		).toBeVisible();
+	}
+	const history = dailyHistory.filter((document) => document.path.startsWith('/horoscopo/aries/'));
+	await expect(page.locator('.history-list h3 a')).toHaveCount(history.length);
+	for (const document of history)
+		await expect(page.locator(`.history-list a[href="${document.path}"]`)).toBeVisible();
 	await expect(page.locator('link[rel="canonical"]')).toHaveCount(1);
 	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 		'href',
@@ -108,6 +134,10 @@ test('sign horoscope indexes exist without claiming an admitted forecast', async
 	);
 	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
 	await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+	await page.goto('/horoscopo/aries?year=1900');
+	await expect(
+		page.getByText('Ainda não há leituras publicadas para este período e ano.', { exact: true })
+	).toBeVisible();
 });
 test('all nine free tools emit one primary metadata set in SSR and the browser', async ({
 	page,
@@ -180,17 +210,21 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 				'/atv-mais',
 				'/canais-oficiais',
 				'/fale-conosco',
-				...(news.length > 0 ? ['/noticias'] : [])
+				...(news.length > 0 ? ['/noticias'] : []),
+				...(datedForecasts.length ? ['/horoscopo'] : []),
+				...new Set(datedForecasts.map((document) => document.path.split('/').slice(0, 3).join('/')))
 			];
 			const locations = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
 			expect(locations.sort()).toEqual(
 				expectedPaths.map((path) => `https://atuavidanosastros.com.br${path}`).sort()
 			);
 		} else if (path === '/sitemap-editorial.xml') {
-			expect(body.match(/<url>/g) ?? []).toHaveLength(
-				published.length + (published.length ? 1 : 0)
+			const authorIds = new Set(
+				publishedEditorial.map((document) => publicEditorialAuthor(document.author).id)
 			);
-			for (const document of published) expect(body).toContain(document.path);
+			expect(body.match(/<url>/g) ?? []).toHaveLength(publishedEditorial.length + authorIds.size);
+			for (const document of publishedEditorial) expect(body).toContain(document.path);
+			for (const id of authorIds) expect(body).toContain(`/pessoas/${id}`);
 		} else expect(body).not.toContain('<url>');
 	}
 	expect((await request.get('/news-sitemap/2.xml')).status()).toBe(404);
@@ -214,7 +248,7 @@ for (const width of [1440, 390]) {
 	}, testInfo) => {
 		test.setTimeout(240_000);
 		await page.setViewportSize({ width, height: 1000 });
-		for (const document of published) {
+		for (const document of bundledEditorial) {
 			// Axe and screenshots can outlive the local server's idle keep-alive window.
 			const response = await request.get(document.path, {
 				headers: { Connection: 'close' }

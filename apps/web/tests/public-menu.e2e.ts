@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { interestNavigation, primaryNavigation } from '../src/lib/data/public-navigation';
-import { editorialTopicPaths } from '../src/lib/data/editorial-topics';
+import { expectedTopicPaths, publishedEditorial } from './fixtures/editorial-inventory';
 
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
@@ -73,7 +73,7 @@ test('artigos filtram o assunto e mantêm o catálogo comercial fora da navegaç
 			page.getByRole('heading', { level: 2, name: item.label, exact: true })
 		).toBeVisible();
 		await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(
-			editorialTopicPaths[item.id].length
+			expectedTopicPaths[item.id].length
 		);
 		const next = page.getByRole('complementary', { name: 'Explore esse assunto no seu ritmo.' });
 		await expect(next.getByRole('link', { name: item.action })).toHaveAttribute(
@@ -89,7 +89,9 @@ test('artigos filtram o assunto e mantêm o catálogo comercial fora da navegaç
 	await expect(
 		page.getByRole('heading', { level: 2, name: 'Para ler agora', exact: true })
 	).toBeVisible();
-	await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(12);
+	await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(
+		publishedEditorial.length
+	);
 	await expect(
 		page
 			.getByRole('navigation', { name: 'Assuntos da Revista' })

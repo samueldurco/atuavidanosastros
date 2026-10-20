@@ -1,14 +1,14 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { interestNavigation } from '../src/lib/data/public-navigation';
-import { editorialTopicPaths } from '../src/lib/data/editorial-topics';
+import { expectedTopicPaths, publishedEditorial } from './fixtures/editorial-inventory';
 
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
 
 for (const width of [390, 1440]) {
-	test(`encontrar os 12 guias pelo menu, assunto e retorno em ${width}px`, async ({
+	test(`encontrar os conteúdos publicados pelo menu, assunto e retorno em ${width}px`, async ({
 		page,
 		request
 	}, testInfo) => {
@@ -21,7 +21,7 @@ for (const width of [390, 1440]) {
 			.click();
 		await expect(page).toHaveURL(/\/revista$/);
 		const articleCards = page.locator('main article.featured, main article.article-card');
-		await expect(articleCards).toHaveCount(12);
+		await expect(articleCards).toHaveCount(publishedEditorial.length);
 		await page.screenshot({ path: testInfo.outputPath(`artigos-${width}.png`), fullPage: true });
 		const accessibility = await new AxeBuilder({ page })
 			.include('main')
@@ -44,12 +44,12 @@ for (const width of [390, 1440]) {
 					.getByRole('link', { name: item.label, exact: true })
 			).toHaveAttribute('aria-current', 'page');
 			const cards = articleCards;
-			await expect(cards).toHaveCount(editorialTopicPaths[item.id].length);
+			await expect(cards).toHaveCount(expectedTopicPaths[item.id].length);
 			const destinations = await cards
 				.locator('h3 a')
 				.evaluateAll((links) => links.map((link) => link.getAttribute('href')));
-			expect(destinations.sort()).toEqual([...editorialTopicPaths[item.id]].sort());
-			for (const path of editorialTopicPaths[item.id])
+			expect(destinations.sort()).toEqual([...expectedTopicPaths[item.id]].sort());
+			for (const path of expectedTopicPaths[item.id])
 				expect((await request.get(path)).status(), path).toBe(200);
 			await cards.first().getByRole('heading', { level: 3 }).getByRole('link').click();
 			const breadcrumb = page.getByRole('navigation', { name: 'Caminho do artigo' });
@@ -63,7 +63,7 @@ for (const width of [390, 1440]) {
 				.getByRole('link', { name: 'Todos os assuntos' })
 				.click();
 			await expect(page).toHaveURL(/\/revista$/);
-			await expect(articleCards).toHaveCount(12);
+			await expect(articleCards).toHaveCount(publishedEditorial.length);
 		}
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
@@ -77,8 +77,7 @@ test('a lista completa e seus destinos estão no HTML servido, sem depender de J
 	const response = await request.get('/revista');
 	expect(response.status()).toBe(200);
 	const html = await response.text();
-	for (const path of Object.values(editorialTopicPaths).flat())
-		expect(html).toContain(`href="${path}"`);
+	for (const document of publishedEditorial) expect(html).toContain(`href="${document.path}"`);
 	expect(html).toContain('CollectionPage');
 	expect(html).toContain('ItemList');
 });

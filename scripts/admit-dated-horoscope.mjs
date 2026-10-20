@@ -1,10 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { digest, byteDigest, verifyAutomatedApproval, canonicalJson } from "../apps/web/src/lib/server/editorial-automation.ts";
 import { datedHoroscopeIndexDocument, verifyDatedHoroscopeIndex } from "../apps/web/src/lib/server/dated-horoscope-automation.ts";
 import { RELEASE_PATH, repoFile, replayComparableFacts } from "./dated-horoscope-authority.mjs";
 export const DATED_INDEX_PATH = "apps/web/src/lib/server/editorial-release/dated-index.json";
+const webRequire = createRequire(new URL("../apps/web/package.json", import.meta.url));
+const prettier = webRequire("prettier");
+const indexSourcePath = fileURLToPath(new URL(`../${DATED_INDEX_PATH}`, import.meta.url));
 const json = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
 function samePublishedEdition(previous, current) {
   if (!previous) return false;
@@ -105,6 +109,10 @@ export async function admitBatch({ root, batch, now = new Date(), runnerEvidence
     } });
   }
   if (!additions.length) return { changed: false, documents: 0, effectiveDocuments };
+  // The index is derived metadata; immutable archive bytes and signatures stay untouched.
+  const formattedIndex = await prettier.format(JSON.stringify({
+    ...archive, entries: [...archive.entries, ...additions],
+  }), { ...await prettier.resolveConfig(indexSourcePath), plugins: [], parser: "json" });
   // Immutable static archives and their compact index share one CI-gated commit.
   for (const { asset, bytes } of assets) {
     const destination = path.resolve(root, `apps/web/static${asset.path}`);
@@ -113,9 +121,7 @@ export async function admitBatch({ root, batch, now = new Date(), runnerEvidence
       if (!fs.readFileSync(destination).equals(bytes)) throw Error("Immutable asset collision");
     } else fs.writeFileSync(destination, bytes, { flag: "wx" });
   }
-  fs.writeFileSync(path.resolve(root, DATED_INDEX_PATH), JSON.stringify({
-    ...archive, entries: [...archive.entries, ...additions],
-  }, null, 2) + "\n");
+  fs.writeFileSync(path.resolve(root, DATED_INDEX_PATH), formattedIndex);
   return { changed: true, documents: additions.length * 12, effectiveDocuments };
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
