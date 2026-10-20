@@ -3,6 +3,8 @@ import { CaelusEphemerisProvider, type EphemerisProvider, type NatalChart } from
 import { tarotDeck } from '@atv/domain';
 import { tarotCanon } from '../trials/reconstruction/tarot-canon';
 import { calculateFreeToolResult } from './free-tools-calculation';
+import { parseFreeToolResult } from '../free-tool-result';
+import { signFreeToolResult, verifyFreeToolReceipt } from './free-tool-receipt';
 
 const input = {
 	utcInstant: '2000-01-01T12:00:00.000Z',
@@ -58,6 +60,13 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 			);
 		expect(result.chart?.svg).toContain('Zero de Áries à esquerda');
 		expect(result.chart?.svg).not.toMatch(/<script|foreignObject|(?:href|src)="https?:/);
+		// The refined SVG must survive the exact persistence and signing boundary.
+		const stored = JSON.parse(JSON.stringify(result));
+		expect(parseFreeToolResult(stored)).not.toBeNull();
+		const key = 'synthetic-mandala-roundtrip-key-2026';
+		const receipt = await signFreeToolResult(stored, key);
+		expect(receipt).toMatch(/^[0-9a-f]{64}$/);
+		expect(await verifyFreeToolReceipt(stored, receipt, key, now().getTime())).toBe(true);
 	});
 	it('diferencia papéis no mesmo signo e muda somente a hipótese do ASC quando a hora muda', async () => {
 		const birth = {
