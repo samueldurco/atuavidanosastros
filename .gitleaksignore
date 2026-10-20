@@ -1,3 +1,6 @@
 # Historical false positive: synthetic UUID used as an anonymous QA request nonce.
 # Not a credential; the current QA script generates a fresh UUID per request.
 1855e1b99d81d3e194384ecf1d9e9854d6cb1625:apps/web/scripts/qa-atv-plus.mjs:generic-api-key:51
+# False positive: literal synthetic key confined to the natal SVG receipt round-trip unit test.
+# No provider or runtime uses this value; preserve scanning for all other occurrences.
+e79bb7c73b3b0fd1cf0c7f2db42065c1851adc46:apps/web/src/lib/server/free-tools-calculation.spec.ts:generic-api-key:66
