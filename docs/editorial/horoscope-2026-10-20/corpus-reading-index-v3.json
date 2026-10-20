@@ -1,0 +1,4561 @@
+{
+  "purpose": "Exact sentence deduplication for independent reading; repeated sentences retain reference to first occurrence; no text summarization",
+  "readings": [
+    {
+      "id": "horoscopo-aquario-daily-2026-10-20",
+      "sentenceIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        11,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-aries-daily-2026-10-20",
+      "sentenceIds": [
+        50,
+        51,
+        3,
+        4,
+        52,
+        53,
+        7,
+        54,
+        55,
+        56,
+        11,
+        12,
+        13,
+        57,
+        58,
+        59,
+        17,
+        60,
+        11,
+        19,
+        20,
+        21,
+        61,
+        62,
+        24,
+        63,
+        64,
+        65,
+        28,
+        29,
+        30,
+        31,
+        66,
+        33,
+        34,
+        67,
+        36,
+        68,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-cancer-daily-2026-10-20",
+      "sentenceIds": [
+        69,
+        70,
+        3,
+        4,
+        71,
+        72,
+        7,
+        73,
+        74,
+        75,
+        11,
+        12,
+        13,
+        76,
+        77,
+        78,
+        17,
+        79,
+        11,
+        19,
+        20,
+        21,
+        80,
+        81,
+        24,
+        82,
+        83,
+        84,
+        28,
+        29,
+        30,
+        31,
+        85,
+        33,
+        34,
+        86,
+        36,
+        87,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-capricornio-daily-2026-10-20",
+      "sentenceIds": [
+        88,
+        89,
+        3,
+        4,
+        90,
+        91,
+        7,
+        92,
+        93,
+        94,
+        11,
+        12,
+        13,
+        95,
+        96,
+        97,
+        17,
+        98,
+        11,
+        19,
+        20,
+        21,
+        99,
+        100,
+        24,
+        101,
+        102,
+        103,
+        28,
+        29,
+        30,
+        31,
+        104,
+        33,
+        34,
+        105,
+        36,
+        106,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-escorpiao-daily-2026-10-20",
+      "sentenceIds": [
+        107,
+        108,
+        3,
+        4,
+        109,
+        110,
+        7,
+        111,
+        112,
+        113,
+        11,
+        12,
+        13,
+        114,
+        115,
+        116,
+        17,
+        117,
+        11,
+        19,
+        20,
+        21,
+        118,
+        119,
+        24,
+        120,
+        121,
+        122,
+        28,
+        29,
+        30,
+        31,
+        123,
+        33,
+        34,
+        124,
+        36,
+        125,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-gemeos-daily-2026-10-20",
+      "sentenceIds": [
+        126,
+        127,
+        3,
+        4,
+        128,
+        129,
+        7,
+        130,
+        131,
+        132,
+        11,
+        12,
+        13,
+        133,
+        134,
+        135,
+        17,
+        136,
+        11,
+        19,
+        20,
+        21,
+        137,
+        138,
+        24,
+        139,
+        140,
+        141,
+        28,
+        29,
+        30,
+        31,
+        142,
+        33,
+        34,
+        143,
+        36,
+        144,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-leao-daily-2026-10-20",
+      "sentenceIds": [
+        145,
+        146,
+        3,
+        4,
+        147,
+        148,
+        7,
+        149,
+        150,
+        151,
+        11,
+        12,
+        13,
+        152,
+        153,
+        154,
+        17,
+        155,
+        11,
+        19,
+        20,
+        21,
+        156,
+        157,
+        24,
+        158,
+        159,
+        160,
+        28,
+        29,
+        30,
+        31,
+        161,
+        33,
+        34,
+        162,
+        36,
+        163,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-libra-daily-2026-10-20",
+      "sentenceIds": [
+        164,
+        165,
+        3,
+        4,
+        166,
+        167,
+        7,
+        168,
+        169,
+        170,
+        11,
+        12,
+        13,
+        171,
+        172,
+        173,
+        17,
+        174,
+        11,
+        19,
+        20,
+        21,
+        175,
+        176,
+        24,
+        177,
+        178,
+        179,
+        28,
+        29,
+        30,
+        31,
+        180,
+        33,
+        34,
+        181,
+        36,
+        182,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-peixes-daily-2026-10-20",
+      "sentenceIds": [
+        183,
+        184,
+        3,
+        4,
+        185,
+        186,
+        7,
+        187,
+        188,
+        189,
+        11,
+        12,
+        13,
+        190,
+        191,
+        192,
+        17,
+        193,
+        11,
+        19,
+        20,
+        21,
+        194,
+        195,
+        24,
+        196,
+        197,
+        198,
+        28,
+        29,
+        30,
+        31,
+        199,
+        33,
+        34,
+        200,
+        36,
+        201,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-sagitario-daily-2026-10-20",
+      "sentenceIds": [
+        202,
+        203,
+        3,
+        4,
+        204,
+        205,
+        7,
+        206,
+        207,
+        208,
+        11,
+        12,
+        13,
+        209,
+        210,
+        211,
+        17,
+        212,
+        11,
+        19,
+        20,
+        21,
+        213,
+        214,
+        24,
+        215,
+        216,
+        217,
+        28,
+        29,
+        30,
+        31,
+        218,
+        33,
+        34,
+        219,
+        36,
+        220,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-touro-daily-2026-10-20",
+      "sentenceIds": [
+        221,
+        222,
+        3,
+        4,
+        223,
+        224,
+        7,
+        225,
+        226,
+        227,
+        11,
+        12,
+        13,
+        228,
+        229,
+        230,
+        17,
+        231,
+        11,
+        19,
+        20,
+        21,
+        232,
+        233,
+        24,
+        234,
+        235,
+        236,
+        28,
+        29,
+        30,
+        31,
+        237,
+        33,
+        34,
+        238,
+        36,
+        239,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-virgem-daily-2026-10-20",
+      "sentenceIds": [
+        240,
+        241,
+        3,
+        4,
+        242,
+        243,
+        7,
+        244,
+        245,
+        246,
+        11,
+        12,
+        13,
+        247,
+        248,
+        249,
+        17,
+        250,
+        11,
+        19,
+        20,
+        21,
+        251,
+        252,
+        24,
+        253,
+        254,
+        255,
+        28,
+        29,
+        30,
+        31,
+        256,
+        33,
+        34,
+        257,
+        36,
+        258,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-aquario-weekly-2026-10-19",
+      "sentenceIds": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        266,
+        19,
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-aries-weekly-2026-10-19",
+      "sentenceIds": [
+        50,
+        51,
+        3,
+        4,
+        52,
+        53,
+        7,
+        54,
+        55,
+        56,
+        259,
+        278,
+        261,
+        279,
+        280,
+        264,
+        265,
+        12,
+        13,
+        57,
+        58,
+        59,
+        17,
+        60,
+        266,
+        19,
+        281,
+        282,
+        269,
+        270,
+        271,
+        283,
+        284,
+        285,
+        275,
+        286,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-cancer-weekly-2026-10-19",
+      "sentenceIds": [
+        69,
+        70,
+        3,
+        4,
+        71,
+        72,
+        7,
+        73,
+        74,
+        75,
+        259,
+        287,
+        261,
+        288,
+        289,
+        264,
+        265,
+        12,
+        13,
+        76,
+        77,
+        78,
+        17,
+        79,
+        266,
+        19,
+        290,
+        291,
+        269,
+        270,
+        271,
+        292,
+        293,
+        294,
+        275,
+        295,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-capricornio-weekly-2026-10-19",
+      "sentenceIds": [
+        88,
+        89,
+        3,
+        4,
+        90,
+        91,
+        7,
+        92,
+        93,
+        94,
+        259,
+        296,
+        261,
+        297,
+        298,
+        264,
+        265,
+        12,
+        13,
+        95,
+        96,
+        97,
+        17,
+        98,
+        266,
+        19,
+        299,
+        300,
+        269,
+        270,
+        271,
+        301,
+        293,
+        294,
+        275,
+        302,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-escorpiao-weekly-2026-10-19",
+      "sentenceIds": [
+        107,
+        108,
+        3,
+        4,
+        109,
+        110,
+        7,
+        111,
+        112,
+        113,
+        259,
+        303,
+        261,
+        304,
+        305,
+        264,
+        265,
+        12,
+        13,
+        114,
+        115,
+        116,
+        17,
+        117,
+        266,
+        19,
+        306,
+        307,
+        269,
+        270,
+        271,
+        308,
+        309,
+        310,
+        275,
+        311,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-gemeos-weekly-2026-10-19",
+      "sentenceIds": [
+        126,
+        127,
+        3,
+        4,
+        128,
+        129,
+        7,
+        130,
+        131,
+        132,
+        259,
+        312,
+        261,
+        313,
+        314,
+        264,
+        265,
+        12,
+        13,
+        133,
+        134,
+        135,
+        17,
+        136,
+        266,
+        19,
+        315,
+        316,
+        269,
+        270,
+        271,
+        317,
+        318,
+        319,
+        275,
+        320,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-leao-weekly-2026-10-19",
+      "sentenceIds": [
+        145,
+        146,
+        3,
+        4,
+        147,
+        148,
+        7,
+        149,
+        150,
+        151,
+        259,
+        321,
+        261,
+        322,
+        323,
+        264,
+        265,
+        12,
+        13,
+        152,
+        153,
+        154,
+        17,
+        155,
+        266,
+        19,
+        324,
+        325,
+        269,
+        270,
+        271,
+        326,
+        273,
+        274,
+        275,
+        327,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-libra-weekly-2026-10-19",
+      "sentenceIds": [
+        164,
+        165,
+        3,
+        4,
+        166,
+        167,
+        7,
+        168,
+        169,
+        170,
+        259,
+        328,
+        261,
+        329,
+        330,
+        264,
+        265,
+        12,
+        13,
+        171,
+        172,
+        173,
+        17,
+        174,
+        266,
+        19,
+        331,
+        332,
+        269,
+        270,
+        271,
+        333,
+        284,
+        285,
+        275,
+        334,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-peixes-weekly-2026-10-19",
+      "sentenceIds": [
+        183,
+        184,
+        3,
+        4,
+        185,
+        186,
+        7,
+        187,
+        188,
+        189,
+        259,
+        335,
+        261,
+        336,
+        337,
+        264,
+        265,
+        12,
+        13,
+        190,
+        191,
+        192,
+        17,
+        193,
+        266,
+        19,
+        338,
+        339,
+        269,
+        270,
+        271,
+        340,
+        341,
+        342,
+        275,
+        343,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-sagitario-weekly-2026-10-19",
+      "sentenceIds": [
+        202,
+        203,
+        3,
+        4,
+        204,
+        205,
+        7,
+        206,
+        207,
+        208,
+        259,
+        344,
+        261,
+        345,
+        346,
+        264,
+        265,
+        12,
+        13,
+        209,
+        210,
+        211,
+        17,
+        212,
+        266,
+        19,
+        347,
+        348,
+        269,
+        270,
+        271,
+        349,
+        318,
+        319,
+        275,
+        350,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-touro-weekly-2026-10-19",
+      "sentenceIds": [
+        221,
+        222,
+        3,
+        4,
+        223,
+        224,
+        7,
+        225,
+        226,
+        227,
+        259,
+        351,
+        261,
+        352,
+        353,
+        264,
+        265,
+        12,
+        13,
+        228,
+        229,
+        230,
+        17,
+        231,
+        266,
+        19,
+        354,
+        355,
+        269,
+        270,
+        271,
+        356,
+        309,
+        310,
+        275,
+        357,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-virgem-weekly-2026-10-19",
+      "sentenceIds": [
+        240,
+        241,
+        3,
+        4,
+        242,
+        243,
+        7,
+        244,
+        245,
+        246,
+        259,
+        358,
+        261,
+        359,
+        360,
+        264,
+        265,
+        12,
+        13,
+        247,
+        248,
+        249,
+        17,
+        250,
+        266,
+        19,
+        361,
+        362,
+        269,
+        270,
+        271,
+        363,
+        341,
+        342,
+        275,
+        364,
+        38,
+        39,
+        277,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-aquario-monthly-2026-10-01",
+      "sentenceIds": [
+        365,
+        366,
+        367,
+        368,
+        369,
+        370,
+        371,
+        372,
+        373,
+        374,
+        375,
+        376,
+        377,
+        378,
+        379,
+        380,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265,
+        381,
+        382,
+        383,
+        384,
+        385,
+        386,
+        387,
+        388,
+        389,
+        390,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-aries-monthly-2026-10-01",
+      "sentenceIds": [
+        392,
+        393,
+        367,
+        368,
+        394,
+        395,
+        396,
+        397,
+        373,
+        374,
+        375,
+        398,
+        377,
+        399,
+        400,
+        380,
+        278,
+        261,
+        279,
+        280,
+        264,
+        265,
+        381,
+        382,
+        383,
+        401,
+        385,
+        402,
+        403,
+        388,
+        389,
+        404,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-cancer-monthly-2026-10-01",
+      "sentenceIds": [
+        405,
+        406,
+        367,
+        368,
+        407,
+        408,
+        409,
+        410,
+        373,
+        374,
+        375,
+        411,
+        377,
+        412,
+        413,
+        380,
+        287,
+        261,
+        288,
+        289,
+        264,
+        265,
+        381,
+        382,
+        383,
+        414,
+        385,
+        415,
+        416,
+        388,
+        389,
+        417,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-capricornio-monthly-2026-10-01",
+      "sentenceIds": [
+        418,
+        419,
+        367,
+        368,
+        420,
+        421,
+        422,
+        423,
+        373,
+        374,
+        375,
+        424,
+        377,
+        425,
+        426,
+        380,
+        296,
+        261,
+        297,
+        298,
+        264,
+        265,
+        381,
+        382,
+        383,
+        427,
+        385,
+        428,
+        429,
+        388,
+        389,
+        430,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-escorpiao-monthly-2026-10-01",
+      "sentenceIds": [
+        431,
+        432,
+        367,
+        368,
+        433,
+        434,
+        435,
+        436,
+        373,
+        374,
+        375,
+        437,
+        377,
+        438,
+        439,
+        380,
+        303,
+        261,
+        304,
+        305,
+        264,
+        265,
+        381,
+        382,
+        383,
+        440,
+        385,
+        441,
+        442,
+        388,
+        389,
+        443,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-gemeos-monthly-2026-10-01",
+      "sentenceIds": [
+        444,
+        445,
+        367,
+        368,
+        446,
+        447,
+        448,
+        449,
+        373,
+        374,
+        375,
+        450,
+        377,
+        451,
+        452,
+        380,
+        312,
+        261,
+        313,
+        314,
+        264,
+        265,
+        381,
+        382,
+        383,
+        453,
+        385,
+        454,
+        455,
+        388,
+        389,
+        456,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-leao-monthly-2026-10-01",
+      "sentenceIds": [
+        457,
+        458,
+        367,
+        368,
+        459,
+        460,
+        461,
+        462,
+        373,
+        374,
+        375,
+        463,
+        377,
+        464,
+        465,
+        380,
+        321,
+        261,
+        322,
+        323,
+        264,
+        265,
+        381,
+        382,
+        383,
+        466,
+        385,
+        467,
+        468,
+        388,
+        389,
+        469,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-libra-monthly-2026-10-01",
+      "sentenceIds": [
+        470,
+        471,
+        367,
+        368,
+        472,
+        473,
+        474,
+        475,
+        373,
+        374,
+        375,
+        476,
+        377,
+        477,
+        478,
+        380,
+        328,
+        261,
+        329,
+        330,
+        264,
+        265,
+        381,
+        382,
+        383,
+        479,
+        385,
+        480,
+        481,
+        388,
+        389,
+        482,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-peixes-monthly-2026-10-01",
+      "sentenceIds": [
+        483,
+        484,
+        367,
+        368,
+        485,
+        486,
+        487,
+        488,
+        373,
+        374,
+        375,
+        489,
+        377,
+        490,
+        491,
+        380,
+        335,
+        261,
+        336,
+        337,
+        264,
+        265,
+        381,
+        382,
+        383,
+        492,
+        385,
+        493,
+        494,
+        388,
+        389,
+        495,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-sagitario-monthly-2026-10-01",
+      "sentenceIds": [
+        496,
+        497,
+        367,
+        368,
+        498,
+        499,
+        500,
+        501,
+        373,
+        374,
+        375,
+        502,
+        377,
+        503,
+        504,
+        380,
+        344,
+        261,
+        345,
+        346,
+        264,
+        265,
+        381,
+        382,
+        383,
+        505,
+        385,
+        506,
+        507,
+        388,
+        389,
+        508,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-touro-monthly-2026-10-01",
+      "sentenceIds": [
+        509,
+        510,
+        367,
+        368,
+        511,
+        512,
+        513,
+        514,
+        373,
+        374,
+        375,
+        515,
+        377,
+        516,
+        517,
+        380,
+        351,
+        261,
+        352,
+        353,
+        264,
+        265,
+        381,
+        382,
+        383,
+        518,
+        385,
+        519,
+        520,
+        388,
+        389,
+        521,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    {
+      "id": "horoscopo-virgem-monthly-2026-10-01",
+      "sentenceIds": [
+        522,
+        523,
+        367,
+        368,
+        524,
+        525,
+        526,
+        527,
+        373,
+        374,
+        375,
+        528,
+        377,
+        529,
+        530,
+        380,
+        358,
+        261,
+        359,
+        360,
+        264,
+        265,
+        381,
+        382,
+        383,
+        531,
+        385,
+        532,
+        533,
+        388,
+        389,
+        534,
+        38,
+        39,
+        391,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    }
+  ],
+  "unique": [
+    {
+      "index": 1,
+      "text": "Aquário: Assumir uma direção que faça sentido e escolher sua própria posição",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 2,
+      "text": "Uma leitura simbólica para Aquário sobre a direção profissional e as responsabilidades públicas e suas relações com sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 3,
+      "text": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 4,
+      "text": "Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 5,
+      "text": "Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 6,
+      "text": "Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 7,
+      "text": "O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 8,
+      "text": "Esse caminho tem um custo: ao medir todas as escolhas pelo reconhecimento que elas podem trazer, você pode comprometer a liberdade de escolher por si.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 9,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma responsabilidade com critérios claros para o que é suficiente precisa comportar também uma iniciativa que possa ser corrigida depois da primeira resposta.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 10,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 10 e 1.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 11,
+      "text": "A relação aparece em amostras das duas metades do dia UTC.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 12,
+      "text": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 13,
+      "text": "A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 14,
+      "text": "Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 15,
+      "text": "Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 16,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma conversa em que o pedido fique compreensível para os dois lados abre caminho para uma iniciativa que possa ser corrigida depois da primeira resposta.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 17,
+      "text": "O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 18,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 3 e 1.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 19,
+      "text": "Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 20,
+      "text": "Dar nome a uma sensação pode tornar uma conversa mais clara.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 21,
+      "text": "O cuidado está em não tratar toda emoção como um problema que desaparece assim que recebe uma explicação.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 22,
+      "text": "Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 23,
+      "text": "Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 24,
+      "text": "O atrito aparece quando a tendência a responder ao desconforto antes de entender o que está pedindo cuidado dificulta compreender, nomear e trocar informações.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 25,
+      "text": "Esse caminho tem um custo: ao decidir depressa e deixar pouco espaço para ajustar o caminho, você pode comprometer o compromisso com uma direção que possa ser sustentada publicamente.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 26,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma iniciativa que possa ser corrigida depois da primeira resposta precisa comportar também uma responsabilidade com critérios claros para o que é suficiente.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 27,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 1 e 10.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 28,
+      "text": "A relação aparece em amostras da segunda metade do dia UTC.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 29,
+      "text": "As duas primeiras relações se encontram em Plutão: rever dependências e relações de poder participa das duas escolhas.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 30,
+      "text": "Encantamento e sensibilidade podem enriquecer uma aproximação.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 31,
+      "text": "Conhecer melhor o que existe ajuda a preservar o afeto sem exigir que a pessoa ou a experiência sustente uma imagem ideal.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 32,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma responsabilidade com critérios claros para o que é suficiente ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 33,
+      "text": "O contato em quadratura entre Lua e Mercúrio acrescenta reconhecer o que traz acolhimento e segurança a essa conclusão.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 34,
+      "text": "Responder ao desconforto antes de entender o que está pedindo cuidado pode acentuar o impasse, porque torna mais difícil escolher o que tem valor e cultivar reciprocidade.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 35,
+      "text": "Assim, uma iniciativa que possa ser corrigida depois da primeira resposta dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 36,
+      "text": "No recorte diário, essa combinação dá medida a uma resposta próxima, sem exigir uma solução para todos os assuntos de uma vez.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 37,
+      "text": "Esta é uma interpretação simbólica geral para Aquário, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 38,
+      "text": "O signo escolhido inicia doze setores simbólicos; eles não são casas do seu mapa natal.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 39,
+      "text": "O mesmo céu é interpretado a partir de setores diferentes para cada signo.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 40,
+      "text": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, Netuno–Plutão em sextil e Lua–Mercúrio em quadratura.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 41,
+      "text": "Os fatores foram escolhidos pela presença de movimentos rápidos e por ligações entre os temas; não são uma lista de todos os movimentos do céu.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 42,
+      "text": "As relações mencionadas foram observadas em uma grade de seis horas.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 43,
+      "text": "Elas não indicam duração completa nem horários exatos de acontecimentos.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 44,
+      "text": "A base calculada tem precisão integral ainda experimental.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 45,
+      "text": "Os exemplos ilustram a interpretação e não afirmam fatos da sua vida.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 46,
+      "text": "Esta leitura foi composta por regras determinísticas a partir de um corpus editorial elaborado com IA e revisto por outra execução de IA.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 47,
+      "text": "Cada publicação passa por verificações automatizadas dos fatos, do método e da integridade.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 48,
+      "text": "Não houve revisão humana nem uma nova revisão interpretativa individual de cada texto.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 49,
+      "text": "A interpretação simbólica não demonstra causalidade científica nem oferece previsão garantida de acontecimentos.",
+      "firstDocument": "horoscopo-aquario-daily-2026-10-20"
+    },
+    {
+      "index": 50,
+      "text": "Áries: Dividir sem perder a clareza e participar sem perder sua voz",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 51,
+      "text": "Uma leitura simbólica para Áries sobre a partilha e os compromissos que envolvem confiança e suas relações com os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 52,
+      "text": "Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 53,
+      "text": "Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 54,
+      "text": "Esse caminho tem um custo: ao deixar expectativas implícitas acumularem peso no vínculo, você pode comprometer o pertencimento que permite contribuir sem apagar sua posição.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 55,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma combinação clara sobre o que cada pessoa oferece e pode pedir precisa comportar também uma contribuição cujos limites sejam compreensíveis para o grupo.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 56,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 8 e 11.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 57,
+      "text": "Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 58,
+      "text": "Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 59,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma iniciativa que possa ser corrigida depois da primeira resposta abre caminho para uma contribuição cujos limites sejam compreensíveis para o grupo.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 60,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 1 e 11.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 61,
+      "text": "Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 62,
+      "text": "Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 63,
+      "text": "Esse caminho tem um custo: ao aceitar expectativas coletivas sem conferir o lugar que você deseja ocupar, você pode comprometer a confiança necessária para dividir algo sem perder a clareza dos limites.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 64,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma contribuição cujos limites sejam compreensíveis para o grupo precisa comportar também uma combinação clara sobre o que cada pessoa oferece e pode pedir.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 65,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 11 e 8.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 66,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma combinação clara sobre o que cada pessoa oferece e pode pedir ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 67,
+      "text": "Assim, uma contribuição cujos limites sejam compreensíveis para o grupo dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 68,
+      "text": "Esta é uma interpretação simbólica geral para Áries, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-aries-daily-2026-10-20"
+    },
+    {
+      "index": 69,
+      "text": "Câncer: Abrir espaço para criar e gostar e dividir sem perder a clareza",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 70,
+      "text": "Uma leitura simbólica para Câncer sobre a criação, o prazer e a expressão pessoal e suas relações com a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 71,
+      "text": "Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 72,
+      "text": "Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 73,
+      "text": "Esse caminho tem um custo: ao depender da resposta alheia para continuar algo que tem valor para você, você pode comprometer a confiança necessária para dividir algo sem perder a clareza dos limites.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 74,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma experiência criativa que possa existir antes de ser avaliada precisa comportar também uma combinação clara sobre o que cada pessoa oferece e pode pedir.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 75,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 5 e 8.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 76,
+      "text": "Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 77,
+      "text": "Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 78,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma responsabilidade com critérios claros para o que é suficiente abre caminho para uma combinação clara sobre o que cada pessoa oferece e pode pedir.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 79,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 10 e 8.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 80,
+      "text": "Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 81,
+      "text": "Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 82,
+      "text": "Esse caminho tem um custo: ao deixar expectativas implícitas acumularem peso no vínculo, você pode comprometer a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 83,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma combinação clara sobre o que cada pessoa oferece e pode pedir precisa comportar também uma experiência criativa que possa existir antes de ser avaliada.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 84,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 8 e 5.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 85,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma experiência criativa que possa existir antes de ser avaliada ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 86,
+      "text": "Assim, uma combinação clara sobre o que cada pessoa oferece e pode pedir dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 87,
+      "text": "Esta é uma interpretação simbólica geral para Câncer, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-cancer-daily-2026-10-20"
+    },
+    {
+      "index": 88,
+      "text": "Capricórnio: Participar sem perder sua voz e dar valor ao que sustenta você",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 89,
+      "text": "Uma leitura simbólica para Capricórnio sobre os grupos, as amizades e os projetos em comum e suas relações com suas prioridades e recursos.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 90,
+      "text": "Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e suas prioridades e recursos.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 91,
+      "text": "Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 92,
+      "text": "Esse caminho tem um custo: ao aceitar expectativas coletivas sem conferir o lugar que você deseja ocupar, você pode comprometer a segurança de ter recursos e prioridades próprios.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 93,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma contribuição cujos limites sejam compreensíveis para o grupo precisa comportar também uma prioridade que caiba nos recursos realmente disponíveis.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 94,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 11 e 2.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 95,
+      "text": "Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e suas prioridades e recursos.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 96,
+      "text": "Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 97,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um acordo de convivência que preserve espaço pessoal abre caminho para uma prioridade que caiba nos recursos realmente disponíveis.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 98,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 4 e 2.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 99,
+      "text": "Essa dinâmica aproxima dois contextos: suas prioridades e recursos e os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 100,
+      "text": "Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 101,
+      "text": "Esse caminho tem um custo: ao conservar algo apenas porque já custou esforço, você pode comprometer o pertencimento que permite contribuir sem apagar sua posição.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 102,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma prioridade que caiba nos recursos realmente disponíveis precisa comportar também uma contribuição cujos limites sejam compreensíveis para o grupo.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 103,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 2 e 11.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 104,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma contribuição cujos limites sejam compreensíveis para o grupo ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 105,
+      "text": "Assim, uma prioridade que caiba nos recursos realmente disponíveis dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 106,
+      "text": "Esta é uma interpretação simbólica geral para Capricórnio, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-capricornio-daily-2026-10-20"
+    },
+    {
+      "index": 107,
+      "text": "Escorpião: Escolher sua própria posição e cuidar da base que acolhe você",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 108,
+      "text": "Uma leitura simbólica para Escorpião sobre sua maneira de se apresentar e começar e suas relações com a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 109,
+      "text": "Essa dinâmica aproxima dois contextos: sua maneira de se apresentar e começar e a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 110,
+      "text": "Uma escolha feita ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 111,
+      "text": "Esse caminho tem um custo: ao decidir depressa e deixar pouco espaço para ajustar o caminho, você pode comprometer o direito de ter uma base íntima que acolha você.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 112,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma iniciativa que possa ser corrigida depois da primeira resposta precisa comportar também um acordo de convivência que preserve espaço pessoal.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 113,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 1 e 4.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 114,
+      "text": "Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 115,
+      "text": "Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 116,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma tarefa com tempo e responsabilidade bem definidos abre caminho para um acordo de convivência que preserve espaço pessoal.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 117,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 6 e 4.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 118,
+      "text": "Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 119,
+      "text": "Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 120,
+      "text": "Esse caminho tem um custo: ao proteger a familiaridade mesmo quando ela já deixou de acolher, você pode comprometer a liberdade de escolher por si.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 121,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: um acordo de convivência que preserve espaço pessoal precisa comportar também uma iniciativa que possa ser corrigida depois da primeira resposta.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 122,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 4 e 1.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 123,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma iniciativa que possa ser corrigida depois da primeira resposta ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 124,
+      "text": "Assim, um acordo de convivência que preserve espaço pessoal dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 125,
+      "text": "Esta é uma interpretação simbólica geral para Escorpião, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-escorpiao-daily-2026-10-20"
+    },
+    {
+      "index": 126,
+      "text": "Gêmeos: Dar uma forma possível à rotina e ampliar a visão sem perder o chão",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 127,
+      "text": "Uma leitura simbólica para Gêmeos sobre o trabalho cotidiano e os cuidados de rotina e suas relações com os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 128,
+      "text": "Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 129,
+      "text": "Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 130,
+      "text": "Esse caminho tem um custo: ao acrescentar exigências até que a organização se torne outra fonte de desgaste, você pode comprometer a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 131,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma tarefa com tempo e responsabilidade bem definidos precisa comportar também um plano maior que aceite uma primeira experiência pequena e verificável.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 132,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 6 e 9.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 133,
+      "text": "Essa dinâmica aproxima dois contextos: os grupos, as amizades e os projetos em comum e os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 134,
+      "text": "Uma escolha feita ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 135,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma contribuição cujos limites sejam compreensíveis para o grupo abre caminho para um plano maior que aceite uma primeira experiência pequena e verificável.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 136,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 11 e 9.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 137,
+      "text": "Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 138,
+      "text": "Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 139,
+      "text": "Esse caminho tem um custo: ao defender uma explicação antes de conhecer suas consequências concretas, você pode comprometer a possibilidade de manter uma rotina que caiba na vida.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 140,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: um plano maior que aceite uma primeira experiência pequena e verificável precisa comportar também uma tarefa com tempo e responsabilidade bem definidos.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 141,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 9 e 6.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 142,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma tarefa com tempo e responsabilidade bem definidos ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 143,
+      "text": "Assim, um plano maior que aceite uma primeira experiência pequena e verificável dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 144,
+      "text": "Esta é uma interpretação simbólica geral para Gêmeos, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-gemeos-daily-2026-10-20"
+    },
+    {
+      "index": 145,
+      "text": "Leão: Cuidar da base que acolhe você e negociar sem desaparecer do encontro",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 146,
+      "text": "Uma leitura simbólica para Leão sobre a intimidade e a vida de casa e suas relações com as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 147,
+      "text": "Essa dinâmica aproxima dois contextos: a intimidade e a vida de casa e as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 148,
+      "text": "Uma escolha feita ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 149,
+      "text": "Esse caminho tem um custo: ao proteger a familiaridade mesmo quando ela já deixou de acolher, você pode comprometer o espaço de cada pessoa dentro de uma escolha compartilhada.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 150,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: um acordo de convivência que preserve espaço pessoal precisa comportar também um acordo que permita discordar sem desfazer toda a parceria.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 151,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 4 e 7.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 152,
+      "text": "Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 153,
+      "text": "Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 154,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um plano maior que aceite uma primeira experiência pequena e verificável abre caminho para um acordo que permita discordar sem desfazer toda a parceria.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 155,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 9 e 7.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 156,
+      "text": "Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 157,
+      "text": "Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 158,
+      "text": "Esse caminho tem um custo: ao confundir um acordo com a obrigação de concordar em tudo, você pode comprometer o direito de ter uma base íntima que acolha você.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 159,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: um acordo que permita discordar sem desfazer toda a parceria precisa comportar também um acordo de convivência que preserve espaço pessoal.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 160,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 7 e 4.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 161,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; um acordo de convivência que preserve espaço pessoal ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 162,
+      "text": "Assim, um acordo que permita discordar sem desfazer toda a parceria dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 163,
+      "text": "Esta é uma interpretação simbólica geral para Leão, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-leao-daily-2026-10-20"
+    },
+    {
+      "index": 164,
+      "text": "Libra: Dar valor ao que sustenta você e abrir espaço para criar e gostar",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 165,
+      "text": "Uma leitura simbólica para Libra sobre suas prioridades e recursos e suas relações com a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 166,
+      "text": "Essa dinâmica aproxima dois contextos: suas prioridades e recursos e a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 167,
+      "text": "Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 168,
+      "text": "Esse caminho tem um custo: ao conservar algo apenas porque já custou esforço, você pode comprometer a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 169,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma prioridade que caiba nos recursos realmente disponíveis precisa comportar também uma experiência criativa que possa existir antes de ser avaliada.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 170,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 2 e 5.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 171,
+      "text": "Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 172,
+      "text": "Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 173,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: um acordo que permita discordar sem desfazer toda a parceria abre caminho para uma experiência criativa que possa existir antes de ser avaliada.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 174,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 7 e 5.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 175,
+      "text": "Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e suas prioridades e recursos.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 176,
+      "text": "Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue distribuir tempo, dinheiro e atenção entre o que importa.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 177,
+      "text": "Esse caminho tem um custo: ao depender da resposta alheia para continuar algo que tem valor para você, você pode comprometer a segurança de ter recursos e prioridades próprios.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 178,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma experiência criativa que possa existir antes de ser avaliada precisa comportar também uma prioridade que caiba nos recursos realmente disponíveis.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 179,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 5 e 2.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 180,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma prioridade que caiba nos recursos realmente disponíveis ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 181,
+      "text": "Assim, uma experiência criativa que possa existir antes de ser avaliada dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 182,
+      "text": "Esta é uma interpretação simbólica geral para Libra, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-libra-daily-2026-10-20"
+    },
+    {
+      "index": 183,
+      "text": "Peixes: Ampliar a visão sem perder o chão e respeitar o tempo de recolher",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 184,
+      "text": "Uma leitura simbólica para Peixes sobre os estudos, as convicções e os projetos de expansão e suas relações com o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 185,
+      "text": "Essa dinâmica aproxima dois contextos: os estudos, as convicções e os projetos de expansão e o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 186,
+      "text": "Uma escolha feita ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 187,
+      "text": "Esse caminho tem um custo: ao defender uma explicação antes de conhecer suas consequências concretas, você pode comprometer o espaço para elaborar algo antes de responder ao mundo.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 188,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: um plano maior que aceite uma primeira experiência pequena e verificável precisa comportar também uma pausa que ajude a voltar ou a concluir.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 189,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 9 e 12.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 190,
+      "text": "Essa dinâmica aproxima dois contextos: suas prioridades e recursos e o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 191,
+      "text": "Uma escolha feita ao distribuir tempo, dinheiro e atenção entre o que importa pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 192,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma prioridade que caiba nos recursos realmente disponíveis abre caminho para uma pausa que ajude a voltar ou a concluir.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 193,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 2 e 12.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 194,
+      "text": "Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 195,
+      "text": "Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 196,
+      "text": "Esse caminho tem um custo: ao adiar indefinidamente uma conversa ou um encerramento por precisar de mais silêncio, você pode comprometer a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 197,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma pausa que ajude a voltar ou a concluir precisa comportar também um plano maior que aceite uma primeira experiência pequena e verificável.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 198,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 12 e 9.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 199,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; um plano maior que aceite uma primeira experiência pequena e verificável ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 200,
+      "text": "Assim, uma pausa que ajude a voltar ou a concluir dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 201,
+      "text": "Esta é uma interpretação simbólica geral para Peixes, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-peixes-daily-2026-10-20"
+    },
+    {
+      "index": 202,
+      "text": "Sagitário: Respeitar o tempo de recolher e encontrar palavras que aproximam",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 203,
+      "text": "Uma leitura simbólica para Sagitário sobre o recolhimento e os assuntos que pedem encerramento e suas relações com as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 204,
+      "text": "Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 205,
+      "text": "Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 206,
+      "text": "Esse caminho tem um custo: ao adiar indefinidamente uma conversa ou um encerramento por precisar de mais silêncio, você pode comprometer a possibilidade de compreender e ser compreendido.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 207,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma pausa que ajude a voltar ou a concluir precisa comportar também uma conversa em que o pedido fique compreensível para os dois lados.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 208,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 12 e 3.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 209,
+      "text": "Essa dinâmica aproxima dois contextos: a criação, o prazer e a expressão pessoal e as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 210,
+      "text": "Uma escolha feita ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 211,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma experiência criativa que possa existir antes de ser avaliada abre caminho para uma conversa em que o pedido fique compreensível para os dois lados.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 212,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 5 e 3.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 213,
+      "text": "Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 214,
+      "text": "Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 215,
+      "text": "Esse caminho tem um custo: ao multiplicar explicações sem chegar ao ponto que precisa ser entendido, você pode comprometer o espaço para elaborar algo antes de responder ao mundo.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 216,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma conversa em que o pedido fique compreensível para os dois lados precisa comportar também uma pausa que ajude a voltar ou a concluir.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 217,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 3 e 12.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 218,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma pausa que ajude a voltar ou a concluir ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 219,
+      "text": "Assim, uma conversa em que o pedido fique compreensível para os dois lados dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 220,
+      "text": "Esta é uma interpretação simbólica geral para Sagitário, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-sagitario-daily-2026-10-20"
+    },
+    {
+      "index": 221,
+      "text": "Touro: Negociar sem desaparecer do encontro e assumir uma direção que faça sentido",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 222,
+      "text": "Uma leitura simbólica para Touro sobre as parcerias e os acordos a dois e suas relações com a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 223,
+      "text": "Essa dinâmica aproxima dois contextos: as parcerias e os acordos a dois e a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 224,
+      "text": "Uma escolha feita ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 225,
+      "text": "Esse caminho tem um custo: ao confundir um acordo com a obrigação de concordar em tudo, você pode comprometer o compromisso com uma direção que possa ser sustentada publicamente.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 226,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: um acordo que permita discordar sem desfazer toda a parceria precisa comportar também uma responsabilidade com critérios claros para o que é suficiente.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 227,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 7 e 10.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 228,
+      "text": "Essa dinâmica aproxima dois contextos: o recolhimento e os assuntos que pedem encerramento e a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 229,
+      "text": "Uma escolha feita ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição pode mudar as condições em que você consegue assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 230,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma pausa que ajude a voltar ou a concluir abre caminho para uma responsabilidade com critérios claros para o que é suficiente.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 231,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 12 e 10.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 232,
+      "text": "Essa dinâmica aproxima dois contextos: a direção profissional e as responsabilidades públicas e as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 233,
+      "text": "Uma escolha feita ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar pode mudar as condições em que você consegue negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 234,
+      "text": "Esse caminho tem um custo: ao medir todas as escolhas pelo reconhecimento que elas podem trazer, você pode comprometer o espaço de cada pessoa dentro de uma escolha compartilhada.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 235,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma responsabilidade com critérios claros para o que é suficiente precisa comportar também um acordo que permita discordar sem desfazer toda a parceria.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 236,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 10 e 7.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 237,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; um acordo que permita discordar sem desfazer toda a parceria ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 238,
+      "text": "Assim, uma responsabilidade com critérios claros para o que é suficiente dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 239,
+      "text": "Esta é uma interpretação simbólica geral para Touro, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-touro-daily-2026-10-20"
+    },
+    {
+      "index": 240,
+      "text": "Virgem: Encontrar palavras que aproximam e dar uma forma possível à rotina",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 241,
+      "text": "Uma leitura simbólica para Virgem sobre as conversas e os aprendizados cotidianos e suas relações com o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 242,
+      "text": "Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 243,
+      "text": "Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 244,
+      "text": "Esse caminho tem um custo: ao multiplicar explicações sem chegar ao ponto que precisa ser entendido, você pode comprometer a possibilidade de manter uma rotina que caiba na vida.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 245,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma conversa em que o pedido fique compreensível para os dois lados precisa comportar também uma tarefa com tempo e responsabilidade bem definidos.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 246,
+      "text": "Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 3 e 6.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 247,
+      "text": "Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 248,
+      "text": "Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 249,
+      "text": "Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma combinação clara sobre o que cada pessoa oferece e pode pedir abre caminho para uma tarefa com tempo e responsabilidade bem definidos.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 250,
+      "text": "Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 8 e 6.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 251,
+      "text": "Essa dinâmica aproxima dois contextos: o trabalho cotidiano e os cuidados de rotina e as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 252,
+      "text": "Uma escolha feita ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância pode mudar as condições em que você consegue explicar uma ideia, pedir uma informação ou retomar uma conversa.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 253,
+      "text": "Esse caminho tem um custo: ao acrescentar exigências até que a organização se torne outra fonte de desgaste, você pode comprometer a possibilidade de compreender e ser compreendido.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 254,
+      "text": "O ajuste interpretado é dar à escolha um limite compreensível: uma tarefa com tempo e responsabilidade bem definidos precisa comportar também uma conversa em que o pedido fique compreensível para os dois lados.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 255,
+      "text": "Esta interpretação reúne Lua e Mercúrio em quadratura, nos setores solares 6 e 3.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 256,
+      "text": "Nesse conjunto, preservar a harmonia à custa de uma preferência importante pode dificultar dar espaço à imaginação e à sensibilidade; uma conversa em que o pedido fique compreensível para os dois lados ajuda a preservar a ligação entre os temas sem entregar toda a decisão a essa reação.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 257,
+      "text": "Assim, uma tarefa com tempo e responsabilidade bem definidos dá um contorno à reação que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 258,
+      "text": "Esta é uma interpretação simbólica geral para Virgem, com cobertura de 2026-10-20 até 2026-10-21 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-virgem-daily-2026-10-20"
+    },
+    {
+      "index": 259,
+      "text": "O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 260,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: a direção profissional e as responsabilidades públicas e os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 261,
+      "text": "A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 262,
+      "text": "Uma resposta adequada para o compromisso com uma direção que possa ser sustentada publicamente pode precisar de ajustes quando está em jogo a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 263,
+      "text": "Por exemplo, uma responsabilidade com critérios claros para o que é suficiente não resolve automaticamente o que aparece ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 264,
+      "text": "Preservar uma intenção pode exigir outra maneira de realizá-la.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 265,
+      "text": "A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 266,
+      "text": "Há observações dessa relação no início, meio e fim da semana amostrada.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 267,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a direção profissional e as responsabilidades públicas e passa ao tema que envolve os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 268,
+      "text": "Um plano maior que aceite uma primeira experiência pequena e verificável torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 269,
+      "text": "Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 270,
+      "text": "O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 271,
+      "text": "Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 272,
+      "text": "Assim, uma conversa em que o pedido fique compreensível para os dois lados oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 273,
+      "text": "A visão maior precisa conversar com a informação concreta.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 274,
+      "text": "Uma boa pergunta pode preservar o sentido de uma ideia e, ao mesmo tempo, mudar a forma como você pretende colocá-la em prática.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 275,
+      "text": "Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 276,
+      "text": "Esta é uma interpretação simbólica geral para Aquário, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 277,
+      "text": "Esta leitura desenvolve 3 relações da seleção calculada para o período: Vênus–Plutão em quadratura, mudança de signo de Vênus e Netuno–Plutão em sextil.",
+      "firstDocument": "horoscopo-aquario-weekly-2026-10-19"
+    },
+    {
+      "index": 278,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: a partilha e os compromissos que envolvem confiança e as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 279,
+      "text": "Uma resposta adequada para a confiança necessária para dividir algo sem perder a clareza dos limites pode precisar de ajustes quando está em jogo o espaço de cada pessoa dentro de uma escolha compartilhada.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 280,
+      "text": "Por exemplo, uma combinação clara sobre o que cada pessoa oferece e pode pedir não resolve automaticamente o que aparece ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 281,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a partilha e os compromissos que envolvem confiança e passa ao tema que envolve as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 282,
+      "text": "Um acordo que permita discordar sem desfazer toda a parceria torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 283,
+      "text": "Assim, uma iniciativa que possa ser corrigida depois da primeira resposta oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 284,
+      "text": "A iniciativa própria e a escolha compartilhada precisam caber na mesma decisão.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 285,
+      "text": "Um acordo ganha qualidade quando a sua posição está presente e ainda pode escutar uma resposta.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 286,
+      "text": "Esta é uma interpretação simbólica geral para Áries, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-aries-weekly-2026-10-19"
+    },
+    {
+      "index": 287,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: a criação, o prazer e a expressão pessoal e a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 288,
+      "text": "Uma resposta adequada para a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro pode precisar de ajustes quando está em jogo o direito de ter uma base íntima que acolha você.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 289,
+      "text": "Por exemplo, uma experiência criativa que possa existir antes de ser avaliada não resolve automaticamente o que aparece ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 290,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a criação, o prazer e a expressão pessoal e passa ao tema que envolve a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 291,
+      "text": "Um acordo de convivência que preserve espaço pessoal torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 292,
+      "text": "Assim, uma responsabilidade com critérios claros para o que é suficiente oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 293,
+      "text": "O que você sustenta publicamente precisa encontrar apoio na vida íntima.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 294,
+      "text": "Reconhecimento e responsabilidade ficam mais habitáveis quando não consomem todo o espaço onde você pode simplesmente descansar.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 295,
+      "text": "Esta é uma interpretação simbólica geral para Câncer, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-cancer-weekly-2026-10-19"
+    },
+    {
+      "index": 296,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: os grupos, as amizades e os projetos em comum e a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 297,
+      "text": "Uma resposta adequada para o pertencimento que permite contribuir sem apagar sua posição pode precisar de ajustes quando está em jogo o compromisso com uma direção que possa ser sustentada publicamente.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 298,
+      "text": "Por exemplo, uma contribuição cujos limites sejam compreensíveis para o grupo não resolve automaticamente o que aparece ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 299,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve os grupos, as amizades e os projetos em comum e passa ao tema que envolve a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 300,
+      "text": "Uma responsabilidade com critérios claros para o que é suficiente torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 301,
+      "text": "Assim, um acordo de convivência que preserve espaço pessoal oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 302,
+      "text": "Esta é uma interpretação simbólica geral para Capricórnio, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-capricornio-weekly-2026-10-19"
+    },
+    {
+      "index": 303,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: sua maneira de se apresentar e começar e o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 304,
+      "text": "Uma resposta adequada para a liberdade de escolher por si pode precisar de ajustes quando está em jogo o espaço para elaborar algo antes de responder ao mundo.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 305,
+      "text": "Por exemplo, uma iniciativa que possa ser corrigida depois da primeira resposta não resolve automaticamente o que aparece ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 306,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve sua maneira de se apresentar e começar e passa ao tema que envolve o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 307,
+      "text": "Uma pausa que ajude a voltar ou a concluir torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 308,
+      "text": "Assim, uma tarefa com tempo e responsabilidade bem definidos oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 309,
+      "text": "Constância e recolhimento se sustentam melhor quando um não chega apenas depois do esgotamento do outro.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 310,
+      "text": "Uma pausa pode preservar a continuidade; uma rotina delimitada pode tornar a pausa possível.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 311,
+      "text": "Esta é uma interpretação simbólica geral para Escorpião, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-escorpiao-weekly-2026-10-19"
+    },
+    {
+      "index": 312,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: o trabalho cotidiano e os cuidados de rotina e a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 313,
+      "text": "Uma resposta adequada para a possibilidade de manter uma rotina que caiba na vida pode precisar de ajustes quando está em jogo a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 314,
+      "text": "Por exemplo, uma tarefa com tempo e responsabilidade bem definidos não resolve automaticamente o que aparece ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 315,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve o trabalho cotidiano e os cuidados de rotina e passa ao tema que envolve a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 316,
+      "text": "Uma experiência criativa que possa existir antes de ser avaliada torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 317,
+      "text": "Assim, uma contribuição cujos limites sejam compreensíveis para o grupo oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 318,
+      "text": "Participar de algo maior não precisa apagar a contribuição pessoal.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 319,
+      "text": "A criação ganha alcance no encontro com outras pessoas, desde que pertencer não exija abandonar tudo o que a torna sua.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 320,
+      "text": "Esta é uma interpretação simbólica geral para Gêmeos, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-gemeos-weekly-2026-10-19"
+    },
+    {
+      "index": 321,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: a intimidade e a vida de casa e as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 322,
+      "text": "Uma resposta adequada para o direito de ter uma base íntima que acolha você pode precisar de ajustes quando está em jogo a possibilidade de compreender e ser compreendido.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 323,
+      "text": "Por exemplo, um acordo de convivência que preserve espaço pessoal não resolve automaticamente o que aparece ao explicar uma ideia, pedir uma informação ou retomar uma conversa.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 324,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve a intimidade e a vida de casa e passa ao tema que envolve as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 325,
+      "text": "Uma conversa em que o pedido fique compreensível para os dois lados torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 326,
+      "text": "Assim, um plano maior que aceite uma primeira experiência pequena e verificável oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 327,
+      "text": "Esta é uma interpretação simbólica geral para Leão, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-leao-weekly-2026-10-19"
+    },
+    {
+      "index": 328,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: suas prioridades e recursos e sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 329,
+      "text": "Uma resposta adequada para a segurança de ter recursos e prioridades próprios pode precisar de ajustes quando está em jogo a liberdade de escolher por si.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 330,
+      "text": "Por exemplo, uma prioridade que caiba nos recursos realmente disponíveis não resolve automaticamente o que aparece ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 331,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve suas prioridades e recursos e passa ao tema que envolve sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 332,
+      "text": "Uma iniciativa que possa ser corrigida depois da primeira resposta torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 333,
+      "text": "Assim, um acordo que permita discordar sem desfazer toda a parceria oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 334,
+      "text": "Esta é uma interpretação simbólica geral para Libra, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-libra-weekly-2026-10-19"
+    },
+    {
+      "index": 335,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: os estudos, as convicções e os projetos de expansão e a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 336,
+      "text": "Uma resposta adequada para a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta pode precisar de ajustes quando está em jogo a confiança necessária para dividir algo sem perder a clareza dos limites.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 337,
+      "text": "Por exemplo, um plano maior que aceite uma primeira experiência pequena e verificável não resolve automaticamente o que aparece ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 338,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve os estudos, as convicções e os projetos de expansão e passa ao tema que envolve a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 339,
+      "text": "Uma combinação clara sobre o que cada pessoa oferece e pode pedir torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 340,
+      "text": "Assim, uma prioridade que caiba nos recursos realmente disponíveis oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 341,
+      "text": "Ter uma base própria muda a maneira de compartilhar.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 342,
+      "text": "A confiança fica mais clara quando contribuição, expectativa e limite deixam de depender de suposições.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 343,
+      "text": "Esta é uma interpretação simbólica geral para Peixes, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-peixes-weekly-2026-10-19"
+    },
+    {
+      "index": 344,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: o recolhimento e os assuntos que pedem encerramento e os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 345,
+      "text": "Uma resposta adequada para o espaço para elaborar algo antes de responder ao mundo pode precisar de ajustes quando está em jogo o pertencimento que permite contribuir sem apagar sua posição.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 346,
+      "text": "Por exemplo, uma pausa que ajude a voltar ou a concluir não resolve automaticamente o que aparece ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 347,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve o recolhimento e os assuntos que pedem encerramento e passa ao tema que envolve os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 348,
+      "text": "Uma contribuição cujos limites sejam compreensíveis para o grupo torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 349,
+      "text": "Assim, uma experiência criativa que possa existir antes de ser avaliada oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 350,
+      "text": "Esta é uma interpretação simbólica geral para Sagitário, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-sagitario-weekly-2026-10-19"
+    },
+    {
+      "index": 351,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: as parcerias e os acordos a dois e o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 352,
+      "text": "Uma resposta adequada para o espaço de cada pessoa dentro de uma escolha compartilhada pode precisar de ajustes quando está em jogo a possibilidade de manter uma rotina que caiba na vida.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 353,
+      "text": "Por exemplo, um acordo que permita discordar sem desfazer toda a parceria não resolve automaticamente o que aparece ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 354,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as parcerias e os acordos a dois e passa ao tema que envolve o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 355,
+      "text": "Uma tarefa com tempo e responsabilidade bem definidos torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 356,
+      "text": "Assim, uma pausa que ajude a voltar ou a concluir oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 357,
+      "text": "Esta é uma interpretação simbólica geral para Touro, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-touro-weekly-2026-10-19"
+    },
+    {
+      "index": 358,
+      "text": "A mudança de signo de Vênus desloca o foco entre dois temas: as conversas e os aprendizados cotidianos e suas prioridades e recursos.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 359,
+      "text": "Uma resposta adequada para a possibilidade de compreender e ser compreendido pode precisar de ajustes quando está em jogo a segurança de ter recursos e prioridades próprios.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 360,
+      "text": "Por exemplo, uma conversa em que o pedido fique compreensível para os dois lados não resolve automaticamente o que aparece ao distribuir tempo, dinheiro e atenção entre o que importa.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 361,
+      "text": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as conversas e os aprendizados cotidianos e passa ao tema que envolve suas prioridades e recursos.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 362,
+      "text": "Uma prioridade que caiba nos recursos realmente disponíveis torna essa mudança concreta e modifica as condições para rever dependências e relações de poder.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 363,
+      "text": "Assim, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece um recurso que modifica a maneira de enfrentar a primeira escolha.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 364,
+      "text": "Esta é uma interpretação simbólica geral para Virgem, com cobertura de 2026-10-19 até 2026-10-26 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-virgem-weekly-2026-10-19"
+    },
+    {
+      "index": 365,
+      "text": "Aquário: Assumir uma direção que faça sentido",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 366,
+      "text": "Uma leitura simbólica para Aquário sobre as diferentes escolhas que envolvem a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 367,
+      "text": "A revisão recai sobre a maneira de entender e comunicar.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 368,
+      "text": "Uma conversa pode estar bem explicada e ainda deixar um pedido importante sem nome; retomar o sentido do acordo é diferente de apenas repetir as mesmas palavras.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 369,
+      "text": "Nos assuntos que envolvem a direção profissional e as responsabilidades públicas, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 370,
+      "text": "Ao assumir uma responsabilidade, apresentar um trabalho ou decidir que direção deseja sustentar, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 371,
+      "text": "O sentido de uma responsabilidade com critérios claros para o que é suficiente depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 372,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 10; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 373,
+      "text": "A mudança aparece entre as amostras de 24/10/2026 às 06:00 e 24/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 374,
+      "text": "A revisão recai sobre o valor que sustenta uma escolha.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 375,
+      "text": "Continuar por afeição, por hábito ou pelo receio de desagradar são movimentos diferentes; reconhecer essa diferença permite compreender melhor o que você deseja preservar.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 376,
+      "text": "Quando a escolha envolve a direção profissional e as responsabilidades públicas, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 377,
+      "text": "Um acordo pode estar perfeitamente explicado e ainda não expressar uma preferência importante.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 378,
+      "text": "Uma responsabilidade com critérios claros para o que é suficiente ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 379,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 10; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 380,
+      "text": "A mudança aparece entre as amostras de 03/10/2026 às 06:00 e 03/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 381,
+      "text": "Lidas em conjunto, as mudanças de movimento de Mercúrio e Vênus acrescentam uma distinção.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 382,
+      "text": "Entender os termos de uma escolha não basta para desejar sustentá-la.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 383,
+      "text": "Uma preferência que mudou pode exigir outro acordo, mesmo quando o anterior estava claro.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 384,
+      "text": "Essa diferença modifica a leitura das situações que envolvem a direção profissional e as responsabilidades públicas: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 385,
+      "text": "Os registros se distribuem pelo período: Vênus em 03/10/2026 às 12:00 e Mercúrio em 24/10/2026 às 12:00 (UTC).",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 386,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a direção profissional e as responsabilidades públicas para o tema que envolve os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 387,
+      "text": "A preocupação anterior era o compromisso com uma direção que possa ser sustentada publicamente; agora, um plano maior que aceite uma primeira experiência pequena e verificável oferece outro modo de responder.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 388,
+      "text": "Essa mudança de contexto ajuda a distinguir a intenção que você preserva dos termos que podem precisar ser renegociados.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 389,
+      "text": "Na escala do mês, a sequência oferece uma mudança de perspectiva: o que precisa de revisão pode ganhar outra forma de continuidade.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 390,
+      "text": "Esta é uma interpretação simbólica geral para Aquário, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 391,
+      "text": "Esta leitura desenvolve 3 relações da seleção calculada para o período: passagem de Mercúrio ao movimento retrógrado, passagem de Vênus ao movimento retrógrado e mudança de signo de Vênus.",
+      "firstDocument": "horoscopo-aquario-monthly-2026-10-01"
+    },
+    {
+      "index": 392,
+      "text": "Áries: Dividir sem perder a clareza",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 393,
+      "text": "Uma leitura simbólica para Áries sobre as diferentes escolhas que envolvem a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 394,
+      "text": "Nos assuntos que envolvem a partilha e os compromissos que envolvem confiança, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 395,
+      "text": "Ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 396,
+      "text": "O sentido de uma combinação clara sobre o que cada pessoa oferece e pode pedir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 397,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 8; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 398,
+      "text": "Quando a escolha envolve a partilha e os compromissos que envolvem confiança, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 399,
+      "text": "Uma combinação clara sobre o que cada pessoa oferece e pode pedir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 400,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 8; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 401,
+      "text": "Essa diferença modifica a leitura das situações que envolvem a partilha e os compromissos que envolvem confiança: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 402,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a partilha e os compromissos que envolvem confiança para o tema que envolve as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 403,
+      "text": "A preocupação anterior era a confiança necessária para dividir algo sem perder a clareza dos limites; agora, um acordo que permita discordar sem desfazer toda a parceria oferece outro modo de responder.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 404,
+      "text": "Esta é uma interpretação simbólica geral para Áries, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-aries-monthly-2026-10-01"
+    },
+    {
+      "index": 405,
+      "text": "Câncer: Abrir espaço para criar e gostar",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 406,
+      "text": "Uma leitura simbólica para Câncer sobre as diferentes escolhas que envolvem a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 407,
+      "text": "Nos assuntos que envolvem a criação, o prazer e a expressão pessoal, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 408,
+      "text": "Ao mostrar algo que criou, experimentar um interesse ou reservar tempo para o prazer, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 409,
+      "text": "O sentido de uma experiência criativa que possa existir antes de ser avaliada depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 410,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 5; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 411,
+      "text": "Quando a escolha envolve a criação, o prazer e a expressão pessoal, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 412,
+      "text": "Uma experiência criativa que possa existir antes de ser avaliada ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 413,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 5; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 414,
+      "text": "Essa diferença modifica a leitura das situações que envolvem a criação, o prazer e a expressão pessoal: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 415,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a criação, o prazer e a expressão pessoal para o tema que envolve a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 416,
+      "text": "A preocupação anterior era a liberdade de gostar de algo sem precisar justificá-lo o tempo inteiro; agora, um acordo de convivência que preserve espaço pessoal oferece outro modo de responder.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 417,
+      "text": "Esta é uma interpretação simbólica geral para Câncer, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-cancer-monthly-2026-10-01"
+    },
+    {
+      "index": 418,
+      "text": "Capricórnio: Participar sem perder sua voz",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 419,
+      "text": "Uma leitura simbólica para Capricórnio sobre as diferentes escolhas que envolvem os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 420,
+      "text": "Nos assuntos que envolvem os grupos, as amizades e os projetos em comum, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 421,
+      "text": "Ao participar de um grupo, dividir uma ideia de futuro ou combinar uma contribuição, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 422,
+      "text": "O sentido de uma contribuição cujos limites sejam compreensíveis para o grupo depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 423,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 11; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 424,
+      "text": "Quando a escolha envolve os grupos, as amizades e os projetos em comum, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 425,
+      "text": "Uma contribuição cujos limites sejam compreensíveis para o grupo ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 426,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 11; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 427,
+      "text": "Essa diferença modifica a leitura das situações que envolvem os grupos, as amizades e os projetos em comum: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 428,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve os grupos, as amizades e os projetos em comum para o tema que envolve a direção profissional e as responsabilidades públicas.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 429,
+      "text": "A preocupação anterior era o pertencimento que permite contribuir sem apagar sua posição; agora, uma responsabilidade com critérios claros para o que é suficiente oferece outro modo de responder.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 430,
+      "text": "Esta é uma interpretação simbólica geral para Capricórnio, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-capricornio-monthly-2026-10-01"
+    },
+    {
+      "index": 431,
+      "text": "Escorpião: Escolher sua própria posição",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 432,
+      "text": "Uma leitura simbólica para Escorpião sobre as diferentes escolhas que envolvem sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 433,
+      "text": "Nos assuntos que envolvem sua maneira de se apresentar e começar, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 434,
+      "text": "Ao tomar a iniciativa, dizer o que você quer ou mudar a forma de se apresentar, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 435,
+      "text": "O sentido de uma iniciativa que possa ser corrigida depois da primeira resposta depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 436,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 1; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 437,
+      "text": "Quando a escolha envolve sua maneira de se apresentar e começar, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 438,
+      "text": "Uma iniciativa que possa ser corrigida depois da primeira resposta ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 439,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 1; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 440,
+      "text": "Essa diferença modifica a leitura das situações que envolvem sua maneira de se apresentar e começar: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 441,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve sua maneira de se apresentar e começar para o tema que envolve o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 442,
+      "text": "A preocupação anterior era a liberdade de escolher por si; agora, uma pausa que ajude a voltar ou a concluir oferece outro modo de responder.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 443,
+      "text": "Esta é uma interpretação simbólica geral para Escorpião, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-escorpiao-monthly-2026-10-01"
+    },
+    {
+      "index": 444,
+      "text": "Gêmeos: Dar uma forma possível à rotina",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 445,
+      "text": "Uma leitura simbólica para Gêmeos sobre as diferentes escolhas que envolvem o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 446,
+      "text": "Nos assuntos que envolvem o trabalho cotidiano e os cuidados de rotina, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 447,
+      "text": "Ao dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 448,
+      "text": "O sentido de uma tarefa com tempo e responsabilidade bem definidos depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 449,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 6; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 450,
+      "text": "Quando a escolha envolve o trabalho cotidiano e os cuidados de rotina, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 451,
+      "text": "Uma tarefa com tempo e responsabilidade bem definidos ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 452,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 6; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 453,
+      "text": "Essa diferença modifica a leitura das situações que envolvem o trabalho cotidiano e os cuidados de rotina: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 454,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o trabalho cotidiano e os cuidados de rotina para o tema que envolve a criação, o prazer e a expressão pessoal.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 455,
+      "text": "A preocupação anterior era a possibilidade de manter uma rotina que caiba na vida; agora, uma experiência criativa que possa existir antes de ser avaliada oferece outro modo de responder.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 456,
+      "text": "Esta é uma interpretação simbólica geral para Gêmeos, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-gemeos-monthly-2026-10-01"
+    },
+    {
+      "index": 457,
+      "text": "Leão: Cuidar da base que acolhe você",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 458,
+      "text": "Uma leitura simbólica para Leão sobre as diferentes escolhas que envolvem a intimidade e a vida de casa.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 459,
+      "text": "Nos assuntos que envolvem a intimidade e a vida de casa, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 460,
+      "text": "Ao organizar a convivência, resguardar a privacidade ou cuidar do lugar onde você descansa, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 461,
+      "text": "O sentido de um acordo de convivência que preserve espaço pessoal depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 462,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 4; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 463,
+      "text": "Quando a escolha envolve a intimidade e a vida de casa, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 464,
+      "text": "Um acordo de convivência que preserve espaço pessoal ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 465,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 4; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 466,
+      "text": "Essa diferença modifica a leitura das situações que envolvem a intimidade e a vida de casa: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 467,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve a intimidade e a vida de casa para o tema que envolve as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 468,
+      "text": "A preocupação anterior era o direito de ter uma base íntima que acolha você; agora, uma conversa em que o pedido fique compreensível para os dois lados oferece outro modo de responder.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 469,
+      "text": "Esta é uma interpretação simbólica geral para Leão, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-leao-monthly-2026-10-01"
+    },
+    {
+      "index": 470,
+      "text": "Libra: Dar valor ao que sustenta você",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 471,
+      "text": "Uma leitura simbólica para Libra sobre as diferentes escolhas que envolvem suas prioridades e recursos.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 472,
+      "text": "Nos assuntos que envolvem suas prioridades e recursos, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 473,
+      "text": "Ao distribuir tempo, dinheiro e atenção entre o que importa, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 474,
+      "text": "O sentido de uma prioridade que caiba nos recursos realmente disponíveis depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 475,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 2; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 476,
+      "text": "Quando a escolha envolve suas prioridades e recursos, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 477,
+      "text": "Uma prioridade que caiba nos recursos realmente disponíveis ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 478,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 2; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 479,
+      "text": "Essa diferença modifica a leitura das situações que envolvem suas prioridades e recursos: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 480,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve suas prioridades e recursos para o tema que envolve sua maneira de se apresentar e começar.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 481,
+      "text": "A preocupação anterior era a segurança de ter recursos e prioridades próprios; agora, uma iniciativa que possa ser corrigida depois da primeira resposta oferece outro modo de responder.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 482,
+      "text": "Esta é uma interpretação simbólica geral para Libra, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-libra-monthly-2026-10-01"
+    },
+    {
+      "index": 483,
+      "text": "Peixes: Ampliar a visão sem perder o chão",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 484,
+      "text": "Uma leitura simbólica para Peixes sobre as diferentes escolhas que envolvem os estudos, as convicções e os projetos de expansão.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 485,
+      "text": "Nos assuntos que envolvem os estudos, as convicções e os projetos de expansão, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 486,
+      "text": "Ao escolher um estudo, conhecer uma perspectiva diferente ou rever um plano de longo alcance, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 487,
+      "text": "O sentido de um plano maior que aceite uma primeira experiência pequena e verificável depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 488,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 9; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 489,
+      "text": "Quando a escolha envolve os estudos, as convicções e os projetos de expansão, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 490,
+      "text": "Um plano maior que aceite uma primeira experiência pequena e verificável ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 491,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 9; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 492,
+      "text": "Essa diferença modifica a leitura das situações que envolvem os estudos, as convicções e os projetos de expansão: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 493,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve os estudos, as convicções e os projetos de expansão para o tema que envolve a partilha e os compromissos que envolvem confiança.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 494,
+      "text": "A preocupação anterior era a liberdade de ampliar a visão sem transformar uma ideia em certeza absoluta; agora, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece outro modo de responder.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 495,
+      "text": "Esta é uma interpretação simbólica geral para Peixes, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-peixes-monthly-2026-10-01"
+    },
+    {
+      "index": 496,
+      "text": "Sagitário: Respeitar o tempo de recolher",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 497,
+      "text": "Uma leitura simbólica para Sagitário sobre as diferentes escolhas que envolvem o recolhimento e os assuntos que pedem encerramento.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 498,
+      "text": "Nos assuntos que envolvem o recolhimento e os assuntos que pedem encerramento, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 499,
+      "text": "Ao diminuir estímulos, terminar uma pendência ou preservar um tempo sem exposição, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 500,
+      "text": "O sentido de uma pausa que ajude a voltar ou a concluir depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 501,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 502,
+      "text": "Quando a escolha envolve o recolhimento e os assuntos que pedem encerramento, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 503,
+      "text": "Uma pausa que ajude a voltar ou a concluir ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 504,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 12; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 505,
+      "text": "Essa diferença modifica a leitura das situações que envolvem o recolhimento e os assuntos que pedem encerramento: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 506,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve o recolhimento e os assuntos que pedem encerramento para o tema que envolve os grupos, as amizades e os projetos em comum.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 507,
+      "text": "A preocupação anterior era o espaço para elaborar algo antes de responder ao mundo; agora, uma contribuição cujos limites sejam compreensíveis para o grupo oferece outro modo de responder.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 508,
+      "text": "Esta é uma interpretação simbólica geral para Sagitário, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-sagitario-monthly-2026-10-01"
+    },
+    {
+      "index": 509,
+      "text": "Touro: Negociar sem desaparecer do encontro",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 510,
+      "text": "Uma leitura simbólica para Touro sobre as diferentes escolhas que envolvem as parcerias e os acordos a dois.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 511,
+      "text": "Nos assuntos que envolvem as parcerias e os acordos a dois, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 512,
+      "text": "Ao negociar uma diferença, fazer um pedido ou decidir algo com outra pessoa, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 513,
+      "text": "O sentido de um acordo que permita discordar sem desfazer toda a parceria depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 514,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 7; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 515,
+      "text": "Quando a escolha envolve as parcerias e os acordos a dois, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 516,
+      "text": "Um acordo que permita discordar sem desfazer toda a parceria ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 517,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 7; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 518,
+      "text": "Essa diferença modifica a leitura das situações que envolvem as parcerias e os acordos a dois: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 519,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve as parcerias e os acordos a dois para o tema que envolve o trabalho cotidiano e os cuidados de rotina.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 520,
+      "text": "A preocupação anterior era o espaço de cada pessoa dentro de uma escolha compartilhada; agora, uma tarefa com tempo e responsabilidade bem definidos oferece outro modo de responder.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 521,
+      "text": "Esta é uma interpretação simbólica geral para Touro, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-touro-monthly-2026-10-01"
+    },
+    {
+      "index": 522,
+      "text": "Virgem: Encontrar palavras que aproximam",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 523,
+      "text": "Uma leitura simbólica para Virgem sobre as diferentes escolhas que envolvem as conversas e os aprendizados cotidianos.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 524,
+      "text": "Nos assuntos que envolvem as conversas e os aprendizados cotidianos, a revisão procura a diferença entre o que foi dito e o que cada pessoa entendeu.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 525,
+      "text": "Ao explicar uma ideia, pedir uma informação ou retomar uma conversa, uma condição omitida pode pesar mais do que a quantidade de explicações.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 526,
+      "text": "O sentido de uma conversa em que o pedido fique compreensível para os dois lados depende de tornar essa condição compreensível, para que concordar seja uma escolha informada.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 527,
+      "text": "A referência é a passagem de Mercúrio ao movimento aparente retrógrado, visto da Terra, no setor solar 3; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 528,
+      "text": "Quando a escolha envolve as conversas e os aprendizados cotidianos, a pergunta afetiva é o que você deseja continuar oferecendo e recebendo.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 529,
+      "text": "Uma conversa em que o pedido fique compreensível para os dois lados ganha valor quando comporta essa preferência; ceder para manter o vínculo pode parecer generosidade mesmo quando já custa reciprocidade.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 530,
+      "text": "A referência é a passagem de Vênus ao movimento aparente retrógrado, visto da Terra, no setor solar 3; ela não impõe uma regra de parar ou avançar.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 531,
+      "text": "Essa diferença modifica a leitura das situações que envolvem as conversas e os aprendizados cotidianos: as duas revisões recaem sobre a mesma escolha, mas esclarecem preocupações diferentes.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 532,
+      "text": "A passagem de Vênus, registrada em 25/10/2026 (UTC), leva essa questão do tema que envolve as conversas e os aprendizados cotidianos para o tema que envolve suas prioridades e recursos.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 533,
+      "text": "A preocupação anterior era a possibilidade de compreender e ser compreendido; agora, uma prioridade que caiba nos recursos realmente disponíveis oferece outro modo de responder.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    },
+    {
+      "index": 534,
+      "text": "Esta é uma interpretação simbólica geral para Virgem, com cobertura de 2026-10-01 até 2026-11-01 (fim exclusivo), em UTC.",
+      "firstDocument": "horoscopo-virgem-monthly-2026-10-01"
+    }
+  ]
+}

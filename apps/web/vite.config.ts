@@ -18,6 +18,7 @@ export default defineConfig({
 						'<build>',
 						'/brand/*',
 						'/locations/*',
+						'/_editorial/*',
 						'/manifest.webmanifest',
 						'/google15945b45fa79e7d3.html',
 						'<prerendered>',

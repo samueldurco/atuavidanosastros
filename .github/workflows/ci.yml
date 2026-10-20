@@ -4,12 +4,33 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      expected_sha:
+        description: Exact commit requested by the dated editorial publisher
+        type: string
+        required: true
 
 permissions:
   contents: read
 
 jobs:
+  dispatch-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Bind dispatched checks to the requested commit
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EXPECTED_SHA: ${{ inputs.expected_sha }}
+          ACTUAL_SHA: ${{ github.sha }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            [[ "$EXPECTED_SHA" =~ ^[a-f0-9]{40}$ ]] && [ "$EXPECTED_SHA" = "$ACTUAL_SHA" ]
+          fi
+
   quality:
+    needs: dispatch-guard
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -33,6 +54,7 @@ jobs:
       - run: pnpm build:free-tools-runtime
 
   accessibility:
+    needs: dispatch-guard
     runs-on: ubuntu-latest
     # 196 browser checks plus the isolated legal/social build exceeded 15 minutes.
     timeout-minutes: 25
@@ -70,6 +92,7 @@ jobs:
           retention-days: 7
 
   secrets:
+    needs: dispatch-guard
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -84,6 +107,7 @@ jobs:
           GITLEAKS_ENABLE_COMMENTS: "false"
 
   current-readings:
+    needs: dispatch-guard
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -109,6 +133,7 @@ jobs:
           retention-days: 7
 
   sbom:
+    needs: dispatch-guard
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

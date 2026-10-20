@@ -1,0 +1,25 @@
+{
+  "schema": "atv-dated-horoscope-runtime-v1",
+  "documentId": "horoscopo-capricornio-weekly-2026-10-19",
+  "documentDigest": "8b72adab459628f39948bab32f7f57208cca1cb074ad18c9494fb324a2a5008a",
+  "factsDigest": "c9827b83824fb027b9700820a9a7fa88bda7fe79bad08ac43b6c82d2b0d5bdda",
+  "claimsDigest": "0ae85e2f6af3977587b142fd822d56c75f7f2607623085cd296c3c794aaa7db4",
+  "scopeDigest": "933c39af2c926d9dc795a5d92a55dd0016286b0f937db8f0958397c8bd5dd8e4",
+  "composition": {
+    "corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+    "corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+    "algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+    "reviewMode": "reviewed-corpus-and-runtime-verification",
+    "algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+  },
+  "verifiedAt": "2026-10-20T10:37:26.612Z",
+  "checks": {
+    "facts": "PASS",
+    "claims": "PASS",
+    "composition": "PASS",
+    "coverage": "PASS",
+    "disclosure": "PASS",
+    "differentiation": "PASS"
+  },
+  "decision": "PASS"
+}

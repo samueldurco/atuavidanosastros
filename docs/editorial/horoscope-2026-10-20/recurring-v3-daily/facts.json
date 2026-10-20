@@ -1,0 +1,360 @@
+{
+  "version": "atv-public-horoscope-samples/1.0.0",
+  "period": "daily",
+  "startDate": "2026-10-20",
+  "endDateExclusive": "2026-10-21",
+  "timezone": "UTC",
+  "stepHours": 6,
+  "bodies": [
+    "sun",
+    "moon",
+    "mercury",
+    "venus",
+    "mars",
+    "jupiter",
+    "saturn",
+    "uranus",
+    "neptune",
+    "pluto"
+  ],
+  "engine": "caelus",
+  "engineVersion": "0.24.1",
+  "license": "MIT",
+  "provenance": {
+    "provider": "caelus",
+    "providerVersion": "0.24.1",
+    "algorithmVersion": "atv-caelus-adapter-v3",
+    "zodiac": "tropical",
+    "houseSystem": "placidus",
+    "calculatedAt": "2026-10-20T09:28:09.455Z",
+    "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+    "dataManifest": {
+      "provider": "caelus",
+      "version": "0.24.1",
+      "tier": "embedded",
+      "files": [
+        {
+          "path": "src/data-embedded.js",
+          "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+        },
+        {
+          "path": "data/vsop87d_mercury.embedded.json",
+          "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+        },
+        {
+          "path": "data/vsop87d_venus.embedded.json",
+          "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+        },
+        {
+          "path": "data/vsop87d_earth.embedded.json",
+          "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+        },
+        {
+          "path": "data/vsop87d_mars.embedded.json",
+          "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+        },
+        {
+          "path": "data/vsop87d_jupiter.embedded.json",
+          "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+        },
+        {
+          "path": "data/vsop87d_saturn.embedded.json",
+          "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+        },
+        {
+          "path": "data/vsop87d_uranus.embedded.json",
+          "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+        },
+        {
+          "path": "data/vsop87d_neptune.embedded.json",
+          "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+        },
+        {
+          "path": "data/nutation_iau1980.json",
+          "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+        },
+        {
+          "path": "data/moon_meeus47.json",
+          "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+        },
+        {
+          "path": "data/pluto_meeus37.json",
+          "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+        },
+        {
+          "path": "data/chiron_cheb.json",
+          "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+        },
+        {
+          "path": "data/fixed_stars.json",
+          "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+        },
+        {
+          "path": "data/constellations.json",
+          "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+        }
+      ]
+    },
+    "contract": {
+      "version": "atv-deterministic-contract/1",
+      "minUtcInstant": "1900-01-01T00:00:00.000Z",
+      "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+      "calendar": "proleptic-gregorian",
+      "inputResolutionMilliseconds": 1,
+      "leapSecondInput": "rejected",
+      "placidusAbsoluteLatitudeExclusive": 66,
+      "accuracy": "experimental-sampled",
+      "guaranteedLongitudeErrorDegrees": null,
+      "retrogradeStationTiming": "not-certified",
+      "productionPromotion": false
+    },
+    "temporal": {
+      "utcInstant": "2026-10-20T00:00:00.000Z",
+      "julianDayUt1Approx": 2461333.5,
+      "dut1Seconds": null,
+      "timezoneMode": "fixed-offset",
+      "timezoneRules": "explicit-offset/v1",
+      "offsetSeconds": 0,
+      "inputScale": "UTC",
+      "engineScale": "UT1-approximated-by-UTC",
+      "deltaTSeconds": 69.13838359575755
+    },
+    "accuracyStatus": "experimental",
+    "warnings": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Offset histórico fornecido pelo usuário; DST não é inferido."
+    ]
+  },
+  "rows": [
+    [
+      1792454400000,
+      206.6181515017739,
+      311.1983845587189,
+      229.87966786883734,
+      213.2390471631038,
+      132.36221589319604,
+      142.70726076244972,
+      10.110473195115002,
+      65.07596446568401,
+      2.3594952032621896,
+      303.0723151365835,
+      456
+    ],
+    [
+      1792476000000,
+      206.86652976140564,
+      314.23757580557015,
+      229.99735304916086,
+      213.09518462866694,
+      132.49675318558732,
+      142.7439701567399,
+      10.09211019396978,
+      65.06842813349424,
+      2.353332956274298,
+      303.07278751402845,
+      456
+    ],
+    [
+      1792497600000,
+      207.11493747937465,
+      317.29244406804764,
+      230.10912525351708,
+      212.95027900983507,
+      132.63112269717888,
+      142.7805558588386,
+      10.073788497952153,
+      65.06085370403419,
+      2.3471861264030855,
+      303.0732890064617,
+      456
+    ],
+    [
+      1792519200000,
+      207.36337467120313,
+      320.36428508566877,
+      230.2148467636942,
+      212.80438839061554,
+      132.76532392292236,
+      142.8170174412452,
+      10.055508712415072,
+      65.05324137161317,
+      2.3410548575477974,
+      303.07381960717504,
+      456
+    ]
+  ],
+  "aspectPolicy": {
+    "id": "atv-public-horoscope-major",
+    "version": "1.0.0",
+    "aspects": [
+      {
+        "kind": "conjunction",
+        "orbDegrees": 2
+      },
+      {
+        "kind": "sextile",
+        "orbDegrees": 2
+      },
+      {
+        "kind": "square",
+        "orbDegrees": 2
+      },
+      {
+        "kind": "trine",
+        "orbDegrees": 2
+      },
+      {
+        "kind": "opposition",
+        "orbDegrees": 2
+      }
+    ]
+  },
+  "pairsEvaluatedPerSample": 45,
+  "candidates": [
+    {
+      "id": "aspect:neptune:pluto:sextile",
+      "kind": "aspect",
+      "category": "background",
+      "bodies": [
+        "neptune",
+        "pluto"
+      ],
+      "firstObservedAt": "2026-10-20T00:00:00.000Z",
+      "lastObservedAt": "2026-10-20T18:00:00.000Z",
+      "representativeAt": "2026-10-20T00:00:00.000Z",
+      "score": 106.43590033339365,
+      "aspect": {
+        "first": "neptune",
+        "second": "pluto",
+        "kind": "sextile",
+        "exactAngleDegrees": 60,
+        "separationDegrees": 59.28718006667873,
+        "orbDegrees": 0.7128199333212706
+      }
+    },
+    {
+      "id": "aspect:uranus:pluto:trine",
+      "kind": "aspect",
+      "category": "background",
+      "bodies": [
+        "uranus",
+        "pluto"
+      ],
+      "firstObservedAt": "2026-10-20T06:00:00.000Z",
+      "lastObservedAt": "2026-10-20T18:00:00.000Z",
+      "representativeAt": "2026-10-20T18:00:00.000Z",
+      "score": 100.10289117780928,
+      "aspect": {
+        "first": "uranus",
+        "second": "pluto",
+        "kind": "trine",
+        "exactAngleDegrees": 120,
+        "separationDegrees": 121.97942176443814,
+        "orbDegrees": 1.9794217644381433
+      }
+    },
+    {
+      "id": "aspect:venus:pluto:square",
+      "kind": "aspect",
+      "category": "fast",
+      "bodies": [
+        "venus",
+        "pluto"
+      ],
+      "firstObservedAt": "2026-10-20T00:00:00.000Z",
+      "lastObservedAt": "2026-10-20T18:00:00.000Z",
+      "representativeAt": "2026-10-20T06:00:00.000Z",
+      "score": 89.88801442680753,
+      "aspect": {
+        "first": "venus",
+        "second": "pluto",
+        "kind": "square",
+        "exactAngleDegrees": 90,
+        "separationDegrees": 89.9776028853615,
+        "orbDegrees": 0.02239711463849403
+      }
+    },
+    {
+      "id": "aspect:moon:mercury:square",
+      "kind": "aspect",
+      "category": "fast",
+      "bodies": [
+        "moon",
+        "mercury"
+      ],
+      "firstObservedAt": "2026-10-20T18:00:00.000Z",
+      "lastObservedAt": "2026-10-20T18:00:00.000Z",
+      "representativeAt": "2026-10-20T18:00:00.000Z",
+      "score": 79.25280839012714,
+      "aspect": {
+        "first": "moon",
+        "second": "mercury",
+        "kind": "square",
+        "exactAngleDegrees": 90,
+        "separationDegrees": 90.14943832197457,
+        "orbDegrees": 0.1494383219745714
+      }
+    },
+    {
+      "id": "aspect:moon:saturn:sextile",
+      "kind": "aspect",
+      "category": "fast",
+      "bodies": [
+        "moon",
+        "saturn"
+      ],
+      "firstObservedAt": "2026-10-20T00:00:00.000Z",
+      "lastObservedAt": "2026-10-20T00:00:00.000Z",
+      "representativeAt": "2026-10-20T00:00:00.000Z",
+      "score": 74.56044318198053,
+      "aspect": {
+        "first": "moon",
+        "second": "saturn",
+        "kind": "sextile",
+        "exactAngleDegrees": 60,
+        "separationDegrees": 58.912088636396106,
+        "orbDegrees": 1.0879113636038937
+      }
+    },
+    {
+      "id": "aspect:moon:mars:opposition",
+      "kind": "aspect",
+      "category": "fast",
+      "bodies": [
+        "moon",
+        "mars"
+      ],
+      "firstObservedAt": "2026-10-20T00:00:00.000Z",
+      "lastObservedAt": "2026-10-20T06:00:00.000Z",
+      "representativeAt": "2026-10-20T00:00:00.000Z",
+      "score": 74.18084332761424,
+      "aspect": {
+        "first": "moon",
+        "second": "mars",
+        "kind": "opposition",
+        "exactAngleDegrees": 180,
+        "separationDegrees": 178.83616866552285,
+        "orbDegrees": 1.1638313344771518
+      }
+    }
+  ],
+  "selectedIds": [
+    "aspect:neptune:pluto:sextile",
+    "aspect:uranus:pluto:trine",
+    "aspect:venus:pluto:square",
+    "aspect:moon:mercury:square",
+    "aspect:moon:saturn:sextile",
+    "aspect:moon:mars:opposition"
+  ],
+  "selectionVersion": "atv-public-sky-relevance/1.0.0",
+  "limits": [
+    "Cálculo geocêntrico tropical experimental; precisão integral ainda não homologada.",
+    "Períodos em UTC, com amostras a cada seis horas; não equivalem ao dia civil de cada leitor.",
+    "Aspectos e mudanças são observações amostradas: não certificam instante exato, duração, aplicação ou separação.",
+    "A grade pode deixar de detectar contatos ou mudanças entre amostras. A última amostra precede o fim exclusivo do período.",
+    "Relevância é uma política editorial explícita, não probabilidade ou previsão de acontecimentos.",
+    "Não usa mapa natal, casas ou ângulos do leitor; os mesmos fatos do céu servem aos doze signos."
+  ]
+}
