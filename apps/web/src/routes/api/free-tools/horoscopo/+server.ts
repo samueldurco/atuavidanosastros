@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 	const documents = await publishedEditorial();
 	const index = publicHoroscopeIndex(documents, url, sign);
 	const entry = index.current;
-	const document = entry && await publishedEditorialDocument(entry.path, fetch);
+	const document = entry && (await publishedEditorialDocument(entry.path, fetch));
 	return json(
 		{
 			sign,

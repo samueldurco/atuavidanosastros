@@ -16,8 +16,10 @@ import storedHoroscopeFacts from './editorial-release/horoscope-facts.json';
 import type { PublicHoroscopeSnapshot } from './public-horoscope-facts';
 import storedDatedIndex from './editorial-release/dated-index.json';
 import {
-	archivedEditorialDocument, archivedEditorialSummaries,
-	type DatedArchiveRelease, type EditorialAssetFetch
+	archivedEditorialDocument,
+	archivedEditorialSummaries,
+	type DatedArchiveRelease,
+	type EditorialAssetFetch
 } from './dated-horoscope-archive';
 
 // Server-owned, immutable packages admitted by the release process. Public keys only.
@@ -69,10 +71,11 @@ const authorities: Readonly<Record<string, EditorialAuthority>> = {};
 
 export async function publishedEditorial(now = new Date()): Promise<EditorialSummary[]> {
 	const combined = [
-		...await approvedDocuments(documents, approvals, authorities, now, automated, horoscopeFacts),
-		...await archivedEditorialSummaries(datedIndex, stored.authorities, now)
+		...(await approvedDocuments(documents, approvals, authorities, now, automated, horoscopeFacts)),
+		...(await archivedEditorialSummaries(datedIndex, stored.authorities, now))
 	];
-	const ids = new Map<string, number>(), paths = new Map<string, number>();
+	const ids = new Map<string, number>(),
+		paths = new Map<string, number>();
 	const authors = new Map<string, Set<string>>();
 	for (const document of combined) {
 		ids.set(document.id, (ids.get(document.id) ?? 0) + 1);
@@ -81,16 +84,24 @@ export async function publishedEditorial(now = new Date()): Promise<EditorialSum
 		signatures.add(JSON.stringify(document.author));
 		authors.set(document.author.id, signatures);
 	}
-	return combined.filter((document) => ids.get(document.id) === 1 &&
-		paths.get(document.path) === 1 && authors.get(document.author.id)?.size === 1
-	).sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+	return combined
+		.filter(
+			(document) =>
+				ids.get(document.id) === 1 &&
+				paths.get(document.path) === 1 &&
+				authors.get(document.author.id)?.size === 1
+		)
+		.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 }
 
 export async function publishedEditorialDocument(
-	path: string, fetchAsset?: EditorialAssetFetch, now = new Date()
+	path: string,
+	fetchAsset?: EditorialAssetFetch,
+	now = new Date()
 ): Promise<EditorialDocument | undefined> {
 	const summary = (await publishedEditorial(now)).find((document) => document.path === path);
 	if (!summary) return;
 	if (summary.sections) return summary as EditorialDocument;
-	if (fetchAsset) return archivedEditorialDocument(path, datedIndex, stored.authorities, fetchAsset, now);
+	if (fetchAsset)
+		return archivedEditorialDocument(path, datedIndex, stored.authorities, fetchAsset, now);
 }

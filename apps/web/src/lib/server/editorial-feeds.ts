@@ -18,10 +18,7 @@ export function xml(value: string): string {
 function urlset(body: string, news = false): string {
 	return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="${sitemapNamespace}"${news ? ' xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"' : ''}>${body}</urlset>`;
 }
-export function recentNews(
-	documents: readonly EditorialSummary[],
-	now: Date
-): EditorialSummary[] {
+export function recentNews(documents: readonly EditorialSummary[], now: Date): EditorialSummary[] {
 	return documents.filter(
 		(document) =>
 			document.kind === 'reporting' &&
