@@ -18,12 +18,12 @@ O botão voltar do navegador não pode ser desativado como garantia de fluxo. Re
 ## Estado implementado nesta revisão
 
 - `/ofertas/[offerSlug]` usa `JourneyShell`, sem navegação pública, banner de consentimento, links para catálogo, produto de origem ou produto de destino. A única saída visível da prévia é `/dashboard`.
-- Todas as rotas dessa família recebem `private, no-store`, `noindex, nofollow` e `no-referrer`; visitante sem autenticação e acesso interno recebe 404 em produção. Em desenvolvimento local, a prévia visual continua acessível. Esta é uma guarda de prévia, não a autorização comercial final por pedido.
+- Todas as rotas dessa família recebem `private, no-store`, `noindex, nofollow` e `no-referrer`. No domínio oficial, visitante sem autenticação e acesso interno recebe 404. A URL de prévia do PR (`codex-commercial-journeys-20.atuavidanosastros.pages.dev`) permite testar a apresentação e a saída para Minha Área sem uma compra; em desenvolvimento local, a prévia visual também continua acessível. Essa exceção é exclusiva da prévia e não concede compra nem direito de acesso.
 - Como preço, condições e checkout ainda não foram aprovados, a tela identifica claramente o estado de prévia e não mostra botão de aceite ou cobrança fictícia.
 - Home, menu, catálogos e rodapé do PR #38 foram integrados à frente comercial. A navegação pública separa Leituras digitais, Produtos físicos e ATV+; a oferta pós-compra fica fora dessa navegação.
 
 ## Verificação e liberação
 
-`svelte-check` passou com zero erros e avisos. Playwright passou nos cinco cenários de `commercial-journey.e2e.ts` e `navigation-catalog.e2e.ts`, incluindo a resposta 404 anônima, ausência de navegação pública e os caminhos recentes de home/menu. As telas da oferta foram inspecionadas em 1440 e 390 px, sem desvio visual identificado. A atualização comercial segue em PR de prévia; não autoriza publicação como oferta ativa.
+`svelte-check` passou com zero erros e avisos. Playwright cobre a resposta 404 anônima no domínio oficial, a abertura da apresentação no host de prévia, a ausência de navegação pública e os caminhos recentes de home/menu. As telas da oferta foram inspecionadas em 1440 e 390 px, sem desvio visual identificado. A atualização comercial segue em PR de prévia; não autoriza publicação como oferta ativa.
 
 Para ativar a etapa comercial ainda faltam contrato J01 (preço, termos, checkout, direito/prazo e política de estorno), retorno autenticado do checkout, conciliação do pedido e do direito, guarda de oportunidade por pedido, decisão de aceitar/recusar, saída para onboarding conforme o estado e validação hospedada completa. As migrações comerciais preparadas continuam sem aplicação hospedada. Fontes: `COMMERCIAL_IMPLEMENTATION_2026-10-19.md`, `FUNNEL_SOURCE_RECONCILIATION_2026-10-19.md`, `docs/contracts/architecture-offers-20261015.md` e o plano comercial externo.
