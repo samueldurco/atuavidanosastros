@@ -7,12 +7,12 @@ import {
 	type PublicPeriod
 } from '$lib/public-horoscope';
 import type { PageSeo } from '$lib/seo';
-import type { EditorialDocument } from './editorial';
+import type { EditorialSummary } from './editorial';
 import { publishedEditorial } from './editorial-registry';
 
 // Call only with the admitted registry. This projection never grants publication.
 export function publicHoroscopeIndex(
-	documents: readonly EditorialDocument[],
+	documents: readonly EditorialSummary[],
 	url: URL,
 	sign: SignSlug | null,
 	now = new Date()

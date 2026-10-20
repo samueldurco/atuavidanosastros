@@ -1,0 +1,1071 @@
+{
+  "documentId": "horoscopo-virgem-weekly-2026-10-19",
+  "methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+  "authoringAgent": "atvna-deterministic-horoscope-composer",
+  "sign": "virgem",
+  "factsDigest": "c9827b83824fb027b9700820a9a7fa88bda7fe79bad08ac43b6c82d2b0d5bdda",
+  "claims": [
+    {
+      "section": 0,
+      "paragraph": 0,
+      "factorIds": [
+        "aspect:venus:pluto:square"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "venus": 2,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "venus": 2,
+            "pluto": 6
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:venus:pluto:square": [
+          "2026-10-19T00:00:00.000Z",
+          "2026-10-19T06:00:00.000Z",
+          "2026-10-19T12:00:00.000Z",
+          "2026-10-19T18:00:00.000Z",
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z",
+          "2026-10-21T00:00:00.000Z",
+          "2026-10-21T06:00:00.000Z",
+          "2026-10-21T12:00:00.000Z",
+          "2026-10-21T18:00:00.000Z",
+          "2026-10-22T00:00:00.000Z",
+          "2026-10-22T06:00:00.000Z",
+          "2026-10-22T12:00:00.000Z",
+          "2026-10-22T18:00:00.000Z",
+          "2026-10-23T00:00:00.000Z",
+          "2026-10-23T06:00:00.000Z",
+          "2026-10-23T12:00:00.000Z"
+        ]
+      },
+      "interpretation": "O desejo de manter um vínculo encontra a pergunta sobre o que cada pessoa pode escolher dentro dele. Uma preferência ganha profundidade quando consegue reconhecer dependências sem transformar intensidade em prova de valor. Essa dinâmica aproxima dois contextos: as conversas e os aprendizados cotidianos e o trabalho cotidiano e os cuidados de rotina. Uma escolha feita ao explicar uma ideia, pedir uma informação ou retomar uma conversa pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. O atrito aparece quando a tendência a preservar a harmonia à custa de uma preferência importante dificulta rever dependências e relações de poder. Esse caminho tem um custo: ao multiplicar explicações sem chegar ao ponto que precisa ser entendido, você pode comprometer a possibilidade de manter uma rotina que caiba na vida. O ajuste interpretado é dar à escolha um limite compreensível: uma conversa em que o pedido fique compreensível para os dois lados precisa comportar também uma tarefa com tempo e responsabilidade bem definidos. Esta interpretação reúne Vênus e Plutão em quadratura, nos setores solares 3 e 6. O recorte observado vai de 19/10/2026 a 23/10/2026 (UTC).",
+      "sampledFactors": [
+        {
+          "id": "aspect:venus:pluto:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "venus",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-19T00:00:00.000Z",
+          "lastObservedAt": "2026-10-23T12:00:00.000Z",
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "score": 89.88801442680753,
+          "aspect": {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 89.9776028853615,
+            "orbDegrees": 0.02239711463849403
+          }
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 1,
+      "factorIds": [
+        "sign:venus:1792929600000"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "venus": 3
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "venus": 2
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "venus": 2
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "sign:venus:1792929600000": [
+          "2026-10-25T12:00:00.000Z"
+        ]
+      },
+      "interpretation": "A mudança de signo de Vênus desloca o foco entre dois temas: as conversas e os aprendizados cotidianos e suas prioridades e recursos. A necessidade de escolher o que tem valor e cultivar reciprocidade permanece, mas passa a ser lida em outro contexto. Uma resposta adequada para a possibilidade de compreender e ser compreendido pode precisar de ajustes quando está em jogo a segurança de ter recursos e prioridades próprios. Por exemplo, uma conversa em que o pedido fique compreensível para os dois lados não resolve automaticamente o que aparece ao distribuir tempo, dinheiro e atenção entre o que importa. Preservar uma intenção pode exigir outra maneira de realizá-la. A mudança aparece entre as amostras de 25/10/2026 às 06:00 e 25/10/2026 às 12:00 (UTC); esse intervalo não determina o instante exato da passagem.",
+      "sampledFactors": [
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-25T06:00:00.000Z",
+          "lastObservedAt": "2026-10-25T12:00:00.000Z",
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "id": "sign:venus:1792929600000",
+          "kind": "sign-change",
+          "score": 115,
+          "fromSign": 7,
+          "toSign": 6
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 2,
+      "factorIds": [
+        "aspect:neptune:pluto:sextile"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "neptune": 8,
+            "pluto": 6
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:neptune:pluto:sextile": [
+          "2026-10-19T00:00:00.000Z",
+          "2026-10-19T06:00:00.000Z",
+          "2026-10-19T12:00:00.000Z",
+          "2026-10-19T18:00:00.000Z",
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z",
+          "2026-10-21T00:00:00.000Z",
+          "2026-10-21T06:00:00.000Z",
+          "2026-10-21T12:00:00.000Z",
+          "2026-10-21T18:00:00.000Z",
+          "2026-10-22T00:00:00.000Z",
+          "2026-10-22T06:00:00.000Z",
+          "2026-10-22T12:00:00.000Z",
+          "2026-10-22T18:00:00.000Z",
+          "2026-10-23T00:00:00.000Z",
+          "2026-10-23T06:00:00.000Z",
+          "2026-10-23T12:00:00.000Z",
+          "2026-10-23T18:00:00.000Z",
+          "2026-10-24T00:00:00.000Z",
+          "2026-10-24T06:00:00.000Z",
+          "2026-10-24T12:00:00.000Z",
+          "2026-10-24T18:00:00.000Z",
+          "2026-10-25T00:00:00.000Z",
+          "2026-10-25T06:00:00.000Z",
+          "2026-10-25T12:00:00.000Z",
+          "2026-10-25T18:00:00.000Z"
+        ]
+      },
+      "interpretation": "Uma imagem coletiva pode ganhar força sem que seus efeitos estejam claros. A leitura simbólica convida a distinguir a inspiração que abre possibilidades da adesão que entrega a outros todo o poder de definir seu sentido. Essa dinâmica aproxima dois contextos: a partilha e os compromissos que envolvem confiança e o trabalho cotidiano e os cuidados de rotina. Uma escolha feita ao combinar o que será compartilhado, reconhecer uma dependência ou esclarecer uma responsabilidade pode mudar as condições em que você consegue dividir tarefas, ajustar uma agenda ou cuidar daquilo que precisa de constância. Dar espaço à imaginação e à sensibilidade pode ajudar a rever dependências e relações de poder: uma combinação clara sobre o que cada pessoa oferece e pode pedir abre caminho para uma tarefa com tempo e responsabilidade bem definidos. O apoio perde força quando vira tomar o que deseja ver pelo que já está claramente combinado, porque essa resposta estreita a abertura entre os dois temas. Esta interpretação reúne Netuno e Plutão em sextil, nos setores solares 8 e 6. Há observações dessa relação no início, meio e fim da semana amostrada. Por envolver corpos lentos, esta relação é um pano de fundo, sem ser uma novidade exclusiva deste período.",
+      "sampledFactors": [
+        {
+          "id": "aspect:neptune:pluto:sextile",
+          "kind": "aspect",
+          "category": "background",
+          "bodies": [
+            "neptune",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-19T00:00:00.000Z",
+          "lastObservedAt": "2026-10-25T18:00:00.000Z",
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "score": 106.56789283094128,
+          "aspect": {
+            "first": "neptune",
+            "second": "pluto",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.313578566188255,
+            "orbDegrees": 0.6864214338117449
+          }
+        }
+      ]
+    },
+    {
+      "section": 0,
+      "paragraph": 3,
+      "factorIds": [
+        "aspect:venus:pluto:square",
+        "sign:venus:1792929600000",
+        "aspect:neptune:pluto:sextile"
+      ],
+      "positionObservations": [
+        {
+          "at": 1792368000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792389600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792411200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792432800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792454400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792476000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792497600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792519200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792540800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792562400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792584000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792605600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792627200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792648800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792670400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792692000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792713600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792735200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792756800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792778400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792800000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792821600000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792843200000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792864800000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792886400000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792908000000,
+          "sectors": {
+            "venus": 3,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792929600000,
+          "sectors": {
+            "venus": 2,
+            "pluto": 6,
+            "neptune": 8
+          }
+        },
+        {
+          "at": 1792951200000,
+          "sectors": {
+            "venus": 2,
+            "pluto": 6,
+            "neptune": 8
+          }
+        }
+      ],
+      "observedAtByFactor": {
+        "aspect:venus:pluto:square": [
+          "2026-10-19T00:00:00.000Z",
+          "2026-10-19T06:00:00.000Z",
+          "2026-10-19T12:00:00.000Z",
+          "2026-10-19T18:00:00.000Z",
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z",
+          "2026-10-21T00:00:00.000Z",
+          "2026-10-21T06:00:00.000Z",
+          "2026-10-21T12:00:00.000Z",
+          "2026-10-21T18:00:00.000Z",
+          "2026-10-22T00:00:00.000Z",
+          "2026-10-22T06:00:00.000Z",
+          "2026-10-22T12:00:00.000Z",
+          "2026-10-22T18:00:00.000Z",
+          "2026-10-23T00:00:00.000Z",
+          "2026-10-23T06:00:00.000Z",
+          "2026-10-23T12:00:00.000Z"
+        ],
+        "sign:venus:1792929600000": [
+          "2026-10-25T12:00:00.000Z"
+        ],
+        "aspect:neptune:pluto:sextile": [
+          "2026-10-19T00:00:00.000Z",
+          "2026-10-19T06:00:00.000Z",
+          "2026-10-19T12:00:00.000Z",
+          "2026-10-19T18:00:00.000Z",
+          "2026-10-20T00:00:00.000Z",
+          "2026-10-20T06:00:00.000Z",
+          "2026-10-20T12:00:00.000Z",
+          "2026-10-20T18:00:00.000Z",
+          "2026-10-21T00:00:00.000Z",
+          "2026-10-21T06:00:00.000Z",
+          "2026-10-21T12:00:00.000Z",
+          "2026-10-21T18:00:00.000Z",
+          "2026-10-22T00:00:00.000Z",
+          "2026-10-22T06:00:00.000Z",
+          "2026-10-22T12:00:00.000Z",
+          "2026-10-22T18:00:00.000Z",
+          "2026-10-23T00:00:00.000Z",
+          "2026-10-23T06:00:00.000Z",
+          "2026-10-23T12:00:00.000Z",
+          "2026-10-23T18:00:00.000Z",
+          "2026-10-24T00:00:00.000Z",
+          "2026-10-24T06:00:00.000Z",
+          "2026-10-24T12:00:00.000Z",
+          "2026-10-24T18:00:00.000Z",
+          "2026-10-25T00:00:00.000Z",
+          "2026-10-25T06:00:00.000Z",
+          "2026-10-25T12:00:00.000Z",
+          "2026-10-25T18:00:00.000Z"
+        ]
+      },
+      "interpretation": "A passagem de Vênus muda o contexto da outra relação: escolher o que tem valor e cultivar reciprocidade deixa de ser lido apenas no tema que envolve as conversas e os aprendizados cotidianos e passa ao tema que envolve suas prioridades e recursos. Uma prioridade que caiba nos recursos realmente disponíveis torna essa mudança concreta e modifica as condições para rever dependências e relações de poder. Preservar a intenção pede reconsiderar os termos em que ela pode ser compartilhada. O contato em sextil entre Netuno e Plutão acrescenta dar espaço à imaginação e à sensibilidade a essa conclusão. Tomar o que deseja ver pelo que já está claramente combinado pode fechar essa possibilidade de apoio, porque torna mais difícil rever dependências e relações de poder. Assim, uma combinação clara sobre o que cada pessoa oferece e pode pedir oferece um recurso que modifica a maneira de enfrentar a primeira escolha. Ter uma base própria muda a maneira de compartilhar. A confiança fica mais clara quando contribuição, expectativa e limite deixam de depender de suposições. Na escala da semana, essa diferença permite ajustar um acordo entre momentos distintos, em vez de tratar a primeira resposta como definitiva.",
+      "sampledFactors": [
+        {
+          "id": "aspect:venus:pluto:square",
+          "kind": "aspect",
+          "category": "fast",
+          "bodies": [
+            "venus",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-19T00:00:00.000Z",
+          "lastObservedAt": "2026-10-23T12:00:00.000Z",
+          "representativeAt": "2026-10-20T06:00:00.000Z",
+          "score": 89.88801442680753,
+          "aspect": {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 89.9776028853615,
+            "orbDegrees": 0.02239711463849403
+          }
+        },
+        {
+          "category": "fast",
+          "bodies": [
+            "venus"
+          ],
+          "firstObservedAt": "2026-10-25T06:00:00.000Z",
+          "lastObservedAt": "2026-10-25T12:00:00.000Z",
+          "representativeAt": "2026-10-25T12:00:00.000Z",
+          "id": "sign:venus:1792929600000",
+          "kind": "sign-change",
+          "score": 115,
+          "fromSign": 7,
+          "toSign": 6
+        },
+        {
+          "id": "aspect:neptune:pluto:sextile",
+          "kind": "aspect",
+          "category": "background",
+          "bodies": [
+            "neptune",
+            "pluto"
+          ],
+          "firstObservedAt": "2026-10-19T00:00:00.000Z",
+          "lastObservedAt": "2026-10-25T18:00:00.000Z",
+          "representativeAt": "2026-10-19T00:00:00.000Z",
+          "score": 106.56789283094128,
+          "aspect": {
+            "first": "neptune",
+            "second": "pluto",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.313578566188255,
+            "orbDegrees": 0.6864214338117449
+          }
+        }
+      ]
+    }
+  ]
+}

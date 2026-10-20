@@ -26,8 +26,8 @@ A referência é architecture-offers-20261015.md e o catálogo de 19 ofertas. No
 - [x] Integrar geração, revisão, web e PDF; não permitir fallback silencioso para a edição antiga nos produtos atuais.
 - [x] Testar mudanças de fatores e ablações com expectativas semânticas específicas, dados ausentes, adulteração, versões históricas e todas as ofertas. Reexecutar os testes afetados pelas últimas revisões antes da publicação.
 - [x] Revisar amostras completas e apresentação em tela/PDF dos 19 produtos. Igualdade, digest, tamanho e IDs são provas de integridade, não prova suficiente de qualidade. A revisão específica do Horóscopo permanece no item próprio.
-- [ ] Publicar runtimes e frontend pelos caminhos autorizados; verificar versão e resultados hospedados por API.
-- [ ] Limpar somente entregas de teste do proprietário identificado pelo relatório fornecido; preservar contas alheias, perfil, permissões e insumos pessoais que não sejam entregas.
+- [x] Publicar runtimes e frontend pelos caminhos autorizados; verificar versão e resultados hospedados por API.
+- [x] Limpar somente entregas de teste do proprietário identificado pelo relatório fornecido; preservar contas alheias, perfil, permissões e insumos pessoais que não sejam entregas.
 - [ ] Registrar evidências, limites e roteiro de teste para a avaliação do proprietário. Aprovação automática privada não substitui sua avaliação do valor do produto.
 
 ## Diagnóstico que orienta a mudança
@@ -40,6 +40,10 @@ Em 20/10/2026, as implementações locais abrangem os 19 produtos e os oito calc
 
 A ordem de publicação acordada é frontend novo primeiro e runtimes Edge imediatamente depois, com verificação hospedada somente após ambos. A compatibilidade offline foi comprovada nos 19 produtos: handler exato do Edge base `b1d3f1c`, adaptador web atual, aprovação e exportação atual do PDF. O calendário antigo acessa uma estrutura ausente na leitura nova, tornando inadequada a ordem inversa. Os scripts de limpeza e restauração estão preparados fora do Git, com nove verificações transacionais locais aprovadas; ainda não foram executados no banco hospedado.
 
-A publicação dos runtimes e do frontend, as verificações hospedadas, a limpeza restrita das entregas de teste do proprietário e sua avaliação do valor continuam pendentes. Nenhuma aceitação do proprietário presumida.
+Atualização da publicação em 20/10/2026: PR39 integrada após CI `39402697936` aprovado; Pages produção `e34b97ac-5306-4b12-87a5-ec2c09338141` serve o merge `086bdf7`. Os dois runtimes Edge foram publicados em seguida. O probe hospedado confirmou 19 gerações iguais às amostras revisadas, 19 verificações e 38 adulterações rejeitadas; os oito calculadores passaram no runtime e pelo site, com validação dos recibos. A chave temporária de teste foi removida e a principal preservada.
+
+Minha Área foi preparada por arquivamento recuperável: 21 leituras de teste e dois itens de biblioteca exclusivamente do proprietário identificado pelo relatório fornecido. Consulta após o commit confirmou zero entregas ativas desse lote; perfil, permissões, compras, fontes pessoais e outras contas foram preservados. Os scripts fora do Git permitem recuperar apenas esse lote, sem alterar novos testes.
+
+A publicação datada recorrente do Horóscopo de Hoje continua em revisão própria. A avaliação do valor pelo proprietário também permanece pendente; nenhuma aceitação foi presumida. O roteiro de teste está em `C:/ATVNA/evidence/ATV-20260902-170644Z-01A0630F/current-interpretation-20261019/roteiro-de-avaliacao.md`.
 
 Evidências e limitações estão em `C:/ATVNA/evidence/ATV-20260902-170644Z-01A0630F/current-interpretation-20261019/readiness-review.md`. O probe preparado distingue 19 produtos, oito calculadores públicos e o Horóscopo de Hoje; o modo padrão é offline e não acessa a rede.

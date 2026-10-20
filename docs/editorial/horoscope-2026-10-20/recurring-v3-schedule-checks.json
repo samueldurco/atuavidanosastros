@@ -1,0 +1,92 @@
+{
+  "schema": "atv-horoscope-schedule-smoke-v1",
+  "checkedAt": "2026-10-20T10:42:53.417Z",
+  "result": "PASS",
+  "note": "Real Caelus snapshots prepared and exact V3 composition replayed; no signature, admission or editorial approval.",
+  "batches": [
+    {
+      "indexPath": "output/horoscope-dated-20261020/schedule-bootstrap-v3/index.json",
+      "mode": "bootstrap",
+      "referenceDate": "2026-10-20",
+      "packages": [
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-bootstrap-v3/daily",
+          "period": "daily",
+          "startDate": "2026-10-20",
+          "endDateExclusive": "2026-10-21",
+          "scopeDigest": "aabb276d88663d7953d039c69bf033feef680f64d1c48e299e792c83ab560f4e",
+          "documents": 12,
+          "factsDigest": "c67f4aa476472c88f0083036c0b522fdd8cff3558ede1b94807d0f4e9e39a512"
+        },
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-bootstrap-v3/weekly",
+          "period": "weekly",
+          "startDate": "2026-10-19",
+          "endDateExclusive": "2026-10-26",
+          "scopeDigest": "8a5f1e1874d0d22600e93e3a00b0dde2fccb84cdb8e19dd5bbf32e7eadcb9eaf",
+          "documents": 12,
+          "factsDigest": "5c82233837a3984c287f027fc0d931bdec0c3d67a9558161941f759e35c852e5"
+        },
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-bootstrap-v3/monthly",
+          "period": "monthly",
+          "startDate": "2026-10-01",
+          "endDateExclusive": "2026-11-01",
+          "scopeDigest": "706fba65bdad15d71374e7751d25bcc4dd64cf17ac47bd7c4ffdd3326996ea73",
+          "documents": 12,
+          "factsDigest": "3ace13be3e097dc5cdaf2f5f28676724e862349071903e6ecdad2d208a7f4227"
+        }
+      ]
+    },
+    {
+      "indexPath": "output/horoscope-dated-20261020/schedule-next-week-v3/index.json",
+      "mode": "next",
+      "referenceDate": "2026-10-25",
+      "packages": [
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-next-week-v3/daily",
+          "period": "daily",
+          "startDate": "2026-10-26",
+          "endDateExclusive": "2026-10-27",
+          "scopeDigest": "195d6c9cbaf317a5b758386b698935b31b09203f39efa3486e4538ff95ce67d7",
+          "documents": 12,
+          "factsDigest": "4ca4cfe6efcb3ed5821fb85170525a0b176ec7d96487e25d95c46e06228dde4a"
+        },
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-next-week-v3/weekly",
+          "period": "weekly",
+          "startDate": "2026-10-26",
+          "endDateExclusive": "2026-11-02",
+          "scopeDigest": "464e61620c7a67ec2f346498a8f2ac4e9ac889f166386bf3b647869c5a13c54d",
+          "documents": 12,
+          "factsDigest": "1f7e19124a8fc44e79759f24036464e5a93ac908810b5af59698cd535cb95b9b"
+        }
+      ]
+    },
+    {
+      "indexPath": "output/horoscope-dated-20261020/schedule-next-month-v3/index.json",
+      "mode": "next",
+      "referenceDate": "2026-10-31",
+      "packages": [
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-next-month-v3/daily",
+          "period": "daily",
+          "startDate": "2026-11-01",
+          "endDateExclusive": "2026-11-02",
+          "scopeDigest": "e629482a7c67ebeb3cec691d1d5d53bdfda83f59baa1e0b26b371d43e4c953dc",
+          "documents": 12,
+          "factsDigest": "4afdffaa544323e05c365393be0fa48170f682fe0b2248189429301a55b0b403"
+        },
+        {
+          "directory": "output/horoscope-dated-20261020/schedule-next-month-v3/monthly",
+          "period": "monthly",
+          "startDate": "2026-11-01",
+          "endDateExclusive": "2026-12-01",
+          "scopeDigest": "79a277004672d2eafe5b39c2d317ef75a88e32bd7ee26329e0611c4191ad6b22",
+          "documents": 12,
+          "factsDigest": "b9e0cf87d1de936745f7c65790f841d46369c4a17a83320a1b9bbe7751543ff4"
+        }
+      ]
+    }
+  ]
+}

@@ -26,9 +26,13 @@ const codes = readdirSync(root)
 	.sort();
 
 describe('externally signed finite editorial release', () => {
-	it('hashes shared evidence once per read and rechecks all signatures on every read', async () => {
-		const release = json<{ evidenceByDigest: Record<string, string>; packages: unknown[] }>(
-			resolve('src/lib/server/editorial-release/registry.json')
+	it('hashes evergreen evidence once per read and rechecks every evergreen signature', async () => {
+		const release = json<{
+			evidenceByDigest: Record<string, string>;
+			packages: { document: EditorialDocument; attestation: AutomatedAttestation }[];
+		}>(resolve('src/lib/server/editorial-release/registry.json'));
+		const evergreenSignatures = new Set(
+			release.packages.map((entry) => entry.attestation.signature)
 		);
 		const largestEvidence = Math.max(
 			...Object.values(release.evidenceByDigest).map(
@@ -37,30 +41,50 @@ describe('externally signed finite editorial release', () => {
 		);
 		const hashes = vi.spyOn(nodeCrypto, 'hash');
 		const signatures = vi.spyOn(crypto.subtle, 'verify');
-		const keys = vi.spyOn(crypto.subtle, 'importKey');
 		try {
 			for (let read = 1; read <= 2; read++) {
-				expect(await publishedEditorial()).toHaveLength(release.packages.length);
+				const documents = await publishedEditorial();
+				for (const entry of release.packages) {
+					expect(documents.filter((document) => document.id === entry.document.id)).toHaveLength(1);
+				}
 				expect(
 					hashes.mock.calls.filter(
 						([, value]) => value instanceof Uint8Array && value.byteLength === largestEvidence
 					)
 				).toHaveLength(read);
-				expect(signatures).toHaveBeenCalledTimes(read * release.packages.length);
-				expect(keys).toHaveBeenCalledTimes(read);
+				expect(
+					signatures.mock.calls.filter(([, , signature]) =>
+						evergreenSignatures.has(
+							Buffer.from(new Uint8Array(signature as ArrayBuffer)).toString('base64')
+						)
+					)
+				).toHaveLength(read * release.packages.length);
 			}
 		} finally {
 			hashes.mockRestore();
 			signatures.mockRestore();
-			keys.mockRestore();
 		}
 	});
 	it('exposes only the exact currently admitted paths in the runtime registry', async () => {
 		const release = json<{ packages: { document: EditorialDocument }[] }>(
 			resolve('src/lib/server/editorial-release/registry.json')
 		);
-		expect((await publishedEditorial()).map((document) => document.path).sort()).toEqual(
-			release.packages.map((entry) => entry.document.path).sort()
+		const archive = json<{
+			entries: {
+				index: { documents: Pick<EditorialDocument, 'path' | 'publishedAt' | 'modifiedAt'>[] };
+			}[];
+		}>(resolve('src/lib/server/editorial-release/dated-index.json'));
+		const now = new Date();
+		const datedPaths = archive.entries.flatMap((entry) =>
+			entry.index.documents
+				.filter(
+					(document) =>
+						new Date(document.publishedAt) <= now && new Date(document.modifiedAt) <= now
+				)
+				.map((document) => document.path)
+		);
+		expect((await publishedEditorial(now)).map((document) => document.path).sort()).toEqual(
+			[...release.packages.map((entry) => entry.document.path), ...datedPaths].sort()
 		);
 	});
 	it('validates all twelve exact packages and renders their full bodies and Article metadata', async () => {

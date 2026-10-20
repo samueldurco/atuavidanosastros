@@ -37,7 +37,7 @@ export const load: PageServerLoad = async ({ url }) => {
 				(!kind || document.kind === kind) &&
 				(!query ||
 					searchText(
-						`${document.title} ${document.description} ${document.sections.map((section) => `${section.heading} ${section.paragraphs.join(' ')}`).join(' ')}`
+						`${document.title} ${document.description} ${(document.sections ?? []).map((section) => `${section.heading} ${section.paragraphs.join(' ')}`).join(' ')}`
 					).includes(searchText(query)))
 			);
 		})
