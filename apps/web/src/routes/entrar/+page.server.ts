@@ -5,8 +5,9 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent, url }) => {
 	const next = authReturnPath(url.searchParams.get('next'));
+	const sessionStatus = url.searchParams.get('sessao');
 	const { user } = await parent();
-	if (user) redirect(303, next);
+	if (user && sessionStatus !== 'erro') redirect(303, next);
 	const issue = url.searchParams.get('erro');
 	const loginError =
 		issue === 'oauth'
@@ -14,7 +15,12 @@ export const load: PageServerLoad = async ({ parent, url }) => {
 			: issue === 'confirmacao'
 				? 'Não foi possível confirmar o link de acesso. Tente entrar com o Google.'
 				: null;
-	return { next, loginError };
+	return {
+		next,
+		loginError,
+		logoutStatus:
+			sessionStatus === 'erro' ? 'error' : sessionStatus === 'encerrada' ? 'success' : null
+	};
 };
 
 export const actions: Actions = {

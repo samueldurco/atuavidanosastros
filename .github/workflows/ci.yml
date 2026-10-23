@@ -107,7 +107,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm --dir apps/web exec playwright install --with-deps chromium
       - name: Dashboard, library, readers and consented continuity recovery
-        run: pnpm --dir apps/web exec playwright test dashboard.e2e.ts library-reader.e2e.ts library-pagination.e2e.ts library-reader-return.e2e.ts continuity.e2e.ts continuity-access.e2e.ts --workers=1
+        run: pnpm --dir apps/web exec playwright test dashboard.e2e.ts library-reader.e2e.ts library-pagination.e2e.ts library-reader-return.e2e.ts continuity.e2e.ts continuity-access.e2e.ts signout.e2e.ts --workers=1
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:

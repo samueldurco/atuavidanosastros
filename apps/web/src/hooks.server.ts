@@ -36,6 +36,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		response.headers.set('cache-control', 'private, no-store');
 	if (
 		[
+			'/entrar',
+			'/sair',
 			'/biblioteca',
 			'/dashboard',
 			'/conta',
@@ -48,7 +50,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 		].some((path) => event.url.pathname === path || event.url.pathname.startsWith(`${path}/`))
 	) {
 		response.headers.set('cache-control', 'private, no-store');
-		response.headers.set('referrer-policy', 'no-referrer');
+		// HTML forms need their same-origin Origin for SvelteKit's CSRF check.
+		// External destinations still receive no referrer from private pages.
+		response.headers.set(
+			'referrer-policy',
+			response.headers.get('content-type')?.startsWith('text/html') ? 'same-origin' : 'no-referrer'
+		);
 		response.headers.set('x-robots-tag', 'noindex, nofollow');
 	}
 	response.headers.set(

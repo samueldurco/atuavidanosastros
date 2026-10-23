@@ -7,6 +7,7 @@
 		secondaryNavigation
 	} from '$lib/data/public-navigation';
 	import BrandLogo from './BrandLogo.svelte';
+	import SignOutButton from './SignOutButton.svelte';
 	let open = $state(false);
 	let ready = $state(false);
 	onMount(() => {
@@ -44,6 +45,7 @@
 			<a class="header-account" href={page.data.user ? '/dashboard' : '/entrar'}
 				>{page.data.user ? 'Minha área' : 'Entrar'}</a
 			>
+			{#if page.data.user}<SignOutButton />{/if}
 			<button
 				bind:this={menuButton}
 				class="menu-button"

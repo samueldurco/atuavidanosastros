@@ -8,8 +8,10 @@ import ts from "typescript";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = "atuavidanosastros";
+const account = "7de48803dab244aa9e6d4d2d7df9b8e7";
 const origin = "https://atuavidanosastros.com.br";
 const wranglerVersion = "4.129.1";
+const outputDirectory = ".svelte-kit/cloudflare";
 const publicKeys = [
   "PUBLIC_SUPABASE_PUBLISHABLE_KEY",
   "PUBLIC_SUPABASE_ANON_KEY",
@@ -63,7 +65,7 @@ export function configurationChecks(config) {
     check(
       "pages-project",
       config?.name === project &&
-        config?.pages_build_output_dir === ".svelte-kit/cloudflare",
+        config?.pages_build_output_dir === outputDirectory,
     ),
     check(
       "production-site",
@@ -102,10 +104,89 @@ export function secretNames(output) {
   );
 }
 
-export function preflightReport(config, output) {
+export function remoteConfigurationCheck(remoteProject) {
+  return check(
+    "remote-pages-build-configuration",
+    remoteProject?.name === project &&
+      remoteProject?.production_branch === "main" &&
+      remoteProject?.build_config?.destination_dir === outputDirectory &&
+      remoteProject?.build_config?.root_dir === "" &&
+      remoteProject?.build_config?.build_command ===
+        "pnpm --filter @atv/web build",
+  );
+}
+
+async function readConfigurationCheck(readProject) {
+  try {
+    return remoteConfigurationCheck(await readProject());
+  } catch {
+    return remoteConfigurationCheck(null);
+  }
+}
+
+// Authentication and the provider response stay in memory. Neither raw output
+// nor API errors are included in release reports, including failed requests.
+export async function readRemoteProject({ getAuth, fetchImpl = fetch } = {}) {
+  try {
+    const auth = JSON.parse(await getAuth());
+    const safeCredential = (value) =>
+      typeof value === "string" &&
+      value.length > 0 &&
+      !/[\x00-\x20\x7f]/.test(value);
+    let headers;
+    if (
+      ["api_token", "oauth"].includes(auth?.type) &&
+      safeCredential(auth.token)
+    ) {
+      headers = { authorization: `Bearer ${auth.token}` };
+    } else if (
+      auth?.type === "api_key" &&
+      safeCredential(auth.key) &&
+      safeCredential(auth.email)
+    ) {
+      headers = { "x-auth-key": auth.key, "x-auth-email": auth.email };
+    } else {
+      throw new Error("invalid-authentication-metadata");
+    }
+    const response = await fetchImpl(
+      `https://api.cloudflare.com/client/v4/accounts/${account}/pages/projects/${project}`,
+      {
+        method: "GET",
+        headers: { ...headers, accept: "application/json" },
+        redirect: "manual",
+        credentials: "omit",
+        cache: "no-store",
+        signal: AbortSignal.timeout(20000),
+      },
+    );
+    if (
+      !response.ok ||
+      !/^application\/json(?:;|$)/i.test(
+        response.headers.get("content-type") ?? "",
+      )
+    )
+      throw new Error("invalid-project-response");
+    const body = await response.json();
+    if (body?.success !== true || !body.result)
+      throw new Error("invalid-project-metadata");
+    const remote = body.result;
+    return {
+      name: remote.name,
+      production_branch: remote.production_branch,
+      build_config: {
+        destination_dir: remote.build_config?.destination_dir,
+        root_dir: remote.build_config?.root_dir,
+        build_command: remote.build_config?.build_command,
+      },
+    };
+  } catch {
+    throw new Error("read-pages-project-configuration-failed");
+  }
+}
+
+function secretChecks(output) {
   const names = secretNames(output);
-  return report("pages-preflight", [
-    ...configurationChecks(config),
+  return [
     check("production-secret-metadata", names !== null),
     check(
       "auth-public-key-secret_text",
@@ -114,16 +195,27 @@ export function preflightReport(config, output) {
     ...requiredSecrets.map((name) =>
       check(`${name}-secret_text`, names?.has(name)),
     ),
+  ];
+}
+
+export function preflightReport(config, output, remoteProject) {
+  return report("pages-preflight", [
+    ...configurationChecks(config),
+    remoteConfigurationCheck(remoteProject),
+    ...secretChecks(output),
   ]);
 }
 
-export async function preflight(config, { listSecrets } = {}) {
+export async function preflight(config, { listSecrets, readProject } = {}) {
   const checks = configurationChecks(config);
+  if (checks.some((item) => !item.pass))
+    return report("pages-preflight", checks);
+  checks.push(await readConfigurationCheck(readProject));
   if (checks.some((item) => !item.pass))
     return report("pages-preflight", checks);
   try {
     const output = await listSecrets();
-    return preflightReport(config, output);
+    return report("pages-preflight", [...checks, ...secretChecks(output)]);
   } catch {
     return report("pages-preflight", [
       ...checks,
@@ -159,8 +251,14 @@ const probes = [
   },
 ];
 
-export async function postflight(config, { fetchImpl = fetch } = {}) {
+export async function postflight(
+  config,
+  { fetchImpl = fetch, readProject } = {},
+) {
   const checks = configurationChecks(config);
+  if (checks.some((item) => !item.pass))
+    return report("pages-postflight", checks);
+  checks.push(await readConfigurationCheck(readProject));
   if (checks.some((item) => !item.pass))
     return report("pages-postflight", checks);
   for (const probe of probes) {
@@ -199,7 +297,7 @@ export async function postflight(config, { fetchImpl = fetch } = {}) {
 
 export async function run(
   mode,
-  { workspace = root, listSecrets, fetchImpl } = {},
+  { workspace = root, listSecrets, fetchImpl, readProject } = {},
 ) {
   try {
     if (!["preflight", "postflight"].includes(mode))
@@ -213,51 +311,61 @@ export async function run(
       return report(`pages-${mode}`, [
         check("read-wrangler-configuration", false),
       ]);
-    if (mode === "postflight") return postflight(parsed.config, { fetchImpl });
     const pkg = JSON.parse(
       await readFile(resolve(workspace, "apps/web/package.json"), "utf8"),
     );
     if (pkg.devDependencies?.wrangler !== wranglerVersion)
-      return report("pages-preflight", [
+      return report(`pages-${mode}`, [
         check("reviewed-wrangler-version", false),
       ]);
+    const runWrangler = async (args) => {
+      const result = await promisify(execFile)(
+        process.execPath,
+        [
+          resolve(workspace, "apps/web/node_modules/wrangler/bin/wrangler.js"),
+          ...args,
+        ],
+        {
+          cwd: resolve(workspace, "apps/web"),
+          encoding: "utf8",
+          timeout: 30000,
+          maxBuffer: 256 * 1024,
+          windowsHide: true,
+          env: {
+            ...process.env,
+            CI: "true",
+            FORCE_COLOR: "0",
+            WRANGLER_SEND_METRICS: "false",
+            WRANGLER_LOG: "log",
+            WRANGLER_WRITE_LOGS: "false",
+          },
+        },
+      );
+      return result.stdout;
+    };
+    const getProject =
+      readProject ??
+      (() =>
+        readRemoteProject({
+          getAuth: () => runWrangler(["auth", "token", "--json"]),
+          fetchImpl,
+        }));
+    if (mode === "postflight")
+      return postflight(parsed.config, { fetchImpl, readProject: getProject });
     return preflight(parsed.config, {
+      readProject: getProject,
       listSecrets:
         listSecrets ??
-        (async () => {
-          const result = await promisify(execFile)(
-            process.execPath,
-            [
-              resolve(
-                workspace,
-                "apps/web/node_modules/wrangler/bin/wrangler.js",
-              ),
-              "pages",
-              "secret",
-              "list",
-              "--project-name",
-              project,
-              "--env",
-              "production",
-            ],
-            {
-              cwd: resolve(workspace, "apps/web"),
-              encoding: "utf8",
-              timeout: 30000,
-              maxBuffer: 256 * 1024,
-              windowsHide: true,
-              env: {
-                ...process.env,
-                CI: "true",
-                FORCE_COLOR: "0",
-                WRANGLER_SEND_METRICS: "false",
-                WRANGLER_LOG: "log",
-                WRANGLER_WRITE_LOGS: "false",
-              },
-            },
-          );
-          return result.stdout;
-        }),
+        (() =>
+          runWrangler([
+            "pages",
+            "secret",
+            "list",
+            "--project-name",
+            project,
+            "--env",
+            "production",
+          ])),
     });
   } catch {
     return report(

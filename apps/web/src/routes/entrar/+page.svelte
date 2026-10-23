@@ -25,6 +25,23 @@
 				<img src="/brand/mvp/assets/marca-clara.svg" alt="" width="64" height="64" />
 				<p class="eyebrow">Acesso à sua conta</p>
 				<h2 id="access-title">Acesse sua conta</h2>
+				{#if data.logoutStatus === 'success'}
+					<StatePanel
+						kind="success"
+						title="Sessão encerrada"
+						description="Você saiu da sua conta neste dispositivo."
+					/>
+				{:else if data.logoutStatus === 'error'}
+					<StatePanel
+						kind="error"
+						title="Não foi possível confirmar sua saída"
+						description="Tente novamente para encerrar a sessão neste dispositivo."
+					>
+						<form method="POST" action="/sair">
+							<Button type="submit">Tentar sair novamente</Button>
+						</form>
+					</StatePanel>
+				{/if}
 				<p>Continue com sua conta Google. Depois do login, você voltará à página que escolheu.</p>
 				<form method="POST" action={`?/google&next=${encodeURIComponent(data.next)}`}>
 					<Button type="submit" disabled={!data.authConfigured}>Continuar com Google</Button>
