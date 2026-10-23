@@ -50,6 +50,7 @@ function renderLogin(data: unknown, message?: string) {
 				seo: null,
 				trialAccess: false,
 				authConfigured: true,
+				logoutStatus: null,
 				...(data as { next: string; loginError: string | null })
 			},
 			form: message ? { message } : null
@@ -103,7 +104,7 @@ describe('authentication failure recovery', () => {
 
 	it('does not display unknown query text as an authentication error', async () => {
 		const data = await loginData('/entrar?erro=arbitrary-provider-details&next=/biblioteca');
-		expect(data).toEqual({ next: '/biblioteca', loginError: null });
+		expect(data).toEqual({ next: '/biblioteca', loginError: null, logoutStatus: null });
 		expect(renderLogin(data)).not.toContain('role="alert"');
 		expect(renderLogin(data)).not.toContain('arbitrary-provider-details');
 	});

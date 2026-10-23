@@ -3,6 +3,7 @@
 	import '$lib/styles/mvp-private.css';
 	import { page } from '$app/state';
 	import BrandLogo from '../BrandLogo.svelte';
+	import SignOutButton from '../SignOutButton.svelte';
 	import { navigation } from '$lib/data/site';
 	let { children }: { children: Snippet } = $props();
 	let expanded = $state(false);
@@ -32,6 +33,7 @@
 				href={page.data.user ? '/dashboard' : '/entrar'}
 				>{page.data.user ? 'Minha conta' : 'Entrar'}</a
 			>
+			{#if page.data.user}<SignOutButton />{/if}
 		</div>
 	</header>
 	<div class="member-layout">

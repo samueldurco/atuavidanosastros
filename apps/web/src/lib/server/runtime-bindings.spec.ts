@@ -65,7 +65,11 @@ it('inicializa autenticação no hook com a chave pública da plataforma e mant�
 			set: vi.fn()
 		}
 	} as unknown as RequestEvent;
-	const response = await handle({ event, resolve: async () => new Response('ok') });
+	const response = await handle({
+		event,
+		resolve: async () =>
+			new Response('ok', { headers: { 'content-type': 'text/html; charset=utf-8' } })
+	});
 	expect(event.locals.supabase).toBe(client);
 	expect(mocks.createServerClient).toHaveBeenCalledWith(
 		platformValues.PUBLIC_SUPABASE_URL,
@@ -74,7 +78,33 @@ it('inicializa autenticação no hook com a chave pública da plataforma e mant�
 	);
 	expect(mocks.createClient).not.toHaveBeenCalled();
 	expect(response.headers.get('cache-control')).toBe('private, no-store');
+	expect(response.headers.get('referrer-policy')).toBe('same-origin');
 	expect(response.headers.get('x-robots-tag')).toBe('noindex, nofollow');
+});
+
+it.each([
+	['/api/workflows/synthetic', () => Response.json({ state: 'pending' })],
+	[
+		'/biblioteca/synthetic/pdf',
+		() => new Response('synthetic', { headers: { 'content-type': 'application/pdf' } })
+	],
+	[
+		'/sair',
+		() => new Response(null, { status: 303, headers: { location: '/entrar?sessao=encerrada' } })
+	]
+] as const)('mantém referrer privado em respostas sem HTML: %s', async (path, response) => {
+	const url = new URL(path, 'https://atuavidanosastros.com.br');
+	const event = {
+		...request(),
+		url,
+		request: new Request(url),
+		locals: {},
+		cookies: { getAll: () => [], set: vi.fn() }
+	} as unknown as RequestEvent;
+	const result = await handle({ event, resolve: async () => response() });
+	expect(result.headers.get('cache-control')).toBe('private, no-store');
+	expect(result.headers.get('referrer-policy')).toBe('no-referrer');
+	expect(result.headers.get('x-robots-tag')).toBe('noindex, nofollow');
 });
 
 it('mantém fallback dinâmico quando o adaptador não fornece bindings', () => {

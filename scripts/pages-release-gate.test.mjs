@@ -2,9 +2,11 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   configurationChecks,
-  preflight,
-  preflightReport,
-  postflight,
+  preflight as runPreflight,
+  preflightReport as reportWithRemote,
+  postflight as runPostflight,
+  readRemoteProject,
+  remoteConfigurationCheck,
   run,
 } from "./pages-release-gate.mjs";
 
@@ -22,6 +24,27 @@ const config = {
     FEATURE_PHYSICAL_CHECKOUT: "false",
   },
 };
+const remoteProject = {
+  name: "atuavidanosastros",
+  production_branch: "main",
+  build_config: {
+    destination_dir: ".svelte-kit/cloudflare",
+    root_dir: "",
+    build_command: "pnpm --filter @atv/web build",
+  },
+};
+const preflightReport = (config, output) =>
+  reportWithRemote(config, output, remoteProject);
+const preflight = (config, options) =>
+  runPreflight(config, {
+    readProject: async () => remoteProject,
+    ...options,
+  });
+const postflight = (config, options) =>
+  runPostflight(config, {
+    readProject: async () => remoteProject,
+    ...options,
+  });
 const secretList = (key = "PUBLIC_SUPABASE_ANON_KEY") =>
   [
     'The "production" environment of your Pages project "atuavidanosastros" has access to the following secrets:',
@@ -57,6 +80,7 @@ test("production preflight accepts both supported encrypted public key names", (
     "PUBLIC_SUPABASE_PUBLISHABLE_KEY",
   ])
     assert.equal(preflightReport(config, secretList(key)).pass, true);
+  assert.equal(preflightReport(config, secretList()).checks.length, 11);
 });
 
 test("missing public binding reproduces the deployment regression and fails closed", () => {
@@ -253,7 +277,181 @@ test("HTML redirects, 503, wrong 401 contract, and transport failures fail witho
 test("versioned repository configuration is covered without any provider access", async () => {
   const result = await run("preflight", {
     listSecrets: async () => secretList(),
+    readProject: async () => remoteProject,
   });
   assert.equal(result.pass, true);
   assert.equal((await run("unknown-mode")).pass, false);
+});
+
+test("remote Pages build configuration rejects malformed metadata and Windows output paths", () => {
+  const invalid = [
+    undefined,
+    null,
+    [],
+    {},
+    { ...remoteProject, name: "another-project" },
+    { ...remoteProject, production_branch: "preview" },
+    { ...remoteProject, build_config: null },
+    ...[
+      { destination_dir: ".svelte-kit\\cloudflare" },
+      { destination_dir: "dist" },
+      { destination_dir: "./.svelte-kit/cloudflare" },
+      { destination_dir: undefined },
+      { root_dir: "apps/web" },
+      { root_dir: undefined },
+      { build_command: "pnpm build" },
+      { build_command: undefined },
+    ].map((fields) => ({
+      ...remoteProject,
+      build_config: { ...remoteProject.build_config, ...fields },
+    })),
+  ];
+  assert.equal(remoteConfigurationCheck(remoteProject).pass, true);
+  assert.equal(reportWithRemote(config, secretList()).pass, false);
+  for (const remote of invalid)
+    assert.deepEqual(remoteConfigurationCheck(remote), {
+      id: "remote-pages-build-configuration",
+      pass: false,
+    });
+});
+
+test("both release gates fail closed before probes when remote configuration regresses or cannot be read", async () => {
+  for (const readProject of [
+    undefined,
+    async () => ({
+      ...remoteProject,
+      build_config: {
+        ...remoteProject.build_config,
+        destination_dir: ".svelte-kit\\cloudflare",
+      },
+    }),
+    async () => {
+      throw new Error("credential-do-not-print");
+    },
+  ]) {
+    let calls = 0;
+    for (const gate of [runPreflight, runPostflight]) {
+      const result = await gate(config, {
+        readProject,
+        listSecrets: async () => {
+          calls++;
+          return secretList();
+        },
+        fetchImpl: async () => {
+          calls++;
+          return Response.json(health);
+        },
+      });
+      assert.equal(result.pass, false);
+      assert.equal(calls, 0);
+      assert.deepEqual(result.checks.at(-1), {
+        id: "remote-pages-build-configuration",
+        pass: false,
+      });
+      assert.equal(
+        JSON.stringify(result).includes("credential-do-not-print"),
+        false,
+      );
+    }
+  }
+});
+
+test("remote GET supports reviewed Wrangler authentication types in memory and returns only safe build metadata", async () => {
+  for (const auth of [
+    { type: "api_token", token: "credential-do-not-print" },
+    { type: "oauth", token: "credential-do-not-print" },
+    {
+      type: "api_key",
+      key: "credential-do-not-print",
+      email: "synthetic@example.invalid",
+    },
+  ]) {
+    const calls = [];
+    const result = await readRemoteProject({
+      getAuth: async () => JSON.stringify(auth),
+      fetchImpl: async (url, options) => {
+        calls.push({ url, options });
+        return Response.json({
+          success: true,
+          result: {
+            ...remoteProject,
+            deployment_configs: {
+              production: { token: auth.token ?? auth.key },
+            },
+          },
+        });
+      },
+    });
+    assert.deepEqual(result, remoteProject);
+    assert.equal(
+      JSON.stringify(result).includes("credential-do-not-print"),
+      false,
+    );
+    assert.equal(calls.length, 1);
+    assert.equal(
+      calls[0].url,
+      "https://api.cloudflare.com/client/v4/accounts/7de48803dab244aa9e6d4d2d7df9b8e7/pages/projects/atuavidanosastros",
+    );
+    assert.equal(calls[0].options.method, "GET");
+    assert.equal(calls[0].options.redirect, "manual");
+    assert.equal(calls[0].options.credentials, "omit");
+    assert.equal(calls[0].options.cache, "no-store");
+    assert.equal(calls[0].options.headers.cookie, undefined);
+    if (auth.type === "api_key") {
+      assert.equal(calls[0].options.headers.authorization, undefined);
+      assert.equal(calls[0].options.headers["x-auth-key"], auth.key);
+      assert.equal(calls[0].options.headers["x-auth-email"], auth.email);
+    } else {
+      assert.equal(
+        calls[0].options.headers.authorization,
+        `Bearer ${auth.token}`,
+      );
+      assert.equal(calls[0].options.headers["x-auth-key"], undefined);
+    }
+  }
+});
+
+test("invalid auth output and provider failures expose only a fixed failure code", async () => {
+  const fail = { message: "read-pages-project-configuration-failed" };
+  for (const output of [
+    "credential-do-not-print",
+    "null",
+    JSON.stringify({ type: "unsupported", token: "credential-do-not-print" }),
+    JSON.stringify({ type: "oauth", token: "" }),
+    JSON.stringify({ type: "api_token", token: "credential-do-not-print\n" }),
+    JSON.stringify({ type: "api_key", key: "credential-do-not-print" }),
+  ]) {
+    let calls = 0;
+    await assert.rejects(
+      readRemoteProject({
+        getAuth: async () => output,
+        fetchImpl: async () => {
+          calls++;
+        },
+      }),
+      fail,
+    );
+    assert.equal(calls, 0);
+  }
+  for (const fetchImpl of [
+    async () =>
+      Response.json({ errors: ["credential-do-not-print"] }, { status: 403 }),
+    async () => Response.json({ success: false, result: remoteProject }),
+    async () => new Response("credential-do-not-print", { status: 302 }),
+    async () =>
+      new Response("credential-do-not-print", {
+        headers: { "content-type": "application/json" },
+      }),
+    async () => {
+      throw new Error("credential-do-not-print");
+    },
+  ])
+    await assert.rejects(
+      readRemoteProject({
+        getAuth: async () =>
+          JSON.stringify({ type: "oauth", token: "credential-do-not-print" }),
+        fetchImpl,
+      }),
+      fail,
+    );
 });

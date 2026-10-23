@@ -9,7 +9,7 @@
 	><title>{data.item?.title ?? 'Resultado salvo'} — A Tua Vida nos Astros</title><meta
 		name="robots"
 		content="noindex,nofollow"
-	/><meta name="referrer" content="no-referrer" /></svelte:head
+	/><meta name="referrer" content="same-origin" /></svelte:head
 >
 {#if data.state === 'free-tool'}<FreeToolResultReader
 		result={data.result}
