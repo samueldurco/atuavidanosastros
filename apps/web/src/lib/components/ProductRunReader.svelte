@@ -263,7 +263,7 @@
 			} catch {
 				/* Deletion is already confirmed. */
 			}
-			await goto(backHref, { invalidateAll: true });
+			await goto(backHref, { refreshAll: true });
 		} catch {
 			failure =
 				'Não foi possível confirmar a exclusão. Atualize o estado ou consulte sua Biblioteca antes de continuar.';

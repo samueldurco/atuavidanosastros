@@ -29,7 +29,7 @@ const remoteProject = {
   production_branch: "main",
   build_config: {
     destination_dir: ".svelte-kit/cloudflare",
-    root_dir: "",
+    root_dir: "apps/web",
     build_command: "pnpm --filter @atv/web build",
   },
 };
@@ -283,7 +283,7 @@ test("versioned repository configuration is covered without any provider access"
   assert.equal((await run("unknown-mode")).pass, false);
 });
 
-test("remote Pages build configuration rejects malformed metadata and Windows output paths", () => {
+test("remote Pages build configuration rejects malformed metadata, Windows paths, and monorepo root regressions", () => {
   const invalid = [
     undefined,
     null,
@@ -297,7 +297,11 @@ test("remote Pages build configuration rejects malformed metadata and Windows ou
       { destination_dir: "dist" },
       { destination_dir: "./.svelte-kit/cloudflare" },
       { destination_dir: undefined },
-      { root_dir: "apps/web" },
+      { root_dir: "" },
+      { root_dir: "apps\\web" },
+      { root_dir: "./apps/web" },
+      { root_dir: "apps/web/" },
+      { root_dir: "/apps/web" },
       { root_dir: undefined },
       { build_command: "pnpm build" },
       { build_command: undefined },
@@ -324,6 +328,10 @@ test("both release gates fail closed before probes when remote configuration reg
         ...remoteProject.build_config,
         destination_dir: ".svelte-kit\\cloudflare",
       },
+    }),
+    async () => ({
+      ...remoteProject,
+      build_config: { ...remoteProject.build_config, root_dir: "" },
     }),
     async () => {
       throw new Error("credential-do-not-print");

@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
+
+type MutableRequestEvent = { -readonly [Key in keyof RequestEvent]: RequestEvent[Key] };
 import { workflowApi } from './workflow-api';
 import { parseProductRun } from '$lib/product-run';
 import { readLibraryResult } from './library-reader';
@@ -81,7 +83,7 @@ function setup({ authenticated = true, rpcError = '', run = view as unknown } = 
 				headers: { 'content-type': 'application/json', origin },
 				...(method !== 'GET' ? { body: JSON.stringify(body) } : {})
 			})
-		}) as unknown as RequestEvent;
+		}) as unknown as MutableRequestEvent;
 	return { event, rpc, getClaims };
 }
 describe('authenticated workflow boundary', () => {

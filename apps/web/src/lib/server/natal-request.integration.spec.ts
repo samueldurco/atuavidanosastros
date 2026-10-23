@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, expect, it } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
+
+type MutableRequestEvent = { -readonly [Key in keyof RequestEvent]: RequestEvent[Key] };
 import { parseWorkflowInput } from '@atv/domain';
 import {
 	setupProductDatabase,
@@ -115,7 +117,7 @@ function event(body: unknown, user: string | null = owner, headers = {}) {
 				}
 			}
 		}
-	} as unknown as Pick<RequestEvent, 'request' | 'url' | 'locals'>;
+	} as unknown as Pick<MutableRequestEvent, 'request' | 'url' | 'locals'>;
 }
 async function counts() {
 	const result = await db.query<{

@@ -110,7 +110,7 @@ export function remoteConfigurationCheck(remoteProject) {
     remoteProject?.name === project &&
       remoteProject?.production_branch === "main" &&
       remoteProject?.build_config?.destination_dir === outputDirectory &&
-      remoteProject?.build_config?.root_dir === "" &&
+      remoteProject?.build_config?.root_dir === "apps/web" &&
       remoteProject?.build_config?.build_command ===
         "pnpm --filter @atv/web build",
   );

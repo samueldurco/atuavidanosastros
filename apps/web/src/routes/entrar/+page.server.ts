@@ -1,6 +1,7 @@
 import { env } from '$env/dynamic/private';
 import { fail, redirect } from '@sveltejs/kit';
 import { authCallbackHref, authReturnPath } from '$lib/auth-return';
+import { supabaseAuthBindings } from '$lib/server/runtime-bindings';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent, url }) => {
@@ -24,8 +25,25 @@ export const load: PageServerLoad = async ({ parent, url }) => {
 };
 
 export const actions: Actions = {
-	google: async ({ locals, url }) => {
+	google: async (event) => {
+		const { locals, url } = event;
 		if (!locals.supabase) return fail(503, { message: 'Autenticação ainda não configurada.' });
+		let authOrigin: string;
+		try {
+			const configured = new URL(supabaseAuthBindings(event).url ?? '');
+			const localHttp =
+				configured.protocol === 'http:' &&
+				['localhost', '127.0.0.1', '[::1]'].includes(configured.hostname);
+			if (
+				(configured.protocol !== 'https:' && !localHttp) ||
+				configured.username ||
+				configured.password
+			)
+				return fail(503, { message: 'Autenticação ainda não configurada.' });
+			authOrigin = configured.origin;
+		} catch {
+			return fail(503, { message: 'Autenticação ainda não configurada.' });
+		}
 		const { data, error } = await locals.supabase.auth.signInWithOAuth({
 			provider: 'google',
 			options: {
@@ -35,7 +53,15 @@ export const actions: Actions = {
 			}
 		});
 		if (error || !data.url) return fail(502, { message: 'Não foi possível iniciar o login.' });
-		redirect(303, data.url);
+		let destination: URL;
+		try {
+			destination = new URL(data.url);
+		} catch {
+			return fail(502, { message: 'Não foi possível iniciar o login.' });
+		}
+		if (destination.origin !== authOrigin || destination.username || destination.password)
+			return fail(502, { message: 'Não foi possível iniciar o login.' });
+		redirect(303, destination.href, { external: [authOrigin] });
 	},
 	magic: async ({ request, locals, url }) => {
 		if (env.FEATURE_MAGIC_LINK !== 'true')

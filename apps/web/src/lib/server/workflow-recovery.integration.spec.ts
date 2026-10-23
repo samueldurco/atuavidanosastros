@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
+
+type MutableRequestEvent = { -readonly [Key in keyof RequestEvent]: RequestEvent[Key] };
 import {
 	setupProductDatabase,
 	owner,
@@ -98,7 +100,7 @@ function event(
 			body: JSON.stringify(body)
 		}),
 		locals: { supabase: { auth: { getClaims }, rpc: call } }
-	} as unknown as RequestEvent;
+	} as unknown as MutableRequestEvent;
 }
 const read = (key: string, user: string | null = owner) =>
 	recoverWorkflowRequest(event({ requestKey: key }, user));

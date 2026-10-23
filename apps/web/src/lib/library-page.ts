@@ -22,7 +22,7 @@ export interface LibraryPageData {
 export const libraryCursor = (before: string | null): string | null =>
 	before && isUuid(before) ? before.toLowerCase() : null;
 
-export const libraryReturnCursor = (params: URLSearchParams): string | null => {
+export const libraryReturnCursor = (params: Pick<URLSearchParams, 'getAll'>): string | null => {
 	const values = params.getAll('fromBefore');
 	return values.length === 1 ? libraryCursor(values[0]) : null;
 };

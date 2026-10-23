@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
-import type { Handle } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit/hooks';
 import { permanentPublicDestination } from '$lib/server/public-redirects';
 import { supabaseAuthBindings } from '$lib/server/runtime-bindings';
 

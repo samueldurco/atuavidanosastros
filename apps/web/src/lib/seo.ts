@@ -75,7 +75,7 @@ export const evergreenGuidePaths = [
 	'/sol-no-mapa-astral'
 ] as const;
 
-export function isProductionOrigin(url: URL): boolean {
+export function isProductionOrigin(url: Pick<URL, 'origin'>): boolean {
 	return url.origin === SITE.url;
 }
 
@@ -196,7 +196,11 @@ export function legacyOwnsRobots(path: string): boolean {
 		/^\/biblioteca\/(?:_spec\/[^/]+|nova\/[^/]+|[0-9a-f-]{36})$/i.test(path)
 	);
 }
-export function robotsPolicy(seo: PageSeo | null | undefined, url: URL, status = 200): string {
+export function robotsPolicy(
+	seo: PageSeo | null | undefined,
+	url: Pick<URL, 'origin'>,
+	status = 200
+): string {
 	if (!seo?.indexable || status !== 200 || !isProductionOrigin(url)) return 'noindex, nofollow';
 	return seo.image?.large ? 'index, follow, max-image-preview:large' : 'index, follow';
 }
