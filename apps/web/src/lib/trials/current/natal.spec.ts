@@ -281,7 +281,9 @@ describe('current natal interpretation: semantic dependence and historical isola
 		};
 		const c = await calculateTrial(i, runId),
 			r = composeCurrentNatal(i, c)!;
-		expect(r.sections[0].text).toContain('seja recebido como cuidado');
+		expect(r.sections[0].text).toContain(
+			'dedicação e sensação de acolhimento nem sempre chegam juntas'
+		);
 		expect(r.sections[0].factIds).toContain('couple-question-1');
 		expect(r.sections[0].text).not.toContain('compreender o caminho usado');
 	});
@@ -289,11 +291,35 @@ describe('current natal interpretation: semantic dependence and historical isola
 		const i = currentNatalTestInput('synastry'),
 			c = await calculateTrial(i, runId),
 			p = interpretRelationship(c, 'care');
-		expect(p.text).toContain('num campo da vida de B');
-		expect(p.text).toContain('o modo como A demonstra apreço');
-		expect(p.text).not.toContain('o modo como B demonstra apreço');
+		expect(p.text).toContain('Vênus de A na casa 4 de B');
+		expect(p.text).toContain('Para A, a forma de demonstrar apreço');
+		expect(p.text).not.toContain('Vênus de B na casa 4 de A');
 		expect(p.factIds.some((id) => id.startsWith('overlay-person-a-'))).toBe(true);
 		expect(p.factIds.every((id) => c.facts.some((f) => f.id === id))).toBe(true);
+	});
+	it('distance and responsibilities change the answer through the actual emotional needs and commitment', async () => {
+		const input = {
+			...currentNatalTestInput('couple-dossier'),
+			questions: ['Como conversar melhor?', 'Como cuidar dos nossos projetos futuros?']
+		};
+		const calculation = await calculateTrial(input, runId);
+		const reading = composeCurrentNatal(input, calculation)!;
+		const generalInput = { ...input, context: 'Queremos compreender melhor a nossa relação.' };
+		const withoutContext = composeCurrentNatal(
+			generalInput,
+			await calculateTrial(generalInput, runId)
+		)!;
+		expect(reading.sections[0].text).toContain('Com a distância que vocês mencionam');
+		expect(reading.sections[0].text).toContain('aumentar a frequência das mensagens');
+		expect(reading.sections[0].factIds).toEqual(
+			expect.arrayContaining(['person-a-position-moon', 'person-b-position-moon'])
+		);
+		expect(reading.sections[1].text).toContain('Um projeto comum precisa abrigar duas direções');
+		expect(reading.sections[1].text).toContain('distribuir seu custo');
+		expect(withoutContext.sections[0].text).not.toContain('Com a distância que vocês mencionam');
+		expect(withoutContext.sections[1].text).not.toContain(
+			'As responsabilidades que vocês trouxeram'
+		);
 	});
 	it('the same angle contact changes meaning with the planet, and its ablation removes the angle conclusion', async () => {
 		const input = currentNatalTestInput('birth-chart');
@@ -378,15 +404,15 @@ describe('current natal interpretation: semantic dependence and historical isola
 	});
 	it('overlays distinguish a private base from play, a receiving person, and the theme under interpretation', () => {
 		const homeCare = relationshipOverlayMeaning('venus', 4, 'care');
-		const play = relationshipOverlayMeaning('venus', 5, 'care');
+		const play = relationshipOverlayMeaning('venus', 5, 'desire');
 		const homeCommitment = relationshipOverlayMeaning('venus', 4, 'commitment');
-		expect(homeCare).toContain('construir familiaridade');
-		expect(play).toContain('brincar, criar e expressar interesse');
-		expect(play).not.toContain('construir familiaridade');
+		expect(homeCare).toContain('gestos de convivência e familiaridade');
+		expect(play).toContain('brincar e criar junto');
+		expect(play).not.toContain('gestos de convivência e familiaridade');
 		expect(homeCommitment).toContain('dever permanência ou disponibilidade');
 		expect(homeCommitment).not.toEqual(homeCare);
 		expect(relationshipOverlayMeaning('saturn', 4, 'care')).toContain(
-			'compromissos e limites trazidos por A'
+			'Saturno de A na casa 4 de B'
 		);
 	});
 	it('care includes both actual Moons even when the selected cross-contact has Venus, while commitment survives absence of a selected aspect', async () => {

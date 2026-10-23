@@ -32,7 +32,9 @@ async function generate(page: Page, tool: string): Promise<FreeToolResponse> {
 	const envelope = (await response.json()) as FreeToolResponse;
 	expect(envelope.result.id).toMatch(uuid);
 	expect(envelope.receipt).toMatch(/^[0-9a-f]{64}$/);
-	await expect(page.locator('.result-card h2')).toHaveText(envelope.result.title);
+	await expect(
+		page.locator('.result-card').getByRole('heading', { name: envelope.result.title, exact: true })
+	).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Entrar para salvar e continuar' })).toHaveAttribute(
 		'href',
 		`/entrar?next=${encodeURIComponent(`/ferramentas/${tool}`)}`
@@ -78,10 +80,21 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	expect(natal.result.chart?.positions).toHaveLength(10);
 	expect(natal.result.chart?.cusps).toHaveLength(12);
 	expect(natal.result.chart?.svg).toContain('<svg');
-	const chart = page.getByRole('img', { name: /^Mandala do mapa calculado/ });
+	const chart = page.getByRole('img', { name: /^Seu mapa astral: roda/ });
 	await expect(chart).toBeVisible();
-	await expect(chart).toHaveAttribute(
-		'src',
+	const wheel = decodeURIComponent((await chart.getAttribute('src'))!.split(',')[1]);
+	expect(wheel).toContain('viewBox="40 40 820 820"');
+	expect(wheel).not.toContain('data-layer="legend"');
+	for (const position of natal.result.chart!.positions)
+		expect(wheel).toContain(`data-longitude="${position.longitude}"`);
+	await expect(page.locator('.result-card .facts')).toHaveCount(0);
+	const positions = page.locator('.result-card .positions');
+	await positions.locator('summary').click();
+	await expect(positions.locator('tbody tr')).toHaveCount(12);
+	await expect(positions.getByRole('rowheader', { name: 'Ascendente', exact: true })).toBeVisible();
+	await positions.locator('summary').click();
+	await expect(page.getByRole('link', { name: 'Baixar mapa completo em SVG' })).toHaveAttribute(
+		'href',
 		`data:image/svg+xml;charset=utf-8,${encodeURIComponent(natal.result.chart!.svg)}`
 	);
 	expect(await chart.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(

@@ -60,15 +60,19 @@ function integration(g: FactGraph, career = false): CurrentPassage {
 		g.asc && ruler
 			? `O Ascendente em ${signs[g.asc.sign]} acrescenta ${natalStyles[g.asc.sign].entry} como maneira de começar. ${entranceDifferent ? 'Isso pode tornar o primeiro movimento diferente daquilo que você procura desenvolver depois: a entrada numa situação não resume seu modo de permanecer nela.' : 'A entrada encontra uma disposição próxima da direção solar, mas o regente mostra o trabalho necessário para sustentar essa continuidade.'} Com ${bodyNames[ruler.body]} em ${signs[ruler.sign]}, continuar envolve ${planetParticipation(ruler)}. ${ruler.house ? `A casa ${ruler.house} desloca esse trabalho para ${houseScenes[ruler.house - 1]}; portanto, a iniciativa precisa encontrar espaço nesse campo para ganhar continuidade.` : ''}`
 			: '';
-	const limitation = career
-		? 'A conclusão é uma combinação de critérios para reconhecer uma contribuição: identificação, condições para sustentá-la e espaço para decidir. Ela pode orientar a comparação entre caminhos reais, mas formação, acesso, remuneração e necessidades materiais precisam entrar nessa decisão com seu próprio peso.'
-		: 'Essa composição não pede uma versão de você que funcione sempre do mesmo modo. Ela oferece uma explicação para ritmos que podem coexistir: o começo, o envolvimento e a sustentação de uma escolha. A nuance está em reconhecer qual necessidade está sendo atendida e qual está pagando o custo, sem reduzir toda a experiência a um traço de personalidade.';
+	const privateAndPublic = sun.house === 10 && moon.house === 8;
+	const synthesis = privateAndPublic
+		? `A casa 10 do Sol dá uma dimensão visível à direção desejada, enquanto a Lua na casa 8 torna a confiança importante para o envolvimento. Por isso, conseguir mostrar um resultado e sentir-se à vontade para dividir o que ele custa são experiências diferentes. ${g.asc?.sign === 0 && ruler?.house === 11 ? 'A entrada direta de Áries pode abrir um projeto antes que todo o investimento emocional esteja pronto para ser exposto. Com o regente na casa 11, a colaboração ganha valor quando há lugar para construir confiança e dividir responsabilidades, além de reunir entusiasmo pela ideia.' : 'Uma direção pode ganhar consistência ao encontrar relações em que o investimento privado também receba cuidado, em vez de ficar encoberto pelo resultado que aparece.'}`
+		: `O Sol em ${signs[sun.sign]} procura uma direção com a qual se identificar; a Lua em ${signs[moon.sign]} mostra o que permite habitá-la emocionalmente. ${hard ? 'O envolvimento se torna mais sustentável quando o custo deixa de ser tratado como falha de vontade e passa a modificar o modo de realizar a escolha.' : 'Uma escolha pode ganhar força ao acolher essas duas exigências: ter sentido para quem a realiza e oferecer condições para continuar envolvido nela.'}`;
+	const practical = career
+		? 'Ao comparar caminhos de trabalho, essa combinação dá peso tanto à identificação com a contribuição quanto às condições para sustentá-la. Formação, acesso, remuneração e necessidades materiais fazem parte dessas condições concretas.'
+		: '';
 	return {
 		title: career
 			? 'Uma direção que precisa caber na vida'
 			: 'A dinâmica que aparece quando as partes se encontram',
 		claim,
-		text: [claim, entrance, limitation].filter(Boolean).join('\n\n'),
+		text: [claim, entrance, synthesis, practical].filter(Boolean).join('\n\n'),
 		factIds: [
 			...new Set([
 				sun.factId,
@@ -185,7 +189,7 @@ const atlasThemes: Record<
 		theme: 'effort',
 		houses: [6, 12],
 		meaning:
-			'No autocuidado e na rotina, agir e estabelecer um limite precisam colaborar. Uma organização que permite realizar mas não permite recompor energia perde parte de sua função. Esta é uma leitura simbólica da relação com o esforço, sem avaliação de saúde.'
+			'No autocuidado e na rotina, agir e estabelecer um limite precisam colaborar. Uma organização que permite realizar mas não permite recompor energia perde parte de sua função.'
 	},
 	identity: {
 		theme: 'identity',
@@ -244,6 +248,7 @@ function atlasPassages(
 	const first = selected[0],
 		second = selected[1];
 	const claim = `Você colocou ${first.label.toLocaleLowerCase('pt-BR')} antes de ${second.label.toLocaleLowerCase('pt-BR')}. ${atlasPriorityLink(first.id, second.id)}`;
+	const sharedBodies = new Set<string>();
 	const bridges = selected.slice(1).map((current, index) => {
 		const previous = selected[index];
 		const previousBodies = g.positions.filter((p) => previous.passage.factIds.includes(p.factId));
@@ -263,10 +268,13 @@ function atlasPassages(
 		const a = contact ? positionFor(g, contact.first) : undefined,
 			b = contact ? positionFor(g, contact.second) : undefined;
 		const connection = common
-			? `${bodyNames[common.body]} em ${signs[common.sign]} participa das duas áreas: ${planetParticipation(common)} é uma condição que elas compartilham. Isso pode permitir que uma escolha ajude ambas; também explica por que tentar responder a tudo ao mesmo tempo pode sobrecarregar a mesma necessidade.`
+			? sharedBodies.has(common.body)
+				? `${bodyNames[common.body]} volta a ligar as prioridades: ${planetParticipation(common)} também participa de ${current.label.toLocaleLowerCase('pt-BR')}. A condição que sustentava a escolha anterior precisa conservar espaço nesta.`
+				: `${bodyNames[common.body]} em ${signs[common.sign]} participa das duas áreas: ${planetParticipation(common)} é uma condição que elas compartilham. Uma escolha pode, assim, ajudar ambas; tentar responder a tudo ao mesmo tempo também pode sobrecarregar a mesma necessidade.`
 			: contact && a && b
 				? `No mapa, ${bodyNames[a.body]} forma ${aspectNames[contact.kind] ?? contact.kind} com ${bodyNames[b.body]}, aproximando essas duas áreas. ${['square', 'opposition'].includes(contact.kind) ? `A tensão envolve ${planetParticipation(a)} e ${planetParticipation(b)}: ampliar uma frente sem medida pode deixar a outra sem condições de participação.` : `A passagem entre ${planetParticipation(a)} e ${planetParticipation(b)} permite procurar meios que atendam às duas, sem exigir que tenham a mesma finalidade.`}`
 				: `Essas áreas mobilizam referências diferentes: ${previousBodies[0] ? planetParticipation(previousBodies[0]) : 'dar forma à primeira escolha'} e ${currentBodies[0] ? planetParticipation(currentBodies[0]) : 'sustentar a segunda'}. Uma decisão que funciona num campo precisa, portanto, ser ajustada antes de servir ao outro.`;
+		if (common) sharedBodies.add(common.body);
 		return {
 			text: `${index === 0 ? '' : `O encontro entre ${previous.label.toLocaleLowerCase('pt-BR')} e ${current.label.toLocaleLowerCase('pt-BR')} acrescenta outra consequência. ${atlasPriorityLink(previous.id, current.id)} `}${connection}`,
 			factIds: contact ? [contact.factId] : []

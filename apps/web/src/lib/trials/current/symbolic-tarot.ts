@@ -6,8 +6,14 @@ import {
 } from '@atv/domain';
 import { composeReconstructedTarot } from '../reconstruction/tarot';
 import { TAROT_CANON_VERSION, type TarotMeaning } from '../reconstruction/tarot-canon';
-import { cardApplication, currentTarotMeanings } from './symbolic-cards';
-import { cardRelationPrinciples } from './symbolic-relations';
+import { currentTarotMeanings } from './symbolic-cards';
+import { tarotApplications } from './symbolic-contexts';
+import { tarotDevelopments } from './symbolic-developments';
+import {
+	interactionMechanism,
+	resolutionMechanism,
+	type TarotScope
+} from './symbolic-interactions';
 import { SYMBOLIC_CURRENT_VERSION, type CurrentSymbolicReading } from './symbolic';
 
 const supported = new Set([
@@ -98,21 +104,7 @@ const movementGroups: Record<Movement, readonly string[]> = {
 export const currentTarotMovement = Object.fromEntries(
 	Object.entries(movementGroups).flatMap(([movement, ids]) => ids.map((id) => [id, movement]))
 ) as Record<string, Movement>;
-const core = (card: Card) => card.meaning.core.split(';')[0]!.trim();
 const quote = (value: string) => `“${value}”`;
-const about = (value: string) =>
-	value.startsWith('a ')
-		? `à ${value.slice(2)}`
-		: value.startsWith('o ')
-			? `ao ${value.slice(2)}`
-			: `a ${value}`;
-const of = (value: string) =>
-	value.startsWith('a ')
-		? `da ${value.slice(2)}`
-		: value.startsWith('o ')
-			? `do ${value.slice(2)}`
-			: `de ${value}`;
-const sentence = (value: string) => value.charAt(0).toLocaleUpperCase('pt-BR') + value.slice(1);
 
 function theme(input: Pick<WorkflowInput, 'productId' | 'focus' | 'context'>) {
 	const text = `${input.focus ?? ''} ${input.context ?? ''}`
@@ -146,7 +138,7 @@ function theme(input: Pick<WorkflowInput, 'productId' | 'focus' | 'context'>) {
 			id: 'learning',
 			label: 'seu percurso de aprendizagem',
 			application:
-				'No estudo, interessar-se por um assunto e sustentar a prática que ele exige são movimentos distintos. A tiragem ajuda a relacionar a curiosidade com o modo de atravessar a dificuldade.',
+				'No estudo, interessar-se por um assunto e sustentar a prática que ele exige são movimentos distintos. A curiosidade abre uma direção; um ritmo possível de estudo permite continuar quando o assunto deixa de ser novidade.',
 			criterion: 'uma forma de aprender que una interesse e prática possível',
 			question:
 				'Em qual etapa da aprendizagem o entusiasmo encontra uma exigência que precisa de outro ritmo?'
@@ -156,7 +148,7 @@ function theme(input: Pick<WorkflowInput, 'productId' | 'focus' | 'context'>) {
 			id: 'work',
 			label: 'a situação de trabalho',
 			application:
-				'No trabalho, oferecer uma ideia e assumir sua execução têm custos diferentes. A interpretação considera também prazo, responsabilidade e espaço para negociar o que depende de outras pessoas.',
+				'No trabalho, oferecer uma ideia e assumir sua execução têm custos diferentes. Prazo, responsabilidade e espaço para negociar o que depende de outras pessoas dão uma medida concreta ao compromisso.',
 			criterion: 'responsabilidade que caiba nos recursos e acordos reais',
 			question: 'Qual parte dessa responsabilidade você pode assumir e qual precisa ser negociada?'
 		};
@@ -172,10 +164,7 @@ function theme(input: Pick<WorkflowInput, 'productId' | 'focus' | 'context'>) {
 	return {
 		id: 'open',
 		label: 'o tema da consulta',
-		application:
-			input.focus || input.context
-				? 'A leitura permanece no alcance da questão que você trouxe: interpreta maneiras de participar da situação, sem presumir o que já aconteceu ou decidir por você.'
-				: 'As posições organizam a leitura sem atribuir acontecimentos à sua vida. O conjunto descreve uma dinâmica simbólica que pode ser aproximada de uma situação concreta.',
+		application: '',
 		criterion: 'o que pode ser escolhido e sustentado por você',
 		question: 'Qual parte desta dinâmica se aproxima melhor da situação que motivou a consulta?'
 	};
@@ -184,68 +173,21 @@ function theme(input: Pick<WorkflowInput, 'productId' | 'focus' | 'context'>) {
 /** Positions determine whether a card contributes a resource, obstacle or
  * condition. The connecting distinction belongs to the actual card, never to
  * the broad movement index retained for source coverage. */
-function bridge(a: Card, b: Card): string {
+function bridge(a: Card, b: Card, scope: TarotScope): string {
 	const difficulty = (card: Card) =>
 		['challenge', 'opposition', 'crossing', 'shared-tension'].includes(card.positionId);
-	const principle = cardRelationPrinciples[b.cardId];
-	if (!principle) throw new Error('Carta sem distinção relacional.');
-	const claim = difficulty(b)
-		? `${a.name} oferece ${a.meaning.resource}, mas ${b.name} coloca esse recurso diante de ${b.meaning.excess}.`
-		: difficulty(a)
-			? `${b.name} responde a ${a.meaning.excess} por meio de ${b.meaning.resource}.`
-			: b.positionId === 'environment'
-				? `${a.name} descreve sua participação por meio de ${a.meaning.resource}; ${b.name} situa essa participação num ambiente de ${core(b)}.`
-				: `${a.name}, em ${quote(a.positionName)}, oferece ${a.meaning.resource}; ${b.name}, em ${quote(b.positionName)}, muda a medida dessa contribuição com ${b.meaning.resource}.`;
-	let connection: string;
-	const pairIds = new Set([a.cardId, b.cardId]);
-	if (pairIds.has('swords-5') && pairIds.has('swords-3')) {
-		connection =
-			'O preço da disputa aparece na diferença dolorosa que precisa ser reconhecida: vencer uma discussão pode deixar o vínculo sem a confiança necessária para continuar. Nomear essa ferida permite separar o que precisa ser reparado da necessidade de provar novamente quem tinha razão.';
-	} else if (pairIds.has('cups-1') && pairIds.has('major-15')) {
-		connection =
-			'A disponibilidade afetiva encontra o risco de ficar presa à gratificação que o encontro oferece. O começo pode ser intenso e ainda precisar de liberdade para recusar: receber afeto não exige entregar à relação toda a medida do próprio desejo. Essa diferença entre abertura e dependência é o ponto que as duas imagens tornam visível.';
-	} else if (pairIds.has('swords-4') && (pairIds.has('wands-8') || pairIds.has('swords-12'))) {
-		connection =
-			'A pausa que recompõe a atenção e a rapidez das respostas pedem ritmos diferentes. Responder antes de recuperar essa atenção pode conservar o desgaste; interromper todo movimento, por outro lado, retiraria a pausa daquilo que ela deveria ajudar a retomar. O ajuste está no tempo necessário para compreender antes da próxima resposta.';
-	} else if (difficulty(b)) {
-		connection = `${principle} Ter esse recurso à disposição não elimina o custo. A resposta sugerida é esta: ${b.meaning.action}. Esse cuidado ajuda a evitar que a dificuldade passe a conduzir toda a situação.`;
-	} else if (difficulty(a)) {
-		connection = `${principle} Esse gesto altera a resposta à dificuldade: em vez de permanecer organizado por ${a.meaning.excess}, o conselho permite dar lugar a ${b.meaning.resource}. Assim, o recurso de ${a.name} — ${a.meaning.resource} — pode ser retomado sem tratar seu excesso como a única saída.`;
-	} else if (b.positionId === 'environment') {
-		connection = `${principle} Essas são condições da interação, não uma tarefa que você possa cumprir por todas as pessoas. ${a.name} delimita sua contribuição: ${a.meaning.action}. A resposta do ambiente mostrará quanto espaço essa participação encontra.`;
-	} else if (b.positionId === 'trend' || b.positionId === 'near-development') {
-		connection = `${principle} A passagem entre as duas posições começa com uma orientação: ${a.meaning.action}. Sua continuidade depende de outro cuidado: ${b.meaning.action}. Se o movimento ficar preso a ${a.meaning.excess}, a segunda carta não elimina esse custo apenas por ocupar a posição de desdobramento.`;
-	} else {
-		connection = `${principle} Essa distinção modifica a orientação da primeira carta: ${a.meaning.action}. O efeito desse gesto passa a ser lido também pela dinâmica da segunda: ${core(b)}. O recurso de uma carta não apaga o limite da outra; ${b.meaning.excess} continua sendo um custo a considerar nessa aproximação.`;
-	}
-	return `${claim} ${connection}`;
+	return interactionMechanism(
+		a.cardId,
+		b.cardId,
+		difficulty(b) ? 'obstacle' : difficulty(a) ? 'response' : 'complement',
+		scope
+	);
 }
 function positional(card: Card, input: WorkflowInput): string {
-	const m = card.meaning,
-		p = card.positionId;
-	if (['challenge', 'opposition', 'crossing', 'shared-tension'].includes(p))
-		return `${card.name} coloca no centro de ${quote(card.positionName)} esta dinâmica: ${core(card)}. A dificuldade está no espaço que ela passa a ocupar: uma resposta possível estreita a participação quando vira a única resposta admitida.`;
-	if (['advice', 'helpful-condition'].includes(p))
-		return `${card.name} oferece uma resposta pela via de ${m.resource}. Na posição ${quote(card.positionName)}, seu sentido é alterar a forma de participar da situação: ${m.action}. Essa orientação perde precisão se virar ${m.excess}; por isso o gesto precisa manter a medida do problema que pretende responder.`;
-	if (p === 'other-position' || p === 'other-need')
-		return `${card.name} introduz na conversa o tema de ${core(card)}. Nesta posição, isso permite formular uma possibilidade sobre a interação: pode haver espaço para ${m.resource}, ou um limite ligado a ${m.excess}. A carta não determina qual dessas experiências pertence à outra pessoa. Seu valor é tornar essa diferença conversável, em vez de preencher o silêncio com uma certeza sobre o que ela sente.`;
-	if (p === 'past')
-		return `${card.name} organiza a posição de antecedente pelo tema de ${core(card)}. A leitura considera como uma experiência dessa natureza poderia continuar influenciando a situação: ${m.excess} pode persistir como modo de responder, enquanto ${m.resource} pode permanecer como aprendizado. Essa posição não comprova que um episódio assim ocorreu; oferece uma ligação possível a partir da qual o restante da cruz será lido.`;
-	if (p === 'trend' || p === 'near-development')
-		return `${card.name} descreve uma direção simbólica de ${core(card)}. A continuidade favorece ${m.resource} quando as condições discutidas no conjunto recebem atenção; se o mesmo movimento se fecha sobre si, pode assumir a forma de ${m.excess}. Trata-se do desdobramento da dinâmica da tiragem, sem prazo ou acontecimento garantido.`;
-	if (p === 'your-need')
-		return `${card.name} dá forma a uma necessidade ligada a ${core(card)}. ${cardApplication(m.relationship, 'relationship')} Existe uma diferença entre reconhecer o que importa para você e exigir que o vínculo elimine qualquer frustração. O risco está em ${m.excess}: a necessidade passa a organizar toda a relação, em vez de poder ser expressa dentro dela.`;
-	if (p === 'hopes-fears')
-		return `${card.name} reúne uma expectativa e seu possível avesso. ${sentence(m.resource)} descreve o que pode atrair nessa imagem; ${m.excess} mostra o preço temido ou o excesso que ela pode carregar. A ambivalência vem de desejar algo que também modifica as condições de participação. Essa posição ajuda a distinguir o que é esperado do que a situação já oferece.`;
-	if (p === 'environment')
-		return `${card.name}, no ambiente, representa condições de ${core(card)}. Seu apoio possível está em ${m.resource}; sua limitação, em ${m.excess}. Isso dirige a leitura para acordos, regras e respostas observáveis, sem atribuir intenções ocultas às pessoas em volta. A postura pessoal terá de encontrar uma forma de atuar dentro dessas condições.`;
-	const application =
-		theme(input).id === 'relationship'
-			? cardApplication(m.relationship, 'relationship')
-			: theme(input).id === 'work'
-				? cardApplication(m.work, 'work')
-				: '';
-	return `${card.name}, em ${quote(card.positionName)}, descreve ${core(card)}.${application ? ` ${application}` : ''}`;
+	const application = tarotApplications[card.cardId];
+	if (!application) throw new Error('Carta sem aplicação editorial atual.');
+	const reading = theme(input).id === 'relationship' ? application.love : application.question;
+	return `${card.name} · ${card.positionName}\n${reading}`;
 }
 
 export function composeCurrentTarot(
@@ -264,6 +206,7 @@ export function composeCurrentTarot(
 	}));
 	if (cards.some((card) => !card.movement)) throw new Error('Carta sem relação editorial atual.');
 	const binding = theme(input),
+		scope = binding.id as TarotScope,
 		contextIds = calculation.facts.filter((f) => f.kind === 'reported').map((f) => f.id);
 	const sections: CurrentSymbolicReading['sections'] = [],
 		conclusions: CurrentSymbolicReading['interpretation']['conclusions'] = [];
@@ -277,11 +220,11 @@ export function composeCurrentTarot(
 	) => {
 		const factIds = [...new Set([...used.map((c) => c.factId), ...(contextual ? contextIds : [])])];
 		conclusions.push({ section: sections.length, claim, factIds, relation });
-		sections.push({ title, text: [claim, ...paragraphs].join('\n\n'), factIds });
+		sections.push({ title, text: [claim, ...paragraphs].filter(Boolean).join('\n\n'), factIds });
 	};
 	const described = new Set<string>();
 	const pair = (title: string, a: Card, b: Card, implication: string, contextual = false) => {
-		const interaction = bridge(a, b),
+		const interaction = bridge(a, b, scope),
 			end = interaction.indexOf('. ');
 		const claim = end >= 0 ? interaction.slice(0, end + 1) : interaction;
 		const descriptions = [a, b]
@@ -293,223 +236,122 @@ export function composeCurrentTarot(
 		add(
 			title,
 			claim,
-			[
-				...descriptions,
-				...(end >= 0 ? [interaction.slice(end + 2)] : []),
-				implication,
-				...(contextual ? [binding.application] : [])
-			],
+			[...descriptions, ...(end >= 0 ? [interaction.slice(end + 2)] : []), implication],
 			[a, b],
 			`${a.positionId}: ${a.meaning.core}; ${b.positionId}: ${b.meaning.core}. Relação entre os sentidos específicos das cartas: ${interaction} A função de cada posição determina recurso, obstáculo ou direção.`,
 			contextual
 		);
 	};
 	const c = (i: number) => cards[i]!;
-	if (input.productId === 'tarot-situation-challenge-advice') {
-		pair(
-			'O ponto em que a situação encontra resistência',
-			c(0),
-			c(1),
-			`O desafio de ${c(1).name} modifica a situação de ${c(0).name}: o recurso inicial não resolve sozinho aquilo que a segunda carta torna difícil. A resposta precisa enfrentar esse custo dentro ${of(binding.label)}.`,
-			true
-		);
-		pair(
-			'Uma resposta que muda a dinâmica',
-			c(1),
-			c(2),
-			`O conselho de ${c(2).name} responde especificamente ao excesso de ${c(1).name}: ${c(1).meaning.excess}. Ele conserva o tema trazido pela situação — ${core(c(0))} — e propõe outra maneira de lhe dar continuidade.`
-		);
+	const resolve = (source: number, obstacle: number, response: number) =>
+		resolutionMechanism(c(source).cardId, c(obstacle).cardId, c(response).cardId, scope);
+	const connect = (a: number, b: number, kind: 'response' | 'complement' = 'complement') =>
+		interactionMechanism(c(a).cardId, c(b).cardId, kind, scope);
+	const synthesis = (title: string, paragraphs: string[], relation: string) => {
+		const [first, ...rest] = paragraphs;
+		if (!first) throw new Error('Síntese sem desenvolvimento.');
+		const end = first.indexOf('. ');
 		add(
-			'O que as três cartas respondem',
-			`A situação se organiza em torno desta dinâmica: ${core(c(0))}. A orientação da tiragem é cuidar dela sem reforçar ${c(1).meaning.excess}.`,
-			[
-				`${c(2).name} acrescenta a alternativa de ${c(2).meaning.resource}. O conselho faz sentido porque altera a resposta ao desafio; repetir apenas a força da primeira carta poderia tornar a dificuldade mais intensa.`,
-				`Aplicada ${about(binding.label)}, essa diferença orienta a escolha por este critério: ${binding.criterion}. ${input.focus ? `Sua pergunta, ${quote(input.focus)}, encontra aqui uma orientação de participação: ${c(2).meaning.action}.` : `A resposta possível toma a forma de ${c(2).meaning.action}.`}`
-			],
+			title,
+			end < 0 ? first : first.slice(0, end + 1),
+			[...(end < 0 ? [] : [first.slice(end + 2)]), ...rest],
 			cards,
-			'Situação estabelece a dinâmica; desafio restringe seu uso; conselho oferece resposta ao mecanismo do desafio.',
+			relation,
 			true
+		);
+	};
+	if (input.productId === 'tarot-situation-challenge-advice') {
+		pair('O ponto em que a situação encontra resistência', c(0), c(1), '', true);
+		pair('Uma resposta que muda a dinâmica', c(1), c(2), '');
+		synthesis(
+			'O que as três cartas respondem',
+			[resolve(0, 1, 2)],
+			'Situação estabelece a dinâmica; desafio restringe seu uso; conselho oferece resposta ao mecanismo do desafio.'
 		);
 	} else if (input.productId === 'tarot-peladan-cross') {
-		pair(
-			'O apoio e o preço de usá-lo',
-			c(0),
-			c(1),
-			'O apoio e a resistência pertencem à mesma decisão. Reconhecer esse limite permite usar a força favorável com medida, sem exigir que uma qualidade resolva toda a questão.',
-			true
-		);
-		pair(
-			'Como o conselho atravessa a resistência',
-			c(1),
-			c(2),
-			`O conselho trabalha sobre a resistência em vez de negar sua existência. A orientação é concreta: ${c(2).meaning.action}. Ela preserva a força favorável sem reproduzir automaticamente o custo da resistência.`
-		);
-		pair(
-			'A direção depende do modo de participar',
-			c(2),
-			c(3),
-			`A tendência é lida depois do conselho porque sua qualidade depende da participação. ${sentence(c(3).meaning.resource)} é uma direção possível; ${c(3).meaning.excess} mostra o que pode acontecer ao sentido da carta quando a resposta perde medida.`
-		);
-		add(
+		pair('O apoio e o preço de usá-lo', c(0), c(1), '', true);
+		pair('Como o conselho atravessa a resistência', c(1), c(2), '');
+		pair('A direção depende do modo de participar', c(2), c(3), '');
+		synthesis(
 			'O centro da cruz',
-			`${c(4).name} reúne a cruz em torno de ${core(c(4))}.`,
-			[
-				positional(c(4), input),
-				`O apoio de ${c(0).name} oferece ${c(0).meaning.resource}, mas a resistência de ${c(1).name} exige lidar com ${c(1).meaning.excess}. A síntese não escolhe um lado e apaga o outro: usa ${c(2).meaning.resource} como mediação.`,
-				`${bridge(c(2), c(4))} Nesta leitura, a prioridade passa a ser ${c(4).meaning.action}. A tendência de ${c(3).name} permanece condicionada a essa maneira de sustentar a decisão.`
-			],
-			cards,
-			'Síntese central qualifica a mediação entre apoio e resistência e condiciona a tendência ao conselho.',
-			true
+			[connect(2, 4, 'response'), positional(c(4), input)],
+			'Síntese central modifica o conselho; as seções anteriores relacionam apoio, resistência e tendência.'
 		);
 	} else if (input.productId === 'tarot-celtic-cross') {
-		pair(
-			'A situação e aquilo que a atravessa',
-			c(0),
-			c(1),
-			`A força que cruza não é um episódio adicional: ela modifica a expressão de ${c(0).name}, colocando em primeiro plano ${c(1).meaning.excess}.`,
-			true
-		);
-		pair(
-			'O que sustenta a questão e o que se espera dela',
-			c(2),
-			c(4),
-			`A base pode oferecer ${c(2).meaning.resource}, enquanto a direção percebida privilegia ${core(c(4))}. A distância entre sustentar e desejar ajuda a compreender por que uma direção pode parecer clara antes de suas condições estarem reunidas.`
-		);
-		pair(
-			'Entre um antecedente possível e o próximo movimento',
-			c(3),
-			c(5),
-			`A carta do passado oferece uma hipótese de continuidade, sem estabelecer biografia. A relação permite distinguir o que seria repetição de ${core(c(3))} e o que seria abertura para ${core(c(5))}.`
-		);
-		pair(
-			'Sua margem de ação diante do ambiente',
-			c(6),
-			c(7),
-			`Sua participação pode mobilizar ${c(6).meaning.resource}, mas encontra condições externas representadas por ${core(c(7))}. O ajuste está em ${c(6).meaning.action}, sem assumir responsabilidade pela resposta de todos os envolvidos.`
-		);
-		pair(
-			'Expectativa e continuidade não são a mesma coisa',
-			c(8),
-			c(9),
-			`A expectativa de ${c(8).name} pode colorir a maneira de ler a tendência. ${c(9).name} precisa ser compreendida também à luz da força que cruza e do ambiente, não como confirmação automática do desejo ou do receio.`
-		);
-		add(
+		pair('A situação e aquilo que a atravessa', c(0), c(1), '', true);
+		pair('O que sustenta a questão e o que se espera dela', c(2), c(4), '');
+		pair('Entre um antecedente possível e o próximo movimento', c(3), c(5), '');
+		pair('Sua margem de ação diante do ambiente', c(6), c(7), '');
+		pair('Expectativa e continuidade não são a mesma coisa', c(8), c(9), '');
+		synthesis(
 			'A leitura da cruz como uma única dinâmica',
-			`O ponto de integração é aproximar ${core(c(4))} das condições de ${core(c(2))}, atravessando a dificuldade de ${c(1).name}.`,
 			[
-				`${c(0).name} situa o movimento inicial; ${c(3).name} oferece um possível antecedente, e ${c(5).name} mostra a passagem simbólica seguinte. Há uma diferença entre continuar por familiaridade e continuar porque a direção ainda faz sentido.`,
-				`A resposta sob sua responsabilidade aparece em ${c(6).name}: ${c(6).meaning.action}. Ela encontra no ambiente de ${c(7).name} uma condição de ${core(c(7))}. ${bridge(c(6), c(7))}`,
-				`Por isso, ${c(9).name} descreve uma continuidade condicionada. O desejo ou receio de ${c(8).name} não a torna um resultado certo. Para ${binding.label}, a cruz favorece uma decisão que reúna ${binding.criterion} e ${c(9).meaning.resource}, sem ignorar ${c(1).meaning.excess}.`
+				resolve(0, 1, 6),
+				`Entre ${c(6).name}, na sua postura, e ${c(9).name}, na tendência:\n${connect(6, 9)}`
 			],
-			cards,
-			'Integra situação/cruzamento, base/direção, antecedente/desenvolvimento, postura/ambiente e expectativa/tendência sem converter posições em fatos biográficos.',
-			true
+			'As cinco seções relacionam os eixos da cruz. A síntese acrescenta a resposta da postura ao cruzamento e sua influência sobre a tendência.'
 		);
 	} else if (input.productId === 'tarot-aphrodite-temple') {
-		pair(
-			'O vínculo visto pela sua participação',
-			c(0),
-			c(1),
-			`O tema comum de ${c(0).name} ganha forma na participação representada por ${c(1).name}. Isso diferencia o que se deseja do vínculo e o modo pelo qual se tenta construí-lo.`,
-			true
-		);
-		pair(
-			'Necessidade e maneira de estar perto',
-			c(1),
-			c(2),
-			`A necessidade de ${c(2).name} pode ser cuidada por ${c(1).meaning.resource}, mas também pode ficar encoberta por ${c(1).meaning.excess}. Nomear essa diferença permite pedir algo específico, sem fazer da relação a responsável por adivinhar tudo.`
-		);
+		pair('O vínculo visto pela sua participação', c(0), c(1), '', true);
+		pair('Necessidade e maneira de estar perto', c(1), c(2), '');
 		pair(
 			'Uma perspectiva que precisa de resposta do outro',
 			c(3),
 			c(4),
-			`Essas duas posições formulam possibilidades para a conversa. O tema de ${core(c(3))} pode aproximar ou entrar em tensão com ${core(c(4))}; apenas o diálogo pode dizer se essa articulação descreve a experiência da outra pessoa.`
+			'As posições do outro oferecem uma possibilidade de conversa: cabe a ele dizer como vive essa diferença.'
 		);
-		pair(
-			'Como a tensão pode ganhar outra forma',
-			c(5),
-			c(6),
-			`A ajuda de ${c(6).name} precisa responder a ${c(5).meaning.excess}. Isso aproxima o diálogo de uma condição concreta: ${c(6).meaning.action}. Uma conversa não resolve diferenças por apagar um dos lados; ela permite reconhecer o que cada lado pode oferecer.`
-		);
-		add(
+		pair('Como a tensão pode ganhar outra forma', c(5), c(6), '');
+		synthesis(
 			'O encontro possível entre as duas perspectivas',
-			`A leitura concentra o cuidado do vínculo em ${c(6).meaning.resource}, diante da tensão de ${c(5).meaning.excess}.`,
 			[
-				`Sua necessidade aparece em ${c(2).name}, enquanto ${c(4).name} dá nome a uma necessidade possível a perguntar. ${bridge(c(2), c(4))}`,
-				`O tema comum, ${core(c(0))}, pode ganhar sustentação quando sua participação de ${c(1).name} encontra uma resposta real à questão levantada por ${c(3).name}. Até essa resposta existir, a leitura mantém uma diferença clara entre o que você pode expressar e o que só o outro pode dizer.`,
-				`O encaminhamento é ${c(6).meaning.action}. Aplicado à sua questão${input.focus ? `, ${quote(input.focus)}` : ''}, ele prioriza ${binding.criterion}; não produz veredito sobre sentimentos, fidelidade ou futuro do casal.`
+				connect(2, 4),
+				`Ao aproximar ${c(1).name}, na sua posição, de ${c(3).name}, na posição do outro:\n${connect(1, 3)}`
 			],
-			cards,
-			'Necessidade própria e necessidade hipotética são relacionadas sob tensão compartilhada e condição de ajuda; alteridade permanece pergunta, não inferência factual.',
-			true
+			'As seções anteriores relacionam tema, posições, tensão e ajuda. A síntese acrescenta o encontro entre as necessidades e entre as formas de participar; a perspectiva do outro é uma hipótese para conversa.'
 		);
 	} else {
-		const axes: [number, number, string, string][] = [
-			[
-				0,
-				6,
-				'Presença e vínculo',
-				'A forma de ocupar espaço encontra a forma de negociar esse espaço com alguém. A integração precisa preservar iniciativa sem tornar o acordo uma renúncia permanente.'
-			],
-			[
-				1,
-				7,
-				'O que sustenta você e o que é compartilhado',
-				'Um recurso próprio e um compromisso compartilhado pedem critérios diferentes. A relação entre essas áreas esclarece onde autonomia e dependência podem se confundir.'
-			],
-			[
-				2,
-				8,
-				'Aprender no cotidiano e ampliar o horizonte',
-				'As trocas próximas dão matéria ao entendimento mais amplo. O sentido escolhido também muda quais informações merecem atenção no dia a dia.'
-			],
-			[
-				3,
-				9,
-				'Base íntima e participação pública',
-				'A direção que aparece no mundo precisa encontrar uma base em que seja possível repousar e se reconhecer. O custo de sustentar uma imagem pública não pode ser lido separado dessa base.'
-			],
-			[
-				4,
-				10,
-				'Expressão própria e construção em grupo',
-				'Criar algo próprio e participar de um projeto comum podem se alimentar, desde que o pertencimento não exija apagar a autoria e a autoria consiga reconhecer a contribuição dos outros.'
-			],
-			[
-				5,
-				11,
-				'O ritmo entre fazer e elaborar',
-				'A organização cotidiana e o recolhimento se influenciam: uma rotina pode proteger um tempo de elaboração, enquanto uma pausa pode esclarecer o que merece voltar à rotina.'
-			]
+		const axes: [number, number, string][] = [
+			[0, 6, 'Presença e vínculo'],
+			[1, 7, 'O que sustenta você e o que é compartilhado'],
+			[2, 8, 'Aprender no cotidiano e ampliar o horizonte'],
+			[3, 9, 'Base íntima e participação pública'],
+			[4, 10, 'Expressão própria e construção em grupo'],
+			[5, 11, 'O ritmo entre fazer e elaborar']
 		];
-		for (const [a, b, title, implication] of axes) pair(title, c(a), c(b), implication, a === 0);
-		add(
-			'A carta central articula as áreas',
-			`${c(12).name} propõe ${core(c(12))} como fio de integração da mandala.`,
+		for (const [a, b, title] of axes) pair(title, c(a), c(b), '', a === 0);
+		synthesis(
+			'O fio que aproxima as áreas',
 			[
+				connect(0, 12),
 				positional(c(12), input),
-				`A prioridade sugerida pelo centro é ${c(12).meaning.action}. Esse gesto altera o modo de lidar com a presença de ${c(0).name} e os acordos de ${c(6).name}: ${bridge(c(0), c(12))}`,
-				`A sustentação de ${c(1).name} e a rotina de ${c(5).name} dão uma medida concreta à direção de ${c(9).name}. O centro não torna todas as áreas iguais: sua contribuição é reunir ${c(12).meaning.resource} sem reforçar ${c(12).meaning.excess}.`,
-				`Para ${binding.label}, a mandala apresenta relações entre áreas simbólicas. A questão${input.focus ? ` ${quote(input.focus)}` : ''} recebe uma prioridade de participação, e não doze previsões independentes.`
+				`Entre ${c(5).name}, no cotidiano, e ${c(9).name}, na direção pública:\n${connect(5, 9)}`
 			],
-			cards,
-			'Seis eixos contrapõem áreas complementares; a carta central modifica presença/acordos e articula recursos/rotina/direção sem supor casas natais calculadas.',
-			true
+			'Seis eixos contrapõem áreas complementares; a síntese relaciona a carta central à presença e acrescenta a relação entre rotina e direção, sem supor casas natais calculadas.'
 		);
 	}
 	const advice = cards.find((card) =>
 		['advice', 'helpful-condition', 'center', 'stance'].includes(card.positionId)
 	)!;
+	const pauseAndReply =
+		input.productId === 'tarot-celtic-cross' &&
+		c(0).cardId === 'swords-4' &&
+		c(1).cardId === 'wands-8' &&
+		c(6).cardId === 'major-14';
+	const practice = pauseAndReply
+		? scope === 'relationship'
+			? 'Combinar uma hora para retomar a conversa permite descansar sem deixar o encontro suspenso. A resposta pode vir com mais atenção quando cada mensagem deixa de exigir uma disponibilidade imediata.'
+			: 'Um prazo de retomada e um volume possível de trabalho dão lugar ao descanso sem abandonar o que precisa continuar. A próxima etapa começa melhor quando a cobrança também respeita esse intervalo.'
+		: tarotDevelopments[advice.cardId]![binding.id === 'relationship' ? 'love' : 'question'];
 	return {
 		version: SYMBOLIC_CURRENT_VERSION,
 		productId: input.productId,
 		title: method.name,
-		opening: `${input.focus ? `A questão que orienta esta leitura é ${quote(input.focus)}. ` : ''}${input.context ? `Você situou a consulta assim: ${quote(input.context)}. ` : ''}As cartas serão lidas em relação: cada posição muda o papel da imagem, e o conjunto mostra tanto uma possibilidade de participação quanto o ponto em que ela encontra dificuldade.`,
+		opening:
+			`${input.focus ? `Você trouxe a questão ${quote(input.focus)}. ` : ''}${input.context ? `O contexto que você informou foi ${quote(input.context)}.` : ''}`.trim(),
 		source: `Cartas desta execução, posições do método ${method.name} e cânone original ATVNA (${TAROT_CANON_VERSION}); interpretação simbólica sem consulta externa.`,
 		sections,
 		questions: [binding.question],
-		practice: `Uma forma de levar a orientação à situação: ${advice.meaning.action}. A medida é ${binding.criterion}; mantenha espaço para rever o gesto conforme a resposta concreta.`,
+		practice,
 		limits: [
 			'As cartas oferecem uma interpretação simbólica; não comprovam acontecimentos, estados internos de terceiros ou resultados futuros.',
 			...(input.productId === 'tarot-astrological-mandala'
@@ -531,25 +373,19 @@ export function composeCurrentSingleCard(
 	mode: 'day' | 'love' | 'question'
 ): { summary: string; sections: { id: string; title: string; body: string }[] } {
 	const meaning = currentTarotMeanings[cardId],
-		movement = currentTarotMovement[cardId];
-	if (!meaning || !movement) throw new Error('Carta desconhecida para a leitura atual.');
+		movement = currentTarotMovement[cardId],
+		application = tarotApplications[cardId];
+	if (!meaning || !movement || !application)
+		throw new Error('Carta desconhecida para a leitura atual.');
 	const binding = theme({
 		productId: mode === 'love' ? 'tarot-aphrodite-temple' : 'tarot-single',
 		focus
 	});
-	const subject =
-		mode === 'day'
-			? 'o ritmo do seu dia'
-			: mode === 'love'
-				? 'a maneira de participar de um vínculo'
-				: binding.label;
-	const cardAnswer = cardRelationPrinciples[cardId];
-	const context =
-		binding.id === 'relationship'
-			? cardApplication(meaning.relationship, 'relationship')
-			: binding.id === 'work'
-				? `${cardApplication(meaning.work, 'work')} Isso aproxima a imagem de ${binding.criterion}.`
-				: binding.application;
+	const cardAnswer = tarotDevelopments[cardId]![mode];
+	const paragraph = application[mode];
+	const firstEnd = paragraph.indexOf('. ');
+	const summary = firstEnd >= 0 ? paragraph.slice(0, firstEnd + 1) : paragraph;
+	const development = firstEnd >= 0 ? paragraph.slice(firstEnd + 2) : paragraph;
 	const normalizedFocus = (focus ?? '')
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
@@ -577,34 +413,29 @@ export function composeCurrentSingleCard(
 					? 'Como sua questão envolve retomar uma relação, recuperar uma presença e repetir as mesmas condições são possibilidades diferentes.'
 					: 'Como sua questão envolve retomar, o recomeço pode aproveitar o que foi aprendido sem exigir a repetição das condições anteriores.';
 	const questionSpecific = completing
-		? `Sua pergunta sobre concluir ${binding.id === 'learning' ? 'esse percurso de aprendizagem' : 'uma tarefa ou projeto'} coloca em foco a diferença entre sustentar o que falta e apenas desejar chegar ao fim. ${meaning.name} acrescenta ${meaning.resource} a essa passagem. A orientação da carta — ${meaning.action} — se aplica à maneira de atravessar a etapa restante; ela não antecipa o resultado.`
+		? `Na sua pergunta sobre concluir ${binding.id === 'learning' ? 'esse percurso de aprendizagem' : 'uma tarefa ou projeto'}, essa diferença se concentra na etapa restante: o que ainda precisa receber continuidade e o que já pode ser entregue.`
 		: returning
-			? `${returnApplication} ${movement === 'release' ? 'O encerramento sugerido pela carta pode se referir à forma anterior do vínculo ou da tentativa; ele não obriga a recusar toda possibilidade nova.' : `${meaning.name} relaciona essa retomada a ${meaning.resource}. A orientação é ${meaning.action}.`}`
+			? `${returnApplication} ${movement === 'release' ? 'O encerramento sugerido pela carta pode se referir à forma anterior do vínculo ou da tentativa; reconhecer o que terminou pode abrir espaço para uma aproximação em outras condições.' : ''}`
 			: leaving
-				? `Como sua questão envolve uma saída, a leitura diferencia o que deixaria de ser sustentado do que ainda precisaria de cuidado depois da decisão. ${meaning.name} acrescenta ${meaning.core.split(';')[0]} a essa diferença; a carta não transforma a saída na única alternativa.`
-				: /escolh|decid|mudar|mudanca/.test(normalizedFocus)
-					? `Na escolha que você trouxe, ${meaning.name} dá peso a ${meaning.core.split(';')[0]}. Esse critério ajuda a comparar o custo de participar de cada direção, sem oferecer uma resposta automática de sim ou não.`
-					: `Para ${subject}, a contribuição específica de ${meaning.name} é ${meaning.action}. Essa orientação tem sentido junto da ambivalência descrita acima, sem substituir sua decisão.`;
+				? 'Como sua questão envolve uma saída, encerrar a participação também pede encaminhar os compromissos que continuarão existindo depois dela. Essa passagem pode ter um ritmo diferente da decisão de partir.'
+				: '';
 	return {
-		summary: `${meaning.name} coloca em foco ${meaning.core.split(';')[0]}. ${mode === 'day' ? 'Uma imagem para dar outra atenção ao dia.' : focus ? `Sua questão é ${quote(focus)}.` : 'A leitura relaciona essa imagem ao tema da consulta.'}`,
+		summary,
 		sections: [
 			{
 				id: 'card-dynamic',
-				title:
-					mode === 'day'
-						? 'A qualidade que a carta traz ao dia'
-						: 'O que esta carta acrescenta à questão',
-				body: `${cardAnswer}\n\n${meaning.name} torna essa dinâmica específica por meio de ${meaning.resource}. Quando essa resposta ocupa todo o espaço, seu excesso aparece em ${meaning.excess}.`
+				title: application.title,
+				body: development
 			},
 			{
 				id: 'card-context',
 				title:
 					mode === 'love'
-						? 'Como isso participa do vínculo'
+						? 'O espaço entre o desejo e o encontro'
 						: mode === 'day'
-							? 'Onde essa imagem pode fazer diferença'
-							: 'Uma orientação para a sua pergunta',
-				body: `${context}\n\n${questionSpecific}`
+							? 'O cuidado que acompanha esse movimento'
+							: 'O que ganha peso na escolha',
+				body: [questionSpecific.trim(), cardAnswer].filter(Boolean).join(' ')
 			}
 		]
 	};

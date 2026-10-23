@@ -6,6 +6,7 @@ import { calculateTarotMethod, tarotMethods, type WorkflowInput } from '@atv/dom
 import { approveTrialReading, type SavedTrial } from '../reading';
 import { composeHistoricalReading as composeTrialReading } from './historical-reading.test-helper';
 import { trialPdf } from '../pdf';
+import { localTarotArtwork } from '../pdf-artwork.test-helper';
 import { buildTarotScene, tarotSceneSvg } from '../tarot-diagram';
 
 const directory = process.env.ATV_TAROT_QA_DIR;
@@ -39,7 +40,7 @@ for (const method of tarotMethods) {
 				approval
 			};
 			const scene = buildTarotScene(saved),
-				pdf = await trialPdf(saved);
+				pdf = await trialPdf(saved, localTarotArtwork);
 			expect((await PDFDocument.load(pdf)).getPageCount()).toBeGreaterThanOrEqual(4);
 			await mkdir(directory!, { recursive: true });
 			await writeFile(join(directory!, `${method.id}.pdf`), pdf);

@@ -18,6 +18,8 @@ import {
 } from './symbolic';
 import { currentTarotMovement } from './symbolic-tarot';
 import { cardRelationPrinciples } from './symbolic-relations';
+import { tarotApplications } from './symbolic-contexts';
+import { tarotDevelopments } from './symbolic-developments';
 
 // Synthetic counterfactuals only. No personal records, runtime service or approval
 // artifact is read or written by this suite.
@@ -98,6 +100,41 @@ const full = (reading: { sections: { text: string }[] }) =>
 	reading.sections.map((s) => s.text).join('\n');
 
 describe('current symbolic interpretations', () => {
+	it.each(paidTarot)(
+		'preserves the complete contextual applications in the current paid method %s without a focus',
+		async (productId) => {
+			const value = input(productId);
+			const calculation = await draw(value);
+			const reading = composeCurrentSymbolic(value, calculation) as CurrentSymbolicReading;
+			const mode = productId === 'tarot-aphrodite-temple' ? 'love' : 'question';
+			expect(reading.opening).toBe('');
+			for (const card of calculation.data.cards as unknown as MethodCard[]) {
+				expect(full(reading), `${productId}/${card.cardId}`).toContain(
+					tarotApplications[card.cardId]![mode]
+				);
+			}
+			checkEvidence(reading, calculation);
+		}
+	);
+	it('uses the supplied focus as the paid opening and closes the Celtic rhythm with a return agreement', async () => {
+		const value = input('tarot-celtic-cross', 'Como cuidar do ritmo desta relação?');
+		const calculation = await draw(value);
+		const cards = calculation.data.cards as unknown as MethodCard[];
+		const ids = cards.map((card) => card.cardId);
+		ids[0] = 'swords-4';
+		ids[1] = 'wands-8';
+		ids[6] = 'major-14';
+		const reading = composeCurrentSymbolic(
+			value,
+			syntheticCards(calculation, ids)
+		) as CurrentSymbolicReading;
+		expect(reading.opening).toBe('Você trouxe a questão “Como cuidar do ritmo desta relação?”.');
+		expect(reading.practice).toContain('Combinar uma hora para retomar a conversa');
+		expect(reading.practice).toContain(
+			'cada mensagem deixa de exigir uma disponibilidade imediata'
+		);
+		expect(reading.practice).not.toBe(tarotDevelopments['major-14']!.love);
+	});
 	it('covers all 78 distinct card meanings and changes operation within one suit', () => {
 		expect(Object.keys(currentTarotMovement).sort()).toEqual(Object.keys(tarotCanon).sort());
 		expect(Object.keys(cardRelationPrinciples).sort()).toEqual(Object.keys(tarotCanon).sort());
@@ -155,9 +192,7 @@ describe('current symbolic interpretations', () => {
 			).toBe(true);
 			expect(reading.title).toBe(tarotMethodFor(product)!.name);
 			if (product === 'tarot-aphrodite-temple')
-				expect(full(reading)).toContain(
-					'A carta não determina qual dessas experiências pertence à outra pessoa'
-				);
+				expect(reading.limits.join(' ')).toContain('estados internos de terceiros');
 			if (product === 'tarot-astrological-mandala') expect(reading.sections).toHaveLength(7);
 		}
 	);
@@ -172,8 +207,8 @@ describe('current symbolic interpretations', () => {
 			value,
 			syntheticCards(calculation, ['major-0', 'wands-10', 'major-9'])
 		) as CurrentSymbolicReading;
-		expect(a.sections[0]!.text).toContain('multiplicação de começos');
-		expect(b.sections[0]!.text).toContain('transforma dedicação em sobrecarga');
+		expect(a.sections[0]!.text).toContain('Os dois impulsos favorecem a abertura');
+		expect(b.sections[0]!.text).toContain('Cada começo pede uma parte da mesma disponibilidade');
 		expect(a.interpretation.conclusions[0]!.claim).not.toBe(b.interpretation.conclusions[0]!.claim);
 	});
 	it('exchanging challenge and advice changes what is constrained and what supplies a response', async () => {
@@ -187,8 +222,8 @@ describe('current symbolic interpretations', () => {
 			value,
 			syntheticCards(calculation, ['major-1', 'major-9', 'major-4'])
 		) as CurrentSymbolicReading;
-		expect(a.sections.at(-1)!.text).toContain('controle que mantém uma regra');
-		expect(b.sections.at(-1)!.text).toContain('isolamento que adia o encontro');
+		expect(a.sections.at(-1)!.text).toContain('uma regra conserva sua utilidade');
+		expect(b.sections.at(-1)!.text).toContain('o recolhimento esclarece');
 		expect(a.sections.at(-1)!.text).not.toBe(b.sections.at(-1)!.text);
 	});
 	it('distinguishes governance from dependency even within the same relational operation', async () => {
@@ -203,10 +238,12 @@ describe('current symbolic interpretations', () => {
 			syntheticCards(calculation, ['major-1', 'major-15', 'major-9'])
 		) as CurrentSymbolicReading;
 		expect(currentTarotMovement['major-4']).toBe(currentTarotMovement['major-15']);
-		expect(emperor.interpretation.conclusions[0]!.claim).toContain('controle que mantém uma regra');
-		expect(devil.interpretation.conclusions[0]!.claim).toContain('dependência de uma gratificação');
-		expect(devil.interpretation.conclusions[0]!.claim).not.toContain(
-			'controle que mantém uma regra'
+		expect(emperor.sections[0]!.text).toContain(
+			'A iniciativa pode ficar estreita quando precisa caber numa regra que ainda não ouviu o que você está propondo'
+		);
+		expect(devil.sections[0]!.text).toContain('A liberdade para recusar continua necessária');
+		expect(emperor.interpretation.conclusions[0]!.claim).not.toBe(
+			devil.interpretation.conclusions[0]!.claim
 		);
 	});
 	it('changing the stated question changes the application without changing the recorded cards', async () => {
@@ -215,10 +252,16 @@ describe('current symbolic interpretations', () => {
 		const a = await draw(work),
 			b = await draw(love);
 		expect(a.data.cards).toEqual(b.data.cards);
-		const workReading = composeCurrentSymbolic(work, a)!,
-			loveReading = composeCurrentSymbolic(love, b)!;
-		expect(full(workReading)).toContain('prazo, responsabilidade');
-		expect(full(loveReading)).toContain('reciprocidade');
+		const workReading = composeCurrentSymbolic(
+				work,
+				syntheticCards(a, ['wands-8', 'pentacles-7', 'swords-4'])
+			)!,
+			loveReading = composeCurrentSymbolic(
+				love,
+				syntheticCards(b, ['wands-8', 'pentacles-7', 'swords-4'])
+			)!;
+		expect(workReading.sections.at(-1)!.text).toContain('A sequência de ações');
+		expect(loveReading.sections.at(-1)!.text).toContain('uma troca de mensagens');
 		expect(workReading.sections.at(-1)!.text).not.toBe(loveReading.sections.at(-1)!.text);
 	});
 	it('preserves recorded-position integrity and does not accept a missing card', async () => {
@@ -235,7 +278,7 @@ describe('current symbolic interpretations', () => {
 		expect(leaving.sections[1]!.body).toContain('uma saída');
 		expect(returning.sections[1]!.body).not.toBe(leaving.sections[1]!.body);
 		const newCard = composeCurrentSingleCard('major-3', 'Quero retomar uma relação', 'love');
-		expect(newCard.sections[0]!.body).toContain('tempo e condições materiais');
+		expect(newCard.sections[0]!.body).toContain('quando cuidar vira ser indispensável');
 		expect(newCard.sections[0]!.body).not.toBe(returning.sections[0]!.body);
 		expect(() => composeCurrentSingleCard('unknown', undefined, 'day')).toThrow();
 	});
@@ -286,7 +329,8 @@ describe('current symbolic interpretations', () => {
 		expect(reading.sections[0]!.text).toContain('impedimento');
 		expect(reading.sections[1]!.text).toContain('Interesse e cautela compõem uma ambivalência');
 		expect(reading.sections[1]!.text).toContain('não informa qual veio primeiro');
-		expect(reading.sections[2]!.text).toContain('mudança de casa');
+		expect(reading.sections[1]!.text).toContain('mudança de casa');
+		expect(reading.sections[1]!.text).toContain('chegar a um lugar e sentir-se instalado');
 		expect(full(reading)).not.toMatch(/casa (significa|representa)|porta (significa|representa)/iu);
 	});
 	it('changing actions changes the interpretation with the same objects, feelings and association', () => {
@@ -337,7 +381,7 @@ describe('current symbolic interpretations', () => {
 		value.dream!.narrative = 'Entrei na casa e esperei na janela.';
 		const staying = composeCurrentSymbolic(value, calculateDreamRecord(value))!;
 		expect(staying.sections[2]!.text).toContain('O tempo de assimilar faz parte dessa aproximação');
-		expect(staying.sections[2]!.text).toContain('mudança de casa');
+		expect(staying.sections[1]!.text).toContain('mudança de casa');
 		value.dream!.narrative = 'Entrei na casa e saí pela janela.';
 		const leaving = composeCurrentSymbolic(value, calculateDreamRecord(value))!;
 		expect(leaving.sections[2]!.text).toContain(
@@ -350,9 +394,9 @@ describe('current symbolic interpretations', () => {
 			a = composeCurrentSymbolic(value, calculateDreamRecord(value))!;
 		value.dream!.associations = ['preparar uma apresentação'];
 		const b = composeCurrentSymbolic(value, calculateDreamRecord(value))!;
-		expect(b.sections.at(-1)!.text).toContain('preparar uma apresentação');
-		expect(b.sections.at(-1)!.text).not.toContain('mudança de casa');
-		expect(b.sections.at(-1)!.text).not.toBe(a.sections.at(-1)!.text);
+		expect(b.sections[1]!.text).toContain('preparar uma apresentação');
+		expect(full(b)).not.toContain('mudança de casa');
+		expect(b.sections[1]!.text).not.toBe(a.sections[1]!.text);
 		expect(full(b)).not.toContain('Você situou o sonho neste contexto');
 	});
 	it('the dossier explains a shared association modified by different actions and emotions', () => {
@@ -361,7 +405,7 @@ describe('current symbolic interpretations', () => {
 			reading = composeCurrentSymbolic(value, calculation) as CurrentSymbolicReading;
 		checkEvidence(reading, calculation);
 		const comparison = reading.sections.at(-1)!;
-		expect(comparison.text).toContain('encontra outra forma de participação');
+		expect(comparison.text).toContain('gesto final dá outra forma à participação');
 		expect(comparison.text).toContain('procura');
 		expect(comparison.text).toContain('impedimento');
 		expect(comparison.factIds).toContain(`history-${uuid(1)}`);
@@ -374,6 +418,16 @@ describe('current symbolic interpretations', () => {
 		expect(reading.sections.at(-1)!.text).toContain('esperei perto da porta');
 		expect(reading.sections.at(-1)!.text).toContain('saí pela janela');
 		expect(reading.sections.at(-1)!.text).toContain('mudar a própria distância');
+	});
+	it('a different opening does not turn the same final pause into a changed ending', () => {
+		const value = dreamInput('dream-dossier');
+		value.dream!.narrative = 'Não consegui abrir a porta. Depois entrei e esperei na janela.';
+		const prior = previous(1, 2, { narrative: 'Entrei na casa e esperei na janela.' });
+		const reading = composeCurrentSymbolic(value, calculateDreamDossier(value, [prior]))!;
+		const comparison = reading.sections.at(-1)!.text;
+		expect(comparison).toContain('continuidade no gesto final');
+		expect(comparison).not.toContain('gesto final dá outra forma');
+		expect(full(reading)).not.toContain('personagens');
 	});
 	it('the atlas compares authorized sources and preserves gaps rather than inventing a month-long trajectory', () => {
 		const value = { ...input('dream-atlas'), dreamAtlas: { startDate: '2026-09-01' } };
@@ -445,7 +499,8 @@ describe('current symbolic interpretations', () => {
 			'major-19'
 		]);
 		const reading = composeCurrentSymbolic(value, calculation)!;
-		expect(full(reading)).toContain('flexibilidade sem base vira precariedade.');
+		expect(reading.practice).toBe(tarotDevelopments['pentacles-2']!.love);
+		expect(full(reading)).toContain('Um ajuste ajuda quando reduz a instabilidade');
 		expect(full(reading)).not.toMatch(/precariedade (oferece|precisa|passa)/u);
 		expect(full(reading)).not.toContain('limite de O Eremita');
 	});

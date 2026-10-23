@@ -106,7 +106,8 @@ export function placeChartMarkers(
 	positions: { body: string; longitude: number }[],
 	protectedBoxes: Box[] = [],
 	radii: number[] = [225, 160, 95, 30],
-	compact = false
+	compact = false,
+	angleStep = compact ? 5 : 20
 ) {
 	const placed: ChartScene['markers'] = [];
 	for (const p of [...positions].sort(
@@ -117,9 +118,10 @@ export function placeChartMarkers(
 		for (const radius of radii) {
 			for (const offset of [
 				0,
-				...Array.from({ length: compact ? 36 : 9 }, (_, i) => (i + 1) * (compact ? 5 : 20)).flatMap(
-					(a) => [a, -a]
-				)
+				...Array.from({ length: 180 / angleStep }, (_, i) => (i + 1) * angleStep).flatMap((a) => [
+					a,
+					-a
+				])
 			])
 				candidates.push({
 					radius,
@@ -743,7 +745,14 @@ function buildDateChartScene(
 	});
 	const protectedBoxes: Box[] = [
 		{ x: 150, y: 31, w: 600, h: 65 },
-		{ x: 40, y: 842, w: 820, h: 50 }
+		{ x: 40, y: 842, w: 820, h: 50 },
+		// The outer cards share the sign-name band. Reserve the full text area before
+		// laying them out; the leader still starts at the original calculated longitude.
+		...scene.nodes.flatMap((node): Box[] => {
+			if (node.type !== 'text' || node.layer !== 'zodiac') return [];
+			const width = node.text.length * node.size * 0.7;
+			return [{ x: node.x - width / 2, y: node.y - node.size, w: width, h: node.size * 1.3 }];
+		})
 	];
 	const natal = placeChartMarkers(
 		geometry.inputPositions.second.map((p) => ({ ...p, body: `natal:${p.body}` })),
@@ -753,7 +762,9 @@ function buildDateChartScene(
 	const sample = placeChartMarkers(
 		geometry.inputPositions.first.map((p) => ({ ...p, body: `sample:${p.body}` })),
 		protectedBoxes,
-		[392, 410]
+		[392, 410],
+		false,
+		5
 	);
 	scene.markers = [...natal, ...sample];
 	for (const marker of scene.markers) {

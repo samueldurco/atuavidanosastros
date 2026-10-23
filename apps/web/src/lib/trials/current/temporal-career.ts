@@ -362,8 +362,8 @@ export function careerPeriodSynthesis(entries: readonly CareerContact[]): Career
 		if (!a || !b) throw new Error('Alvo sem ligação profissional disponível.');
 		claim +=
 			basis[0].contact.natal === basis[1].contact.natal
-				? ` As duas continuidades alcançam ${a.work}: ${a.opening} dá uma forma comum às exigências, enquanto ${a.tension} tende a concentrar o custo delas numa única escolha.`
-				: ` A relação se torna concreta entre ${a.work} e ${b.work}. Nesse encontro, ${a.opening} depende também de ${b.opening}: as duas frentes precisam caber na mesma proposta para que uma não prometa o que a outra não consegue sustentar.`;
+				? ` As duas continuidades alcançam ${a.work}. Nesse ponto, a possibilidade é ${a.opening}; a dificuldade aparece ao ${a.tension}.`
+				: ` Essa relação alcança tanto ${a.work} quanto ${b.work}. Na primeira frente, a possibilidade é ${a.opening}; na segunda, ${b.opening}. Uma proposta que depende das duas precisa dar condições para que ambas avancem.`;
 	}
 	for (const entry of contacts.filter((entry) => !basis.includes(entry))) {
 		claim += `\n\n${thirdContinuity(entry.contact, basis)}`;

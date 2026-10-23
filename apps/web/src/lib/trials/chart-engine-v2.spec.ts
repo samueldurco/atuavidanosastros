@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { PDFDocument, StandardFonts } from 'pdf-lib';
+import { calculateCrossAspects, type AspectPolicy, type AspectPosition } from '@atv/astrology';
 import { calculateTrial } from '../server/trial-calculation';
 import { composeTrialReading, approveTrialReading, type SavedTrial } from './reading';
 import {
@@ -114,6 +116,110 @@ describe('AstroChartEngineV2 saved geometry', () => {
 			).toBe(true);
 		}
 	});
+});
+
+describe('comparison cards leave every zodiac name readable', () => {
+	const products = [
+		['date-reading', 'atv-private-date-synthesis/4.0.0'],
+		['synastry', 'atv-private-synastry-synthesis/4.0.0'],
+		['couple-dossier', 'atv-private-couple-dossier-synthesis/4.0.0'],
+		['week-reading', 'atv-private-week-synthesis/4.0.0'],
+		['personal-calendar', 'atv-private-calendar-synthesis/4.0.0'],
+		['career-forecast-30d', 'atv-private-thirty-day-synthesis/1.0.0']
+	] as const;
+	const policy: AspectPolicy = {
+		id: 'comparison-layout-test',
+		version: '1.0.0',
+		aspects: (['conjunction', 'sextile', 'square', 'trine', 'opposition'] as const).map((kind) => ({
+			kind,
+			orbDegrees: 2
+		}))
+	};
+	let fixture: ReturnType<typeof careerChartFixture>;
+	const savedFixture = () => (fixture ??= careerChartFixture());
+
+	it.each(products)(
+		'%s protects sign names even with crowded external cards',
+		async (productId, version) => {
+			const original = await savedFixture();
+			const font = await (await PDFDocument.create()).embedFont(StandardFonts.Helvetica);
+			const natal = original.calculation.data.positions as AspectPosition[];
+			for (const cluster of [null, 225, 315]) {
+				const outer = natal.map((position, i) => ({
+					...position,
+					longitude: cluster ?? (i * 30 + 75) % 360
+				}));
+				const geometry = calculateCrossAspects(outer, natal, policy);
+				const base = structuredClone(original.calculation);
+				base.data.policy = policy;
+				const saved: SavedTrial = {
+					...structuredClone(original),
+					product_id: productId,
+					input: { ...structuredClone(original.input), productId, targetDate: '2026-10-20' },
+					calculation: {
+						...base,
+						version,
+						data: {
+							...base.data,
+							base,
+							sources: [base, base],
+							transitGeometry: geometry,
+							relationshipGeometry: geometry,
+							days: [
+								{ date: '2026-10-20', sampleInstant: '2026-10-20T12:00:00Z', positions: outer }
+							],
+							contacts: [],
+							events: [],
+							windows: []
+						}
+					}
+				};
+				const before = structuredClone(saved.calculation);
+				const scene = buildChartScene(saved);
+				const names = scene.nodes.filter((node) => node.type === 'text' && node.layer === 'zodiac');
+				expect(names).toHaveLength(12);
+				expect(scene.markers).toHaveLength(20);
+				for (const marker of scene.markers.filter((m) => m.body.startsWith('sample:'))) {
+					for (const name of names) {
+						if (name.type !== 'text') throw Error('expected_zodiac_text');
+						// Measure the exported PDF font independently of the SVG layout estimate.
+						const width = font.widthOfTextAtSize(name.text, name.size);
+						const label = {
+							x: name.x - width / 2,
+							y: name.y - name.size,
+							w: width,
+							h: name.size * 1.25
+						};
+						const clearance = Math.max(
+							label.x - (marker.box.x + marker.box.w),
+							marker.box.x - (label.x + label.w),
+							label.y - (marker.box.y + marker.box.h),
+							marker.box.y - (label.y + label.h)
+						);
+						expect(
+							clearance,
+							`${productId}: ${marker.body} covers ${name.text}`
+						).toBeGreaterThanOrEqual(4 - 1e-7);
+					}
+					const position = outer.find((p) => `sample:${p.body}` === marker.body)!;
+					expect(marker.longitude).toBe(position.longitude);
+					const radians = (position.longitude * Math.PI) / 180;
+					const leader = scene.nodes.find(
+						(node) =>
+							node.type === 'line' &&
+							node.layer === 'leaders' &&
+							node.x2 === marker.x &&
+							node.y2 === marker.y
+					);
+					expect(leader).toMatchObject({
+						x: 450 - 274 * Math.cos(radians),
+						y: 450 + 274 * Math.sin(radians)
+					});
+				}
+				expect(saved.calculation).toEqual(before);
+			}
+		}
+	);
 });
 
 describe('compact natal markers keep crowded labels separate from factual geometry', () => {

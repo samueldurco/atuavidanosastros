@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { CaelusEphemerisProvider, type EphemerisProvider, type NatalChart } from '@atv/astrology';
 import { tarotDeck } from '@atv/domain';
 import { tarotCanon } from '../trials/reconstruction/tarot-canon';
+import { tarotApplications } from '../trials/current/symbolic-contexts';
 import { calculateFreeToolResult } from './free-tools-calculation';
 import { parseFreeToolResult } from '../free-tool-result';
 import { signFreeToolResult, verifyFreeToolReceipt } from './free-tool-receipt';
@@ -92,7 +93,8 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 		expect(section(earlier, 'moon').body).toContain(
 			'reconhecer limites, contar com acordos confiáveis'
 		);
-		expect(section(earlier, 'ascendant').body).toContain('avaliar responsabilidades');
+		expect(section(earlier, 'ascendant').body).toContain('Entender o que é esperado');
+		expect(section(earlier, 'ascendant').body).toContain('antes que você tenha escolhido');
 		expect(new Set(earlier.sections.map((part) => part.body)).size).toBe(4);
 		for (const id of ['sun', 'moon']) expect(section(earlier, id)).toEqual(section(later, id));
 		expect(section(earlier, 'ascendant').title).not.toBe(section(later, 'ascendant').title);
@@ -166,7 +168,9 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 		expect(result.facts[0]).toMatchObject({ id: 'midheaven', kind: 'calculated' });
 		expect(result.summary).toContain('Meio do Céu');
 		expect(result.sections.map((section) => section.id)).toEqual(['contribution', 'environment']);
-		expect(result.sections[1]!.body).toContain('não determina uma profissão');
+		expect(result.limits.join(' ')).toContain('Não determina uma profissão');
+		expect(result.sections[1]!.body).toContain('as tarefas e a autonomia');
+		expect(result.sections[1]!.body).toContain('o mesmo cargo');
 	});
 	it('dinheiro usa a Casa 2 real e seu regente, e rejeita casas indisponíveis', async () => {
 		const sample = structuredClone(chart);
@@ -195,9 +199,9 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 	it('a carta do amor traz o conteúdo de relacionamentos da carta sorteada, sem atribuir sentimentos a terceiros', async () => {
 		const result = await calculateFreeToolResult('carta-do-amor', {}, { uuid, now });
 		expect(result.draw).toBeDefined();
-		expect(result.sections.find((section) => section.id === 'card-context')?.body).toContain(
-			tarotCanon[result.draw!.cardId]!.relationship
-		);
+		expect(
+			`${result.summary} ${result.sections.find((section) => section.id === 'card-dynamic')?.body}`
+		).toBe(tarotApplications[result.draw!.cardId]!.love);
 		expect(result.facts[0]!.kind).toBe('drawn');
 		expect(result).not.toHaveProperty('binaryVerdict');
 		expect(result.limits.join(' ')).toContain('sentimentos');
@@ -241,7 +245,9 @@ describe('sorteio público independente dos produtos pagos', () => {
 		expect(first.draw).toEqual(second.draw);
 		expect(first.facts[1]!.value).not.toEqual(second.facts[1]!.value);
 		expect(first.draw?.name).toBe(tarotCanon[first.draw!.cardId]!.name);
-		expect(first.summary).toContain(tarotCanon[first.draw!.cardId]!.core);
+		expect(first.summary).toBe(
+			tarotApplications[first.draw!.cardId]!.question.split(/(?<=\.)\s/)[0]
+		);
 		expect(first).not.toHaveProperty('binaryVerdict');
 		expect(first).not.toHaveProperty('productId');
 		expect(first.limits.join(' ')).toContain('não calcula uma resposta binária');

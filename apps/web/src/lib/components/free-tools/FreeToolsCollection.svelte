@@ -249,20 +249,20 @@
 			margin-top: 1.2rem;
 		}
 		.tool-rail {
-			width: calc(100% - 1.25rem);
-			margin-left: 1.25rem;
-			padding-right: 1.25rem;
+			width: 100%;
+			margin-left: 0;
+			padding-right: 0;
 			gap: 1rem;
 		}
 		.tool-block {
-			flex-basis: calc(100% - 1.75rem);
+			flex-basis: 100%;
 		}
 		.tool-cover {
 			padding: 1.4rem;
 			min-height: 22rem;
 		}
 		.tool-body {
-			padding: 1.25rem;
+			padding: 1rem;
 		}
 	}
 </style>

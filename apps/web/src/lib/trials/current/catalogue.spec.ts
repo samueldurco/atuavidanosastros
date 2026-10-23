@@ -5,7 +5,8 @@ import { describe, expect, it } from 'vitest';
 import { offeredProductIds, type WorkflowInput, type DreamAtlasFactSource } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
 import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
-import { trialPdf } from '../pdf';
+import { pdfReferenceFacts, trialPdf } from '../pdf';
+import { localTarotArtwork } from '../pdf-artwork.test-helper';
 
 const directory = process.env.ATV_CURRENT_QA_DIR;
 const uuid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
@@ -128,17 +129,39 @@ describe('catalogue current interpretation integration', () => {
 			const unsupported = structuredClone(reading);
 			unsupported.interpretation!.conclusions[0]!.factIds = ['invented'];
 			expect(await approveTrialReading(input, calculation, unsupported)).toBeNull();
+			const saved: SavedTrial = {
+				id,
+				product_id: productId,
+				created_at: '2026-10-19T12:00:00Z',
+				input,
+				calculation,
+				reading,
+				approval: approval!
+			};
+			if (['synastry', 'couple-dossier'].includes(productId)) {
+				const originalFacts = JSON.stringify(calculation.facts);
+				const selected = new Set(reading.sections.flatMap((section) => section.factIds));
+				const references = pdfReferenceFacts(saved);
+				expect(references.length).toBeGreaterThan(0);
+				expect(references.length).toBeLessThan(calculation.facts.length);
+				expect(references.every((fact) => selected.has(fact.id))).toBe(true);
+				expect(references.some((fact) => fact.id.startsWith('cross-'))).toBe(true);
+				expect(references.every((fact) => !/(?:nenhum|sem) aspecto/i.test(fact.display))).toBe(
+					true
+				);
+				expect(references.every((fact) => !fact.display.includes('Precisão não certificada'))).toBe(
+					true
+				);
+				expect(reading.limits.some((limit) => /precisão.*não.*certificada/i.test(limit))).toBe(
+					true
+				);
+				expect(JSON.stringify(calculation.facts)).toBe(originalFacts);
+				expect(
+					calculation.facts.some((fact) => fact.display.includes('Precisão não certificada'))
+				).toBe(true);
+			}
 			if (directory) {
-				const saved: SavedTrial = {
-					id,
-					product_id: productId,
-					created_at: '2026-10-19T12:00:00Z',
-					input,
-					calculation,
-					reading,
-					approval: approval!
-				};
-				const pdf = await trialPdf(saved);
+				const pdf = await trialPdf(saved, localTarotArtwork);
 				const pages = (await PDFDocument.load(pdf)).getPageCount();
 				expect(pages).toBeGreaterThan(1);
 				await mkdir(directory, { recursive: true });

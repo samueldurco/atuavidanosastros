@@ -7,7 +7,7 @@ const lastPositionChapters: Record<string, string> = {
 	'tarot-peladan-cross': 'O centro da cruz',
 	'tarot-celtic-cross': 'Expectativa e continuidade não são a mesma coisa',
 	'tarot-aphrodite-temple': 'Como a tensão pode ganhar outra forma',
-	'tarot-astrological-mandala': 'A carta central articula as áreas'
+	'tarot-astrological-mandala': 'O fio que aproxima as áreas'
 };
 
 for (const width of [390, 1440])
@@ -18,19 +18,69 @@ for (const width of [390, 1440])
 			await expect(
 				page.getByRole('heading', {
 					name: productDefinitionFor(method.id)!.name,
+					level: 1,
 					exact: true
 				})
 			).toBeVisible();
-			const positions = page.getByRole('list', { name: 'Cartas e funções das posições' });
+			const positions = page
+				.getByRole('region', { name: 'Cartas da sua tiragem', exact: true })
+				.getByRole('list', { name: 'Cartas e posições', exact: true });
+			await expect(positions.getByRole('listitem')).toHaveCount(method.positions.length);
 			await expect(positions.getByRole('button')).toHaveCount(method.positions.length);
-			const last = positions.getByRole('button').last();
+			const artwork = positions.getByRole('img');
+			await expect(artwork).toHaveCount(method.positions.length);
+			await expect
+				.poll(() =>
+					artwork.evaluateAll((images) =>
+						images.every(
+							(image) =>
+								image instanceof HTMLImageElement &&
+								image.complete &&
+								image.naturalWidth > 0 &&
+								image.naturalHeight > 0
+						)
+					)
+				)
+				.toBe(true);
+			await artwork.evaluateAll(async (images) => {
+				await Promise.all(images.map((image) => (image as HTMLImageElement).decode()));
+			});
+			for (const card of await positions.getByRole('listitem').all()) {
+				const name = await card.locator('figcaption strong').innerText();
+				await expect(card.getByRole('img')).toHaveAttribute(
+					'alt',
+					`${name} — Tarot Rider–Waite–Smith`
+				);
+				await expect(card.getByRole('img')).toBeVisible();
+			}
+			expect(
+				await artwork.evaluateAll((images) =>
+					images.every((image) => {
+						const bounds = image.getBoundingClientRect();
+						const name = image.closest('figure')?.querySelector('figcaption strong');
+						return (
+							bounds.width >= 120 &&
+							bounds.height >= bounds.width * 1.5 &&
+							bounds.left >= 0 &&
+							bounds.right <= innerWidth &&
+							name !== null &&
+							name !== undefined &&
+							parseFloat(getComputedStyle(name).fontSize) >= 20
+						);
+					})
+				)
+			).toBe(true);
+			const lastCard = positions.getByRole('listitem').last();
+			const last = lastCard.getByRole('button', { name: 'Ler esta posição', exact: true });
 			await expect(last).toBeEnabled();
-			const cardName = (await last.locator('strong').innerText()).split(' · ')[1];
+			const cardName = await lastCard.locator('figcaption strong').innerText();
 			const lastChapter =
 				method.id === 'tarot-single-card'
 					? `1. Tema central — ${cardName}`
 					: lastPositionChapters[method.id];
-			await last.click();
+			await last.focus();
+			await expect(last).toBeFocused();
+			await last.press('Enter');
 			const chapter = page.getByRole('article', { name: 'Capítulo selecionado' });
 			await expect(chapter.getByRole('heading')).toHaveText(lastChapter);
 			await expect(chapter).toContainText(cardName);

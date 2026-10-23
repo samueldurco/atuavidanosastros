@@ -2,14 +2,13 @@
 	import type { SavedTrial } from '$lib/trials/reading';
 	import { buildChartScene, chartSceneSvg, type ChartOptions } from '$lib/trials/chart-engine-v2';
 	import { formatCareerCompassFactDisplay } from '$lib/career-compass-fact-presentation';
+	import AstrologicalChart from './AstrologicalChart.svelte';
 	let { saved, onselect }: { saved: SavedTrial; onselect: (id: string) => void } = $props();
 	let houses = $state(true),
 		degrees = $state(true),
 		aspects = $state<ChartOptions['aspects']>('major'),
-		zoom = $state(false),
 		selected = $state(''),
 		message = $state('');
-	let panel: HTMLDivElement;
 	let weekDay = $state(0);
 	let solarView = $state<ChartOptions['solarView']>('return');
 	const weekDays = $derived(
@@ -69,14 +68,6 @@
 			? display.replace(/(\d+\.\d{2})\d+(?=°)/g, '$1').replace(/ da candidata\b/g, '')
 			: display;
 	}
-	async function fullscreen() {
-		try {
-			await panel.requestFullscreen();
-		} catch {
-			message = 'Use o botão Ampliar para explorar o mapa.';
-			zoom = true;
-		}
-	}
 	async function download(format: 'svg' | 'png') {
 		let source = '',
 			output = '';
@@ -117,7 +108,7 @@
 	}
 </script>
 
-<div class="chart-panel" bind:this={panel}>
+<div class="chart-panel">
 	{#if saved.calculation.version === 'atv-private-solar-synthesis/4.0.0'}
 		<label
 			>Carta apresentada <select bind:value={solarView}
@@ -153,33 +144,21 @@
 			></label
 		>
 	</fieldset>
-	<div class="actions">
-		<button onclick={() => (zoom = !zoom)} aria-pressed={zoom}
-			>{zoom ? 'Ajustar à tela' : 'Ampliar'}</button
-		><button onclick={fullscreen}>Tela cheia</button>
-	</div>
 	{#if chart.error}<p role="status">{chart.error}</p>{:else}
-		<!-- svelte-ignore a11y_no_noninteractive_tabindex (Scrollable map needs keyboard focus.) -->
-		<div
-			class="viewport"
-			tabindex="0"
-			role="region"
-			aria-label="Mapa ampliável; use a rolagem quando ampliado"
-		>
-			<!-- The SVG is generated locally from validated numbers and escaped text. -->
-			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-			<div class:zoom>{@html chart.svg}</div>
-		</div>
+		<AstrologicalChart svg={chart.svg} title="Mapa desta leitura" />
 	{/if}
-	<div class="factors" aria-label="Selecione um fator para abrir o capítulo relacionado">
-		{#each factors as fact (fact.id)}<button
-				aria-pressed={selected === fact.id}
-				onclick={() => {
-					selected = fact.id;
-					onselect(fact.id);
-				}}>{factorDisplay(fact.display)}</button
-			>{/each}
-	</div>
+	<details class="map-factors">
+		<summary>Posições e capítulos relacionados</summary>
+		<div class="factors" aria-label="Selecione um fator para abrir o capítulo relacionado">
+			{#each factors as fact (fact.id)}<button
+					aria-pressed={selected === fact.id}
+					onclick={() => {
+						selected = fact.id;
+						onselect(fact.id);
+					}}>{factorDisplay(fact.display)}</button
+				>{/each}
+		</div>
+	</details>
 	{#if chart.svg}<div class="actions">
 			<button onclick={() => download('svg')}>Baixar SVG</button><button
 				onclick={() => download('png')}>Baixar PNG</button
@@ -190,25 +169,19 @@
 
 <style>
 	.chart-panel {
-		background: #fcf8ef;
-		color: #193549;
-		padding: 1rem;
-		border-radius: 1rem;
+		color: var(--atv-text-primary, #183746);
 		max-width: 100%;
 		min-width: 0;
 	}
-	.chart-panel:fullscreen {
-		overflow: auto;
-		padding: 1.5rem;
-	}
 	fieldset {
 		min-width: 0;
-		border: 1px solid #8b7256;
-		border-radius: 0.65rem;
+		border: 1px solid var(--atv-border, #c7bfac);
+		border-radius: 0.2rem;
 		display: flex;
 		gap: 1rem;
 		flex-wrap: wrap;
 		padding: 0.8rem;
+		margin: 1rem 0;
 	}
 	legend {
 		font-weight: 600;
@@ -225,9 +198,9 @@
 	button {
 		font: inherit;
 		color: inherit;
-		background: #fcf8ef;
-		border: 1px solid #8b7256;
-		border-radius: 0.5rem;
+		background: var(--atv-surface, #f6efdf);
+		border: 1px solid var(--atv-border, #c7bfac);
+		border-radius: 0.2rem;
 		min-height: 44px;
 		padding: 0.5rem 0.7rem;
 	}
@@ -239,13 +212,13 @@
 		max-width: 100%;
 	}
 	button[aria-pressed='true'] {
-		border: 2px solid #193549;
-		background: #e3edf0;
+		border-color: #174c69;
+		background: #174c6912;
 	}
 	button:focus-visible,
 	select:focus-visible,
 	input:focus-visible,
-	.viewport:focus-visible {
+	summary:focus-visible {
 		outline: 3px solid #31566a;
 		outline-offset: 3px;
 	}
@@ -255,20 +228,14 @@
 		flex-wrap: wrap;
 		margin: 0.8rem 0;
 	}
-	.viewport {
-		overflow: auto;
-		max-width: 100%;
-		border-radius: 0.7rem;
+	.map-factors {
+		padding-block: 0.9rem;
+		border-bottom: 1px solid var(--atv-border, #c7bfac);
+		font-size: 0.875rem;
 	}
-	.viewport :global(svg) {
-		display: block;
-		width: 100%;
-		height: auto;
-		min-width: 0;
-	}
-	.viewport .zoom {
-		width: 900px;
-		max-width: none;
+	summary {
+		font-weight: 600;
+		cursor: pointer;
 	}
 	.factors {
 		display: flex;
