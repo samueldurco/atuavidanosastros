@@ -308,8 +308,14 @@ function verifyEventsAndWindows(
             const p0 = p[cell]!,
               p1 = p0 + step(p[cell + 1]!, p0);
             for (const target of targets) {
-              const minTurn = Math.floor((Math.min(p0, p1) - target) / 360);
-              const maxTurn = Math.ceil((Math.max(p0, p1) - target) / 360);
+              // The same inclusive arc bounds as the search avoid testing
+              // turns outside the cell; the sign test still checks every root.
+              const minTurn = Math.ceil(
+                (Math.min(p0, p1) - target) / 360 - 4 * Number.EPSILON,
+              );
+              const maxTurn = Math.floor(
+                (Math.max(p0, p1) - target) / 360 + 4 * Number.EPSILON,
+              );
               for (let turn = minTurn; turn <= maxTurn; turn++) {
                 const root = target + turn * 360,
                   f0 = p0 - root,

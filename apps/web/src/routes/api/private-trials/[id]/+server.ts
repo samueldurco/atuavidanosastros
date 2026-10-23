@@ -5,6 +5,7 @@ import { privateTrial, trialIdentity, trialJson } from '$lib/server/private-tria
 import type { RequestHandler } from './$types';
 import { parseReaderState } from '$lib/trials/reader-state';
 import { canShareReading, shareTokenHash } from '$lib/trials/sharing';
+import { readingCheckIns } from '$lib/trials/check-ins';
 
 export const POST: RequestHandler = async (event) => {
 	const identity = (await trialIdentity(event.locals))!;
@@ -63,12 +64,7 @@ export const POST: RequestHandler = async (event) => {
 		);
 		if (result.error) error(503, 'Não foi possível salvar sua avaliação.');
 	} else if (body?.action === 'note') {
-		const steps =
-			saved.product_id === 'direction-journey'
-				? [0, 7, 14, 30]
-				: saved.product_id === 'tarot-journey'
-					? [0, 1, 7, 14]
-					: [0];
+		const steps = readingCheckIns(saved.product_id, saved.calculation.version);
 		if (
 			!steps.includes(body.step) ||
 			typeof body.text !== 'string' ||

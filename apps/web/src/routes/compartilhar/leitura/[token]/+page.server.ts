@@ -38,6 +38,7 @@ export const load: PageServerLoad = async ({ params, setHeaders, platform }) => 
 		.select('*')
 		.eq('owner_id', link.data.owner_id)
 		.eq('id', link.data.reading_id)
+		.is('archived_at', null)
 		.maybeSingle();
 	if (result.error) error(503, 'Não foi possível abrir a leitura compartilhada.');
 	const reading = result.data && sharedReading(result.data as SavedTrial);

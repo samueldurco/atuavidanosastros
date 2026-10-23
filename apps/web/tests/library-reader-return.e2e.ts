@@ -17,7 +17,7 @@ test('older and first-page cards produce bounded reader links', async ({ page })
 	).toHaveAttribute('href', '/biblioteca/00000000-0000-4000-8000-000000000006');
 });
 
-for (const reader of ['fluxo', 'leitor']) {
+for (const reader of ['fluxo', 'leitor', 'ferramenta']) {
 	test(`${reader}: preserves the cursor through reload and keyboard return`, async ({ page }) => {
 		await page.goto(`/biblioteca/_spec/${reader}?fromBefore=${cursor}`);
 		const back = page.getByRole('link', { name: 'Voltar à Biblioteca', exact: true });

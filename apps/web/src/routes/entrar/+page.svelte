@@ -4,6 +4,7 @@
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	let { data, form } = $props();
+	const loginError = $derived(form?.message ?? data.loginError);
 </script>
 
 <svelte:head
@@ -28,10 +29,10 @@
 				<form method="POST" action={`?/google&next=${encodeURIComponent(data.next)}`}>
 					<Button type="submit" disabled={!data.authConfigured}>Continuar com Google</Button>
 				</form>
-				{#if form?.message}<StatePanel
+				{#if loginError}<StatePanel
 						kind="error"
 						title="Não foi possível entrar"
-						description={form.message}
+						description={loginError}
 					/>{/if}{#if !data.authConfigured}<StatePanel
 						kind="info"
 						title="Acesso temporariamente indisponível"

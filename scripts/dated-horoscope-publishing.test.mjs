@@ -80,6 +80,7 @@ test("publisher requires exact successful dispatched CI including every required
   for (const change of [{ head_sha: "b".repeat(40) }, { event: "pull_request" }, { conclusion: "skipped" }, { path: "other.yml" }])
     assert.throws(() => assertSuccessfulRun({ ...run, ...change }, jobs, sha));
   assert.throws(() => assertSuccessfulRun(run, jobs.slice(1), sha));
+  assert.throws(() => assertSuccessfulRun(run, jobs.filter((job) => job.name !== "user-area"), sha), /user-area/);
   assert.throws(() => assertSuccessfulRun(run, [...jobs, jobs[0]], sha));
   assert.throws(() => assertSuccessfulRun(run, jobs.map((j, i) => i ? j : { ...j, conclusion: "skipped" }), sha));
 });

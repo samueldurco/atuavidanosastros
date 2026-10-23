@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import { admitBatch } from "./admit-dated-horoscope.mjs";
 import { repoFile } from "./dated-horoscope-authority.mjs";
-export const REQUIRED_JOBS = ["dispatch-guard", "quality", "accessibility", "secrets", "current-readings", "sbom"];
+export const REQUIRED_JOBS = ["dispatch-guard", "quality", "accessibility", "secrets", "current-readings", "user-area", "sbom"];
 export const INDEX_PATH = "apps/web/src/lib/server/editorial-release/dated-index.json";
 const ASSET_PATH = /^apps\/web\/static\/_editorial\/dated\/[a-f0-9]{64}\.json$/;
 export function assertPublicationFiles(files) {

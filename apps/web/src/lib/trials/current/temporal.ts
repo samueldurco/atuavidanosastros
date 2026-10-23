@@ -313,7 +313,7 @@ function composeWeek(input: WorkflowInput, calculation: CalculationSnapshot): Tr
 			relation: 'Persistência observada na grade horária, sem extrapolação de duração contínua.'
 		};
 		b.add(
-			`${w.observedHours >= 120 ? 'O que permanece em pauta' : 'Uma mudança de acento'} — ${bodyNames[c.transit]} e ${bodyNames[c.natal]}`,
+			`${w.observedHours >= 120 ? 'O que permanece em pauta' : 'Uma mudança de acento'} — ${bodyNames[c.transit]} em ${aspectNames[c.aspect]} com ${bodyNames[c.natal]}`,
 			`${meaning.text}\n\n${timing}`,
 			meaning.factIds,
 			[meaning, timingMeaning]

@@ -13,6 +13,7 @@
 >
 {#if data.state === 'free-tool'}<FreeToolResultReader
 		result={data.result}
+		libraryBefore={data.libraryBefore}
 	/>{:else if data.state === 'workflow'}<ProductRunReader
 		{data}
 		libraryBefore={data.libraryBefore}
