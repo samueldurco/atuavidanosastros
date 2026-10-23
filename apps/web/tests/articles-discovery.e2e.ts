@@ -9,8 +9,7 @@ test.beforeEach(async ({ page }) => {
 
 for (const width of [390, 1440]) {
 	test(`encontrar os conteúdos publicados pelo menu, assunto e retorno em ${width}px`, async ({
-		page,
-		request
+		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/');
@@ -49,8 +48,6 @@ for (const width of [390, 1440]) {
 				.locator('h3 a')
 				.evaluateAll((links) => links.map((link) => link.getAttribute('href')));
 			expect(destinations.sort()).toEqual([...expectedTopicPaths[item.id]].sort());
-			for (const path of expectedTopicPaths[item.id])
-				expect((await request.get(path)).status(), path).toBe(200);
 			await cards.first().getByRole('heading', { level: 3 }).getByRole('link').click();
 			const breadcrumb = page.getByRole('navigation', { name: 'Caminho do artigo' });
 			await expect(
@@ -71,6 +68,28 @@ for (const width of [390, 1440]) {
 	});
 }
 
+test('todos os destinos dos assuntos respondem sem repetir a prova por viewport', async ({
+	request
+}) => {
+	test.setTimeout(120_000);
+	const destinations = [
+		...new Set(interestNavigation.flatMap((item) => expectedTopicPaths[item.id]))
+	];
+	let nextDestination = 0;
+	await Promise.all(
+		Array.from({ length: Math.min(3, destinations.length) }, async () => {
+			while (nextDestination < destinations.length) {
+				const path = destinations[nextDestination++];
+				const response = await request.get(path, { timeout: 15_000 });
+				try {
+					expect(response.status(), path).toBe(200);
+				} finally {
+					await response.dispose();
+				}
+			}
+		})
+	);
+});
 test('a lista completa e seus destinos estão no HTML servido, sem depender de JavaScript', async ({
 	request
 }) => {
