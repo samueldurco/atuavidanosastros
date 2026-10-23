@@ -4,6 +4,7 @@
 	import { trialResponse } from '$lib/trials/response';
 	import { privateFormats } from '$lib/trials/experience';
 	import { latestReadingVersion } from '$lib/trials/versions';
+	import { readingCheckIns } from '$lib/trials/check-ins';
 	import ReadingDirectionJourney from '$lib/components/ReadingDirectionJourney.svelte';
 	import { DIRECTION_VERSION } from '$lib/trials/reconstruction/direction-facts';
 	import ReadingExperience from '$lib/components/ReadingExperience.svelte';
@@ -26,15 +27,7 @@
 		status = $state(''),
 		busy = $state(false),
 		speaking = $state(false);
-	const checkIns = $derived(
-		data.saved.calculation.version === 'atv-private-life-atlas/4.0.0'
-			? [0, 7, 14, 21, 30]
-			: data.saved.product_id === 'direction-journey'
-				? [0, 7, 14, 30]
-				: data.saved.product_id === 'tarot-journey'
-					? [0, 1, 7, 14]
-					: [0]
-	);
+	const checkIns = $derived(readingCheckIns(data.saved.product_id, data.saved.calculation.version));
 	const reading = $derived(data.saved.reading);
 	const careerCompass = $derived(data.saved.product_id === 'career-compass');
 	const formats = $derived(privateFormats(data.saved.product_id, data.product.delivery));

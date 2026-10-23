@@ -7,7 +7,14 @@ export const load: PageServerLoad = async ({ parent, url }) => {
 	const next = authReturnPath(url.searchParams.get('next'));
 	const { user } = await parent();
 	if (user) redirect(303, next);
-	return { next };
+	const issue = url.searchParams.get('erro');
+	const loginError =
+		issue === 'oauth'
+			? 'Não foi possível concluir o acesso com o Google. Tente entrar novamente.'
+			: issue === 'confirmacao'
+				? 'Não foi possível confirmar o link de acesso. Tente entrar com o Google.'
+				: null;
+	return { next, loginError };
 };
 
 export const actions: Actions = {

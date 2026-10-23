@@ -2,9 +2,12 @@
 	import type { FreeToolResult } from '$lib/free-tools';
 	import { freeToolReadingFacts } from '$lib/free-tool-result-presentation';
 	import { freeToolById } from '$lib/data/free-tools';
+	import { libraryPageHref } from '$lib/library-page';
 	import AstrologicalChart from './AstrologicalChart.svelte';
 	import TarotCard from './TarotCard.svelte';
-	let { result }: { result: FreeToolResult } = $props();
+	let { result, libraryBefore = null }: { result: FreeToolResult; libraryBefore?: string | null } =
+		$props();
+	const backHref = $derived(libraryPageHref(libraryBefore));
 	const readingFacts = $derived(freeToolReadingFacts(result));
 	const date = (value: string) =>
 		new Date(value).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' });
@@ -12,7 +15,11 @@
 
 <section class="section">
 	<div class="container reader">
-		<a href="/biblioteca">← Biblioteca</a>
+		<nav class="breadcrumb" aria-label="Caminho do resultado">
+			<a href={backHref}>Biblioteca</a><span aria-hidden="true">/</span><span aria-current="page"
+				>Resultado salvo</span
+			>
+		</nav>
 		<p class="eyebrow">Resultado gratuito salvo · {date(result.createdAt)}</p>
 		<h1 class="h1">{result.title}</h1>
 		<p class="lead">{result.summary}</p>
@@ -46,6 +53,7 @@
 		<a class="btn btn-primary" href={freeToolById(result.tool)?.href ?? '/ferramentas'}
 			>Voltar à ferramenta</a
 		>
+		<a class="library-return" href={backHref}>Voltar à Biblioteca</a>
 	</div>
 </section>
 
@@ -53,6 +61,17 @@
 	.reader {
 		max-width: 48rem;
 		min-width: 0;
+	}
+	.breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1.25rem;
+		font-size: 0.875rem;
+	}
+	.library-return {
+		display: inline-block;
+		margin: 1rem;
 	}
 	.lead {
 		font: 400 1.25rem/1.65 var(--atv-font-display);

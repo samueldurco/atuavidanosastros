@@ -4,6 +4,7 @@ import dataManifest from './data-manifest.json' with { type: 'json' };
 import { validateCalculationInput, type CalculationInput } from './input.ts';
 import { bodies, type CelestialBody } from './bodies.ts';
 import { engineContract } from './contract.ts';
+import { RequestCachedCaelusEngine } from './ecliptic-request-cache.ts';
 export { engineContract } from './contract.ts';
 export { validateCalculationInput, type CalculationInput } from './input.ts';
 export { bodies, type CelestialBody } from './bodies.ts';
@@ -60,8 +61,14 @@ export class CaelusHouseCalculator implements HouseCalculator {
 export class CaelusEphemerisProvider implements EphemerisProvider {
   readonly name = 'caelus';
   readonly version = '0.24.1';
-  private readonly engine = new Engine(embeddedData);
+  private readonly engine: Engine;
   private readonly houseCalculator = new CaelusHouseCalculator();
+
+  constructor(options: { requestCache?: true } = {}) {
+    this.engine = options.requestCache
+      ? new RequestCachedCaelusEngine(embeddedData)
+      : new Engine(embeddedData);
+  }
 
   async calculate(input: CalculationInput): Promise<NatalChart> {
     const time = validateCalculationInput(input);

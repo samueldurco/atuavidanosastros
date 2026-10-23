@@ -2,7 +2,7 @@
 	import { productCatalog } from '@atv/domain';
 	import type { TrialLibraryData } from '$lib/trials/library';
 	import { experienceFor } from '$lib/trials/experience';
-	import { CONTENT_VERSION } from '$lib/trials/versions';
+	import { latestReadingVersion } from '$lib/trials/versions';
 	import { editorialTopicPaths } from '$lib/data/editorial-topics';
 	import Button from './ui/Button.svelte';
 	import MvpProductArt from './MvpProductArt.svelte';
@@ -61,7 +61,9 @@
 						>
 					</a>
 					<p>{experience.benefit}</p>
-					{#if reading.version && reading.version !== CONTENT_VERSION}<p class="previous">
+					{#if reading.version && reading.version !== latestReadingVersion(reading.product_id)}<p
+							class="previous"
+						>
 							Edição anterior preservada. Você pode gerar uma nova edição com seus dados.
 						</p>{/if}
 					<div class="edition-actions">

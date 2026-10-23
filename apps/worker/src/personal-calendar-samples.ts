@@ -145,13 +145,14 @@ export function assertCalendarSamples(
     value.provenance.temporal?.utcInstant !== new Date(first).toISOString() ||
     value.source !==
       `${value.provenance.provider}/${value.provenance.providerVersion};${value.provenance.algorithmVersion};${version}` ||
-    JSON.stringify(value.inputTemplate) !==
-      JSON.stringify({
-        timezone: "UTC",
-        latitude: 0,
-        longitude: 0,
-        locationSource: "internal-geocentric-reference/no-local-houses",
-      }) ||
+    // JSONB preserves values, not insertion order. Validate the exact contract structurally.
+    !value.inputTemplate ||
+    Object.keys(value.inputTemplate).length !== 4 ||
+    value.inputTemplate.timezone !== "UTC" ||
+    value.inputTemplate.latitude !== 0 ||
+    value.inputTemplate.longitude !== 0 ||
+    value.inputTemplate.locationSource !==
+      "internal-geocentric-reference/no-local-houses" ||
     !Array.isArray(value.rows) ||
     value.rows.length !== count ||
     value.rows.some(

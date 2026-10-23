@@ -237,8 +237,15 @@ export async function searchWeekTransits(
             const p0 = phases[cell]!,
               p1 = p0 + step(phases[cell + 1]!, p0);
             for (const target of targets) {
-              const minTurn = Math.floor((Math.min(p0, p1) - target) / 360);
-              const maxTurn = Math.ceil((Math.max(p0, p1) - target) / 360);
+              // Only a target inside this unwrapped hourly arc can cross it.
+              // Keep a small outward rounding margin; the original sign test
+              // below remains authoritative for equality and floating points.
+              const minTurn = Math.ceil(
+                (Math.min(p0, p1) - target) / 360 - 4 * Number.EPSILON,
+              );
+              const maxTurn = Math.floor(
+                (Math.max(p0, p1) - target) / 360 + 4 * Number.EPSILON,
+              );
               for (let turn = minTurn; turn <= maxTurn; turn++) {
                 const unwrappedTarget = target + turn * 360;
                 let left = start + cell * hour,

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { CalculationSnapshot, WorkflowInput } from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
+import { approveTrialReading } from '../reading';
 import type { Position } from '../reconstruction/fact-graph';
 import {
 	composeCurrentTemporal,
@@ -155,6 +156,18 @@ describe('current temporal interpretation: semantic dependence', () => {
 });
 
 describe('current temporal interpretation: real deterministic projections', () => {
+	it('distinct weekly aspects receive distinct titles and pass the complete approval gate', async () => {
+		const input = { ...fixture('week-reading'), targetDate: '2026-10-08', context: undefined },
+			calculation = await sample(input),
+			reading = composeCurrentTemporal(input, calculation)!;
+		const moonSun = reading.sections.filter((s) => /Lua em .+ com Sol$/.test(s.title));
+		expect(moonSun).toHaveLength(3);
+		expect(new Set(reading.sections.map((s) => s.title)).size).toBe(reading.sections.length);
+		expect(await approveTrialReading(input, calculation, reading)).not.toBeNull();
+		const duplicated = structuredClone(reading);
+		duplicated.sections[1].title = duplicated.sections[0].title;
+		expect(await approveTrialReading(input, calculation, duplicated)).toBeNull();
+	}, 30000);
 	for (const id of [
 		'date-reading',
 		'week-reading',

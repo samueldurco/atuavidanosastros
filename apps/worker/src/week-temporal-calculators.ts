@@ -27,7 +27,7 @@ import { searchWeekTransits } from "./week-temporal-search.ts";
 /** Independent internal opt-in. The policy and each request are captured before provider work. */
 export function createWeekTemporalCalculators(
   policy: AspectPolicy,
-  provider: EphemerisProvider = new CaelusEphemerisProvider(),
+  provider?: EphemerisProvider,
 ): Readonly<Record<string, ProductCalculator>> {
   const capturedPolicy = calculateCrossAspects([], [], policy).policy;
   const calculate: ProductCalculator = async (value, { signal }) => {
@@ -64,12 +64,15 @@ export function createWeekTemporalCalculators(
     } catch {
       throw new ProcessingError("input_invalid");
     }
-    const natal = await calculateValidatedChart(provider, birth, signal);
+    // One bounded exact cache per generation, never shared across requests.
+    const requestProvider =
+      provider ?? new CaelusEphemerisProvider({ requestCache: true });
+    const natal = await calculateValidatedChart(requestProvider, birth, signal);
     const sourceCharts = new Map<string, NatalChart>();
     const evaluate = async (utcInstant: string) => {
       signal.throwIfAborted();
       const chart = await calculateValidatedChart(
-        provider,
+        requestProvider,
         {
           localDateTime: utcInstant.slice(0, -1),
           utcInstant,
