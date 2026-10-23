@@ -44,7 +44,27 @@ O script exige HEAD correspondente e Git limpo, constrói ambos os bundles com o
 3. Verificar DDL/RLS/privilégios antes de conceder acesso: `owner_evaluation` default false; nenhuma conta habilitada automaticamente; allowlists incluem legado e novos IDs; `atv_plus_test_cycles`, `atv_plus_test_uses` e `atv_trial_dream_cycles` têm RLS; `authenticated` não possui INSERT/UPDATE/DELETE direto nas tabelas protegidas; RPCs públicas são restritas a authenticated; helper privado do Diário não é executável por anon/authenticated/service_role; triggers e FKs permanecem ativos. Conferir os nomes exatos na migration. Rodar advisors e revisar o delta. Não criar leituras fictícias no banco real para validar.
 4. Publicar `atv-trial-runtime` com `deploy_edge_function` usando o payload congelado e `verify_jwt:true`; depois `atv-free-tools-runtime` com `verify_jwt:false`, preservando a configuração existente da função pública. Reconsultar status ACTIVE, versão e JWT; inspecionar logs de erro. `ATV_TRIAL_RUNTIME_KEY`, sua chave de rotação e `FREE_TOOL_RECEIPT_KEY` permanecem como bindings existentes, nunca dentro dos arquivos enviados. Não usar deploy sem slug nem `--prune`.
 5. Conceder a avaliação nominal por operação separada: em uma transação, definir `atvna.release_owner_id` via `set_config(...,true)` com o UUID obtido/confirmado privadamente e executar `supabase/operations/architecture-owner-evaluation.sql`. Usar `DO ... PERFORM set_config(...)` para não retornar o valor. O template falha sem dono verificado, exige grant existente/ativo e conta Google confirmada, recusa outra conta já habilitada e altera exatamente uma linha. Não criar grants novos, estender validade, reativar revogação ou incluir identidade em fixtures. Conferir apenas contagens e booleans.
-6. Comunicar ao executor principal as versões/hashes hospedados para publicar Pages pelo processo vigente. Após o deployment, conferir `/api/health`, `/api/private-trials/health`, proteção de acesso anônimo e ferramenta gratuita real. A avaliação completa exige sessão real do proprietário: gerar, salvar, reabrir e baixar uma leitura; exercitar os três planos e limite excedido; Diário cria período real de 30 dias e recusa síntese antecipada. Fixtures locais não comprovam esse percurso. Não simular login do proprietário por SQL.
+6. Comunicar ao executor principal as versões/hashes hospedados para publicar Pages pelo processo vigente, executando o preflight e o postflight versionados abaixo. Após o deployment, conferir também `/api/health` e uma ferramenta gratuita real. A avaliação completa exige sessão real do proprietário: gerar, salvar, reabrir e baixar uma leitura; exercitar os três planos e limite excedido; Diário cria período real de 30 dias e recusa síntese antecipada. Fixtures locais não comprovam esse percurso. Não simular login do proprietário por SQL.
+
+## Gate de publicação Pages
+
+Após os gates e CI do SHA final, executar na raiz do candidato com o Wrangler autenticado:
+
+```powershell
+pnpm release:pages:preflight
+```
+
+O preflight é somente leitura. Confere o projeto e a URL Supabase em `apps/web/wrangler.jsonc`, o ambiente de produção e os gates de gasto zero e features desligadas. Com o Wrangler fixado em 4.129.1, consulta `pages secret list --env production`: a listagem só inclui bindings `secret_text`. Exige uma das chaves públicas de autenticação (`PUBLIC_SUPABASE_ANON_KEY` ou `PUBLIC_SUPABASE_PUBLISHABLE_KEY`), mais os bindings de serviço, runtime e recibo. A chave pública deve permanecer como secret de produção no Pages; não adicioná-la ao mapa `vars` nem usar opções de preservação de variáveis específicas de Workers como substituto. O relatório apresenta apenas nomes de checks, booleans e status; não imprime valores nem a saída do provedor.
+
+Com o preflight aprovado, publicar pelo processo Pages já autorizado e registrar o SHA/deployment. Em seguida executar:
+
+```powershell
+pnpm release:pages:postflight
+```
+
+O postflight exige HTTP 200 e os indicadores de configuração/autenticação em `/api/private-trials/health`; exige HTTP 401 JSON dos POSTs anônimos de salvar ferramenta e iniciar Diário. Não envia cookies, não segue redirecionamentos nem repete chamadas. O preflight tem limite de 30 segundos para o CLI e cada sonda HTTP tem limite de 15 segundos. Ambos os comandos precisam terminar com `pass: true` e código zero; uma falha interrompe a liberação até diagnóstico e correção. Os comandos não fazem deploy, não alteram grants e não substituem os demais gates.
+
+A presença de um secret não comprova seu valor nem o pareamento da chave com a URL. Health e proteção anônima também não comprovam salvar/reabrir com sessão. A prova hospedada separada com conta sintética isolada, grant de avaliação autorizado e limpeza verificada continua necessária; seu acesso de avaliação não representa direito comercial Hotmart. A sessão pessoal do proprietário continua sendo validada pelo próprio proprietário, sem impersonação por SQL.
 
 CLI alternativo, **somente se autenticado por mecanismo dedicado**, conforme `supabase functions deploy --help` e [documentação oficial](https://supabase.com/docs/guides/functions/deploy):
 

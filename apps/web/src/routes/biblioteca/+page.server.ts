@@ -22,9 +22,16 @@ export const load: PageServerLoad = async ({ parent, locals, url, setHeaders }) 
 			trialLibrary: null
 		} satisfies LibraryPageData & { trialLibrary: null };
 	const cursors = url.searchParams.getAll('before');
+	const trialCursors = url.searchParams.getAll('trialBefore');
 	const [library, trialLibrary] = await Promise.all([
 		readLibraryPage(locals.supabase, user.id, cursors.length > 1 ? '' : (cursors[0] ?? null)),
-		trialAccess ? readTrialLibrary(locals.supabase, user.id) : null
+		trialAccess
+			? readTrialLibrary(
+					locals.supabase,
+					user.id,
+					trialCursors.length > 1 ? '' : (trialCursors[0] ?? null)
+				)
+			: null
 	]);
 	return { ...library, trialLibrary };
 };

@@ -40,7 +40,7 @@ A restrição atual é concreta: sem credencial de publicação já disponível 
 
 O bootstrap verifica repositório, workflow, evento, SHA, branch, tentativa, job e artefato recente. Baixa apenas o pacote público assinado; a chave privada permanece no environment externo. O token da autenticação do `gh` permanece na memória do processo. O diretório de saída por run/tentativa precisa ser novo.
 
-O mesmo publicador usado no job futuro verifica assinaturas e reprodução, admite o lote, cria um branch somente com o índice e até três arquivos estáticos imutáveis, abre PR e dispara CI explicitamente no SHA exato. Exige sucesso de `dispatch-guard`, `quality`, `accessibility`, `secrets`, `current-readings` e `sbom`. Antes do merge, verifica `main`, SHA do PR, estado de merge e lista fechada dos arquivos permitidos. Não envia aprovação humana, bypass ou opção administrativa.
+O mesmo publicador usado no job futuro verifica assinaturas e reprodução, admite o lote, cria um branch somente com o índice e até três arquivos estáticos imutáveis, abre PR e dispara CI explicitamente no SHA exato. Exige sucesso de `dispatch-guard`, `quality`, `accessibility`, `secrets`, `current-readings`, `user-area` e `sbom`. Antes do merge, verifica `main`, SHA do PR, estado de merge e lista fechada dos arquivos permitidos. Não envia aprovação humana, bypass ou opção administrativa.
 
 O publicador informa a URL do PR. O executor deve anexá-la à tarefa e guardar os links de CI e merge. A integração Git do Cloudflare é verificada pelo resultado hospedado, sem presumir que um merge disparou publicação.
 
@@ -65,6 +65,8 @@ Falha editorial, factual, de assinatura, CI, admissão ou prazo impede nova publ
 ## Evidências e custo
 
 O índice assinado compacto permanece no Worker; pacotes completos ficam em assets estáticos separados por intervalo e são carregados quando necessários. Evidências compartilhadas são deduplicadas por digest dentro do arquivo. Isso evita incorporar todo o histórico ao bundle, sem apagar edições antigas.
+
+Os arquivos estáticos assinados usam LF por regra específica de `.gitattributes`, inclusive em checkouts Windows. O build confere o SHA-256 dos bytes de cada arquivo contra seu índice antes da compilação e novamente na pasta final de publicação. Alteração de quebra de linha, arquivo ausente ou cópia divergente bloqueia o build; o runtime continua verificando os bytes originais, sem normalização.
 
 Os testes locais usam exclusivamente chaves efêmeras sintéticas. O inventário e os testes não comprovam capacidade de publicação remota. Arquivos de prova local estão em `test-results/dated-horoscope-*.log`; execução real deve acrescentar IDs e resultados de assinatura, CI e hospedagem. Nenhum recurso pago ou novo segredo faz parte deste fluxo.
 

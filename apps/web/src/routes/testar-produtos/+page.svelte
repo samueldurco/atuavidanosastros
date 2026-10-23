@@ -52,20 +52,24 @@
 			</p>{/if}
 		<section aria-labelledby="free-products">
 			<h2 id="free-products">Escolha seu próximo produto</h2>
-			<p>
-				{approvedProducts} de {products.length} produtos aprovados por você. Uma rejeição fica registrada
-				para orientar a revisão.
-			</p>
+			{#if data.feedbackUnavailable}<p role="status">
+					Seus pareceres não puderam ser consultados agora. Recarregue a página para recuperá-los.
+				</p>{:else}<p>
+					{approvedProducts} de {products.length} produtos aprovados por você. Uma rejeição fica registrada
+					para orientar a revisão.
+				</p>{/if}
 			<div class="products">
 				{#each products as product (product.id)}
 					{@const feedback = data.feedback.find((f) => f.product_id === product.id)}
 					<Card
 						title={product.name}
-						eyebrow={feedback
-							? feedback.decision === 'approved'
-								? 'Aprovado por você'
-								: 'Revisão solicitada'
-							: 'Aguardando seu teste'}
+						eyebrow={data.feedbackUnavailable
+							? 'Parecer indisponível'
+							: feedback
+								? feedback.decision === 'approved'
+									? 'Aprovado por você'
+									: 'Revisão solicitada'
+								: 'Aguardando seu teste'}
 						variant="product"
 					>
 						<p><a href={`/testar-produtos/${product.id}`}>Testar {product.name}</a></p>
@@ -79,7 +83,11 @@
 			</div>
 		</section>
 		<TrialLibrary
-			library={{ readings: data.readings, unavailable: Boolean(data.libraryUnavailable) }}
+			library={data.trialLibrary ?? {
+				readings: data.readings,
+				unavailable: Boolean(data.libraryUnavailable)
+			}}
+			paginationPath="/testar-produtos"
 		/>
 	{:else}
 		<Card
