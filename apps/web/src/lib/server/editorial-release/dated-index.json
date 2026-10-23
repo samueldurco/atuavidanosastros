@@ -1653,6 +1653,557 @@
 				"acceptedAt": "2026-10-20T15:05:56.584Z",
 				"gateEvidenceDigest": "94038b3d3feaa3b81b547e0e8a7a4ed376ae8448f03ce06fe886ffffa6c87fbc"
 			}
+		},
+		{
+			"scope": {
+				"schemaVersion": "atv-dated-horoscope-preparation-v1",
+				"status": "PREPARED_NOT_REVIEWED_NOT_SIGNED_NOT_ADMITTED",
+				"policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+				"methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"period": "daily",
+				"startDate": "2026-10-23",
+				"endDateExclusive": "2026-10-24",
+				"frozenAt": "2026-10-23T23:17:36.785Z",
+				"authoringAgent": "atvna-deterministic-horoscope-composer",
+				"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+				"documentDigests": {
+					"horoscopo-aries-daily-2026-10-23": "ed0cc06b5d50dc02ab3a8a7bb93d43edf5b57c9603175a025ec8b8932f2602c2",
+					"horoscopo-touro-daily-2026-10-23": "41eec54425583a9a79029a0e4e2315f4ea4472e479cfd585c69cb798932bf7f9",
+					"horoscopo-gemeos-daily-2026-10-23": "48e86245e62f583f49001dc4fbdbe08d3e092bae729da52b00ba9badc7c8627a",
+					"horoscopo-cancer-daily-2026-10-23": "ec68b718ccb3ba0d2bb3b40575496f7bc7221a31b8dffefdea3244ec4fd651fa",
+					"horoscopo-leao-daily-2026-10-23": "06f796abf9bcd4e2845e37e73cdfc97cd9a6ba7a54920188c0e0b67a5b01d1fe",
+					"horoscopo-virgem-daily-2026-10-23": "65e33bcc4ced382f4a68090a83110c5c5bd4f5db0c0d91b6287703812358d21f",
+					"horoscopo-libra-daily-2026-10-23": "5af8d525c941495cb17e03d1ea67fa66abe0fddfaf7b5d6108c3886c991ae04a",
+					"horoscopo-escorpiao-daily-2026-10-23": "af337bfca730e2c2eb6743a3aa5bcb706925ca62606b22419d4c7ce53b2974fe",
+					"horoscopo-sagitario-daily-2026-10-23": "3bd44802d22c52e39a57aa1c3e0b3dd4f039401db79f6dcd019cbb7a3f22d9b2",
+					"horoscopo-capricornio-daily-2026-10-23": "e32eea818c56f29330c98d1c104e7753700f59a826512e710030ae172e9c1f2b",
+					"horoscopo-aquario-daily-2026-10-23": "6618d1dc55451462254e4e86772dfb0040865fda2d4933fc9fcbec141bef9b4f",
+					"horoscopo-peixes-daily-2026-10-23": "04a7e80264163872babdd30a50c9ddadf60ec9b9ca160a100c5dfda761389357"
+				},
+				"claimsDigests": {
+					"horoscopo-aries-daily-2026-10-23": "2977ebe24b70e55f3d3d6f8ead0d57aee43a40aa35c991dc3cd365b2308db369",
+					"horoscopo-touro-daily-2026-10-23": "3066fb8bd57a1888ac54f23a3d95a90001c7610dc592cdc3d2d9ba162878f184",
+					"horoscopo-gemeos-daily-2026-10-23": "5b95453be79e0b9330c9ac9626f0e64165ef608646c8809d10f7167164a88073",
+					"horoscopo-cancer-daily-2026-10-23": "8106d250493b22dfa6990197988fd9779f61847d5a8045bcc08139e19794c255",
+					"horoscopo-leao-daily-2026-10-23": "9133a975a93eb3943c7803d70fd8745c2765e14226a4b3b0b32fabb42882be29",
+					"horoscopo-virgem-daily-2026-10-23": "19b8723d267dcde6b0f83beb4d0a9fac2960b793fb997e9bdd016aacfef24284",
+					"horoscopo-libra-daily-2026-10-23": "b18ac8ac4a5580aa07377b77c3233b457579d4bb83d9abede64e8b06cf2e7f57",
+					"horoscopo-escorpiao-daily-2026-10-23": "a25555896a46be2880491878ed095e39aeab9988edc17961308dac9bee471b0f",
+					"horoscopo-sagitario-daily-2026-10-23": "2c69b8c48f0e17593802a12c399b217af6c8d9dbcd0f7fdebda1e6032464a1f9",
+					"horoscopo-capricornio-daily-2026-10-23": "304961e9d017ba35f513336bdfe37f5cde8eaa7a680ba6f7d81793c6b98d578b",
+					"horoscopo-aquario-daily-2026-10-23": "98d815772d9b3b6ff2ddef43887d4333a59e149e5e4de60bd1f6601fdd938d3b",
+					"horoscopo-peixes-daily-2026-10-23": "b34f17aa380d9da50fd55f897afd2c63856bcacbf0c37257c848846ff6bc1089"
+				},
+				"composition": {
+					"corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+					"corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+					"algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+					"reviewMode": "reviewed-corpus-and-runtime-verification",
+					"algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+				},
+				"algorithmManifest": {
+					"scripts/lib/public-horoscope-compose.mjs": "4bda72201716a04b9de587676f2f8c505536659b0b73ae451ed2cd374f9075d2",
+					"scripts/prepare-dated-horoscope.mjs": "b96275e379de7be9dae058db4e0e5aed4065369ba90379804c2ae1626417b088"
+				},
+				"evidence": [
+					{
+						"path": "facts.json",
+						"sha256": "5e513a6197cababbc9b882b35ca0da5678ff2fc6d59c704402cc95e4fa195e45"
+					},
+					{
+						"path": "method.md",
+						"sha256": "5f54d7ce13c1d3e261e4a6f33e46eccffa23ddf29ba2f998e7413e707abbb463"
+					},
+					{
+						"path": "authored-copy.json",
+						"sha256": "372840a78ad9a88e92f2d5f86598353746e363ca06b36f37cc0e8e82268ea64a"
+					}
+				],
+				"remainingGates": [
+					"independent-corpus-and-algorithm-review",
+					"real-external-signature",
+					"admission",
+					"visual-a11y-ci",
+					"hosted-verification"
+				]
+			},
+			"grant": {
+				"protocol": "atv-dated-horoscope-grant-v1",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+				"methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+				"reviewMode": "reviewed-corpus-and-runtime-verification",
+				"composition": {
+					"corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+					"corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+					"algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+					"reviewMode": "reviewed-corpus-and-runtime-verification",
+					"algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+				},
+				"ownerDecisionDigest": "7986c686bbcdcb3f69261f6e3d8c29f4941f4f218a0b7d8fad76f9a2acc148f5",
+				"corpusReviewDigest": "8c1296f820abecbd7de3e0b45e3a62cf93368a9ca017a0be4ca3c1d53a960001",
+				"allowedPeriods": ["daily", "weekly", "monthly"],
+				"validFrom": "2026-10-20T10:55:15.000Z",
+				"validUntil": "2027-01-04T16:00:39.930Z",
+				"coverageFrom": "2026-10-01",
+				"signature": "wz/sJAU4rJrgLNQG6afSZHI+lQEiCOBNOM78zybDsCHyiogTI4rNmPhFtzTTiv6jRlpNNaJHK85lh7w1hsreBw=="
+			},
+			"index": {
+				"protocol": "atv-dated-horoscope-index-v1",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"scopeDigest": "8f1bab8f024141515ea52489e51b7d0a4a326f35db5d3eaf5967bb18648f7895",
+				"grantDigest": "d3934ca70214db5057a08c411fbecf41dff815b52edf8e0637d19083b6fb7c28",
+				"signedAt": "2026-10-23T23:17:37.996Z",
+				"documents": [
+					{
+						"id": "horoscopo-aries-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/aries/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Áries: Dividir sem perder a clareza e participar sem perder sua voz",
+						"description": "Uma leitura simbólica para Áries sobre a partilha e os compromissos que envolvem confiança e suas relações com os grupos, as amizades e os projetos em comum.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-touro-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/touro/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Touro: Negociar sem desaparecer do encontro e assumir uma direção que faça sentido",
+						"description": "Uma leitura simbólica para Touro sobre as parcerias e os acordos a dois e suas relações com a direção profissional e as responsabilidades públicas.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-gemeos-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/gemeos/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Gêmeos: Dar uma forma possível à rotina e ampliar a visão sem perder o chão",
+						"description": "Uma leitura simbólica para Gêmeos sobre o trabalho cotidiano e os cuidados de rotina e suas relações com os estudos, as convicções e os projetos de expansão.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-cancer-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/cancer/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Câncer: Abrir espaço para criar e gostar e dividir sem perder a clareza",
+						"description": "Uma leitura simbólica para Câncer sobre a criação, o prazer e a expressão pessoal e suas relações com a partilha e os compromissos que envolvem confiança.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-leao-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/leao/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Leão: Cuidar da base que acolhe você e negociar sem desaparecer do encontro",
+						"description": "Uma leitura simbólica para Leão sobre a intimidade e a vida de casa e suas relações com as parcerias e os acordos a dois.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-virgem-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/virgem/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Virgem: Encontrar palavras que aproximam e dar uma forma possível à rotina",
+						"description": "Uma leitura simbólica para Virgem sobre as conversas e os aprendizados cotidianos e suas relações com o trabalho cotidiano e os cuidados de rotina.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-libra-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/libra/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Libra: Dar valor ao que sustenta você e abrir espaço para criar e gostar",
+						"description": "Uma leitura simbólica para Libra sobre suas prioridades e recursos e suas relações com a criação, o prazer e a expressão pessoal.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-escorpiao-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/escorpiao/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Escorpião: Escolher sua própria posição e cuidar da base que acolhe você",
+						"description": "Uma leitura simbólica para Escorpião sobre sua maneira de se apresentar e começar e suas relações com a intimidade e a vida de casa.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-sagitario-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/sagitario/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Sagitário: Respeitar o tempo de recolher e encontrar palavras que aproximam",
+						"description": "Uma leitura simbólica para Sagitário sobre o recolhimento e os assuntos que pedem encerramento e suas relações com as conversas e os aprendizados cotidianos.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-capricornio-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/capricornio/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Capricórnio: Participar sem perder sua voz e dar valor ao que sustenta você",
+						"description": "Uma leitura simbólica para Capricórnio sobre os grupos, as amizades e os projetos em comum e suas relações com suas prioridades e recursos.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-aquario-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/aquario/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Aquário: Assumir uma direção que faça sentido e escolher sua própria posição",
+						"description": "Uma leitura simbólica para Aquário sobre a direção profissional e as responsabilidades públicas e suas relações com sua maneira de se apresentar e começar.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-peixes-daily-2026-10-23",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/peixes/daily/2026-10-23",
+						"kind": "horoscope",
+						"title": "Peixes: Ampliar a visão sem perder o chão e respeitar o tempo de recolher",
+						"description": "Uma leitura simbólica para Peixes sobre os estudos, as convicções e os projetos de expansão e suas relações com o recolhimento e os assuntos que pedem encerramento.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-10-23T23:17:36.785Z",
+						"modifiedAt": "2026-10-23T23:17:36.785Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "ef4b09cb2f9e06b5026d6a2cc1ed573a4c4d6723ca8b3d0bb700f71a4727a18d",
+							"coverageStart": "2026-10-23T00:00:00.000Z",
+							"coverageEnd": "2026-10-24T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					}
+				],
+				"documentDigests": {
+					"horoscopo-aries-daily-2026-10-23": "ed0cc06b5d50dc02ab3a8a7bb93d43edf5b57c9603175a025ec8b8932f2602c2",
+					"horoscopo-touro-daily-2026-10-23": "41eec54425583a9a79029a0e4e2315f4ea4472e479cfd585c69cb798932bf7f9",
+					"horoscopo-gemeos-daily-2026-10-23": "48e86245e62f583f49001dc4fbdbe08d3e092bae729da52b00ba9badc7c8627a",
+					"horoscopo-cancer-daily-2026-10-23": "ec68b718ccb3ba0d2bb3b40575496f7bc7221a31b8dffefdea3244ec4fd651fa",
+					"horoscopo-leao-daily-2026-10-23": "06f796abf9bcd4e2845e37e73cdfc97cd9a6ba7a54920188c0e0b67a5b01d1fe",
+					"horoscopo-virgem-daily-2026-10-23": "65e33bcc4ced382f4a68090a83110c5c5bd4f5db0c0d91b6287703812358d21f",
+					"horoscopo-libra-daily-2026-10-23": "5af8d525c941495cb17e03d1ea67fa66abe0fddfaf7b5d6108c3886c991ae04a",
+					"horoscopo-escorpiao-daily-2026-10-23": "af337bfca730e2c2eb6743a3aa5bcb706925ca62606b22419d4c7ce53b2974fe",
+					"horoscopo-sagitario-daily-2026-10-23": "3bd44802d22c52e39a57aa1c3e0b3dd4f039401db79f6dcd019cbb7a3f22d9b2",
+					"horoscopo-capricornio-daily-2026-10-23": "e32eea818c56f29330c98d1c104e7753700f59a826512e710030ae172e9c1f2b",
+					"horoscopo-aquario-daily-2026-10-23": "6618d1dc55451462254e4e86772dfb0040865fda2d4933fc9fcbec141bef9b4f",
+					"horoscopo-peixes-daily-2026-10-23": "04a7e80264163872babdd30a50c9ddadf60ec9b9ca160a100c5dfda761389357"
+				},
+				"signature": "w2B3HvoGHrm0wRTJpdrK990zmsD7GH2oA3F62u45xeBtyoUFR6SYmJRaMcqFvLIY72Pnz/PUuL+PU7XnpVgJBg=="
+			},
+			"asset": {
+				"path": "/_editorial/dated/820760fb3b90c5f8a1ac318ecb1f5e090a28dc1a5357badccb1b19be50c7fd42.json",
+				"sha256": "820760fb3b90c5f8a1ac318ecb1f5e090a28dc1a5357badccb1b19be50c7fd42"
+			},
+			"admission": {
+				"acceptedAt": "2026-10-23T23:20:21.370Z",
+				"gateEvidenceDigest": "6ac2e43479924e2cd8187e56cb34ccf0caeee573192583062887640db506af19"
+			}
 		}
 	]
 }
