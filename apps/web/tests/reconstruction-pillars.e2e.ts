@@ -1,3 +1,4 @@
+import { chartImage, expectChartImage } from './chart-image';
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
@@ -48,7 +49,7 @@ for (const width of [390, 1440]) {
 			.locator('summary')
 			.filter({ hasText: 'Explore seu mapa e os capítulos relacionados' })
 			.click();
-		await expect(page.locator('svg [data-layer="positions"]')).toHaveCount(10);
+		await expectChartImage(chartImage(page), 10);
 		const pending = page.waitForEvent('download');
 		await page.getByRole('button', { name: 'Baixar SVG', exact: true }).click();
 		const download = await pending;

@@ -1,3 +1,4 @@
+import { chartImage, chartElementCount, chartTitle, expectChartImage } from './chart-image';
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
@@ -15,22 +16,20 @@ for (const width of [390, 1440]) {
 			0
 		);
 		const individual = page.getByRole('region', { name: 'Fatores natais das duas pessoas' });
-		await expect(individual.locator('svg[data-engine="AstroChartEngineV2/2.1.0"]')).toHaveCount(2);
-		await expect(individual.locator('[data-layer="houses"]')).not.toHaveCount(0);
+		await expect(chartImage(individual)).toHaveCount(2);
+		for (const wheel of await chartImage(individual).all()) {
+			await expectChartImage(wheel, 10);
+			await expect.poll(() => chartElementCount(wheel, '[data-layer="houses"]')).toBeGreaterThan(0);
+		}
 		await page.getByText('Explore seu mapa e os capítulos relacionados', { exact: true }).click();
-		const svg = page.locator('.chart-panel svg[data-engine="AstroChartEngineV2/2.1.0"]');
-		await expect(svg).toBeVisible();
-		await expect(svg.locator('[data-layer="positions"]')).toHaveCount(20);
-		await expect(
-			svg
-				.locator('text[data-layer="heading"]')
-				.filter({ hasText: 'Dossiê do Casal · mapas em relação' })
-		).toBeVisible();
-		expect(await svg.locator('[data-layer="aspects"]').count()).toBeGreaterThan(0);
+		const wheel = chartImage(page.locator('.chart-panel'));
+		await expectChartImage(wheel, 20);
+		await expect.poll(() => chartTitle(wheel)).toBe('Dossiê do Casal · mapas em relação');
+		await expect.poll(() => chartElementCount(wheel, '[data-layer="aspects"]')).toBeGreaterThan(0);
 		await page.getByRole('combobox', { name: 'Aspectos', exact: true }).selectOption('none');
-		await expect(svg.locator('[data-layer="aspects"]')).toHaveCount(0);
+		await expect.poll(() => chartElementCount(wheel, '[data-layer="aspects"]')).toBe(0);
 		await page.getByLabel('Casas disponíveis').uncheck();
-		await expect(svg.locator('[data-layer="houses"]')).toHaveCount(0);
+		await expect.poll(() => chartElementCount(wheel, '[data-layer="houses"]')).toBe(0);
 		await page.getByLabel('Casas disponíveis').check();
 		await page.getByRole('combobox', { name: 'Aspectos', exact: true }).selectOption('major');
 		for (const format of ['SVG', 'PNG']) {
