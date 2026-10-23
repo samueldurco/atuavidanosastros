@@ -1,5 +1,7 @@
 import { expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
+
+type MutableRequestEvent = { -readonly [Key in keyof RequestEvent]: RequestEvent[Key] };
 import { productContinuityApi, parseContinuityManagement } from './product-continuity-api';
 import { POST as readRoute } from '../../routes/api/continuity/read/+server';
 import { POST as consentRoute } from '../../routes/api/continuity/consent/+server';
@@ -92,7 +94,7 @@ function setup({
 				headers: { origin: url.origin, 'content-type': 'application/json', ...headers },
 				...(method === 'GET' ? {} : { body: JSON.stringify(body) })
 			})
-		} as unknown as RequestEvent;
+		} as unknown as MutableRequestEvent;
 	}
 	return { event, rpc, getClaims, abortSignal };
 }

@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { afterAll, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
+
+type MutableRequestEvent = { -readonly [Key in keyof RequestEvent]: RequestEvent[Key] };
 import { parseProductEmailReceipt, parseProductEmailHistory } from '$lib/product-email';
 import { createProductEmailRequest } from '$lib/product-email-request';
 import { createProductEmailHistory } from '$lib/product-email-history';
@@ -106,7 +108,7 @@ function event(
 			headers: { origin: url.origin, 'content-type': 'application/json' },
 			body: JSON.stringify(body)
 		})
-	} as unknown as RequestEvent;
+	} as unknown as MutableRequestEvent;
 }
 it('lost acknowledgement and browser key recover through owner history after revision and gate changes', async () => {
 	await db.exec('update product_email_policy set enabled=true');

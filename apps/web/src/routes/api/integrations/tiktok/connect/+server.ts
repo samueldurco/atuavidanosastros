@@ -26,5 +26,5 @@ export const GET: RequestHandler = async ({ cookies, locals, url }) => {
 		path: '/api/integrations/tiktok',
 		maxAge: 10 * 60
 	});
-	redirect(303, authorizationUrl.toString());
+	redirect(303, authorizationUrl.toString(), { external: true });
 };

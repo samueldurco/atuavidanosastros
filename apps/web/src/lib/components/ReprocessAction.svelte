@@ -47,7 +47,7 @@
 		outcome = await client.perform(allowed);
 		if (outcome.href) {
 			try {
-				await goto(outcome.href, { invalidateAll: true });
+				await goto(outcome.href, { refreshAll: true });
 			} catch {
 				outcome = {
 					mode: 'recover',

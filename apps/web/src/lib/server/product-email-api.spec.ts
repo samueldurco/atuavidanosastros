@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
+
+type MutableRequestEvent = { -readonly [Key in keyof RequestEvent]: RequestEvent[Key] };
 import { productEmailApi } from './product-email-api';
 import {
 	parseProductEmailCommand,
@@ -61,7 +63,7 @@ function setup({
 				headers: { origin: url.origin, 'content-type': 'application/json', ...headers },
 				...(method === 'GET' ? {} : { body: JSON.stringify(body) })
 			})
-		} as unknown as RequestEvent;
+		} as unknown as MutableRequestEvent;
 	}
 	return { event, rpc, getClaims, abortSignal };
 }
