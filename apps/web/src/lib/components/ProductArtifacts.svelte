@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { artifactFormats, type ArtifactManifest } from '@atv/domain';
 	import type { ProductRunView } from '$lib/product-run';
 	import {
@@ -9,6 +9,10 @@
 	} from '$lib/product-artifact-client';
 	import Button from './ui/Button.svelte';
 	let { run, disabled = false }: { run: ProductRunView; disabled?: boolean } = $props();
+	let ready = $state(false);
+	onMount(() => {
+		ready = true;
+	});
 	let artifacts = $state<ArtifactManifest[] | null>(null);
 	let busy = $state(false);
 	let message = $state('');
@@ -29,7 +33,7 @@
 	const label = (v: ArtifactManifest) =>
 		`${labels[v.format]}${v.format === 'card' ? ` — seção ${v.section + 1}` : ''}`;
 	async function consult(artifact?: ArtifactManifest) {
-		if (busy || disabled) return;
+		if (!ready || busy || disabled) return;
 		const trigger = document.activeElement;
 		busy = true;
 		message = '';
@@ -85,7 +89,7 @@
 		Veja os arquivos salvos desta leitura. Os relatórios que você baixa na seção acima são gerados
 		na hora e aparecem separadamente.
 	</p>
-	<Button variant="secondary" onclick={() => consult()} {disabled} pending={busy}
+	<Button variant="secondary" onclick={() => consult()} disabled={!ready || disabled} pending={busy}
 		>Ver arquivos salvos</Button
 	>
 	{#if disabled}<p>Os arquivos desta leitura não podem ser consultados agora.</p>{/if}
@@ -117,8 +121,10 @@
 							>
 						</p>
 					</div>
-					<Button variant="secondary" disabled={busy || disabled} onclick={() => consult(artifact)}
-						>Baixar {label(artifact)}</Button
+					<Button
+						variant="secondary"
+						disabled={!ready || busy || disabled}
+						onclick={() => consult(artifact)}>Baixar {label(artifact)}</Button
 					>
 				</li>
 			{/each}

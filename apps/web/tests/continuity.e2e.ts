@@ -102,6 +102,53 @@ async function chooseReference(page: Page, key: string) {
 	await expect(page.getByRole('button', { name: 'Salvar registro revisado' })).toBeDisabled();
 	await page.getByLabel('Referência da leitura', { exact: true }).selectOption(key);
 }
+for (const [surface, fixturePath] of [
+	['biblioteca', path],
+	['leitor', '/biblioteca/_spec/referencias']
+] as const)
+	test(`${surface}: consulta aguarda hidratação e envia um único POST`, async ({ page }) => {
+		let releaseScripts!: () => void;
+		const scriptsReleased = new Promise<void>((resolve) => {
+			releaseScripts = resolve;
+		});
+		const isAppScript = (url: URL) =>
+			url.pathname.startsWith('/_app/immutable/') && url.pathname.endsWith('.js');
+		await page.route(isAppScript, async (route) => {
+			await scriptsReleased;
+			await route.continue();
+		});
+		const requests: { action: string; method: string; body: unknown }[] = [];
+		await page.route('**/api/continuity/*', async (route) => {
+			requests.push({
+				action: new URL(route.request().url()).pathname.split('/').at(-1)!,
+				method: route.request().method(),
+				body: route.request().postDataJSON()
+			});
+			await route.fulfill({ json: initial() });
+		});
+		const firstScript = page.waitForRequest((request) => isAppScript(new URL(request.url())));
+		try {
+			await page.goto(fixturePath, { waitUntil: 'commit' });
+			await firstScript;
+			if (surface === 'leitor')
+				await page.getByText('Salvar trechos nos meus registros', { exact: true }).click();
+			const consult = page.getByRole('button', {
+				name: 'Consultar meus registros',
+				exact: true
+			});
+			await expect(consult).toBeVisible();
+			await expect(consult).toBeDisabled();
+			expect(requests).toEqual([]);
+			releaseScripts();
+			await expect(consult).toBeEnabled();
+			expect(requests).toEqual([]);
+			await consult.click();
+			await expect(page.getByText('Estado consultado.', { exact: false })).toBeVisible();
+			expect(requests).toEqual([{ action: 'read', method: 'POST', body: {} }]);
+		} finally {
+			releaseScripts();
+		}
+	});
 test('leitor: hipótese e ciclo explícitos, seletores mínimos e revisão preserva fonte', async ({
 	page
 }) => {

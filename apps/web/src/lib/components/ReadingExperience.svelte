@@ -136,6 +136,7 @@
 		}
 	}
 	function open(index: number) {
+		if (!interactive) return;
 		void persist(index, bookmarks);
 	}
 	function mark() {
@@ -298,10 +299,11 @@
 				<p class="prose">{current.text}</p>
 			{/if}
 			<div class="chapter-navigation">
-				<button disabled={currentIndex === 0} onclick={() => open(chapters[currentIndex - 1].index)}
-					>← Anterior</button
+				<button
+					disabled={!interactive || currentIndex === 0}
+					onclick={() => open(chapters[currentIndex - 1].index)}>← Anterior</button
 				><button
-					disabled={currentIndex === chapters.length - 1}
+					disabled={!interactive || currentIndex === chapters.length - 1}
 					onclick={() => open(chapters[currentIndex + 1].index)}>Próximo →</button
 				>
 			</div>
