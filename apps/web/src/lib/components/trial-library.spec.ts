@@ -33,4 +33,31 @@ describe('trial library edition labels', () => {
 	it('does not infer that a versionless historical reading is outdated', () => {
 		expect(renderLibrary([edition('birth-chart')])).not.toContain('Edição anterior preservada');
 	});
+
+	it('offers cursor pagination in the matching library and a recovery link for an expired cursor', () => {
+		const cursor = '00000000-0000-4000-8000-000000000001';
+		const body = render(TrialLibrary, {
+			props: {
+				paginationPath: '/testar-produtos',
+				library: {
+					readings: [edition('birth-chart')],
+					unavailable: false,
+					pagination: { before: cursor, next: cursor, expired: false }
+				}
+			}
+		}).body;
+		expect(body).toContain(`/testar-produtos?trialBefore=${cursor}#free-trials-heading`);
+		expect(body).toContain('/testar-produtos#free-trials-heading');
+		const expired = render(TrialLibrary, {
+			props: {
+				library: {
+					readings: [],
+					unavailable: false,
+					pagination: { before: cursor, next: null, expired: true }
+				}
+			}
+		}).body;
+		expect(expired).toContain('/biblioteca#free-trials-heading');
+		expect(expired).not.toContain('Ainda não há leituras');
+	});
 });

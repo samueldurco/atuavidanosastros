@@ -7,7 +7,10 @@
 	import Button from './ui/Button.svelte';
 	import MvpProductArt from './MvpProductArt.svelte';
 	import '$lib/styles/mvp-private.css';
-	let { library }: { library: TrialLibraryData } = $props();
+	let {
+		library,
+		paginationPath = '/biblioteca'
+	}: { library: TrialLibraryData; paginationPath?: string } = $props();
 	const topics: Record<string, string> = {
 		'meu-ceu': 'meu-ceu',
 		'ciclos-tempo': 'ciclos',
@@ -38,6 +41,12 @@
 		<p role="alert">
 			Não foi possível recuperar suas leituras de teste agora. Recarregue a página para tentar
 			novamente.
+		</p>
+	{:else if library.pagination?.expired}
+		<p role="status">
+			Esta página de leituras não está mais disponível. <a
+				href={`${paginationPath}#free-trials-heading`}>Voltar às mais recentes</a
+			>.
 		</p>
 	{:else if !library.readings.length}
 		<p>Depois de gerar uma leitura, ela aparecerá aqui para você reabrir e avaliar.</p>
@@ -79,6 +88,18 @@
 				</article>
 			{/each}
 		</div>
+	{/if}
+	{#if !library.unavailable && (library.pagination?.before || library.pagination?.next)}
+		<nav class="actions" aria-label="Páginas das leituras de teste">
+			{#if library.pagination.before}<Button
+					href={`${paginationPath}#free-trials-heading`}
+					variant="secondary">Leituras mais recentes</Button
+				>{/if}
+			{#if library.pagination.next}<Button
+					href={`${paginationPath}?trialBefore=${library.pagination.next}#free-trials-heading`}
+					variant="secondary">Leituras anteriores</Button
+				>{/if}
+		</nav>
 	{/if}
 </section>
 

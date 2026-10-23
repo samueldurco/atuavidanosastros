@@ -289,7 +289,14 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 				managePrimary: true
 			}
 		},
-		index: { products: productCatalog, readings: [], feedback: [], libraryUnavailable: false },
+		index: {
+			products: productCatalog,
+			readings: [],
+			feedback: [],
+			libraryUnavailable: false,
+			trialLibrary: { readings: [], unavailable: false },
+			feedbackUnavailable: false
+		},
 		library: {
 			readings: [
 				{
@@ -333,7 +340,12 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 								text: `Dia ${step}: observei uma tarefa, preservei meu limite e registrei uma evidência contrária.`
 							}))
 						: [],
-			readerState: { chapter: 0, bookmarks: [] }
+			readerState: { chapter: 0, bookmarks: [] },
+			optionalUnavailable: {
+				feedback: url.searchParams.get('optional') === 'unavailable',
+				notes: url.searchParams.get('optional') === 'unavailable',
+				readerState: url.searchParams.get('optional') === 'unavailable'
+			}
 		},
 		download: { saved },
 		club: {

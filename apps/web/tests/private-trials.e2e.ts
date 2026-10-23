@@ -394,3 +394,44 @@ test('the browser produces and downloads the full private PDF', async ({ page })
 		/^blob:/
 	);
 });
+
+test('optional workspace retrieval failures preserve reading and pause writes until recovery', async ({
+	page
+}) => {
+	let writes = 0;
+	await page.route('**/api/private-trials/*', async (route) => {
+		if (route.request().method() === 'POST') writes++;
+		await route.fulfill({ json: { ok: true } });
+	});
+	await page.goto('/testar-produtos/_spec?optional=unavailable');
+	await expect(
+		page.getByRole('heading', { name: 'Bússola de Carreira', exact: true })
+	).toBeVisible();
+	await expect(
+		page.getByText('Não foi possível recuperar suas anotações.', { exact: false })
+	).toBeVisible();
+	await expect(
+		page.getByText('Não foi possível recuperar seu parecer.', { exact: false })
+	).toBeVisible();
+	await page
+		.getByRole('button', { name: 'Modo de trabalhar: pensar, iniciar e concluir', exact: true })
+		.click();
+	await expect(
+		page.getByRole('heading', {
+			name: 'Modo de trabalhar: pensar, iniciar e concluir',
+			exact: true
+		})
+	).toBeVisible();
+	await expect(page.getByRole('button', { name: '☆ Marcar capítulo', exact: true })).toBeDisabled();
+	await expect(page.getByLabel('Sua anotação', { exact: true })).toHaveCount(0);
+	await expect(
+		page.getByLabel('Comentário sobre a leitura (opcional)', { exact: true })
+	).toHaveCount(0);
+	expect(writes).toBe(0);
+	await page.goto('/testar-produtos/_spec');
+	await expect(page.getByRole('button', { name: '☆ Marcar capítulo', exact: true })).toBeEnabled();
+	await expect(page.getByLabel('Sua anotação', { exact: true })).toBeVisible();
+	await expect(
+		page.getByLabel('Comentário sobre a leitura (opcional)', { exact: true })
+	).toBeVisible();
+});

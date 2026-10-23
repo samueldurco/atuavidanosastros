@@ -14,8 +14,14 @@
 	let {
 		saved,
 		initial,
-		ephemeral = false
-	}: { saved: SavedTrial; initial: ReaderState; ephemeral?: boolean } = $props();
+		ephemeral = false,
+		persistenceUnavailable = false
+	}: {
+		saved: SavedTrial;
+		initial: ReaderState;
+		ephemeral?: boolean;
+		persistenceUnavailable?: boolean;
+	} = $props();
 	let chapter = $state(untrack(() => initial.chapter)),
 		bookmarks = $state(untrack(() => [...initial.bookmarks]));
 	let status = $state(''),
@@ -99,6 +105,7 @@
 	async function persist(next: number, marked: number[]) {
 		chapter = next;
 		bookmarks = [...marked];
+		if (persistenceUnavailable) return;
 		if (ephemeral) {
 			status = 'Posição e marcadores ficam somente enquanto este exemplo está aberto.';
 			return;
@@ -132,6 +139,7 @@
 		void persist(index, bookmarks);
 	}
 	function mark() {
+		if (persistenceUnavailable) return;
 		void persist(
 			current.index,
 			bookmarks.includes(current.index)
@@ -271,7 +279,11 @@
 		<article id="selected-chapter" aria-label="Capítulo selecionado">
 			<div class="chapter-heading">
 				<p class="eyebrow">{String(currentIndex + 1).padStart(2, '0')} · Sua leitura</p>
-				<button class="bookmark" aria-pressed={bookmarks.includes(current.index)} onclick={mark}
+				<button
+					class="bookmark"
+					disabled={!interactive || persistenceUnavailable}
+					aria-pressed={bookmarks.includes(current.index)}
+					onclick={mark}
 					>{bookmarks.includes(current.index) ? '★ Marcado' : '☆ Marcar capítulo'}</button
 				>
 			</div>
@@ -296,8 +308,10 @@
 		</article>
 	</div>
 	<p class="save-status" role="status">
-		{status ||
-			'Sua posição é guardada ao escolher um capítulo. Os marcadores ficam na sua biblioteca privada.'}
+		{persistenceUnavailable
+			? 'Sua posição e seus marcadores não puderam ser recuperados. Você pode ler os capítulos; o salvamento fica pausado até recarregar.'
+			: status ||
+				'Sua posição é guardada ao escolher um capítulo. Os marcadores ficam na sua biblioteca privada.'}
 	</p>
 	{#if references}<details class="references">
 			<summary>Referências calculadas e informadas</summary>

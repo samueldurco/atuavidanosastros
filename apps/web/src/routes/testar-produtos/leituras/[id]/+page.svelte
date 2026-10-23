@@ -57,6 +57,14 @@
 		};
 	});
 	async function save(body: unknown) {
+		const action = (body as { action?: string })?.action;
+		if (
+			(action === 'note' && data.optionalUnavailable?.notes) ||
+			(action === 'feedback' && data.optionalUnavailable?.feedback)
+		) {
+			status = 'Recarregue para recuperar seus registros antes de editar.';
+			return;
+		}
 		busy = true;
 		status = '';
 		try {
@@ -189,8 +197,12 @@
 					reprodução.
 				</p>{/if}
 		</nav>
-		{#key data.saved.id}
-			<ReadingExperience saved={data.saved} initial={data.readerState} />
+		{#key `${data.saved.id}:${Boolean(data.optionalUnavailable?.readerState)}`}
+			<ReadingExperience
+				saved={data.saved}
+				initial={data.readerState}
+				persistenceUnavailable={data.optionalUnavailable?.readerState ?? false}
+			/>
 			{#if canShareReading(data.saved.product_id)}<ReadingShare id={data.saved.id} />{/if}
 		{/key}
 		<article aria-label="Sua leitura completa">
@@ -219,7 +231,16 @@
 				</ul>
 			</section>
 		</article>
-		{#if data.saved.calculation.version === DIRECTION_VERSION}
+		{#if data.optionalUnavailable?.notes}
+			<section class="workspace" aria-labelledby="notes-title">
+				<h2 id="notes-title">Suas anotações e acompanhamento</h2>
+				<p role="status">
+					Não foi possível recuperar suas anotações. A edição fica pausada até elas serem
+					carregadas.
+				</p>
+				<button onclick={() => location.reload()}>Tentar novamente</button>
+			</section>
+		{:else if data.saved.calculation.version === DIRECTION_VERSION}
 			<ReadingDirectionJourney
 				saved={data.saved}
 				notes={data.notes}
@@ -257,36 +278,44 @@
 		{/if}
 		<section class="workspace" aria-labelledby="feedback-title">
 			<h2 id="feedback-title">Seu parecer sobre este produto</h2>
-			{#if data.feedback}<p>
-					Seu último parecer: <strong
-						>{data.feedback.decision === 'approved' ? 'aprovado' : 'revisão solicitada'}</strong
-					>. {data.feedback.reading_id !== data.saved.id
-						? 'O parecer foi registrado em outra leitura deste produto.'
-						: ''}
+			{#if data.optionalUnavailable?.feedback}
+				<p role="status">
+					Não foi possível recuperar seu parecer. Recarregue para consultá-lo e registrar uma nova
+					avaliação.
 				</p>
-				<p class="prose">{data.feedback.comment}</p>{/if}
-			<label
-				>Comentário sobre a leitura (opcional)<textarea
-					maxlength="3000"
-					rows="4"
-					bind:value={comment}></textarea></label
-			>
-			<div class="decisions">
-				<button
-					disabled={!ready || busy}
-					onclick={() => save({ action: 'feedback', decision: 'approved', comment })}
-					>Aprovar este produto</button
-				><button
-					class="secondary"
-					disabled={!ready || busy}
-					onclick={() => save({ action: 'feedback', decision: 'rejected', comment })}
-					>Solicitar revisão</button
+				<button onclick={() => location.reload()}>Tentar novamente</button>
+			{:else}
+				{#if data.feedback}<p>
+						Seu último parecer: <strong
+							>{data.feedback.decision === 'approved' ? 'aprovado' : 'revisão solicitada'}</strong
+						>. {data.feedback.reading_id !== data.saved.id
+							? 'O parecer foi registrado em outra leitura deste produto.'
+							: ''}
+					</p>
+					<p class="prose">{data.feedback.comment}</p>{/if}
+				<label
+					>Comentário sobre a leitura (opcional)<textarea
+						maxlength="3000"
+						rows="4"
+						bind:value={comment}></textarea></label
 				>
-			</div>
-			<p>
-				Seu parecer fica vinculado a esta leitura e versão. A revisão automática não substitui sua
-				avaliação.
-			</p>
+				<div class="decisions">
+					<button
+						disabled={!ready || busy}
+						onclick={() => save({ action: 'feedback', decision: 'approved', comment })}
+						>Aprovar este produto</button
+					><button
+						class="secondary"
+						disabled={!ready || busy}
+						onclick={() => save({ action: 'feedback', decision: 'rejected', comment })}
+						>Solicitar revisão</button
+					>
+				</div>
+				<p>
+					Seu parecer fica vinculado a esta leitura e versão. A revisão automática não substitui sua
+					avaliação.
+				</p>
+			{/if}
 		</section>
 		{#if status}<p class="notice" role="status">{status}</p>{/if}
 		<details>

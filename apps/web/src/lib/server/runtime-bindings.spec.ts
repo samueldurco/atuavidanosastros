@@ -144,6 +144,8 @@ it('health confirma bindings e consulta real sem devolver chaves ou dados', asyn
 		scope: 'private-free-test'
 	});
 	expect(Object.keys(body).sort()).toEqual([
+		'authPublicKeyPresent',
+		'authUrlValid',
 		'available',
 		'configurationReady',
 		'runtimeKeyPresent',
@@ -153,6 +155,8 @@ it('health confirma bindings e consulta real sem devolver chaves ou dados', asyn
 		'version'
 	]);
 	expect(body).toMatchObject({
+		authUrlValid: true,
+		authPublicKeyPresent: true,
 		urlValid: true,
 		serviceRolePresent: true,
 		runtimeKeyPresent: true
@@ -183,10 +187,12 @@ it('health falha fechado se falta o binding de runtime', async () => {
 	);
 	expect(response.status).toBe(503);
 	expect(await response.json()).toMatchObject({ available: false, configurationReady: false });
+	expect(mocks.query).not.toHaveBeenCalled();
 });
 
 it.each([
 	['PUBLIC_SUPABASE_URL', 'urlValid'],
+	['PUBLIC_SUPABASE_PUBLISHABLE_KEY', 'authPublicKeyPresent'],
 	['SUPABASE_SERVICE_ROLE_KEY', 'serviceRolePresent'],
 	['ATV_TRIAL_RUNTIME_KEY', 'runtimeKeyPresent']
 ] as const)(
@@ -201,11 +207,14 @@ it.each([
 			expect(await response.json()).toMatchObject({
 				available: false,
 				configurationReady: false,
+				authPublicKeyPresent: true,
+				authUrlValid: key !== 'PUBLIC_SUPABASE_URL',
 				urlValid: true,
 				serviceRolePresent: true,
 				runtimeKeyPresent: true,
 				[field]: false
 			});
+			expect(mocks.query).not.toHaveBeenCalled();
 		}
 	}
 );
@@ -220,8 +229,48 @@ it('health distingue URL insegura de chaves presentes sem enfraquecer o guard', 
 	expect(await response.json()).toMatchObject({
 		available: false,
 		configurationReady: false,
+		authUrlValid: false,
+		authPublicKeyPresent: true,
 		urlValid: false,
 		serviceRolePresent: true,
 		runtimeKeyPresent: true
 	});
+});
+
+it('health aceita chave pública anon da plataforma sem exigir publishable', async () => {
+	const bindings: Record<string, string> = {
+		...platformValues,
+		PUBLIC_SUPABASE_ANON_KEY: 'synthetic-request-anon'
+	};
+	delete bindings.PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+	const response = await GET(request(bindings) as Parameters<typeof GET>[0]);
+	expect(response.status).toBe(200);
+	expect(await response.json()).toMatchObject({
+		available: true,
+		configurationReady: true,
+		authUrlValid: true,
+		authPublicKeyPresent: true
+	});
+	expect(mocks.query).toHaveBeenCalledOnce();
+});
+
+it('health não mascara chave pública explicitamente vazia com anon ou fallback dinâmico', async () => {
+	mocks.publicEnv.PUBLIC_SUPABASE_PUBLISHABLE_KEY = 'synthetic-stale-public-key';
+	const response = await GET(
+		request({
+			...platformValues,
+			PUBLIC_SUPABASE_PUBLISHABLE_KEY: '',
+			PUBLIC_SUPABASE_ANON_KEY: 'synthetic-request-anon'
+		}) as Parameters<typeof GET>[0]
+	);
+	expect(response.status).toBe(503);
+	expect(await response.json()).toMatchObject({
+		available: false,
+		configurationReady: false,
+		authUrlValid: true,
+		authPublicKeyPresent: false,
+		serviceRolePresent: true,
+		runtimeKeyPresent: true
+	});
+	expect(mocks.query).not.toHaveBeenCalled();
 });
