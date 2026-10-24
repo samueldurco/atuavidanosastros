@@ -16,8 +16,7 @@ import storedHoroscopeFacts from './editorial-release/horoscope-facts.json';
 import type { PublicHoroscopeSnapshot } from './public-horoscope-facts';
 import storedDatedIndex from './editorial-release/dated-index.json';
 import {
-	archivedEditorialDocument,
-	archivedEditorialSummaries,
+	createDatedArchiveRead,
 	type DatedArchiveRelease,
 	type EditorialAssetFetch
 } from './dated-horoscope-archive';
@@ -69,10 +68,13 @@ const documents: readonly EditorialDocument[] = automated.packages.map((entry) =
 const approvals: readonly EditorialApproval[] = [];
 const authorities: Readonly<Record<string, EditorialAuthority>> = {};
 
-export async function publishedEditorial(now = new Date()): Promise<EditorialSummary[]> {
+async function readPublishedEditorial(
+	now: Date,
+	archive: ReturnType<typeof createDatedArchiveRead>
+): Promise<EditorialSummary[]> {
 	const combined = [
 		...(await approvedDocuments(documents, approvals, authorities, now, automated, horoscopeFacts)),
-		...(await archivedEditorialSummaries(datedIndex, stored.authorities, now))
+		...(await archive.summaries())
 	];
 	const ids = new Map<string, number>(),
 		paths = new Map<string, number>();
@@ -94,14 +96,31 @@ export async function publishedEditorial(now = new Date()): Promise<EditorialSum
 		.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 }
 
+/** One request shares verification, while the next request rechecks admission and evidence. */
+export function createEditorialRead(now = new Date()) {
+	const readAt = new Date(now.getTime());
+	const archive = createDatedArchiveRead(datedIndex, stored.authorities, readAt);
+	let summaries: Promise<EditorialSummary[]> | undefined;
+	const readSummaries = () => (summaries ??= readPublishedEditorial(readAt, archive));
+	return {
+		summaries: readSummaries,
+		async document(path: string, fetchAsset?: EditorialAssetFetch) {
+			const summary = (await readSummaries()).find((document) => document.path === path);
+			if (!summary) return;
+			if (summary.sections) return summary as EditorialDocument;
+			if (fetchAsset) return archive.document(path, fetchAsset);
+		}
+	};
+}
+
+export async function publishedEditorial(now = new Date()): Promise<EditorialSummary[]> {
+	return createEditorialRead(now).summaries();
+}
+
 export async function publishedEditorialDocument(
 	path: string,
 	fetchAsset?: EditorialAssetFetch,
 	now = new Date()
 ): Promise<EditorialDocument | undefined> {
-	const summary = (await publishedEditorial(now)).find((document) => document.path === path);
-	if (!summary) return;
-	if (summary.sections) return summary as EditorialDocument;
-	if (fetchAsset)
-		return archivedEditorialDocument(path, datedIndex, stored.authorities, fetchAsset, now);
+	return createEditorialRead(now).document(path, fetchAsset);
 }

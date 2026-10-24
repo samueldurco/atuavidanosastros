@@ -11,6 +11,7 @@ import {
 } from './editorial-automation.ts';
 import { assertRuntimeComposition } from '../../../../../scripts/lib/public-horoscope-compose.mjs';
 import type { PublicHoroscopeSnapshot } from './public-horoscope-facts.ts';
+import { editorialVerificationKey, verifyEditorialSignature } from './editorial-signature.ts';
 
 export const DATED_POLICY = 'atvna-horoscope-policy-2026-10-20-v1';
 export const DATED_PROTOCOL = 'atv-dated-horoscope-automation-v1';
@@ -299,10 +300,10 @@ async function verifySignature(value: { signature: string }, publicKey: string) 
 		const raw = decode(publicKey),
 			signature = decode(value.signature);
 		if (raw.length !== 32 || signature.length !== 64) return false;
-		const key = await crypto.subtle.importKey('raw', raw, 'Ed25519', false, ['verify']);
+		const key = editorialVerificationKey(raw);
 		const { signature: omitted, ...payload } = value;
 		void omitted;
-		return crypto.subtle.verify('Ed25519', key, signature, attestationPayload(payload));
+		return verifyEditorialSignature(key, attestationPayload(payload), signature);
 	} catch {
 		return false;
 	}

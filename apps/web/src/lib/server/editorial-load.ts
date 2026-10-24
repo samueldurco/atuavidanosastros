@@ -1,6 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
 import { articleSeo, canonicalPair, hubDocuments, hubSeo } from './editorial';
-import { publishedEditorial, publishedEditorialDocument } from './editorial-registry';
+import { createEditorialRead, publishedEditorial } from './editorial-registry';
 import type { EditorialAssetFetch } from './dated-horoscope-archive';
 import type { EditorialHub } from '$lib/seo';
 
@@ -9,11 +9,12 @@ export async function loadEditorialHub(path: EditorialHub) {
 	return { documents: hubDocuments(documents, path), seo: hubSeo(path, documents) };
 }
 export async function loadEditorialDocument(path: string, fetchAsset?: EditorialAssetFetch) {
-	const documents = await publishedEditorial();
+	const read = createEditorialRead();
+	const documents = await read.summaries();
 	const pair = path.match(/^\/compatibilidade\/([a-z]+)-([a-z]+)$/);
 	const canonical = pair ? canonicalPair(pair[1], pair[2]) : path;
 	if (!canonical) error(404, 'Esta leitura ainda não está publicada.');
-	const document = await publishedEditorialDocument(canonical, fetchAsset);
+	const document = await read.document(canonical, fetchAsset);
 	if (!document) error(404, 'Esta leitura ainda não está publicada.');
 	if (canonical !== path) redirect(301, document.path);
 	const groups = [
