@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { productCatalog, workflowFor } from '@atv/domain';
 	import ReadingShell from '$lib/components/shells/ReadingShell.svelte';
@@ -77,6 +77,10 @@
 				)
 			: null
 	);
+	let ready = $state(false);
+	onMount(() => {
+		ready = true;
+	});
 	let busy = $state<'reprocess' | 'delete' | 'download' | 'email' | null>(null);
 	let failure = $state('');
 	let downloadFormat = $state<'web' | 'pdf' | 'svg' | 'card'>('web');
@@ -189,7 +193,7 @@
 				: 'O registro está preservado. A interpretação só será exibida após as verificações de cálculo, qualidade editorial e segurança.'
 	);
 	async function download(format: 'web' | 'pdf' | 'svg' | 'card') {
-		if (busy || data.synthetic || !data.run.released) return;
+		if (!ready || busy || data.synthetic || !data.run.released) return;
 		busy = 'download';
 		downloadFormat = format;
 		failure = '';
@@ -231,8 +235,16 @@
 			}
 		}
 	}
+	function refresh() {
+		if (!ready || busy) return;
+		location.reload();
+	}
+	function setDeleteConfirmation(next: boolean) {
+		if (!ready || busy || data.synthetic) return;
+		confirmDelete = next;
+	}
 	async function remove() {
-		if (busy || data.synthetic) return;
+		if (!ready || !confirmDelete || busy || data.synthetic) return;
 		busy = 'delete';
 		failure = '';
 		try {
@@ -341,14 +353,14 @@
 				{#if data.run.released}
 					<Button
 						onclick={() => download('web')}
-						disabled={!!busy || data.synthetic}
+						disabled={!ready || !!busy || data.synthetic}
 						pending={busy === 'download' && downloadFormat === 'web'}
 						variant="secondary">Baixar leitura</Button
 					>
 					{#if svgEligible}
 						<Button
 							onclick={() => download('svg')}
-							disabled={!!busy || !!data.synthetic}
+							disabled={!ready || !!busy || !!data.synthetic}
 							pending={busy === 'download' && downloadFormat === 'svg'}
 							variant="secondary">Baixar mapa em SVG</Button
 						>
@@ -356,7 +368,7 @@
 					{#if pdfEligible}
 						<Button
 							onclick={() => download('pdf')}
-							disabled={!!busy || data.synthetic}
+							disabled={!ready || !!busy || data.synthetic}
 							pending={busy === 'download' && downloadFormat === 'pdf'}
 							variant="secondary">Baixar PDF</Button
 						>
@@ -364,7 +376,7 @@
 					{#if cardEligible && data.run.editorial}
 						<div class="card-choice">
 							<label for="card-section">Trecho da leitura</label>
-							<select id="card-section" bind:value={cardSection} disabled={!!busy}>
+							<select id="card-section" bind:value={cardSection} disabled={!ready || !!busy}>
 								{#each data.run.editorial.sections as section, index (index)}
 									<option value={index}>{index + 1}. {readingSectionTitle(section.title)}</option>
 								{/each}
@@ -372,7 +384,7 @@
 						</div>
 						<Button
 							onclick={() => download('card')}
-							disabled={!!busy || data.synthetic}
+							disabled={!ready || !!busy || data.synthetic}
 							pending={busy === 'download' && downloadFormat === 'card'}
 							variant="secondary">Baixar imagem (SVG)</Button
 						>
@@ -404,7 +416,7 @@
 				{#if !data.run.canReprocess}<p>
 						Uma nova versão desta leitura está indisponível agora.
 					</p>{/if}
-				<Button variant="tertiary" onclick={() => location.reload()} disabled={!!busy}
+				<Button variant="tertiary" onclick={refresh} disabled={!ready || !!busy}
 					>Atualizar andamento</Button
 				>
 				{#if confirmDelete}
@@ -416,16 +428,18 @@
 						variant="destructive"
 						aria-describedby="delete-warning"
 						pending={busy === 'delete'}
-						disabled={!!busy || data.synthetic}
+						disabled={!ready || !!busy || data.synthetic}
 						onclick={remove}>Confirmar exclusão</Button
 					>
-					<Button variant="tertiary" disabled={!!busy} onclick={() => (confirmDelete = false)}
-						>Manter registro</Button
+					<Button
+						variant="tertiary"
+						disabled={!ready || !!busy}
+						onclick={() => setDeleteConfirmation(false)}>Manter registro</Button
 					>
 				{:else}<Button
 						variant="tertiary"
-						disabled={!!busy || data.synthetic}
-						onclick={() => (confirmDelete = true)}>Excluir esta versão</Button
+						disabled={!ready || !!busy || data.synthetic}
+						onclick={() => setDeleteConfirmation(true)}>Excluir esta versão</Button
 					>{/if}
 			</div>
 		{/snippet}

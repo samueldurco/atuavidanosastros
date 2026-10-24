@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { parseContinuitySelection, type ContinuitySelection } from '@atv/domain';
 	import {
 		continuityRequest,
@@ -19,6 +19,7 @@
 		sources = [],
 		references = []
 	}: { sources?: ContinuityLibrarySource[]; references?: ReaderContinuityReference[] } = $props();
+	let ready = $state(false);
 	let snapshot = $state<ContinuityManagement | null>(null);
 	let busy = $state(false);
 	let failure = $state('');
@@ -63,6 +64,9 @@
 			!!parseContinuitySelection($state.snapshot(selection)) &&
 			(editing?.revision ?? 0) < 2147483647
 	);
+	onMount(() => {
+		ready = true;
+	});
 	function title(id: string) {
 		return candidates.find((s) => s.source_id === id)?.title ?? `Leitura ${id}`;
 	}
@@ -77,7 +81,7 @@
 		authorized = false;
 	}
 	async function read(message = 'Estado consultado. Revise suas escolhas antes de alterar.') {
-		if (busy) return;
+		if (!ready || busy) return;
 		busy = true;
 		failure = '';
 		status = '';
@@ -195,7 +199,7 @@
 		preciso uma autorização específica. O uso automático ainda está indisponível.
 	</p>
 	<div bind:this={recoveryButton}>
-		<Button variant="secondary" pending={busy} onclick={() => read()}
+		<Button variant="secondary" disabled={!ready} pending={busy} onclick={() => read()}
 			>{busy
 				? 'Consultando ou salvando…'
 				: snapshot

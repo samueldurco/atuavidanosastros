@@ -8,9 +8,9 @@ test.beforeEach(async ({ page }) => {
 });
 
 for (const width of [390, 1440]) {
-	test(`encontrar os conteúdos publicados pelo menu, assunto e retorno em ${width}px`, async ({
+	test(`encontrar os conteúdos publicados pelo menu com acessibilidade em ${width}px`, async ({
 		page
-	}, testInfo) => {
+	}) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/');
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
@@ -21,13 +21,22 @@ for (const width of [390, 1440]) {
 		await expect(page).toHaveURL(/\/revista$/);
 		const articleCards = page.locator('main article.featured, main article.article-card');
 		await expect(articleCards).toHaveCount(publishedEditorial.length);
-		await page.screenshot({ path: testInfo.outputPath(`artigos-${width}.png`), fullPage: true });
 		const accessibility = await new AxeBuilder({ page })
 			.include('main')
 			.withTags(['wcag2a', 'wcag2aa', 'wcag21aa'])
 			.analyze();
 		expect(accessibility.violations).toEqual([]);
-		for (const item of interestNavigation) {
+		expect(
+			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
+		).toBeLessThanOrEqual(1);
+	});
+
+	for (const item of interestNavigation) {
+		test(`encontrar ${item.label} e retornar pelo artigo em ${width}px`, async ({ page }) => {
+			await page.setViewportSize({ width, height: 900 });
+			await page.goto('/revista');
+			const articleCards = page.locator('main article.featured, main article.article-card');
+			await expect(articleCards).toHaveCount(publishedEditorial.length);
 			await page
 				.getByRole('navigation', { name: 'Assuntos da Revista' })
 				.getByRole('link', { name: item.label, exact: true })
@@ -61,11 +70,11 @@ for (const width of [390, 1440]) {
 				.click();
 			await expect(page).toHaveURL(/\/revista$/);
 			await expect(articleCards).toHaveCount(publishedEditorial.length);
-		}
-		expect(
-			await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
-		).toBeLessThanOrEqual(1);
-	});
+			expect(
+				await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
+			).toBeLessThanOrEqual(1);
+		});
+	}
 }
 
 test('todos os destinos dos assuntos respondem sem repetir a prova por viewport', async ({
