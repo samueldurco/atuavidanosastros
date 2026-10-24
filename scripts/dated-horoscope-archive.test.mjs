@@ -28,7 +28,11 @@ const bundled = await build({
   write: false,
   alias: { $lib: path.join(repository, "apps/web/src/lib") },
 });
-const { archivedEditorialDocument, archivedEditorialSummaries } = await import(
+const {
+  archivedEditorialDocument,
+  archivedEditorialSummaries,
+  createDatedArchiveRead,
+} = await import(
   `data:text/javascript;base64,${Buffer.from(bundled.outputFiles[0].contents).toString("base64")}`
 );
 
@@ -135,6 +139,31 @@ test("complete signed admission creates a compact index and fetches exactly one 
     undefined,
   );
   assert.equal(f.fetches(), 1);
+});
+
+test("request admission shares the index but rereads asset bytes and the next request checks revocation", async (t) => {
+  const f = await workspace(t);
+  const read = createDatedArchiveRead(f.release, f.authorities, f.now);
+  assert.equal((await read.summaries()).length, 12);
+  assert.deepEqual(
+    await read.document(f.requested, f.fetchAsset),
+    f.batch.packages[0].document,
+  );
+  assert.equal(f.fetches(), 1);
+  assert.equal(
+    await read.document(f.requested, async (assetPath) => {
+      const response = await f.fetchAsset(assetPath);
+      return new Response((await response.text()) + " ");
+    }),
+    undefined,
+  );
+  assert.equal(f.fetches(), 2);
+  for (const authority of Object.values(f.authorities))
+    authority.revokedAt = "2026-10-01T00:00:00.000Z";
+  const next = createDatedArchiveRead(f.release, f.authorities, f.now);
+  assert.deepEqual(await next.summaries(), []);
+  assert.equal(await next.document(f.requested, f.fetchAsset), undefined);
+  assert.equal(f.fetches(), 2);
 });
 
 test("readmission is idempotent and preserves the first archive bytes and admission", async (t) => {

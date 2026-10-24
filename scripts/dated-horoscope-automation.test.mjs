@@ -2,7 +2,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { createHash } from "node:crypto";
+import nodeCrypto, { createHash } from "node:crypto";
+import { syncBuiltinESMExports } from "node:module";
 import {
   digest, byteDigest, attestationPayload, verifyAutomatedApproval,
   verifyAdmittedApproval, freezeEditorialJson, GATE,
@@ -170,9 +171,11 @@ for (const [name, mutate] of Object.entries(indexMutations)) test(`compact index
 test("only immutable signatures are cached and current authority remains enforced", async (t) => {
   const f = await indexFixture();
   Object.values(f.indexEntry).forEach(freezeEditorialJson);
-  const originalVerify = crypto.subtle.verify.bind(crypto.subtle);
+  const originalVerify = nodeCrypto.verify;
   let calls = 0;
-  t.mock.method(crypto.subtle, "verify", (...args) => { calls++; return originalVerify(...args); });
+  const nativeVerify = t.mock.method(nodeCrypto, "verify", (...args) => { calls++; return originalVerify(...args); });
+  syncBuiltinESMExports();
+  t.after(() => { nativeVerify.mock.restore(); syncBuiltinESMExports(); });
   assert.equal((await verifyDatedHoroscopeIndex(f)).approved, true);
   assert.equal(calls, 2);
   assert.equal((await verifyDatedHoroscopeIndex(f)).approved, true);

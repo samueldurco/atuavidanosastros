@@ -1,5 +1,6 @@
 // Public evergreen guide admission only. No authority is provisioned by this module.
 import { hash } from 'node:crypto';
+import { editorialVerificationKey, verifyEditorialSignature } from './editorial-signature.ts';
 import type { EditorialDocument } from './editorial';
 import {
 	DATED_PROTOCOL,
@@ -195,14 +196,12 @@ export const attestationPayload = (value: unknown) => new Uint8Array(bytes(value
 // rechecks every byte and signature, including changes to revocation or packages.
 function verificationDigests() {
 	const evidence = new WeakMap<Uint8Array, Promise<string>>();
-	const keys = new Map<string, Promise<CryptoKey>>();
+	const keys = new Map<string, ReturnType<typeof editorialVerificationKey>>();
 	return {
 		key(publicKey: string) {
 			let key = keys.get(publicKey);
 			if (!key) {
-				key = crypto.subtle.importKey('raw', base64(publicKey), { name: 'Ed25519' }, false, [
-					'verify'
-				]);
+				key = editorialVerificationKey(base64(publicKey));
 				keys.set(publicKey, key);
 			}
 			return key;
@@ -467,10 +466,10 @@ async function verifyAutomatedApprovalWithDigests(
 		const rawKey = base64(authority.publicKey),
 			signature = base64(a.signature);
 		if (rawKey.length !== 32 || signature.length !== 64) return reject('SIGNATURE_FORMAT');
-		const key = await digests.key(authority.publicKey);
+		const key = digests.key(authority.publicKey);
 		const payload = { ...a };
 		delete (payload as Partial<AutomatedAttestation>).signature;
-		if (!(await crypto.subtle.verify('Ed25519', key, signature, attestationPayload(payload))))
+		if (!verifyEditorialSignature(key, attestationPayload(payload), signature))
 			return reject('SIGNATURE');
 		return {
 			approved: true,

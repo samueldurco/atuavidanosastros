@@ -6,7 +6,7 @@ import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { articleSeo, validDocument, type EditorialDocument } from './editorial';
 import { editorialSitemap, newsSitemap, recentNews } from './editorial-feeds';
-import { publishedEditorial } from './editorial-registry';
+import { createEditorialRead, publishedEditorial } from './editorial-registry';
 import {
 	verifyAutomatedApproval,
 	type AutomatedAttestation,
@@ -26,7 +26,7 @@ const codes = readdirSync(root)
 	.sort();
 
 describe('externally signed finite editorial release', () => {
-	it('hashes evergreen evidence once per read and rechecks every evergreen signature', async () => {
+	it('shares admission within one request and rechecks every evergreen signature on the next read', async () => {
 		const release = json<{
 			evidenceByDigest: Record<string, string>;
 			packages: { document: EditorialDocument; attestation: AutomatedAttestation }[];
@@ -40,23 +40,26 @@ describe('externally signed finite editorial release', () => {
 			)
 		);
 		const hashes = vi.spyOn(nodeCrypto, 'hash');
-		const signatures = vi.spyOn(crypto.subtle, 'verify');
+		const signatures = vi.spyOn(nodeCrypto, 'verify');
 		try {
 			for (let read = 1; read <= 2; read++) {
-				const documents = await publishedEditorial();
+				const request = createEditorialRead();
+				const documents = await request.summaries();
 				for (const entry of release.packages) {
 					expect(documents.filter((document) => document.id === entry.document.id)).toHaveLength(1);
 				}
+				expect(await request.document(release.packages[0].document.path)).toEqual(
+					release.packages[0].document
+				);
+				expect(await request.summaries()).toBe(documents);
 				expect(
 					hashes.mock.calls.filter(
 						([, value]) => value instanceof Uint8Array && value.byteLength === largestEvidence
 					)
 				).toHaveLength(read);
 				expect(
-					signatures.mock.calls.filter(([, , signature]) =>
-						evergreenSignatures.has(
-							Buffer.from(new Uint8Array(signature as ArrayBuffer)).toString('base64')
-						)
+					signatures.mock.calls.filter(([, , , signature]) =>
+						evergreenSignatures.has(Buffer.from(signature as Uint8Array).toString('base64'))
 					)
 				).toHaveLength(read * release.packages.length);
 			}

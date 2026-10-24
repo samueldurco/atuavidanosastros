@@ -100,6 +100,46 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	expect(await chart.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(
 		0
 	);
+	const expand = page.getByRole('button', { name: 'Ampliar mapa', exact: true });
+	const dialog = page.getByRole('dialog', { name: 'Seu mapa astral', exact: true });
+	const enlarged = page.getByRole('img', { name: 'Seu mapa astral ampliado.', exact: true });
+	await expect(page.locator('.chart-dialog img')).toHaveCount(0);
+	await expand.click();
+	await expect(dialog).toBeVisible();
+	await expect(enlarged).toHaveAttribute('src', (await chart.getAttribute('src'))!);
+	await expect(enlarged).toBeVisible();
+	expect(
+		await enlarged.evaluate((image) => (image as HTMLImageElement).naturalWidth)
+	).toBeGreaterThan(0);
+	const scrollRegion = dialog.getByRole('region', {
+		name: 'Mapa ampliado; use a rolagem para explorar',
+		exact: true
+	});
+	await scrollRegion.focus();
+	await expect(scrollRegion).toBeFocused();
+	await page.keyboard.press('Escape');
+	await expect(dialog).not.toBeVisible();
+	await expect(expand).toBeFocused();
+	await expect(page.locator('.chart-dialog img')).toHaveCount(0);
+	await expand.press('Enter');
+	await expect(dialog).toBeVisible();
+	// A delayed close from the previous opening must preserve the current map and focus.
+	await dialog.evaluate((element) => element.dispatchEvent(new Event('close')));
+	await expect(dialog).toBeVisible();
+	await expect(enlarged).toBeVisible();
+	await expect(dialog.getByRole('button', { name: 'Fechar' })).toBeFocused();
+	await dialog.getByRole('button', { name: 'Fechar' }).click();
+	await expect(dialog).not.toBeVisible();
+	await expect(expand).toBeFocused();
+	await expect(page.locator('.chart-dialog img')).toHaveCount(0);
+	const downloadPromise = page.waitForEvent('download');
+	await page.getByRole('link', { name: 'Baixar mapa completo em SVG' }).click();
+	const download = await downloadPromise;
+	expect(download.suggestedFilename()).toBe('mapa-mapa-astral.svg');
+	const stream = await download.createReadStream();
+	const chunks: Buffer[] = [];
+	for await (const chunk of stream) chunks.push(Buffer.from(chunk));
+	expect(Buffer.concat(chunks).toString('utf8')).toBe(natal.result.chart!.svg);
 	await expect(page.locator('.result-card')).toContainText('Capricórnio');
 	await expect(page.locator('.result-card')).toContainText('Virgem');
 	expect(

@@ -26,6 +26,7 @@
 	let dialog: HTMLDialogElement;
 	let openButton: HTMLButtonElement;
 	let hydrated = $state(false);
+	let expanded = $state(false);
 	onMount(() => {
 		hydrated = true;
 	});
@@ -41,7 +42,15 @@
 		...(midheaven === null ? [] : [{ name: 'Meio do Céu', ...chartPosition(midheaven) }])
 	]);
 	function expand() {
+		if (!hydrated || dialog.open) return;
+		expanded = true;
 		dialog.showModal();
+	}
+	function close() {
+		// A queued close from an earlier opening must not clear a reopened map.
+		if (dialog.open) return;
+		expanded = false;
+		openButton?.focus();
 	}
 </script>
 
@@ -109,7 +118,7 @@
 	class="chart-dialog"
 	bind:this={dialog}
 	aria-labelledby={`${chartId}-dialog-title`}
-	onclose={() => openButton?.focus()}
+	onclose={close}
 >
 	<div class="dialog-heading">
 		<div>
@@ -127,7 +136,9 @@
 		aria-label="Mapa ampliado; use a rolagem para explorar"
 		tabindex="0"
 	>
-		<img src={source} width="820" height="820" alt={`${title} ampliado.`} />
+		{#if expanded}
+			<img src={source} width="820" height="820" alt={`${title} ampliado.`} />
+		{/if}
 	</div>
 </dialog>
 

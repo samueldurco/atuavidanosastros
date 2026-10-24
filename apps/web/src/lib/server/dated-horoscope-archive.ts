@@ -27,6 +27,7 @@ interface ArchiveAsset {
 	evidenceByDigest: Record<string, string>;
 }
 export type EditorialAssetFetch = (path: string) => Promise<Response>;
+type IndexAdmission = (entry: DatedArchiveEntry) => Promise<boolean>;
 const hex = (value: unknown): value is string =>
 	typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
 
@@ -53,10 +54,10 @@ async function admittedIndex(
 }
 
 /** Listings verify signed metadata; historical text and ephemerides stay in static assets. */
-export async function archivedEditorialSummaries(
+async function readSummaries(
 	release: DatedArchiveRelease,
-	authorities: AutomatedRegistry['authorities'],
-	now: Date
+	now: Date,
+	admit: IndexAdmission
 ): Promise<EditorialSummary[]> {
 	if (release.schemaVersion !== 'atv-dated-horoscope-index-release-v1') return [];
 	const ids = new Map<string, number>();
@@ -70,7 +71,7 @@ export async function archivedEditorialSummaries(
 	}
 	const documents: EditorialSummary[] = [];
 	for (const entry of release.entries) {
-		if (!(await admittedIndex(entry, authorities, now))) continue;
+		if (!(await admit(entry))) continue;
 		documents.push(
 			...entry.index.documents.filter(
 				(d) =>
@@ -85,12 +86,13 @@ export async function archivedEditorialSummaries(
 }
 
 /** Fetch only the requested interval. A content hash is not a substitute for approval. */
-export async function archivedEditorialDocument(
+async function readDocument(
 	path: string,
 	release: DatedArchiveRelease,
 	authorities: AutomatedRegistry['authorities'],
 	fetchAsset: EditorialAssetFetch,
-	now: Date
+	now: Date,
+	admit: IndexAdmission
 ): Promise<EditorialDocument | undefined> {
 	try {
 		if (release.schemaVersion !== 'atv-dated-horoscope-index-release-v1') return;
@@ -99,7 +101,7 @@ export async function archivedEditorialDocument(
 		);
 		if (matches.length !== 1) return;
 		const entry = matches[0];
-		if (!(await admittedIndex(entry, authorities, now))) return;
+		if (!(await admit(entry))) return;
 		const summary = entry.index.documents.find((document) => document.path === path)!;
 		if (
 			Date.parse(summary.publishedAt) > now.getTime() ||
@@ -147,4 +149,45 @@ export async function archivedEditorialDocument(
 		// Unavailable assets, malformed packages and failed verification never become readings.
 		return;
 	}
+}
+
+/** Share admission only within one request, bound to its release, authorities and clock. */
+export function createDatedArchiveRead(
+	release: DatedArchiveRelease,
+	authorities: AutomatedRegistry['authorities'],
+	now: Date
+) {
+	const readAt = new Date(now.getTime());
+	const admitted = new Map<DatedArchiveEntry, Promise<boolean>>();
+	const admit: IndexAdmission = (entry) => {
+		let result = admitted.get(entry);
+		if (!result) {
+			result = admittedIndex(entry, authorities, readAt);
+			admitted.set(entry, result);
+		}
+		return result;
+	};
+	return {
+		summaries: () => readSummaries(release, readAt, admit),
+		document: (path: string, fetchAsset: EditorialAssetFetch) =>
+			readDocument(path, release, authorities, fetchAsset, readAt, admit)
+	};
+}
+
+export function archivedEditorialSummaries(
+	release: DatedArchiveRelease,
+	authorities: AutomatedRegistry['authorities'],
+	now: Date
+): Promise<EditorialSummary[]> {
+	return createDatedArchiveRead(release, authorities, now).summaries();
+}
+
+export function archivedEditorialDocument(
+	path: string,
+	release: DatedArchiveRelease,
+	authorities: AutomatedRegistry['authorities'],
+	fetchAsset: EditorialAssetFetch,
+	now: Date
+): Promise<EditorialDocument | undefined> {
+	return createDatedArchiveRead(release, authorities, now).document(path, fetchAsset);
 }
