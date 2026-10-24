@@ -285,6 +285,43 @@ test('consentimento explícito → nota → revisão CAS → revogação → exc
 	await expect(page.getByRole('button', { name: 'Atualizar registros' })).toBeFocused();
 });
 
+test('close atrasado não fecha diálogo reaberto nem antecipa a exclusão', async ({ page }) => {
+	const state = await fixture(page);
+	await load(page);
+	await authorize(page);
+	await note(page);
+	const savedId = state.value.items[0].id;
+	const trigger = page.getByRole('button', { name: 'Excluir registro', exact: true });
+	const dialog = page.getByRole('dialog');
+	const confirm = page.getByRole('button', { name: 'Confirmar exclusão do registro' });
+	await trigger.click();
+	await expect(dialog).toContainText('Tema sintético escrito por mim.');
+	await page.keyboard.press('Escape');
+	await expect(dialog).not.toBeVisible();
+	await expect(trigger).toBeFocused();
+	expect(state.writes.filter((write) => write.action === 'delete')).toHaveLength(0);
+	await page.keyboard.press('Enter');
+	await expect(dialog).toBeVisible();
+	await confirm.focus();
+	await expect(confirm).toBeFocused();
+	await dialog.evaluate((element) => {
+		if (!(element instanceof HTMLDialogElement) || !element.open)
+			throw new Error('O diálogo precisa estar reaberto antes do close atrasado.');
+		element.dispatchEvent(new Event('close'));
+	});
+	await expect(dialog).toBeVisible();
+	await expect(confirm).toBeFocused();
+	expect(state.value.items).toHaveLength(1);
+	expect(state.writes.filter((write) => write.action === 'delete')).toHaveLength(0);
+	await confirm.click();
+	await expect(page.getByText('Você ainda não guardou referências')).toBeVisible();
+	expect(state.writes.filter((write) => write.action === 'delete')).toEqual([
+		{ action: 'delete', body: { id: savedId } }
+	]);
+	expect(state.value.items).toHaveLength(0);
+	await expect(page.getByRole('button', { name: 'Atualizar registros' })).toBeFocused();
+});
+
 for (const code of [401, 409]) {
 	test(`HTTP ${code} impede reenvio e exige recuperação`, async ({ page }) => {
 		const state = await fixture(page);

@@ -23,8 +23,14 @@
 		} else if (!open && element.open) element.close();
 	});
 	function close() {
+		// A queued close can belong to the previous opening of this dialog.
+		if (element.open) return;
 		open = false;
 		returnFocus?.focus();
+	}
+	function cancel(event: Event) {
+		event.preventDefault();
+		open = false;
 	}
 	function containFocus(event: KeyboardEvent) {
 		if (event.key !== 'Tab') return;
@@ -50,7 +56,7 @@
 	class={variant}
 	aria-labelledby={`${id}-title`}
 	onclose={close}
-	oncancel={() => (open = false)}
+	oncancel={cancel}
 	onkeydown={containFocus}
 >
 	<div class="dialog-heading">
