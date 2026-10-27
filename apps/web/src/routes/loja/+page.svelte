@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ShopShowcase from '$lib/components/ShopShowcase.svelte';
+	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
 </script>
 
 <svelte:head>
@@ -18,6 +19,7 @@
 		>.
 	</p>
 	<ShopShowcase showLink={false} headingLevel="h1" />
+	<ShopPolicyLinks />
 	<aside class="shop-reading" aria-labelledby="shop-reading-title">
 		<div>
 			<p class="eyebrow">Enquanto a coleção ganha forma</p>
