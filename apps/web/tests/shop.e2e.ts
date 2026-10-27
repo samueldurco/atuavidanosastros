@@ -7,6 +7,11 @@ test.beforeEach(async ({ page }) => {
 
 async function assertShowcaseOnly(page: Page) {
 	await expect(page.locator('main')).toContainText('ainda não está à venda');
+	const robots = await page
+		.locator('meta[name="robots"]')
+		.evaluateAll((tags) => tags.map((tag) => tag.getAttribute('content') ?? ''));
+	expect(robots.length).toBeGreaterThan(0);
+	expect(robots.every((value) => /(?:^|,)\s*noindex\s*(?:,|$)/i.test(value))).toBe(true);
 	await expect(
 		page.locator('main').getByRole('button', { name: /comprar|carrinho|pagar/i })
 	).toHaveCount(0);
@@ -49,6 +54,7 @@ test('Todas as 15 coleções estão acessíveis sem duplicar páginas das peças
 	await nav.getByRole('link', { name: /Namorados e Sinastria/ }).click();
 	await expect(page).toHaveURL(/\/loja\/colecao\/casal$/);
 	await expect(page.locator('.shop-card')).toHaveCount(159);
+	await assertShowcaseOnly(page);
 	await page
 		.getByRole('combobox', { name: 'Combinação de signos', exact: true })
 		.selectOption('Áries + Câncer');
