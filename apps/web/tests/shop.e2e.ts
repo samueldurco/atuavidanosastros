@@ -1,114 +1,144 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
 
-test('Coleções conceituais permitem filtros, detalhes e estado vazio sem checkout', async ({
-	page
-}) => {
-	await page.goto('/loja');
-	await expect(page.locator('#colecoes')).toHaveAttribute('data-hydrated', 'true');
-	const refuseAnalytics = page.getByRole('button', { name: 'Recusar opcionais' });
-	if (await refuseAnalytics.isVisible()) {
-		await refuseAnalytics.click();
-		await expect(refuseAnalytics).toBeHidden();
-	}
-	const region = page.locator('#colecoes');
-	await expect(region).toHaveAttribute('data-hydrated', 'true');
-	await expect(region.getByRole('status')).toContainText('19 direções');
-	await expect(region.getByTestId('shop-direction')).toHaveCount(6);
-	await region.getByRole('button', { name: 'Próxima', exact: true }).click();
-	await expect(region.getByText('Página 2 de 4')).toBeVisible();
-	await region.getByLabel('Técnica em estudo', { exact: true }).selectOption('embroidery');
-	await expect(region.getByRole('status')).toContainText('4 direções');
-	await expect(region.getByText('Página 1 de 1')).toBeVisible();
-	await region.getByLabel('Coleção', { exact: true }).selectOption('simbolos-bordados');
-	await expect(region.getByTestId('shop-direction')).toHaveCount(1);
-	await region.getByText('Conhecer a direção', { exact: true }).click();
-	await expect(region.getByText(/Monogramas celestes/)).toBeVisible();
-	await region.getByLabel('Para quem', { exact: true }).selectOption('baby');
-	await expect(
-		region.getByRole('heading', { name: 'Nenhuma direção com esses filtros' })
-	).toBeVisible();
-	await region.getByRole('button', { name: 'Ver todas as direções' }).click();
-	await region.getByLabel('Buscar uma direção').fill('orbita');
-	await expect(region.getByTestId('shop-direction')).toHaveCount(1);
-	await expect(region.getByRole('heading', { name: 'Órbita Zodiacal' })).toBeVisible();
-	await region.getByRole('button', { name: 'Limpar filtros' }).click();
-	await region.getByLabel('Signo', { exact: true }).selectOption('aries');
-	await expect(region.getByRole('status')).toContainText('16 direções');
-	await expect(region.locator('img')).toHaveCount(0);
-	await expect(region.getByRole('button', { name: /comprar|carrinho|pagar/i })).toHaveCount(0);
+test.beforeEach(async ({ page }) => {
+	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
 
-test('Loja mantém as 12 rotas editoriais sem ofertas publicadas', async ({ page }) => {
+async function assertShowcaseOnly(page: Page) {
+	await expect(page.locator('main')).toContainText('ainda não está à venda');
+	await expect(
+		page.locator('main').getByRole('button', { name: /comprar|carrinho|pagar/i })
+	).toHaveCount(0);
+	const structuredData = await page.locator('script[type="application/ld+json"]').allTextContents();
+	expect(
+		structuredData.some((value) => /"@type"\s*:\s*"(Product|Offer|AggregateOffer)"/.test(value))
+	).toBe(false);
+}
+
+test('Vitrine permite filtrar peças existentes e abrir detalhes sem checkout', async ({ page }) => {
 	await page.goto('/loja');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
-	await expect(
-		page.getByRole('navigation', { name: 'Signos na loja' }).getByRole('link')
-	).toHaveCount(12);
-	await expect(page.locator('.hero-copy .lead')).toContainText(
-		'Ainda não há produtos, preços, estoque, prazo ou avaliações publicados.'
-	);
-	expect(await page.locator('script[type="application/ld+json"]').allTextContents()).not.toEqual(
-		expect.arrayContaining([
-			expect.stringMatching(/"@type"\s*:\s*"(Product|Offer|AggregateOffer)"/)
-		])
-	);
+	await expect(page.locator('.shop-card')).toHaveCount(319);
+	await assertShowcaseOnly(page);
 	await page
-		.getByRole('navigation', { name: 'Signos na loja' })
+		.getByRole('combobox', { name: 'Tipo de peça', exact: true })
+		.selectOption('Regata de casal');
+	await expect(page.locator('.shop-card')).toHaveCount(3);
+	await expect(page.locator('.shop-toolbar [aria-live]')).toContainText('3 peças em preparação');
+	await page.locator('.shop-card .product-image').first().click();
+	await expect(page).toHaveURL(/\/loja\/peca\//);
+	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+	await expect(page.locator('.gallery .main-image img')).toBeVisible();
+	await expect(page.locator('meta[name="robots"][content="noindex,follow"]')).toHaveCount(1);
+	expect(
+		await page
+			.locator('meta[name="robots"]')
+			.evaluateAll((tags) => tags.every((tag) => tag.getAttribute('content')?.includes('noindex')))
+	).toBe(true);
+	await assertShowcaseOnly(page);
+});
+
+test('Todas as 15 coleções estão acessíveis sem duplicar páginas das peças', async ({ page }) => {
+	await page.goto('/loja');
+	const nav = page.getByRole('navigation', { name: 'Coleções da Loja dos Signos', exact: true });
+	await nav.locator('summary').click();
+	await expect(nav.getByRole('link')).toHaveCount(16);
+	await expect(nav.getByRole('link', { name: /Acessórios/ })).toBeVisible();
+	await expect(nav.getByRole('link', { name: /Premium/ })).toBeVisible();
+	await nav.getByRole('link', { name: /Namorados e Sinastria/ }).click();
+	await expect(page).toHaveURL(/\/loja\/colecao\/casal$/);
+	await expect(page.locator('.shop-card')).toHaveCount(159);
+	await page
+		.getByRole('combobox', { name: 'Combinação de signos', exact: true })
+		.selectOption('Áries + Câncer');
+	await expect(page.locator('.shop-card')).toHaveCount(3);
+	await page
+		.getByRole('combobox', { name: 'Tipo de peça', exact: true })
+		.selectOption('Regata de casal');
+	await expect(page.locator('.shop-card')).toHaveCount(1);
+	await page
+		.getByRole('navigation', { name: 'Coleções da Loja dos Signos', exact: true })
+		.getByRole('link', { name: /Premium/ })
+		.click();
+	await expect(page.locator('.shop-card')).toHaveCount(24);
+	await expect(page.getByRole('combobox', { name: 'Tipo de peça', exact: true })).toHaveValue(
+		'Todas'
+	);
+	const pieceHref = await page.locator('.shop-card .product-image').first().getAttribute('href');
+	await page
+		.getByRole('navigation', { name: 'Coleções da Loja dos Signos', exact: true })
+		.locator('summary')
+		.click();
+	await page
+		.getByRole('navigation', { name: 'Coleções da Loja dos Signos', exact: true })
 		.getByRole('link', { name: /Áries/ })
 		.click();
 	await expect(page).toHaveURL(/\/loja\/signo\/aries$/);
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Áries na Loja dos Signos');
-	await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,follow');
-	await expect(
-		page.getByText(/Os produtos, os preços e as condições de compra serão exibidos aqui/)
-	).toBeVisible();
-	const refuseAnalytics = page.getByRole('button', { name: 'Recusar opcionais' });
-	if (await refuseAnalytics.isVisible()) await refuseAnalytics.click();
-	await page.screenshot({ path: '../../test-results/gate-b/loja-signo-1280.png', fullPage: true });
-	await page.setViewportSize({ width: 390, height: 900 });
-	expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(
-		false
+	await expect(page.locator('.shop-card')).toHaveCount(14);
+	await expect(page.locator(`.shop-card .product-image[href="${pieceHref}"]`)).toHaveCount(1);
+	await assertShowcaseOnly(page);
+});
+
+test('Galeria troca vistas e cores; caminhos inexistentes retornam 404', async ({ page }) => {
+	await page.goto('/loja/peca/cropped-aries');
+	const image = page.locator('.gallery .main-image img');
+	const initial = await image.getAttribute('src');
+	await page.getByRole('button', { name: 'No corpo', exact: true }).click();
+	await expect(image).not.toHaveAttribute('src', initial!);
+	await page.getByRole('button', { name: 'Branco', exact: true }).click();
+	await expect(page.getByRole('button', { name: 'Frente da peça', exact: true })).toHaveAttribute(
+		'aria-pressed',
+		'true'
 	);
-	await page.screenshot({ path: '../../test-results/gate-b/loja-signo-390.png', fullPage: true });
+	await expect(image).toHaveAttribute('src', /branco-produto/);
+	await expect(image).toHaveAttribute('alt', /branco/);
+	for (const path of [
+		'/loja/peca/inexistente',
+		'/loja/colecao/inexistente',
+		'/loja/signo/inexistente'
+	]) {
+		expect((await page.goto(path))?.status()).toBe(404);
+	}
+});
+
+test('Rotas de comércio permanecem bloqueadas no ambiente publicado de teste', async ({
+	request
+}) => {
+	const catalog = await request.get('/api/shop/catalog');
+	expect(catalog.status()).toBe(503);
+	expect(await catalog.json()).toMatchObject({ code: 'physical_commerce_disabled' });
+	const cart = await request.post('/api/shop/cart', { data: {} });
+	expect(cart.status()).toBe(503);
+	expect(await cart.json()).toMatchObject({ code: 'physical_commerce_disabled' });
+	expect((await request.post('/api/shop/diagnostic', { data: {} })).status()).toBe(404);
 });
 
 for (const width of [1440, 820, 390, 320]) {
-	test(`Loja cabe na viewport de ${width}px`, async ({ page }) => {
+	test(`Loja e detalhes cabem na viewport de ${width}px`, async ({ page }, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
-		await page.goto('/loja');
-		await expect(page.locator('#colecoes')).toHaveAttribute('data-hydrated', 'true');
-		const refuseAnalytics = page.getByRole('button', { name: 'Recusar opcionais' });
-		if (await refuseAnalytics.isVisible()) {
-			await refuseAnalytics.click();
-			await expect(refuseAnalytics).toBeHidden();
-		}
-		await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
-		const horizontalOverflow = await page.evaluate(
-			() => document.documentElement.scrollWidth > window.innerWidth
-		);
-		expect(horizontalOverflow).toBe(false);
-		await page.screenshot({ path: `../../test-results/gate-b/loja-${width}.png`, fullPage: true });
-		if (width === 1440 || width === 390) {
-			await page.screenshot({ path: `../../test-results/gate-b/loja-${width}-inicio.png` });
+		for (const path of ['/loja', '/loja/colecao/casal', '/loja/peca/cropped-aries']) {
+			await page.goto(path);
+			await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+			expect(
+				await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
+			).toBe(false);
+			await page.screenshot({ path: testInfo.outputPath(`${path.split('/').pop()}-${width}.png`) });
 		}
 	});
 }
 
 for (const width of [1440, 390]) {
-	test(`Coleções acessíveis e filtros por teclado em ${width}px`, async ({ page }, testInfo) => {
+	test(`Vitrine e detalhes acessíveis em ${width}px`, async ({ page }, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/loja');
-		await expect(page.locator('#colecoes')).toHaveAttribute('data-hydrated', 'true');
-		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
-		const search = page.getByLabel('Buscar uma direção');
-		await search.focus();
-		await page.keyboard.type('orbita');
-		await expect(page.getByTestId('shop-direction')).toHaveCount(1);
-		await page.keyboard.press('Tab');
-		await expect(page.getByLabel('Coleção', { exact: true })).toBeFocused();
+		const category = page.getByRole('combobox', { name: 'Tipo de peça', exact: true });
+		await category.focus();
+		await expect(category).toBeFocused();
+		await page.keyboard.press('r');
+		await page.keyboard.press('Enter');
 		await scanAccessibility(page, testInfo);
-		await page.getByRole('button', { name: 'Limpar filtros' }).click();
+		await page.goto('/loja/peca/cropped-aries');
 		await scanAccessibility(page, testInfo);
 	});
 }

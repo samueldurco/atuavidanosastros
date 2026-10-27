@@ -3,10 +3,10 @@
 </script>
 
 <svelte:head>
-	<title>Produtos físicos · Loja dos Signos — A Tua Vida nos Astros</title>
+	<title>Loja dos Signos — A Tua Vida nos Astros</title>
 	<meta
 		name="description"
-		content="Produtos físicos da Loja dos Signos: conheça as primeiras artes para pôsteres inspirados no zodíaco e nas fases da Lua. Coleção em preparação."
+		content="Conheça as artes zodiacais da nova Loja dos Signos. Produtos e mockups da coleção em preparação."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
 </svelte:head>

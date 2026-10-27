@@ -1,55 +1,154 @@
 <script lang="ts">
-	let { showLink = true, headingLevel = 'h2' }: { showLink?: boolean; headingLevel?: 'h1' | 'h2' } =
-		$props();
-	const pieces = [
-		{
-			id: 'P04-CICLO-A001',
-			title: 'Percurso dos doze',
-			image: '/brand/shop/p04/percurso-dos-doze.png',
-			description: 'Os doze signos reunidos em uma composição para a parede.',
-			alt: 'Prévia da arte Percurso dos doze: símbolos dos doze signos ligados por um percurso sobre fundo claro.'
-		},
-		{
-			id: 'P04-CICLO-A003',
-			title: 'Ciclo lunar',
-			image: '/brand/shop/p04/ciclo-lunar.png',
-			description: 'Uma composição inspirada nas fases da Lua e no zodíaco.',
-			alt: 'Prévia da arte Ciclo lunar: fases da Lua na parte superior e símbolos dos doze signos abaixo.'
-		}
-	];
+	import { shopPreviews } from '$lib/data/shop-products';
+	import type { ShopCollection } from '$lib/data/shop-collections';
+	import ShopCollectionsNav from './ShopCollectionsNav.svelte';
+	let {
+		showLink = true,
+		headingLevel = 'h2',
+		collection
+	}: {
+		showLink?: boolean;
+		headingLevel?: 'h1' | 'h2';
+		collection?: ShopCollection;
+	} = $props();
+	let sign = $state('Todos');
+	let category = $state('Todas');
+	$effect(() => {
+		void collection?.slug;
+		sign = 'Todos';
+		category = 'Todas';
+	});
+	const source = $derived(collection?.products ?? shopPreviews);
+	const signs = $derived(['Todos', ...new Set(source.map((piece) => piece.sign))]);
+	const categories = $derived(['Todas', ...new Set(source.map((piece) => piece.category))]);
+	const pieces = $derived(
+		showLink
+			? source.slice(0, 3)
+			: source.filter(
+					(piece) =>
+						(sign === 'Todos' || piece.sign === sign) &&
+						(category === 'Todas' || piece.category === category)
+				)
+	);
 </script>
 
 <section class="shop-showcase" aria-labelledby="shop-showcase-title">
 	<div class="shop-heading">
 		<div>
-			<p class="eyebrow">Produtos físicos · coleção em preparação</p>
-			<svelte:element this={headingLevel} id="shop-showcase-title">Loja dos Signos</svelte:element>
+			<p class="eyebrow">Produtos físicos · aquarelas zodiacais</p>
+			<svelte:element this={headingLevel} id="shop-showcase-title"
+				>{collection?.name ?? 'Loja dos Signos'}</svelte:element
+			>
 		</div>
 		<p>
-			Produtos físicos inspirados na astrologia para o seu espaço. Conheça as primeiras artes da
-			nossa coleção de pôsteres.
+			{#if collection?.slug === 'acessorios'}
+				Aquarelas para acompanhar seus dias. Explore canecas, ecobags e garrafas, com uma composição
+				própria para cada peça.
+			{:else if collection?.slug === 'casal'}
+				Dois signos em uma aquarela de afeto. Composições integradas para celebrar encontros, com
+				uma camiseta em cada compra.
+			{:else if collection}
+				Os símbolos de {collection.name} em diferentes aquarelas. Descubra as peças e os detalhes de cada
+				estampa.
+			{:else}
+				Seu signo no que você veste e leva consigo. Conheça a coleção e veja os detalhes de cada
+				estampa.
+			{/if}
 		</p>
 	</div>
+	{#if !showLink}
+		<ShopCollectionsNav current={collection?.slug ?? ''} />
+		<div class="shop-toolbar">
+			{#if signs.length > 2}
+				<label class="mobile-sign-filter" class:compact-filter={signs.length > 14}>
+					{collection?.slug === 'casal' ? 'Combinação de signos' : 'Signo'}
+					<select bind:value={sign}>
+						{#each signs as option (option)}
+							<option value={option}
+								>{option === 'Todos'
+									? collection?.slug === 'casal'
+										? 'Todas as combinações'
+										: 'Todos os signos'
+									: option}</option
+							>
+						{/each}
+					</select>
+				</label>
+				{#if signs.length <= 14}
+					<div
+						class="sign-filter"
+						role="group"
+						aria-label={collection?.slug === 'casal'
+							? 'Filtrar peças por combinação'
+							: 'Filtrar peças por signo'}
+					>
+						{#each signs as option (option)}
+							<button type="button" aria-pressed={sign === option} onclick={() => (sign = option)}
+								>{option === 'Todos'
+									? collection?.slug === 'casal'
+										? 'Todas as combinações'
+										: 'Todos os signos'
+									: option}</button
+							>
+						{/each}
+					</div>
+				{/if}
+			{/if}
+			{#if categories.length > 2}
+				<label class="category-filter">
+					Tipo de peça
+					<select bind:value={category}>
+						{#each categories as option (option)}
+							<option value={option}>{option === 'Todas' ? 'Todas as peças' : option}</option>
+						{/each}
+					</select>
+				</label>
+			{/if}
+			<p aria-live="polite">
+				{pieces.length}
+				{pieces.length === 1 ? 'peça em preparação' : 'peças em preparação'}
+			</p>
+		</div>
+	{/if}
 	<div class="shop-pieces">
-		{#each pieces as piece (piece.id)}
-			<figure>
-				<div class="art-proof">
-					<img src={piece.image} alt={piece.alt} width="600" height="800" loading="lazy" />
+		{#each pieces as piece (piece.slug)}
+			<article class="shop-card">
+				<a
+					class="product-image"
+					href={`/loja/peca/${piece.slug}`}
+					aria-label={`Ver ${piece.title}`}
+				>
+					<img
+						src={piece.colors[0].images[0].src}
+						alt={piece.colors[0].images[0].alt}
+						width={piece.imageSize ?? 1200}
+						height={piece.imageSize ?? 1200}
+						loading="lazy"
+					/>
+					<span class="preview-label">Prévia da coleção</span>
+				</a>
+				<div class="product-copy">
+					<p class="eyebrow">{piece.sign} · {piece.category}</p>
+					<svelte:element this={headingLevel === 'h1' ? 'h2' : 'h3'}
+						><a href={`/loja/peca/${piece.slug}`}>{piece.title}</a></svelte:element
+					>
+					<p class="colors">{piece.colors.map((color) => color.name).join(' / ')}</p>
+					<div class="card-end">
+						<span>Em preparação</span><a href={`/loja/peca/${piece.slug}`}
+							>Ver peça <span aria-hidden="true">↗</span></a
+						>
+					</div>
 				</div>
-				<figcaption>
-					<p class="eyebrow">Prévia de pôster</p>
-					<svelte:element this={headingLevel === 'h1' ? 'h2' : 'h3'}>{piece.title}</svelte:element>
-					<p>{piece.description}</p>
-				</figcaption>
-			</figure>
+			</article>
 		{/each}
 	</div>
 	<div class="shop-end">
-		<p>Estas são prévias das artes. A coleção ainda não está à venda.</p>
+		<p>
+			Imagens de apresentação geradas pelo fabricante para esta coleção. A coleção ainda não está à
+			venda.
+		</p>
 		{#if showLink}<a class="button secondary" href="/loja"
-				>Conhecer os produtos físicos <span aria-hidden="true">↗</span></a
-			>{:else}<a class="button secondary" href="/fale-conosco?assunto=loja"
-				>Falar sobre a coleção <span aria-hidden="true">↗</span></a
+				>Conhecer a Loja dos Signos <span aria-hidden="true">↗</span></a
 			>{/if}
 	</div>
 </section>
@@ -75,40 +174,131 @@
 		font: 400 1.2rem/1.6 var(--atv-font-editorial);
 		margin: 0;
 	}
+	.shop-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		margin: 2rem 0;
+		padding-block: 1rem;
+		border-block: 1px solid var(--atv-border);
+	}
+	.shop-toolbar > p {
+		font-size: 0.85rem;
+		margin: 0;
+	}
+	.category-filter {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: 0.9rem;
+	}
+	.category-filter select,
+	.mobile-sign-filter select {
+		min-height: 44px;
+		max-width: 100%;
+		padding: 0.6rem 2rem 0.6rem 0.9rem;
+		border: 1px solid var(--atv-border);
+		border-radius: 0.4rem;
+		background: #fff8e9;
+		color: var(--atv-text, inherit);
+		font: inherit;
+	}
+	.mobile-sign-filter {
+		display: none;
+	}
+	.mobile-sign-filter.compact-filter {
+		display: grid;
+		gap: 0.6rem;
+		min-width: 0;
+		max-width: 100%;
+		font-size: 0.9rem;
+	}
+	.sign-filter {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.sign-filter button {
+		min-height: 44px;
+		padding: 0.6rem 1rem;
+		border: 1px solid var(--atv-border);
+		border-radius: 2rem;
+		color: var(--atv-text, inherit);
+		background: transparent;
+		font: inherit;
+		cursor: pointer;
+	}
+	.sign-filter button[aria-pressed='true'] {
+		color: #fff8e9;
+		background: #183746;
+		border-color: #183746;
+	}
 	.shop-pieces {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 		gap: clamp(1rem, 3vw, 3rem);
 	}
-	figure {
-		margin: 0;
+	.shop-card {
 		min-width: 0;
 	}
-	.art-proof {
-		padding: clamp(1rem, 3vw, 2.5rem);
-		background: #ddd7c8;
+	.product-image {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		background: #fff;
+		border: 1px solid var(--atv-border);
 	}
-	.art-proof img {
+	.product-image img {
 		display: block;
 		width: 100%;
-		max-width: 350px;
 		height: auto;
-		margin-inline: auto;
-		box-shadow: 0 7px 18px #173b4020;
+		aspect-ratio: 1;
+		object-fit: contain;
 	}
-	figcaption {
-		padding: 1.3rem 0;
+	.preview-label {
+		position: absolute;
+		inset: 1rem auto auto 1rem;
+		padding: 0.4rem 0.65rem;
+		background: #f6efdf;
+		color: #183746;
+		font-size: 0.75rem;
 	}
-	figcaption .eyebrow {
+	.product-copy {
+		padding: 1.3rem 0 1.75rem;
+	}
+	.product-copy .eyebrow {
 		margin: 0 0 0.5rem;
 	}
-	figcaption :is(h2, h3) {
+	.product-copy :is(h2, h3) {
 		font: 500 clamp(1.5rem, 3vw, 2rem)/1.15 var(--atv-font-display);
 		margin: 0;
 	}
-	figcaption > p:last-child {
-		max-width: 33rem;
-		margin-bottom: 0;
+	.product-copy :is(h2, h3) a {
+		text-decoration: none;
+	}
+	.colors {
+		font-size: 0.9rem;
+		margin: 0.75rem 0;
+	}
+	.card-end {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: center;
+		gap: 0.5rem 1rem;
+	}
+	.card-end > span {
+		font-size: 0.85rem;
+	}
+	.card-end a {
+		display: inline-flex;
+		min-height: 44px;
+		gap: 0.5rem;
+		align-items: center;
+		font-weight: 600;
 	}
 	.shop-end {
 		display: flex;
@@ -119,10 +309,25 @@
 		border-top: 1px solid var(--atv-border);
 	}
 	.shop-end p {
-		max-width: 30rem;
-		font-size: 0.95rem;
+		max-width: 36rem;
+		font-size: 0.9rem;
+	}
+	@media (min-width: 651px) and (max-width: 1000px) {
+		.shop-pieces {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
 	}
 	@media (max-width: 650px) {
+		.sign-filter {
+			display: none;
+		}
+		.mobile-sign-filter {
+			display: grid;
+			gap: 0.6rem;
+			width: 100%;
+			min-width: 0;
+			font-size: 0.9rem;
+		}
 		.shop-heading {
 			grid-template-columns: 1fr;
 			gap: 1rem;
@@ -135,9 +340,6 @@
 			align-items: flex-start;
 			flex-direction: column;
 			gap: 0.5rem;
-		}
-		.art-proof img {
-			max-width: 280px;
 		}
 	}
 </style>
