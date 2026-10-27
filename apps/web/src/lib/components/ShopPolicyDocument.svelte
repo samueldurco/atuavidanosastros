@@ -32,7 +32,7 @@
 	<div class="policy-body">
 		<!-- Static, reviewed local HTML; no customer or provider response is interpolated. -->
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html document.body}
+		{@html `<!--email_off-->${document.body}<!--/email_off-->`}
 	</div>
 	<nav aria-label="Privacidade e atendimento" class="related-links">
 		<a href="/privacidade">Política de Privacidade</a>
