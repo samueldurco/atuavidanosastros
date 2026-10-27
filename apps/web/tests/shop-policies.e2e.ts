@@ -18,6 +18,10 @@ test('Políticas e atendimento estão disponíveis sem JavaScript e sem abrir co
 		for (const policy of policies) {
 			const response = await page.goto(policy.path);
 			expect(response?.status()).toBe(200);
+			const html = await response!.text();
+			const protectedBody = html.match(/<!--email_off-->([\s\S]*?)<!--\/email_off-->/)?.[1];
+			expect(protectedBody).toContain('href="mailto:atuavidanosastros2026@gmail.com"');
+			expect(protectedBody).not.toContain('data-cfemail');
 			await expect(page.getByRole('heading', { level: 1 })).toHaveText(policy.title);
 			await expect(page.locator('article .policy-body')).not.toBeEmpty();
 			await expect(
