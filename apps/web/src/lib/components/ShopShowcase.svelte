@@ -46,7 +46,7 @@
 				própria para cada peça.
 			{:else if collection?.slug === 'casal'}
 				Dois signos em uma aquarela de afeto. Composições integradas para celebrar encontros, com
-				uma camiseta em cada compra.
+				uma peça em cada compra.
 			{:else if collection}
 				Os símbolos de {collection.name} em diferentes aquarelas. Descubra as peças e os detalhes de cada
 				estampa.

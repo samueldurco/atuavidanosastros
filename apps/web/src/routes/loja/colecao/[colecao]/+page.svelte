@@ -10,7 +10,7 @@
 	<meta
 		name="description"
 		content={data.collection.slug === 'casal'
-			? 'Dois signos em composições de afeto. Conheça as camisetas Namorados e Sinastria e os detalhes de cada estampa.'
+			? 'Dois signos em composições de afeto. Conheça as peças Namorados e Sinastria e os detalhes de cada estampa.'
 			: `Conheça as aquarelas e os detalhes das peças da coleção ${data.collection.name}, na Loja dos Signos.`}
 	/>
 	<link rel="canonical" href={`https://atuavidanosastros.com.br${data.collection.href}`} />
