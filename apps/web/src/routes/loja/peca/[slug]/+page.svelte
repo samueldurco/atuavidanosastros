@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
 	let { data } = $props();
 	let colorIndex = $state(0);
 	let imageIndex = $state(0);
@@ -103,6 +104,7 @@
 					</div>
 				{/if}
 			</dl>
+			<ShopPolicyLinks />
 			<a class="button secondary" href="/loja"
 				>Explorar a coleção <span aria-hidden="true">↗</span></a
 			>

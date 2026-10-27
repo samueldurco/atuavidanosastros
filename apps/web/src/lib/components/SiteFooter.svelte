@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { navigationGroups } from '$lib/data/public-navigation';
+	import { shopPolicyLinks } from '$lib/data/shop-policies';
 	import BrandLogo from './BrandLogo.svelte';
 	import SocialPresence from './SocialPresence.svelte';
 </script>
@@ -25,6 +26,9 @@
 			<a href="/biblioteca">Minhas leituras</a>
 			<a href="/termos">Termos de uso</a>
 			<a href="/privacidade">Privacidade</a>
+			{#each shopPolicyLinks as policy (policy.href)}
+				<a href={policy.href}>{policy.label}</a>
+			{/each}
 			<button
 				type="button"
 				onclick={() => window.dispatchEvent(new Event('atv-cookie-preferences'))}
