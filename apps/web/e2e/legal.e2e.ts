@@ -16,8 +16,9 @@ test('legal documents render publicly with contact and canonical links', async (
 		await page.goto(`/${path}`);
 		await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
 		await expect(
-			page.locator('article a[href="mailto:suporte@atuavidanosastros.com.br"]')
+			page.locator('article a[href="mailto:atuavidanosastros2026@gmail.com"]')
 		).toBeVisible();
+		expect(html).not.toContain('suporte@atuavidanosastros.com.br');
 		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 			'href',
 			`https://atuavidanosastros.com.br/${path}`
