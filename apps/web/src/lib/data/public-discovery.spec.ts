@@ -54,4 +54,21 @@ describe('public discovery identity and canonical URLs', () => {
 		).toHaveLength(1);
 		expect(pagesSitemap([])).not.toContain('/produtos/mapa-proposito-carreira</loc>');
 	});
+	it('keeps the physical showcase out of search on the canonical origin while preserving digital discovery', () => {
+		for (const path of [
+			'/loja',
+			'/loja/colecao/casal',
+			'/loja/signo/aries',
+			'/loja/peca/cropped-aries'
+		]) {
+			expect(
+				robotsPolicy(legacySeo(path), new URL(`https://atuavidanosastros.com.br${path}`))
+			).toBe('noindex, nofollow');
+		}
+		for (const path of ['/', '/leituras']) {
+			expect(
+				robotsPolicy(legacySeo(path), new URL(`https://atuavidanosastros.com.br${path}`))
+			).toBe('index, follow');
+		}
+	});
 });

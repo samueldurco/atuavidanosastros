@@ -130,7 +130,7 @@ export function legacySeo(path: string): PageSeo | null {
 		title: path === '/' ? entry.title : `${entry.title} — ${SITE.name}`,
 		description: entry.description,
 		path,
-		indexable: !shopSign,
+		indexable: path !== '/loja' && !shopSign,
 		managePrimary: false,
 		image: { url: `${SITE.url}/brand/social/og-default-1200x630.png`, alt: SITE.name, large: false }
 	};
