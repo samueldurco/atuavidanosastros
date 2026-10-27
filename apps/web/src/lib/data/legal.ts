@@ -1,4 +1,6 @@
-export const legalContact = 'suporte@atuavidanosastros.com.br';
+import { publicContactEmail } from './public-channels';
+
+export const legalContact = publicContactEmail;
 export const legalUpdatedAt = '5 de outubro de 2026';
 
 export const legalDocuments = {
