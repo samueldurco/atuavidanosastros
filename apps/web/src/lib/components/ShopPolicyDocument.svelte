@@ -29,6 +29,12 @@
 	<p class="lead">{document.description}</p>
 	<p>Atualizada em {shopPolicyUpdatedAt}</p>
 	<ShopPolicyLinks current={document.href} />
+	{#if kind === 'devolucoes'}
+		<p>
+			<a href="https://shopify.com/104247329136/account">Acompanhar pedido e solicitar devolução</a>
+			na sua conta da loja. Entre com o e-mail usado na compra.
+		</p>
+	{/if}
 	<div class="policy-body">
 		<!-- Static, reviewed local HTML; no customer or provider response is interpolated. -->
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
