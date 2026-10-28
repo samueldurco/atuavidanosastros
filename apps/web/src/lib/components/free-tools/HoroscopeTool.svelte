@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { onMount, tick } from 'svelte';
+	import { trackHomeEvent } from '$lib/analytics/home-events';
+	import MvpProductArt from '$lib/components/MvpProductArt.svelte';
 	import { signs, signNames, type SignSlug } from '$lib/data/site';
 	import {
 		horoscopePeriods,
@@ -14,6 +17,7 @@
 	let period = $state<PublicPeriod>('daily');
 	let pending = $state(false);
 	let error = $state('');
+	let resultHeading = $state<HTMLHeadingElement>();
 	let result = $state<{
 		sign: SignSlug;
 		period: PublicPeriod;
@@ -22,8 +26,35 @@
 		supportingGuides: { path: string; title: string; description: string }[];
 		archive: string;
 	} | null>(null);
+	const storageKey = 'atv-free-horoscope';
+	const localDay = () =>
+		new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date());
+	onMount(() => {
+		try {
+			const raw = sessionStorage.getItem(storageKey);
+			if (!raw || raw.length > 100000) return;
+			const saved = JSON.parse(raw);
+			if (
+				saved.day !== localDay() ||
+				!signs.includes(saved.sign) ||
+				!horoscopePeriods.includes(saved.period)
+			)
+				return;
+			sign = saved.sign;
+			period = saved.period;
+			// Reload editorial availability rather than trusting browser-supplied article content.
+			void read();
+		} catch {
+			/* Optional continuity. */
+		}
+	});
 	async function read() {
 		if (pending) return;
+		trackHomeEvent('tool_submit', {
+			tool_id: 'horoscopo',
+			context: embedded ? 'home' : 'alias',
+			state: 'initial'
+		});
 		pending = true;
 		error = '';
 		result = null;
@@ -31,7 +62,38 @@
 			const response = await fetch(`/api/free-tools/horoscopo?sign=${sign}&period=${period}`);
 			if (!response.ok) throw new Error('Não foi possível consultar agora. Tente novamente.');
 			result = await response.json();
+			if (result?.current) {
+				// Stable, non-personal operation ID deduplicates the same editorial revision.
+				const bytes = new Uint8Array(
+					await crypto.subtle.digest(
+						'SHA-256',
+						new TextEncoder().encode(`${result.current.id}:${result.current.revision}`)
+					)
+				);
+				bytes[6] = (bytes[6]! & 15) | 128;
+				bytes[8] = (bytes[8]! & 63) | 128;
+				const hex = Array.from(bytes.slice(0, 16), (b) => b.toString(16).padStart(2, '0')).join('');
+				trackHomeEvent(
+					'tool_result',
+					{ tool_id: 'horoscopo', context: embedded ? 'home' : 'alias', state: 'new' },
+					{
+						operationId: `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`
+					}
+				);
+				await tick();
+				resultHeading?.focus({ preventScroll: true });
+			}
+			try {
+				sessionStorage.setItem(storageKey, JSON.stringify({ sign, period, day: localDay() }));
+			} catch {
+				/* Optional continuity. */
+			}
 		} catch (cause) {
+			trackHomeEvent('tool_error', {
+				tool_id: 'horoscopo',
+				context: embedded ? 'home' : 'alias',
+				error_code: 'service_unavailable'
+			});
 			error = cause instanceof Error ? cause.message : 'Não foi possível consultar agora.';
 		} finally {
 			pending = false;
@@ -67,53 +129,84 @@
 			{#if result.current}
 				<article>
 					<p class="period">{horoscopeRange(result.current)}</p>
-					<h3>{result.current.title}</h3>
+					<h3 bind:this={resultHeading} tabindex="-1">{result.current.title}</h3>
 					{#each result.current.sections as section, sectionIndex (sectionIndex)}<section>
 							<h4>{section.heading}</h4>
 							{#each section.paragraphs as paragraph, paragraphIndex (paragraphIndex)}<p>
 									{paragraph}
 								</p>{/each}
 						</section>{/each}
-					<a href={result.current.path}>Abrir esta leitura</a>
 				</article>
 			{:else}<p>
 					A leitura de {periodNames[result.period].toLowerCase()} para {signNames[result.sign]} ainda
 					não está disponível.
 					{#if result.hasHistory}Você pode consultar as publicações anteriores.{/if}
-				</p>{/if}
-			<p>
-				<a href={result.archive}
-					>{result.hasHistory ? 'Ver o histórico' : 'Consultar a disponibilidade'} de {signNames[
-						result.sign
-					]}</a
-				>
-			</p>
-			{#if result.supportingGuides.length}
-				<section class="supporting-guides" aria-label="Para entender os ciclos">
-					<h3>Para entender os ciclos</h3>
-					<p>
-						Guias educativos sobre os movimentos do céu. Não são previsões para o período escolhido.
-					</p>
-					{#each result.supportingGuides as guide (guide.path)}
-						<div class="guide">
-							<h4><a href={guide.path}>{guide.title}</a></h4>
-							<p>{guide.description}</p>
-						</div>
-					{/each}
-				</section>
+				</p>
+				<p>
+					<a href={result.archive}
+						>{result.hasHistory ? 'Ver o histórico' : 'Consultar a disponibilidade'} de {signNames[
+							result.sign
+						]}</a
+					>
+				</p>
 			{/if}
-			{#if weeklyProduct}<aside>
-					<h4>Uma previsão com o seu mapa</h4>
-					<p>
-						{weeklyProduct.name} considera seus dados de nascimento para interpretar os trânsitos da semana.
-					</p>
-					<a href={`/produtos/${weeklyProduct.slug}`}>Conhecer a leitura pessoal →</a>
+			{#if weeklyProduct && result.current}<aside
+					class="continuation"
+					data-free-offer="week-reading"
+				>
+					<div class="continuation-art"><MvpProductArt productId="week-reading" /></div>
+					<div>
+						<p class="eyebrow">Para aprofundar</p>
+						<h4>Uma previsão com o seu mapa</h4>
+						<p>
+							{weeklyProduct.name} considera seus dados de nascimento para interpretar os trânsitos da
+							semana.
+						</p>
+						<a
+							class="button secondary"
+							href={`${weeklyProduct.href}?ferramenta=horoscopo&origem=ferramenta`}
+							data-atv-event="tool_product_click"
+							data-atv-tool="horoscopo"
+							data-atv-product="week-reading"
+							data-atv-universe="ciclos"
+							data-atv-context="result"
+							data-atv-cta="offer">Conhecer conteúdo e disponibilidade →</a
+						>
+					</div>
 				</aside>{/if}
 		{/if}
 	</div>
 </div>
 
 <style>
+	.continuation {
+		display: grid;
+		grid-template-columns: minmax(130px, 0.6fr) minmax(0, 1fr);
+		gap: 1.4rem;
+		align-items: center;
+		background: #e3ebdf;
+		padding: 1.5rem;
+	}
+	.continuation-art {
+		min-width: 0;
+	}
+	@media (min-width: 700px) {
+		form {
+			grid-template-columns: 1fr 1fr;
+		}
+		form button {
+			grid-column: 1 / -1;
+		}
+	}
+	@media (max-width: 620px) {
+		.continuation {
+			grid-template-columns: 1fr;
+		}
+		.continuation-art {
+			max-width: 19rem;
+			margin-inline: auto;
+		}
+	}
 	.horoscope-tool {
 		max-width: 48rem;
 		margin-inline: auto;
@@ -150,8 +243,7 @@
 		cursor: wait;
 	}
 	article,
-	aside,
-	.supporting-guides {
+	aside {
 		margin-top: 1.5rem;
 		border-top: 1px solid #153b4d33;
 		padding-top: 1rem;

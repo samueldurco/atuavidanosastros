@@ -204,8 +204,8 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
 	await expect(page.locator('.product-offer-art .product-art')).toHaveCount(1);
 	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
-	await expect(page.locator('.header-account')).toBeInViewport();
-	await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeInViewport();
+	await expect(page.locator('.account-link')).toBeInViewport();
+	await expect(page.locator('.nav-trigger[aria-controls="nav-produtos"]')).toBeInViewport();
 	await page.evaluate(() => {
 		document.documentElement.style.zoom = '2';
 	});

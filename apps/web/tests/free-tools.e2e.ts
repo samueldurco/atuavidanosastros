@@ -5,6 +5,21 @@ import type { FreeToolResponse } from '../src/lib/free-tools';
 // These paths exercise the public handlers and calculation engine without fixtures or route mocks.
 const cityLabel = 'São Paulo, São Paulo, Brasil';
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+// Owner-approved one-product continuation; keep this contract independent from UI data.
+const offerPaths: Record<string, string> = {
+	ascendente: '/produtos/sol-lua-e-ascendente',
+	'mapa-astral': '/produtos/mapa-astral-completo',
+	horoscopo: '/produtos/horoscopo-semanal-pessoal',
+	'combinacao-do-casal': '/produtos/analise-astral-do-casal',
+	'meio-do-ceu': '/produtos/mapa-astral-dinheiro-carreira',
+	'dinheiro-no-mapa': '/produtos/mapa-astral-dinheiro-carreira',
+	'carta-do-dia': '/produtos/tarot-3-cartas',
+	'carta-do-amor': '/produtos/tarot-relacionamentos-7-cartas',
+	'registro-de-sonho': '/produtos/interpretacao-do-sonho'
+};
+
+const offerUrl = (tool: string, resultId: string) =>
+	`${offerPaths[tool]}?ferramenta=${tool}&origem=ferramenta&resultado=${resultId}`;
 
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
@@ -35,10 +50,13 @@ async function generate(page: Page, tool: string): Promise<FreeToolResponse> {
 	await expect(
 		page.locator('.result-card').getByRole('heading', { name: envelope.result.title, exact: true })
 	).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Entrar para salvar e continuar' })).toHaveAttribute(
+	const continuation = page.locator('[data-free-offer]');
+	await expect(continuation.getByRole('link')).toHaveCount(1);
+	await expect(continuation.getByRole('link')).toHaveAttribute(
 		'href',
-		`/entrar?next=${encodeURIComponent(`/ferramentas/${tool}`)}`
+		offerUrl(tool, envelope.result.id)
 	);
+	await expect(page.getByRole('link', { name: 'Entrar para salvar e continuar' })).toHaveCount(0);
 	await expect(page.getByRole('button', { name: 'Salvar resultado', exact: true })).toHaveCount(0);
 	return envelope;
 }
@@ -51,9 +69,7 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	page
 }, testInfo) => {
 	await page.goto('/');
-	await expect(
-		page.getByRole('region', { name: 'Experimente uma ferramenta' }).locator('article')
-	).toHaveCount(9);
+	await expect(page.locator('#ferramentas .tool-card[data-tool]')).toHaveCount(9);
 	await expect(page.locator('.tool-open').first()).toBeVisible();
 	await page.screenshot({
 		path: testInfo.outputPath('home-free-tools-desktop.png'),
@@ -65,7 +81,7 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	expect(ascendant.result.facts.find((fact) => fact.id === 'ascendant')?.value).toContain('Áries');
 	await expect(page.locator('.result-card')).toContainText('14.31°');
 	await expect(
-		page.locator('.continuation a[href="/produtos/sol-lua-e-ascendente"]')
+		page.locator('.continuation a[href^="/produtos/sol-lua-e-ascendente?"]')
 	).toBeVisible();
 	await expect(page).toHaveURL(/\/ferramentas\/ascendente$/);
 	await page.screenshot({
@@ -180,9 +196,8 @@ for (const tool of ['carta-do-dia', 'carta-do-amor']) {
 		await expect(page.locator('.result-card h2')).toHaveText(original.result.title);
 		expect((await stored(page, tool)).result).toEqual(original.result);
 		await expect(page.locator(`#${tool}-tarot-focus`)).toHaveValue(focus);
-		await page.getByRole('link', { name: 'Entrar para salvar e continuar' }).click();
-		await expect(page).toHaveURL(/\/entrar\?next=/);
-		expect(new URL(page.url()).searchParams.get('next')).toBe(`/ferramentas/${tool}`);
+		await page.locator('[data-free-offer] a').click();
+		await expect(page).toHaveURL(offerUrl(tool, original.result.id));
 		expect(page.url()).not.toContain('rotina');
 		await page.goBack();
 		await expect(page.locator('.result-card h2')).toHaveText(original.result.title);
@@ -242,11 +257,11 @@ test('Combinação do Casal usa os dois mapas e requer autorização para compar
 	const pair = await generate(page, 'combinacao-do-casal');
 	expect(pair.result.facts.filter((fact) => fact.kind === 'calculated')).not.toHaveLength(0);
 	await expect(
-		page.locator('.continuation a[href="/produtos/analise-astral-do-casal"]')
+		page.locator('.continuation a[href^="/produtos/analise-astral-do-casal?"]')
 	).toBeVisible();
 });
 
-test('Bússola mantém cálculo ao voltar de Entrar e elimina dados ao limpar', async ({
+test('Bússola mantém cálculo ao voltar da oferta e elimina dados ao limpar', async ({
 	page
 }, testInfo) => {
 	let calculations = 0;
@@ -261,13 +276,11 @@ test('Bússola mantém cálculo ao voltar de Entrar e elimina dados ao limpar', 
 	await expect(page).toHaveURL(/\/ferramentas\/meio-do-ceu$/);
 	await fillBirth(page, 'first-birth');
 	const result = await generate(page, 'meio-do-ceu');
-	await page.getByRole('link', { name: 'Entrar para salvar e continuar' }).click();
-	await expect(page).toHaveURL(/\/entrar\?next=%2Fferramentas%2Fmeio-do-ceu$/);
+	await page.locator('[data-free-offer] a').click();
+	await expect(page).toHaveURL(offerUrl('meio-do-ceu', result.result.id));
 	await page.goBack();
 	await expect(page.locator('.result-card h2')).toHaveText(result.result.title);
-	await expect(
-		page.getByText('Seu resultado foi recuperado nesta aba.', { exact: false })
-	).toBeVisible();
+	await expect(page.getByText(/Seu resultado foi recuperado nesta aba/)).toBeVisible();
 	await expect(page.locator('#meio-do-ceu-first-birth-date')).toHaveValue('1990-01-15');
 	await expect(page.locator('#meio-do-ceu-first-birth-time')).toHaveValue('12:30');
 	expect((await stored(page, 'meio-do-ceu')).result).toEqual(result.result);

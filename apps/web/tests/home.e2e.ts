@@ -3,16 +3,17 @@ import { expect, test } from '@playwright/test';
 test('home entrega proposta e navegação principal', async ({ page }) => {
 	await page.goto('/');
 	await expect(page.getByRole('heading', { level: 1 })).toContainText(
-		'Conheça seu mapa. Explore seu momento.'
+		'Conheça seu mapa. Explore seu momento.',
+		{ useInnerText: true }
 	);
-	const chart = page.getByRole('link', { name: 'Experimente grátis', exact: true });
+	const chart = page.getByRole('link', { name: 'Experimentar uma ferramenta grátis', exact: true });
 	await expect(chart).toBeVisible();
 	await expect(chart).toHaveAttribute('href', '#ferramentas');
 });
 test('loja comunica preparação sem oferta fictícia', async ({ page }) => {
 	await page.goto('/loja');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
-	await expect(page.getByText('Compras ainda indisponíveis', { exact: true })).toBeVisible();
+	await expect(page.locator('main')).toContainText('A coleção ainda não está à venda');
 	await expect(page.getByRole('link', { name: /comprar|pagar|checkout/i })).toHaveCount(0);
 });
 
@@ -37,10 +38,15 @@ test('endereço anterior da Bússola abre o Meio do Céu sem cadastro', async ({
 		'São Paulo',
 		'São Paulo, São Paulo, Brasil'
 	);
-	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
-	await expect(page.locator('.result-card')).toContainText('Meio do Céu');
 	await expect(
 		page.getByText('Não é preciso criar uma conta para ver o resultado.', { exact: false })
 	).toBeVisible();
-	await expect(page.getByRole('link', { name: 'Entrar para salvar e continuar' })).toBeVisible();
+	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
+	await expect(page.locator('.result-card')).toContainText('Meio do Céu');
+	await expect(page.locator('[data-free-offer] a')).toHaveCount(1);
+	await expect(page.locator('[data-free-offer] a')).toHaveAttribute(
+		'href',
+		/^\/produtos\/mapa-astral-dinheiro-carreira\?ferramenta=meio-do-ceu&origem=ferramenta&resultado=[0-9a-f-]{36}$/
+	);
+	await expect(page.getByRole('link', { name: 'Entrar para salvar e continuar' })).toHaveCount(0);
 });

@@ -4,6 +4,7 @@ import {
   isFreeToolId,
 } from "../../../apps/web/src/lib/server/free-tools-calculation";
 import { signFreeToolResult } from "../../../apps/web/src/lib/server/free-tool-receipt";
+import { verifyFreeToolRuntimeRequest } from "../../../apps/web/src/lib/server/free-tool-runtime-auth";
 
 const headers = {
   "content-type": "application/json; charset=utf-8",
@@ -50,9 +51,10 @@ export function freeToolsRuntimeHandler(secret: string | undefined) {
         bytes.set(chunk, offset);
         offset += chunk.byteLength;
       }
-      payload = JSON.parse(
-        new TextDecoder("utf-8", { fatal: true }).decode(bytes),
-      );
+      const body = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      payload = JSON.parse(body);
+      if (!(await verifyFreeToolRuntimeRequest(request.headers, body, secret)))
+        return respond({ code: "runtime_auth_required" }, 401);
       if (
         !payload ||
         typeof payload !== "object" ||

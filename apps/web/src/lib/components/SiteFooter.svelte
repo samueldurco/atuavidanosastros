@@ -8,7 +8,7 @@
 <footer class="site-footer" data-stitch="SH-01">
 	<div class="container footer-main">
 		<div class="footer-brand">
-			<BrandLogo compact onDark={false} />
+			<BrandLogo compact />
 			<p>Astrologia para conhecer você.</p>
 			<a href="/fale-conosco">Fale com a ATVNA <span aria-hidden="true">↗</span></a>
 		</div>
@@ -50,6 +50,21 @@
 </footer>
 
 <style>
+	:global(.mvp-experience) .site-footer {
+		background: #103344;
+		color: #f4e9d2;
+		padding: 20px 0;
+		--atv-border: #e4d3b536;
+		--atv-text-primary: #f4e9d2;
+		--atv-surface-card: #1c4658;
+	}
+	.site-footer :global(a),
+	.site-footer :global(button) {
+		color: inherit;
+	}
+	.site-footer :global(.eyebrow) {
+		color: #e4c18b;
+	}
 	.footer-main {
 		display: grid;
 		grid-template-columns: 1.15fr 1fr 1fr 1fr;

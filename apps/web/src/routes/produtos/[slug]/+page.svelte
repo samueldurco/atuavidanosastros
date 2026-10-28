@@ -1,70 +1,96 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
 	import MvpProductArt from '$lib/components/MvpProductArt.svelte';
+	import FreeReadingDownload from '$lib/components/FreeReadingDownload.svelte';
+	import { page } from '$app/state';
 	import { mvpProductDesign, mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
 	import { formatLabels } from '$lib/data/product-details';
 	let { data } = $props();
 	const freeEntryByProduct: Record<string, { href: string; label: string }> = {
-		ascendant: { href: '/ferramentas/ascendente', label: 'Calcular meu Ascendente grátis' },
-		'three-pillars': {
-			href: '/ferramentas/mapa-astral',
-			label: 'Ver Sol, Lua e Ascendente grátis'
+		ascendant: {
+			href: '/?ferramenta=ascendente#ferramentas',
+			label: 'Calcular meu Ascendente grátis'
 		},
-		'birth-chart': { href: '/ferramentas/mapa-astral', label: 'Ver o preview gratuito do mapa' },
+		'three-pillars': {
+			href: '/?ferramenta=ascendente#ferramentas',
+			label: 'Calcular meu Ascendente grátis'
+		},
+		'birth-chart': {
+			href: '/?ferramenta=mapa-astral#ferramentas',
+			label: 'Ver o preview gratuito do mapa'
+		},
 		'life-atlas': {
-			href: '/ferramentas/mapa-astral',
+			href: '/?ferramenta=mapa-astral#ferramentas',
 			label: 'Começar pelo preview gratuito do mapa'
 		},
-		horoscope: { href: '/ferramentas/horoscopo', label: 'Explorar o horóscopo gratuito' },
-		'date-reading': { href: '/ferramentas/horoscopo', label: 'Explorar o horóscopo gratuito' },
+		horoscope: {
+			href: '/?ferramenta=horoscopo#ferramentas',
+			label: 'Explorar o horóscopo gratuito'
+		},
+		'date-reading': {
+			href: '/?ferramenta=horoscopo#ferramentas',
+			label: 'Explorar o horóscopo gratuito'
+		},
 		'pair-preview': {
-			href: '/ferramentas/combinacao-do-casal',
+			href: '/?ferramenta=combinacao-do-casal#ferramentas',
 			label: 'Ver a combinação gratuita do casal'
 		},
 		synastry: {
-			href: '/ferramentas/combinacao-do-casal',
+			href: '/?ferramenta=combinacao-do-casal#ferramentas',
 			label: 'Ver a combinação gratuita do casal'
 		},
 		'couple-dossier': {
-			href: '/ferramentas/combinacao-do-casal',
+			href: '/?ferramenta=combinacao-do-casal#ferramentas',
 			label: 'Começar pela combinação gratuita'
 		},
-		'career-compass': { href: '/bussola-de-carreira', label: 'Calcular meu Meio do Céu grátis' },
+		'career-compass': {
+			href: '/?ferramenta=meio-do-ceu#ferramentas',
+			label: 'Calcular meu Meio do Céu grátis'
+		},
 		'tarot-single-card': {
-			href: '/ferramentas/carta-do-dia',
+			href: '/?ferramenta=carta-do-dia#ferramentas',
 			label: 'Começar com a Carta do Dia grátis'
 		},
 		'dream-reading': {
-			href: '/ferramentas/registro-de-sonho',
+			href: '/?ferramenta=registro-de-sonho#ferramentas',
 			label: 'Registrar meu sonho grátis'
 		},
 		'dream-journal': {
-			href: '/ferramentas/registro-de-sonho',
+			href: '/?ferramenta=registro-de-sonho#ferramentas',
 			label: 'Registrar meu sonho grátis'
 		},
 		'dream-dossier': {
-			href: '/ferramentas/registro-de-sonho',
+			href: '/?ferramenta=registro-de-sonho#ferramentas',
 			label: 'Registrar meu sonho grátis'
 		},
-		'dream-atlas': { href: '/ferramentas/registro-de-sonho', label: 'Registrar meu sonho grátis' }
+		'dream-atlas': {
+			href: '/?ferramenta=registro-de-sonho#ferramentas',
+			label: 'Registrar meu sonho grátis'
+		}
 	};
 	const freeEntryByUniverse: Record<string, { href: string; label: string }> = {
-		'meu-ceu': { href: '/ferramentas/mapa-astral', label: 'Ver o preview gratuito do mapa' },
-		'ciclos-tempo': { href: '/ferramentas/horoscopo', label: 'Explorar o horóscopo gratuito' },
+		'meu-ceu': {
+			href: '/?ferramenta=mapa-astral#ferramentas',
+			label: 'Ver o preview gratuito do mapa'
+		},
+		'ciclos-tempo': {
+			href: '/?ferramenta=horoscopo#ferramentas',
+			label: 'Explorar o horóscopo gratuito'
+		},
 		'amor-relacoes': {
-			href: '/ferramentas/combinacao-do-casal',
+			href: '/?ferramenta=combinacao-do-casal#ferramentas',
 			label: 'Ver a combinação gratuita do casal'
 		},
 		'proposito-prosperidade': {
-			href: '/bussola-de-carreira',
+			href: '/?ferramenta=meio-do-ceu#ferramentas',
 			label: 'Calcular meu Meio do Céu grátis'
 		},
 		'tarot-arcanos': {
-			href: '/ferramentas/carta-do-dia',
+			href: '/?ferramenta=carta-do-dia#ferramentas',
 			label: 'Tirar minha Carta do Dia grátis'
 		},
 		'sonhos-simbolos': {
-			href: '/ferramentas/registro-de-sonho',
+			href: '/?ferramenta=registro-de-sonho#ferramentas',
 			label: 'Registrar meu sonho grátis'
 		}
 	};
@@ -153,7 +179,8 @@
 						</p>
 					</div>
 				{/if}
-				{#if freeEntry}<div class="free-entry">
+				<FreeReadingDownload productId={data.product.id} />
+				{#if freeEntry && !page.url.searchParams.has('ferramenta')}<div class="free-entry">
 						<h3>Comece gratuitamente</h3>
 						<p>Conheça um resultado relacionado a esta leitura antes de criar sua conta.</p>
 						<Button href={freeEntry.href}>{freeEntry.label}</Button>

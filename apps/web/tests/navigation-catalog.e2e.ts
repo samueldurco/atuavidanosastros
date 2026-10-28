@@ -9,26 +9,22 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	await page.goto('/leituras');
 	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
 	await page.screenshot({ path: testInfo.outputPath('cabecalho-desktop-simples.png') });
-	const button = page.getByRole('button', { name: 'Menu', exact: true });
+	const button = page.locator('.nav-trigger[aria-controls="nav-produtos"]');
 	await expect(button).toBeEnabled();
 	await button.click();
 	const menu = page.getByRole('navigation', { name: 'Navegação principal', exact: true });
-	await expect(menu.getByRole('heading', { name: 'Comece e explore' })).toBeVisible();
-	const offers = menu.locator('section', { has: page.locator('#menu-produtos') });
-	await expect(offers.locator('a[href="/leituras"]')).toContainText('Leituras digitais');
-	await expect(offers.locator('a[href="/loja"]')).toContainText('Produtos físicos');
-	await expect(offers.locator('a[href="/loja"]')).toContainText('Loja dos Signos');
-	await expect(offers.locator('a[href="/atv-mais"]')).toContainText('ATV+ · Assinatura');
-	await expect(menu.locator('.nav-interests a')).toHaveCount(6);
-	await expect(menu.locator('a[href="/leituras"]')).toHaveAttribute('aria-current', 'page');
+	const offers = page.locator('#nav-produtos');
+	await expect(offers.locator('.nav-item[href="/leituras"]')).toContainText('Leituras avulsas');
+	await expect(offers.locator('a[href="/atv-mais"]')).toContainText('Assinatura ATV+');
+	await expect(offers.locator('a[href^="/leituras?tema="]')).toHaveCount(6);
 	await page.screenshot({ path: testInfo.outputPath('menu-desktop.png') });
 	await page.keyboard.press('Escape');
-	await expect(menu).toBeHidden();
+	await expect(offers).toHaveCount(0);
 	await expect(button).toBeFocused();
-	await button.click();
-	await offers.locator('a[href="/loja"]').click();
+	await menu.locator('[aria-controls="nav-loja"]').click();
+	await page.locator('#nav-loja a[href="/loja"]').click();
 	await expect(page).toHaveURL(/\/loja$/);
-	await expect(menu).toBeHidden();
+	await expect(page.locator('.nav-panel')).toHaveCount(0);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
 	await expect(page.locator('main')).toContainText('Produtos físicos');
 	await expect(page.locator('main')).toContainText('A coleção ainda não está à venda');
@@ -37,9 +33,12 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	).toHaveCount(0);
 	await page.screenshot({ path: testInfo.outputPath('loja-produtos-fisicos.png') });
 	await page.locator('main a[href="/leituras"]').click();
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Leituras digitais');
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Escolha sua próxima descoberta.',
+		{ useInnerText: true }
+	);
 	const footer = page.locator('footer');
-	await expect(footer.locator('a[href="/leituras"]')).toHaveText('Leituras digitais');
+	await expect(footer.locator('a[href="/leituras"]')).toHaveText('Produtos digitais');
 	await expect(footer.locator('a[href="/loja"]')).toHaveText('Produtos físicos');
 	await expect(footer.locator('a[href="/atv-mais"]')).toHaveText('ATV+ · Assinatura');
 	await footer.screenshot({ path: testInfo.outputPath('rodape-catalogos.png') });
@@ -51,7 +50,7 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 	for (const width of [320, 390, 768, 1280]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/');
-		await page.getByRole('button', { name: 'Menu', exact: true }).click();
+		if (width <= 960) await page.locator('.mobile-menu').click();
 		const menu = page.getByRole('navigation', { name: 'Navegação principal', exact: true });
 		await expect(menu).toBeVisible();
 		await expect
@@ -59,15 +58,21 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 				message: `O menu deve caber na tela de ${width}px`
 			})
 			.toBeLessThanOrEqual(0);
-		await menu.locator('a[href="/loja"]').scrollIntoViewIfNeeded();
-		await expect(menu.locator('a[href="/loja"]')).toBeInViewport();
-		await menu.locator('a[href="/loja"]').click({ trial: true });
+		await menu.locator('[aria-controls="nav-loja"]').click();
+		const store = page.locator('#nav-loja a[href="/loja"]');
+		await store.scrollIntoViewIfNeeded();
+		await expect(store).toBeInViewport();
+		await store.click({ trial: true });
 		if (width === 390)
 			await page.screenshot({ path: testInfo.outputPath('menu-mobile-produtos.png') });
-		await menu.getByRole('link', { name: 'Fale conosco', exact: true }).scrollIntoViewIfNeeded();
-		await expect(menu.getByRole('link', { name: 'Fale conosco', exact: true })).toBeInViewport();
+		await menu.locator('.account-link').scrollIntoViewIfNeeded();
+		await expect(menu.locator('.account-link')).toBeInViewport();
 		await page.keyboard.press('Escape');
-		await expect(menu).toBeHidden();
+		await expect(page.locator('.nav-panel')).toHaveCount(0);
+		if (width <= 960) {
+			await page.keyboard.press('Escape');
+			await expect(menu).toBeHidden();
+		}
 	}
 });
 
@@ -78,7 +83,7 @@ test('cabeçalho e menu cabem em telas pequenas quando as fontes não carregam',
 		await page.goto('/');
 		await page.getByRole('button', { name: 'Menu', exact: true }).click();
 		await expect(page.getByRole('button', { name: 'Fechar menu', exact: true })).toBeInViewport();
-		await expect(page.locator('.header-account')).toBeInViewport();
+		await expect(page.locator('.account-link')).toBeInViewport();
 		await expect
 			.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
 			.toBeLessThanOrEqual(0);
@@ -94,14 +99,13 @@ test('home, universos, produto e ATV+ mantêm o contexto de cada oferta', async 
 }, testInfo) => {
 	await page.setViewportSize({ width: 1440, height: 1000 });
 	await page.goto('/');
-	const catalogs = page.getByRole('navigation', { name: 'Catálogos de produtos' });
-	await expect(catalogs.locator('a[href="/leituras"]')).toContainText('Leituras digitais');
-	await expect(catalogs.locator('a[href="/loja"]')).toContainText(
-		'Produtos físicos · Loja dos Signos'
-	);
+	const catalogs = page.locator('#produtos');
+	await expect(catalogs.locator('.showcase-card.avulsos')).toBeVisible();
+	await expect(catalogs.locator('.showcase-card.subscription')).toBeVisible();
+	await expect(page.locator('#loja a[href="/loja"]')).toContainText('Explorar a Loja dos Signos');
 	await catalogs.scrollIntoViewIfNeeded();
 	await page.screenshot({ path: testInfo.outputPath('home-catalogos.png') });
-	await catalogs.locator('a[href="/leituras"]').click();
+	await catalogs.locator('.showcase-card.avulsos a[href="/leituras#catalogo"]').click();
 	await expect(page).toHaveTitle(/Leituras digitais/);
 	await expect(page.locator('.public-product-card')).toHaveCount(19);
 	await page.locator('.public-product-card h3 a').first().click();

@@ -282,8 +282,8 @@ export async function calculateFreeToolResult(
 		];
 		result.limits = [
 			`Registro fiel ao relato (${DREAM_METHOD}); nenhum significado, emoção ou diagnóstico foi calculado.`,
-			'Este registro não consulta histórico nem identifica recorrências. As associações são as que você informou.',
-			'Você pode escolher salvar em sua conta depois de ver o resultado. O cálculo não concede consentimento de armazenamento.'
+			'Esta leitura não analisa seu histórico nem identifica recorrências. As associações são as que você informou.',
+			'O registro e os dados informados ficam associados à sua identificação para releitura e controle das utilizações gratuitas, sem publicação ou compartilhamento.'
 		];
 		return result;
 	}
@@ -341,7 +341,7 @@ export async function calculateFreeToolResult(
 				: []),
 			'A carta não decide por você e não calcula uma resposta binária. O resultado não afirma um sim ou um não.',
 			'Uma carta de um baralho de 78, sorteada no servidor, sem carta invertida. Sua pergunta não altera o sorteio.',
-			'Este resultado conserva a carta desta execução. Solicitar outra consulta inicia um novo sorteio.'
+			'Esta ferramenta conserva a mesma carta durante o dia, no horário de Brasília. Você pode reler sem novo sorteio. Carta do Dia e Carta do Amor têm limites diários independentes.'
 		];
 		return result;
 	}
@@ -385,7 +385,7 @@ export async function calculateFreeToolResult(
 		result.limits = [
 			...new Set(charts.flatMap(natalLimits)),
 			'Esta comparação introdutória não calcula aspectos entre mapas nem uma pontuação de compatibilidade e não afirma sentimentos, intenções ou destino da relação.',
-			'Sua declaração permite usar os dados da outra pessoa nesta consulta; não verifica identidade nem autoriza armazenamento ou compartilhamento.'
+			'Sua declaração não verifica a identidade das pessoas. Os dados e a leitura ficam associados à sua identificação para releitura e controle das utilizações gratuitas, sem publicação ou compartilhamento.'
 		];
 		return result;
 	}
