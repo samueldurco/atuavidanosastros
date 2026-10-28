@@ -13,7 +13,7 @@ const procedures = {
   claim_free_tool_subject: ['p_anonymous_subject', 'p_user_subject', 'p_resolution'],
   read_free_tool_history: ['p_subject', 'p_tool', 'p_before', 'p_result_id']
 };
-export async function startLedgerRpc(port = 4174) {
+export async function startLedgerRpc(port = 0) {
   const db = await setupProductDatabase({ privateOnly: true });
   await db.exec(await file('supabase/migrations/20261028171546_free_tool_quota_ledger.sql'));
   const server = createServer(async (request, response) => {
@@ -55,8 +55,11 @@ export async function startLedgerRpc(port = 4174) {
 
 async function main() {
   const port = Number(process.env.ATV_E2E_PORT ?? 4173);
-  const rpcPort = Number(process.env.ATV_E2E_RPC_PORT ?? port + 1);
-  if (![port, rpcPort].every(value => Number.isInteger(value) && value > 1024 && value < 65536) || port === rpcPort) throw new Error('invalid_test_ports');
+  // The operating system assigns the RPC port so independent Auth fixtures can
+  // continue to use their own worker ports in the same Playwright run.
+  const rpcPort = Number(process.env.ATV_E2E_RPC_PORT ?? 0);
+  const validPort = value => Number.isInteger(value) && value > 1024 && value < 65536;
+  if (!validPort(port) || (rpcPort !== 0 && !validPort(rpcPort)) || port === rpcPort) throw new Error('invalid_test_ports');
   const ledger = await startLedgerRpc(rpcPort);
   if (process.argv.includes('--rpc-only')) {
     console.log(`Test-only quota RPC ready at ${ledger.url}`);

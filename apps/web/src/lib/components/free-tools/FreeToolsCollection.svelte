@@ -7,12 +7,8 @@
 	import FreeToolExperience from './FreeToolExperience.svelte';
 	import { trackHomeEvent } from '$lib/analytics/home-events';
 	let {
-		canSave = false,
-		hasAccount = false,
 		onToolOpenChange
 	}: {
-		canSave?: boolean;
-		hasAccount?: boolean;
 		onToolOpenChange?: (open: boolean) => void;
 	} = $props();
 	let opened = $state<string[]>([]);
@@ -150,11 +146,7 @@
 							<p class="requirements">{tool.requirements}</p>
 						</div>
 					</div>
-					<FreeToolExperience
-						data={{ tool, canSave, hasAccount }}
-						embedded
-						active={selected === tool.id}
-					/>
+					<FreeToolExperience data={{ tool }} embedded active={selected === tool.id} />
 				{/if}
 			</div>
 		{/each}

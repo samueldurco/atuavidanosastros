@@ -6,7 +6,7 @@ import {
 } from './free-tool-ledger';
 
 describe('identificador opaco e hash do ledger gratuito', () => {
-	const secret = 'synthetic-subject-key-at-least-32-chars';
+	const secret = 'ledger-cookie-fixture-'.repeat(3);
 	const id = 'ba93fab2-f581-46d6-95a5-fbcab1adcdab';
 	it('valida assinatura, prazo e identidade; rejeita adulteração e expiração', async () => {
 		const now = Date.now();

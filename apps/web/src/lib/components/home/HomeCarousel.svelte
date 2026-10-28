@@ -111,7 +111,7 @@
 >
 	{#if heading}{@render heading()}{/if}
 	{#if titles.length}<div class="showcase-tabs" aria-label={`Escolher destaque de ${label}`}>
-			{#each titles as title, position}<button
+			{#each titles as title, position (position)}<button
 					type="button"
 					aria-pressed={position === index}
 					disabled={!ready}
@@ -119,7 +119,7 @@
 				>{/each}
 		</div>{/if}
 	<div class="banner-stage">
-		{#each Array(count) as _, position}<div
+		{#each [...Array(count).keys()] as position (position)}<div
 				class="showcase-slide"
 				data-active={position === index}
 				aria-hidden={position !== index ? true : undefined}

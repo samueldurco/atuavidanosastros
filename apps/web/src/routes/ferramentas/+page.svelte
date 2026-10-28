@@ -13,10 +13,7 @@
 		</p>
 	</div>
 </section>
-<FreeToolsCollection
-	canSave={Boolean(data.authConfigured && data.user)}
-	hasAccount={Boolean(data.user)}
-/>
+<FreeToolsCollection />
 <section class="section">
 	<div class="container topics">
 		<h2 class="h2">Continue pelo seu assunto</h2>

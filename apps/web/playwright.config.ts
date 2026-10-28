@@ -8,7 +8,10 @@ export default defineConfig({
 	use: { baseURL: `http://127.0.0.1:${port}`, trace: 'retain-on-failure' },
 	webServer: {
 		command: 'pnpm exec node ../../scripts/free-tools-e2e-server.mjs',
-		env: { ATV_E2E_PORT: String(port), ATV_E2E_RPC_PORT: String(port + 1) },
+		env: {
+			ATV_E2E_PORT: String(port),
+			ATV_E2E_RPC_PORT: process.env.ATV_E2E_RPC_PORT ?? '0'
+		},
 		port,
 		stdout: 'pipe',
 		stderr: 'pipe',

@@ -12,6 +12,7 @@
 
 <svelte:head>
 	<title>{SITE.name} — uma descoberta de cada vez</title>
+	<link rel="canonical" href={SITE.url} />
 	<meta
 		name="description"
 		content="Ferramentas grátis, produtos digitais e histórias para ampliar seu olhar. Explore astrologia, Tarot, sonhos e a Loja dos Signos."
@@ -57,11 +58,7 @@
 			<p class="hero-note">Um primeiro passo pode abrir um universo.</p>
 		</div>
 	</section>
-	<FreeToolsCollection
-		canSave={Boolean(data.authConfigured && data.user)}
-		hasAccount={Boolean(data.user)}
-		onToolOpenChange={(open) => (toolActive = open)}
-	/>
+	<FreeToolsCollection onToolOpenChange={(open) => (toolActive = open)} />
 	<section class="home-section digital-section" id="produtos" aria-labelledby="products-heading">
 		<div class="home-wrap">
 			<header class="home-section-head">

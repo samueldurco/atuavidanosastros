@@ -29,7 +29,7 @@
 		embedded = false,
 		active = true
 	}: {
-		data: { tool: FreeTool; canSave?: boolean; hasAccount?: boolean };
+		data: { tool: FreeTool };
 		embedded?: boolean;
 		active?: boolean;
 	} = $props();

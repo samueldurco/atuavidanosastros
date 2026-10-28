@@ -23,7 +23,7 @@ Validação local de 28/10/2026 no worktree `home-approved-20261028`. Esta evid�
 
 Esses cinco testes usam respostas sintéticas interceptadas para reproduzir mudanças de conta e corridas de rede. O evento de saída é reproduzido sem realizar autenticação real. Cálculo e SQL são validados separadamente nos testes de API/ledger e na suíte E2E com PostgreSQL/PGlite.
 
-`free-tools-api.integration.spec.ts` e `free-tool-ledger.spec.ts`: **13/13 passaram** na rodada focal anterior à atualização de texto. Incluem A → B no mesmo cookie, resposta exclusiva da conta B, manutenção das cotas de A e B, cookie preservado, acesso anônimo bloqueado após a saída, retorno de A sem reset e POST com dono divergente rejeitado antes do commit.
+`free-tools-api.integration.spec.ts`, `free-tool-ledger.spec.ts` e `free-tools-calculation.spec.ts`: **29/29 passaram** na rodada final após a atualização de texto, saída 0. Incluem A → B no mesmo cookie, resposta exclusiva da conta B, manutenção das cotas de A e B, cookie preservado, acesso anônimo bloqueado após a saída, retorno de A sem reset e POST com dono divergente rejeitado antes do commit. O Vitest emitiu aviso de processo pendente durante o encerramento, depois de concluir os testes com sucesso.
 
 `svelte-check --tsconfig ./tsconfig.json`: **0 erros e 0 avisos** após os ajustes de tipos da integração.
 

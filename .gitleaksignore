@@ -4,3 +4,6 @@
 # False positive: literal synthetic key confined to the natal SVG receipt round-trip unit test.
 # No provider or runtime uses this value; preserve scanning for all other occurrences.
 e79bb7c73b3b0fd1cf0c7f2db42065c1851adc46:apps/web/src/lib/server/free-tools-calculation.spec.ts:generic-api-key:66
+# Historical false positive: synthetic cookie-signing fixture confined to the ledger unit test.
+# Replaced by an explicit repeated fixture; no provider/runtime uses the old literal.
+353a84b43880e48d6872a12b840818dcf71c1e28:apps/web/src/lib/server/free-tool-ledger.spec.ts:generic-api-key:9

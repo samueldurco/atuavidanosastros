@@ -109,10 +109,8 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	await expect(positions.locator('tbody tr')).toHaveCount(12);
 	await expect(positions.getByRole('rowheader', { name: 'Ascendente', exact: true })).toBeVisible();
 	await positions.locator('summary').click();
-	await expect(page.getByRole('link', { name: 'Baixar mapa completo em SVG' })).toHaveAttribute(
-		'href',
-		`data:image/svg+xml;charset=utf-8,${encodeURIComponent(natal.result.chart!.svg)}`
-	);
+	// The free result keeps the chart onscreen; the downloadable reading belongs after the offer.
+	await expect(page.getByRole('link', { name: 'Baixar mapa completo em SVG' })).toHaveCount(0);
 	expect(await chart.evaluate((image) => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(
 		0
 	);
@@ -148,14 +146,6 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	await expect(dialog).not.toBeVisible();
 	await expect(expand).toBeFocused();
 	await expect(page.locator('.chart-dialog img')).toHaveCount(0);
-	const downloadPromise = page.waitForEvent('download');
-	await page.getByRole('link', { name: 'Baixar mapa completo em SVG' }).click();
-	const download = await downloadPromise;
-	expect(download.suggestedFilename()).toBe('mapa-mapa-astral.svg');
-	const stream = await download.createReadStream();
-	const chunks: Buffer[] = [];
-	for await (const chunk of stream) chunks.push(Buffer.from(chunk));
-	expect(Buffer.concat(chunks).toString('utf8')).toBe(natal.result.chart!.svg);
 	await expect(page.locator('.result-card')).toContainText('Capricórnio');
 	await expect(page.locator('.result-card')).toContainText('Virgem');
 	expect(
