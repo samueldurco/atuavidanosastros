@@ -17,7 +17,7 @@ const ariesWeekly = currentForecasts.find((document) =>
 	document.path.startsWith('/horoscopo/aries/weekly/')
 );
 
-test('free tool separates admitted dated readings from supporting guides', async ({
+test('free tool shows complete admitted readings and keeps supporting guides in the public hub', async ({
 	page,
 	request
 }, testInfo) => {
@@ -37,27 +37,40 @@ test('free tool separates admitted dated readings from supporting guides', async
 	await page.goto('/ferramentas/horoscopo');
 	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
 	await page.getByRole('button', { name: 'Consultar meu signo', exact: true }).click();
+	const tool = page.locator('.horoscope-tool');
+	const offer = tool.locator('[data-free-offer="week-reading"]');
 	if (ariesDaily) {
 		await expect(
 			page.getByRole('heading', { level: 3, name: ariesDaily.title, exact: true })
 		).toBeVisible();
-		await expect(
-			page.getByRole('link', { name: 'Abrir esta leitura', exact: true })
-		).toHaveAttribute('href', ariesDaily.path);
+		const reading = tool.locator('article');
+		for (const section of result.current.sections) {
+			await expect(
+				reading.getByRole('heading', { level: 4, name: section.heading, exact: true })
+			).toBeVisible();
+			for (const paragraph of section.paragraphs) {
+				await expect(reading.getByText(paragraph, { exact: true }).first()).toBeVisible();
+			}
+		}
+		await expect(tool.getByRole('link')).toHaveCount(1);
+		await expect(offer.getByRole('link')).toHaveAttribute(
+			'href',
+			'/produtos/horoscopo-semanal-pessoal?ferramenta=horoscopo&origem=ferramenta'
+		);
 	} else {
 		await expect(
 			page.getByText('A leitura de dia para Áries ainda não está disponível.')
 		).toBeVisible();
+		await expect(offer).toHaveCount(0);
+		await expect(tool.getByRole('link')).toHaveCount(1);
+		await expect(tool.getByRole('link')).toHaveAttribute('href', result.archive);
 	}
-	const guides = page.getByRole('region', { name: 'Para entender os ciclos' });
-	await expect(guides.getByRole('link')).toHaveCount(2);
-	await expect(guides).toContainText('Não são previsões para o período escolhido.');
+	// Home reformulation §3.3: the complete result keeps only its related commercial offer.
+	// Educational guides remain available in the editorial hub, outside this result.
+	await expect(tool.getByRole('region', { name: 'Para entender os ciclos' })).toHaveCount(0);
 	await expect(page.getByText('Você pode consultar as publicações anteriores.')).toHaveCount(
 		!ariesDaily && ariesDailyHistory ? 1 : 0
 	);
-	await expect(
-		page.getByRole('link', { name: 'Conhecer a leitura pessoal →' })
-	).not.toHaveAttribute('href', /undefined|horoscope/);
 	await scanAccessibility(page, testInfo);
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(
 		true
@@ -66,6 +79,16 @@ test('free tool separates admitted dated readings from supporting guides', async
 		path: testInfo.outputPath('horoscope-free-tool-390.png'),
 		fullPage: true
 	});
+	await page.goto('/horoscopo');
+	const guides = page.getByRole('region', { name: 'Para entender os ciclos' });
+	await expect(guides.getByRole('link')).toHaveCount(2);
+	await expect(guides).toContainText('Não são previsões para o período escolhido.');
+	for (const guide of result.supportingGuides) {
+		await expect(guides.getByRole('link', { name: guide.title, exact: true })).toHaveAttribute(
+			'href',
+			guide.path
+		);
+	}
 });
 
 for (const width of [320, 390, 1440]) {

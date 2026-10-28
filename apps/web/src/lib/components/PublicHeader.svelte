@@ -178,6 +178,7 @@
 
 <style>
 	.approved-header {
+		container: approved-header / inline-size;
 		position: relative;
 		z-index: 40;
 		background: #103344;
@@ -308,7 +309,7 @@
 		outline: 2px solid #c89b4d;
 		outline-offset: 3px;
 	}
-	@media (max-width: 1120px) {
+	@container approved-header (max-width: 1120px) {
 		.approved-header-inner {
 			width: calc(100% - 40px);
 			min-height: 82px;
@@ -321,7 +322,7 @@
 			gap: 5px;
 		}
 	}
-	@media (max-width: 960px) {
+	@container approved-header (max-width: 960px) {
 		.approved-header-inner {
 			min-height: 78px;
 		}
@@ -382,7 +383,7 @@
 			font-size: 13px;
 		}
 	}
-	@media (max-width: 360px) {
+	@container approved-header (max-width: 360px) {
 		.nav-panel-grid {
 			grid-template-columns: 1fr;
 		}

@@ -326,6 +326,8 @@
 			session_changed: 'Sua identificação mudou. Recupere suas leituras antes de continuar.',
 			profile_conflict:
 				'Seu perfil foi alterado em outra sessão. Recarregue a leitura antes de continuar.',
+			invalid_input: 'Confira os dados informados e tente novamente.',
+			calculation_unavailable: 'Não foi possível calcular agora. Tente novamente.',
 			ascendant_unavailable:
 				'O Ascendente não está disponível para estas coordenadas. Confira o local de nascimento.',
 			houses_unavailable:
@@ -669,6 +671,7 @@
 		const signal = controller.signal;
 		const current = () => epoch === requestEpoch && !signal.aborted;
 		let requestStarted = false;
+		let recoverableFailure = false;
 		pending = true;
 		error = '';
 		storageMessage = '';
@@ -710,11 +713,23 @@
 			const answer = (await response.json()) as Partial<FreeToolResponse> & {
 				error?: string;
 				code?: string;
+				owner?: string;
 			};
 			if (!current()) return;
 			if (!response.ok) {
-				clearStorage();
-				reset();
+				recoverableFailure =
+					answer.owner === submittedOwner &&
+					owner === submittedOwner &&
+					[
+						'invalid_input',
+						'ascendant_unavailable',
+						'houses_unavailable',
+						'calculation_unavailable'
+					].includes(answer.code ?? '');
+				if (!recoverableFailure) {
+					clearStorage();
+					reset();
+				}
 				identityConflict = answer.code === 'claim_conflict';
 				identityRequired = answer.code === 'subject_claimed';
 				trackHomeEvent('tool_error', {
@@ -758,7 +773,7 @@
 			resultHeading?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
 		} catch (issue) {
 			if (!current()) return;
-			if (requestStarted) {
+			if (requestStarted && !recoverableFailure) {
 				clearStorage();
 				reset();
 			}

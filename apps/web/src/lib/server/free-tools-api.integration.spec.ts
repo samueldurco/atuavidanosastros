@@ -334,6 +334,38 @@ describe('rotas públicas com sujeito nominal e cálculo real', () => {
 			).status
 		).toBe(404);
 	});
+	it('confirma o dono apenas em erros conhecidos de cálculo; falhas do ledger não autorizam reuso', async () => {
+		const jar = new Map<string, string>();
+		const initial = (await (
+			await GET(event('ascendente', null, { jar, method: 'GET' }))
+		).json()) as FreeToolState & { owner: string };
+		const headers = { 'x-atv-owner': initial.owner };
+		for (const [input, code, status] of [
+			[{}, 'invalid_input', 400],
+			[{ ...natal, latitude: 66 }, 'ascendant_unavailable', 422]
+		] as const) {
+			const response = await POST(event('ascendente', input, { jar, headers }));
+			expect(response.status).toBe(status);
+			expect(response.headers.get('cache-control')).toBe('private, no-store');
+			expect(await response.json()).toEqual({ code, owner: initial.owner });
+		}
+		expect(rpcMock.mock.calls.some(([name]) => name === 'commit_free_tool_result')).toBe(false);
+		expect(states.size).toBe(0);
+		const delegate = rpcMock.getMockImplementation()!;
+		for (const failurePoint of ['read_free_tool_state', 'commit_free_tool_result']) {
+			rpcMock.mockImplementation(async (name: string, args: Record<string, unknown>) => {
+				if (name === failurePoint)
+					throw Object.assign(new Error('synthetic ledger failure'), {
+						code: 'invalid_input',
+						status: 503
+					});
+				return delegate(name, args);
+			});
+			const response = await POST(event('ascendente', natal, { jar, headers }));
+			expect(response.status).toBe(503);
+			expect(await response.json()).toEqual({ code: 'quota_unavailable' });
+		}
+	});
 	it('propaga conflitos e recusa entradas, origem e cálculo polar inválidos', async () => {
 		for (const [message, status] of [
 			['claim_conflict', 409],

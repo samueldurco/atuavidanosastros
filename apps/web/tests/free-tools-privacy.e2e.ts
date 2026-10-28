@@ -171,6 +171,48 @@ test('saída durante POST cancela apresentação tardia e envia vínculo opaco d
 	await page.waitForTimeout(300);
 	await expect(page.locator('.result-card')).toHaveCount(0);
 });
+for (const [scenario, unsafeError] of [
+	['outro dono', { code: 'invalid_input', owner: ownerB }],
+	['sem dono', { code: 'invalid_input' }],
+	['erro desconhecido', { code: 'calculation_failed', owner: ownerA }]
+] as const) {
+	test(`400 conhecido preserva rascunho confirmado; ${scenario} limpa e bloqueia`, async ({
+		page
+	}) => {
+		await seed(page, 'carta-do-dia');
+		let failClosed = false;
+		await page.route('**/api/free-tools/carta-do-dia', (route) =>
+			route.fulfill(
+				route.request().method() === 'POST'
+					? {
+							status: 400,
+							json: failClosed ? unsafeError : { code: 'invalid_input', owner: ownerA }
+						}
+					: { json: state() }
+			)
+		);
+		await page.goto('/ferramentas/carta-do-dia');
+		const field = page.locator('#carta-do-dia-tarot-focus');
+		const submit = page.locator('form.tool-form button[type="submit"]');
+		await expect(field).toHaveValue('Rascunho privado A');
+		await submit.click();
+		await expect(page.getByRole('alert')).toContainText(
+			'Confira os dados informados e tente novamente.'
+		);
+		await expect(field).toHaveValue('Rascunho privado A');
+		await expect(field).toBeEnabled();
+		await expect(submit).toBeEnabled();
+		failClosed = true;
+		await submit.click();
+		await expect(field).toHaveValue('');
+		await expect(field).toBeDisabled();
+		await expect(page.locator('.result-card')).toHaveCount(0);
+		expect(
+			await page.evaluate(() => sessionStorage.getItem('atv-free-tool:carta-do-dia'))
+		).toBeNull();
+	});
+}
+
 test('retorno de sonho antigo mantém o ID da leitura e a oferta correta após conferência do dono', async ({
 	page
 }) => {

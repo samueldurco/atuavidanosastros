@@ -301,7 +301,16 @@ test.describe('real SSR signout with local Auth fixture', () => {
 			}, testInfo) => {
 				await page.setViewportSize(viewport);
 				const token = await openAuthenticatedDashboard(page, context);
-				if (shell === 'public') await page.goto('/privacidade');
+				if (shell === 'public') {
+					await page.goto('/privacidade');
+					const mobileMenu = page.getByRole('button', { name: 'Menu', exact: true });
+					if (await mobileMenu.isVisible()) {
+						await mobileMenu.click();
+						await expect(
+							page.getByRole('button', { name: 'Fechar menu', exact: true })
+						).toHaveAttribute('aria-expanded', 'true');
+					}
+				}
 				await expect(
 					page.getByRole('button', { name: 'Sair da conta', exact: true })
 				).toBeVisible();

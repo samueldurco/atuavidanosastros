@@ -96,17 +96,22 @@ test('Meio do Céu mostra erro recuperável com os campos preservados', async ({
 		'Sao Paulo',
 		'São Paulo, São Paulo, Brasil'
 	);
-	await page.route('**/api/free-tools/meio-do-ceu', (route) =>
-		route.fulfill({
+	await page.route('**/api/free-tools/meio-do-ceu', (route) => {
+		if (route.request().method() !== 'POST') return route.fallback();
+		return route.fulfill({
 			status: 503,
-			json: { error: 'Não foi possível calcular agora. Tente novamente.' }
-		})
-	);
+			json: { code: 'calculation_unavailable', owner: route.request().headers()['x-atv-owner'] }
+		});
+	});
 	await page.getByRole('button', { name: 'Calcular meu Meio do Céu' }).click();
 	await expect(page.getByRole('alert')).toContainText(
 		'Não foi possível calcular agora. Tente novamente.'
 	);
 	await expect(page.getByLabel('Data de nascimento')).toHaveValue('2000-01-01');
+	await expect(page.getByLabel('Hora de nascimento')).toHaveValue('09:00');
+	await expect(page.locator('#meio-do-ceu-first-birth-city')).toHaveValue(
+		'São Paulo, São Paulo, Brasil'
+	);
 	await expect(page.getByRole('button', { name: 'Calcular meu Meio do Céu' })).toBeEnabled();
 });
 

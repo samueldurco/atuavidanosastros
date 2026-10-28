@@ -89,7 +89,22 @@ export const POST: RequestHandler = async (event) => {
 			state.quota.remainingCorrections === 0
 		)
 			return json({ code: 'quota_exceeded', quota: state.quota }, { status: 429, headers });
-		const calculated = await calculatePublicFreeTool(event, tool, input);
+		let calculated: Awaited<ReturnType<typeof calculatePublicFreeTool>>;
+		try {
+			calculated = await calculatePublicFreeTool(event, tool, input);
+		} catch (failure) {
+			// Only a recognized calculation failure can keep the confirmed owner's draft.
+			// Ledger reads/commits and unexpected failures must never authorize that reuse.
+			const code =
+				failure && typeof failure === 'object' && 'code' in failure ? failure.code : null;
+			const binding = expectedOwner === state.owner ? { owner: state.owner } : {};
+			if (code === 'invalid_input') return json({ code, ...binding }, { status: 400, headers });
+			if (code === 'ascendant_unavailable' || code === 'houses_unavailable')
+				return json({ code, ...binding }, { status: 422, headers });
+			if (failure && typeof failure === 'object' && 'status' in failure && failure.status === 503)
+				return json({ code: 'calculation_unavailable', ...binding }, { status: 503, headers });
+			return json({ code: 'calculation_failed' }, { status: 422, headers });
+		}
 		if (tool === 'registro-de-sonho' && state.result) {
 			calculated.result.id = state.result.id;
 			calculated.result.createdAt = state.result.createdAt;
@@ -100,12 +115,6 @@ export const POST: RequestHandler = async (event) => {
 	} catch (failure) {
 		if (failure instanceof FreeToolLedgerError)
 			return json({ code: failure.code }, { status: failure.status, headers });
-		const code = failure && typeof failure === 'object' && 'code' in failure ? failure.code : null;
-		if (code === 'invalid_input') return json({ code }, { status: 400, headers });
-		if (code === 'ascendant_unavailable' || code === 'houses_unavailable')
-			return json({ code }, { status: 422, headers });
-		if (failure && typeof failure === 'object' && 'status' in failure && failure.status === 503)
-			return json({ code: 'calculation_unavailable' }, { status: 503, headers });
-		return json({ code: 'calculation_failed' }, { status: 422, headers });
+		return json({ code: 'quota_unavailable' }, { status: 503, headers });
 	}
 };

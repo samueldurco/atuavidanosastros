@@ -9,8 +9,12 @@ test('city resolves coordinates and historical daylight saving without technical
 }) => {
 	let submitted: Record<string, unknown> | undefined;
 	await page.route('**/api/free-tools/meio-do-ceu', async (route) => {
+		if (route.request().method() !== 'POST') return route.fallback();
 		submitted = route.request().postDataJSON();
-		await route.fulfill({ status: 400, json: { error: 'fixture' } });
+		await route.fulfill({
+			status: 400,
+			json: { code: 'invalid_input', owner: route.request().headers()['x-atv-owner'] }
+		});
 	});
 	await expect(page.getByLabel('Latitude', { exact: true })).toHaveCount(0);
 	await expect(page.getByLabel('Longitude', { exact: true })).toHaveCount(0);
