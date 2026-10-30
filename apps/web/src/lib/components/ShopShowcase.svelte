@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { shopPreviews } from '$lib/data/shop-products';
 	import type { ShopCollection } from '$lib/data/shop-collections';
 	import ShopCollectionsNav from './ShopCollectionsNav.svelte';
@@ -13,6 +14,10 @@
 	} = $props();
 	let sign = $state('Todos');
 	let category = $state('Todas');
+	let filtersReady = $state(false);
+	onMount(() => {
+		filtersReady = true;
+	});
 	$effect(() => {
 		void collection?.slug;
 		sign = 'Todos';
@@ -62,7 +67,7 @@
 			{#if signs.length > 2}
 				<label class="mobile-sign-filter" class:compact-filter={signs.length > 14}>
 					{collection?.slug === 'casal' ? 'Combinação de signos' : 'Signo'}
-					<select bind:value={sign}>
+					<select bind:value={sign} disabled={!filtersReady}>
 						{#each signs as option (option)}
 							<option value={option}
 								>{option === 'Todos'
@@ -83,7 +88,11 @@
 							: 'Filtrar peças por signo'}
 					>
 						{#each signs as option (option)}
-							<button type="button" aria-pressed={sign === option} onclick={() => (sign = option)}
+							<button
+								type="button"
+								disabled={!filtersReady}
+								aria-pressed={sign === option}
+								onclick={() => (sign = option)}
 								>{option === 'Todos'
 									? collection?.slug === 'casal'
 										? 'Todas as combinações'
@@ -97,7 +106,7 @@
 			{#if categories.length > 2}
 				<label class="category-filter">
 					Tipo de peça
-					<select bind:value={category}>
+					<select bind:value={category} disabled={!filtersReady}>
 						{#each categories as option (option)}
 							<option value={option}>{option === 'Todas' ? 'Todas as peças' : option}</option>
 						{/each}

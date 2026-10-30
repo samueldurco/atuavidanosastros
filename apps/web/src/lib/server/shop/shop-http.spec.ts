@@ -1,6 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import { shopCart, shopCatalog, shopDiagnostic } from './shop-http';
 
+vi.mock('./shop-catalog-map', () => ({
+	approvedShopProducts: {
+		'synthetic-product': {
+			handle: 'synthetic-product',
+			productId: 'gid://shopify/Product/100',
+			variantIds: ['gid://shopify/ProductVariant/1']
+		}
+	}
+}));
+
 const token = 'private-token-never-in-response';
 const diagnosticToken = 'diagnostic-token-private-and-at-least-thirty-two';
 const configured = {
@@ -99,7 +109,7 @@ describe('Shop HTTP boundaries', () => {
 		for (const secret of [token, diagnosticToken, 'cart-access-secret', 'checkout-secret'])
 			expect(text).not.toContain(secret);
 		const sent = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
-		expect(sent.variables).toEqual({ input: { lines: [] } });
+		expect(sent.variables).toEqual({ input: { lines: [], buyerIdentity: { countryCode: 'BR' } } });
 		const forbidden = provider(emptyCart);
 		expect(
 			(

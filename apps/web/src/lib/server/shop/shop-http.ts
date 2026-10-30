@@ -1,16 +1,26 @@
 import { json } from '@sveltejs/kit';
+import { approvedShopProducts } from './shop-catalog-map';
 import {
+	CART_LINES_LIMIT,
+	CART_QUANTITY_LIMIT,
 	createShopCart,
 	createShopPreviewCart,
 	readShopCatalog,
 	readShopProduct,
 	ShopStorefrontError,
+	type ShopCartLine,
+	type ShopCatalogProduct,
 	type StorefrontConfig
 } from './shopify-storefront';
 
 type PrivateEnv = Record<string, string | undefined>;
 const headers = { 'Cache-Control': 'private, no-store', 'X-Robots-Tag': 'noindex, nofollow' };
 const reply = (body: unknown, status = 200) => json(body, { status, headers });
+const approvedVariantSlugs = new Map(
+	Object.entries(approvedShopProducts).flatMap(([slug, product]) =>
+		product.variantIds.map((id) => [id, slug] as const)
+	)
+);
 class ShopHttpError extends Error {
 	constructor(
 		readonly code: string,
@@ -132,6 +142,74 @@ export async function shopCatalog(
 	}
 }
 
+async function readApprovedProduct(
+	shop: StorefrontConfig,
+	fetcher: typeof fetch,
+	slug: string,
+	buyerIp?: string
+): Promise<ShopCatalogProduct | null> {
+	const approved = approvedShopProducts[slug];
+	const allowed = new Set(approved.variantIds);
+	const seenVariants = new Set<string>();
+	const seenCursors = new Set<string>();
+	const variants: ShopCatalogProduct['variants'] = [];
+	let first: ShopCatalogProduct | null = null;
+	let cursor: string | undefined;
+	while (true) {
+		const product = await readShopProduct(shop, fetcher, approved.handle, buyerIp, cursor);
+		if (!product) {
+			if (!first) return null;
+			throw new ShopStorefrontError('invalid_provider_response');
+		}
+		if (product.id !== approved.productId || product.handle !== approved.handle)
+			throw new ShopStorefrontError('invalid_provider_response');
+		first ??= product;
+		for (const variant of product.variants) {
+			if (
+				!allowed.has(variant.id) ||
+				seenVariants.has(variant.id) ||
+				variant.price.currencyCode !== 'BRL' ||
+				Number(variant.price.amount) <= 0
+			)
+				throw new ShopStorefrontError('invalid_provider_response');
+			seenVariants.add(variant.id);
+			variants.push(variant);
+		}
+		if (!product.variantsPageInfo.hasNextPage)
+			return { ...first, variants, variantsPageInfo: { hasNextPage: false, endCursor: null } };
+		cursor = product.variantsPageInfo.endCursor ?? undefined;
+		// Every next page must make progress within the finite approved variant set.
+		if (
+			!cursor ||
+			seenCursors.has(cursor) ||
+			product.variants.length === 0 ||
+			variants.length >= allowed.size
+		)
+			throw new ShopStorefrontError('invalid_provider_response');
+		seenCursors.add(cursor);
+	}
+}
+
+/** Resolve an existing public slug without exposing the complete supplier/catalog mapping. */
+export async function shopProduct(
+	env: PrivateEnv,
+	fetcher: typeof fetch,
+	slug: string,
+	buyerIp?: string
+) {
+	if (env.FEATURE_PHYSICAL_CHECKOUT !== 'true')
+		return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	if (!Object.hasOwn(approvedShopProducts, slug))
+		return reply({ ok: false, code: 'product_not_found' }, 404);
+	const shop = config(env);
+	if (!shop) return reply({ ok: false, code: 'shop_not_configured' }, 503);
+	try {
+		return reply({ ok: true, product: await readApprovedProduct(shop, fetcher, slug, buyerIp) });
+	} catch (error) {
+		return failure(error);
+	}
+}
+
 export async function shopCart(
 	request: Request,
 	env: PrivateEnv,
@@ -159,12 +237,43 @@ export async function shopCart(
 			!(body as { lines: unknown[] }).lines.length
 		)
 			throw new ShopHttpError('invalid_lines', 400);
-		const cart = await createShopCart(
-			shop,
-			fetcher,
-			(body as { lines: Parameters<typeof createShopCart>[2] }).lines,
-			buyerIp
+		const submittedLines = (body as { lines: unknown[] }).lines;
+		if (
+			submittedLines.length > CART_LINES_LIMIT ||
+			!submittedLines.every(
+				(line) =>
+					line !== null &&
+					typeof line === 'object' &&
+					!Array.isArray(line) &&
+					Object.keys(line).every((key) => key === 'merchandiseId' || key === 'quantity') &&
+					typeof (line as { merchandiseId?: unknown }).merchandiseId === 'string' &&
+					approvedVariantSlugs.has((line as { merchandiseId: string }).merchandiseId) &&
+					Number.isSafeInteger((line as { quantity?: unknown }).quantity) &&
+					(line as { quantity: number }).quantity >= 1 &&
+					(line as { quantity: number }).quantity <= CART_QUANTITY_LIMIT
+			)
+		)
+			throw new ShopHttpError('invalid_lines', 400);
+		const lines = submittedLines as ShopCartLine[];
+		if (new Set(lines.map((line) => line.merchandiseId)).size !== lines.length)
+			throw new ShopHttpError('invalid_lines', 400);
+		// POST clients cannot bypass current availability, BRL or positive-price checks.
+		const slugs = [...new Set(lines.map((line) => approvedVariantSlugs.get(line.merchandiseId)!))];
+		const products = await Promise.all(
+			slugs.map((slug) => readApprovedProduct(shop, fetcher, slug, buyerIp))
 		);
+		const available = new Set(
+			products.flatMap((product) =>
+				product?.availableForSale
+					? product.variants
+							.filter((variant) => variant.availableForSale)
+							.map((variant) => variant.id)
+					: []
+			)
+		);
+		if (lines.some((line) => !available.has(line.merchandiseId)))
+			throw new ShopHttpError('variant_unavailable', 409);
+		const cart = await createShopCart(shop, fetcher, lines, buyerIp);
 		return reply({ ok: true, checkoutUrl: cart.checkoutUrl, totalQuantity: cart.totalQuantity });
 	} catch (error) {
 		return failure(error);

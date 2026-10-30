@@ -4,6 +4,14 @@ import { defineEnvVars } from '@sveltejs/kit/env';
 const optional = (value: string | undefined) => value;
 
 export const variables = defineEnvVars({
+	FEATURE_PHYSICAL_CHECKOUT: { schema: optional },
+	SHOPIFY_CHECKOUT_HOSTS: { schema: optional },
+	SHOPIFY_DIAGNOSTIC_ENABLED: { schema: optional },
+	SHOPIFY_DIAGNOSTIC_TOKEN: { schema: optional },
+	SHOPIFY_PREVIEW_ENABLED: { schema: optional },
+	SHOPIFY_STORE_DOMAIN: { schema: optional },
+	SHOPIFY_STOREFRONT_API_VERSION: { schema: optional },
+	SHOPIFY_STOREFRONT_PRIVATE_TOKEN: { schema: optional },
 	ADMIN_EMAIL_ALLOWLIST: { schema: optional },
 	TIKTOK_CLIENT_KEY: { schema: optional },
 	TIKTOK_CLIENT_SECRET: { schema: optional },

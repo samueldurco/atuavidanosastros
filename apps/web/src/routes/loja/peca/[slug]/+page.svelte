@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
+	import ShopPurchase from '$lib/components/ShopPurchase.svelte';
 	let { data } = $props();
 	let interactive = $state(false);
 	onMount(() => {
@@ -80,13 +81,7 @@
 					{/each}
 				</div>
 			</div>
-			<div class="availability">
-				<p class="eyebrow">Em preparação</p>
-				<p>
-					Esta peça ainda não está à venda. Preço e condições de entrega serão exibidos antes da
-					abertura das compras.
-				</p>
-			</div>
+			<ShopPurchase slug={data.piece.slug} enabled={data.shopCommerceEnabled} />
 			<dl>
 				<div>
 					<dt>Modelo da peça</dt>
@@ -224,16 +219,6 @@
 		border: 2px solid #183746;
 		padding: calc(0.65rem - 1px) calc(1rem - 1px);
 		background: #d5d9c6;
-	}
-	.availability {
-		background: #ece6d7;
-		padding: 1.25rem;
-		margin: 1.5rem 0;
-	}
-	.availability p:last-child {
-		margin-bottom: 0;
-		font-size: 0.9rem;
-		line-height: 1.7;
 	}
 	dl {
 		margin-bottom: 2rem;
