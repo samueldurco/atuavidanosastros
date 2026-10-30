@@ -5,6 +5,34 @@ test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
 
+test('Identificação pública acompanha a loja, as políticas e as peças', async ({
+	page
+}, testInfo) => {
+	await page.setViewportSize({ width: 320, height: 800 });
+	for (const path of [
+		'/loja',
+		'/loja/termos',
+		'/loja/frete',
+		'/loja/devolucoes',
+		'/loja/peca/cropped-aries'
+	]) {
+		await page.goto(path);
+		const seller = page.getByRole('region', { name: 'Quem vende e atende' });
+		await expect(seller).toContainText('Responsável de exemplo');
+		await expect(seller).toContainText('Endereço fictício para teste de layout, Brasil');
+		await expect(seller.getByRole('link', { name: 'seller@example.test' })).toHaveAttribute(
+			'href',
+			'mailto:seller@example.test'
+		);
+		expect(
+			await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
+		).toBe(false);
+		if (path === '/loja/termos') {
+			await seller.screenshot({ path: testInfo.outputPath('seller-mobile.png') });
+		}
+	}
+});
+
 async function assertShowcaseOnly(page: Page) {
 	await expect(page.locator('main')).toContainText('ainda não está à venda');
 	const robots = await page
