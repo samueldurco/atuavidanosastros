@@ -81,6 +81,31 @@ async function expectProductIllustration(art: Locator, context: string) {
 	expect(box?.height, `${context}: artwork height`).toBeGreaterThan(100);
 }
 
+async function expectApprovedCatalogCover(art: Locator, productId: string) {
+	await expect(art, `${productId}: illustrated cover`).toHaveCount(1);
+	await expect(art).toHaveAttribute('data-cover', productId);
+	await art.scrollIntoViewIfNeeded();
+	await expect(art).toBeVisible();
+	const engravings = art.locator('img[src*="/brand/mvp/"]');
+	await expect(engravings, `${productId}: primary and supporting approved engravings`).toHaveCount(
+		2
+	);
+	await expect
+		.poll(
+			() =>
+				engravings.evaluateAll((nodes) =>
+					(nodes as HTMLImageElement[]).every(
+						(image) => image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
+					)
+				),
+			{ message: `${productId}: every engraved asset must load` }
+		)
+		.toBe(true);
+	const box = await art.boundingBox();
+	expect(box?.width, `${productId}: cover width`).toBeGreaterThan(100);
+	expect(box?.height, `${productId}: cover height`).toBeGreaterThan(100);
+}
+
 async function expectSeparatePanels(first: Locator, second: Locator, context: string) {
 	const [a, b] = await Promise.all([first.boundingBox(), second.boundingBox()]);
 	expect(a, `${context}: first panel exists`).not.toBeNull();
@@ -179,10 +204,10 @@ for (const width of [320, 1440]) {
 				'href',
 				`/produtos/${product.slug}`
 			);
-			await expectProductIllustration(card.locator('.product-art'), product.id);
+			await expectApprovedCatalogCover(card.locator('.product-cover'), product.id);
 			await expectSeparatePanels(
-				card.locator('.product-card-picture'),
-				card.locator('.card-body'),
+				card.locator('.cover-link'),
+				card.locator('.catalog-card-body'),
 				product.id
 			);
 		}
@@ -204,8 +229,8 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
 	await expect(page.locator('.product-offer-art .product-art')).toHaveCount(1);
 	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
-	await expect(page.locator('.header-account')).toBeInViewport();
-	await expect(page.getByRole('button', { name: 'Menu', exact: true })).toBeInViewport();
+	await expect(page.locator('.account-link')).toBeInViewport();
+	await expect(page.locator('.nav-trigger[aria-controls="nav-produtos"]')).toBeInViewport();
 	await page.evaluate(() => {
 		document.documentElement.style.zoom = '2';
 	});
@@ -219,12 +244,13 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await expect(heading).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Ver disponibilidade', exact: false })).toBeVisible();
 	await expectNoOverflow(page, 'artwork failure at 200% zoom');
-	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
 	const menu = page.getByRole('button', { name: 'Menu', exact: true });
+	await expect(menu).toBeInViewport();
 	await menu.click();
 	await expect(
 		page.getByRole('navigation', { name: 'Navegação principal', exact: true })
 	).toBeVisible();
+	await expect(page.locator('.account-link')).toBeVisible();
 	await expectNoOverflow(page, 'open navigation at 200% zoom');
 	await page.keyboard.press('Escape');
 	await expect(menu).toBeFocused();
@@ -249,7 +275,7 @@ test('MVP: printing retains the complete catalog and private reading text', asyn
 	for (const card of await cards.all()) {
 		await expect(card).toBeVisible();
 		await expect(card.getByRole('heading')).toBeVisible();
-		await expect(card.locator('.card-body')).not.toHaveText('');
+		await expect(card.locator('.catalog-card-body')).not.toHaveText('');
 	}
 	await page.goto('/testar-produtos/_spec?product=career-compass');
 	await expect(page.getByRole('heading', { level: 1 })).toBeVisible();

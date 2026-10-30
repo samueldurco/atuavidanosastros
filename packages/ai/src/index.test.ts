@@ -261,7 +261,9 @@ test("timeout aborta tentativa e fallback é limitado; falha editorial não rege
       return new Promise<never>(() => {});
     },
   };
-  const result = await gateway([slow, fixture()], { timeoutMs: 10 }).generate(
+  // Leave time for prompt validation before the pending provider is aborted.
+  // A 10 ms total budget can expire before the provider starts on a busy runner.
+  const result = await gateway([slow, fixture()], { timeoutMs: 1_000 }).generate(
     request,
   );
   assert.deepEqual(result, { status: "unavailable", reason: "timeout" });

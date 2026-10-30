@@ -1,268 +1,385 @@
 <script lang="ts">
+	import { onMount, tick, untrack } from 'svelte';
+	import { page } from '$app/state';
 	import { freeTools } from '$lib/data/free-tools';
-	import { onMount } from 'svelte';
-	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
+	import { interestNavigation } from '$lib/data/public-navigation';
+	import { freeToolDesign } from './free-tool-design';
 	import FreeToolExperience from './FreeToolExperience.svelte';
-	let { canSave = false, hasAccount = false }: { canSave?: boolean; hasAccount?: boolean } =
-		$props();
-	let rail: HTMLDivElement;
+	import { trackHomeEvent } from '$lib/analytics/home-events';
+	let {
+		onToolOpenChange
+	}: {
+		onToolOpenChange?: (open: boolean) => void;
+	} = $props();
 	let opened = $state<string[]>([]);
-	let expanded = $state<string[]>([]);
-	let active = $state(0);
-	let atEnd = $state(false);
-	onMount(() => {
-		const observer = new ResizeObserver(track);
-		observer.observe(rail);
-		track();
-		return () => observer.disconnect();
-	});
-	function toggle(id: string) {
+	let selected = $state<string | null>(null);
+	let columns = $state(3);
+	let ready = $state(false);
+	const openKey = 'atv-home-open-tool';
+	const panelOrder = (index: number) => (Math.floor(index / columns) + 1) * columns * 2 - 1;
+	function rememberSelection() {
+		try {
+			if (selected) sessionStorage.setItem(openKey, selected);
+			else sessionStorage.removeItem(openKey);
+		} catch {
+			/* Optional same-tab continuity; never used as a quota. */
+		}
+	}
+	async function select(id: string, focus = true) {
+		if (focus) trackHomeEvent('tool_select', { tool_id: id, context: 'home', cta: 'open' });
 		if (!opened.includes(id)) opened = [...opened, id];
-		expanded = expanded.includes(id) ? expanded.filter((item) => item !== id) : [...expanded, id];
+		selected = id;
+		rememberSelection();
+		onToolOpenChange?.(true);
+		await tick();
+		if (focus) {
+			const panel = document.getElementById(`interactive-${id}`);
+			panel?.focus({ preventScroll: true });
+			panel?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+		}
 	}
-	function track() {
-		const cards = Array.from(rail.children) as HTMLElement[];
-		const edge = rail.getBoundingClientRect().left;
-		atEnd = rail.scrollLeft >= rail.scrollWidth - rail.clientWidth - 2;
-		active = cards.reduce(
-			(closest, card, index) =>
-				Math.abs(card.getBoundingClientRect().left - edge) <
-				Math.abs(cards[closest].getBoundingClientRect().left - edge)
-					? index
-					: closest,
-			0
-		);
+	async function close(id: string) {
+		selected = null;
+		rememberSelection();
+		onToolOpenChange?.(false);
+		await tick();
+		document.getElementById(`open-${id}`)?.focus({ preventScroll: true });
 	}
-	function move(step: number) {
-		const index = Math.max(0, Math.min(freeTools.length - 1, active + step));
-		const card = rail.children[index] as HTMLElement;
-		const left =
-			rail.scrollLeft + card.getBoundingClientRect().left - rail.getBoundingClientRect().left;
-		rail.scrollTo({
-			left,
-			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
-		});
-	}
+	$effect(() => {
+		if (!ready) return;
+		const requested = page.url.searchParams.get('ferramenta');
+		if (requested && freeTools.some((tool) => tool.id === requested)) {
+			// A menu link can navigate within this mounted home. Keep existing experiences alive.
+			untrack(() => void select(requested));
+		}
+	});
+	onMount(() => {
+		const resize = () => {
+			columns = window.innerWidth <= 620 ? 1 : window.innerWidth <= 1020 ? 2 : 3;
+		};
+		resize();
+		window.addEventListener('resize', resize, { passive: true });
+		try {
+			const previous = sessionStorage.getItem(openKey);
+			if (
+				!page.url.searchParams.has('ferramenta') &&
+				freeTools.some((tool) => tool.id === previous)
+			)
+				void select(previous!, false);
+		} catch {
+			/* A disabled browser store does not prevent use. */
+		}
+		ready = true;
+		return () => {
+			window.removeEventListener('resize', resize);
+			onToolOpenChange?.(false);
+		};
+	});
 </script>
 
 <section class="tool-collection section" id="ferramentas" aria-labelledby="tools-heading">
 	<div class="wrap collection-heading">
 		<div>
-			<p class="eyebrow">Grátis · comece por aqui</p>
-			<h2 id="tools-heading">Experimente uma ferramenta</h2>
-			<p>Escolha um bloco para usar. Deslize para o lado e descubra os outros.</p>
+			<p class="eyebrow">01 / Um primeiro olhar</p>
+			<h2 id="tools-heading">Ferramentas grátis</h2>
+			<p>Uma pergunta, um ponto de partida. Explore seu céu, seus vínculos e seus símbolos.</p>
 		</div>
-		<div class="rail-controls" aria-label="Navegar pelas ferramentas">
-			<button
-				type="button"
-				onclick={() => move(-1)}
-				aria-label="Ferramenta anterior"
-				disabled={active === 0}>←</button
-			>
-			<span aria-live="polite">{active + 1} / {freeTools.length}</span>
-			<button type="button" onclick={() => move(1)} aria-label="Próxima ferramenta" disabled={atEnd}
-				>→</button
-			>
-		</div>
+		<span class="collection-note">Nove caminhos.<br />Comece pelo que faz sentido hoje.</span>
 	</div>
-	<div class="tool-rail wrap" bind:this={rail} onscroll={track}>
+	<div class="tool-grid wrap">
 		{#each freeTools as tool, index (tool.id)}
+			{@const design = freeToolDesign(tool)}
+			{@const universe = interestNavigation.find((item) => item.id === tool.topicId)}
 			<article
-				class="tool-block"
-				style={`--tool-ink:${mvpThemes[tool.topicId].ink};--tool-tint:${mvpThemes[tool.topicId].tint}`}
+				class="tool-card"
+				data-tool={tool.id}
+				class:selected={selected === tool.id}
+				style={`--tool-ink:${design.ink};--tool-tint:${design.tint};order:${index * 2}`}
 			>
-				<div class="tool-cover">
-					<span class="tool-number">{String(index + 1).padStart(2, '0')}</span>
-					<img
-						src={mvpArt(mvpThemes[tool.topicId].art)}
-						alt=""
-						width="260"
-						height="160"
-						loading="lazy"
-					/>
-					<p class="eyebrow">{tool.availabilityLabel}</p>
-					<h3>{tool.label}</h3>
-					<p>{tool.description}</p>
-				</div>
-				<div class="tool-body">
-					<button
-						class="tool-open"
-						type="button"
-						aria-expanded={expanded.includes(tool.id)}
-						aria-controls={`interactive-${tool.id}`}
-						onclick={() => toggle(tool.id)}
-						>{expanded.includes(tool.id) ? 'Recolher ferramenta' : tool.action}<span
-							aria-hidden="true">{expanded.includes(tool.id) ? '−' : '+'}</span
-						></button
+				<button
+					id={`open-${tool.id}`}
+					class="tool-open"
+					type="button"
+					aria-expanded={selected === tool.id}
+					aria-controls={`interactive-${tool.id}`}
+					onclick={() => (selected === tool.id ? close(tool.id) : select(tool.id))}
+				>
+					<img src={design.art} alt="" width="110" height="110" loading="lazy" />
+					<span class="tool-copy"
+						><span class="tool-kicker"
+							>{universe?.label} <span aria-hidden="true">/</span> Grátis</span
+						>
+						<span class="tool-name">{tool.label}</span><span class="tool-description"
+							>{tool.description}</span
+						></span
 					>
-					<div
-						id={`interactive-${tool.id}`}
-						hidden={!expanded.includes(tool.id)}
-						class="tool-interaction"
-					>
-						{#if opened.includes(tool.id)}<FreeToolExperience
-								data={{ tool, canSave, hasAccount }}
-								embedded
-							/>{/if}
-					</div>
-					<a class="standalone" href={tool.href}>Abrir em uma página própria ↗</a>
-				</div>
+					<span class="tool-mark" aria-hidden="true">{selected === tool.id ? '−' : '+'}</span>
+				</button>
 			</article>
+			<div
+				id={`interactive-${tool.id}`}
+				class="tool-panel"
+				data-tool-panel={tool.id}
+				role="region"
+				aria-label={tool.label}
+				tabindex="-1"
+				hidden={selected !== tool.id}
+				style={`--tool-ink:${design.ink};--tool-tint:${design.tint};order:${panelOrder(index)}`}
+			>
+				{#if opened.includes(tool.id)}
+					<div class="panel-heading">
+						<div>
+							<p class="eyebrow">{universe?.label} / Ferramenta gratuita</p>
+							<h3>{tool.label}</h3>
+						</div>
+						<button
+							class="tool-close"
+							type="button"
+							onclick={() => close(tool.id)}
+							aria-label={`Fechar ${tool.label}`}>Fechar <span aria-hidden="true">×</span></button
+						>
+					</div>
+					<div class="panel-intro">
+						<img src={design.art} alt="" width="180" height="130" loading="lazy" />
+						<div>
+							<p>{tool.description}</p>
+							<p class="requirements">{tool.requirements}</p>
+						</div>
+					</div>
+					<FreeToolExperience data={{ tool }} embedded active={selected === tool.id} />
+				{/if}
+			</div>
 		{/each}
 	</div>
-	<p class="wrap collection-end"><a href="/ferramentas">Ver todas as ferramentas →</a></p>
 </section>
 
 <style>
 	.tool-collection {
-		overflow: hidden;
-		background: #e6e9dc;
+		background: #e7eadf;
 		border-block: 1px solid #173c4d22;
 	}
 	.collection-heading {
 		display: flex;
 		align-items: end;
 		justify-content: space-between;
-		gap: 1.5rem;
-		margin-bottom: 2rem;
+		gap: 2rem;
+		margin-bottom: 2.1rem;
 	}
 	h2 {
-		margin-block: 0.5rem 1rem;
+		font: 500 clamp(2.8rem, 5.4vw, 4.6rem)/1.03 var(--atv-font-display);
+		letter-spacing: -0.035em;
+		margin: 0.55rem 0 1rem;
 	}
-	.rail-controls {
-		display: flex;
-		align-items: center;
-		gap: 0.7rem;
-		flex-shrink: 0;
+	.collection-heading p:not(.eyebrow) {
+		max-width: 36rem;
+		line-height: 1.65;
+		margin: 0;
 	}
-	.rail-controls button {
-		width: 2.8rem;
-		height: 2.8rem;
-		border-radius: 50%;
-		border: 1px solid currentColor;
-		background: transparent;
-		font-size: 1.3rem;
-		cursor: pointer;
-	}
-	.rail-controls button:disabled {
-		opacity: 0.3;
-		cursor: default;
-	}
-	.rail-controls span {
-		min-width: 2.8rem;
-		text-align: center;
+	.collection-note {
+		text-align: right;
 		font-size: 0.85rem;
+		line-height: 1.6;
+		color: #4d5d50;
 	}
-	.tool-rail {
-		display: flex;
-		align-items: start;
-		gap: 1.5rem;
-		overflow-x: auto;
-		scroll-snap-type: x mandatory;
-		overscroll-behavior-x: contain;
-		padding-bottom: 1.25rem;
-		scrollbar-color: #586647 #d2d8c7;
-		scrollbar-width: thin;
+	.tool-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0.8rem;
+		align-items: stretch;
 	}
-	.tool-block {
-		flex: 0 0 calc((100% - 2rem) / 2);
+	.tool-card {
 		min-width: 0;
-		scroll-snap-align: start;
-		background: #fff9ec;
-		border: 1px solid #183c4d36;
-		border-radius: 0.35rem;
-		overflow: hidden;
-		box-shadow: 0 4px 12px #183c4d0b;
+		background: #faf5e9;
+		border: 1px solid #183c4d35;
+		border-radius: 0.2rem;
+		transition:
+			border-color 160ms,
+			background 160ms;
 	}
-	.tool-cover {
-		position: relative;
-		padding: 1.5rem 1.6rem 1rem;
-		color: var(--tool-ink);
+	.tool-card.selected {
 		background: var(--tool-tint);
-		min-height: 23rem;
-	}
-	.tool-number {
-		position: absolute;
-		left: 1.6rem;
-		top: 1.5rem;
-		font-family: var(--atv-font-display);
-		font-size: 1.3rem;
-	}
-	.tool-cover img {
-		display: block;
-		width: 100%;
-		max-width: 15rem;
-		height: 9rem;
-		object-fit: contain;
-		margin: 0 auto 1rem;
-		mix-blend-mode: multiply;
-	}
-	.tool-cover h3 {
-		font-family: var(--atv-font-display);
-		font-size: clamp(1.8rem, 2.7vw, 2.6rem);
-		line-height: 1.12;
-		margin: 0.5rem 0 0.8rem;
-	}
-	.tool-cover p {
-		line-height: 1.5;
-		margin-bottom: 0.5rem;
-	}
-	.tool-body {
-		padding: 1.25rem 1.5rem;
+		border-color: var(--tool-ink);
+		box-shadow: inset 0 -3px var(--tool-ink);
 	}
 	.tool-open {
-		display: flex;
+		position: relative;
+		display: grid;
+		grid-template-columns: 76px minmax(0, 1fr) 14px;
+		gap: 0.8rem;
 		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
 		width: 100%;
-		min-height: 3.2rem;
-		padding: 0.8rem 1rem;
+		height: 100%;
+		min-height: 12rem;
 		border: 0;
-		border-radius: 0.2rem;
-		background: var(--tool-ink);
-		color: #fffaf0;
-		font: inherit;
+		padding: 1.15rem;
+		background: none;
+		color: #203e43;
 		text-align: left;
+		font: inherit;
 		cursor: pointer;
 	}
-	.tool-open span {
-		font-size: 1.4rem;
+	.tool-open:hover {
+		background: #ffffff40;
 	}
-	.tool-interaction {
-		padding-top: 1.5rem;
+	.tool-open:focus-visible,
+	.tool-close:focus-visible {
+		outline: 3px solid var(--tool-ink);
+		outline-offset: 4px;
 	}
-	.standalone {
-		display: inline-block;
-		margin-top: 1rem;
+	.tool-open img {
+		width: 76px;
+		height: 100px;
+		object-fit: contain;
+		mix-blend-mode: multiply;
+	}
+	.tool-copy {
+		display: grid;
+		gap: 0.55rem;
+	}
+	.tool-kicker {
+		color: var(--tool-ink);
+		font-size: 0.6rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		font-weight: 650;
+	}
+	.tool-kicker span {
+		padding-inline: 0.15rem;
+	}
+	.tool-name {
+		font: 500 1.55rem/1.05 var(--atv-font-display);
+		letter-spacing: -0.02em;
+	}
+	.tool-description {
+		font-size: 0.76rem;
+		line-height: 1.55;
+		color: #4b5953;
+	}
+	.tool-mark {
+		align-self: end;
+		color: var(--tool-ink);
+		font-size: 1.5rem;
+	}
+	.tool-panel {
+		grid-column: 1 / -1;
+		min-width: 0;
+		background: #faf5e9;
+		border: 1px solid var(--tool-ink);
+		border-top: 4px solid var(--tool-ink);
+		padding: clamp(1.2rem, 3.5vw, 3rem);
+		margin-block: 0.2rem 0.65rem;
+		scroll-margin-top: 6rem;
+	}
+	.tool-panel[hidden] {
+		display: none;
+	}
+	.tool-panel:focus {
+		outline: none;
+	}
+	.panel-heading {
+		display: flex;
+		justify-content: space-between;
+		align-items: start;
+		gap: 1rem;
+		padding-bottom: 1.1rem;
+		border-bottom: 1px solid #173c4d2e;
+	}
+	.panel-heading .eyebrow {
+		color: var(--tool-ink);
+	}
+	.panel-heading h3 {
+		font: 500 clamp(2rem, 3.8vw, 3rem)/1.1 var(--atv-font-display);
+		margin: 0.5rem 0 0;
+		letter-spacing: -0.025em;
+	}
+	.tool-close {
+		display: flex;
+		align-items: center;
+		gap: 0.8rem;
+		background: transparent;
+		color: #203e43;
+		border: 1px solid #183c4d55;
+		padding: 0.6rem 0.8rem;
+		border-radius: 0.15rem;
+		font: inherit;
 		font-size: 0.8rem;
+		min-height: 44px;
+		cursor: pointer;
 	}
-	.collection-end {
-		margin-top: 1.5rem;
-		font-size: 0.9rem;
+	.tool-close span {
+		font-size: 1.2rem;
 	}
-	@media (max-width: 700px) {
+	.panel-intro {
+		display: flex;
+		align-items: center;
+		gap: 1.6rem;
+		max-width: 52rem;
+		margin-block: 1.3rem;
+	}
+	.panel-intro img {
+		width: 115px;
+		height: 100px;
+		object-fit: contain;
+		mix-blend-mode: multiply;
+	}
+	.panel-intro p {
+		margin: 0.5rem 0;
+		line-height: 1.6;
+	}
+	.panel-intro .requirements {
+		font-size: 0.8rem;
+		color: #536055;
+	}
+	@media (max-width: 1020px) {
+		.tool-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+	@media (max-width: 620px) {
+		.tool-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
 		.collection-heading {
 			display: block;
 		}
-		.rail-controls {
-			margin-top: 1.2rem;
+		.collection-note {
+			display: none;
 		}
-		.tool-rail {
-			width: 100%;
-			margin-left: 0;
-			padding-right: 0;
+		.tool-open {
+			min-height: 10rem;
+			grid-template-columns: 68px minmax(0, 1fr) 14px;
+			padding: 1rem;
+		}
+		.tool-open img {
+			width: 68px;
+			height: 90px;
+		}
+		.tool-name {
+			font-size: 1.65rem;
+		}
+		.tool-description {
+			font-size: 0.8rem;
+		}
+		.panel-heading h3 {
+			font-size: 2rem;
+		}
+		.panel-heading .eyebrow {
+			font-size: 0.6rem;
+		}
+		.panel-intro {
 			gap: 1rem;
 		}
-		.tool-block {
-			flex-basis: 100%;
+		.panel-intro img {
+			width: 65px;
+			height: 80px;
 		}
-		.tool-cover {
-			padding: 1.4rem;
-			min-height: 22rem;
+		.panel-intro p {
+			font-size: 0.86rem;
 		}
-		.tool-body {
-			padding: 1rem;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.tool-card {
+			transition: none;
 		}
 	}
 </style>

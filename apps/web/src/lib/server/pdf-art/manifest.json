@@ -1,0 +1,47 @@
+[
+	{
+		"name": "mandala-gravada",
+		"source": "apps/web/static/brand/mvp/assets/revisao/mandala-gravada.webp",
+		"output": "mandala-gravada.png",
+		"sourceSHA256": "fa29e053df1df50786e81920b186a7f5753ea8744742ff56013b36538a1aef2e",
+		"outputSHA256": "933a0cba30317a15c872e040abdaf62876d41daa6dfa75f7ca261ab027bf2078",
+		"bytes": 310010,
+		"derivation": "Same approved composition, alpha and colors; deterministic 1254px to 416px Lanczos3 export, 288ppi at 104pt print size"
+	},
+	{
+		"name": "bussola-gravada",
+		"source": "apps/web/static/brand/mvp/assets/revisao/bussola-gravada.webp",
+		"output": "bussola-gravada.png",
+		"sourceSHA256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5",
+		"outputSHA256": "18fcc9c4f0b31d627047fa2de492ca3f82ae387a5d879024ed6d7f62c6e74630",
+		"bytes": 190245,
+		"derivation": "Same approved composition, alpha and colors; deterministic 1254px to 416px Lanczos3 export, 288ppi at 104pt print size"
+	},
+	{
+		"name": "flor-gravada",
+		"source": "apps/web/static/brand/mvp/assets/revisao/flor-gravada.webp",
+		"output": "flor-gravada.png",
+		"sourceSHA256": "4aa291c21a0fd16898ae537cbfa371475d2b4c57fbfd4784ac7f0643b8b304e2",
+		"outputSHA256": "20f05715e07ed60f28c229fb22ef21d60d943a78d89b5bbe59b234d6a0fefa2d",
+		"bytes": 142156,
+		"derivation": "Same approved composition, alpha and colors; deterministic 1254px to 416px Lanczos3 export, 288ppi at 104pt print size"
+	},
+	{
+		"name": "cartas-gravadas",
+		"source": "apps/web/static/brand/mvp/assets/revisao/cartas-gravadas.webp",
+		"output": "cartas-gravadas.png",
+		"sourceSHA256": "acaaab3ebd94e4b1b30be03ebd06333f219efc132105f54468e17c60465ff6de",
+		"outputSHA256": "cdae5fb24c86c64e419bd0abbdff98062f9226be71b385d90cf3a0d03536c7bf",
+		"bytes": 213910,
+		"derivation": "Same approved composition, alpha and colors; deterministic 1254px to 416px Lanczos3 export, 288ppi at 104pt print size"
+	},
+	{
+		"name": "sonhos-gravados",
+		"source": "apps/web/static/brand/mvp/assets/revisao/sonhos-gravados.webp",
+		"output": "sonhos-gravados.png",
+		"sourceSHA256": "9db83ef4bb389225a027f462959f8c6df674b7a68d81a1d640bd689071c22809",
+		"outputSHA256": "08aea9a57ad02cdb591477db2cfd24282fdd8dbd215e4c250c35458ef1caf4e5",
+		"bytes": 341676,
+		"derivation": "Same approved composition, alpha and colors; deterministic 1254px to 416px Lanczos3 export, 288ppi at 104pt print size"
+	}
+]

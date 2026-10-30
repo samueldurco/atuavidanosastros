@@ -87,7 +87,11 @@ export function legacySeo(path: string): PageSeo | null {
 		? editorialPages[slug as keyof typeof editorialPages]
 		: null;
 	const special: Record<string, { title: string; description: string }> = {
-		'/': { title: `${SITE.name} — ${SITE.tagline}`, description: SITE.description },
+		'/': {
+			title: `${SITE.name} — uma descoberta de cada vez`,
+			description:
+				'Ferramentas grátis, produtos digitais e histórias para ampliar seu olhar. Explore astrologia, Tarot, sonhos e a Loja dos Signos.'
+		},
 		'/meio-do-ceu': {
 			title: 'Meio do Céu no mapa astral',
 			description:

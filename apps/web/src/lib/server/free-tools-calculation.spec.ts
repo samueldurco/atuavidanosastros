@@ -226,7 +226,8 @@ describe('ferramentas públicas: cálculos reais e fronteiras', () => {
 		expect(result.facts.every((f) => f.kind === 'calculated')).toBe(true);
 		expect(result).not.toHaveProperty('compatibilityScore');
 		expect(result).not.toHaveProperty('aspects');
-		expect(result.limits.join(' ')).toContain('nem autoriza armazenamento');
+		expect(result.limits.join(' ')).toContain('releitura e controle das utilizações gratuitas');
+		expect(result.limits.join(' ')).toContain('sem publicação ou compartilhamento');
 	});
 });
 

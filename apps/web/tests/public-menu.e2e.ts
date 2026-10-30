@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import { interestNavigation, primaryNavigation } from '../src/lib/data/public-navigation';
+import { interestNavigation } from '../src/lib/data/public-navigation';
+import { freeTools } from '../src/lib/data/free-tools';
 import { expectedTopicPaths, publishedEditorial } from './fixtures/editorial-inventory';
 
 test.beforeEach(async ({ page }) => {
@@ -14,34 +15,48 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 844 });
 		await page.goto('/');
-		const button = page.getByRole('button', { name: 'Menu', exact: true });
-		await expect(button).toBeEnabled();
 		const header = page.locator('header.site-header');
-		await expect(header.getByRole('link')).toHaveCount(2);
-		await expect(header.getByRole('link', { name: 'Entrar', exact: true })).toBeInViewport();
-		await expect(button).toBeInViewport();
-		await expect(header.locator('.header-actions a')).toHaveCount(1);
+		await expect(
+			header.getByRole('link', { name: 'A Tua Vida nos Astros — início', exact: true })
+		).toHaveAttribute('href', '/');
+		const mobile = page.locator('.mobile-menu');
+		if (width <= 960) {
+			await expect(mobile).toBeEnabled();
+			await mobile.focus();
+			await page.keyboard.press('Enter');
+		}
+		const nav = page.getByRole('navigation', { name: 'Navegação principal' });
+		await expect(nav.locator('.nav-trigger')).toHaveText([
+			'Ferramentas grátis⌄',
+			'Produtos digitais⌄',
+			'Universos⌄',
+			'Revista⌄',
+			'Loja dos Signos⌄'
+		]);
+		await expect(nav.locator('.account-link')).toHaveAttribute('href', '/entrar');
+		const tools = nav.locator('[aria-controls="nav-ferramentas"]');
+		await expect(tools).toBeEnabled();
+		await tools.focus();
+		await page.keyboard.press('Enter');
+		await expect(page.locator('#nav-ferramentas .nav-item')).toHaveCount(9);
+		for (const tool of freeTools)
+			await expect(
+				page.locator(`#nav-ferramentas a[href="/?ferramenta=${tool.id}#ferramentas"]`)
+			).toContainText(tool.label);
+		await page.keyboard.press('Escape');
+		await expect(tools).toBeFocused();
+		await expect(tools).toHaveAttribute('aria-expanded', 'false');
+		const button = nav.locator('[aria-controls="nav-universos"]');
 		await button.focus();
 		await page.keyboard.press('Enter');
-		const nav = page.getByRole('navigation', { name: 'Navegação principal' });
-		await expect(nav.getByRole('link', { name: 'Início', exact: true })).toHaveAttribute(
-			'href',
-			'/'
-		);
-		for (const item of primaryNavigation)
-			await expect(nav.locator(`a[href="${item.href}"]`)).toContainText(item.label);
-		await expect(nav.locator('.topic-link')).toHaveCount(6);
+		await expect(page.locator('#nav-universos .nav-item')).toHaveCount(6);
 		for (const item of interestNavigation) {
-			await expect(nav.locator(`.topic-link[href="${item.href}"]`)).toContainText(item.label);
+			await expect(page.locator(`#nav-universos .nav-item[href="${item.href}"]`)).toContainText(
+				item.label
+			);
 			for (const href of [item.href, `/revista?tema=${item.id}`])
 				expect((await request.get(href)).status(), href).toBe(200);
 		}
-		await expect(nav.getByRole('link', { name: 'Loja dos Signos' })).toHaveAttribute(
-			'href',
-			'/loja'
-		);
-		await expect(page.locator('.header-account')).toHaveText('Entrar');
-		await expect(page.locator('.header-account')).toHaveAttribute('href', '/entrar');
 		await expect(
 			nav.locator('a[href*="dossie"], a[href*="jornada"], a[href*="atv-plus"], a[href*="atlas"]')
 		).toHaveCount(0);
@@ -56,10 +71,18 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await page.keyboard.press('Escape');
 		await expect(button).toBeFocused();
 		await expect(button).toHaveAttribute('aria-expanded', 'false');
-		await button.click();
-		await nav.locator('a[href="/revista"]').click();
+		if (width <= 960) {
+			await page.keyboard.press('Escape');
+			await expect(mobile).toBeFocused();
+			await expect(nav).toBeHidden();
+			await mobile.click();
+		}
+		await nav.locator('[aria-controls="nav-revista"]').click();
+		await expect(page.locator('#nav-revista .nav-item')).toHaveCount(6);
+		await page.locator('#nav-revista a[href="/revista"]').click();
 		await expect(page).toHaveURL(/\/revista$/);
-		await expect(nav).not.toBeVisible();
+		await expect(page.locator('.nav-panel')).toHaveCount(0);
+		if (width <= 960) await expect(nav).not.toBeVisible();
 	});
 }
 

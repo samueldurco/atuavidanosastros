@@ -5,6 +5,7 @@ import type { RequestEvent } from '@sveltejs/kit';
 import { parseFreeToolResult } from '$lib/free-tool-result';
 import { FreeToolInputError, type FreeToolResponse } from '$lib/free-tools';
 import { signFreeToolResult, verifyFreeToolReceipt } from './free-tool-receipt';
+import { signFreeToolRuntimeRequest } from './free-tool-runtime-auth';
 
 /** Public calculations have their own runtime and signing key, independent of private trial grants. */
 export async function calculatePublicFreeTool(
@@ -20,10 +21,14 @@ export async function calculatePublicFreeTool(
 	}
 	const base = event.platform?.env?.PUBLIC_SUPABASE_URL ?? publicEnv.PUBLIC_SUPABASE_URL;
 	if (!base) throw Object.assign(new Error('public_runtime_unavailable'), { status: 503 });
+	const body = JSON.stringify({ tool, input });
 	const response = await fetch(`${base}/functions/v1/atv-free-tools-runtime`, {
 		method: 'POST',
-		headers: { 'content-type': 'application/json' },
-		body: JSON.stringify({ tool, input }),
+		headers: {
+			'content-type': 'application/json',
+			...(await signFreeToolRuntimeRequest(body, secret))
+		},
+		body,
 		signal: AbortSignal.timeout(30000)
 	}).catch(() => {
 		throw Object.assign(new Error('public_runtime_unavailable'), { status: 503 });

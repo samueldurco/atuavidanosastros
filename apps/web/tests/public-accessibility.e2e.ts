@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { customerOffers } from '../src/lib/data/product-copy';
 import { scanAccessibility as scan } from './fixtures/accessibility';
 
 const surfaces = [
@@ -19,6 +20,8 @@ const viewports = [
 for (const viewport of viewports) {
 	for (const path of surfaces) {
 		test(`acessibilidade pública ${viewport.name}: ${path}`, async ({ page }, testInfo) => {
+			// The existing physical catalog renders 319 cards; scan all of them without reducing coverage.
+			if (path === '/loja') test.setTimeout(180_000);
 			await page.setViewportSize(viewport);
 			const response = await page.goto(path);
 			expect(response?.status()).toBe(200);
@@ -54,7 +57,7 @@ test('menu público aberto por teclado no celular', async ({ page }, testInfo) =
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/');
 	await page.getByRole('button', { name: 'Recusar opcionais' }).click();
-	const menu = page.locator('button[aria-controls="primary-navigation"]');
+	const menu = page.locator('button[aria-controls="approved-navigation"]');
 	await menu.focus();
 	await page.keyboard.press('Enter');
 	await expect(menu).toHaveAttribute('aria-expanded', 'true');
@@ -74,15 +77,16 @@ for (const width of [320, 1440]) {
 		await page.screenshot({ path: testInfo.outputPath(`home-${width}.png`), fullPage: true });
 		const main = page.getByRole('main');
 		for (const name of [
-			'Experimente uma ferramenta',
-			'Explore os seis universos',
-			'Revista ATVNA',
-			'Loja dos Signos'
+			'Ferramentas grátis',
+			'Leituras para você. Um tema de cada vez.',
+			'Por onde seu olhar quer caminhar?',
+			'Uma pausa para ler.',
+			'O seu universo, perto de você.'
 		]) {
 			await expect(main.getByRole('heading', { level: 2, name, exact: true })).toBeVisible();
 		}
-		const themes = page.getByRole('region', { name: 'Explore os seis universos' });
-		const themeCards = themes.getByRole('article');
+		const themes = page.locator('#universos');
+		const themeCards = themes.locator('.home-universe');
 		await expect(themeCards).toHaveCount(6);
 		const themeHeadings = themeCards.getByRole('heading', { level: 3 });
 		await expect(themeHeadings).toHaveText([
@@ -93,7 +97,7 @@ for (const width of [320, 1440]) {
 			'Tarot',
 			'Sonhos'
 		]);
-		const themeLinks = themeHeadings.getByRole('link');
+		const themeLinks = themeCards.locator('.universe-main');
 		await expect(themeLinks).toHaveCount(6);
 		expect(
 			await themeLinks.evaluateAll((links) => links.map((link) => link.getAttribute('href')))
@@ -105,35 +109,29 @@ for (const width of [320, 1440]) {
 			'/temas/tarot',
 			'/temas/sonhos'
 		]);
-		await expect(main.getByRole('link', { name: 'Conheça nosso método' })).toHaveAttribute(
-			'href',
-			'/metodo'
-		);
+		await expect(
+			page.locator('footer').getByRole('link', { name: 'Nosso método', exact: true })
+		).toHaveAttribute('href', '/metodo');
 		expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(
 			true
 		);
-		const free = page.getByRole('region', { name: 'Experimente uma ferramenta' });
-		await expect(free.getByRole('article')).toHaveCount(9);
-		await expect(free.getByRole('link', { name: 'Ver todas as ferramentas' })).toHaveAttribute(
-			'href',
-			'/ferramentas'
-		);
-		const firstTool = free.getByRole('article').first();
+		const free = page.locator('#ferramentas');
+		await expect(free.locator('.tool-card[data-tool]')).toHaveCount(9);
+		const firstTool = free.locator('.tool-card[data-tool]').first();
 		await firstTool.locator('button.tool-open').click();
-		await expect(firstTool.getByLabel('Data de nascimento')).toBeVisible();
+		await expect(
+			free.locator('[data-tool-panel]:not([hidden])').getByLabel('Data de nascimento')
+		).toBeVisible();
 		await expect(page).toHaveURL('/');
-		await expect(main.getByRole('link', { name: 'Conhecer a assinatura ATV+' })).toHaveAttribute(
-			'href',
-			'/atv-mais'
-		);
+		await expect(
+			main.locator('.showcase-card.subscription a[href="/atv-mais"]').first()
+		).toHaveAttribute('href', '/atv-mais');
 		await page.goto('/');
-		const magazine = page.getByRole('region', { name: 'Revista ATVNA' });
+		const magazine = page.locator('#revista');
 		await expect(magazine.locator('article')).toHaveCount(3);
-		await page.locator('button[aria-controls="primary-navigation"]').click();
-		await page
-			.getByRole('navigation', { name: 'Navegação principal', exact: true })
-			.locator('a[href="/leituras"]')
-			.click();
+		if (width <= 960) await page.locator('.mobile-menu').click();
+		await page.locator('.nav-trigger[aria-controls="nav-produtos"]').click();
+		await page.locator('#nav-produtos .nav-item[href="/leituras"]').click();
 		await expect(page).toHaveURL('/leituras');
 		await expect(page.locator('.public-product-card')).toHaveCount(19);
 		await expect(
@@ -141,11 +139,15 @@ for (const width of [320, 1440]) {
 		).toHaveCount(19);
 		const topic = page.getByRole('navigation', { name: 'Temas das leituras' });
 		await topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true }).click();
-		await expect(page).toHaveURL('/leituras?tema=amor');
+		await expect(page).toHaveURL('/leituras?tema=amor#catalogo');
 		await expect(
 			topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true })
 		).toHaveAttribute('aria-current', 'page');
-		await expect(page.locator('.universe-catalog-group')).toHaveCount(1);
+		const loveOffers = customerOffers.filter((product) => product.universe === 'amor-relacoes');
+		await expect(page.locator('.public-product-card')).toHaveCount(loveOffers.length);
+		for (const product of loveOffers) {
+			await expect(page.locator(`.public-product-card h3 a[href="${product.href}"]`)).toBeVisible();
+		}
 		await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
 			'href',
 			'https://atuavidanosastros.com.br/leituras'

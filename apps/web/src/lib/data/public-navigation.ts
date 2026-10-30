@@ -110,13 +110,13 @@ export const explorationNavigation = [
 export const offerNavigation = [
 	{
 		href: '/leituras',
-		label: 'Leituras digitais',
+		label: 'Produtos digitais',
 		description: 'Compare as leituras avulsas e confira conteúdo, formatos e disponibilidade.'
 	},
 	{
 		href: '/loja',
 		label: 'Produtos físicos',
-		description: 'Loja dos Signos · conheça as artes da coleção em preparação.'
+		description: 'Loja dos Signos · explore as coleções, estampas e aplicações aprovadas.'
 	},
 	{
 		href: '/atv-mais',
