@@ -4,6 +4,10 @@ import { defineEnvVars } from '@sveltejs/kit/env';
 const optional = (value: string | undefined) => value;
 
 export const variables = defineEnvVars({
+	SHOP_SELLER_PUBLIC_NAME: { schema: optional },
+	SHOP_SELLER_PUBLIC_ADDRESS: { schema: optional },
+	SHOP_SELLER_PUBLIC_EMAIL: { schema: optional },
+	SHOP_SELLER_PUBLIC_DOCUMENT: { schema: optional },
 	ADMIN_EMAIL_ALLOWLIST: { schema: optional },
 	TIKTOK_CLIENT_KEY: { schema: optional },
 	TIKTOK_CLIENT_SECRET: { schema: optional },

@@ -1,6 +1,11 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
 	let { data } = $props();
+	let interactive = $state(false);
+	onMount(() => {
+		interactive = true;
+	});
 	let colorIndex = $state(0);
 	let imageIndex = $state(0);
 	const color = $derived(data.piece.colors[colorIndex] ?? data.piece.colors[0]);
@@ -41,6 +46,7 @@
 					{#each color.images as photo, index (photo.src)}
 						<button
 							type="button"
+							disabled={!interactive}
 							aria-pressed={imageIndex === index}
 							onclick={() => (imageIndex = index)}
 							><img src={photo.src} alt="" width="120" height="120" /><span>{photo.label}</span
@@ -64,6 +70,7 @@
 					{#each data.piece.colors as option, index (option.name)}
 						<button
 							type="button"
+							disabled={!interactive}
 							aria-pressed={colorIndex === index}
 							onclick={() => {
 								colorIndex = index;
