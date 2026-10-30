@@ -109,7 +109,7 @@ export class ShopStorefrontError extends Error {
 	}
 }
 
-const CATALOG_QUERY = `query ShopRuntimeCatalog($cursor: String) {
+const CATALOG_QUERY = `query ShopRuntimeCatalog($cursor: String) @inContext(country: BR) {
   products(first: 25, after: $cursor) {
     nodes {
       id handle title description availableForSale
@@ -128,7 +128,7 @@ const CART_MUTATION = `mutation ShopRuntimeCart($input: CartInput!) {
     userErrors { field message code }
   }
 }`;
-const PRODUCT_QUERY = `query ShopPreviewProduct($handle: String!, $cursor: String) {
+const PRODUCT_QUERY = `query ShopPreviewProduct($handle: String!, $cursor: String) @inContext(country: BR) {
   product(handle: $handle) {
     id handle title description availableForSale
     featuredImage { url altText width height }
@@ -484,7 +484,7 @@ export async function createShopCart(
 		config,
 		fetcher,
 		CART_MUTATION,
-		{ input: { lines: cartLines(lines) } },
+		{ input: { lines: cartLines(lines), buyerIdentity: { countryCode: 'BR' } } },
 		buyerIp
 	);
 	return parsedCart(data, config, lines);

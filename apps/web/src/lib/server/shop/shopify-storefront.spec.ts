@@ -202,7 +202,7 @@ it('creates an empty cart for a controlled smoke test, without requesting an ord
 	const fetcher = fetchJson(cartData());
 	const result = await createShopCart(config, fetcher, []);
 	const body = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
-	expect(body.variables).toEqual({ input: { lines: [] } });
+	expect(body.variables).toEqual({ input: { lines: [], buyerIdentity: { countryCode: 'BR' } } });
 	expect(body.query).toContain('cartCreate');
 	expect(body.query).not.toMatch(/orderCreate|draftOrder|payment|checkoutComplete/);
 	expect(result).toMatchObject({
@@ -216,7 +216,7 @@ it('sends only variant IDs and quantities, keeping Shopify authoritative for pri
 	const lines = [{ merchandiseId: 'gid://shopify/ProductVariant/101', quantity: 2 }];
 	await createShopCart(config, fetcher, lines, '203.0.113.15');
 	expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body)).variables).toEqual({
-		input: { lines }
+		input: { lines, buyerIdentity: { countryCode: 'BR' } }
 	});
 });
 

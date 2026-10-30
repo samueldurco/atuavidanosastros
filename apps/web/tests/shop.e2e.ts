@@ -167,6 +167,7 @@ for (const width of [1440, 390]) {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/loja');
 		const category = page.getByRole('combobox', { name: 'Tipo de peça', exact: true });
+		await expect(category).toBeEnabled({ timeout: 30_000 });
 		await category.focus();
 		await expect(category).toBeFocused();
 		await page.keyboard.press('r');
