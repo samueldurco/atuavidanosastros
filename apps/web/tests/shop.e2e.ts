@@ -5,30 +5,30 @@ test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
 
-test('Identificação pública acompanha a loja, as políticas e as peças', async ({
+test('Loja, coleções, políticas e peças não exibem o bloco de identificação do vendedor', async ({
 	page
 }, testInfo) => {
 	await page.setViewportSize({ width: 320, height: 800 });
 	for (const path of [
 		'/loja',
+		'/loja/colecao/casal',
 		'/loja/termos',
 		'/loja/frete',
 		'/loja/devolucoes',
 		'/loja/peca/cropped-aries'
 	]) {
 		await page.goto(path);
-		const seller = page.getByRole('region', { name: 'Quem vende e atende' });
-		await expect(seller).toContainText('Responsável de exemplo');
-		await expect(seller).toContainText('Endereço fictício para teste de layout, Brasil');
-		await expect(seller.getByRole('link', { name: 'seller@example.test' })).toHaveAttribute(
-			'href',
-			'mailto:seller@example.test'
-		);
+		await expect(page.getByRole('region', { name: 'Quem vende e atende' })).toHaveCount(0);
+		await expect(page.locator('body')).not.toContainText('Responsável de exemplo');
+		await expect(page.locator('body')).not.toContainText('Endereço fictício para teste de layout');
+		await expect(page.locator('body')).not.toContainText('seller@example.test');
+		const footer = page.getByRole('contentinfo');
+		await expect(footer).toBeVisible();
 		expect(
 			await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
 		).toBe(false);
 		if (path === '/loja/termos') {
-			await seller.screenshot({ path: testInfo.outputPath('seller-mobile.png') });
+			await footer.screenshot({ path: testInfo.outputPath('footer-mobile.png') });
 		}
 	}
 });
