@@ -164,7 +164,7 @@
 						</p>
 						<a
 							class="button secondary"
-							href={`${weeklyProduct.href}?ferramenta=horoscopo&origem=ferramenta`}
+							href={`${weeklyProduct.href}?ferramenta=horoscopo&origem=ferramenta&leitura=${encodeURIComponent(result.current.path)}&revisao=${result.current.revision}`}
 							data-atv-event="tool_product_click"
 							data-atv-tool="horoscopo"
 							data-atv-product="week-reading"

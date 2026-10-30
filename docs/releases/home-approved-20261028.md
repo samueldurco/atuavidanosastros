@@ -21,6 +21,12 @@ estoque fictício foi acrescentado ao catálogo físico.
   24 horas, renovação diária em America/Sao_Paulo, reconciliação após login e
   histórico de sonhos com paginação e edição do registro escolhido.
 - Eventos analíticos sujeitos ao consentimento, sem dados pessoais de leitura.
+- Escolha opcional e inicialmente desmarcada para receber novidades, salva
+  separadamente na conta confirmada. O download não depende dessa escolha;
+  registrar consentimento não inicia campanhas nem ativa envio de e-mail.
+- PDF do Horóscopo pela referência pública e revisão editorial consultadas.
+  A exportação revalida a admissão e recusa uma revisão substituída ou revogada,
+  sem trocar o conteúdo silenciosamente nem consumir cota pessoal.
 
 ## Limites preservados
 

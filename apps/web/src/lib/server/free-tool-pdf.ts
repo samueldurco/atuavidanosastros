@@ -1,6 +1,9 @@
 import { PDFDocument, rgb, type PDFFont } from 'pdf-lib';
 import fontkit from '@pdf-lib/fontkit';
 import { parseFreeToolResult } from '$lib/free-tool-result';
+import { horoscopeRange, parseHoroscopeArchivePath } from '$lib/public-horoscope';
+import type { FreeToolResult } from '$lib/free-tools';
+import type { EditorialDocument } from './editorial';
 import bodyData from './pdf-fonts/newsreader-regular.ttf?inline';
 import labelData from './pdf-fonts/onest-regular.ttf?inline';
 import fallbackData from './pdf-fonts/LiberationSans-Regular.ttf?inline';
@@ -32,10 +35,52 @@ const readingArt: Record<string, string> = {
 	'registro-de-sonho': dreamArt
 };
 
+type PdfReading = Pick<
+	FreeToolResult,
+	'createdAt' | 'title' | 'summary' | 'facts' | 'limits' | 'chart'
+> & {
+	tool: string;
+	sections: { title: string; paragraphs: string[] }[];
+};
+
 /** Exports only the verified, persisted free reading supplied by the ownership route. */
 export async function renderFreeToolPdf(value: unknown): Promise<Uint8Array | null> {
 	const result = parseFreeToolResult(value);
 	if (!result || JSON.stringify(result).length > 80000) return null;
+	return renderReadingPdf({
+		...result,
+		sections: result.sections.map((section) => ({
+			title: section.title,
+			paragraphs: [section.body]
+		}))
+	});
+}
+
+/** Called only after exact public path/revision admission; no personal result or quota is created. */
+export async function renderPublicHoroscopePdf(
+	document: EditorialDocument
+): Promise<Uint8Array | null> {
+	const archive = parseHoroscopeArchivePath(document.path);
+	if (!archive || document.kind !== 'horoscope' || !document.calculation) return null;
+	return renderReadingPdf({
+		tool: 'horoscopo',
+		createdAt: document.publishedAt,
+		title: document.title,
+		summary: horoscopeRange({
+			startDate: archive.startDate,
+			endDateExclusive: document.calculation.coverageEnd.slice(0, 10)
+		}),
+		facts: [],
+		sections: document.sections.map((section) => ({
+			title: section.heading,
+			paragraphs: section.paragraphs
+		})),
+		limits: []
+	});
+}
+
+async function renderReadingPdf(result: PdfReading): Promise<Uint8Array | null> {
+	if (JSON.stringify(result).length > 80000) return null;
 	const doc = await PDFDocument.create();
 	doc.registerFontkit(fontkit);
 	doc.setTitle(result.title);
@@ -151,23 +196,24 @@ export async function renderFreeToolPdf(value: unknown): Promise<Uint8Array | nu
 		paragraph(text, 17);
 	}
 	try {
-		const art = await doc.embedPng(readingArt[result.tool]);
+		const art = await doc.embedPng(result.tool === 'horoscopo' ? skyArt : readingArt[result.tool]);
 		// The approved engraving occupies its own opening area. Text never
 		// flows beneath it, and subsequent pages keep the compact header.
 		page.drawImage(art, { x: 439, y: 660, width: 104, height: 104 });
 		paragraph(result.title, 25, body, 359);
-		paragraph(
-			new Date(result.createdAt).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
-			9,
-			label
-		);
+		if (result.tool !== 'horoscopo')
+			paragraph(
+				new Date(result.createdAt).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+				9,
+				label
+			);
 		y = Math.min(y, 636);
 		paragraph(result.summary, 14);
 		for (const fact of result.facts) paragraph(`${fact.label}: ${fact.value}`, 11);
 		for (const section of result.sections) {
 			y -= 8;
 			heading(section.title);
-			paragraph(section.body);
+			for (const text of section.paragraphs) paragraph(text);
 		}
 		if (result.chart?.positions.length) {
 			heading('Posições do mapa');

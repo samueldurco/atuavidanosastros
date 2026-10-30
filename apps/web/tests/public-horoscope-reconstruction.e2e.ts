@@ -55,7 +55,7 @@ test('free tool shows complete admitted readings and keeps supporting guides in 
 		await expect(tool.getByRole('link')).toHaveCount(1);
 		await expect(offer.getByRole('link')).toHaveAttribute(
 			'href',
-			'/produtos/horoscopo-semanal-pessoal?ferramenta=horoscopo&origem=ferramenta'
+			`/produtos/horoscopo-semanal-pessoal?ferramenta=horoscopo&origem=ferramenta&leitura=${encodeURIComponent(result.current.path)}&revisao=${result.current.revision}`
 		);
 	} else {
 		await expect(
