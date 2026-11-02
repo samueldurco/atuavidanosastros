@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { guboAvailable, guboRate } from './gubo-freight';
-import { fulfillmentKey, manufacturingAvailable, rateFor, type Offer } from './national-freight';
+import { supplierItem, manufacturingAvailable, rateFor, type Offer } from './national-freight';
 
 const env = { GUBO_FRETE_TOKEN: 'gubo_live_fixture' };
 const v = { sku: 'CAM01-BR-P', product: 'CAM01', size: 'P', maxCostCents: 6480 };
@@ -63,7 +63,7 @@ describe('Gubo national checkout', () => {
 			id: 'gubo-jadlog'
 		});
 		expect(fetcher).toHaveBeenCalledTimes(2);
-		expect(fulfillmentKey(offer)).toBe('gubo:CAM01-BR-P');
+		expect(supplierItem(offer)).toBe('gubo:CAM01-BR-P');
 	});
 	it.each([{}, { GUBO_FRETE_TOKEN: 'gubo_test_fixture' }])(
 		'requires a production key before contacting the supplier',
