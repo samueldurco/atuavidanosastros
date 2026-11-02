@@ -18,7 +18,7 @@ const shopRelease = {
 };
 
 export const catalogPublications: readonly CatalogPublication[] = [
-	{ kind: 'shop', id: 'cropped-aries', image: 'cropped-aries-bone-modelo.webp', ...shopRelease },
+	{ kind: 'shop', id: 'cropped-aries', image: 'cropped-aries-branco-modelo.webp', ...shopRelease },
 	{
 		kind: 'shop',
 		id: 'camiseta-oversized-taurus',

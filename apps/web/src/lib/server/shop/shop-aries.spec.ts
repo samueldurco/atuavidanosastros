@@ -1,6 +1,7 @@
 import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
 import { describe, expect, it, vi } from 'vitest';
 import { shopAriesRoute } from '$lib/data/shop-commerce';
+import reviewedOffers from '$lib/data/shop-reviewed-offers.json' with { type: 'json' };
 import { shopCart, shopProduct } from './shop-http';
 import { approvedShopProducts } from './shop-catalog-map';
 
@@ -27,7 +28,11 @@ const request = (lines: unknown[], postalCode?: unknown) =>
 const json = (data: unknown) =>
 	new Response(JSON.stringify({ data }), { headers: { 'content-type': 'application/json' } });
 
-const productAt = (amount: string, slug = 'caneca-aries') =>
+const productAt = (
+	amount: string,
+	slug = 'caneca-aries',
+	variantId = approvedShopProducts[slug].variantIds[0]
+) =>
 	json({
 		product: {
 			id: approvedShopProducts[slug].productId,
@@ -39,7 +44,7 @@ const productAt = (amount: string, slug = 'caneca-aries') =>
 			variants: {
 				nodes: [
 					{
-						id: approvedShopProducts[slug].variantIds[0],
+						id: variantId,
 						title: 'Default Title',
 						availableForSale: true,
 						price: { amount: amount, currencyCode: 'BRL' },
@@ -204,6 +209,39 @@ describe('Compra de uma unidade com preço e destino conferidos', () => {
 		const response = await shopCart(request([bag], '36960-000'), enabled, provider);
 		expect(response.status).toBe(503);
 	});
+	it.each(['bone-aries', 'cropped-touro'])(
+		'hands off a reviewed %s to checkout only in the reviewed catalog',
+		async (slug) => {
+			const { variantId, priceBrl } = reviewedOffers.find((offer) => offer.slug === slug)!;
+			const variant = { merchandiseId: variantId, quantity: 1 };
+			const provider = vi
+				.fn<typeof fetch>()
+				.mockResolvedValueOnce(productAt(priceBrl.toFixed(2), slug, variantId))
+				.mockResolvedValueOnce(
+					cartAt({
+						subtotal: cash(priceBrl.toFixed(2)),
+						total: cash((priceBrl + 29.9).toFixed(2)),
+						addresses: [location('35160-001')]
+					})
+				);
+			const response = await shopCart(request([variant], '35160-001'), enabled, provider);
+			expect(response.status).toBe(200);
+			expect(JSON.parse(String(provider.mock.calls[1][1]?.body)).variables.input.lines).toEqual([
+				variant
+			]);
+			const legacy = await shopCart(
+				request([variant], '35160-001'),
+				{
+					...enabled,
+					SHOP_ARIES_SINGLE_UNIT_ONLY: 'false',
+					SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40'
+				},
+				provider
+			);
+			expect(legacy.status).toBe(400);
+			expect(provider).toHaveBeenCalledTimes(2);
+		}
+	);
 	it('não inclui uma peça no frete fixo quando a Dimona esgota a base ou o transporte supera o valor aceito', async () => {
 		for (const [skuStock, shipping, status] of [
 			[0, '12.00', 409],

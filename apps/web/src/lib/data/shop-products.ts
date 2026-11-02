@@ -11,6 +11,7 @@ import { bottlePreviews } from './shop-bottles';
 import { mugPreviews } from './shop-mugs';
 import { ecobagPreviews } from './shop-ecobags';
 import reviewedOffers from './shop-reviewed-offers.json' with { type: 'json' };
+import nationalPreviews from './shop-caps-croppeds.json' with { type: 'json' };
 
 /** Existing collection artwork and product specifications; live offers come from Shopify. */
 export interface ShopPreview {
@@ -26,6 +27,7 @@ export interface ShopPreview {
 	material: string;
 	provider: 'Printful' | 'Gelato' | 'Dimona';
 	imageNote?: string;
+	artOnly?: boolean;
 	measurements?: readonly (readonly string[])[];
 	care?: string;
 	construction: { label: string; value: string };
@@ -41,7 +43,7 @@ const previews: ShopPreview[] = [
 		sign: 'Áries',
 		category: 'Cropped',
 		description:
-			'O carneiro de Áries entre flores vermelhas, em uma aquarela com glifo e nome latino. Uma estampa delicada para acompanhar o corte curto e solto da peça.',
+			'O carneiro de Áries entre flores vermelhas, em uma aquarela com glifo e nome latino.',
 		model: 'AS Colour 4062',
 		material: '100% algodão penteado · 180 g/m²',
 		provider: 'Printful',
@@ -161,6 +163,9 @@ const previews: ShopPreview[] = [
 ];
 
 const reviewedSlugs = new Set(reviewedOffers.map((offer) => offer.slug));
+const capPreviews: Record<string, { image: string; area: string }> = nationalPreviews.caps;
+const croppedPreviews: Record<string, { images: string[]; area: string }> =
+	nationalPreviews.croppeds;
 const shirtSizes = [
 	['P', '46–50', '65–69'],
 	['M', '48–52', '67–71'],
@@ -177,6 +182,60 @@ const tankSizes = [
 	['XGG', '58–62', '72–76']
 ];
 export const shopPreviews: ShopPreview[] = previews.map((piece) => {
+	const cap = capPreviews[piece.slug];
+	if (reviewedSlugs.has(piece.slug) && cap) {
+		return {
+			...piece,
+			provider: 'Dimona',
+			model: 'Boné americano Dimona',
+			material: 'Sarja de algodão',
+			description: `O glifo de ${piece.sign} aparece na frente deste boné de aba anatômica. Disponível em preto e azul-marinho, com ajuste traseiro.`,
+			construction: { label: 'Tamanho', value: 'Tamanho único com ajuste traseiro.' },
+			printDescription: `Estampa frontal em DTF plano. O desenho mede aproximadamente ${cap.area}.`,
+			imageNote:
+				'A imagem de referência mostra o desenho da estampa que será aplicado na frente do boné.',
+			artOnly: true,
+			care: undefined,
+			colors: [
+				{
+					name: 'Estampa frontal',
+					images: [
+						{
+							src: cap.image,
+							label: 'Glifo frontal',
+							alt: `Desenho do glifo de ${piece.sign} para a frente do boné.`
+						}
+					]
+				}
+			]
+		};
+	}
+	const cropped = croppedPreviews[piece.slug];
+	if (reviewedSlugs.has(piece.slug) && cropped) {
+		const images = piece.colors
+			.flatMap((color) => color.images)
+			.filter((photo) => cropped.images.includes(photo.src.split('/').at(-1)!));
+		return {
+			...piece,
+			provider: 'Dimona',
+			model: 'Cropped branco Dimona',
+			material: '100% algodão penteado, fio 30.1 · 165 g/m²',
+			construction: {
+				label: 'Modelagem',
+				value:
+					'Cropped branco nos tamanhos G e GG. Compare largura e comprimento com uma peça sua, estendida.'
+			},
+			measurements: [
+				['G', '52–56', '39–43'],
+				['GG', '54–58', '41–45']
+			],
+			printDescription: `Estampa frontal em Silk HD de aproximadamente ${cropped.area}.`,
+			imageNote:
+				'As imagens ilustram a estampa em um cropped branco de referência. A malha pode encolher de 4 a 7% no comprimento e de 3 a 5% na largura.',
+			care: undefined,
+			colors: [{ name: 'Branco', images }]
+		};
+	}
 	const tank = piece.slug.startsWith('regata-casal-');
 	if (
 		!reviewedSlugs.has(piece.slug) ||

@@ -2688,5 +2688,245 @@
 		"slug": "regata-casal-ari-aqu",
 		"variantId": "gid://shopify/ProductVariant/68006986121584",
 		"priceBrl": 89.9
+	},
+	{
+		"slug": "bone-aries",
+		"variantId": "gid://shopify/ProductVariant/68006923895152",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-aries",
+		"variantId": "gid://shopify/ProductVariant/68006923927920",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-touro",
+		"variantId": "gid://shopify/ProductVariant/68006924058992",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-touro",
+		"variantId": "gid://shopify/ProductVariant/68006924091760",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006924157296",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006924190064",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006924255600",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006924288368",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-leao",
+		"variantId": "gid://shopify/ProductVariant/68006924353904",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-leao",
+		"variantId": "gid://shopify/ProductVariant/68006924386672",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006924452208",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006924484976",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-libra",
+		"variantId": "gid://shopify/ProductVariant/68006924550512",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-libra",
+		"variantId": "gid://shopify/ProductVariant/68006924583280",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006924648816",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006924681584",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006924747120",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006924779888",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006924845424",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006924878192",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006924943728",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006924976496",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006925074800",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "bone-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006925107568",
+		"priceBrl": 59.9
+	},
+	{
+		"slug": "cropped-touro",
+		"variantId": "gid://shopify/ProductVariant/68006930055536",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-touro",
+		"variantId": "gid://shopify/ProductVariant/68006930153840",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006930383216",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006930481520",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006930710896",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006930809200",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-leao",
+		"variantId": "gid://shopify/ProductVariant/68006931890544",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-leao",
+		"variantId": "gid://shopify/ProductVariant/68006931988848",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006932218224",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006932316528",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-libra",
+		"variantId": "gid://shopify/ProductVariant/68006932545904",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-libra",
+		"variantId": "gid://shopify/ProductVariant/68006932644208",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006933594480",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006933692784",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006933922160",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006934020464",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006934413680",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006934511984",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006934741360",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006934839664",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006935069040",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006935167344",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-aries",
+		"variantId": "gid://shopify/ProductVariant/68006986908016",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "cropped-aries",
+		"variantId": "gid://shopify/ProductVariant/68006987006320",
+		"priceBrl": 79.9
 	}
 ]

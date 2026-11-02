@@ -69,22 +69,24 @@
 			<p class="eyebrow">Nova coleção · {data.piece.sign}</p>
 			<h1 id="piece-title">{data.piece.title}</h1>
 			<p class="description">{data.piece.description}</p>
-			<div class="color-choice">
-				<p id="color-label">Cor da prévia: <strong>{color.name}</strong></p>
-				<div role="group" aria-labelledby="color-label">
-					{#each data.piece.colors as option, index (option.name)}
-						<button
-							type="button"
-							disabled={!interactive}
-							aria-pressed={colorIndex === index}
-							onclick={() => {
-								colorIndex = index;
-								imageIndex = 0;
-							}}>{option.name}</button
-						>
-					{/each}
+			{#if !data.piece.artOnly}
+				<div class="color-choice">
+					<p id="color-label">Cor da prévia: <strong>{color.name}</strong></p>
+					<div role="group" aria-labelledby="color-label">
+						{#each data.piece.colors as option, index (option.name)}
+							<button
+								type="button"
+								disabled={!interactive}
+								aria-pressed={colorIndex === index}
+								onclick={() => {
+									colorIndex = index;
+									imageIndex = 0;
+								}}>{option.name}</button
+							>
+						{/each}
+					</div>
 				</div>
-			</div>
+			{/if}
 			<ShopPurchase
 				slug={data.piece.slug}
 				deliveryBusinessDays={data.deliveryBusinessDays}

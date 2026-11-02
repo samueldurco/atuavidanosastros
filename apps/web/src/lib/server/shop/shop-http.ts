@@ -24,7 +24,9 @@ const headers = { 'Cache-Control': 'private, no-store', 'X-Robots-Tag': 'noindex
 const reply = (body: unknown, status = 200) => json(body, { status, headers });
 const approvedVariantSlugs = new Map(
 	Object.entries(approvedShopProducts).flatMap(([slug, product]) =>
-		isShopCommerceEligible(slug) ? product.variantIds.map((id) => [id, slug] as const) : []
+		isShopCommerceEligible(slug) || isShopCommerceEligible(slug, true)
+			? product.variantIds.map((id) => [id, slug] as const)
+			: []
 	)
 );
 function isReviewedOffer(variant: ShopCatalogProduct['variants'][number]): boolean {
@@ -289,7 +291,10 @@ export async function shopCart(
 					!Array.isArray(line) &&
 					Object.keys(line).every((key) => key === 'merchandiseId' || key === 'quantity') &&
 					typeof (line as { merchandiseId?: unknown }).merchandiseId === 'string' &&
-					approvedVariantSlugs.has((line as { merchandiseId: string }).merchandiseId) &&
+					isShopCommerceEligible(
+						approvedVariantSlugs.get((line as { merchandiseId: string }).merchandiseId) ?? '',
+						sale.ariesOnly
+					) &&
 					Number.isSafeInteger((line as { quantity?: unknown }).quantity) &&
 					(line as { quantity: number }).quantity >= 1 &&
 					(line as { quantity: number }).quantity <= CART_QUANTITY_LIMIT

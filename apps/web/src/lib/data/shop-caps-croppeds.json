@@ -1,0 +1,102 @@
+{
+	"caps": {
+		"bone-aries": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-aries-dtf.png?v=1793641543",
+			"area": "2,1 × 2,1 cm"
+		},
+		"bone-touro": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-touro-dtf.png?v=1793641542",
+			"area": "1,6 × 2,2 cm"
+		},
+		"bone-gemeos": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-gemeos-dtf.png?v=1793641542",
+			"area": "1,5 × 2,1 cm"
+		},
+		"bone-cancer": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-cancer-dtf.png?v=1793641542",
+			"area": "2,0 × 2,0 cm"
+		},
+		"bone-leao": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-leao-dtf.png?v=1793641542",
+			"area": "2,1 × 2,3 cm"
+		},
+		"bone-virgem": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-virgem-dtf.png?v=1793641542",
+			"area": "2,1 × 2,0 cm"
+		},
+		"bone-libra": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-libra-dtf.png?v=1793641542",
+			"area": "2,2 × 1,8 cm"
+		},
+		"bone-escorpiao": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-escorpiao-dtf.png?v=1793641542",
+			"area": "2,2 × 1,9 cm"
+		},
+		"bone-sagitario": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-sagitario-dtf.png?v=1793641542",
+			"area": "2,0 × 2,0 cm"
+		},
+		"bone-capricornio": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-capricornio-dtf.png?v=1793641542",
+			"area": "2,3 × 1,8 cm"
+		},
+		"bone-aquario": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-aquario-dtf.png?v=1793641542",
+			"area": "2,4 × 1,4 cm"
+		},
+		"bone-peixes": {
+			"image": "https://cdn.shopify.com/s/files/1/1042/4732/9136/files/atvna-bone-peixes-dtf.png?v=1793641542",
+			"area": "2,2 × 2,2 cm"
+		}
+	},
+	"croppeds": {
+		"cropped-touro": {
+			"images": ["cropped-touro-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-gemeos": {
+			"images": ["cropped-gemeos-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-cancer": {
+			"images": ["cropped-cancer-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-leao": {
+			"images": ["cropped-leao-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-virgem": {
+			"images": ["cropped-virgem-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-libra": {
+			"images": ["cropped-libra-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-escorpiao": {
+			"images": ["cropped-escorpiao-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-sagitario": {
+			"images": ["cropped-sagitario-v002-16119.webp"],
+			"area": "11,2 × 10,1 cm"
+		},
+		"cropped-capricornio": {
+			"images": ["cropped-capricornio-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-aquario": {
+			"images": ["cropped-aquario-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-peixes": {
+			"images": ["cropped-peixes-v002-16119.webp"],
+			"area": "10,6 × 10,6 cm"
+		},
+		"cropped-aries": {
+			"images": ["cropped-aries-branco-produto.webp", "cropped-aries-branco-modelo.webp"],
+			"area": "12,7 × 12,7 cm"
+		}
+	}
+}
