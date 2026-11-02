@@ -112,9 +112,9 @@ export function legacySeo(path: string): PageSeo | null {
 				'Explore os produtos digitais da ATVNA: mapa astral, previsões, relacionamentos, carreira, Tarot e sonhos. Confira o conteúdo e a disponibilidade de cada leitura.'
 		},
 		'/loja': {
-			title: 'Produtos físicos · Loja dos Signos — em preparação',
+			title: 'Produtos físicos · Loja dos Signos',
 			description:
-				'Conheça as primeiras artes da coleção de pôsteres da Loja dos Signos. Produtos físicos em preparação.'
+				'Explore as artes e os produtos físicos da Loja dos Signos. Confira as características e a disponibilidade de cada peça.'
 		}
 	};
 	const sign = path.match(/^\/loja\/signo\/([a-z]+)$/)?.[1];
@@ -124,9 +124,9 @@ export function legacySeo(path: string): PageSeo | null {
 		page ??
 		(shopSign
 			? {
-					title: `Produtos físicos de ${signNames[shopSign]} — em preparação`,
+					title: `Produtos físicos de ${signNames[shopSign]}`,
 					description:
-						'Conheça a coleção de produtos físicos da Loja dos Signos, ainda em preparação.'
+						'Conheça as peças da Loja dos Signos e confira as características e a disponibilidade de cada produto.'
 				}
 			: null);
 	if (!entry) return null;

@@ -57,8 +57,12 @@
 				</div>
 			{/if}
 			<p class="image-note">
-				Imagens de apresentação geradas pela {data.piece.provider} para a peça na cor {color.name}.
-				A tonalidade pode variar conforme a tela e a impressão.
+				{#if data.piece.imageNote}
+					{data.piece.imageNote}
+				{:else}
+					Imagens de apresentação geradas pela {data.piece.provider} para a peça na cor {color.name}.
+					A tonalidade pode variar conforme a tela e a impressão.
+				{/if}
 			</p>
 		</section>
 		<section class="piece-details" aria-labelledby="piece-title">
@@ -81,7 +85,11 @@
 					{/each}
 				</div>
 			</div>
-			<ShopPurchase slug={data.piece.slug} enabled={data.shopCommerceEnabled} />
+			<ShopPurchase
+				slug={data.piece.slug}
+				deliveryBusinessDays={data.deliveryBusinessDays}
+				enabled={data.shopCommerceEnabled && data.purchaseEligible}
+			/>
 			<dl>
 				<div>
 					<dt>Modelo da peça</dt>
@@ -99,6 +107,12 @@
 					<dt>Estampa</dt>
 					<dd>{data.piece.printDescription ?? 'Impressão direta no tecido, na frente da peça.'}</dd>
 				</div>
+				{#if data.piece.care}
+					<div>
+						<dt>Cuidados</dt>
+						<dd>{data.piece.care}</dd>
+					</div>
+				{/if}
 				{#if data.piece.subjectKind === 'canonical_pair'}
 					<div>
 						<dt>Conteúdo da peça</dt>

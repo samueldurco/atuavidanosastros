@@ -8,7 +8,15 @@ export default defineConfig({
 	testMatch: '**/shop-purchase.e2e.ts',
 	webServer: {
 		command: 'pnpm exec vite dev --host 127.0.0.1 --port 4187 --strictPort',
-		env: { FEATURE_PHYSICAL_CHECKOUT: 'true' },
+		env: {
+			FEATURE_PHYSICAL_CHECKOUT: 'true',
+			SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
+			SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
+			SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
+			SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
+			SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
+			SHOP_SELLER_PUBLIC_DOCUMENT: 'Documento de teste'
+		},
 		port: 4187,
 		reuseExistingServer: false,
 		timeout: 360_000

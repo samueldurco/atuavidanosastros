@@ -1,6 +1,11 @@
 <script lang="ts">
 	import type { ShopCatalogProduct } from '$lib/server/shop/shopify-storefront';
-	let { slug, enabled }: { slug: string; enabled: boolean } = $props();
+	import { shopDelivery } from '$lib/data/shop-commerce';
+	let {
+		slug,
+		enabled,
+		deliveryBusinessDays
+	}: { slug: string; enabled: boolean; deliveryBusinessDays: number | null } = $props();
 	let product = $state<ShopCatalogProduct | null>(null);
 	let purchaseState = $state<'loading' | 'ready' | 'unavailable' | 'error'>('loading');
 	let variantId = $state('');
@@ -142,6 +147,15 @@
 								Subtotal: {money((Math.round(Number(variant.price.amount) * 100) * quantity) / 100)}
 							</p>
 						{/if}
+						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10}
+							<p class="subtotal">
+								Total com frete: {money(
+									(Math.round(Number(variant.price.amount) * 100) * quantity +
+										Math.round(shopDelivery.priceBrl * 100)) /
+										100
+								)}
+							</p>
+						{/if}
 					{/if}
 				</div>
 				<button class="button" type="submit" disabled={!canBuy}>
@@ -149,6 +163,10 @@
 				</button>
 			</fieldset>
 			{#if errorMessage}<p class="error" role="alert">{errorMessage}</p>{/if}
+			<p class="checkout-note">
+				Frete fixo de {money(shopDelivery.priceBrl)} por pedido nos destinos habilitados no checkout.
+				Fabricação e entrega em até {deliveryBusinessDays} dias úteis após a aprovação do pagamento.
+			</p>
 			<p class="checkout-note">
 				Revise o endereço, a entrega e o valor total antes de confirmar o pagamento.
 			</p>

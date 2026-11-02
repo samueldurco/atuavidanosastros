@@ -1,6 +1,12 @@
 import { env } from '$env/dynamic/private';
+import { readShopSale } from '$lib/server/shop/seller-identity';
 import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutServerLoad = () => ({
-	shopCommerceEnabled: env.FEATURE_PHYSICAL_CHECKOUT === 'true'
-});
+export const load: LayoutServerLoad = () => {
+	const sale = readShopSale(env);
+	return {
+		shopSeller: sale?.seller ?? null,
+		shopCommerceEnabled: sale !== null,
+		deliveryBusinessDays: sale?.deliveryBusinessDays ?? null
+	};
+};

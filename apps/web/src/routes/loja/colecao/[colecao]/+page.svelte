@@ -18,7 +18,12 @@
 
 <div class="container collection-page">
 	<a class="back-link" href="/loja">← Loja dos Signos</a>
-	<ShopShowcase showLink={false} headingLevel="h1" collection={data.collection} />
+	<ShopShowcase
+		showLink={false}
+		headingLevel="h1"
+		collection={data.collection}
+		commerceEnabled={data.shopCommerceEnabled}
+	/>
 </div>
 
 <style>

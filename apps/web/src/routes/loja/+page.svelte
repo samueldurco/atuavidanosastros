@@ -1,13 +1,15 @@
 <script lang="ts">
 	import ShopShowcase from '$lib/components/ShopShowcase.svelte';
 	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
+	import type { PageProps } from './$types';
+	let { data }: PageProps = $props();
 </script>
 
 <svelte:head>
 	<title>Loja dos Signos — A Tua Vida nos Astros</title>
 	<meta
 		name="description"
-		content="Conheça as artes zodiacais da nova Loja dos Signos. Produtos e mockups da coleção em preparação."
+		content="Conheça as artes zodiacais da Loja dos Signos e confira as características e a disponibilidade de cada peça."
 	/>
 	<link rel="canonical" href="https://atuavidanosastros.com.br/loja" />
 </svelte:head>
@@ -18,11 +20,11 @@
 			>Ver o catálogo de leituras digitais</a
 		>.
 	</p>
-	<ShopShowcase showLink={false} headingLevel="h1" />
+	<ShopShowcase showLink={false} headingLevel="h1" commerceEnabled={data.shopCommerceEnabled} />
 	<ShopPolicyLinks />
 	<aside class="shop-reading" aria-labelledby="shop-reading-title">
 		<div>
-			<p class="eyebrow">Enquanto a coleção ganha forma</p>
+			<p class="eyebrow">Da arte aos símbolos</p>
 			<h2 id="shop-reading-title">Conheça os símbolos por trás das artes.</h2>
 			<p>
 				Na Revista ATVNA, você encontra artigos sobre o mapa astral, os ciclos da Lua e outros
