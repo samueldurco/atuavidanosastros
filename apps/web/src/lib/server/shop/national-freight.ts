@@ -20,13 +20,20 @@ export interface Offer {
 	variantId: string;
 	priceBrl: number;
 	dimonaSku?: string;
+	dimonaRetailProductionDays?: number;
 }
 export function physicalOffer(id: unknown): Offer {
 	const o = (offers as Offer[]).find((o) => o.variantId === id);
 	const dimonaSku = o && (industrialSkus as Record<string, string>)[o.variantId.split('/').at(-1)!];
-	if (!o || !(o.slug === 'caneca-aries' || /^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')))
-		return fail('product_unavailable', 409);
-	return { ...o, dimonaSku: o.slug === 'caneca-aries' ? undefined : dimonaSku };
+	if (!o) return fail('product_unavailable', 409);
+	if (o.dimonaRetailProductionDays !== undefined) {
+		const days = o.dimonaRetailProductionDays;
+		if (!/^caneca-[a-z]+$/.test(o.slug) || !Number.isInteger(days) || days < 1 || days > 60)
+			return fail('product_unavailable', 409);
+		return o;
+	}
+	if (!/^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')) return fail('product_unavailable', 409);
+	return { ...o, dimonaSku };
 }
 export async function provider(fetcher: typeof fetch, url: string, init: RequestInit = {}) {
 	const res = await fetcher(url, {
@@ -100,8 +107,8 @@ const supplierHeaders = (env: PrivateEnv) => ({
 	'Content-Type': 'application/json'
 });
 export async function manufacturingAvailable(env: PrivateEnv, fetcher: typeof fetch, offer: Offer) {
-	// The 325 ml mug is a retail pilot; the Dropsimples 310 ml SKU is a different item.
-	return offer.slug === 'caneca-aries'
+	// The reviewed retail model 94 and the Dropsimples SKU for 310 ml are distinct.
+	return offer.dimonaRetailProductionDays !== undefined
 		? Promise.resolve(true)
 		: provider(fetcher, dimona + '/sku/' + offer.dimonaSku + '/availability', {
 				headers: supplierHeaders(env)
@@ -140,7 +147,11 @@ export interface Rate {
 	cents: number;
 	days: number;
 }
-export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { basis: string } {
+export function shippingRate(
+	raw: unknown,
+	retailDays?: number,
+	secret = ''
+): Rate & { basis: string } {
 	if (!Array.isArray(raw) || raw.length > 128) return fail('carrier_unavailable', 503);
 	const rates: Rate[] = [];
 	for (const item of raw) {
@@ -177,18 +188,22 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { 
 	rates.sort((a, b) => a.cents - b.cents || b.days - a.days || a.id.localeCompare(b.id));
 	const first = rates[0],
 		standard = rates.find((x) => ['16594', '1', '2'].includes(x.id)) ?? first;
-	const result = mug
-		? { ...first, days: first.days + 5 }
-		: {
-				name: 'Entrega padrão',
-				id: 'standard',
-				cents: Math.max(first.cents, standard.cents),
-				days: Math.max(first.days, standard.days) + 6
-			};
+	const result =
+		retailDays !== undefined
+			? { ...first, days: first.days + retailDays + 2 }
+			: {
+					name: 'Entrega padrão',
+					id: 'standard',
+					cents: Math.max(first.cents, standard.cents),
+					days: Math.max(first.days, standard.days) + 6
+				};
 	if (result.days > 90 || result.cents > 50000) return fail('delivery_unavailable');
 	// Both lists can determine the standard service. Seal their identities and terms so
 	// replacing one carrier with another at the same price still requires a fresh quote.
-	return { ...result, basis: JSON.stringify(mug ? [first] : [first, standard]) };
+	return {
+		...result,
+		basis: JSON.stringify(retailDays !== undefined ? [first] : [first, standard])
+	};
 }
 export async function rateFor(env: PrivateEnv, fetcher: typeof fetch, cep: string, offer: Offer) {
 	return shippingRate(
@@ -197,7 +212,7 @@ export async function rateFor(env: PrivateEnv, fetcher: typeof fetch, cep: strin
 			headers: supplierHeaders(env),
 			body: JSON.stringify({ zipcode: cep, quantity: '1' })
 		}),
-		offer.slug === 'caneca-aries',
+		offer.dimonaRetailProductionDays,
 		env.DIMONA_FRETE_TOKEN
 	);
 }

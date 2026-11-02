@@ -39,6 +39,7 @@ test('relaciona somente a variante comprovada e prepara a restauração exata', 
   assert.deepEqual(p.shopify.operations, [{ profile: dedicated, variants: [variantId] }]);
   assert.deepEqual(p.shopify.rollback, [{ profile: previous, variants: [variantId] }]);
   assert.equal(p.offers[0].priceBrl, 79.9);
+  assert.deepEqual(p.publicOffers, [{ slug: 'caneca-taurus', variantId, priceBrl: 79.9, dimonaRetailProductionDays: 3 }]);
 });
 test('nenhuma prova significa nenhuma mudança', () => {
   const args = fixture();

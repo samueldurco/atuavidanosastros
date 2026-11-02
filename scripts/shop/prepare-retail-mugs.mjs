@@ -69,7 +69,8 @@ export function planMugs({ snapshot, art, quotes, hashEvidence, now = Date.now()
     assert.equal(quote.previewApproved, true, 'Conferir a arte individual aplicada no estúdio');
     assert(quote.unitPrintedBrl > 0 && cents(quote.unitPrintedBrl) <= 4810,
       'O custo difere da faixa já validada para o preço de R$ 79,90');
-    assert(quote.productionBusinessDays > 0 && Number.isInteger(quote.productionBusinessDays));
+    assert(Number.isInteger(quote.productionBusinessDays) && quote.productionBusinessDays > 0 &&
+      quote.productionBusinessDays <= 60, 'Prazo de produção varejista inválido');
     assert(quote.shippingBrl > 0 && Number.isFinite(quote.shippingBrl));
     assert.equal(cents(quote.unitPrintedBrl) + cents(quote.shippingBrl), cents(quote.totalBrl));
     assert(/^\d{8}$/.test(quote.cep) && Number.isFinite(Date.parse(quote.observed)));
@@ -95,7 +96,10 @@ export function planMugs({ snapshot, art, quotes, hashEvidence, now = Date.now()
       rollback.push({ profile: before, variants: [variant.id] });
     }
   }
-  return { shop: snapshot.shop, offers, shopify: { mutation: associateMutation, operations, rollback } };
+  const publicOffers = offers.map(({ slug, variantId, priceBrl, cotacao }) => ({
+    slug, variantId, priceBrl, dimonaRetailProductionDays: cotacao.diasProducao
+  }));
+  return { shop: snapshot.shop, offers, publicOffers, shopify: { mutation: associateMutation, operations, rollback } };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {

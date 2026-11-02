@@ -2,7 +2,8 @@
 	{
 		"slug": "caneca-aries",
 		"variantId": "gid://shopify/ProductVariant/68006922223984",
-		"priceBrl": 79.9
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
 	},
 	{
 		"slug": "ecobag-aquarius",
