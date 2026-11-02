@@ -1,5 +1,5 @@
-import offers from '$lib/data/shop-reviewed-offers.json';
-import industrialSkus from './national-skus.json';
+import offers from '$lib/data/shop-reviewed-offers.json' with { type: 'json' };
+import industrialSkus from './national-skus.json' with { type: 'json' };
 import { reviewedDestination } from '$lib/data/shop-commerce';
 import { config, readApprovedProduct, ShopHttpError } from './shop-http';
 import { hasControlCharacters } from './shopify-storefront';

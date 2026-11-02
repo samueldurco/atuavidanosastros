@@ -10,7 +10,7 @@ import { posterPreviews } from './shop-posters';
 import { bottlePreviews } from './shop-bottles';
 import { mugPreviews } from './shop-mugs';
 import { ecobagPreviews } from './shop-ecobags';
-import reviewedOffers from './shop-reviewed-offers.json';
+import reviewedOffers from './shop-reviewed-offers.json' with { type: 'json' };
 
 /** Existing collection artwork and product specifications; live offers come from Shopify. */
 export interface ShopPreview {
