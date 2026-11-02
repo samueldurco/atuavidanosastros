@@ -1,28 +1,21 @@
 import { publishedEditorial } from '$lib/server/editorial-registry';
 import { editorialTopic } from '$lib/data/editorial-topics';
-import { universes } from '$lib/data/site';
 import { homeCatalogHighlights } from '$lib/server/home-catalog-highlights';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	const documents = await publishedEditorial();
-	// One verified snapshot per request; contextual slots do not repeat in the magazine.
-	const contextualArticles = Object.fromEntries(
-		universes.map((universe) => [
-			universe.slug,
-			documents.find((item) => editorialTopic(item.path) === universe.slug)
-		])
-	);
-	const used = new Set(
-		Object.values(contextualArticles)
-			.filter(Boolean)
-			.map((item) => item!.path)
-	);
+	// One verified snapshot; favor different interests without reserving hidden article slots.
+	const articles = documents.filter((item) => item.kind !== 'horoscope');
+	const topics = new Set<string>();
+	const varied = articles.filter((item) => {
+		const topic = editorialTopic(item.path);
+		if (!topic || topics.has(topic)) return false;
+		topics.add(topic);
+		return true;
+	});
 	return {
 		...homeCatalogHighlights(),
-		contextualArticles,
-		articles: documents
-			.filter((item) => !used.has(item.path) && item.kind !== 'horoscope')
-			.slice(0, 3)
+		articles: [...varied, ...articles.filter((item) => !varied.includes(item))].slice(0, 3)
 	};
 };

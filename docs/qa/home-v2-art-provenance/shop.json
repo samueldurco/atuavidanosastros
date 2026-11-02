@@ -1,0 +1,118 @@
+{
+  "date": "2026-11-02",
+  "purpose": "Four unique editorial lifestyle scenes for the Loja dos Signos HOME carousel.",
+  "tool": "Built-in image_gen; one generation per scene with local referenced images.",
+  "direction": {
+    "version": "1.1.0",
+    "skill": "C:/Users/samue/.codex/skills/atvna-artes-fisicas/SKILL.md",
+    "canonical": "COLEÇOES LOJA FISICA/DIRETRIZ_ARTISTICA/atvna-artes-fisicas/SKILL.md",
+    "approvedLanguageReferences": [
+      "C:/Users/samue/.codex/skills/atvna-artes-fisicas/references/aprovadas/aries-feminino.png",
+      "C:/Users/samue/.codex/skills/atvna-artes-fisicas/references/aprovadas/aquarius-masculino.png"
+    ],
+    "referenceRole": "Approved references establish artistic language; the actual SKU mockups are authoritative for the printed designs and applications."
+  },
+  "commonPromptBrief": "Photorealistic premium editorial lifestyle photography, landscape 3:2, warm natural light, matte handmade atmosphere, actual existing SKU shapes and printed artwork from references, preserve mother-art, palette, glyphs, Latin sign names, original placement and scale, no overlay text, no invented product art.",
+  "visualReview": {
+    "status": "Compared by assistant against the actual SKU reference images before integration.",
+    "checks": [
+      "Four different editorial contexts and compositions.",
+      "Printed figures, glyphs and Latin sign names remain recognizable and consistent with actual SKU references.",
+      "Actual product types, colors and formats retained.",
+      "Poster shown unframed.",
+      "No prices, stock, offers or new SKU claims embedded in images."
+    ],
+    "limits": "Illustrative generated lifestyle scenes; not industrial print proofs and not replacements for product detail specifications."
+  },
+  "optimization": {
+    "tool": "Sharp 0.35.5",
+    "format": "WebP",
+    "quality": 87,
+    "dimensions": "1536x1024",
+    "crop": false
+  },
+  "images": [
+    {
+      "id": "wear",
+      "asset": "apps/web/static/brand/home-v2/shop-wear.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 166666,
+      "sha256": "0e7497bb2ad8d7df4336da47ae85b36265bdca74cf2cc7e350864b709ff376c6",
+      "references": [
+        "apps/web/static/brand/shop/colecao-202610/cropped-aries-bone-modelo.webp",
+        "apps/web/static/brand/shop/colecao-202610/oversized-taurus-bone-modelo.webp"
+      ],
+      "generatedSource": "C:/Users/samue/.codex/generated_images/01a19c4f-3392-7e53-874a-780f996635b8/exec-81581547-32aa-4675-b5b4-4c98ed0d86c4.png",
+      "promptBrief": "Two adults wearing actual Cropped Aries Bone and Oversized Taurus Faded Bone at an artist studio; preserve mother-art, glyphs, lettering, placement and original scale."
+    },
+    {
+      "id": "mugs",
+      "asset": "apps/web/static/brand/home-v2/shop-mugs.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 146954,
+      "sha256": "9b1e3c6501a061a4abbc247b08889efd3059f76f2324825697e87aec4acf792b",
+      "references": [
+        "apps/web/static/brand/shop/colecao-202610/caneca-aries-branca-produto.webp"
+      ],
+      "generatedSource": "C:/Users/samue/.codex/generated_images/01a19c4f-3392-7e53-874a-780f996635b8/exec-a33efa55-e62f-41e5-aa2b-839d35825882.png",
+      "promptBrief": "Warm breakfast table with actual white Caneca Aries foreground and second identical mug turned back; preserve leaping ram, glyph, lettering and horizontal botanical composition."
+    },
+    {
+      "id": "carry",
+      "asset": "apps/web/static/brand/home-v2/shop-carry.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 240822,
+      "sha256": "cf80cc17c08f2385840095639be66e38637e8591e53f302a903824118814cf3f",
+      "references": [
+        "apps/web/static/brand/shop/colecao-202610/ecobag-taurus-natural-produto.webp",
+        "apps/web/static/brand/shop/colecao-202610/garrafa-aries-branca-produto.webp"
+      ],
+      "generatedSource": "C:/Users/samue/.codex/generated_images/01a19c4f-3392-7e53-874a-780f996635b8/exec-56688b4a-afcb-48cd-83d0-fc711e264dfa.png",
+      "promptBrief": "Adult in natural linen carrying actual Ecobag Taurus, at garden bench next to actual Garrafa Aries; preserve cotton, bottle, silver cap, art, glyphs, names and proportions."
+    },
+    {
+      "id": "space",
+      "asset": "apps/web/static/brand/home-v2/shop-space.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 278748,
+      "sha256": "b44f774d022853b4ac493778a4f6e2e084001dafcbb4b411debaa1c86612dc23",
+      "references": [
+        "apps/web/static/brand/shop/colecao-202610/poster-virgem-30x40-produto.webp",
+        "apps/web/static/brand/shop/colecao-202610/caderno-aries-produto.webp"
+      ],
+      "generatedSource": "C:/Users/samue/.codex/generated_images/01a19c4f-3392-7e53-874a-780f996635b8/exec-e1cc55da-72c8-4d2f-aba1-cef9c38bd4a2.png",
+      "promptBrief": "Unframed actual Poster Virgo and spiral Caderno Aries on oak desk near window; preserve artwork, glyphs, names, format and print scale."
+    }
+  ],
+  "validation": {
+    "date": "2026-11-02",
+    "svelteCheck": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "componentCompileWarnings": 0,
+    "axeComponentViolations": 0,
+    "playwright": {
+      "url": "http://127.0.0.1:4330/",
+      "viewports": [
+        "1440x1000",
+        "390x844"
+      ],
+      "checks": [
+        "No horizontal page overflow at either viewport.",
+        "Next button moves 01 to 02; previous enabled after movement.",
+        "Last scene indicator moves to 04 and disables next.",
+        "First indicator returns to 01.",
+        "Native mobile scroll updates active counter.",
+        "Emulated native touch swipe moves 01 to 02.",
+        "All four images load.",
+        "Seven actual SKU links are rendered.",
+        "No page errors."
+      ]
+    }
+  }
+}

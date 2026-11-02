@@ -13,9 +13,26 @@ const artByTool: Record<string, string> = {
 	'registro-de-sonho': 'sonhos-gravados'
 };
 
-export function freeToolDesign(tool: FreeTool) {
+/** Functional micro-engravings belong to the HOME discovery collection. */
+const homeArtByTool: Record<string, string> = {
+	ascendente: 'ascendant',
+	'mapa-astral': 'birth-chart',
+	horoscopo: 'horoscope',
+	'combinacao-do-casal': 'compatibility',
+	'meio-do-ceu': 'midheaven',
+	'dinheiro-no-mapa': 'money',
+	'carta-do-dia': 'daily-card',
+	'carta-do-amor': 'love-card',
+	'registro-de-sonho': 'dream-journal'
+};
+
+export function freeToolDesign(tool: FreeTool, context: 'home' | 'default' = 'default') {
 	const theme = mvpThemes[tool.topicId];
-	return { ...theme, art: mvpArt(artByTool[tool.id] ?? theme.art) };
+	const homeArt = context === 'home' ? homeArtByTool[tool.id] : undefined;
+	return {
+		...theme,
+		art: homeArt ? `/brand/home-v2/tool-${homeArt}.webp` : mvpArt(artByTool[tool.id] ?? theme.art)
+	};
 }
 
 /** Each continuation describes this tool's next step, rather than a catalogue of offers. */

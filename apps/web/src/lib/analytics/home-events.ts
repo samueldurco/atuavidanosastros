@@ -66,6 +66,7 @@ const contexts = new Set([
 ]);
 const ctas = new Set([
 	'tools',
+	'sample',
 	'products',
 	'select',
 	'open',

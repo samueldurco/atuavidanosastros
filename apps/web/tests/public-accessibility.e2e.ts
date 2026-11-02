@@ -79,7 +79,7 @@ for (const width of [320, 1440]) {
 		for (const name of [
 			'Ferramentas grátis',
 			'Leituras para você. Um tema de cada vez.',
-			'Por onde seu olhar quer caminhar?',
+			'Encontre o seu assunto.',
 			'Uma pausa para ler.',
 			'O seu universo, perto de você.'
 		]) {
@@ -92,7 +92,7 @@ for (const width of [320, 1440]) {
 		await expect(themeHeadings).toHaveText([
 			'Mapa astral',
 			'Previsões',
-			'Amor e relacionamentos',
+			'Amor e relações',
 			'Dinheiro e carreira',
 			'Tarot',
 			'Sonhos'
@@ -124,7 +124,7 @@ for (const width of [320, 1440]) {
 		).toBeVisible();
 		await expect(page).toHaveURL('/');
 		await expect(
-			main.locator('.showcase-card.subscription a[href="/atv-mais"]').first()
+			main.locator('#atv-mais-home').getByRole('link', { name: 'Conhecer os planos' })
 		).toHaveAttribute('href', '/atv-mais');
 		await page.goto('/');
 		const magazine = page.locator('#revista');

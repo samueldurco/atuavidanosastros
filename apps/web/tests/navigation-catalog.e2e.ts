@@ -100,12 +100,25 @@ test('home, universos, produto e ATV+ mantêm o contexto de cada oferta', async 
 	await page.setViewportSize({ width: 1440, height: 1000 });
 	await page.goto('/');
 	const catalogs = page.locator('#produtos');
-	await expect(catalogs.locator('.showcase-card.avulsos')).toBeVisible();
-	await expect(catalogs.locator('.showcase-card.subscription')).toBeVisible();
+	const readings = catalogs.locator('.reading-selection .reading-feature');
+	await expect(readings).toHaveCount(3);
+	for (const reading of await readings.all()) {
+		await expect(reading).toBeVisible();
+		await expect(reading.locator('a[data-atv-event="product_click"]')).toHaveAttribute(
+			'href',
+			/^\/produtos\//
+		);
+	}
+	const subscription = page.locator('#atv-mais-home');
+	await expect(subscription.locator('.plus-plan')).toHaveCount(3);
+	await expect(subscription.getByRole('link', { name: 'Conhecer os planos' })).toHaveAttribute(
+		'href',
+		'/atv-mais'
+	);
 	await expect(page.locator('#loja a[href="/loja"]')).toContainText('Explorar a Loja dos Signos');
 	await catalogs.scrollIntoViewIfNeeded();
 	await page.screenshot({ path: testInfo.outputPath('home-catalogos.png') });
-	await catalogs.locator('.showcase-card.avulsos a[href="/leituras#catalogo"]').click();
+	await catalogs.getByRole('link', { name: 'Ver todas as leituras' }).click();
 	await expect(page).toHaveTitle(/Leituras digitais/);
 	await expect(page.locator('.public-product-card')).toHaveCount(19);
 	await page.locator('.public-product-card h3 a').first().click();
