@@ -29,7 +29,11 @@ export function physicalOffer(id: unknown): Offer {
 	return { ...o, dimonaSku: o.slug === 'caneca-aries' ? undefined : dimonaSku };
 }
 export async function provider(fetcher: typeof fetch, url: string, init: RequestInit = {}) {
-	const res = await fetcher(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(7000) });
+	const res = await fetcher(url, {
+		...init,
+		redirect: 'manual',
+		signal: AbortSignal.timeout(7000)
+	});
 	if (!res.ok) throw new Error('upstream');
 	const reader = res.body?.getReader();
 	if (!reader) throw new Error('upstream');
