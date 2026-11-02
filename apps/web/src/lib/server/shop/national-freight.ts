@@ -136,7 +136,7 @@ export interface Rate {
 	cents: number;
 	days: number;
 }
-export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate {
+export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { basis: string } {
 	if (!Array.isArray(raw) || raw.length > 128) return fail('carrier_unavailable', 503);
 	const rates: Rate[] = [];
 	for (const item of raw) {
@@ -170,7 +170,7 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate {
 		});
 	}
 	if (!rates.length) return fail('delivery_unavailable');
-	rates.sort((a, b) => a.cents - b.cents || b.days - a.days);
+	rates.sort((a, b) => a.cents - b.cents || b.days - a.days || a.id.localeCompare(b.id));
 	const first = rates[0],
 		standard = rates.find((x) => ['16594', '1', '2'].includes(x.id)) ?? first;
 	const result = mug
@@ -182,7 +182,9 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate {
 				days: Math.max(first.days, standard.days) + 6
 			};
 	if (result.days > 90 || result.cents > 50000) return fail('delivery_unavailable');
-	return result;
+	// Both lists can determine the standard service. Seal their identities and terms so
+	// replacing one carrier with another at the same price still requires a fresh quote.
+	return { ...result, basis: JSON.stringify(mug ? [first] : [first, standard]) };
 }
 export async function rateFor(env: PrivateEnv, fetcher: typeof fetch, cep: string, offer: Offer) {
 	return shippingRate(

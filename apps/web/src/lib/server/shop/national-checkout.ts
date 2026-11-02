@@ -17,6 +17,7 @@ import {
 	mac,
 	openQuote,
 	prepareDraft,
+	recoverDraft,
 	seal,
 	type SealedQuote
 } from './national-draft';
@@ -82,15 +83,31 @@ function quoteLimit(ip: string, now: number) {
 	quoteIps.set(ip, count + 1);
 	quoteHits++;
 }
-async function attempt(db: D1Database, q: SealedQuote, fingerprint: string) {
+async function saveInvoice(db: D1Database, q: SealedQuote, fingerprint: string, url: string) {
+	const saved = await db
+		.prepare(
+			"UPDATE shop_checkout_attempts SET state='ready',checkout_url=? WHERE nonce=? AND address_hash=? AND (state='pending' OR (state='ready' AND checkout_url=?))"
+		)
+		.bind(url, q.nonce, fingerprint, url)
+		.run();
+	if (!saved.meta.changes) return fail('checkout_unavailable', 503);
+	return url;
+}
+async function attempt(
+	db: D1Database,
+	q: SealedQuote,
+	fingerprint: string,
+	recover: () => Promise<string>
+) {
 	const found = await db
 		.prepare('SELECT address_hash,state,checkout_url FROM shop_checkout_attempts WHERE nonce=?')
 		.bind(q.nonce)
 		.first<{ address_hash: string; state: string; checkout_url: string }>();
 	if (!found) return;
 	if (found.address_hash !== fingerprint) fail('quote_already_used', 409);
-	if (found.state === 'ready') return found.checkout_url;
-	return fail(found.state === 'pending' ? 'checkout_pending' : 'quote_refresh_required', 409);
+	if (found.state === 'ready' && found.checkout_url) return found.checkout_url;
+	if (found.state === 'pending') return saveInvoice(db, q, fingerprint, await recover());
+	return fail('quote_refresh_required', 409);
 }
 export async function nationalCheckout(
 	kind: Kind,
@@ -144,6 +161,7 @@ export async function nationalCheckout(
 				shipping: rate.cents,
 				service: rate.name,
 				serviceId: rate.id,
+				rateBasis: checkoutReady ? await mac(secret!, 'rate-basis:' + rate.basis) : '',
 				days: rate.days
 			};
 			return reply({
@@ -173,7 +191,9 @@ export async function nationalCheckout(
 			o = physicalOffer(q.variantId),
 			address = addressFor(input.address, q);
 		const fingerprint = await mac(secret!, 'ship:' + JSON.stringify(address));
-		const old = await attempt(db, q, fingerprint);
+		const previous = () =>
+			attempt(db, q, fingerprint, () => recoverDraft(env, fetcher, q, address));
+		const old = await previous();
 		if (old) return reply({ ok: true, checkoutUrl: old });
 		const [, rate] = await Promise.all([
 			checkOffer(env, fetcher, o, ip),
@@ -184,7 +204,9 @@ export async function nationalCheckout(
 			q.sku !== (await mac(secret!, 'sku:' + (o.dimonaSku ?? 'varejo-94'))) ||
 			q.shipping !== rate.cents ||
 			q.days !== rate.days ||
-			q.serviceId !== rate.id
+			q.serviceId !== rate.id ||
+			q.service !== rate.name ||
+			q.rateBasis !== (await mac(secret!, 'rate-basis:' + rate.basis))
 		)
 			fail('quote_changed', 409);
 		const reservation = await db
@@ -194,18 +216,26 @@ export async function nationalCheckout(
 			.bind(q.nonce, fingerprint, q.expires + 86400)
 			.run();
 		if (!reservation.meta.changes) {
-			const url = await attempt(db, q, fingerprint);
+			const url = await previous();
 			if (url) return reply({ ok: true, checkoutUrl: url });
 			return fail('checkout_pending', 409);
 		}
 		// Once reserved, never repeat a create on a retry, even if Shopify's response was lost.
-		const checkoutUrl = await prepareDraft(env, fetcher, q, address);
-		await db
-			.prepare(
-				"UPDATE shop_checkout_attempts SET state='ready',checkout_url=? WHERE nonce=? AND state='pending'"
-			)
-			.bind(checkoutUrl, q.nonce)
-			.run();
+		let checkoutUrl: string;
+		try {
+			checkoutUrl = await prepareDraft(env, fetcher, q, address);
+		} catch (e) {
+			if (e instanceof ShopHttpError && e.code === 'offer_changed') {
+				await db
+					.prepare(
+						"UPDATE shop_checkout_attempts SET state='failed' WHERE nonce=? AND state='pending'"
+					)
+					.bind(q.nonce)
+					.run();
+			}
+			throw e;
+		}
+		await saveInvoice(db, q, fingerprint, checkoutUrl);
 		return reply({ ok: true, checkoutUrl });
 	} catch (e) {
 		const known = e instanceof ShopHttpError;

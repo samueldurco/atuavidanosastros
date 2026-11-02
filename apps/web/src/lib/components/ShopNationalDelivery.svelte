@@ -131,6 +131,13 @@
 			});
 			if (current !== generation) return;
 			if (res.status === 409) {
+				const error = (await res.json()) as { code?: string };
+				if (current !== generation) return;
+				if (error.code === 'checkout_pending') {
+					message =
+						'Seu checkout está sendo preparado. Aguarde alguns instantes e tente abrir o mesmo pagamento novamente.';
+					return;
+				}
 				quote = null;
 				message = 'A cotação mudou ou expirou. Calcule novamente o frete para continuar.';
 				return;

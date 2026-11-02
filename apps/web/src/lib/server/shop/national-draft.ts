@@ -12,6 +12,7 @@ export interface SealedQuote {
 	days: number;
 	service: string;
 	serviceId: string;
+	rateBasis: string;
 	sku: string;
 }
 const utf = new TextEncoder();
@@ -87,7 +88,14 @@ export function addressFor(input: unknown, q: SealedQuote): BuyerAddress {
 		normal(city) !== normal(q.city)
 	)
 		return fail('address_does_not_match_quote');
-	if (!/\d|\bs\s*\/?\s*n\b|sem n[uú]mero/i.test(street)) return fail('invalid_address');
+	// Require a street name and its own number (or an explicit "sem número").
+	if (
+		!/\p{L}/u.test(street) ||
+		!/(?:,\s*|\s+)(?:n[º°.]?\s*)?(?:\d+[\p{L}]?|s\s*\/?\s*n|sem n[uú]mero)(?=\s*(?:,|$))/iu.test(
+			street
+		)
+	)
+		return fail('invalid_address');
 	return {
 		firstName: fld(a.firstName, 64),
 		lastName: fld(a.lastName, 64),
@@ -99,8 +107,20 @@ export function addressFor(input: unknown, q: SealedQuote): BuyerAddress {
 		countryCode: 'BR'
 	};
 }
-const createQuery =
-	'mutation NationalDraft($input: DraftOrderInput!) { draftOrderCreate(input: $input) { draftOrder { id invoiceUrl totalPriceSet { shopMoney { amount currencyCode } } subtotalPriceSet { shopMoney { amount currencyCode } } totalShippingPriceSet { shopMoney { amount currencyCode } } shippingAddress { countryCodeV2 provinceCode zip address1 address2 firstName lastName city } lineItems(first:2) { nodes { quantity variant { id } } } } userErrors { field message } } }';
+const draftFields = `
+	id tags status invoiceUrl
+	totalPriceSet { shopMoney { amount currencyCode } }
+	subtotalPriceSet { shopMoney { amount currencyCode } }
+	totalShippingPriceSet { shopMoney { amount currencyCode } }
+	shippingLine { title custom originalPriceSet { shopMoney { amount currencyCode } } }
+	shippingAddress { countryCodeV2 provinceCode zip address1 address2 firstName lastName city }
+	lineItems(first: 2) { nodes { quantity variant { id } } }`;
+const createQuery = `mutation NationalDraft($input: DraftOrderInput!) {
+	draftOrderCreate(input: $input) { draftOrder { ${draftFields} } userErrors { field message } }
+}`;
+const recoverQuery = `query FindNationalDraft($input: String!) {
+	draftOrders(first: 2, query: $input) { nodes { ${draftFields} } }
+}`;
 const deleteQuery =
 	'mutation NationalDraftDiscard($input: DraftOrderDeleteInput!) { draftOrderDelete(input:$input) { deletedId userErrors {field} } }';
 let grant:
@@ -183,7 +203,6 @@ export async function prepareDraft(
 	q: SealedQuote,
 	a: BuyerAddress
 ) {
-	const title = 'Entrega padrão · até ' + q.days + ' dias úteis';
 	const input = {
 		presentmentCurrencyCode: 'BRL',
 		acceptAutomaticDiscounts: false,
@@ -191,7 +210,7 @@ export async function prepareDraft(
 		lineItems: [{ variantId: q.variantId, quantity: 1 }],
 		shippingAddress: a,
 		shippingLine: {
-			title,
+			title: shippingTitle(q),
 			priceWithCurrency: { amount: (q.shipping / 100).toFixed(2), currencyCode: 'BRL' }
 		},
 		tags: ['atvna-entrega-nacional', 'atvna-q-' + q.nonce],
@@ -209,8 +228,34 @@ export async function prepareDraft(
 		!/^gid:\/\/shopify\/DraftOrder\/\d+$/.test(id)
 	)
 		return fail('checkout_unavailable', 503);
+	const url = verifiedInvoice(env, q, a, draft);
+	if (url) return url;
+	await admin(env, fetcher, deleteQuery, { id }).catch(() => {});
+	return fail('offer_changed', 409);
+}
+const shippingTitle = (q: SealedQuote) => 'Entrega padrão · até ' + q.days + ' dias úteis';
+
+// A timed-out create might already exist. Only read by our unique tag; never send another create.
+export async function recoverDraft(
+	env: PrivateEnv,
+	fetcher: typeof fetch,
+	q: SealedQuote,
+	a: BuyerAddress
+) {
+	const result = await admin(env, fetcher, recoverQuery, 'tag:atvna-q-' + q.nonce);
+	const nodes = record(result.draftOrders).nodes;
+	if (!Array.isArray(nodes) || nodes.length !== 1) return fail('checkout_pending', 409);
+	return verifiedInvoice(env, q, a, record(nodes[0])) ?? fail('offer_changed', 409);
+}
+function verifiedInvoice(
+	env: PrivateEnv,
+	q: SealedQuote,
+	a: BuyerAddress,
+	draft: Record<string, unknown>
+) {
 	const addr = record(draft.shippingAddress),
-		nodes = record(draft.lineItems).nodes;
+		nodes = record(draft.lineItems).nodes,
+		line = record(draft.shippingLine);
 	const url =
 		typeof draft.invoiceUrl === 'string' && URL.canParse(draft.invoiceUrl)
 			? new URL(draft.invoiceUrl)
@@ -227,6 +272,14 @@ export async function prepareDraft(
 		addr.lastName === a.lastName;
 	if (
 		!matches ||
+		typeof draft.id !== 'string' ||
+		!/^gid:\/\/shopify\/DraftOrder\/\d+$/.test(draft.id) ||
+		draft.status !== 'OPEN' ||
+		!Array.isArray(draft.tags) ||
+		!draft.tags.includes('atvna-q-' + q.nonce) ||
+		line.custom !== true ||
+		line.title !== shippingTitle(q) ||
+		!expectedMoney(line.originalPriceSet, q.shipping) ||
 		!Array.isArray(nodes) ||
 		nodes.length !== 1 ||
 		record(nodes[0]).quantity !== 1 ||
@@ -240,10 +293,11 @@ export async function prepareDraft(
 		url.port ||
 		url.username ||
 		url.password ||
+		url.search ||
+		url.hash ||
 		!/^\/\d+\/invoices\/[a-zA-Z0-9_-]+\/?$/.test(url.pathname)
 	) {
-		await admin(env, fetcher, deleteQuery, { id }).catch(() => {});
-		return fail('offer_changed', 409);
+		return;
 	}
 	return url.href;
 }

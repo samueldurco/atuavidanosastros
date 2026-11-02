@@ -65,20 +65,34 @@ const json = (v: unknown) =>
 	new Response(JSON.stringify(v), { headers: { 'content-type': 'application/json' } });
 function upstream() {
 	let shipping = '15.50',
-		extraTax = '0';
+		extraTax = '0',
+		carrier = 'J&T';
+	let failAfterCreate = false;
+	let stored: Record<string, unknown> | undefined;
+	let transform: (draft: Record<string, unknown>) => void = () => undefined;
 	let drafts = 0,
 		deletes = 0;
 	const fetcher = vi.fn<typeof fetch>(async (url, opts) => {
 		const s = String(url);
 		if (s.includes('brasilapi') || s.includes('viacep'))
 			return json({ cep: '35160-001', city: 'Ipatinga', state: 'MG' });
-		if (s.endsWith('/shipping')) return json([rate(shipping)]);
+		if (s.endsWith('/shipping')) return json([rate(shipping, carrier)]);
 		if (s.includes('/admin/api/')) {
 			const body = JSON.parse(String(opts?.body)) as {
 				query: string;
-				variables: { input: { shippingAddress: typeof address & { zip: string } } };
+				variables: {
+					input: {
+						shippingAddress: typeof address & { zip: string };
+						tags: string[];
+						shippingLine: { title: string };
+					};
+				};
 			};
+			if (body.query.includes('FindNationalDraft')) {
+				return json({ data: { draftOrders: { nodes: stored ? [stored] : [] } } });
+			}
 			if (body.query.includes('draftOrderDelete')) {
+				stored = undefined;
 				deletes++;
 				return json({
 					data: { draftOrderDelete: { deletedId: 'gid://shopify/DraftOrder/123', userErrors: [] } }
@@ -87,22 +101,25 @@ function upstream() {
 			drafts++;
 			const addr = body.variables.input.shippingAddress;
 			const money = (n: number) => ({ shopMoney: { currencyCode: 'BRL', amount: n.toFixed(2) } });
-			return json({
-				data: {
-					draftOrderCreate: {
-						userErrors: [],
-						draftOrder: {
-							id: 'gid://shopify/DraftOrder/123',
-							invoiceUrl: 'https://test-shop.myshopify.com/456/invoices/abC123',
-							shippingAddress: { ...addr, countryCodeV2: 'BR' },
-							lineItems: { nodes: [{ quantity: 1, variant: { id: variantId } }] },
-							totalPriceSet: money(79.9 + Number(shipping) + Number(extraTax)),
-							subtotalPriceSet: money(79.9),
-							totalShippingPriceSet: money(Number(shipping))
-						}
-					}
-				}
-			});
+			stored = {
+				id: 'gid://shopify/DraftOrder/123',
+				status: 'OPEN',
+				tags: body.variables.input.tags,
+				invoiceUrl: 'https://test-shop.myshopify.com/456/invoices/abC123',
+				shippingLine: {
+					custom: true,
+					title: body.variables.input.shippingLine.title,
+					originalPriceSet: money(Number(shipping))
+				},
+				shippingAddress: { ...addr, countryCodeV2: 'BR' },
+				lineItems: { nodes: [{ quantity: 1, variant: { id: variantId } }] },
+				totalPriceSet: money(79.9 + Number(shipping) + Number(extraTax)),
+				subtotalPriceSet: money(79.9),
+				totalShippingPriceSet: money(Number(shipping))
+			};
+			transform(stored);
+			if (failAfterCreate) throw new Error('response lost after create');
+			return json({ data: { draftOrderCreate: { userErrors: [], draftOrder: stored } } });
 		}
 		if (s.includes('graphql.json'))
 			return json({
@@ -134,6 +151,9 @@ function upstream() {
 	return {
 		fetcher,
 		changeShipping: () => (shipping = '16.50'),
+		changeCarrier: () => (carrier = 'outra transportadora'),
+		loseResponse: () => (failAfterCreate = true),
+		changeDraft: (fn: typeof transform) => (transform = fn),
 		addTax: () => (extraTax = '8'),
 		created: () => drafts,
 		removed: () => deletes
@@ -317,6 +337,90 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 		expect(s.up.removed()).toBe(1);
 		expect((await s.call('checkout', { token, address })).status).toBe(409);
 		expect(s.up.created()).toBe(1);
+	});
+	it('rejeita endereço incompleto e não mistura o CEP com outra cidade ou UF', async () => {
+		const s = scenario(),
+			token = await s.quote();
+		for (const change of [
+			{ firstName: '' },
+			{ lastName: '' },
+			{ address1: 'Rua 13 de Maio' },
+			{ city: 'São Paulo' },
+			{ provinceCode: 'SP' }
+		]) {
+			expect((await s.call('checkout', { token, address: { ...address, ...change } })).status).toBe(
+				422
+			);
+		}
+		expect(s.up.created()).toBe(0);
+		expect(
+			(
+				await s.call('checkout', {
+					token,
+					address: { ...address, address1: 'Rua pública, s/n', address2: '' }
+				})
+			).status
+		).toBe(200);
+	});
+	it('recupera a fatura da Shopify quando a resposta do primeiro POST se perdeu', async () => {
+		const s = scenario(),
+			token = await s.quote();
+		s.up.loseResponse();
+		expect((await s.call('checkout', { token, address })).status).toBe(503);
+		const retry = await s.call('checkout', { token, address });
+		expect(retry.status).toBe(200);
+		expect(await retry.json()).toMatchObject({
+			checkoutUrl: 'https://test-shop.myshopify.com/456/invoices/abC123'
+		});
+		expect(s.up.created()).toBe(1);
+	});
+	it('dois cliques simultâneos não criam duas faturas', async () => {
+		const s = scenario(),
+			token = await s.quote();
+		const results = await Promise.all([
+			s.call('checkout', { token, address }),
+			s.call('checkout', { token, address })
+		]);
+		expect(results.map((r) => r.status)).toContain(200);
+		expect(results.every((r) => r.status === 200 || r.status === 409)).toBe(true);
+		expect((await s.call('checkout', { token, address })).status).toBe(200);
+		expect(s.up.created()).toBe(1);
+	});
+	it('exige nova cotação se a transportadora mudou, mesmo com preço e prazo idênticos', async () => {
+		const s = scenario(),
+			token = await s.quote();
+		s.up.changeCarrier();
+		expect((await s.call('checkout', { token, address })).status).toBe(409);
+		expect(s.up.created()).toBe(0);
+	});
+	it.each([
+		[
+			'frete não pré-combinado',
+			(draft: Record<string, unknown>) =>
+				Object.assign(draft.shippingLine as object, { custom: false })
+		],
+		[
+			'via de entrega diferente',
+			(draft: Record<string, unknown>) =>
+				Object.assign(draft.shippingLine as object, { title: 'Outro serviço' })
+		],
+		[
+			'endereço sem rua ou número',
+			(draft: Record<string, unknown>) =>
+				Object.assign(draft.shippingAddress as object, { address1: null })
+		],
+		[
+			'nome ausente',
+			(draft: Record<string, unknown>) =>
+				Object.assign(draft.shippingAddress as object, { lastName: null })
+		]
+	] as const)('descarta a fatura cujo retorno da Shopify tem %s', async (_, change) => {
+		const s = scenario(),
+			token = await s.quote();
+		s.up.changeDraft(change);
+		expect((await s.call('checkout', { token, address })).status).toBe(409);
+		expect(s.up.created()).toBe(1);
+		expect(s.up.removed()).toBe(1);
 	});
 	it('não promete entrega grátis ou em dólar; cobre a variação do serviço padrão do Dropsimples', () => {
 		expect(() => shippingRate([], false)).toThrow('delivery_unavailable');
