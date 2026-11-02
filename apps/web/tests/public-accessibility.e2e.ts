@@ -92,7 +92,7 @@ for (const width of [320, 1440]) {
 		await expect(themeHeadings).toHaveText([
 			'Mapa astral',
 			'Previsões',
-			'Amor e relacionamentos',
+			'Amor e relações',
 			'Dinheiro e carreira',
 			'Tarot',
 			'Sonhos'
