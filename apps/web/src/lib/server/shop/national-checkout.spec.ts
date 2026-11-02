@@ -1,8 +1,8 @@
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
-import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
 import { nationalCheckout } from './national-checkout';
+import { ensureCheckoutSchema } from './checkout-schema';
 import { draftToken } from './national-draft';
 import { approvedShopProducts } from './shop-catalog-map';
 import { checkOffer, locality, physicalOffer, shippingRate } from './national-freight';
@@ -29,16 +29,12 @@ const rate = (value: string, name = 'J&T', delivery_method_id = '5', business_da
 	business_days
 });
 const now = 1900000000;
-const newDB = () => {
-	const db = new DatabaseSync(':memory:');
-	db.exec(
-		readFileSync(new URL('../../../../d1-checkout/0001_checkout.sql', import.meta.url), 'utf8')
-	);
+const newDB = (db = new DatabaseSync(':memory:')) => {
 	function prepare(sql: string, vals: SQLInputValue[] = []) {
 		return {
 			bind: (...v: SQLInputValue[]) => prepare(sql, v),
 			first: async () => db.prepare(sql).get(...vals) ?? null,
-			run: async () => ({ meta: db.prepare(sql).run(...vals) })
+			run: async () => ({ success: true, meta: db.prepare(sql).run(...vals) })
 		};
 	}
 	return {
@@ -184,6 +180,57 @@ function scenario() {
 	};
 }
 describe('Entrega nacional com endereço e frete fixados no checkout', () => {
+	it('prepara tabelas e índices no primeiro frete, inclusive antes da credencial Shopify, e preserva tentativas existentes', async () => {
+		const sqlite = new DatabaseSync(':memory:');
+		const db = newDB(sqlite);
+		const tables = () =>
+			sqlite
+				.prepare("SELECT name FROM sqlite_schema WHERE name LIKE 'shop_checkout_%' ORDER BY name")
+				.all()
+				.map((row) => row.name);
+		expect(tables()).toEqual([]);
+		const response = await nationalCheckout(
+			'quote',
+			req({ variantId, quantity: 1, postalCode: '35160001' }),
+			{ ...env, SHOPIFY_DRAFT_ORDERS_TOKEN: undefined },
+			db,
+			upstream().fetcher,
+			'203.0.113.60',
+			now
+		);
+		expect((await response.json()).quote.checkoutReady).toBe(false);
+		expect(tables()).toEqual([
+			'shop_checkout_attempt_expiry',
+			'shop_checkout_attempts',
+			'shop_checkout_limit_expiry',
+			'shop_checkout_limits'
+		]);
+		sqlite.exec(
+			"INSERT INTO shop_checkout_attempts VALUES ('keep','hash','pending',NULL,2000000000)"
+		);
+		await Promise.all([ensureCheckoutSchema(newDB(sqlite)), ensureCheckoutSchema(newDB(sqlite))]);
+		expect(sqlite.prepare('SELECT nonce FROM shop_checkout_attempts').get()?.nonce).toBe('keep');
+		sqlite.close();
+	});
+	it('conserva a cotação sem link se a instalação do schema falhar e repete a instalação na próxima consulta', async () => {
+		const db = newDB();
+		vi.spyOn(db, 'batch').mockRejectedValueOnce(new Error('binding unavailable'));
+		const call = () =>
+			nationalCheckout(
+				'quote',
+				req({ variantId, quantity: 1, postalCode: '35160001' }),
+				env,
+				db,
+				upstream().fetcher,
+				'203.0.113.61',
+				now
+			);
+		expect((await (await call()).json()).quote).toMatchObject({
+			checkoutReady: false,
+			shippingBrl: 15.5
+		});
+		expect((await (await call()).json()).quote.checkoutReady).toBe(true);
+	});
 	it('informa o frete real sem D1 ou acesso de rascunhos, mas nunca emite link de pagamento', async () => {
 		const readonly = {
 			...env,

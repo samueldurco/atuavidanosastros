@@ -1,4 +1,5 @@
 import { json } from '@sveltejs/kit';
+import { ensureCheckoutSchema } from './checkout-schema';
 import { readShopSale } from './seller-identity';
 import { readBody, ShopHttpError } from './shop-http';
 import {
@@ -132,6 +133,7 @@ export async function nationalCheckout(
 			const o = physicalOffer(input.variantId);
 			const canIssue = async () => {
 				try {
+					if (binding) await ensureCheckoutSchema(binding);
 					const db = ready(env, binding);
 					const identity = await mac(secret!, 'rate:' + ip);
 					await limit(db, 'quote:' + identity, 30, 300, now);
@@ -184,6 +186,7 @@ export async function nationalCheckout(
 		}
 		const db = ready(env, binding),
 			identity = await mac(secret!, 'rate:' + ip);
+		await ensureCheckoutSchema(db);
 		await limit(db, 'checkout:' + identity, 12, 300, now);
 		await limit(db, 'checkout:site', 90, 300, now);
 		await prune(db, now);
