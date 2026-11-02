@@ -114,7 +114,7 @@ const draftFields = `
 	totalShippingPriceSet { shopMoney { amount currencyCode } }
 	shippingLine { title custom originalPriceSet { shopMoney { amount currencyCode } } }
 	shippingAddress { countryCodeV2 provinceCode zip address1 address2 firstName lastName city }
-	lineItems(first: 2) { nodes { quantity variant { id } } }`;
+	lineItems(first: 2) { nodes { quantity custom } }`;
 const createQuery = `mutation NationalDraft($input: DraftOrderInput!) {
 	draftOrderCreate(input: $input) { draftOrder { ${draftFields} } userErrors { field message } }
 }`;
@@ -153,8 +153,7 @@ export async function draftToken(env: PrivateEnv, fetcher: typeof fetch, domain:
 	const scopes = typeof res.scope === 'string' ? res.scope.split(',').map((x) => x.trim()) : [];
 	if (
 		!scopes.includes('write_draft_orders') ||
-		!scopes.includes('read_products') ||
-		scopes.some((s) => !['read_draft_orders', 'write_draft_orders', 'read_products'].includes(s)) ||
+		scopes.some((s) => !['read_draft_orders', 'write_draft_orders'].includes(s)) ||
 		typeof res.access_token !== 'string' ||
 		!/^[A-Za-z0-9_-]{16,2048}$/.test(res.access_token) ||
 		typeof res.expires_in !== 'number' ||
@@ -228,7 +227,7 @@ export async function prepareDraft(
 		!/^gid:\/\/shopify\/DraftOrder\/\d+$/.test(id)
 	)
 		return fail('checkout_unavailable', 503);
-	const url = verifiedInvoice(env, q, a, draft);
+	const url = await verifiedInvoice(env, fetcher, q, a, draft);
 	if (url) return url;
 	await admin(env, fetcher, deleteQuery, { id }).catch(() => {});
 	return fail('offer_changed', 409);
@@ -245,10 +244,13 @@ export async function recoverDraft(
 	const result = await admin(env, fetcher, recoverQuery, 'tag:atvna-q-' + q.nonce);
 	const nodes = record(result.draftOrders).nodes;
 	if (!Array.isArray(nodes) || nodes.length !== 1) return fail('checkout_pending', 409);
-	return verifiedInvoice(env, q, a, record(nodes[0])) ?? fail('offer_changed', 409);
+	return (
+		(await verifiedInvoice(env, fetcher, q, a, record(nodes[0]))) ?? fail('offer_changed', 409)
+	);
 }
-function verifiedInvoice(
+async function verifiedInvoice(
 	env: PrivateEnv,
+	fetcher: typeof fetch,
 	q: SealedQuote,
 	a: BuyerAddress,
 	draft: Record<string, unknown>
@@ -283,7 +285,7 @@ function verifiedInvoice(
 		!Array.isArray(nodes) ||
 		nodes.length !== 1 ||
 		record(nodes[0]).quantity !== 1 ||
-		record(record(nodes[0]).variant).id !== q.variantId ||
+		record(nodes[0]).custom !== false ||
 		!expectedMoney(draft.totalPriceSet, q.unit + q.shipping) ||
 		!expectedMoney(draft.subtotalPriceSet, q.unit) ||
 		!expectedMoney(draft.totalShippingPriceSet, q.shipping) ||
@@ -299,5 +301,38 @@ function verifiedInvoice(
 	) {
 		return;
 	}
+	// The draft REST resource exposes the saved variant_id without catalog read access.
+	const domain = url.hostname;
+	const draftId = draft.id.slice('gid://shopify/DraftOrder/'.length);
+	const result = record(
+		await provider(
+			fetcher,
+			'https://' +
+				domain +
+				'/admin/api/2026-10/draft_orders/' +
+				draftId +
+				'.json?fields=id,line_items',
+			{
+				headers: {
+					'X-Shopify-Access-Token': await draftToken(env, fetcher, domain),
+					Accept: 'application/json'
+				}
+			}
+		)
+	);
+	const saved = record(result.draft_order);
+	if (
+		String(saved.id) !== draftId ||
+		!Array.isArray(saved.line_items) ||
+		saved.line_items.length !== 1
+	)
+		return;
+	const item = record(saved.line_items[0]);
+	if (
+		item.custom !== false ||
+		item.quantity !== 1 ||
+		'gid://shopify/ProductVariant/' + String(item.variant_id) !== q.variantId
+	)
+		return;
 	return url.href;
 }

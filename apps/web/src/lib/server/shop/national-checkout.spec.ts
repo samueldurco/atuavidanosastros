@@ -63,6 +63,7 @@ function upstream() {
 	let shipping = '15.50',
 		extraTax = '0',
 		carrier = 'J&T';
+	let savedVariantId = variantId.split('/').at(-1);
 	let failAfterCreate = false;
 	let stored: Record<string, unknown> | undefined;
 	let transform: (draft: Record<string, unknown>) => void = () => undefined;
@@ -73,6 +74,15 @@ function upstream() {
 		if (s.includes('brasilapi') || s.includes('viacep'))
 			return json({ cep: '35160-001', city: 'Ipatinga', state: 'MG' });
 		if (s.endsWith('/shipping')) return json([rate(shipping, carrier)]);
+		if (s.endsWith('/draft_orders/123.json?fields=id,line_items')) {
+			expect(opts?.method ?? 'GET').toBe('GET');
+			return json({
+				draft_order: {
+					id: 123,
+					line_items: [{ quantity: 1, custom: false, variant_id: savedVariantId }]
+				}
+			});
+		}
 		if (s.includes('/admin/api/')) {
 			const body = JSON.parse(String(opts?.body)) as {
 				query: string;
@@ -84,6 +94,7 @@ function upstream() {
 					};
 				};
 			};
+			expect(body.query).not.toMatch(/\bvariant\s*\{/);
 			if (body.query.includes('FindNationalDraft')) {
 				return json({ data: { draftOrders: { nodes: stored ? [stored] : [] } } });
 			}
@@ -108,7 +119,7 @@ function upstream() {
 					originalPriceSet: money(Number(shipping))
 				},
 				shippingAddress: { ...addr, countryCodeV2: 'BR' },
-				lineItems: { nodes: [{ quantity: 1, variant: { id: variantId } }] },
+				lineItems: { nodes: [{ quantity: 1, custom: false }] },
 				totalPriceSet: money(79.9 + Number(shipping) + Number(extraTax)),
 				subtotalPriceSet: money(79.9),
 				totalShippingPriceSet: money(Number(shipping))
@@ -147,6 +158,7 @@ function upstream() {
 	return {
 		fetcher,
 		changeShipping: () => (shipping = '16.50'),
+		changeSavedVariant: () => (savedVariantId = '999'),
 		changeCarrier: () => (carrier = 'outra transportadora'),
 		loseResponse: () => (failAfterCreate = true),
 		changeDraft: (fn: typeof transform) => (transform = fn),
@@ -266,42 +278,47 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 		).toBe(503);
 		expect(up.created()).toBe(0);
 	});
-	it('só aceita credencial de app dedicado com os escopos mínimos e renova sem chamar o grant a cada consulta', async () => {
-		const dedicated = {
-			SHOPIFY_DRAFT_CLIENT_ID: 'synthetic-client',
-			SHOPIFY_DRAFT_CLIENT_SECRET: 'temporary-test-secret'
-		};
-		const domain = 'test-shop.myshopify.com';
-		const grant = vi.fn<typeof fetch>(async (url, init) => {
-			expect(url).toBe('https://test-shop.myshopify.com/admin/oauth/access_token');
-			expect(new URLSearchParams(String(init?.body)).get('grant_type')).toBe('client_credentials');
-			return json({
-				access_token: 'test_token_authorized',
-				expires_in: 86399,
-				scope: 'read_products,write_draft_orders'
+	it.each(['write_draft_orders', 'read_draft_orders,write_draft_orders'])(
+		'aceita o grant dedicado %s e reutiliza seu token',
+		async (scope) => {
+			const dedicated = {
+				SHOPIFY_DRAFT_CLIENT_ID: 'synthetic-client-' + scope,
+				SHOPIFY_DRAFT_CLIENT_SECRET: 'temporary-test-secret'
+			};
+			const domain = 'test-shop.myshopify.com';
+			const grant = vi.fn<typeof fetch>(async (url, init) => {
+				expect(url).toBe('https://test-shop.myshopify.com/admin/oauth/access_token');
+				expect(new URLSearchParams(String(init?.body)).get('grant_type')).toBe(
+					'client_credentials'
+				);
+				return json({
+					access_token: 'test_token_authorized',
+					expires_in: 86399,
+					scope
+				});
 			});
-		});
-		await expect(draftToken(dedicated, grant, domain)).resolves.toBe('test_token_authorized');
-		await expect(draftToken(dedicated, grant, domain)).resolves.toBe('test_token_authorized');
-		expect(grant).toHaveBeenCalledTimes(1);
-		const excess = vi.fn<typeof fetch>(async () =>
-			json({
-				access_token: 'test_token_authorized',
-				expires_in: 86399,
-				scope: 'read_products,write_draft_orders,write_orders'
-			})
-		);
-		await expect(
-			draftToken(
-				{ ...dedicated, SHOPIFY_DRAFT_CLIENT_SECRET: 'different-test-secret' },
-				excess,
-				domain
-			)
-		).rejects.toThrow('national_checkout_not_configured');
-		await expect(draftToken(dedicated, grant, 'outside.example')).rejects.toThrow(
-			'national_checkout_not_configured'
-		);
-	});
+			await expect(draftToken(dedicated, grant, domain)).resolves.toBe('test_token_authorized');
+			await expect(draftToken(dedicated, grant, domain)).resolves.toBe('test_token_authorized');
+			expect(grant).toHaveBeenCalledTimes(1);
+			const excess = vi.fn<typeof fetch>(async () =>
+				json({
+					access_token: 'test_token_authorized',
+					expires_in: 86399,
+					scope: 'read_products,write_draft_orders,write_orders'
+				})
+			);
+			await expect(
+				draftToken(
+					{ ...dedicated, SHOPIFY_DRAFT_CLIENT_SECRET: 'different-test-secret' },
+					excess,
+					domain
+				)
+			).rejects.toThrow('national_checkout_not_configured');
+			await expect(draftToken(dedicated, grant, 'outside.example')).rejects.toThrow(
+				'national_checkout_not_configured'
+			);
+		}
+	);
 	it('cota um CEP fora da tabela inicial e rejeita o CEP inexistente', async () => {
 		const valid = vi.fn<typeof fetch>(async () =>
 			json({ cep: '01311-001', localidade: 'São Paulo', uf: 'SP' })
@@ -383,6 +400,13 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 		expect(s.up.removed()).toBe(1);
 		expect((await s.call('checkout', { token, address })).status).toBe(409);
 		expect(s.up.created()).toBe(1);
+	});
+	it('descarta a fatura quando a variante persistida no rascunho difere da cotação', async () => {
+		const s = scenario(),
+			token = await s.quote();
+		s.up.changeSavedVariant();
+		expect((await s.call('checkout', { token, address })).status).toBe(409);
+		expect(s.up.removed()).toBe(1);
 	});
 	it('rejeita endereço incompleto e não mistura o CEP com outra cidade ou UF', async () => {
 		const s = scenario(),
