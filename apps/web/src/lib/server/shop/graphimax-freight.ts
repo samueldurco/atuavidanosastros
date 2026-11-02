@@ -14,6 +14,8 @@ export function graphimaxNotebook(slug: string, variantId: string) {
 
 export async function graphimaxAvailable(fetcher: typeof fetch) {
 	const html = await supplierText(fetcher, product, {}, 512 * 1024);
+	const buy = html.match(/<button\b([^>]*\bproduto-pagina-botao-comprar\b[^>]*)>/i);
+	if (!buy || /\bdisabled\b/i.test(buy[1])) return false;
 	const tiers = html.match(
 		/<div\b[^>]*\bid=["']produto-preco-demanda-lista["'][^>]*>([^<]+)<\/div>/i
 	);

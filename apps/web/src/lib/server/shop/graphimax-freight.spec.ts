@@ -5,6 +5,7 @@ import { approvedShopProducts } from './shop-catalog-map';
 import { physicalOffer, supplierItem } from './national-freight';
 
 const listing = `<p>Código: DCFEC312</p><p>Produção: 7 dias úteis</p>
+<button class="produto-pagina-botao-comprar">Comprar agora</button>
 <div id="produto-preco-demanda-lista">[{"produto":"143","de":"1","ate":"49","preco_unit":"29.95"}]</div>
 <option value="376" data-extra="0" data-opcao="revestimento"></option>
 <option value="379" data-extra="0" data-opcao="opcao"></option>
@@ -50,6 +51,7 @@ describe('GraphiMax single-unit A5 notebooks', () => {
 			listing.replace('data-extra="0"', 'data-extra="4"'),
 			listing.replace('DCFEC312', 'DCFEC316'),
 			listing.replace('7 dias', '9 dias'),
+			listing.replace('<button ', '<button disabled '),
 			listing.replace('<option ', '<option disabled ')
 		]) {
 			expect(await graphimaxAvailable(text(changed))).toBe(false);
