@@ -25,7 +25,7 @@ export interface ShopPreview {
 	description: string;
 	model: string;
 	material: string;
-	provider: 'Printful' | 'Gelato' | 'Dimona';
+	provider: 'Printful' | 'Gelato' | 'Dimona' | 'Digipix Pro';
 	imageNote?: string;
 	artOnly?: boolean;
 	measurements?: readonly (readonly string[])[];
@@ -182,6 +182,37 @@ const tankSizes = [
 	['XGG', '58–62', '72–76']
 ];
 export const shopPreviews: ShopPreview[] = previews.map((piece) => {
+	const framed = piece.slug.startsWith('quadro-');
+	if (reviewedSlugs.has(piece.slug) && (framed || piece.slug.startsWith('poster-'))) {
+		return {
+			...piece,
+			provider: 'Digipix Pro',
+			model: framed ? 'Quadro Classic 34 × 44 cm · moldura preta' : 'Pôster vertical 30 × 40 cm',
+			material: framed
+				? 'Papel fotográfico de 180 g/m², moldura preta laqueada e vidro'
+				: 'Papel couché de 170 g/m² com verniz brilhante',
+			description: framed
+				? `Arte de ${piece.sign} em papel fotográfico, protegida por vidro e emoldurada em preto. O quadro acompanha pendurador e niveladores de silicone.`
+				: `A arte de ${piece.sign} ocupa o centro do pôster vertical. O verniz brilhante cobre o papel couché.`,
+			construction: {
+				label: 'Dimensões',
+				value: framed ? '34 × 44 cm incluindo a moldura.' : '30 × 40 cm. Vendido sem moldura.'
+			},
+			printDescription: 'Impressão da arte zodiacal ATVNA em orientação vertical.',
+			colors: framed
+				? piece.colors.map((color) => ({
+						...color,
+						images: color.images.map((image) => ({
+							...image,
+							alt: image.alt.replace('de 30 × 40 cm', 'de referência')
+						}))
+					}))
+				: piece.colors,
+			imageNote: framed
+				? 'A imagem ilustra a arte em um quadro de referência. A moldura e o reflexo do vidro podem diferir da prévia.'
+				: 'A imagem ilustra a arte em um pôster de referência. O brilho do papel e as cores podem variar em relação à prévia.'
+		};
+	}
 	const cap = capPreviews[piece.slug];
 	if (reviewedSlugs.has(piece.slug) && cap) {
 		return {

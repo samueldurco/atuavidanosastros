@@ -6,7 +6,9 @@ import {
 	checkOffer,
 	fail,
 	locality,
+	normal,
 	physicalOffer,
+	supplierItem,
 	rateFor,
 	record,
 	zip,
@@ -37,7 +39,6 @@ function ready(env: PrivateEnv, db: D1Database | undefined) {
 	if (
 		!readShopSale(env) ||
 		!db ||
-		!env.DIMONA_FRETE_TOKEN ||
 		!(
 			env.SHOPIFY_DRAFT_ORDERS_TOKEN ||
 			(env.SHOPIFY_DRAFT_CLIENT_ID && env.SHOPIFY_DRAFT_CLIENT_SECRET)
@@ -122,7 +123,7 @@ export async function nationalCheckout(
 	try {
 		const origin = request.headers.get('Origin');
 		if (origin !== new URL(request.url).origin) fail('origin_not_allowed', 403);
-		if (!ip || !env.DIMONA_FRETE_TOKEN || !readShopSale(env)) fail('shop_unavailable', 503);
+		if (!ip || !readShopSale(env)) fail('shop_unavailable', 503);
 		const input = record(await readBody(request)),
 			secret = env.ATVNA_CHECKOUT_SIGNING_KEY;
 		if (kind === 'quote') {
@@ -152,11 +153,17 @@ export async function nationalCheckout(
 				rateFor(env, fetcher, cep, o),
 				canIssue()
 			]);
+			if (
+				'destination' in rate &&
+				(rate.destination.provinceCode !== destination.provinceCode ||
+					normal(rate.destination.city) !== normal(destination.city))
+			)
+				fail('delivery_unavailable');
 			const q: SealedQuote = {
 				nonce: crypto.randomUUID(),
 				expires: now + ttl,
 				variantId: o.variantId,
-				sku: checkoutReady ? await mac(secret!, 'sku:' + (o.dimonaSku ?? 'varejo-94')) : '',
+				sku: checkoutReady ? await mac(secret!, 'sku:' + supplierItem(o)) : '',
 				postalCode: cep,
 				...destination,
 				unit: Math.round(o.priceBrl * 100),
@@ -204,7 +211,7 @@ export async function nationalCheckout(
 		]);
 		if (
 			q.unit !== Math.round(o.priceBrl * 100) ||
-			q.sku !== (await mac(secret!, 'sku:' + (o.dimonaSku ?? 'varejo-94'))) ||
+			q.sku !== (await mac(secret!, 'sku:' + supplierItem(o))) ||
 			q.shipping !== rate.cents ||
 			q.days !== rate.days ||
 			q.serviceId !== rate.id ||
