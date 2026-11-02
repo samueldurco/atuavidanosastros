@@ -204,6 +204,31 @@ describe('Compra de uma unidade com preço e destino conferidos', () => {
 		const response = await shopCart(request([bag], '36960-000'), enabled, provider);
 		expect(response.status).toBe(503);
 	});
+	it('não inclui uma peça no frete fixo quando a Dimona esgota a base ou o transporte supera o valor aceito', async () => {
+		for (const [skuStock, shipping, status] of [
+			[0, '12.00', 409],
+			[2, '38.00', 422]
+		] as const) {
+			const provider = vi.fn<typeof fetch>(async (url, init) => {
+				if (String(url).endsWith('/availability')) return Response.json({ bolsaecom: skuStock });
+				if (String(url).endsWith('/shipping'))
+					return Response.json([
+						{ value: shipping, name: 'PAC', delivery_method_id: '1', business_days: 9 }
+					]);
+				if (String(init?.body).includes('cartCreate')) throw new Error('unexpected cart');
+				return productAt('49.90', 'ecobag-aries');
+			});
+			expect(
+				(
+					await shopCart(
+						request([bag], '35160-001'),
+						{ ...enabled, DIMONA_FRETE_TOKEN: 'test-only' },
+						provider
+					)
+				).status
+			).toBe(status);
+		}
+	});
 	it.each(['36960000', '36960-000'])(
 		'opens the verified one-unit handoff for %s through mocked Shopify',
 		async (cep) => {

@@ -121,6 +121,23 @@
 					</div>
 				{/if}
 			</dl>
+			{#if data.piece.measurements}
+				<table class="measurements">
+					<caption>Medidas da peça em centímetros</caption>
+					<thead
+						><tr
+							><th scope="col">Tamanho</th><th scope="col">Largura</th><th scope="col"
+								>Comprimento</th
+							></tr
+						></thead
+					>
+					<tbody
+						>{#each data.piece.measurements as row (row[0])}
+							<tr><th scope="row">{row[0]}</th><td>{row[1]}</td><td>{row[2]}</td></tr>
+						{/each}</tbody
+					>
+				</table>
+			{/if}
 			<ShopPolicyLinks />
 			<a class="button secondary" href="/loja"
 				>Explorar a coleção <span aria-hidden="true">↗</span></a
@@ -130,6 +147,22 @@
 </div>
 
 <style>
+	.measurements {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 1rem 0 2rem;
+	}
+	.measurements caption {
+		text-align: left;
+		font-weight: 600;
+		padding-block: 0.5rem;
+	}
+	.measurements th,
+	.measurements td {
+		text-align: left;
+		border-bottom: 1px solid currentColor;
+		padding: 0.4rem;
+	}
 	.piece-page {
 		padding-block: 2rem clamp(3rem, 6vw, 6rem);
 	}

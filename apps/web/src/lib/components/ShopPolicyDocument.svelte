@@ -44,10 +44,9 @@
 			{#if ariesOnly}
 				<p>{shopSingleUnitTerms}</p>
 				<p>
-					O frete é de {new Intl.NumberFormat('pt-BR', {
-						style: 'currency',
-						currency: 'BRL'
-					}).format(shopDelivery.priceBrl)} por pedido.
+					Informe o CEP de entrega na página da peça. A loja consulta as transportadoras para o
+					destino no Brasil e apresenta o frete, o prazo e o preço total antes do pagamento. A
+					disponibilidade depende da peça e da cobertura para o endereço informado.
 				</p>
 			{:else}
 				<p>

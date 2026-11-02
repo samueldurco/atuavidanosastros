@@ -63,5 +63,2630 @@
 		"slug": "ecobag-virgo",
 		"variantId": "gid://shopify/ProductVariant/68006902006128",
 		"priceBrl": 49.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006940967280",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941000048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941032816",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941065584",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941163888",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941196656",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941229424",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941262192",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941360496",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941393264",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941426032",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941458800",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941557104",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941589872",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941622640",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941655408",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941753712",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941786480",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941819248",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941852016",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941950320",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941983088",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006942015856",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006942048624",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942146928",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942179696",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942212464",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942245232",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942343536",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942376304",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942409072",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942441840",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942572912",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942605680",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942703984",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942736752",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942769520",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942802288",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942867824",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942900592",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006942933360",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006942966128",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006942998896",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943031664",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943129968",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943162736",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943195504",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943228272",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943326576",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943359344",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943392112",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943424880",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943523184",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943555952",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943588720",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943621488",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943719792",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943752560",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943785328",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943818096",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943916400",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943949168",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943981936",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006944014704",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944113008",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944145776",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944178544",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944211312",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944309616",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944342384",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944375152",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944407920",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944506224",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944538992",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944571760",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944604528",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944702832",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944735600",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944768368",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944801136",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006944899440",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006944932208",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006944964976",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006945063280",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006945096048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006945194352",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006945227120",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006945259888",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945292656",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945423728",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945456496",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945489264",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945522032",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945554800",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945587568",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945620336",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006948700528",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006948733296",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006948766064",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006948798832",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-can",
+		"variantId": "gid://shopify/ProductVariant/68006948897136",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-can",
+		"variantId": "gid://shopify/ProductVariant/68006948929904",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-can",
+		"variantId": "gid://shopify/ProductVariant/68006948962672",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-can",
+		"variantId": "gid://shopify/ProductVariant/68006948995440",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006949093744",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006949126512",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006949159280",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006949192048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-tou",
+		"variantId": "gid://shopify/ProductVariant/68006949716336",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-tou",
+		"variantId": "gid://shopify/ProductVariant/68006949749104",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-tou",
+		"variantId": "gid://shopify/ProductVariant/68006949781872",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-tou",
+		"variantId": "gid://shopify/ProductVariant/68006949814640",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006949912944",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006949945712",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006949978480",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006950011248",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lea",
+		"variantId": "gid://shopify/ProductVariant/68006950109552",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lea",
+		"variantId": "gid://shopify/ProductVariant/68006950142320",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lea",
+		"variantId": "gid://shopify/ProductVariant/68006950175088",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lea",
+		"variantId": "gid://shopify/ProductVariant/68006950207856",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-esc",
+		"variantId": "gid://shopify/ProductVariant/68006950306160",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-esc",
+		"variantId": "gid://shopify/ProductVariant/68006950338928",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-esc",
+		"variantId": "gid://shopify/ProductVariant/68006950371696",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-esc",
+		"variantId": "gid://shopify/ProductVariant/68006950404464",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-cap",
+		"variantId": "gid://shopify/ProductVariant/68006950502768",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-cap",
+		"variantId": "gid://shopify/ProductVariant/68006950535536",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-cap",
+		"variantId": "gid://shopify/ProductVariant/68006950568304",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-cap",
+		"variantId": "gid://shopify/ProductVariant/68006950601072",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-pei",
+		"variantId": "gid://shopify/ProductVariant/68006950699376",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-pei",
+		"variantId": "gid://shopify/ProductVariant/68006950732144",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-pei",
+		"variantId": "gid://shopify/ProductVariant/68006950764912",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-pei",
+		"variantId": "gid://shopify/ProductVariant/68006950797680",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-tou",
+		"variantId": "gid://shopify/ProductVariant/68006950895984",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-tou",
+		"variantId": "gid://shopify/ProductVariant/68006950928752",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-tou",
+		"variantId": "gid://shopify/ProductVariant/68006950961520",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-tou",
+		"variantId": "gid://shopify/ProductVariant/68006950994288",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-can",
+		"variantId": "gid://shopify/ProductVariant/68006951092592",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-can",
+		"variantId": "gid://shopify/ProductVariant/68006951125360",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-can",
+		"variantId": "gid://shopify/ProductVariant/68006951158128",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-can",
+		"variantId": "gid://shopify/ProductVariant/68006951256432",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951289200",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951321968",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951354736",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951387504",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lea",
+		"variantId": "gid://shopify/ProductVariant/68006951485808",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lea",
+		"variantId": "gid://shopify/ProductVariant/68006951518576",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lea",
+		"variantId": "gid://shopify/ProductVariant/68006951551344",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lea",
+		"variantId": "gid://shopify/ProductVariant/68006951584112",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951682416",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951715184",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951747952",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951780720",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-esc",
+		"variantId": "gid://shopify/ProductVariant/68006951879024",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-esc",
+		"variantId": "gid://shopify/ProductVariant/68006951911792",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-esc",
+		"variantId": "gid://shopify/ProductVariant/68006951944560",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-esc",
+		"variantId": "gid://shopify/ProductVariant/68006951977328",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-cap",
+		"variantId": "gid://shopify/ProductVariant/68006952075632",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-cap",
+		"variantId": "gid://shopify/ProductVariant/68006952108400",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-cap",
+		"variantId": "gid://shopify/ProductVariant/68006952141168",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-cap",
+		"variantId": "gid://shopify/ProductVariant/68006952173936",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-pei",
+		"variantId": "gid://shopify/ProductVariant/68006952272240",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-pei",
+		"variantId": "gid://shopify/ProductVariant/68006952305008",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-pei",
+		"variantId": "gid://shopify/ProductVariant/68006952337776",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-pei",
+		"variantId": "gid://shopify/ProductVariant/68006952370544",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lea",
+		"variantId": "gid://shopify/ProductVariant/68006952468848",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lea",
+		"variantId": "gid://shopify/ProductVariant/68006952501616",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lea",
+		"variantId": "gid://shopify/ProductVariant/68006952534384",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lea",
+		"variantId": "gid://shopify/ProductVariant/68006952567152",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lib",
+		"variantId": "gid://shopify/ProductVariant/68006952665456",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lib",
+		"variantId": "gid://shopify/ProductVariant/68006952698224",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lib",
+		"variantId": "gid://shopify/ProductVariant/68006952730992",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-lib",
+		"variantId": "gid://shopify/ProductVariant/68006952763760",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-esc",
+		"variantId": "gid://shopify/ProductVariant/68006952862064",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-esc",
+		"variantId": "gid://shopify/ProductVariant/68006952894832",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-esc",
+		"variantId": "gid://shopify/ProductVariant/68006952927600",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-esc",
+		"variantId": "gid://shopify/ProductVariant/68006952960368",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-cap",
+		"variantId": "gid://shopify/ProductVariant/68006953058672",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-cap",
+		"variantId": "gid://shopify/ProductVariant/68006953091440",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-cap",
+		"variantId": "gid://shopify/ProductVariant/68006953124208",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-cap",
+		"variantId": "gid://shopify/ProductVariant/68006953156976",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-pei",
+		"variantId": "gid://shopify/ProductVariant/68006953255280",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-pei",
+		"variantId": "gid://shopify/ProductVariant/68006953288048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-pei",
+		"variantId": "gid://shopify/ProductVariant/68006953320816",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-pei",
+		"variantId": "gid://shopify/ProductVariant/68006953419120",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lea",
+		"variantId": "gid://shopify/ProductVariant/68006954008944",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lea",
+		"variantId": "gid://shopify/ProductVariant/68006954041712",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lea",
+		"variantId": "gid://shopify/ProductVariant/68006954074480",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lea",
+		"variantId": "gid://shopify/ProductVariant/68006954107248",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lib",
+		"variantId": "gid://shopify/ProductVariant/68006954467696",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lib",
+		"variantId": "gid://shopify/ProductVariant/68006954500464",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lib",
+		"variantId": "gid://shopify/ProductVariant/68006954533232",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lib",
+		"variantId": "gid://shopify/ProductVariant/68006954566000",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-esc",
+		"variantId": "gid://shopify/ProductVariant/68006954664304",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-esc",
+		"variantId": "gid://shopify/ProductVariant/68006954697072",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-esc",
+		"variantId": "gid://shopify/ProductVariant/68006954729840",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-esc",
+		"variantId": "gid://shopify/ProductVariant/68006954762608",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-cap",
+		"variantId": "gid://shopify/ProductVariant/68006954860912",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-cap",
+		"variantId": "gid://shopify/ProductVariant/68006954893680",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-cap",
+		"variantId": "gid://shopify/ProductVariant/68006954926448",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-cap",
+		"variantId": "gid://shopify/ProductVariant/68006954959216",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955057520",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955090288",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955123056",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955155824",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955254128",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955286896",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955319664",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955352432",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-cap",
+		"variantId": "gid://shopify/ProductVariant/68006955450736",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-cap",
+		"variantId": "gid://shopify/ProductVariant/68006955483504",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-cap",
+		"variantId": "gid://shopify/ProductVariant/68006955516272",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-cap",
+		"variantId": "gid://shopify/ProductVariant/68006955549040",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955647344",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955680112",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955712880",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955745648",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955843952",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955876720",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955909488",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955942256",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956040560",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956073328",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956106096",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956138864",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956237168",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956269936",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956302704",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956335472",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956433776",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956466544",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956499312",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956532080",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956630384",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956663152",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956695920",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956728688",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-pei-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956826992",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-pei-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956859760",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-pei-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956892528",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-pei-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956925296",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957023600",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957056368",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957089136",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957121904",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-sag",
+		"variantId": "gid://shopify/ProductVariant/68006957220208",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-sag",
+		"variantId": "gid://shopify/ProductVariant/68006957252976",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-sag",
+		"variantId": "gid://shopify/ProductVariant/68006957285744",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-sag",
+		"variantId": "gid://shopify/ProductVariant/68006957318512",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957416816",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957449584",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957482352",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957515120",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957613424",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957646192",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957678960",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957711728",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-cap",
+		"variantId": "gid://shopify/ProductVariant/68006957810032",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-cap",
+		"variantId": "gid://shopify/ProductVariant/68006957842800",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-cap",
+		"variantId": "gid://shopify/ProductVariant/68006957875568",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-cap",
+		"variantId": "gid://shopify/ProductVariant/68006957908336",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958006640",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958039408",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958072176",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-cap-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958104944",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-pei",
+		"variantId": "gid://shopify/ProductVariant/68006958203248",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-pei",
+		"variantId": "gid://shopify/ProductVariant/68006958236016",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-pei",
+		"variantId": "gid://shopify/ProductVariant/68006958268784",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-pei",
+		"variantId": "gid://shopify/ProductVariant/68006958301552",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-gem",
+		"variantId": "gid://shopify/ProductVariant/68006958694768",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-gem",
+		"variantId": "gid://shopify/ProductVariant/68006958727536",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-gem",
+		"variantId": "gid://shopify/ProductVariant/68006958760304",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-gem",
+		"variantId": "gid://shopify/ProductVariant/68006958793072",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958891376",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958924144",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959022448",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959055216",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959087984",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959120752",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959153520",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959186288",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959284592",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959317360",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959415664",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959448432",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-vir",
+		"variantId": "gid://shopify/ProductVariant/68006959546736",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-vir",
+		"variantId": "gid://shopify/ProductVariant/68006959579504",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-vir",
+		"variantId": "gid://shopify/ProductVariant/68006959612272",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-vir",
+		"variantId": "gid://shopify/ProductVariant/68006959645040",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-can",
+		"variantId": "gid://shopify/ProductVariant/68006959743344",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-can",
+		"variantId": "gid://shopify/ProductVariant/68006959776112",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-can",
+		"variantId": "gid://shopify/ProductVariant/68006959808880",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-can",
+		"variantId": "gid://shopify/ProductVariant/68006959841648",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lea",
+		"variantId": "gid://shopify/ProductVariant/68006959939952",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lea",
+		"variantId": "gid://shopify/ProductVariant/68006959972720",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lea",
+		"variantId": "gid://shopify/ProductVariant/68006960005488",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lea",
+		"variantId": "gid://shopify/ProductVariant/68006960038256",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-cap",
+		"variantId": "gid://shopify/ProductVariant/68006960136560",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-cap",
+		"variantId": "gid://shopify/ProductVariant/68006960169328",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-cap",
+		"variantId": "gid://shopify/ProductVariant/68006960202096",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-cap",
+		"variantId": "gid://shopify/ProductVariant/68006960234864",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006960333168",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006960365936",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006960398704",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006960431472",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-pei",
+		"variantId": "gid://shopify/ProductVariant/68006960529776",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-pei",
+		"variantId": "gid://shopify/ProductVariant/68006960562544",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-pei",
+		"variantId": "gid://shopify/ProductVariant/68006960660848",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-pei",
+		"variantId": "gid://shopify/ProductVariant/68006960693616",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-gem",
+		"variantId": "gid://shopify/ProductVariant/68006960988528",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-gem",
+		"variantId": "gid://shopify/ProductVariant/68006961021296",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-gem",
+		"variantId": "gid://shopify/ProductVariant/68006961054064",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-gem",
+		"variantId": "gid://shopify/ProductVariant/68006961086832",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-vir",
+		"variantId": "gid://shopify/ProductVariant/68006961185136",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-vir",
+		"variantId": "gid://shopify/ProductVariant/68006961217904",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-vir",
+		"variantId": "gid://shopify/ProductVariant/68006961250672",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-vir",
+		"variantId": "gid://shopify/ProductVariant/68006961283440",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lib",
+		"variantId": "gid://shopify/ProductVariant/68006961414512",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lib",
+		"variantId": "gid://shopify/ProductVariant/68006961447280",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lib",
+		"variantId": "gid://shopify/ProductVariant/68006961480048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lib",
+		"variantId": "gid://shopify/ProductVariant/68006961512816",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-esc",
+		"variantId": "gid://shopify/ProductVariant/68006961611120",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-esc",
+		"variantId": "gid://shopify/ProductVariant/68006961643888",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-esc",
+		"variantId": "gid://shopify/ProductVariant/68006961676656",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-esc",
+		"variantId": "gid://shopify/ProductVariant/68006961709424",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-sag",
+		"variantId": "gid://shopify/ProductVariant/68006961807728",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-sag",
+		"variantId": "gid://shopify/ProductVariant/68006961840496",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-sag",
+		"variantId": "gid://shopify/ProductVariant/68006961873264",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-gem-sag",
+		"variantId": "gid://shopify/ProductVariant/68006961906032",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962004336",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962037104",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962069872",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-ari-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962102640",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-gem",
+		"variantId": "gid://shopify/ProductVariant/68006962200944",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-gem",
+		"variantId": "gid://shopify/ProductVariant/68006962233712",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-gem",
+		"variantId": "gid://shopify/ProductVariant/68006962266480",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-gem",
+		"variantId": "gid://shopify/ProductVariant/68006962299248",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962397552",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962430320",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962463088",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962495856",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962594160",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962626928",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962659696",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-tou-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962692464",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962790768",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962823536",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962856304",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-can-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962889072",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963151216",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963183984",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963216752",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963249520",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-sag",
+		"variantId": "gid://shopify/ProductVariant/68006963347824",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-sag",
+		"variantId": "gid://shopify/ProductVariant/68006963380592",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-sag",
+		"variantId": "gid://shopify/ProductVariant/68006963413360",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lea-sag",
+		"variantId": "gid://shopify/ProductVariant/68006963446128",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963544432",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963577200",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963609968",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963642736",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-lib",
+		"variantId": "gid://shopify/ProductVariant/68006963741040",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-lib",
+		"variantId": "gid://shopify/ProductVariant/68006963773808",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-lib",
+		"variantId": "gid://shopify/ProductVariant/68006963806576",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-lib",
+		"variantId": "gid://shopify/ProductVariant/68006963839344",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-esc",
+		"variantId": "gid://shopify/ProductVariant/68006963937648",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-esc",
+		"variantId": "gid://shopify/ProductVariant/68006963970416",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-esc",
+		"variantId": "gid://shopify/ProductVariant/68006964003184",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-esc",
+		"variantId": "gid://shopify/ProductVariant/68006964035952",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-sag",
+		"variantId": "gid://shopify/ProductVariant/68006964167024",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-sag",
+		"variantId": "gid://shopify/ProductVariant/68006964199792",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-sag",
+		"variantId": "gid://shopify/ProductVariant/68006964232560",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-sag",
+		"variantId": "gid://shopify/ProductVariant/68006964265328",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-cap",
+		"variantId": "gid://shopify/ProductVariant/68006964330864",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-cap",
+		"variantId": "gid://shopify/ProductVariant/68006964363632",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-cap",
+		"variantId": "gid://shopify/ProductVariant/68006964396400",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-cap",
+		"variantId": "gid://shopify/ProductVariant/68006964494704",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-pei",
+		"variantId": "gid://shopify/ProductVariant/68006964560240",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-pei",
+		"variantId": "gid://shopify/ProductVariant/68006964593008",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-pei",
+		"variantId": "gid://shopify/ProductVariant/68006964625776",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-pei",
+		"variantId": "gid://shopify/ProductVariant/68006964658544",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006964756848",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006964789616",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006964822384",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-vir-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006964855152",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-lib",
+		"variantId": "gid://shopify/ProductVariant/68006964953456",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-lib",
+		"variantId": "gid://shopify/ProductVariant/68006964986224",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-lib",
+		"variantId": "gid://shopify/ProductVariant/68006965018992",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-lib",
+		"variantId": "gid://shopify/ProductVariant/68006965051760",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965182832",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965215600",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965248368",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-lib-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965281136",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965379440",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965412208",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965444976",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-esc-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965477744",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965576048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965608816",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965641584",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965739888",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006965772656",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006965805424",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006965838192",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006965870960",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-pei",
+		"variantId": "gid://shopify/ProductVariant/68006965969264",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-pei",
+		"variantId": "gid://shopify/ProductVariant/68006966002032",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-pei",
+		"variantId": "gid://shopify/ProductVariant/68006966034800",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-casal-sag-pei",
+		"variantId": "gid://shopify/ProductVariant/68006966067568",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006985564528",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006985597296",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006985630064",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006985662832",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006985793904",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006985826672",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006985859440",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006985892208",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006985990512",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006986023280",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006986056048",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "regata-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006986088816",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941098352",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-aries",
+		"variantId": "gid://shopify/ProductVariant/68006941294960",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941491568",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-touro",
+		"variantId": "gid://shopify/ProductVariant/68006941688176",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006941884784",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-gemeos",
+		"variantId": "gid://shopify/ProductVariant/68006942081392",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942278000",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006942474608",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942638448",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-leao",
+		"variantId": "gid://shopify/ProductVariant/68006942835056",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943064432",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-virgem",
+		"variantId": "gid://shopify/ProductVariant/68006943261040",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943457648",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-libra",
+		"variantId": "gid://shopify/ProductVariant/68006943654256",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006943850864",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-escorpiao",
+		"variantId": "gid://shopify/ProductVariant/68006944047472",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944244080",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-sagitario",
+		"variantId": "gid://shopify/ProductVariant/68006944440688",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944637296",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-capricornio",
+		"variantId": "gid://shopify/ProductVariant/68006944833904",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006944997744",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-aquario",
+		"variantId": "gid://shopify/ProductVariant/68006945128816",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945325424",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-peixes",
+		"variantId": "gid://shopify/ProductVariant/68006945653104",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006948831600",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-can",
+		"variantId": "gid://shopify/ProductVariant/68006949028208",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006949224816",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-tou",
+		"variantId": "gid://shopify/ProductVariant/68006949847408",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006950044016",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lea",
+		"variantId": "gid://shopify/ProductVariant/68006950240624",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-esc",
+		"variantId": "gid://shopify/ProductVariant/68006950437232",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-cap",
+		"variantId": "gid://shopify/ProductVariant/68006950633840",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-pei",
+		"variantId": "gid://shopify/ProductVariant/68006950830448",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-tou",
+		"variantId": "gid://shopify/ProductVariant/68006951027056",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-can",
+		"variantId": "gid://shopify/ProductVariant/68006951190896",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951420272",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lea",
+		"variantId": "gid://shopify/ProductVariant/68006951616880",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-lib",
+		"variantId": "gid://shopify/ProductVariant/68006951813488",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-esc",
+		"variantId": "gid://shopify/ProductVariant/68006952010096",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-cap",
+		"variantId": "gid://shopify/ProductVariant/68006952206704",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-pei",
+		"variantId": "gid://shopify/ProductVariant/68006952403312",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-lea",
+		"variantId": "gid://shopify/ProductVariant/68006952599920",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-lib",
+		"variantId": "gid://shopify/ProductVariant/68006952796528",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-esc",
+		"variantId": "gid://shopify/ProductVariant/68006952993136",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-cap",
+		"variantId": "gid://shopify/ProductVariant/68006953189744",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-pei",
+		"variantId": "gid://shopify/ProductVariant/68006953353584",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lea",
+		"variantId": "gid://shopify/ProductVariant/68006954140016",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-lib",
+		"variantId": "gid://shopify/ProductVariant/68006954598768",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-esc",
+		"variantId": "gid://shopify/ProductVariant/68006954795376",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-cap",
+		"variantId": "gid://shopify/ProductVariant/68006954991984",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955188592",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lib-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955385200",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lib-cap",
+		"variantId": "gid://shopify/ProductVariant/68006955581808",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lib-pei",
+		"variantId": "gid://shopify/ProductVariant/68006955778416",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-esc-esc",
+		"variantId": "gid://shopify/ProductVariant/68006955975024",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-esc-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956171632",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-esc-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956368240",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-cap-cap",
+		"variantId": "gid://shopify/ProductVariant/68006956564848",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-cap-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956761456",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-pei-pei",
+		"variantId": "gid://shopify/ProductVariant/68006956958064",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957154672",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-sag",
+		"variantId": "gid://shopify/ProductVariant/68006957351280",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957547888",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006957744496",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-sag-cap",
+		"variantId": "gid://shopify/ProductVariant/68006957941104",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-cap-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958137712",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-pei",
+		"variantId": "gid://shopify/ProductVariant/68006958334320",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-gem",
+		"variantId": "gid://shopify/ProductVariant/68006958825840",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lib-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006958956912",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-aqu-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959219056",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-esc-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006959350128",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-vir",
+		"variantId": "gid://shopify/ProductVariant/68006959677808",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-can",
+		"variantId": "gid://shopify/ProductVariant/68006959874416",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lea",
+		"variantId": "gid://shopify/ProductVariant/68006960071024",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-cap",
+		"variantId": "gid://shopify/ProductVariant/68006960267632",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006960464240",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-pei",
+		"variantId": "gid://shopify/ProductVariant/68006960595312",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-gem",
+		"variantId": "gid://shopify/ProductVariant/68006961119600",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-vir",
+		"variantId": "gid://shopify/ProductVariant/68006961316208",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-lib",
+		"variantId": "gid://shopify/ProductVariant/68006961545584",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-esc",
+		"variantId": "gid://shopify/ProductVariant/68006961742192",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-gem-sag",
+		"variantId": "gid://shopify/ProductVariant/68006961938800",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-ari-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962135408",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-gem",
+		"variantId": "gid://shopify/ProductVariant/68006962332016",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962528624",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-tou-sag",
+		"variantId": "gid://shopify/ProductVariant/68006962725232",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-can-vir",
+		"variantId": "gid://shopify/ProductVariant/68006962921840",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963282288",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lea-sag",
+		"variantId": "gid://shopify/ProductVariant/68006963478896",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-vir",
+		"variantId": "gid://shopify/ProductVariant/68006963675504",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-lib",
+		"variantId": "gid://shopify/ProductVariant/68006963872112",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-esc",
+		"variantId": "gid://shopify/ProductVariant/68006964068720",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-sag",
+		"variantId": "gid://shopify/ProductVariant/68006964298096",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-cap",
+		"variantId": "gid://shopify/ProductVariant/68006964429168",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-pei",
+		"variantId": "gid://shopify/ProductVariant/68006964691312",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-vir-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006964887920",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lib-lib",
+		"variantId": "gid://shopify/ProductVariant/68006965084528",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-lib-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965313904",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-esc-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965510512",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-sag-sag",
+		"variantId": "gid://shopify/ProductVariant/68006965674352",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-sag-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006965903728",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "camiseta-casal-sag-pei",
+		"variantId": "gid://shopify/ProductVariant/68006966100336",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "regata-casal-ari-ari",
+		"variantId": "gid://shopify/ProductVariant/68006985695600",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "regata-casal-ari-can",
+		"variantId": "gid://shopify/ProductVariant/68006985924976",
+		"priceBrl": 89.9
+	},
+	{
+		"slug": "regata-casal-ari-aqu",
+		"variantId": "gid://shopify/ProductVariant/68006986121584",
+		"priceBrl": 89.9
 	}
 ]

@@ -10,6 +10,7 @@ import { posterPreviews } from './shop-posters';
 import { bottlePreviews } from './shop-bottles';
 import { mugPreviews } from './shop-mugs';
 import { ecobagPreviews } from './shop-ecobags';
+import reviewedOffers from './shop-reviewed-offers.json';
 
 /** Existing collection artwork and product specifications; live offers come from Shopify. */
 export interface ShopPreview {
@@ -25,6 +26,7 @@ export interface ShopPreview {
 	material: string;
 	provider: 'Printful' | 'Gelato' | 'Dimona';
 	imageNote?: string;
+	measurements?: readonly (readonly string[])[];
 	care?: string;
 	construction: { label: string; value: string };
 	imageSize?: number;
@@ -32,7 +34,7 @@ export interface ShopPreview {
 	colors: { name: string; images: { src: string; alt: string; label: string }[] }[];
 }
 const base = '/brand/shop/colecao-202610';
-export const shopPreviews: ShopPreview[] = [
+const previews: ShopPreview[] = [
 	{
 		slug: 'cropped-aries',
 		title: 'Cropped Aries',
@@ -157,3 +159,47 @@ export const shopPreviews: ShopPreview[] = [
 	...framePreviews,
 	...couplePreviews
 ];
+
+const reviewedSlugs = new Set(reviewedOffers.map((offer) => offer.slug));
+const shirtSizes = [
+	['P', '46–50', '65–69'],
+	['M', '48–52', '67–71'],
+	['G', '53–57', '69–73'],
+	['GG', '56–60', '72–76'],
+	['XGG', '59–63', '73–77'],
+	['G1', '64–68', '72–76']
+];
+const tankSizes = [
+	['P', '45–49', '64–68'],
+	['M', '47–51', '66–70'],
+	['G', '52–56', '68–72'],
+	['GG', '55–59', '71–75'],
+	['XGG', '58–62', '72–76']
+];
+export const shopPreviews: ShopPreview[] = previews.map((piece) => {
+	const tank = piece.slug.startsWith('regata-casal-');
+	if (
+		!reviewedSlugs.has(piece.slug) ||
+		(!tank && !piece.slug.startsWith('camiseta-')) ||
+		piece.slug.startsWith('camiseta-oversized-')
+	)
+		return piece;
+	return {
+		...piece,
+		provider: 'Dimona',
+		model: tank ? 'Regata Dimona de corte masculino' : 'Camiseta Dimona de corte masculino',
+		material: '100% algodão penteado, fio 30.1 · 165 g/m²',
+		construction: {
+			label: 'Caimento',
+			value:
+				'Corte masculino. Compare largura e comprimento com uma peça sua, estendida sobre uma superfície plana.'
+		},
+		measurements: tank ? tankSizes : shirtSizes,
+		printDescription:
+			'Estampa frontal em Silk HD de aproximadamente ' +
+			(tank ? '12,7 × 15,2 cm.' : '15,2 × 20,3 cm.'),
+		imageNote:
+			'As imagens mostram a estampa em uma peça de referência. A Dimona fabrica a peça no Brasil. O caimento e a aplicação podem variar em relação à imagem.',
+		care: undefined
+	};
+});
