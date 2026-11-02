@@ -1,3 +1,4 @@
+import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
 import { describe, expect, it, vi } from 'vitest';
 import { shopAriesRoute } from '$lib/data/shop-commerce';
 import { shopCart, shopProduct } from './shop-http';
@@ -8,10 +9,7 @@ const enabled = {
 	SHOP_ARIES_SINGLE_UNIT_ONLY: 'true',
 	SHOP_DELIVERY_MAX_BUSINESS_DAYS: '8',
 	SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
-	SHOP_SELLER_PUBLIC_NAME: 'Responsável de teste',
-	SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço de teste',
-	SHOP_SELLER_PUBLIC_EMAIL: 'loja@example.test',
-	SHOP_SELLER_PUBLIC_DOCUMENT: 'Documento de teste',
+	...testShopSeller,
 	SHOPIFY_STORE_DOMAIN: 'test-shop.myshopify.com',
 	SHOPIFY_STOREFRONT_PRIVATE_TOKEN: 'synthetic-private-token',
 	SHOPIFY_STOREFRONT_API_VERSION: '2026-10'

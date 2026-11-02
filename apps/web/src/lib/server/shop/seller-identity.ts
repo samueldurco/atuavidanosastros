@@ -1,4 +1,7 @@
 import { shopAriesRoute, shopDelivery } from '$lib/data/shop-commerce';
+import { publicAddressIssue, validSellerDocument, validSellerName } from './seller-fields';
+
+let loggedIdentityIssue = false;
 
 export type ShopSellerIdentity = {
 	name: string;
@@ -27,12 +30,26 @@ export function readShopSale(
 	)
 		return null;
 	if (env.SHOP_VERIFIED_FLAT_SHIPPING_BRL !== shopDelivery.priceBrl.toFixed(2)) return null;
-	const name = env.SHOP_SELLER_PUBLIC_NAME?.trim();
-	const address = env.SHOP_SELLER_PUBLIC_ADDRESS?.trim();
-	const email = env.SHOP_SELLER_PUBLIC_EMAIL?.trim();
-	if (!name || !address || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return null;
-	const document = env.SHOP_SELLER_PUBLIC_DOCUMENT?.trim();
-	return document
-		? { seller: { name, address, email, document }, deliveryBusinessDays: Number(days), ariesOnly }
-		: null;
+	const name = env.SHOP_SELLER_PUBLIC_NAME?.trim() ?? '';
+	const address = env.SHOP_SELLER_PUBLIC_ADDRESS?.trim() ?? '';
+	const email = env.SHOP_SELLER_PUBLIC_EMAIL?.trim() ?? '';
+	const document = env.SHOP_SELLER_PUBLIC_DOCUMENT?.trim() ?? '';
+	const issues = [
+		validSellerName(name) ? null : 'name',
+		publicAddressIssue(address, env.SHOP_SELLER_PRIVATE_RETURN_LOCATION),
+		/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? null : 'email',
+		validSellerDocument(document) ? null : 'document'
+	].filter(Boolean);
+	if (issues.length) {
+		if (!loggedIdentityIssue) {
+			loggedIdentityIssue = true;
+			console.warn('shop_seller_identity_blocked', issues.join(','));
+		}
+		return null;
+	}
+	return {
+		seller: { name, address, email, document },
+		deliveryBusinessDays: Number(days),
+		ariesOnly
+	};
 }

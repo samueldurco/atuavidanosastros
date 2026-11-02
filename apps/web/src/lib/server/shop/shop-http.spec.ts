@@ -1,3 +1,4 @@
+import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
 import { describe, expect, it, vi } from 'vitest';
 import { shopCart, shopCatalog, shopDiagnostic } from './shop-http';
 
@@ -25,10 +26,7 @@ const enabled = {
 	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
 	SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
 	SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
-	SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
-	SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
-	SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
-	SHOP_SELLER_PUBLIC_DOCUMENT: 'Documento de teste'
+	...testShopSeller
 };
 const diagnostic = {
 	...configured,
@@ -84,6 +82,7 @@ describe('Shop HTTP boundaries', () => {
 			'SHOP_SELLER_PUBLIC_NAME',
 			'SHOP_SELLER_PUBLIC_ADDRESS',
 			'SHOP_SELLER_PUBLIC_DOCUMENT',
+			'SHOP_SELLER_PRIVATE_RETURN_LOCATION',
 			'SHOP_SELLER_PUBLIC_EMAIL'
 		] as const) {
 			const incomplete = { ...enabled, [key]: undefined };

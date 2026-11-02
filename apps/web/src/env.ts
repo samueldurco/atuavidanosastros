@@ -12,6 +12,7 @@ export const variables = defineEnvVars({
 	SHOP_SELLER_PUBLIC_ADDRESS: { schema: optional },
 	SHOP_SELLER_PUBLIC_EMAIL: { schema: optional },
 	SHOP_SELLER_PUBLIC_DOCUMENT: { schema: optional },
+	SHOP_SELLER_PRIVATE_RETURN_LOCATION: { schema: optional },
 	FEATURE_PHYSICAL_CHECKOUT: { schema: optional },
 	SHOPIFY_CHECKOUT_HOSTS: { schema: optional },
 	SHOPIFY_DIAGNOSTIC_ENABLED: { schema: optional },

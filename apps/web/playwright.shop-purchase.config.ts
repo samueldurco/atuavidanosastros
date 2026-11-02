@@ -1,3 +1,4 @@
+import { testShopSeller } from './tests/fixtures/shop-seller';
 import { defineConfig } from '@playwright/test';
 import base from './playwright.shop.config';
 
@@ -14,10 +15,7 @@ export default defineConfig({
 			SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
 			SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
 			SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
-			SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
-			SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
-			SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
-			SHOP_SELLER_PUBLIC_DOCUMENT: 'Documento de teste'
+			...testShopSeller
 		},
 		port: 4187,
 		reuseExistingServer: false,
