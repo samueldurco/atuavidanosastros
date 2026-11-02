@@ -94,7 +94,12 @@ describe('public seller disclosure', () => {
 		['Rua das Flores, 50, CEP 123456789', 'address_postcode'],
 		['CEP 12.345-678', 'address_location_missing'],
 		['12345678', 'address_location_missing'],
+		['Endereço: CEP 12345-678', 'address_location_missing'],
 		['Endereço do vendedor, CEP 12345-678', 'address_placeholder'],
+		['Endereço informado depois, CEP 12345-678', 'address_placeholder'],
+		['Local a cadastrar, CEP 12345-678', 'address_placeholder'],
+		['Endereço a informar, CEP 12345-678', 'address_placeholder'],
+		['Endereço a definir, CEP 12345-678', 'address_placeholder'],
 		['Não informado, CEP 12345-678', 'address_placeholder'],
 		['Pendente, CEP 12345-678', 'address_placeholder'],
 		['Rua do Lírio, 021, CEP 12.345-678', 'reserved_address']

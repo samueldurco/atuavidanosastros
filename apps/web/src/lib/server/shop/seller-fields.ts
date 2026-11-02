@@ -77,13 +77,16 @@ export function publicAddressIssue(
 	const locationWords = words(address.replace(postcode[0], '')).filter(
 		(token) => token !== 'cep' && /^\p{L}{2,}$/u.test(token)
 	);
-	if (!locationWords.length) return 'address_location_missing';
+	if (locationWords.every((word) => ['endereco', 'local'].includes(word)))
+		return 'address_location_missing';
 	// A word such as “vendedor” can be part of a real street name.
 	const addressPrompt =
-		/\b(placeholder|pendente|preencher|exemplo|teste|ficticio|ficticia|cadastrar|endereco (?:do |da )?(?:responsavel|vendedor)|nao informad[oa])\b/;
+		/\b(placeholder|pendente|preencher|exemplo|teste|ficticio|ficticia|cadastrar|endereco (?:do |da )?(?:responsavel|vendedor)|(?:nao|a ser) informad[oa]|informad[oa] (?:depois|posteriormente)|a (?:informar|definir)|sem informacao)\b/;
 	if (
 		addressPrompt.test(locationWords.join(' ')) ||
-		locationWords.every((word) => placeholders.test(word))
+		locationWords.every(
+			(word) => word === 'endereco' || word === 'local' || placeholders.test(word)
+		)
 	)
 		return 'address_placeholder';
 	return null;
