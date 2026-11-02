@@ -45,8 +45,7 @@
 				"SHOPIFY_STOREFRONT_API_VERSION": "2026-10",
 				"SHOPIFY_DIAGNOSTIC_ENABLED": "false",
 				"SHOPIFY_PREVIEW_ENABLED": "false"
-			}
-,
+			},
 			"d1_databases": [
 				{
 					"binding": "ATVNA_CHECKOUT_DB",

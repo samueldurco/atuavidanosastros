@@ -198,7 +198,7 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 			'203.0.113.60',
 			now
 		);
-		expect((await response.json()).quote.checkoutReady).toBe(false);
+		expect(await response.json()).toMatchObject({ quote: { checkoutReady: false } });
 		expect(tables()).toEqual([
 			'shop_checkout_attempt_expiry',
 			'shop_checkout_attempts',
@@ -225,11 +225,10 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 				'203.0.113.61',
 				now
 			);
-		expect((await (await call()).json()).quote).toMatchObject({
-			checkoutReady: false,
-			shippingBrl: 15.5
+		expect(await (await call()).json()).toMatchObject({
+			quote: { checkoutReady: false, shippingBrl: 15.5 }
 		});
-		expect((await (await call()).json()).quote.checkoutReady).toBe(true);
+		expect(await (await call()).json()).toMatchObject({ quote: { checkoutReady: true } });
 	});
 	it('informa o frete real sem D1 ou acesso de rascunhos, mas nunca emite link de pagamento', async () => {
 		const readonly = {
