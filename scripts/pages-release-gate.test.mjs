@@ -80,6 +80,7 @@ const commerceSecrets = () =>
       "SHOP_SELLER_PUBLIC_ADDRESS",
       "SHOP_SELLER_PUBLIC_EMAIL",
       "SHOP_SELLER_PUBLIC_DOCUMENT",
+      "SHOP_SELLER_PRIVATE_RETURN_LOCATION",
     ].map((name) => `  - ${name}: Value Encrypted`),
   ].join("\n");
 const health = {
