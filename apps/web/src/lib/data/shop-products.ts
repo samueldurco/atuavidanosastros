@@ -11,7 +11,7 @@ import { bottlePreviews } from './shop-bottles';
 import { mugPreviews } from './shop-mugs';
 import { ecobagPreviews } from './shop-ecobags';
 
-/** Real provider mockups of the current collection; no purchasable offers. */
+/** Existing collection artwork and product specifications; live offers come from Shopify. */
 export interface ShopPreview {
 	slug: string;
 	title: string;
@@ -23,7 +23,9 @@ export interface ShopPreview {
 	description: string;
 	model: string;
 	material: string;
-	provider: 'Printful' | 'Gelato';
+	provider: 'Printful' | 'Gelato' | 'Dimona';
+	imageNote?: string;
+	care?: string;
 	construction: { label: string; value: string };
 	imageSize?: number;
 	printDescription?: string;
@@ -116,11 +118,18 @@ export const shopPreviews: ShopPreview[] = [
 		sign: 'Touro',
 		category: 'Ecobag',
 		description:
-			'Taurus em aquarela, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
-		construction: { label: 'Dimensões', value: 'Bolsa de 38 × 42 cm; alças de 67 cm.' },
+			'Taurus em aquarela, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		construction: {
+			label: 'Dimensões',
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
+		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{

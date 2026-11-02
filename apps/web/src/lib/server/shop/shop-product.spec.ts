@@ -1,12 +1,17 @@
 import { describe, expect, it, vi } from 'vitest';
-import { shopCart, shopProduct } from './shop-http';
+import { shopCart, shopCatalog, shopProduct } from './shop-http';
 
 vi.mock('./shop-catalog-map', () => ({
 	approvedShopProducts: {
-		'synthetic-product': {
-			handle: 'synthetic-product',
+		'caneca-aries': {
+			handle: 'caneca-aries',
 			productId: 'gid://shopify/Product/100',
 			variantIds: Array.from({ length: 51 }, (_, i) => `gid://shopify/ProductVariant/${i + 1}`)
+		},
+		'cropped-aries': {
+			handle: 'cropped-aries',
+			productId: 'gid://shopify/Product/200',
+			variantIds: ['gid://shopify/ProductVariant/9999']
 		}
 	}
 }));
@@ -16,8 +21,18 @@ const configured = {
 	SHOPIFY_STOREFRONT_PRIVATE_TOKEN: 'synthetic-private-token',
 	SHOPIFY_STOREFRONT_API_VERSION: '2026-10'
 };
-const enabled = { ...configured, FEATURE_PHYSICAL_CHECKOUT: 'true' };
-const slug = 'synthetic-product';
+const enabled = {
+	...configured,
+	FEATURE_PHYSICAL_CHECKOUT: 'true',
+	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
+	SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
+	SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
+	SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
+	SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
+	SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
+	SHOP_SELLER_PUBLIC_DOCUMENT: 'Documento de teste'
+};
+const slug = 'caneca-aries';
 const line = { merchandiseId: 'gid://shopify/ProductVariant/1', quantity: 2 };
 
 function productPage(ids = [1], next: string | null = null) {
@@ -63,6 +78,37 @@ function cartRequest(lines: unknown[] = [line]) {
 }
 
 describe('Approved physical product lookup', () => {
+	it('keeps mapped preview-only pieces outside public product, catalog and direct cart access', async () => {
+		const blocked = provider(productPage());
+		expect((await shopProduct(enabled, blocked, 'cropped-aries')).status).toBe(404);
+		expect(
+			(
+				await shopCart(
+					cartRequest([{ merchandiseId: 'gid://shopify/ProductVariant/9999', quantity: 1 }]),
+					enabled,
+					blocked
+				)
+			).status
+		).toBe(400);
+		expect(blocked).not.toHaveBeenCalled();
+		const eligible = productPage().data.product;
+		const preview = { ...eligible, handle: 'cropped-aries', id: 'gid://shopify/Product/200' };
+		const wrongId = { ...eligible, id: 'gid://shopify/Product/999' };
+		const catalog = await shopCatalog(
+			enabled,
+			provider({
+				data: {
+					products: {
+						nodes: [eligible, preview, wrongId],
+						pageInfo: { hasNextPage: false, endCursor: null }
+					}
+				}
+			})
+		);
+		expect(catalog.status).toBe(200);
+		const body = (await catalog.json()) as { products: { handle: string }[] };
+		expect(body.products.map((product) => product.handle)).toEqual(['caneca-aries']);
+	});
 	it('checks the closed gate before configuration, slug or provider access', async () => {
 		const fetcher = provider(productPage());
 		const response = await shopProduct(configured, fetcher, '__proto__');

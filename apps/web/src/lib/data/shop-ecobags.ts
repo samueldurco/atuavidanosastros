@@ -1,6 +1,6 @@
 import type { ShopPreview } from './shop-products';
 
-/** Real Gelato mockups of the product-specific revision; POD receipts retain provenance. */
+/** Existing artwork shown on illustrative mockups; specifications refer to the national Dimona route. */
 export const ecobagPreviews = [
 	{
 		slug: 'ecobag-aries',
@@ -8,14 +8,18 @@ export const ecobagPreviews = [
 		sign: 'Áries',
 		category: 'Ecobag',
 		description:
-			'Um carneiro de corpo inteiro entre flores vermelhas, em aquarela vinho. A composição ampliada ocupa a frente da ecobag natural, com glifo de Áries e nome Aries.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'Um carneiro de corpo inteiro entre flores vermelhas, em aquarela vinho. A composição ocupa a frente da ecobag natural, com glifo de Áries e nome Aries.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 12,80 × 12,80 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -23,7 +27,7 @@ export const ecobagPreviews = [
 				images: [
 					{
 						src: '/brand/shop/colecao-202610/ecobag-aries-natural-produto.webp',
-						alt: 'Ecobag de algodão natural. Um carneiro de corpo inteiro entre flores vermelhas, em aquarela vinho. A composição ampliada ocupa a frente da ecobag natural, com glifo de Áries e nome Aries.',
+						alt: 'Ecobag de algodão natural. Um carneiro de corpo inteiro entre flores vermelhas, em aquarela vinho. A composição ocupa a frente da ecobag natural, com glifo de Áries e nome Aries.',
 						label: 'Frente da peça'
 					}
 				]
@@ -36,14 +40,18 @@ export const ecobagPreviews = [
 		sign: 'Gêmeos',
 		category: 'Ecobag',
 		description:
-			'Gêmeos em aquarela verde, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'Gêmeos em aquarela verde, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -64,14 +72,18 @@ export const ecobagPreviews = [
 		sign: 'Câncer',
 		category: 'Ecobag',
 		description:
-			'O caranguejo em aquarela violeta, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'O caranguejo em aquarela violeta, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -92,14 +104,18 @@ export const ecobagPreviews = [
 		sign: 'Leão',
 		category: 'Ecobag',
 		description:
-			'O leão em aquarela vermelha e dourada, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'O leão em aquarela vermelha e dourada, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -121,13 +137,17 @@ export const ecobagPreviews = [
 		category: 'Ecobag',
 		description:
 			'Espigas e folhagens atravessam uma pedra em aquarela verde. A composição ampliada reúne glifo de Virgem e nome Virgo na frente da ecobag natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 12,80 × 12,80 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -148,14 +168,18 @@ export const ecobagPreviews = [
 		sign: 'Libra',
 		category: 'Ecobag',
 		description:
-			'A balança em aquarela rosada, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'A balança em aquarela rosada, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -176,14 +200,18 @@ export const ecobagPreviews = [
 		sign: 'Escorpião',
 		category: 'Ecobag',
 		description:
-			'O escorpião em aquarela violeta, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'O escorpião em aquarela violeta, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -204,14 +232,18 @@ export const ecobagPreviews = [
 		sign: 'Sagitário',
 		category: 'Ecobag',
 		description:
-			'O centauro arqueiro em aquarela dourada, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'O centauro arqueiro em aquarela dourada, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -232,14 +264,18 @@ export const ecobagPreviews = [
 		sign: 'Capricórnio',
 		category: 'Ecobag',
 		description:
-			'A cabra de Capricórnio em aquarela terrosa, entre flores e folhagens, com glifo e nome latino. Uma composição ampliada na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+			'A cabra de Capricórnio em aquarela terrosa, entre flores e folhagens, com glifo e nome latino. Uma composição na frente da ecobag de algodão natural.',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -261,13 +297,17 @@ export const ecobagPreviews = [
 		category: 'Ecobag',
 		description:
 			'Uma figura adulta verte água de uma ânfora, entre flores e pinceladas azuis. A composição ampliada traz glifo de Aquário e nome Aquarius na frente da ecobag natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 12,80 × 12,80 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{
@@ -289,13 +329,17 @@ export const ecobagPreviews = [
 		category: 'Ecobag',
 		description:
 			'Dois peixes azuis em movimento circular, com detalhes de gravura e aquarela, glifo de Peixes e nome Pisces. Uma composição ampla na frente da ecobag de algodão natural.',
-		model: 'Ecobag clássica',
-		material: 'Algodão',
-		provider: 'Gelato',
+		model: 'Ecobag de algodão cru · M',
+		material: 'Algodão cru',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		construction: {
 			label: 'Dimensões',
-			value: 'Bolsa de 38 × 42 cm; alças de 67 cm.'
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
 		},
+		printDescription:
+			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 12,80 × 12,80 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,
 		colors: [
 			{

@@ -3,8 +3,8 @@ import { shopCart, shopCatalog, shopDiagnostic } from './shop-http';
 
 vi.mock('./shop-catalog-map', () => ({
 	approvedShopProducts: {
-		'synthetic-product': {
-			handle: 'synthetic-product',
+		'caneca-aries': {
+			handle: 'caneca-aries',
 			productId: 'gid://shopify/Product/100',
 			variantIds: ['gid://shopify/ProductVariant/1']
 		}
@@ -18,7 +18,17 @@ const configured = {
 	SHOPIFY_STOREFRONT_PRIVATE_TOKEN: token,
 	SHOPIFY_STOREFRONT_API_VERSION: '2026-10'
 };
-const enabled = { ...configured, FEATURE_PHYSICAL_CHECKOUT: 'true' };
+const enabled = {
+	...configured,
+	FEATURE_PHYSICAL_CHECKOUT: 'true',
+	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
+	SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
+	SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
+	SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
+	SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
+	SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
+	SHOP_SELLER_PUBLIC_DOCUMENT: 'Documento de teste'
+};
 const diagnostic = {
 	...configured,
 	SHOPIFY_DIAGNOSTIC_ENABLED: 'true',
@@ -63,6 +73,29 @@ describe('Shop HTTP boundaries', () => {
 		expect(cart.status).toBe(503);
 		expect(fetcher).not.toHaveBeenCalled();
 		expect(catalog.headers.get('cache-control')).toContain('no-store');
+	});
+	it('rejects commerce before contacting Shopify when public identification is missing or unapproved', async () => {
+		const fetcher = provider(emptyCatalog);
+		for (const key of [
+			'SHOP_DELIVERY_MAX_BUSINESS_DAYS',
+			'SHOP_VERIFIED_FLAT_SHIPPING_BRL',
+			'SHOP_SELLER_DISCLOSURE_APPROVED',
+			'SHOP_SELLER_PUBLIC_NAME',
+			'SHOP_SELLER_PUBLIC_ADDRESS',
+			'SHOP_SELLER_PUBLIC_DOCUMENT',
+			'SHOP_SELLER_PUBLIC_EMAIL'
+		] as const) {
+			const incomplete = { ...enabled, [key]: undefined };
+			expect((await shopCatalog(incomplete, fetcher)).status).toBe(503);
+			expect((await shopCart(request({ lines: [] }), incomplete, fetcher)).status).toBe(503);
+		}
+		expect(fetcher).not.toHaveBeenCalled();
+	});
+	it('rejects carts for shipping configurations not covered by the uniform price', async () => {
+		const fetcher = provider(emptyCatalog);
+		const unreviewed = { ...enabled, SHOP_VERIFIED_FLAT_SHIPPING_BRL: '35.00' };
+		expect((await shopCart(request({ lines: [] }), unreviewed, fetcher)).status).toBe(503);
+		expect(fetcher).not.toHaveBeenCalled();
 	});
 	it('requires an explicit diagnostic gate and correct Bearer authorization', async () => {
 		const fetcher = provider(emptyCatalog);

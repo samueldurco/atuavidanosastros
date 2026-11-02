@@ -2,15 +2,18 @@
 	import { onMount } from 'svelte';
 	import { shopPreviews } from '$lib/data/shop-products';
 	import type { ShopCollection } from '$lib/data/shop-collections';
+	import { isShopCommerceEligible } from '$lib/data/shop-commerce';
 	import ShopCollectionsNav from './ShopCollectionsNav.svelte';
 	let {
 		showLink = true,
 		headingLevel = 'h2',
-		collection
+		collection,
+		commerceEnabled = false
 	}: {
 		showLink?: boolean;
 		headingLevel?: 'h1' | 'h2';
 		collection?: ShopCollection;
+		commerceEnabled?: boolean;
 	} = $props();
 	let sign = $state('Todos');
 	let category = $state('Todas');
@@ -23,7 +26,14 @@
 		sign = 'Todos';
 		category = 'Todas';
 	});
-	const source = $derived(collection?.products ?? shopPreviews);
+	const source = $derived.by(() => {
+		const products = collection?.products ?? shopPreviews;
+		return commerceEnabled
+			? [...products].sort(
+					(a, b) => Number(isShopCommerceEligible(b.slug)) - Number(isShopCommerceEligible(a.slug))
+				)
+			: products;
+	});
 	const signs = $derived(['Todos', ...new Set(source.map((piece) => piece.sign))]);
 	const categories = $derived(['Todas', ...new Set(source.map((piece) => piece.category))]);
 	const pieces = $derived(
@@ -115,7 +125,7 @@
 			{/if}
 			<p aria-live="polite">
 				{pieces.length}
-				{pieces.length === 1 ? 'peça em preparação' : 'peças em preparação'}
+				{pieces.length === 1 ? 'peça' : 'peças'}{commerceEnabled ? '' : ' em preparação'}
 			</p>
 		</div>
 	{/if}
@@ -134,7 +144,11 @@
 						height={piece.imageSize ?? 1200}
 						loading="lazy"
 					/>
-					<span class="preview-label">Prévia da coleção</span>
+					<span class="preview-label"
+						>{commerceEnabled && isShopCommerceEligible(piece.slug)
+							? 'Compra online'
+							: 'Prévia da coleção'}</span
+					>
 				</a>
 				<div class="product-copy">
 					<p class="eyebrow">{piece.sign} · {piece.category}</p>
@@ -143,9 +157,11 @@
 					>
 					<p class="colors">{piece.colors.map((color) => color.name).join(' / ')}</p>
 					<div class="card-end">
-						<span>Em preparação</span><a href={`/loja/peca/${piece.slug}`}
-							>Ver peça <span aria-hidden="true">↗</span></a
-						>
+						<span
+							>{commerceEnabled && isShopCommerceEligible(piece.slug)
+								? 'Consultar compra'
+								: 'Em preparação'}</span
+						><a href={`/loja/peca/${piece.slug}`}>Ver peça <span aria-hidden="true">↗</span></a>
 					</div>
 				</div>
 			</article>
@@ -153,8 +169,12 @@
 	</div>
 	<div class="shop-end">
 		<p>
-			Imagens de apresentação geradas pelo fabricante para esta coleção. A coleção ainda não está à
-			venda.
+			{#if commerceEnabled}
+				As peças com compra online estão sinalizadas. Confira preço e disponibilidade na página da
+				peça. As demais peças continuam em preparação.
+			{:else}
+				Imagens de apresentação da coleção. A coleção ainda não está à venda.
+			{/if}
 		</p>
 		{#if showLink}<a class="button secondary" href="/loja"
 				>Conhecer a Loja dos Signos <span aria-hidden="true">↗</span></a

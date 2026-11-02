@@ -4,6 +4,13 @@ import { defineEnvVars } from '@sveltejs/kit/env';
 const optional = (value: string | undefined) => value;
 
 export const variables = defineEnvVars({
+	SHOP_DELIVERY_MAX_BUSINESS_DAYS: { schema: optional },
+	SHOP_VERIFIED_FLAT_SHIPPING_BRL: { schema: optional },
+	SHOP_SELLER_DISCLOSURE_APPROVED: { schema: optional },
+	SHOP_SELLER_PUBLIC_NAME: { schema: optional },
+	SHOP_SELLER_PUBLIC_ADDRESS: { schema: optional },
+	SHOP_SELLER_PUBLIC_EMAIL: { schema: optional },
+	SHOP_SELLER_PUBLIC_DOCUMENT: { schema: optional },
 	FEATURE_PHYSICAL_CHECKOUT: { schema: optional },
 	SHOPIFY_CHECKOUT_HOSTS: { schema: optional },
 	SHOPIFY_DIAGNOSTIC_ENABLED: { schema: optional },

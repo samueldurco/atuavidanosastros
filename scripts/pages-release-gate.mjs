@@ -1,6 +1,7 @@
 // Read-only Pages release checks. Never log provider output or binding values.
 import { execFile } from "node:child_process";
 import { readFile } from "node:fs/promises";
+import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
@@ -25,8 +26,61 @@ const disabledFeatures = [
   "FEATURE_AI",
   "FEATURE_HOTMART_LIVE",
   "FEATURE_MAGIC_LINK",
-  "FEATURE_PHYSICAL_CHECKOUT",
 ];
+const shopSecrets = [
+  "SHOPIFY_STOREFRONT_PRIVATE_TOKEN",
+  "SHOP_SELLER_PUBLIC_NAME",
+  "SHOP_SELLER_PUBLIC_ADDRESS",
+  "SHOP_SELLER_PUBLIC_EMAIL",
+  "SHOP_SELLER_PUBLIC_DOCUMENT",
+];
+
+function commerceAllowlist(workspace = root) {
+  try {
+    return JSON.parse(
+      readFileSync(
+        resolve(workspace, "apps/web/src/lib/data/shop-commerce-slugs.json"),
+        "utf8",
+      ),
+    );
+  } catch {
+    return [];
+  }
+}
+
+export function commerceConfigurationChecks(
+  config,
+  slugs = commerceAllowlist(),
+) {
+  const vars = config?.vars ?? {};
+  if (vars.FEATURE_PHYSICAL_CHECKOUT === "false") return [];
+  return [
+    check(
+      "shopify-flat-shipping-verified-at-brl-29-90",
+      vars.SHOP_VERIFIED_FLAT_SHIPPING_BRL === "29.90",
+    ),
+    check(
+      "physical-commerce-reviewed-configuration",
+      vars.FEATURE_PHYSICAL_CHECKOUT === "true" &&
+        vars.SHOP_SELLER_DISCLOSURE_APPROVED === "true" &&
+        /^[1-9][0-9]?$/.test(vars.SHOP_DELIVERY_MAX_BUSINESS_DAYS ?? "") &&
+        vars.SHOPIFY_STORE_DOMAIN === "bhvc0w-kk.myshopify.com" &&
+        vars.SHOPIFY_STOREFRONT_API_VERSION === "2026-10" &&
+        vars.SHOPIFY_DIAGNOSTIC_ENABLED === "false" &&
+        vars.SHOPIFY_PREVIEW_ENABLED === "false" &&
+        (!vars.SHOPIFY_CHECKOUT_HOSTS ||
+          vars.SHOPIFY_CHECKOUT_HOSTS ===
+            "bhvc0w-kk.myshopify.com,checkout.shopify.com") &&
+        Array.isArray(slugs) &&
+        slugs.length > 0 &&
+        slugs.every(
+          (slug) =>
+            typeof slug === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug),
+        ) &&
+        new Set(slugs).size === slugs.length,
+    ),
+  ];
+}
 const healthFlags = [
   "available",
   "configurationReady",
@@ -75,15 +129,19 @@ export function configurationChecks(config) {
     check("auth-url-in-wrangler-vars", validSupabaseUrl),
     check(
       "credentials-not-in-plaintext-vars",
-      [...publicKeys, ...requiredSecrets].every(
-        (name) => !Object.hasOwn(vars, name),
-      ),
+      [
+        ...publicKeys,
+        ...requiredSecrets,
+        ...shopSecrets,
+        "SHOPIFY_DIAGNOSTIC_TOKEN",
+      ].every((name) => !Object.hasOwn(vars, name)),
     ),
     check(
       "spend-and-feature-gates",
       vars.AUTOMATIC_SPEND_CAP_BRL === "0" &&
         disabledFeatures.every((name) => vars[name] === "false"),
     ),
+    ...commerceConfigurationChecks(config),
   ];
 }
 
@@ -184,7 +242,7 @@ export async function readRemoteProject({ getAuth, fetchImpl = fetch } = {}) {
   }
 }
 
-function secretChecks(output) {
+function secretChecks(output, config) {
   const names = secretNames(output);
   return [
     check("production-secret-metadata", names !== null),
@@ -195,6 +253,11 @@ function secretChecks(output) {
     ...requiredSecrets.map((name) =>
       check(`${name}-secret_text`, names?.has(name)),
     ),
+    ...(config?.vars?.FEATURE_PHYSICAL_CHECKOUT === "true"
+      ? shopSecrets.map((name) =>
+          check(`${name}-secret_text`, names?.has(name)),
+        )
+      : []),
   ];
 }
 
@@ -202,7 +265,7 @@ export function preflightReport(config, output, remoteProject) {
   return report("pages-preflight", [
     ...configurationChecks(config),
     remoteConfigurationCheck(remoteProject),
-    ...secretChecks(output),
+    ...secretChecks(output, config),
   ]);
 }
 
@@ -215,7 +278,10 @@ export async function preflight(config, { listSecrets, readProject } = {}) {
     return report("pages-preflight", checks);
   try {
     const output = await listSecrets();
-    return report("pages-preflight", [...checks, ...secretChecks(output)]);
+    return report("pages-preflight", [
+      ...checks,
+      ...secretChecks(output, config),
+    ]);
   } catch {
     return report("pages-preflight", [
       ...checks,
@@ -261,7 +327,36 @@ export async function postflight(
   checks.push(await readConfigurationCheck(readProject));
   if (checks.some((item) => !item.pass))
     return report("pages-postflight", checks);
-  for (const probe of probes) {
+  const commerceProbes =
+    config.vars.FEATURE_PHYSICAL_CHECKOUT === "true"
+      ? [
+          ...commerceAllowlist().map((slug) => ({
+            id: `physical-commerce-${slug}`,
+            path: `/api/shop/product/${slug}`,
+            method: "GET",
+            status: 200,
+            valid: (body) =>
+              body?.ok === true &&
+              body.product?.handle === slug &&
+              body.product?.availableForSale === true &&
+              Array.isArray(body.product.variants) &&
+              body.product.variants.some(
+                (variant) =>
+                  variant.availableForSale === true &&
+                  variant.price?.currencyCode === "BRL" &&
+                  Number(variant.price?.amount) > 0,
+              ),
+          })),
+          {
+            id: "physical-diagnostic-disabled",
+            path: "/api/shop/diagnostic",
+            method: "POST",
+            status: 404,
+            valid: (body) => body?.code === "diagnostic_disabled",
+          },
+        ]
+      : [];
+  for (const probe of [...probes, ...commerceProbes]) {
     try {
       const response = await fetchImpl(`${origin}${probe.path}`, {
         method: probe.method,

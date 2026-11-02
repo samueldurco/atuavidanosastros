@@ -1,6 +1,6 @@
 import type { ShopPreview } from './shop-products';
 
-/** Real Gelato mockups of the product-specific revision; POD receipts retain provenance. */
+/** Existing artwork shown on illustrative Gelato mockups; specifications below refer to the national Dimona route. */
 export const mugPreviews = [
 	{
 		slug: 'caneca-aries',
@@ -9,16 +9,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Um carneiro em salto, flores vermelhas e pinceladas em vinho. A composição horizontal acompanha a curva da caneca, com glifo de Áries e nome Aries.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -49,16 +52,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Um touro de corpo inteiro repousa entre flores campestres em tons rosados e suaves. Glifo de Touro e nome Taurus completam a aquarela horizontal.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -89,16 +95,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Duas figuras adultas, drapeados e folhas de hera em aquarela verde. Uma composição horizontal com glifo de Gêmeos e nome Gemini.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -129,16 +138,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Um caranguejo em perspectiva sobre água rasa, em aquarela lilás. O desenho horizontal reúne glifo de Câncer e nome Cancer.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -169,16 +181,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Um leão de corpo inteiro em repouso, com juba em vermelhos e ocres e vegetação leve. Glifo de Leão e nome Leo integram a composição.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -209,16 +224,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Uma figura feminina adulta entre espigas, com drapeados e verdes suaves. A aquarela horizontal traz glifo de Virgem e nome Virgo.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -249,16 +267,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Uma balança de dois pratos entre ramos de roseira, em pigmentos foscos e tons rosados. Glifo de Libra e nome Libra completam o desenho.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -289,16 +310,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Um escorpião em perspectiva, com cauda arqueada e tons de ameixa. Glifo de Escorpião e nome Scorpio acompanham o desenho horizontal.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -329,16 +353,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Um arco e uma flecha cruzam a composição entre espigas e folhas em tons de palha. Glifo de Sagitário e nome Sagittarius completam a aquarela.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -369,16 +396,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Uma cabra marinha com cauda de peixe surge entre pinceladas de água, em cinzas e verdes sóbrios. Glifo de Capricórnio e nome Capricornus integram a composição.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -409,16 +439,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Mãos inclinam uma ânfora e dão movimento à água em aquarela azul. Uma composição horizontal com glifo de Aquário e nome Aquarius.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',
@@ -449,16 +482,19 @@ export const mugPreviews = [
 		category: 'Caneca',
 		description:
 			'Dois peixes nadam em direções opostas entre pinceladas de água azul. A composição horizontal inclui glifo de Peixes e nome Pisces.',
-		model: 'Caneca branca de cerâmica · 11 oz',
-		material: 'Cerâmica',
-		provider: 'Gelato',
+		model: 'Caneca branca de porcelana · 325 ml',
+		material: 'Porcelana branca',
+		provider: 'Dimona',
+		imageNote:
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
-			label: 'Dimensões',
-			value: 'Altura de 9,6 cm; diâmetro de 8 cm. Capacidade de 11 oz.'
+			label: 'Capacidade e produção',
+			value: '325 ml. Produção nacional sob demanda.'
 		},
 		imageSize: 1000,
 		printDescription:
-			'Composição horizontal própria para a caneca, aplicada na superfície de cerâmica.',
+			'Arte zodiacal aplicada por sublimação em área de 12 × 8 cm, sem corte da composição.',
 		colors: [
 			{
 				name: 'Branco',

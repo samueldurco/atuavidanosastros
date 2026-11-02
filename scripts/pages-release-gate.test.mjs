@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  commerceConfigurationChecks,
   configurationChecks,
   preflight as runPreflight,
   preflightReport as reportWithRemote,
@@ -55,6 +56,31 @@ const secretList = (key = "PUBLIC_SUPABASE_ANON_KEY") =>
   ]
     .map((line, index) => (index ? `  - ${line}: Value Encrypted` : line))
     .join("\n");
+const commerceConfig = {
+  ...config,
+  vars: {
+    ...config.vars,
+    FEATURE_PHYSICAL_CHECKOUT: "true",
+    SHOP_SELLER_DISCLOSURE_APPROVED: "true",
+    SHOP_DELIVERY_MAX_BUSINESS_DAYS: "40",
+    SHOP_VERIFIED_FLAT_SHIPPING_BRL: "29.90",
+    SHOPIFY_STORE_DOMAIN: "bhvc0w-kk.myshopify.com",
+    SHOPIFY_STOREFRONT_API_VERSION: "2026-10",
+    SHOPIFY_DIAGNOSTIC_ENABLED: "false",
+    SHOPIFY_PREVIEW_ENABLED: "false",
+  },
+};
+const commerceSecrets = () =>
+  [
+    secretList(),
+    ...[
+      "SHOPIFY_STOREFRONT_PRIVATE_TOKEN",
+      "SHOP_SELLER_PUBLIC_NAME",
+      "SHOP_SELLER_PUBLIC_ADDRESS",
+      "SHOP_SELLER_PUBLIC_EMAIL",
+      "SHOP_SELLER_PUBLIC_DOCUMENT",
+    ].map((name) => `  - ${name}: Value Encrypted`),
+  ].join("\n");
 const health = {
   available: true,
   configurationReady: true,
@@ -276,11 +302,140 @@ test("HTML redirects, 503, wrong 401 contract, and transport failures fail witho
 
 test("versioned repository configuration is covered without any provider access", async () => {
   const result = await run("preflight", {
-    listSecrets: async () => secretList(),
+    listSecrets: async () => commerceSecrets(),
     readProject: async () => remoteProject,
   });
   assert.equal(result.pass, true);
   assert.equal((await run("unknown-mode")).pass, false);
+});
+
+test("reviewed physical commerce requires encrypted access and preserves zero-spend feature gates", () => {
+  assert.equal(preflightReport(commerceConfig, commerceSecrets()).pass, true);
+  assert.equal(preflightReport(commerceConfig, secretList()).pass, false);
+  for (const vars of [
+    { FEATURE_PHYSICAL_CHECKOUT: "yes" },
+    { SHOP_SELLER_DISCLOSURE_APPROVED: "false" },
+    { SHOP_DELIVERY_MAX_BUSINESS_DAYS: "" },
+    { SHOP_DELIVERY_MAX_BUSINESS_DAYS: "0" },
+    { SHOP_VERIFIED_FLAT_SHIPPING_BRL: "" },
+    { SHOP_VERIFIED_FLAT_SHIPPING_BRL: "35.00" },
+    { SHOP_SELLER_PUBLIC_ADDRESS: "credential-do-not-print" },
+    { SHOPIFY_STORE_DOMAIN: "other.myshopify.com" },
+    { SHOPIFY_STOREFRONT_API_VERSION: "2025-01" },
+    { SHOPIFY_DIAGNOSTIC_ENABLED: "true" },
+    { SHOPIFY_PREVIEW_ENABLED: "true" },
+    { SHOPIFY_CHECKOUT_HOSTS: "unreviewed.example" },
+    { SHOPIFY_STOREFRONT_PRIVATE_TOKEN: "credential-do-not-print" },
+    { AUTOMATIC_SPEND_CAP_BRL: "1" },
+    { FEATURE_AI: "true" },
+    { FEATURE_HOTMART_LIVE: "true" },
+    { FEATURE_MAGIC_LINK: "true" },
+  ]) {
+    const result = preflightReport(
+      { ...commerceConfig, vars: { ...commerceConfig.vars, ...vars } },
+      commerceSecrets(),
+    );
+    assert.equal(result.pass, false);
+    assert.equal(
+      JSON.stringify(result).includes("credential-do-not-print"),
+      false,
+    );
+  }
+  for (const slugs of [
+    [],
+    null,
+    ["caneca-aries", "caneca-aries"],
+    ["../invalid"],
+    [1],
+  ])
+    assert.equal(
+      commerceConfigurationChecks(commerceConfig, slugs).every(
+        (item) => item.pass,
+      ),
+      false,
+    );
+});
+
+test("physical postflight verifies every eligible product without creating carts or payments", async () => {
+  const initial = replies(),
+    calls = [];
+  const result = await postflight(commerceConfig, {
+    fetchImpl: async (url, options) => {
+      calls.push({ url, options });
+      if (initial.length) return initial.shift();
+      if (url.endsWith("/diagnostic"))
+        return Response.json({ code: "diagnostic_disabled" }, { status: 404 });
+      const slug = new URL(url).pathname.split("/").at(-1);
+      return Response.json({
+        ok: true,
+        product: {
+          handle: slug,
+          availableForSale: true,
+          variants: [
+            {
+              availableForSale: true,
+              price: { amount: "79.90", currencyCode: "BRL" },
+            },
+          ],
+        },
+      });
+    },
+  });
+  assert.equal(result.pass, true);
+  const products = calls.filter(({ url }) =>
+    url.includes("/api/shop/product/"),
+  );
+  assert.equal(products.length, 24);
+  assert.equal(new Set(products.map(({ url }) => url)).size, 24);
+  assert.ok(
+    products.every(
+      ({ options }) =>
+        options.method === "GET" && options.credentials === "omit",
+    ),
+  );
+  assert.equal(
+    calls.some(({ url }) =>
+      /cart|payment|checkout/.test(new URL(url).pathname),
+    ),
+    false,
+  );
+});
+
+test("physical postflight rejects unavailable, free, or non-BRL offers", async () => {
+  for (const variant of [
+    {
+      availableForSale: false,
+      price: { amount: "79.90", currencyCode: "BRL" },
+    },
+    { availableForSale: true, price: { amount: "0", currencyCode: "BRL" } },
+    { availableForSale: true, price: { amount: "79.90", currencyCode: "USD" } },
+  ]) {
+    const initial = replies();
+    const result = await postflight(commerceConfig, {
+      fetchImpl: async (url) => {
+        if (initial.length) return initial.shift();
+        if (url.endsWith("/diagnostic"))
+          return Response.json(
+            { code: "diagnostic_disabled" },
+            { status: 404 },
+          );
+        return Response.json({
+          ok: true,
+          product: {
+            handle: new URL(url).pathname.split("/").at(-1),
+            availableForSale: true,
+            variants: [variant],
+          },
+        });
+      },
+    });
+    assert.equal(result.pass, false);
+    assert.ok(
+      result.checks
+        .filter(({ id }) => id.startsWith("physical-product-"))
+        .every(({ pass }) => !pass),
+    );
+  }
 });
 
 test("remote Pages build configuration rejects malformed metadata, Windows paths, and monorepo root regressions", () => {

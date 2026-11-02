@@ -1,5 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
+import { readFileSync } from 'node:fs';
+
+const commercialSlugs: string[] = JSON.parse(
+	readFileSync(new URL('../src/lib/data/shop-commerce-slugs.json', import.meta.url), 'utf8')
+);
 
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
@@ -48,6 +53,33 @@ async function assertShowcaseOnly(page: Page) {
 		structuredData.some((value) => /"@type"\s*:\s*"(Product|Offer|AggregateOffer)"/.test(value))
 	).toBe(false);
 }
+
+test('As 24 peças candidatas permanecem sem oferta pública quando as compras estão desligadas', async ({
+	page,
+	request
+}) => {
+	for (const slug of commercialSlugs) {
+		const response = await request.get(`/loja/peca/${slug}`);
+		expect(response.status(), slug).toBe(200);
+		const listing = await page.evaluate(
+			(html) => {
+				const doc = new DOMParser().parseFromString(html, 'text/html');
+				return {
+					text: doc.querySelector('main')?.textContent,
+					purchase: doc.querySelector('form[aria-label="Comprar esta peça"]') !== null,
+					schema: Array.from(doc.querySelectorAll('script[type="application/ld+json"]'))
+						.map((script) => script.textContent)
+						.join('\n')
+				};
+			},
+			await response.text()
+		);
+		expect(listing.text, slug).toContain('ainda não está à venda');
+		expect(listing.text, slug).not.toMatch(/R\$\s*\d|até \d+ dias úteis/i);
+		expect(listing.purchase, slug).toBe(false);
+		expect(listing.schema, slug).not.toMatch(/"@type"\s*:\s*"(Product|Offer|AggregateOffer)"/);
+	}
+});
 
 test('Vitrine permite filtrar peças existentes e abrir detalhes sem checkout', async ({ page }) => {
 	await page.goto('/loja');

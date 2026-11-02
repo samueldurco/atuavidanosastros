@@ -1,4 +1,6 @@
 import { json } from '@sveltejs/kit';
+import { isShopCommerceEligible } from '$lib/data/shop-commerce';
+import { readShopSale } from './seller-identity';
 import { approvedShopProducts } from './shop-catalog-map';
 import {
 	CART_LINES_LIMIT,
@@ -18,7 +20,7 @@ const headers = { 'Cache-Control': 'private, no-store', 'X-Robots-Tag': 'noindex
 const reply = (body: unknown, status = 200) => json(body, { status, headers });
 const approvedVariantSlugs = new Map(
 	Object.entries(approvedShopProducts).flatMap(([slug, product]) =>
-		product.variantIds.map((id) => [id, slug] as const)
+		isShopCommerceEligible(slug) ? product.variantIds.map((id) => [id, slug] as const) : []
 	)
 );
 class ShopHttpError extends Error {
@@ -131,12 +133,20 @@ export async function shopCatalog(
 	buyerIp?: string,
 	cursor?: string
 ) {
-	if (env.FEATURE_PHYSICAL_CHECKOUT !== 'true')
-		return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	if (!readShopSale(env)) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
 	const shop = config(env);
 	if (!shop) return reply({ ok: false, code: 'shop_not_configured' }, 503);
 	try {
-		return reply({ ok: true, ...(await readShopCatalog(shop, fetcher, buyerIp, cursor)) });
+		const catalog = await readShopCatalog(shop, fetcher, buyerIp, cursor);
+		return reply({
+			ok: true,
+			...catalog,
+			products: catalog.products.filter(
+				(product) =>
+					isShopCommerceEligible(product.handle) &&
+					approvedShopProducts[product.handle]?.productId === product.id
+			)
+		});
 	} catch (error) {
 		return failure(error);
 	}
@@ -197,9 +207,8 @@ export async function shopProduct(
 	slug: string,
 	buyerIp?: string
 ) {
-	if (env.FEATURE_PHYSICAL_CHECKOUT !== 'true')
-		return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
-	if (!Object.hasOwn(approvedShopProducts, slug))
+	if (!readShopSale(env)) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	if (!Object.hasOwn(approvedShopProducts, slug) || !isShopCommerceEligible(slug))
 		return reply({ ok: false, code: 'product_not_found' }, 404);
 	const shop = config(env);
 	if (!shop) return reply({ ok: false, code: 'shop_not_configured' }, 503);
@@ -216,8 +225,7 @@ export async function shopCart(
 	fetcher: typeof fetch,
 	buyerIp?: string
 ) {
-	if (env.FEATURE_PHYSICAL_CHECKOUT !== 'true')
-		return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	if (!readShopSale(env)) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
 	const url = new URL(request.url);
 	if (
 		request.headers.get('origin') !== url.origin ||

@@ -10,6 +10,7 @@ export default defineConfig({
 	webServer: {
 		command: 'pnpm exec vite dev --host 127.0.0.1 --port 4186 --strictPort',
 		env: {
+			FEATURE_PHYSICAL_CHECKOUT: 'false',
 			SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
 			SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
 			SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test'

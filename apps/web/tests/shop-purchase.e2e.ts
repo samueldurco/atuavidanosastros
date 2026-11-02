@@ -3,7 +3,7 @@ import { scanAccessibility } from './fixtures/accessibility';
 
 const product = {
 	id: 'gid://shopify/Product/1',
-	handle: 'cropped-aries',
+	handle: 'caneca-aries',
 	title: 'Peça sintética somente para teste local',
 	availableForSale: true,
 	variants: [
@@ -42,7 +42,8 @@ async function openProduct(page: Page) {
 	await page.route('**/api/shop/product/*', (route) =>
 		route.fulfill({ json: { ok: true, product } })
 	);
-	await page.goto('/loja/peca/cropped-aries');
+	await page.goto('/loja/peca/caneca-aries');
+	await expect(page.getByRole('heading', { name: 'Quem vende e atende' })).toBeVisible();
 	await expect(page.getByRole('form', { name: 'Comprar esta peça' })).toBeVisible();
 }
 
@@ -75,6 +76,9 @@ test('Escolha explícita, disponibilidade, quantidade e encaminhamento ao checko
 	await purchase.getByRole('spinbutton').fill('2');
 	await expect(purchase).toContainText('R$ 156,78');
 	await expect(purchase).toContainText('Subtotal: R$ 313,56');
+	await expect(purchase).toContainText('Total com frete: R$ 343,46');
+	await expect(purchase).toContainText('Frete fixo de R$ 29,90 por pedido');
+	await expect(purchase).toContainText('até 40 dias úteis após a aprovação do pagamento');
 	await purchase.getByRole('spinbutton').fill('11');
 	await expect(purchase.getByRole('button', { name: 'Comprar agora' })).toBeDisabled();
 	await purchase.getByRole('spinbutton').fill('2');
@@ -83,6 +87,35 @@ test('Escolha explícita, disponibilidade, quantidade e encaminhamento ao checko
 	expect(sent).toEqual({
 		lines: [{ merchandiseId: 'gid://shopify/ProductVariant/3', quantity: 2 }]
 	});
+});
+
+test('A abertura do MVP mantém as outras peças em vitrine e apresenta as condições nacionais', async ({
+	page
+}) => {
+	let productRequests = 0;
+	await page.route('**/api/shop/product/*', (route) => {
+		productRequests += 1;
+		return route.fulfill({ json: { ok: true, product } });
+	});
+	await page.goto('/loja/peca/cropped-aries');
+	await expect(page.getByRole('region', { name: 'Disponibilidade e compra' })).toContainText(
+		'Esta peça ainda não está à venda'
+	);
+	await expect(page.getByRole('button', { name: 'Comprar agora' })).toHaveCount(0);
+	expect(productRequests).toBe(0);
+	await page.goto('/loja');
+	await expect(page.locator('.shop-card').first()).toContainText('Ecobag Taurus');
+	await expect(page.locator('.shop-card .preview-label', { hasText: 'Compra online' })).toHaveCount(
+		24
+	);
+	await page.goto('/loja/frete');
+	await expect(
+		page.getByRole('heading', { name: 'Condições das peças com compra online' })
+	).toBeVisible();
+	await expect(page.locator('article')).toContainText('O frete é cobrado uma única vez');
+	await expect(page.locator('article')).toContainText(
+		'até 40 dias úteis após a aprovação do pagamento'
+	);
 });
 
 test('Falha do carrinho permite tentar de novo sem perder seleção', async ({ page }) => {
@@ -107,7 +140,8 @@ test('Produto indisponível e falha de consulta não mostram preço ou botão de
 	await page.route('**/api/shop/product/*', (route) =>
 		route.fulfill({ json: { ok: true, product: null } })
 	);
-	await page.goto('/loja/peca/cropped-aries');
+	await page.goto('/loja/peca/caneca-aries');
+	await expect(page.getByRole('heading', { name: 'Quem vende e atende' })).toBeVisible();
 	await expect(page.getByRole('region', { name: 'Disponibilidade e compra' })).toContainText(
 		'Indisponível para compra'
 	);

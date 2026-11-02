@@ -9,14 +9,19 @@
 	<meta name="robots" content="noindex,follow" />
 	<meta
 		name="description"
-		content={`Conheça as aquarelas de ${data.name} em canecas, ecobags e garrafas da Loja dos Signos. Coleção em preparação.`}
+		content={`Conheça as aquarelas de ${data.name} em canecas, ecobags e garrafas da Loja dos Signos. Confira as condições de compra na página de cada peça.`}
 	/>
 	<link rel="canonical" href={`https://atuavidanosastros.com.br/loja/signo/${data.slug}`} />
 </svelte:head>
 
 <div class="container collection-page">
 	<a class="back-link" href="/loja">← Loja dos Signos</a>
-	<ShopShowcase showLink={false} headingLevel="h1" collection={data.collection} />
+	<ShopShowcase
+		showLink={false}
+		headingLevel="h1"
+		collection={data.collection}
+		commerceEnabled={data.shopCommerceEnabled}
+	/>
 </div>
 
 <style>
