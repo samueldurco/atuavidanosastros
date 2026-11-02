@@ -23,5 +23,36 @@
 		"SHOPIFY_STOREFRONT_API_VERSION": "2026-10",
 		"SHOPIFY_DIAGNOSTIC_ENABLED": "false",
 		"SHOPIFY_PREVIEW_ENABLED": "false"
+	},
+	"env": {
+		"production": {
+			"vars": {
+				"PUBLIC_SITE_URL": "https://atuavidanosastros.com.br",
+				"PUBLIC_SUPABASE_URL": "https://irgnhvouvzyoqfmltrna.supabase.co",
+				"PUBLIC_ENVIRONMENT": "production",
+				"PUBLIC_GTM_ID": "GTM-T576R9MR",
+				"PUBLIC_GA_MEASUREMENT_ID": "G-XKBGJ113Z5",
+				"AUTOMATIC_SPEND_CAP_BRL": "0",
+				"FEATURE_AI": "false",
+				"FEATURE_HOTMART_LIVE": "false",
+				"FEATURE_MAGIC_LINK": "false",
+				"FEATURE_PHYSICAL_CHECKOUT": "true",
+				"SHOP_ARIES_SINGLE_UNIT_ONLY": "true",
+				"SHOP_SELLER_DISCLOSURE_APPROVED": "true",
+				"SHOP_DELIVERY_MAX_BUSINESS_DAYS": "8",
+				"SHOP_VERIFIED_FLAT_SHIPPING_BRL": "29.90",
+				"SHOPIFY_STORE_DOMAIN": "bhvc0w-kk.myshopify.com",
+				"SHOPIFY_STOREFRONT_API_VERSION": "2026-10",
+				"SHOPIFY_DIAGNOSTIC_ENABLED": "false",
+				"SHOPIFY_PREVIEW_ENABLED": "false"
+			},
+			"d1_databases": [
+				{
+					"binding": "ATVNA_CHECKOUT_DB",
+					"database_name": "atvna-checkout-nacional",
+					"database_id": "2b259bbc-834f-4605-9991-d748c95a3777"
+				}
+			]
+		}
 	}
 }

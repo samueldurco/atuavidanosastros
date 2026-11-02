@@ -5,11 +5,14 @@ import { signNames } from './site';
 const modelIds: Record<string, string> = {
 	'Quadro vertical 30 × 40 cm · moldura preta': 'GE-quadro-12x16',
 	'Gildan 64000 · camiseta unissex de gola redonda': 'GE-camiseta-unissex',
+	'Camiseta Dimona de corte masculino': 'GE-camiseta-unissex',
 	'Regata unissex premium': 'GE-regata-unissex',
+	'Regata Dimona de corte masculino': 'GE-regata-unissex',
 	'Top esportivo acolchoado com estampa integral': 'PF-top-esportivo-acolchoado',
 	'Legging de yoga com estampa integral': 'PF-legging-yoga',
 	'Pochete com estampa integral': 'PF-pochete',
 	'AS Colour 4062': 'PF-cropped-feminino',
+	'Cropped branco Dimona': 'PF-cropped-feminino',
 	'AS Colour 5082': 'PF-oversized',
 	'Ecobag clássica': 'GE-ecobag-classica',
 	'Ecobag de algodão cru · M': 'GE-ecobag-classica',
@@ -19,6 +22,7 @@ const modelIds: Record<string, string> = {
 	'Pôster vertical 30 × 40 cm': 'GE-poster-30x40',
 	'Caderno espiral · 140 páginas pontilhadas': 'PF-caderno-espiral',
 	'Yupoong 6245CM · boné ajustável': 'PF-bone-bordado',
+	'Boné americano Dimona': 'PF-bone-bordado',
 	'Yupoong 1501KC · gorro com dobra': 'PF-gorro-bordado'
 };
 

@@ -1,7 +1,7 @@
 import ariesRoute from './shop-aries-route.json';
 import slugs from './shop-commerce-slugs.json';
-import reviewedOffers from './shop-reviewed-offers.json';
-import reviewedDestinations from './shop-reviewed-destinations.json';
+import reviewedOffers from './shop-reviewed-offers.json' with { type: 'json' };
+import reviewedDestinations from './shop-reviewed-destinations.json' with { type: 'json' };
 
 export const shopCommerceSlugs: readonly string[] = slugs;
 const eligible = new Set<string>(shopCommerceSlugs);

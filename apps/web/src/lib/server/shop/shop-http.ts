@@ -24,7 +24,9 @@ const headers = { 'Cache-Control': 'private, no-store', 'X-Robots-Tag': 'noindex
 const reply = (body: unknown, status = 200) => json(body, { status, headers });
 const approvedVariantSlugs = new Map(
 	Object.entries(approvedShopProducts).flatMap(([slug, product]) =>
-		isShopCommerceEligible(slug) ? product.variantIds.map((id) => [id, slug] as const) : []
+		isShopCommerceEligible(slug) || isShopCommerceEligible(slug, true)
+			? product.variantIds.map((id) => [id, slug] as const)
+			: []
 	)
 );
 function isReviewedOffer(variant: ShopCatalogProduct['variants'][number]): boolean {
@@ -37,7 +39,7 @@ function isReviewedOffer(variant: ShopCatalogProduct['variants'][number]): boole
 	);
 }
 
-class ShopHttpError extends Error {
+export class ShopHttpError extends Error {
 	constructor(
 		readonly code: string,
 		readonly status: number
@@ -61,7 +63,7 @@ async function authorized(request: Request, secret: string): Promise<boolean> {
 	return difference === 0;
 }
 
-function config(env: PrivateEnv): StorefrontConfig | null {
+export function config(env: PrivateEnv): StorefrontConfig | null {
 	if (
 		!env.SHOPIFY_STORE_DOMAIN ||
 		!env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN ||
@@ -78,7 +80,7 @@ function config(env: PrivateEnv): StorefrontConfig | null {
 	};
 }
 
-async function readBody(request: Request): Promise<unknown> {
+export async function readBody(request: Request): Promise<unknown> {
 	if (!/^application\/json(?:;|$)/i.test(request.headers.get('content-type') ?? ''))
 		throw new ShopHttpError('invalid_content_type', 415);
 	const declared = request.headers.get('content-length');
@@ -175,7 +177,7 @@ export async function shopCatalog(
 	}
 }
 
-async function readApprovedProduct(
+export async function readApprovedProduct(
 	shop: StorefrontConfig,
 	fetcher: typeof fetch,
 	slug: string,
@@ -289,7 +291,10 @@ export async function shopCart(
 					!Array.isArray(line) &&
 					Object.keys(line).every((key) => key === 'merchandiseId' || key === 'quantity') &&
 					typeof (line as { merchandiseId?: unknown }).merchandiseId === 'string' &&
-					approvedVariantSlugs.has((line as { merchandiseId: string }).merchandiseId) &&
+					isShopCommerceEligible(
+						approvedVariantSlugs.get((line as { merchandiseId: string }).merchandiseId) ?? '',
+						sale.ariesOnly
+					) &&
 					Number.isSafeInteger((line as { quantity?: unknown }).quantity) &&
 					(line as { quantity: number }).quantity >= 1 &&
 					(line as { quantity: number }).quantity <= CART_QUANTITY_LIMIT
@@ -331,6 +336,17 @@ export async function shopCart(
 		);
 		if (lines.some((line) => !available.has(line.merchandiseId)))
 			throw new ShopHttpError('variant_unavailable', 409);
+		if (sale.ariesOnly && destination && env.DIMONA_FRETE_TOKEN) {
+			const { manufacturingAvailable, physicalOffer, rateFor } = await import('./national-freight');
+			const offer = physicalOffer(lines[0].merchandiseId);
+			const [inStock, route] = await Promise.all([
+				manufacturingAvailable(env, fetcher, offer),
+				rateFor(env, fetcher, destination.postalCode.replace('-', ''), offer)
+			]);
+			if (!inStock) throw new ShopHttpError('variant_unavailable', 409);
+			if (route.cents > Math.round(Number(env.SHOP_VERIFIED_FLAT_SHIPPING_BRL) * 100))
+				throw new ShopHttpError('delivery_unavailable', 422);
+		}
 		const cart = await createShopCart(shop, fetcher, lines, buyerIp, destination);
 		return reply({ ok: true, checkoutUrl: cart.checkoutUrl, totalQuantity: cart.totalQuantity });
 	} catch (error) {

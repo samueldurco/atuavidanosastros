@@ -1,4 +1,5 @@
 <script lang="ts">
+	import ShopNationalDelivery from './ShopNationalDelivery.svelte';
 	import type { ShopCatalogProduct } from '$lib/server/shop/shopify-storefront';
 	import {
 		reviewedDestination,
@@ -27,11 +28,6 @@
 	let retry = $state(0);
 	const variant = $derived(product?.variants.find((item) => item.id === variantId));
 	const destination = $derived(reviewedDestination(postalCode));
-	const deliveryDays = $derived(
-		slug.startsWith('caneca-')
-			? destination?.deliveryBusinessDays
-			: destination?.bagDeliveryBusinessDays
-	);
 	const canBuy = $derived(
 		enabled &&
 			product?.availableForSale &&
@@ -89,8 +85,8 @@
 		return () => controller.abort();
 	});
 
-	async function buy(event: SubmitEvent) {
-		event.preventDefault();
+	async function buy(event?: SubmitEvent) {
+		event?.preventDefault();
 		if (!canBuy || !variant) return;
 		submitting = true;
 		errorMessage = '';
@@ -140,7 +136,10 @@
 		<p role="status">Não foi possível consultar esta peça agora.</p>
 		<button type="button" class="button secondary" onclick={() => retry++}>Tentar novamente</button>
 	{:else if product}
-		<form onsubmit={buy} aria-label="Comprar esta peça">
+		<form
+			onsubmit={(event) => (ariesOnly ? event.preventDefault() : buy(event))}
+			aria-label="Comprar esta peça"
+		>
 			<fieldset disabled={submitting}>
 				<legend>Escolha sua peça</legend>
 				<label for="shop-variant">Opção da peça (cor e tamanho, quando disponíveis)</label>
@@ -157,27 +156,6 @@
 				</p>
 				{#if ariesOnly}
 					<p>{shopSingleUnitTerms}</p>
-					<label for="shop-postal-code">CEP de entrega</label>
-					<input
-						id="shop-postal-code"
-						type="text"
-						inputmode="numeric"
-						autocomplete="postal-code"
-						maxlength="9"
-						bind:value={postalCode}
-						required
-						aria-describedby="shop-postal-help"
-					/>
-					<p id="shop-postal-help" aria-live="polite">
-						{#if destination}
-							Entrega em {destination.city} ({destination.provinceCode}) em até {deliveryDays} dias úteis.
-							Confirme o mesmo CEP no checkout.
-						{:else if postalCode.replace('-', '').length >= 8}
-							Ainda não temos entrega confirmada para este CEP.
-						{:else}
-							Informe os oito dígitos do CEP para consultar a entrega.
-						{/if}
-					</p>
 				{:else}
 					<label for="shop-quantity">Quantidade</label>
 					<input
@@ -198,7 +176,7 @@
 								Subtotal: {money((Math.round(Number(variant.price.amount) * 100) * quantity) / 100)}
 							</p>
 						{/if}
-						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10 && (!ariesOnly || destination)}
+						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10 && !ariesOnly}
 							<p class="subtotal">
 								Total com frete: {money(
 									(Math.round(Number(variant.price.amount) * 100) * quantity +
@@ -209,13 +187,14 @@
 						{/if}
 					{/if}
 				</div>
-				<button class="button" type="submit" disabled={!canBuy}>
-					{submitting ? 'Abrindo pagamento…' : 'Comprar agora'}
-				</button>
+				{#if !ariesOnly}<button class="button" type="submit" disabled={!canBuy}>
+						{submitting ? 'Abrindo pagamento…' : 'Comprar agora'}
+					</button>{/if}
 			</fieldset>
 			{#if errorMessage}<p class="error" role="alert">{errorMessage}</p>{/if}
 			<p class="checkout-note">
-				Frete fixo de {money(shopDelivery.priceBrl)} por pedido nos destinos habilitados no checkout.
+				{#if !ariesOnly}Frete fixo de {money(shopDelivery.priceBrl)} por pedido nos destinos habilitados
+					no checkout.{/if}
 				{#if !ariesOnly}Fabricação e entrega em até {deliveryBusinessDays} dias úteis após a aprovação
 					do pagamento.{/if}
 			</p>
@@ -223,6 +202,16 @@
 				Revise o endereço, a entrega e o valor total antes de confirmar o pagamento.
 			</p>
 		</form>
+		{#if ariesOnly}
+			<ShopNationalDelivery
+				{variantId}
+				bind:postalCode
+				price={variant?.availableForSale ? reviewedUnitPrice(variant.id) : undefined}
+				{submitting}
+				fallbackBuy={() => buy()}
+				mug={slug.startsWith('caneca-')}
+			/>
+		{/if}
 	{/if}
 </section>
 
