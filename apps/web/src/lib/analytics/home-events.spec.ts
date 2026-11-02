@@ -106,6 +106,14 @@ describe('consented public funnel analytics', () => {
 		expect(stub.dataLayer).toEqual([{ event: 'atv_home_path_select', cta: 'products' }]);
 	});
 
+	it('retains the public reading-sample path after consent', () => {
+		const stub = browser();
+		trackHomeEvent('home_path_select', { context: 'hero', cta: 'sample' });
+		expect(stub.dataLayer).toEqual([
+			{ event: 'atv_home_path_select', context: 'hero', cta: 'sample' }
+		]);
+	});
+
 	it('deduplicates actual result/download operations without emitting operation identifiers', () => {
 		const stub = browser();
 		const operationId = '12345678-1234-4234-8234-123456789abc';

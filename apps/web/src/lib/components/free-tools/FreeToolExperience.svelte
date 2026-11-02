@@ -1390,7 +1390,7 @@
 		justify-self: start;
 	}
 	@media (max-width: 760px) {
-		:global(.v4-experience #conteudo:has(.free-tool-page)) {
+		:global(.v4-experience:not(.v4-home) #conteudo:has(.free-tool-page)) {
 			padding-inline: 1rem;
 		}
 		.free-tool-page :global(.content-shell) {

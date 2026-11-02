@@ -7,6 +7,8 @@ import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { articleSeo, validDocument, type EditorialDocument } from './editorial';
 import { editorialSitemap, newsSitemap, recentNews } from './editorial-feeds';
 import { createEditorialRead, publishedEditorial } from './editorial-registry';
+import { editorialTopic } from '$lib/data/editorial-topics';
+import { load as homeLoad } from '../../routes/+page.server';
 import {
 	verifyAutomatedApproval,
 	type AutomatedAttestation,
@@ -89,6 +91,20 @@ describe('externally signed finite editorial release', () => {
 		expect((await publishedEditorial(now)).map((document) => document.path).sort()).toEqual(
 			[...release.packages.map((entry) => entry.document.path), ...datedPaths].sort()
 		);
+	});
+	it('features three admitted articles from different interests without excluding the first article', async () => {
+		const admitted = (await publishedEditorial()).filter((item) => item.kind !== 'horoscope');
+		const home = await homeLoad({} as never);
+		if (!home) throw new Error('Home metadata was not returned');
+		expect(home.articles).toHaveLength(3);
+		expect(home.articles).toContainEqual(admitted[0]);
+		expect(
+			new Set(home.articles.map((item: (typeof admitted)[number]) => editorialTopic(item.path)))
+				.size
+		).toBe(3);
+		for (const article of home.articles) {
+			expect(article).toEqual(admitted.find((item) => item.path === article.path));
+		}
 	});
 	it('validates all twelve exact packages and renders their full bodies and Article metadata', async () => {
 		const documents: EditorialDocument[] = [];

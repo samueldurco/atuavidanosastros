@@ -1,0 +1,97 @@
+{
+  "created": "2026-11-02",
+  "method": "built-in image_gen, one call per asset; original files preserved; WebP format optimization only",
+  "assets": [
+    {
+      "id": "product-natal-chart",
+      "prompt": "Create one new horizontal 3:2 promotional illustration for ATVNA digital product Mapa Astral Completo. Image 1 is ONLY the approved drawing-family/style reference, do not copy its circular zodiac medallion. New composition: an exquisite celestial atlas sheet unfurling diagonally across the middle, a large hand-engraved diagram of interconnected planetary orbits and houses on its left and three layered interpretation paper leaves with fine abstract non-readable rules on the right; a tiny ringed planet is integrated into the chart. All a flat artistic editorial engraving, not a physical hardcover book or electronic device. Dominant deep mineral blue #174c69 and navy #173747 ink, muted teal #22748b, cream paper #f6efdf and sparse ochre #cf9a44. Distinct tactile pigment washes at edges, fine antique woodcut hatching, purposeful strong dark/light contrast, slight artisanal registration, sophisticated contemporary editorial layout. Drawings occupy 75% of composition with generous 8% breathing room. Background integrated blue-gray rag paper. This is symbolic product art, not a calculated natal chart: avoid exact birth data, readable planet labels or calculations. NO words, typography, numbers, logos, UI, mockup frames or watermarks. Preserve approved family of matte cut-paper engraving, very high quality fine linework. ONE complete artwork, not a contact sheet.",
+      "reference": "mandala-gravada.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-ad53e50b-cf24-4efe-a0af-361e677ba52b.png",
+      "target": "apps/web/static/brand/home-v2/product-natal-chart.webp",
+      "width": 1200,
+      "height": 800,
+      "alpha": false,
+      "bytes": 429628,
+      "sha256": "2bea1d4839db8db95aa6949ee1565f72904d0feca02a3ca43774367ed054e77e",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    },
+    {
+      "id": "product-three-card-tarot",
+      "prompt": "Create one new horizontal 3:2 promotional illustration for ATVNA digital product Tarot 3 Cartas (Situação, Desafio e Conselho). Image 1 is ONLY the approved engraving style reference. New composition with EXACTLY THREE large distinct vertical ornate paper panels aligned as a triptych across the center, slight varied overlap; left shows engraved flowing waves around a small rising sun, center shows a rugged mountain pass with a narrow path, right shows a branching olive plant with a small star overhead. Symbols are ornamental, not a purported real tarot draw. Triptych explicitly visualizes context, obstacle, possible direction. No card names, no numerals, no real drawn-card claims. Rich copper #bd783c and dark sepia #382a27 engraved ink on cream sheets over layered ochre handmade paper #f1ddbb. Fine woodcut hatching, visibly irregular pigment at borders, small botanical marks only as support, tactile printmaking material, calm negative space. Broad promotional panel with 8% safe margins, not tiny three-card icon copied from reference. Matte, hand engraved, sophisticated editorial product identity consistent with reference. NO readable text, labels, UI, logos, watermarks or physical product packaging. ONE complete illustration.",
+      "reference": "cartas-gravadas.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-94a0c6f5-948d-49fb-95e4-11291d9ccf70.png",
+      "target": "apps/web/static/brand/home-v2/product-three-card-tarot.webp",
+      "width": 1200,
+      "height": 800,
+      "alpha": false,
+      "bytes": 345464,
+      "sha256": "54634ac3cf2b732cedea4b5730c22f3a8f6530c0105da5d0bf75c46022cf0529",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    },
+    {
+      "id": "product-dream-reading",
+      "prompt": "Create one new horizontal 3:2 promotional illustration for ATVNA digital product Interpretação do Sonho. Image 1 is ONLY the approved engraving-family style reference. Do not repeat a sleeping woman's face, moth or crescent as main image. New composition: an open doorway floating on quiet cloud strata reveals a luminous winding river and distant botanical landscape, in foreground a single unrolled manuscript ribbon has fine abstract marks and subtle symbolic fragments (key, branch, wave) as an unfolding dream narrative. It must read as a crafted symbolic scene of interpretation, NOT a book offered physically and NOT literal text analysis UI. Deep violet #4b416a and navy engraved ink with dusty lavender #9b7abb, pale lilac #e7def1, cream rag paper and tiny copper flecks. Antique fine woodcut hatching and beautiful tactile layered pigment, strong light doorway versus dark ink landscape, 8% safe margins, full scenic composition. Matte handmade editorial illustration with carefully drawn contours and readable silhouetted subjects. NO words, numbers, logo, decorative fake writing resembling letters, UI or watermark. ONE complete artwork not a collage of variants.",
+      "reference": "sonhos-gravados.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-2276730f-2953-4e15-90b5-3c97ea987c99.png",
+      "target": "apps/web/static/brand/home-v2/product-dream-reading.webp",
+      "width": 1200,
+      "height": 800,
+      "alpha": false,
+      "bytes": 487734,
+      "sha256": "d90f08ba30049d39af886468249d313aaff8380e715b873e7becfddc3e7e1bce",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    },
+    {
+      "id": "article-ascendant",
+      "prompt": "Create one new original editorial illustration for the Portuguese ATVNA website. Use the attached reference ONLY for the fine hand-engraved hatching, cream rag paper and navy/copper ink language, never copy its composition. Landscape 3:2. NO words, letters, numbers, labels, UI, logos, watermark or frame. This is a discreet reading-article thumbnail, not a product advertisement. Restrained contrast, generous unprinted cream paper, delicate meaningful subject, simple silhouette readable small. Article subject: the Ascendant and how the eastern horizon anchors a birth chart. Show an old observatory's architectural window, its opening framing a low eastern horizon and one emerging star with a fine fan of orientation lines. Small brass sighting instrument on the sill. Do NOT draw an entire zodiac wheel, mandala, face, product or book. Mineral blue, muted gray-blue and a tiny copper accent, mostly cream.",
+      "reference": "mandala-gravada.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-53505ff8-e6df-4aef-92f7-26b92c49c434.png",
+      "target": "apps/web/static/brand/home-v2/article-ascendant.webp",
+      "width": 720,
+      "height": 480,
+      "alpha": false,
+      "bytes": 61480,
+      "sha256": "5a47a29aff6a00e10dcf258b825a54fcd56479f5e4dc4f447fd3862188f2e474",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    },
+    {
+      "id": "article-mercury-retrograde",
+      "prompt": "Create one new original editorial illustration for the Portuguese ATVNA website. Use the attached reference ONLY for the fine hand-engraved hatching, cream rag paper and navy/copper ink language, never copy its composition. Landscape 3:2. NO words, letters, numbers, labels, UI, logos, watermark or frame. This is a discreet reading-article thumbnail, not a product advertisement. Restrained contrast, generous unprinted cream paper, delicate meaningful subject, simple silhouette readable small. Article subject: understanding apparent Mercury retrograde. Show a quiet scientific engraving of a small Mercury-like cratered globe and a single graceful looping orbital trajectory passing behind it, with subtle tracking points and one directional arrow returning along the loop. A sparse field of small engraved stars. Do NOT draw a clock, hourglass, lunar phases, astrological mandala or diagram with labels. Muted slate blue, gray and very restrained aged copper, mostly cream paper.",
+      "reference": "mandala-gravada.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-aa397cf5-337e-43d7-865b-3a7fbbe6a2c3.png",
+      "target": "apps/web/static/brand/home-v2/article-mercury-retrograde.webp",
+      "width": 720,
+      "height": 480,
+      "alpha": false,
+      "bytes": 29670,
+      "sha256": "131d44e76f284a7aba82b9f54c4eafa9dd707787710acd6b67c6c5a4bde82d80",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    },
+    {
+      "id": "article-tarot-arcana",
+      "prompt": "Create one new original editorial illustration for the Portuguese ATVNA website. Use the attached reference ONLY for the fine hand-engraved hatching, cream rag paper and navy/copper ink language, never copy its composition. Landscape 3:2. NO words, letters, numbers, labels, UI, logos, watermark or frame. This is a discreet reading-article thumbnail, not a product advertisement. Restrained contrast, generous unprinted cream paper, delicate meaningful subject, simple silhouette readable small. Article subject: the structure of major and minor tarot arcana. An understated close view of the edge of an antique engraved tarot deck, one decorated card back standing behind it, and a small arrangement of four finely etched objects: a chalice, a short wand with leaves, a sword and a coin. Intimate still life, balanced, no fortune-teller theatrics. Do NOT show three face-up cards, specific tarot card faces or text. Muted umber, warm navy and faded copper on mostly cream.",
+      "reference": "cartas-gravadas.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-5efa1ca5-4eff-416e-a07d-e77fd45fb4b4.png",
+      "target": "apps/web/static/brand/home-v2/article-tarot-arcana.webp",
+      "width": 720,
+      "height": 480,
+      "alpha": false,
+      "bytes": 59336,
+      "sha256": "8bc968e7fabecd8ae856a7f7b321393741f6383dc904f174e504d9e525f1b553",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    },
+    {
+      "id": "atv-continuity",
+      "prompt": "Create a new original landscape 3:2 decorative hand-engraving for the ATVNA membership continuity section. Use the attached reference ONLY for precise fine engraving/hatching craft, not its zodiac mandala composition. A continuous ribbon-like path flowing through three layered curved paper arcs, a small botanical branch growing along the path, sparse guiding stars. Suggest ongoing attentive exploration across time through flowing connected lines, no clock, no moon phases, no tarot cards, no zodiac circle, no products or people. Elegant compact silhouette, ample clear space around it. Warm cream etched lines and subdued copper accents, intended to be legible on a midnight navy #102c3d section. TRANSPARENT background, preserve alpha; no white rectangle. NO words, letters, labels, numbers, UI, logo or watermark.",
+      "reference": "mandala-gravada.webp",
+      "source": "C:\\Users\\samue\\.codex\\generated_images\\01a19bfa-d4c4-7352-8444-6c0d60a698d8\\exec-fe9cddee-768a-4652-9eb1-c63b80adb961.png",
+      "target": "apps/web/static/brand/home-v2/atv-continuity.webp",
+      "width": 1000,
+      "height": 667,
+      "alpha": true,
+      "bytes": 131176,
+      "sha256": "ce186ae01c093bbc25623b9dee16ffa82d914a21752217a125c2da2397cd9d6c",
+      "review": "Inspected generated original; new composition preserves section-specific purpose and engraved brand vocabulary."
+    }
+  ]
+}

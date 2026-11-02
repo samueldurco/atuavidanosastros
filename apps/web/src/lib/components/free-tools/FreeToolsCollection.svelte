@@ -15,6 +15,12 @@
 	let selected = $state<string | null>(null);
 	let columns = $state(3);
 	let ready = $state(false);
+	let activeInterest = $state('all');
+	const artContext = $derived(page.url.pathname === '/' ? 'home' : 'default');
+	const visibleTools = $derived(
+		freeTools.filter((tool) => activeInterest === 'all' || tool.topicId === activeInterest)
+	);
+	const visibleIndex = (id: string) => visibleTools.findIndex((tool) => tool.id === id);
 	const openKey = 'atv-home-open-tool';
 	const panelOrder = (index: number) => (Math.floor(index / columns) + 1) * columns * 2 - 1;
 	function rememberSelection() {
@@ -26,6 +32,9 @@
 		}
 	}
 	async function select(id: string, focus = true) {
+		const tool = freeTools.find((item) => item.id === id);
+		if (activeInterest !== 'all' && tool && tool.topicId !== activeInterest)
+			activeInterest = tool.topicId;
 		if (focus) trackHomeEvent('tool_select', { tool_id: id, context: 'home', cta: 'open' });
 		if (!opened.includes(id)) opened = [...opened, id];
 		selected = id;
@@ -36,6 +45,14 @@
 			const panel = document.getElementById(`interactive-${id}`);
 			panel?.focus({ preventScroll: true });
 			panel?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
+		}
+	}
+	function filterInterest(id: string) {
+		activeInterest = id;
+		if (selected && !visibleTools.some((tool) => tool.id === selected)) {
+			selected = null;
+			rememberSelection();
+			onToolOpenChange?.(false);
 		}
 	}
 	async function close(id: string) {
@@ -77,7 +94,12 @@
 	});
 </script>
 
-<section class="tool-collection section" id="ferramentas" aria-labelledby="tools-heading">
+<section
+	class="tool-collection section"
+	class:home-tools={artContext === 'home'}
+	id="ferramentas"
+	aria-labelledby="tools-heading"
+>
 	<div class="wrap collection-heading">
 		<div>
 			<p class="eyebrow">01 / Um primeiro olhar</p>
@@ -86,15 +108,37 @@
 		</div>
 		<span class="collection-note">Nove caminhos.<br />Comece pelo que faz sentido hoje.</span>
 	</div>
+	<div class="interest-picker wrap" role="group" aria-label="Escolha seu interesse">
+		<button
+			type="button"
+			data-interest="all"
+			aria-pressed={activeInterest === 'all'}
+			onclick={() => filterInterest('all')}>Todos os interesses</button
+		>
+		{#each interestNavigation as interest (interest.id)}
+			<button
+				type="button"
+				data-interest={interest.id}
+				aria-pressed={activeInterest === interest.id}
+				onclick={() => filterInterest(interest.id)}>{interest.label}</button
+			>
+		{/each}
+	</div>
+	<p class="tools-count wrap" aria-live="polite">
+		{visibleTools.length === 1
+			? '1 ferramenta gratuita'
+			: `${visibleTools.length} ferramentas gratuitas`} · Use aqui, antes de criar uma conta.
+	</p>
 	<div class="tool-grid wrap">
-		{#each freeTools as tool, index (tool.id)}
-			{@const design = freeToolDesign(tool)}
+		{#each freeTools as tool (tool.id)}
+			{@const design = freeToolDesign(tool, artContext)}
 			{@const universe = interestNavigation.find((item) => item.id === tool.topicId)}
 			<article
 				class="tool-card"
 				data-tool={tool.id}
+				hidden={activeInterest !== 'all' && tool.topicId !== activeInterest}
 				class:selected={selected === tool.id}
-				style={`--tool-ink:${design.ink};--tool-tint:${design.tint};order:${index * 2}`}
+				style={`--tool-ink:${design.ink};--tool-tint:${design.tint};order:${visibleIndex(tool.id) * 2}`}
 			>
 				<button
 					id={`open-${tool.id}`}
@@ -124,7 +168,7 @@
 				aria-label={tool.label}
 				tabindex="-1"
 				hidden={selected !== tool.id}
-				style={`--tool-ink:${design.ink};--tool-tint:${design.tint};order:${panelOrder(index)}`}
+				style={`--tool-ink:${design.ink};--tool-tint:${design.tint};order:${panelOrder(visibleIndex(tool.id))}`}
 			>
 				{#if opened.includes(tool.id)}
 					<div class="panel-heading">
@@ -154,6 +198,38 @@
 </section>
 
 <style>
+	.interest-picker {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.interest-picker button {
+		border: 1px solid #18374655;
+		padding: 0.65rem 0.85rem;
+		min-height: 44px;
+		background: transparent;
+		color: #183746;
+		font: inherit;
+		font-size: 0.85rem;
+		cursor: pointer;
+	}
+	.interest-picker button[aria-pressed='true'] {
+		background: #183746;
+		color: #fff8e9;
+		border-color: #183746;
+	}
+	.interest-picker button:focus-visible {
+		outline: 3px solid #183746;
+		outline-offset: 3px;
+	}
+	.tools-count {
+		font-size: 0.8rem;
+		color: #485a4e;
+		margin-block: 1rem;
+	}
+	.tool-card[hidden] {
+		display: none;
+	}
 	.tool-collection {
 		background: #e7eadf;
 		border-block: 1px solid #173c4d22;
@@ -209,7 +285,7 @@
 		align-items: center;
 		width: 100%;
 		height: 100%;
-		min-height: 12rem;
+		min-height: 10rem;
 		border: 0;
 		padding: 1.15rem;
 		background: none;
@@ -232,13 +308,20 @@
 		object-fit: contain;
 		mix-blend-mode: multiply;
 	}
+	.home-tools .tool-open img,
+	.home-tools .panel-intro img {
+		mix-blend-mode: normal;
+	}
+	.home-tools .tool-open img {
+		height: 92px;
+	}
 	.tool-copy {
 		display: grid;
 		gap: 0.55rem;
 	}
 	.tool-kicker {
 		color: var(--tool-ink);
-		font-size: 0.6rem;
+		font-size: 0.7rem;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		font-weight: 650;
@@ -251,7 +334,7 @@
 		letter-spacing: -0.02em;
 	}
 	.tool-description {
-		font-size: 0.76rem;
+		font-size: 0.875rem;
 		line-height: 1.55;
 		color: #4b5953;
 	}
@@ -358,7 +441,7 @@
 			font-size: 1.65rem;
 		}
 		.tool-description {
-			font-size: 0.8rem;
+			font-size: 0.875rem;
 		}
 		.panel-heading h3 {
 			font-size: 2rem;

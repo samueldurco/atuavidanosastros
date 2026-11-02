@@ -1,0 +1,256 @@
+{
+  "schemaVersion": "atv-home-demonstration-content-review/1",
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "reviewedAt": "2026-11-02T11:53:09.456Z",
+  "reviewer": {
+    "agent": "/root/sample_and_qa_review",
+    "mode": "separate-agent-review",
+    "humanReview": false
+  },
+  "decision": "APTA_PARA_INTEGRACAO_LOCAL_COMO_DEMONSTRACAO",
+  "scope": {
+    "surface": "HOME local",
+    "purpose": "Uma amostra parcial da leitura Mapa Astral, com perfil integralmente fictício, conforme entrevista do proprietário.",
+    "isArticle": false,
+    "isCompleteProductReview": false,
+    "isPersonalOwnerAcceptance": false,
+    "isHostedRelease": false,
+    "isCommerceRelease": false,
+    "releaseAuthority": false
+  },
+  "classification": {
+    "publicEditorialRegistry": "NOT_APPLICABLE: public-editorial-seo rege documentos admitidos no inventário de artigos/hubs. Este trecho de demonstração na HOME não é um desses documentos.",
+    "evergreenAutomaticPolicy": "NOT_APPLICABLE: não é guia educativo evergreen; nenhuma nota ou aprovação atvna-editorial-policy foi emitida.",
+    "privateGate": "CONFIRMED_PRIVATE_FREE_TEST_ONLY: o approval original foi conferido e não é autorização pública, comercial ou de produção.",
+    "localAuthorization": "Criação da amostra fictícia e implementação local já autorizadas pelo proprietário; este parecer não cria nova exigência de aprovação humana para a HOME."
+  },
+  "reviewedArtifacts": {
+    "publicJson": {
+      "path": "apps/web/src/lib/data/home-reading-sample.json",
+      "fileSha256": "0fad98b9e0322ca0d3010e087ef40b5a7e4e1733dc93c237cd965b8bccae3d7c",
+      "bytes": 42764,
+      "canonicalSha256": "d81ede11d63b4ca76c71cb41adf122a41908c256b779ac4385088b7d2a0327a5"
+    },
+    "provenance": {
+      "path": "docs/qa/HOME_READING_SAMPLE_2026-11-02.json",
+      "fileSha256": "ba44339d1229c69668bbad4d36e0597ac3e07710fdc59db27629198cdfde8e56",
+      "calculationVersion": "atv-private-birth-chart/5.0.0",
+      "readingVersion": "atv-current-reading/1.0.0",
+      "factsCanonicalSha256": "8478f108332f2cb9fbfaffb968bb464c04b0b660140ec8814b2efe06f1553949"
+    },
+    "component": {
+      "path": "apps/web/src/lib/components/home/ReadingSample.svelte",
+      "fileSha256": "610e38875882a5c9634a7f4e023b90f46db54149bdaa1b9277244dfe7a5eb509"
+    },
+    "frozenPrivateApproval": {
+      "status": "approved",
+      "scope": "private-free-test",
+      "policy": "atv-current-interpretation-review/1.0.0",
+      "digest": "a5b60e83097c14d586122b9f9705e24cc4a55d2b3f2b6500191121e5c1ead84e",
+      "recomputedCanonicalDigest": "a5b60e83097c14d586122b9f9705e24cc4a55d2b3f2b6500191121e5c1ead84e"
+    },
+    "sourceHashes": {
+      "scripts/generate-home-reading-sample.mjs": {
+        "sha256": "ae40a097755ad887d528bc491b57c490d3609e4b88fb24322c9a3b7173fa6f50",
+        "matchesRecorded": true
+      },
+      "apps/web/src/lib/server/trial-calculation.ts": {
+        "sha256": "73747e9652da49eafb6de7b08821abd77ad5d5f97f6f6d88dbe76c2dda3f62c0",
+        "matchesRecorded": true
+      },
+      "apps/web/src/lib/trials/reading.ts": {
+        "sha256": "7ac45ded61335ed25816ada95e990658238aa1d49b5fc3b8daa0b0d4ab6d81be",
+        "matchesRecorded": true
+      },
+      "apps/web/src/lib/trials/current/natal.ts": {
+        "sha256": "2e0054c0cf00596c96325c581afecdd218d891e2002d6d6a3c20a4c567097c2b",
+        "matchesRecorded": true
+      },
+      "apps/web/src/lib/trials/chart-engine-v2.ts": {
+        "sha256": "356ec836885758bf9e2b7535cd6f87b021da88418db397bf7245d310924c4334",
+        "matchesRecorded": true
+      },
+      "apps/web/src/lib/astrological-chart-presentation.ts": {
+        "sha256": "0adc291f3e91318112815f37172c90b35f54c901d07c746869c7a2eeb2d982e3",
+        "matchesRecorded": true
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "synthetic_origin",
+      "status": "PASS",
+      "finding": "O gerador contém uma fixture nova de nascimento sem nome, conta, leitura salva ou perfil privado. Não há conexão com banco nem provedor externo. Flags de consentimento pertencem à fixture e não representam consentimento de uma pessoa real.",
+      "evidence": [
+        "scripts/generate-home-reading-sample.mjs:generate",
+        "docs/qa/HOME_READING_SAMPLE_2026-11-02.json:inputSource,persistence,providers,input"
+      ]
+    },
+    {
+      "id": "frozen_integrity",
+      "status": "PASS",
+      "finding": "SHA-256 e tamanho dos bytes públicos conferem com a evidência. Os dois trechos são cópias completas e exatas das seções 0 e 8 da leitura atual. A recomposição independente reproduziu o texto integral e o digest da aprovação congelada foi recalculado.",
+      "evidence": [
+        "apps/web/src/lib/data/home-reading-sample.json",
+        "docs/qa/HOME_READING_SAMPLE_2026-11-02.json",
+        "apps/web/src/lib/trials/reading.ts:209-408"
+      ]
+    },
+    {
+      "id": "factual_projection",
+      "status": "PASS",
+      "finding": "Sol a 51.564095628665974° (Touro), casa 11; Lua a 241.6370507659152° (Sagitário), casa 6; Ascendente a 83.22501478625219° (Gêmeos); Mercúrio a 26.448792188543322° (Áries), casa 10. Regência do Ascendente por Mercúrio e ausência de aspecto maior Sol–Lua conferem. Dez posições, dois ângulos e doze cúspides do SVG/tabela vêm da mesma projeção calculada.",
+      "evidence": [
+        "docs/qa/HOME_READING_SAMPLE_2026-11-02.json:calculation.facts,calculation.data",
+        "apps/web/src/lib/data/home-reading-sample.json:chart",
+        "apps/web/src/lib/astrological-chart-presentation.ts:chartPosition"
+      ]
+    },
+    {
+      "id": "semantic_dependency",
+      "status": "PASS_WITH_LIMITED_SCOPE",
+      "finding": "O primeiro trecho distingue direção solar, necessidade lunar e seus campos (grupos versus rotina) sem inventar contato. A síntese usa também Ascendente, regente e casa 10. A leitura de ausência de aspecto corresponde ao ramo none do compositor; o texto não trata signos como comprovação de personalidade. Duas variações válidas mudaram estilos/campos e a síntese, incluindo o ramo de mesmo signo. Isto sustenta estes trechos, sem homologar toda a composição em todos os mapas.",
+      "evidence": [
+        "apps/web/src/lib/trials/current/natal-language.ts:interpretNatalPair",
+        "apps/web/src/lib/trials/current/natal.ts:47-84",
+        "apps/web/src/lib/data/home-reading-sample.json:excerpts",
+        "docs/qa/HOME_READING_SAMPLE_2026-11-02.json:reading.interpretation"
+      ]
+    },
+    {
+      "id": "symbolic_safety",
+      "status": "PASS",
+      "finding": "O texto oferece hipóteses de reflexão, preserva vontade/necessidade como perguntas distintas e não afirma doença, destino, renda, profissão necessária, previsão de acontecimento ou sentimento de terceiros. Há pergunta útil sem pressão para compra.",
+      "evidence": [
+        "apps/web/src/lib/data/home-reading-sample.json:excerpts,question,limits",
+        "apps/web/src/lib/components/home/ReadingSample.svelte:82"
+      ]
+    },
+    {
+      "id": "fictional_label_and_privacy",
+      "status": "PASS",
+      "finding": "Perfil fictício e amostra demonstrativa aparecem antes do conteúdo, com nota de que os dados foram escolhidos só para a demonstração. Não há nome, ID de usuário, histórico ou entrega privada no JSON público. SVG contém somente geometria e rótulos gerados localmente; nenhum script, foreignObject ou handler inline foi encontrado.",
+      "evidence": [
+        "apps/web/src/lib/data/home-reading-sample.json:profile,fictional,chart.svg",
+        "apps/web/src/lib/components/home/ReadingSample.svelte:26-31"
+      ]
+    },
+    {
+      "id": "limits_visible",
+      "status": "PASS",
+      "finding": "Método tropical/Placidus, cálculo experimental, influência de horário/local e interpretação simbólica sem diagnóstico/previsão constam no componente. A nota identifica demonstração parcial e dependência dos dados pessoais informados. Não há promessa de precisão homologada.",
+      "evidence": [
+        "apps/web/src/lib/data/home-reading-sample.json:limits",
+        "apps/web/src/lib/components/home/ReadingSample.svelte:50,75-82",
+        "docs/contracts/astrology-engine.md:Precisão e decisão de aspecto"
+      ]
+    },
+    {
+      "id": "free_and_complete_reading",
+      "status": "PASS",
+      "finding": "A introdução identifica leitura completa avulsa. O CTA Conhecer a leitura completa aponta diretamente a /produtos/mapa-astral-completo; esse slug corresponde ao birth-chart. Não promete entrega gratuita do produto completo, compra liberada ou acesso privado automático. O estado PREPARING do domínio permanece intacto.",
+      "evidence": [
+        "apps/web/src/lib/components/home/ReadingSample.svelte:20,84-87",
+        "packages/domain/src/catalog.ts:111-118",
+        "apps/web/src/routes/produtos/[slug]/+page.ts"
+      ]
+    },
+    {
+      "id": "origin_and_rights_scope",
+      "status": "PASS_WITH_LIMITED_SCOPE",
+      "finding": "Excertos e cartografia reutilizam o compositor/cânone original ATVNA e seu motor SVG presentes no repositório. Nenhum texto externo, biografia, crédito humano ou imagem de terceiro foi acrescentado nesta amostra. Isto identifica a origem observada; não constitui auditoria jurídica universal do corpus.",
+      "evidence": [
+        "apps/web/src/lib/data/home-reading-sample.json:provenance",
+        "apps/web/src/lib/trials/current/natal.ts:source",
+        "scripts/generate-home-reading-sample.mjs"
+      ]
+    },
+    {
+      "id": "reader_clarity",
+      "status": "PASS_SOURCE_REVIEW",
+      "finding": "Um capítulo fica aberto; a síntese adicional é expansível; a pergunta encerra o trecho. A carta usa componente existente com alternativa tabular, dez astros e casas calculadas. Renderização responsiva e interação de mapa ainda pertencem à QA visual da HOME, não a este parecer de conteúdo.",
+      "evidence": [
+        "apps/web/src/lib/components/home/ReadingSample.svelte",
+        "apps/web/src/lib/components/AstrologicalChart.svelte"
+      ]
+    }
+  ],
+  "independentVerification": {
+    "method": "Bundle esbuild em memória (write:false) de calculateTrial/composeTrialReading/approveTrialReading; execução com a fixture congelada; comparação canônica e hashes locais. Nenhum arquivo de origem, conta, banco ou serviço alterado.",
+    "frozenApprovalDigestMatches": true,
+    "excerptsExact": true,
+    "sourceHashesAllMatched": true,
+    "replay": {
+      "factsExact": true,
+      "readingExact": true,
+      "onlyDifferences": [
+        "calculation.data.provenance.calculatedAt",
+        "calculation.data.natal.data.provenance.calculatedAt"
+      ],
+      "reason": "Timestamp real de geração; muda legitimamente o digest de uma execução nova. O digest congelado continua calculado sobre seu snapshot exato."
+    },
+    "validCounterfactuals": [
+      {
+        "input": "1998-06-12 09:00 America/Sao_Paulo; mesmas coordenadas sintéticas",
+        "privateGate": "private-free-test",
+        "observed": "Sol/Gêmeos e Lua/Capricórnio; capítulo e síntese mudam conforme os estilos calculados."
+      },
+      {
+        "input": "1998-05-26 09:00 America/Sao_Paulo; mesmas coordenadas sintéticas",
+        "privateGate": "private-free-test",
+        "observed": "Sol e Lua em Gêmeos; Lua muda para casa 12; o campo da reflexão passa de rotina a elaboração reservada e a síntese passa ao ramo de mesmo signo, sem inventar aspecto maior."
+      }
+    ],
+    "unsupportedClaimsNotMade": [
+      "Homologação astronômica do motor",
+      "Revisão humana integral da leitura completa",
+      "Aprovação pública derivada de private-free-test",
+      "E5/aceite pessoal do proprietário",
+      "Sessão ou persistência hospedadas",
+      "Publicação hospedada",
+      "Ausência universal de plágio",
+      "Autorização comercial"
+    ]
+  },
+  "correctionsResolved": [
+    {
+      "issue": "CTA genérico e alias podiam confundir a leitura completa com Mapa Astral Grátis.",
+      "resolution": "Introdução identifica a leitura completa avulsa; CTA Conhecer a leitura completa usa o slug canônico."
+    }
+  ],
+  "requiredCorrections": [],
+  "remainingVerification": [
+    "QA visual e de interação da HOME integrada pelo executor; este relatório é de conteúdo/proveniência."
+  ],
+  "invalidation": "Qualquer alteração em cenário, cálculo, trecho, pergunta, limites ou CTA exige nova conferência do delta e novo hash. Este parecer não publica a HOME nem altera gates de produto.",
+  "referencesRead": [
+    "C:/Users/samue/.codex/skills/atv-aprovar-interpretacoes/SKILL.md",
+    "C:/Users/samue/.codex/skills/atv-aprovar-interpretacoes/references/criterios.md",
+    "C:/Users/samue/.codex/skills/atvna-editorial-approval/SKILL.md",
+    "C:/Users/samue/.codex/skills/atvna-editorial-approval/references/rubrica.md",
+    "docs/contracts/public-editorial-seo.md",
+    "docs/contracts/birth-chart-reconstruction-v5.md",
+    "docs/contracts/current-interpretation-correction-20261019.md",
+    "docs/contracts/birth-chart-calculation.md",
+    "docs/contracts/astrology-engine.md"
+  ],
+  "formatRevision": {
+    "reviewedAt": "2026-11-02T12:21:59.237Z",
+    "scope": "Formatting-only revision and source/file hash recheck",
+    "changedFiles": [
+      "scripts/generate-home-reading-sample.mjs",
+      "docs/qa/HOME_READING_SAMPLE_2026-11-02.json",
+      "docs/qa/HOME_READING_SAMPLE_REVIEW_2026-11-02.json"
+    ],
+    "generatorSha256": "ae40a097755ad887d528bc491b57c490d3609e4b88fb24322c9a3b7173fa6f50",
+    "provenanceFileSha256": "ba44339d1229c69668bbad4d36e0597ac3e07710fdc59db27629198cdfde8e56",
+    "textAndFactsChanged": false,
+    "publicJsonChanged": false,
+    "componentChanged": false,
+    "sampleRegenerated": false,
+    "originalDecisionPreserved": true,
+    "contentReviewRepeated": false,
+    "hostedRelease": false,
+    "note": "Prettier formatting and provenance bookkeeping only. The original content review, text, facts and approval decision remain unchanged."
+  }
+}

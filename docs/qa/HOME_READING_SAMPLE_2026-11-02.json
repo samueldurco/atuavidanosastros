@@ -1,0 +1,1463 @@
+{
+  "version": "atv-home-reading-sample-evidence/1",
+  "runId": "home-reading-sample-20261102-v1",
+  "command": "node scripts/generate-home-reading-sample.mjs",
+  "inputSource": "Wholly synthetic fixture authored specifically for the HOME demonstration; no saved private delivery or personal profile imported.",
+  "persistence": "none",
+  "providers": "none; local deterministic calculation and existing versioned editorial compositor",
+  "reproducibility": "Public excerpt and chart are reproducible from this fixed synthetic input. The full private approval digest also includes the real calculation timestamp and is refreshed on each generation; no provenance clock is overwritten.",
+  "publicArtifact": {
+    "path": "apps/web/src/lib/data/home-reading-sample.json",
+    "sha256": "0fad98b9e0322ca0d3010e087ef40b5a7e4e1733dc93c237cd965b8bccae3d7c",
+    "bytes": 42764
+  },
+  "approvalScope": "The existing approval below covers private-free-test only. It is not public editorial approval, commercial release, hosted release or production precision homologation.",
+  "publicReview": {
+    "status": "separate-review-required",
+    "report": null
+  },
+  "selection": {
+    "sectionIndices": [0, 8],
+    "rule": "First interpretative chapter and closing synthesis, copied whole and unchanged from the generated current reading."
+  },
+  "sourceHashes": {
+    "scripts/generate-home-reading-sample.mjs": "ae40a097755ad887d528bc491b57c490d3609e4b88fb24322c9a3b7173fa6f50",
+    "apps/web/src/lib/server/trial-calculation.ts": "73747e9652da49eafb6de7b08821abd77ad5d5f97f6f6d88dbe76c2dda3f62c0",
+    "apps/web/src/lib/trials/reading.ts": "7ac45ded61335ed25816ada95e990658238aa1d49b5fc3b8daa0b0d4ab6d81be",
+    "apps/web/src/lib/trials/current/natal.ts": "2e0054c0cf00596c96325c581afecdd218d891e2002d6d6a3c20a4c567097c2b",
+    "apps/web/src/lib/trials/chart-engine-v2.ts": "356ec836885758bf9e2b7535cd6f87b021da88418db397bf7245d310924c4334",
+    "apps/web/src/lib/astrological-chart-presentation.ts": "0adc291f3e91318112815f37172c90b35f54c901d07c746869c7a2eeb2d982e3"
+  },
+  "input": {
+    "version": "atv-workflow/1.0.0",
+    "productId": "birth-chart",
+    "consent": {
+      "storage": true,
+      "partner": false,
+      "continuity": false,
+      "policyVersion": "atv-input-consent/1"
+    },
+    "birth": {
+      "localDateTime": "1998-05-12T09:00:00",
+      "utcInstant": "1998-05-12T12:00:00Z",
+      "timezone": "America/Sao_Paulo",
+      "latitude": -23.5505,
+      "longitude": -46.6333,
+      "locationSource": "synthetic"
+    }
+  },
+  "calculation": {
+    "version": "atv-private-birth-chart/5.0.0",
+    "kind": "natal",
+    "status": "experimental",
+    "facts": [
+      {
+        "id": "position-sun",
+        "kind": "calculated",
+        "display": "Sol: 21.564095° de Touro; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-moon",
+        "kind": "calculated",
+        "display": "Lua: 1.637050° de Sagitário; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-mercury",
+        "kind": "calculated",
+        "display": "Mercúrio: 26.448792° de Áries; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-venus",
+        "kind": "calculated",
+        "display": "Vênus: 9.851427° de Áries; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-mars",
+        "kind": "calculated",
+        "display": "Marte: 21.642945° de Touro; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-jupiter",
+        "kind": "calculated",
+        "display": "Júpiter: 21.653680° de Peixes; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-saturn",
+        "kind": "calculated",
+        "display": "Saturno: 26.949818° de Áries; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-uranus",
+        "kind": "calculated",
+        "display": "Urano: 12.732410° de Aquário; movimento direto da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-neptune",
+        "kind": "calculated",
+        "display": "Netuno: 2.145693° de Aquário; movimento retrógrado da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "position-pluto",
+        "kind": "calculated",
+        "display": "Plutão: 7.117557° de Sagitário; movimento retrógrado da candidata",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "angle-ascendant",
+        "kind": "calculated",
+        "display": "Ascendente: 23.225014° de Gêmeos",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "angle-midheaven",
+        "kind": "calculated",
+        "display": "Meio do Céu: 3.729347° de Áries",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-1",
+        "kind": "calculated",
+        "display": "Cúspide 1 (Placidus): 23.225014° de Gêmeos",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-2",
+        "kind": "calculated",
+        "display": "Cúspide 2 (Placidus): 25.016255° de Câncer",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-3",
+        "kind": "calculated",
+        "display": "Cúspide 3 (Placidus): 29.603249° de Leão",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-4",
+        "kind": "calculated",
+        "display": "Cúspide 4 (Placidus): 3.729347° de Libra",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-5",
+        "kind": "calculated",
+        "display": "Cúspide 5 (Placidus): 3.772428° de Escorpião",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-6",
+        "kind": "calculated",
+        "display": "Cúspide 6 (Placidus): 29.521725° de Escorpião",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-7",
+        "kind": "calculated",
+        "display": "Cúspide 7 (Placidus): 23.225014° de Sagitário",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-8",
+        "kind": "calculated",
+        "display": "Cúspide 8 (Placidus): 25.016255° de Capricórnio",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-9",
+        "kind": "calculated",
+        "display": "Cúspide 9 (Placidus): 29.603249° de Aquário",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-10",
+        "kind": "calculated",
+        "display": "Cúspide 10 (Placidus): 3.729347° de Áries",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-11",
+        "kind": "calculated",
+        "display": "Cúspide 11 (Placidus): 3.772428° de Touro",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "house-12",
+        "kind": "calculated",
+        "display": "Cúspide 12 (Placidus): 29.521725° de Touro",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+      },
+      {
+        "id": "natal-asc-ruler",
+        "kind": "calculated",
+        "display": "Regente moderno do Ascendente: Mercúrio",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "career-mc-ruler",
+        "kind": "calculated",
+        "display": "Regente moderno do Meio do Céu: Marte",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-1",
+        "kind": "calculated",
+        "display": "Casa 1: regência moderna de Mercúrio, na casa 10",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-2",
+        "kind": "calculated",
+        "display": "Casa 2: regência moderna de Lua, na casa 6",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-3",
+        "kind": "calculated",
+        "display": "Casa 3: regência moderna de Sol, na casa 11",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-4",
+        "kind": "calculated",
+        "display": "Casa 4: regência moderna de Vênus, na casa 10",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-5",
+        "kind": "calculated",
+        "display": "Casa 5: regência moderna de Plutão, na casa 6",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-6",
+        "kind": "calculated",
+        "display": "Casa 6: regência moderna de Plutão, na casa 6",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-7",
+        "kind": "calculated",
+        "display": "Casa 7: regência moderna de Júpiter, na casa 9",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-8",
+        "kind": "calculated",
+        "display": "Casa 8: regência moderna de Saturno, na casa 10",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-9",
+        "kind": "calculated",
+        "display": "Casa 9: regência moderna de Urano, na casa 8",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-10",
+        "kind": "calculated",
+        "display": "Casa 10: regência moderna de Marte, na casa 11",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-11",
+        "kind": "calculated",
+        "display": "Casa 11: regência moderna de Vênus, na casa 10",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "birth-house-ruler-12",
+        "kind": "calculated",
+        "display": "Casa 12: regência moderna de Vênus, na casa 10",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-0",
+        "kind": "calculated",
+        "display": "Sol — Marte: conjunção; orbe 0.079°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-1",
+        "kind": "calculated",
+        "display": "Sol — Júpiter: sextil; orbe 0.090°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-2",
+        "kind": "calculated",
+        "display": "Lua — Netuno: sextil; orbe 0.509°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-3",
+        "kind": "calculated",
+        "display": "Lua — Plutão: conjunção; orbe 5.481°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-4",
+        "kind": "calculated",
+        "display": "Mercúrio — Saturno: conjunção; orbe 0.501°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-5",
+        "kind": "calculated",
+        "display": "Mercúrio — Netuno: quadratura; orbe 5.697°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-6",
+        "kind": "calculated",
+        "display": "Vênus — Urano: sextil; orbe 2.881°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-7",
+        "kind": "calculated",
+        "display": "Vênus — Plutão: trígono; orbe 2.734°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-8",
+        "kind": "calculated",
+        "display": "Marte — Júpiter: sextil; orbe 0.011°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-natal-aspect-9",
+        "kind": "calculated",
+        "display": "Saturno — Netuno: quadratura; orbe 5.196°",
+        "source": "atv-major-aspects/1;atv-birth-major-aspects@1.0.0"
+      },
+      {
+        "id": "private-angle-contact-0",
+        "kind": "calculated",
+        "display": "Lua — Meio do Céu: trígono; orbe 2.092°",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "private-angle-contact-1",
+        "kind": "calculated",
+        "display": "Júpiter — Ascendente: quadratura; orbe 1.571°",
+        "source": "atv-birth-life-signatures/1.0.0"
+      },
+      {
+        "id": "private-angle-contact-2",
+        "kind": "calculated",
+        "display": "Netuno — Meio do Céu: sextil; orbe 1.584°",
+        "source": "atv-birth-life-signatures/1.0.0"
+      }
+    ],
+    "data": {
+      "productId": "birth-chart",
+      "positions": [
+        {
+          "body": "sun",
+          "longitude": 51.564095628665974,
+          "latitude": 0.00016067530324246132,
+          "distanceAu": 1.0102170122692933,
+          "retrograde": false
+        },
+        {
+          "body": "moon",
+          "longitude": 241.6370507659152,
+          "latitude": 4.992934617549566,
+          "distanceAu": 0.002672603224927686,
+          "retrograde": false
+        },
+        {
+          "body": "mercury",
+          "longitude": 26.448792188543322,
+          "latitude": -3.03988838066817,
+          "distanceAu": 0.9592773906440251,
+          "retrograde": false
+        },
+        {
+          "body": "venus",
+          "longitude": 9.85142742615087,
+          "latitude": -1.7126641349763563,
+          "distanceAu": 1.0328518512930553,
+          "retrograde": false
+        },
+        {
+          "body": "mars",
+          "longitude": 51.64294530211403,
+          "latitude": 0.041481702030514295,
+          "distanceAu": 2.4865488538793983,
+          "retrograde": false
+        },
+        {
+          "body": "jupiter",
+          "longitude": 351.6536806230598,
+          "latitude": -1.0517830007773286,
+          "distanceAu": 5.419726800083119,
+          "retrograde": false
+        },
+        {
+          "body": "saturn",
+          "longitude": 26.949818597909438,
+          "latitude": -2.264490824770659,
+          "distanceAu": 10.23921332373209,
+          "retrograde": false
+        },
+        {
+          "body": "uranus",
+          "longitude": 312.7324107306978,
+          "latitude": -0.6451602300563756,
+          "distanceAu": 19.681366480991958,
+          "retrograde": false
+        },
+        {
+          "body": "neptune",
+          "longitude": 302.14569303098654,
+          "latitude": 0.35490014035153244,
+          "distanceAu": 29.792769805157715,
+          "retrograde": true
+        },
+        {
+          "body": "pluto",
+          "longitude": 247.11755748062097,
+          "latitude": 12.43009319768342,
+          "distanceAu": 29.108528743798907,
+          "retrograde": true
+        }
+      ],
+      "angles": {
+        "ascendant": 83.22501478625219,
+        "midheaven": 3.729347674470546
+      },
+      "houses": {
+        "system": "placidus",
+        "status": "ok",
+        "cusps": [
+          83.22501478625219, 115.01625518670875, 149.60324957989593,
+          183.72934767447055, 213.7724289687119, 239.52172581952675,
+          263.22501478625213, 295.0162551867088, 329.6032495798959,
+          3.729347674470546, 33.77242896871189, 59.52172581952681
+        ]
+      },
+      "provenance": {
+        "provider": "caelus",
+        "providerVersion": "0.24.1",
+        "algorithmVersion": "atv-caelus-adapter-v3",
+        "zodiac": "tropical",
+        "houseSystem": "placidus",
+        "calculatedAt": "2026-11-02T11:47:37.942Z",
+        "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+        "dataManifest": {
+          "provider": "caelus",
+          "version": "0.24.1",
+          "tier": "embedded",
+          "files": [
+            {
+              "path": "src/data-embedded.js",
+              "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+            },
+            {
+              "path": "data/vsop87d_mercury.embedded.json",
+              "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+            },
+            {
+              "path": "data/vsop87d_venus.embedded.json",
+              "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+            },
+            {
+              "path": "data/vsop87d_earth.embedded.json",
+              "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+            },
+            {
+              "path": "data/vsop87d_mars.embedded.json",
+              "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+            },
+            {
+              "path": "data/vsop87d_jupiter.embedded.json",
+              "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+            },
+            {
+              "path": "data/vsop87d_saturn.embedded.json",
+              "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+            },
+            {
+              "path": "data/vsop87d_uranus.embedded.json",
+              "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+            },
+            {
+              "path": "data/vsop87d_neptune.embedded.json",
+              "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+            },
+            {
+              "path": "data/nutation_iau1980.json",
+              "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+            },
+            {
+              "path": "data/moon_meeus47.json",
+              "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+            },
+            {
+              "path": "data/pluto_meeus37.json",
+              "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+            },
+            {
+              "path": "data/chiron_cheb.json",
+              "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+            },
+            {
+              "path": "data/fixed_stars.json",
+              "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+            },
+            {
+              "path": "data/constellations.json",
+              "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+            }
+          ]
+        },
+        "contract": {
+          "version": "atv-deterministic-contract/1",
+          "minUtcInstant": "1900-01-01T00:00:00.000Z",
+          "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+          "calendar": "proleptic-gregorian",
+          "inputResolutionMilliseconds": 1,
+          "leapSecondInput": "rejected",
+          "placidusAbsoluteLatitudeExclusive": 66,
+          "accuracy": "experimental-sampled",
+          "guaranteedLongitudeErrorDegrees": null,
+          "retrogradeStationTiming": "not-certified",
+          "productionPromotion": false
+        },
+        "temporal": {
+          "utcInstant": "1998-05-12T12:00:00.000Z",
+          "julianDayUt1Approx": 2450946,
+          "dut1Seconds": null,
+          "timezoneMode": "iana",
+          "timezoneRules": "runtime-intl/unpinned",
+          "offsetSeconds": -10800,
+          "inputScale": "UTC",
+          "engineScale": "UT1-approximated-by-UTC",
+          "deltaTSeconds": 62.81601642710466
+        },
+        "accuracyStatus": "experimental",
+        "warnings": [
+          "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+          "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+          "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+          "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+        ]
+      },
+      "projection": {
+        "version": "atv-natal-product-calculation/1.0.0",
+        "products": ["birth-chart", "three-pillars", "ascendant", "midheaven"],
+        "zodiac": "tropical",
+        "presentation": "zodiac-half-open-sectors/truncated-6-decimals/1",
+        "aspects": "not-assessed",
+        "interpretation": "not-produced",
+        "status": "experimental"
+      },
+      "natal": {
+        "version": "atv-natal-product-calculation/1.0.0",
+        "kind": "natal",
+        "status": "experimental",
+        "facts": [
+          {
+            "id": "position-sun",
+            "kind": "calculated",
+            "display": "Sol: 21.564095° de Touro; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-moon",
+            "kind": "calculated",
+            "display": "Lua: 1.637050° de Sagitário; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-mercury",
+            "kind": "calculated",
+            "display": "Mercúrio: 26.448792° de Áries; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-venus",
+            "kind": "calculated",
+            "display": "Vênus: 9.851427° de Áries; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-mars",
+            "kind": "calculated",
+            "display": "Marte: 21.642945° de Touro; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-jupiter",
+            "kind": "calculated",
+            "display": "Júpiter: 21.653680° de Peixes; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-saturn",
+            "kind": "calculated",
+            "display": "Saturno: 26.949818° de Áries; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-uranus",
+            "kind": "calculated",
+            "display": "Urano: 12.732410° de Aquário; movimento direto da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-neptune",
+            "kind": "calculated",
+            "display": "Netuno: 2.145693° de Aquário; movimento retrógrado da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "position-pluto",
+            "kind": "calculated",
+            "display": "Plutão: 7.117557° de Sagitário; movimento retrógrado da candidata",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "angle-ascendant",
+            "kind": "calculated",
+            "display": "Ascendente: 23.225014° de Gêmeos",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "angle-midheaven",
+            "kind": "calculated",
+            "display": "Meio do Céu: 3.729347° de Áries",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-1",
+            "kind": "calculated",
+            "display": "Cúspide 1 (Placidus): 23.225014° de Gêmeos",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-2",
+            "kind": "calculated",
+            "display": "Cúspide 2 (Placidus): 25.016255° de Câncer",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-3",
+            "kind": "calculated",
+            "display": "Cúspide 3 (Placidus): 29.603249° de Leão",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-4",
+            "kind": "calculated",
+            "display": "Cúspide 4 (Placidus): 3.729347° de Libra",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-5",
+            "kind": "calculated",
+            "display": "Cúspide 5 (Placidus): 3.772428° de Escorpião",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-6",
+            "kind": "calculated",
+            "display": "Cúspide 6 (Placidus): 29.521725° de Escorpião",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-7",
+            "kind": "calculated",
+            "display": "Cúspide 7 (Placidus): 23.225014° de Sagitário",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-8",
+            "kind": "calculated",
+            "display": "Cúspide 8 (Placidus): 25.016255° de Capricórnio",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-9",
+            "kind": "calculated",
+            "display": "Cúspide 9 (Placidus): 29.603249° de Aquário",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-10",
+            "kind": "calculated",
+            "display": "Cúspide 10 (Placidus): 3.729347° de Áries",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-11",
+            "kind": "calculated",
+            "display": "Cúspide 11 (Placidus): 3.772428° de Touro",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          },
+          {
+            "id": "house-12",
+            "kind": "calculated",
+            "display": "Cúspide 12 (Placidus): 29.521725° de Touro",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-natal-product-calculation/1.0.0"
+          }
+        ],
+        "data": {
+          "productId": "birth-chart",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 51.564095628665974,
+              "latitude": 0.00016067530324246132,
+              "distanceAu": 1.0102170122692933,
+              "retrograde": false
+            },
+            {
+              "body": "moon",
+              "longitude": 241.6370507659152,
+              "latitude": 4.992934617549566,
+              "distanceAu": 0.002672603224927686,
+              "retrograde": false
+            },
+            {
+              "body": "mercury",
+              "longitude": 26.448792188543322,
+              "latitude": -3.03988838066817,
+              "distanceAu": 0.9592773906440251,
+              "retrograde": false
+            },
+            {
+              "body": "venus",
+              "longitude": 9.85142742615087,
+              "latitude": -1.7126641349763563,
+              "distanceAu": 1.0328518512930553,
+              "retrograde": false
+            },
+            {
+              "body": "mars",
+              "longitude": 51.64294530211403,
+              "latitude": 0.041481702030514295,
+              "distanceAu": 2.4865488538793983,
+              "retrograde": false
+            },
+            {
+              "body": "jupiter",
+              "longitude": 351.6536806230598,
+              "latitude": -1.0517830007773286,
+              "distanceAu": 5.419726800083119,
+              "retrograde": false
+            },
+            {
+              "body": "saturn",
+              "longitude": 26.949818597909438,
+              "latitude": -2.264490824770659,
+              "distanceAu": 10.23921332373209,
+              "retrograde": false
+            },
+            {
+              "body": "uranus",
+              "longitude": 312.7324107306978,
+              "latitude": -0.6451602300563756,
+              "distanceAu": 19.681366480991958,
+              "retrograde": false
+            },
+            {
+              "body": "neptune",
+              "longitude": 302.14569303098654,
+              "latitude": 0.35490014035153244,
+              "distanceAu": 29.792769805157715,
+              "retrograde": true
+            },
+            {
+              "body": "pluto",
+              "longitude": 247.11755748062097,
+              "latitude": 12.43009319768342,
+              "distanceAu": 29.108528743798907,
+              "retrograde": true
+            }
+          ],
+          "angles": {
+            "ascendant": 83.22501478625219,
+            "midheaven": 3.729347674470546
+          },
+          "houses": {
+            "system": "placidus",
+            "status": "ok",
+            "cusps": [
+              83.22501478625219, 115.01625518670875, 149.60324957989593,
+              183.72934767447055, 213.7724289687119, 239.52172581952675,
+              263.22501478625213, 295.0162551867088, 329.6032495798959,
+              3.729347674470546, 33.77242896871189, 59.52172581952681
+            ]
+          },
+          "provenance": {
+            "provider": "caelus",
+            "providerVersion": "0.24.1",
+            "algorithmVersion": "atv-caelus-adapter-v3",
+            "zodiac": "tropical",
+            "houseSystem": "placidus",
+            "calculatedAt": "2026-11-02T11:47:37.942Z",
+            "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+            "dataManifest": {
+              "provider": "caelus",
+              "version": "0.24.1",
+              "tier": "embedded",
+              "files": [
+                {
+                  "path": "src/data-embedded.js",
+                  "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+                },
+                {
+                  "path": "data/vsop87d_mercury.embedded.json",
+                  "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+                },
+                {
+                  "path": "data/vsop87d_venus.embedded.json",
+                  "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+                },
+                {
+                  "path": "data/vsop87d_earth.embedded.json",
+                  "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+                },
+                {
+                  "path": "data/vsop87d_mars.embedded.json",
+                  "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+                },
+                {
+                  "path": "data/vsop87d_jupiter.embedded.json",
+                  "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+                },
+                {
+                  "path": "data/vsop87d_saturn.embedded.json",
+                  "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+                },
+                {
+                  "path": "data/vsop87d_uranus.embedded.json",
+                  "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+                },
+                {
+                  "path": "data/vsop87d_neptune.embedded.json",
+                  "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+                },
+                {
+                  "path": "data/nutation_iau1980.json",
+                  "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+                },
+                {
+                  "path": "data/moon_meeus47.json",
+                  "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+                },
+                {
+                  "path": "data/pluto_meeus37.json",
+                  "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+                },
+                {
+                  "path": "data/chiron_cheb.json",
+                  "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+                },
+                {
+                  "path": "data/fixed_stars.json",
+                  "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+                },
+                {
+                  "path": "data/constellations.json",
+                  "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+                }
+              ]
+            },
+            "contract": {
+              "version": "atv-deterministic-contract/1",
+              "minUtcInstant": "1900-01-01T00:00:00.000Z",
+              "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+              "calendar": "proleptic-gregorian",
+              "inputResolutionMilliseconds": 1,
+              "leapSecondInput": "rejected",
+              "placidusAbsoluteLatitudeExclusive": 66,
+              "accuracy": "experimental-sampled",
+              "guaranteedLongitudeErrorDegrees": null,
+              "retrogradeStationTiming": "not-certified",
+              "productionPromotion": false
+            },
+            "temporal": {
+              "utcInstant": "1998-05-12T12:00:00.000Z",
+              "julianDayUt1Approx": 2450946,
+              "dut1Seconds": null,
+              "timezoneMode": "iana",
+              "timezoneRules": "runtime-intl/unpinned",
+              "offsetSeconds": -10800,
+              "inputScale": "UTC",
+              "engineScale": "UT1-approximated-by-UTC",
+              "deltaTSeconds": 62.81601642710466
+            },
+            "accuracyStatus": "experimental",
+            "warnings": [
+              "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+              "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+              "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+              "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+            ]
+          },
+          "projection": {
+            "version": "atv-natal-product-calculation/1.0.0",
+            "products": [
+              "birth-chart",
+              "three-pillars",
+              "ascendant",
+              "midheaven"
+            ],
+            "zodiac": "tropical",
+            "presentation": "zodiac-half-open-sectors/truncated-6-decimals/1",
+            "aspects": "not-assessed",
+            "interpretation": "not-produced",
+            "status": "experimental"
+          }
+        },
+        "limits": [
+          "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+          "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+          "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+          "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+          "Posições e signos são fatos experimentais, não uma interpretação ou homologação. Casas decimais de exibição não garantem precisão.",
+          "Aspectos, síntese interpretativa, profissões e promessas de prosperidade não foram produzidos."
+        ]
+      },
+      "birth": {
+        "localDateTime": "1998-05-12T09:00:00",
+        "utcInstant": "1998-05-12T12:00:00Z",
+        "timezone": "America/Sao_Paulo",
+        "latitude": -23.5505,
+        "longitude": -46.6333,
+        "locationSource": "synthetic"
+      },
+      "method": {
+        "version": "atv-birth-life-signatures/1.0.0",
+        "zodiac": "tropical",
+        "rulership": "modern",
+        "houseSystem": "placidus",
+        "houseMembership": "cyclic-half-open-start-inclusive",
+        "aspectPolicy": {
+          "id": "atv-birth-major-aspects",
+          "version": "1.0.0",
+          "aspects": [
+            {
+              "kind": "conjunction",
+              "orbDegrees": 6
+            },
+            {
+              "kind": "sextile",
+              "orbDegrees": 4
+            },
+            {
+              "kind": "square",
+              "orbDegrees": 6
+            },
+            {
+              "kind": "trine",
+              "orbDegrees": 6
+            },
+            {
+              "kind": "opposition",
+              "orbDegrees": 6
+            }
+          ]
+        },
+        "angularOrb": 3,
+        "applyingSeparating": false,
+        "selection": {
+          "signatures": 6,
+          "core": ["sun-moon", "asc-ruler", "mc-ruler"],
+          "resources": 3,
+          "closeAspectOrb": 3,
+          "tieBreak": "body-id-ascending"
+        },
+        "themes": [
+          "whole-chart",
+          "identity-needs",
+          "presence-action",
+          "learning",
+          "relationships",
+          "private-support",
+          "daily-effort",
+          "contribution",
+          "resources",
+          "groups-meaning",
+          "synthesis"
+        ]
+      },
+      "regents": [
+        {
+          "axis": "ascendant",
+          "body": "mercury",
+          "house": 10
+        },
+        {
+          "axis": "midheaven",
+          "body": "mars",
+          "house": 11
+        }
+      ],
+      "houseRegents": [
+        {
+          "house": 1,
+          "body": "mercury",
+          "rulerHouse": 10
+        },
+        {
+          "house": 2,
+          "body": "moon",
+          "rulerHouse": 6
+        },
+        {
+          "house": 3,
+          "body": "sun",
+          "rulerHouse": 11
+        },
+        {
+          "house": 4,
+          "body": "venus",
+          "rulerHouse": 10
+        },
+        {
+          "house": 5,
+          "body": "pluto",
+          "rulerHouse": 6
+        },
+        {
+          "house": 6,
+          "body": "pluto",
+          "rulerHouse": 6
+        },
+        {
+          "house": 7,
+          "body": "jupiter",
+          "rulerHouse": 9
+        },
+        {
+          "house": 8,
+          "body": "saturn",
+          "rulerHouse": 10
+        },
+        {
+          "house": 9,
+          "body": "uranus",
+          "rulerHouse": 8
+        },
+        {
+          "house": 10,
+          "body": "mars",
+          "rulerHouse": 11
+        },
+        {
+          "house": 11,
+          "body": "venus",
+          "rulerHouse": 10
+        },
+        {
+          "house": 12,
+          "body": "venus",
+          "rulerHouse": 10
+        }
+      ],
+      "privateAspects": {
+        "algorithmVersion": "atv-major-aspects/1",
+        "coordinate": "ecliptic-longitude",
+        "motion": "not-evaluated",
+        "inputPrecision": "not-certified",
+        "inputPositions": [
+          {
+            "body": "sun",
+            "longitude": 51.564095628665974
+          },
+          {
+            "body": "moon",
+            "longitude": 241.6370507659152
+          },
+          {
+            "body": "mercury",
+            "longitude": 26.448792188543322
+          },
+          {
+            "body": "venus",
+            "longitude": 9.85142742615087
+          },
+          {
+            "body": "mars",
+            "longitude": 51.64294530211403
+          },
+          {
+            "body": "jupiter",
+            "longitude": 351.6536806230598
+          },
+          {
+            "body": "saturn",
+            "longitude": 26.949818597909438
+          },
+          {
+            "body": "uranus",
+            "longitude": 312.7324107306978
+          },
+          {
+            "body": "neptune",
+            "longitude": 302.14569303098654
+          },
+          {
+            "body": "pluto",
+            "longitude": 247.11755748062097
+          }
+        ],
+        "policy": {
+          "id": "atv-birth-major-aspects",
+          "version": "1.0.0",
+          "aspects": [
+            {
+              "kind": "conjunction",
+              "orbDegrees": 6
+            },
+            {
+              "kind": "sextile",
+              "orbDegrees": 4
+            },
+            {
+              "kind": "square",
+              "orbDegrees": 6
+            },
+            {
+              "kind": "trine",
+              "orbDegrees": 6
+            },
+            {
+              "kind": "opposition",
+              "orbDegrees": 6
+            }
+          ]
+        },
+        "pairsEvaluated": 45,
+        "aspects": [
+          {
+            "first": "sun",
+            "second": "mars",
+            "kind": "conjunction",
+            "exactAngleDegrees": 0,
+            "separationDegrees": 0.0788496734480546,
+            "orbDegrees": 0.0788496734480546
+          },
+          {
+            "first": "sun",
+            "second": "jupiter",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.91041500560618,
+            "orbDegrees": 0.0895849943938174
+          },
+          {
+            "first": "moon",
+            "second": "neptune",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 60.50864226507133,
+            "orbDegrees": 0.5086422650713303
+          },
+          {
+            "first": "moon",
+            "second": "pluto",
+            "kind": "conjunction",
+            "exactAngleDegrees": 0,
+            "separationDegrees": 5.4805067147057684,
+            "orbDegrees": 5.4805067147057684
+          },
+          {
+            "first": "mercury",
+            "second": "saturn",
+            "kind": "conjunction",
+            "exactAngleDegrees": 0,
+            "separationDegrees": 0.5010264093661156,
+            "orbDegrees": 0.5010264093661156
+          },
+          {
+            "first": "mercury",
+            "second": "neptune",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 84.3030991575568,
+            "orbDegrees": 5.696900842443199
+          },
+          {
+            "first": "venus",
+            "second": "uranus",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 57.11901669545307,
+            "orbDegrees": 2.8809833045469304
+          },
+          {
+            "first": "venus",
+            "second": "pluto",
+            "kind": "trine",
+            "exactAngleDegrees": 120,
+            "separationDegrees": 122.7338699455299,
+            "orbDegrees": 2.7338699455299036
+          },
+          {
+            "first": "mars",
+            "second": "jupiter",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.9892646790542,
+            "orbDegrees": 0.010735320945798321
+          },
+          {
+            "first": "saturn",
+            "second": "neptune",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 84.80412556692289,
+            "orbDegrees": 5.195874433077108
+          }
+        ]
+      },
+      "angleContacts": [
+        {
+          "body": "moon",
+          "angle": "midheaven",
+          "kind": "trine",
+          "orb": 2.0922969085553405
+        },
+        {
+          "body": "jupiter",
+          "angle": "ascendant",
+          "kind": "square",
+          "orb": 1.5713341631923754
+        },
+        {
+          "body": "neptune",
+          "angle": "midheaven",
+          "kind": "sextile",
+          "orb": 1.5836546434840102
+        }
+      ]
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "Posições e signos são fatos experimentais, não uma interpretação ou homologação. Casas decimais de exibição não garantem precisão.",
+      "Leitura humanista tropical com regências modernas e casas Placidus; base experimental e precisão não homologada para produção.",
+      "Aspectos maiores: orbe nominal 6°, sextil 4°; contatos aos ângulos 3°. Aplicação e separação não certificadas.",
+      "Seis assinaturas editoriais relacionam fatores calculados. A prioridade de uso considera o contexto declarado sem alterar a geometria."
+    ]
+  },
+  "reading": {
+    "version": "atv-current-reading/1.0.0",
+    "productId": "birth-chart",
+    "title": "Mapa Astral Completo",
+    "opening": "Esta leitura acompanha como direção, sentimento, pensamento e iniciativa se encontram no seu mapa. O significado aparece nas relações entre as posições: uma facilidade pode carregar seu próprio custo, e ritmos diferentes podem coexistir sem que um invalide o outro.",
+    "source": "Composição editorial original ATVNA; atv-humanistic-modern/1.0.0; atv-current-natal/1.0.0. Posições, casas e contatos provenientes da projeção verificada desta solicitação.",
+    "sections": [
+      {
+        "title": "O que faz sentido precisa também caber na sua vida",
+        "text": "Sol em Touro, na casa 11 e Lua em Sagitário, na casa 6 relacionam o que dá direção às suas escolhas com o que ajuda você a se sentir à vontade. Vontade e conforto descrevem necessidades diferentes, mesmo quando apontam para um tema parecido. A direção de uma escolha pode fazer sentido sem oferecer alívio imediato; uma experiência acolhedora pode recompor você sem precisar virar um projeto. Essa distinção permite reconhecer ambas sem forçar uma concordância.\n\nSol em Touro busca construir algo que possa reconhecer, usar e manter ao longo do tempo; Lua em Sagitário acrescenta a importância de perceber possibilidades e conservar espaço para explorar.\n\nAs casas situam essa relação: Sol se volta para os grupos e os projetos compartilhados; Lua, para a rotina e a organização do trabalho. Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.",
+        "factIds": ["position-sun", "position-moon", "house-11", "house-6"]
+      },
+      {
+        "title": "A maneira de começar e o trabalho de continuar",
+        "text": "Com o Ascendente em Gêmeos, perguntar, observar respostas e abrir mais de uma possibilidade descreve uma forma de entrar nas situações. Seu regente, Mercúrio em Áries, na casa 10, leva essa intenção a compreender e comunicar, pela tendência a formular o ponto principal e testar uma resposta direta. A primeira impressão não conta toda a história: o modo de iniciar e o trabalho necessário para sustentar essa intenção têm ritmos diferentes.\n\nA iniciativa encontra uma fonte de ideias e alternativas. Isso pode tornar um começo ágil, mas a abertura de possibilidades tende a multiplicar caminhos antes de um deles ter tempo de amadurecer. A casa 10 direciona esse trabalho para a contribuição pública e as responsabilidades profissionais. É nesse campo simbólico que a intenção precisa encontrar meios de se realizar, em vez de permanecer apenas uma imagem de si.\n\nJúpiter em Peixes, em quadratura com o Ascendente, aproxima a maneira de entrar em contato com o mundo da necessidade de ampliar possibilidades e encontrar um horizonte de sentido. Há uma tensão específica: a promessa de crescimento pode exceder o espaço e os meios que essa direção tem no presente. O signo dá a essa busca uma orientação particular: abrir possibilidades e ampliar o entendimento, procurando dar espaço à imaginação e perceber relações que uma explicação imediata não alcança.",
+        "factIds": [
+          "angle-ascendant",
+          "natal-asc-ruler",
+          "position-mercury",
+          "private-angle-contact-1",
+          "position-jupiter"
+        ]
+      },
+      {
+        "title": "Entre entender o detalhe e enxergar mais longe",
+        "text": "Mercúrio em Áries, na casa 10 e Júpiter em Peixes, na casa 9 relacionam o caminho pelo qual uma ideia se torna compreensível com o horizonte que faz valer a pena aprendê-la. Entender uma informação e acreditar que ela leva a algum lugar são movimentos diferentes. A leitura reúne seu modo de elaborar uma ideia e aquilo que amplia seu interesse, sem pressupor que um determine o outro. Uma boa direção de aprendizagem precisa oferecer tanto uma forma compreensível de avançar quanto uma razão para continuar.\n\nMercúrio em Áries busca formular o ponto principal e testar uma resposta direta; Júpiter em Peixes acrescenta a importância de dar espaço à imaginação e perceber relações que uma explicação imediata não alcança.\n\nAs casas situam essa relação: Mercúrio se volta para a contribuição pública e as responsabilidades profissionais; Júpiter, para os estudos mais amplos e as convicções. Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.",
+        "factIds": [
+          "position-mercury",
+          "position-jupiter",
+          "house-10",
+          "house-9"
+        ]
+      },
+      {
+        "title": "Receber cuidado e demonstrar afeto nem sempre têm o mesmo ritmo",
+        "text": "Lua em Sagitário, na casa 6 e Vênus em Áries, na casa 10 relacionam o que faz você se sentir acolhido com a maneira de se aproximar e demonstrar apreço. O que conforta você e o que considera bonito numa relação não precisam ser idênticos. Reconhecer essa diferença ajuda a entender por que uma troca pode ser atraente sem atender a todas as necessidades de acolhimento, ou segura sem reunir tudo o que desperta seu interesse.\n\nLua em Sagitário busca perceber possibilidades e conservar espaço para explorar; Vênus em Áries acrescenta a importância de demonstrar interesse de forma direta, preservando a iniciativa de cada pessoa.\n\nAs casas situam essa relação: Lua se volta para a rotina e a organização do trabalho; Vênus, para a contribuição pública e as responsabilidades profissionais. Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.",
+        "factIds": ["position-moon", "position-venus", "house-6", "house-10"]
+      },
+      {
+        "title": "O que atrai você e o que faz você se mover",
+        "text": "Vênus em Áries, na casa 10 e Marte em Touro, na casa 11 relacionam o modo de cultivar uma aproximação com o modo de agir quando algo importa. Gostar de uma possibilidade e agir para torná-la real descrevem etapas distintas. Seu modo de demonstrar apreço pode ser diferente do modo como enfrenta obstáculos. A leitura ganha precisão ao distinguir a intenção de aproximação da força usada para defendê-la.\n\nVênus em Áries busca demonstrar interesse de forma direta, preservando a iniciativa de cada pessoa; Marte em Touro acrescenta a importância de concentrar esforço em uma direção e sustentar a execução.\n\nAs casas situam essa relação: Vênus se volta para a contribuição pública e as responsabilidades profissionais; Marte, para os grupos e os projetos compartilhados. Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.",
+        "factIds": ["position-venus", "position-mars", "house-10", "house-11"]
+      },
+      {
+        "title": "Começar, sustentar e saber quando basta",
+        "text": "Marte em Touro, na casa 11 e Saturno em Áries, na casa 10 relacionam a maneira de enfrentar um obstáculo com a maneira de dar continuidade e assumir um limite. Seu modo de entrar em ação e seu modo de lidar com responsabilidade são duas referências diferentes. Uma decisão pode ser fácil de começar e difícil de manter, ou exigir preparação antes de ganhar movimento. O mapa oferece essas duas perspectivas sem presumir um conflito calculado entre elas.\n\nMarte em Touro busca concentrar esforço em uma direção e sustentar a execução; Saturno em Áries acrescenta a importância de formular o ponto principal e testar uma resposta direta.\n\nAs casas situam essa relação: Marte se volta para os grupos e os projetos compartilhados; Saturno, para a contribuição pública e as responsabilidades profissionais. Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.",
+        "factIds": ["position-mars", "position-saturn", "house-11", "house-10"]
+      },
+      {
+        "title": "Crescer sem perder as condições que sustentam o crescimento",
+        "text": "Júpiter em Peixes, na casa 9 e Saturno em Áries, na casa 10 relacionam o que amplia seu horizonte com o que dá medida aos compromissos. A leitura coloca lado a lado sua busca de possibilidades e sua maneira de dar forma a compromissos. Elas ajudam a distinguir uma direção desejável de uma decisão viável agora, sem transformar a condição presente numa sentença sobre o futuro.\n\nJúpiter em Peixes busca dar espaço à imaginação e perceber relações que uma explicação imediata não alcança; Saturno em Áries acrescenta a importância de formular o ponto principal e testar uma resposta direta.\n\nAs casas situam essa relação: Júpiter se volta para os estudos mais amplos e as convicções; Saturno, para a contribuição pública e as responsabilidades profissionais. Uma intenção encontra condições em outro campo da vida. Dar lugar a ambos permite que a escolha tenha continuidade sem cobrar de uma única experiência todas as respostas.",
+        "factIds": [
+          "position-jupiter",
+          "position-saturn",
+          "house-9",
+          "house-10"
+        ]
+      },
+      {
+        "title": "Uma direção de contribuição, várias formas de realizá-la",
+        "text": "Com o Meio do Céu em Áries, participar por iniciativa própria e descobrir o que consegue começar descreve uma direção simbólica de contribuição. Seu regente, Marte em Touro, na casa 11, leva essa intenção a transformar vontade em atitude, pela tendência a concentrar esforço em uma direção e sustentar a execução. O ideal de contribuição e os meios para sustentá-lo têm ritmos diferentes. Dar espaço a ambos evita que a identificação com um resultado torne invisível o trabalho necessário para construí-lo.\n\nO desejo de colocar algo em movimento encontra a necessidade de concretude. Uma parte ganha confiança ao começar; a outra, ao perceber o que pode ser sustentado. A diferença está no momento em que cada uma considera haver base suficiente para avançar. A casa 11 direciona esse trabalho para os grupos e os projetos compartilhados. É nesse campo simbólico que a intenção precisa encontrar meios de se realizar, em vez de permanecer apenas uma imagem de si.\n\nNetuno em Aquário, em sextil com o Meio do Céu, aproxima a direção que ganha expressão pública da necessidade de dar lugar à sensibilidade, à imaginação e ao que ainda não tem forma. A ligação oferece apoio: imaginação e escuta ampliam a contribuição quando encontram uma forma e limites compartilháveis. O signo dá a essa busca uma orientação particular: dar espaço à imaginação e à sensibilidade, sem tomar o desejo de participar com independência de pensamento e contribuir para possibilidades novas como garantia de realização.\n\nEssa direção pode ganhar formas diferentes conforme sua formação, seus interesses e as condições de trabalho. O ponto comum entre elas é a maneira de participar e dar continuidade à contribuição descrita aqui.",
+        "factIds": [
+          "angle-midheaven",
+          "career-mc-ruler",
+          "position-mars",
+          "private-angle-contact-2",
+          "position-neptune"
+        ]
+      },
+      {
+        "title": "A dinâmica que aparece quando as partes se encontram",
+        "text": "Ao reunir o mapa, aparece uma distinção entre querer construir algo que possa reconhecer, usar e manter ao longo do tempo e precisar perceber possibilidades e conservar espaço para explorar. Sem um aspecto maior entre Sol e Lua nesta política, a leitura conserva essas duas referências distintas: nem todo desejo precisa oferecer conforto imediato, e nem todo conforto precisa virar direção de vida.\n\nO Ascendente em Gêmeos acrescenta perguntar, observar respostas e abrir mais de uma possibilidade como maneira de começar. Isso pode tornar o primeiro movimento diferente daquilo que você procura desenvolver depois: a entrada numa situação não resume seu modo de permanecer nela. Com Mercúrio em Áries, continuar envolve compreender e comunicar, pela tendência a formular o ponto principal e testar uma resposta direta. A casa 10 desloca esse trabalho para a contribuição pública e as responsabilidades profissionais; portanto, a iniciativa precisa encontrar espaço nesse campo para ganhar continuidade.\n\nO Sol em Touro procura uma direção com a qual se identificar; a Lua em Sagitário mostra o que permite habitá-la emocionalmente. Uma escolha pode ganhar força ao acolher essas duas exigências: ter sentido para quem a realiza e oferecer condições para continuar envolvido nela.",
+        "factIds": [
+          "position-sun",
+          "position-moon",
+          "angle-ascendant",
+          "natal-asc-ruler",
+          "position-mercury"
+        ]
+      }
+    ],
+    "questions": [
+      "Qual combinação desta leitura esclarece melhor uma escolha que importa para você?"
+    ],
+    "practice": "Escolha uma dinâmica que já tenha ficado clara na leitura e dê espaço às duas necessidades que ela descreve em uma decisão pequena. Não é necessário concordar com todo o texto para aproveitar uma distinção que faça sentido.",
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "Posições e signos são fatos experimentais, não uma interpretação ou homologação. Casas decimais de exibição não garantem precisão.",
+      "Leitura humanista tropical com regências modernas e casas Placidus; base experimental e precisão não homologada para produção.",
+      "Aspectos maiores: orbe nominal 6°, sextil 4°; contatos aos ângulos 3°. Aplicação e separação não certificadas.",
+      "Seis assinaturas editoriais relacionam fatores calculados. A prioridade de uso considera o contexto declarado sem alterar a geometria.",
+      "Interpretação simbólica e contextual, sem diagnóstico, previsão de acontecimentos ou comprovação de traços pessoais.",
+      "As aproximações temáticas não pressupõem um aspecto entre os fatores; quando um contato calculado modifica a interpretação, ele é identificado no trecho correspondente."
+    ],
+    "interpretation": {
+      "version": "atv-interpretation-evidence/1",
+      "family": "natal",
+      "conclusions": [
+        {
+          "section": 0,
+          "claim": "Sol em Touro, na casa 11 e Lua em Sagitário, na casa 6 relacionam o que dá direção às suas escolhas com o que ajuda você a se sentir à vontade. Vontade e conforto descrevem necessidades diferentes, mesmo quando apontam para um tema parecido. A direção de uma escolha pode fazer sentido sem oferecer alívio imediato; uma experiência acolhedora pode recompor você sem precisar virar um projeto. Essa distinção permite reconhecer ambas sem forçar uma concordância.",
+          "factIds": ["position-sun", "position-moon", "house-11", "house-6"],
+          "relation": "sun/moon; composição temática sem aspecto maior; signos Touro/Sagitário modulam ritmos e necessidades; casas 11/6 delimitam campos. Vontade e conforto descrevem necessidades diferentes, mesmo quando apontam para um tema parecido. A direção de uma escolha pode fazer sentido sem oferecer alívio imediato; uma experiência acolhedora pode recompor você sem precisar virar um projeto. Essa distinção permite reconhecer ambas sem forçar uma concordância."
+        },
+        {
+          "section": 1,
+          "claim": "Com o Ascendente em Gêmeos, perguntar, observar respostas e abrir mais de uma possibilidade descreve uma forma de entrar nas situações. Seu regente, Mercúrio em Áries, na casa 10, leva essa intenção a compreender e comunicar, pela tendência a formular o ponto principal e testar uma resposta direta. A primeira impressão não conta toda a história: o modo de iniciar e o trabalho necessário para sustentar essa intenção têm ritmos diferentes.",
+          "factIds": [
+            "angle-ascendant",
+            "natal-asc-ruler",
+            "position-mercury",
+            "private-angle-contact-1",
+            "position-jupiter"
+          ],
+          "relation": "Ascendente em Gêmeos lido com regente mercury em Áries, casa 10; mudança de ritmo entre intenção e execução; contato jupiter/square."
+        },
+        {
+          "section": 2,
+          "claim": "Mercúrio em Áries, na casa 10 e Júpiter em Peixes, na casa 9 relacionam o caminho pelo qual uma ideia se torna compreensível com o horizonte que faz valer a pena aprendê-la. Entender uma informação e acreditar que ela leva a algum lugar são movimentos diferentes. A leitura reúne seu modo de elaborar uma ideia e aquilo que amplia seu interesse, sem pressupor que um determine o outro. Uma boa direção de aprendizagem precisa oferecer tanto uma forma compreensível de avançar quanto uma razão para continuar.",
+          "factIds": [
+            "position-mercury",
+            "position-jupiter",
+            "house-10",
+            "house-9"
+          ],
+          "relation": "mercury/jupiter; composição temática sem aspecto maior; signos Áries/Peixes modulam ritmos e necessidades; casas 10/9 delimitam campos. Entender uma informação e acreditar que ela leva a algum lugar são movimentos diferentes. A leitura reúne seu modo de elaborar uma ideia e aquilo que amplia seu interesse, sem pressupor que um determine o outro. Uma boa direção de aprendizagem precisa oferecer tanto uma forma compreensível de avançar quanto uma razão para continuar."
+        },
+        {
+          "section": 3,
+          "claim": "Lua em Sagitário, na casa 6 e Vênus em Áries, na casa 10 relacionam o que faz você se sentir acolhido com a maneira de se aproximar e demonstrar apreço. O que conforta você e o que considera bonito numa relação não precisam ser idênticos. Reconhecer essa diferença ajuda a entender por que uma troca pode ser atraente sem atender a todas as necessidades de acolhimento, ou segura sem reunir tudo o que desperta seu interesse.",
+          "factIds": ["position-moon", "position-venus", "house-6", "house-10"],
+          "relation": "moon/venus; composição temática sem aspecto maior; signos Sagitário/Áries modulam ritmos e necessidades; casas 6/10 delimitam campos. O que conforta você e o que considera bonito numa relação não precisam ser idênticos. Reconhecer essa diferença ajuda a entender por que uma troca pode ser atraente sem atender a todas as necessidades de acolhimento, ou segura sem reunir tudo o que desperta seu interesse."
+        },
+        {
+          "section": 4,
+          "claim": "Vênus em Áries, na casa 10 e Marte em Touro, na casa 11 relacionam o modo de cultivar uma aproximação com o modo de agir quando algo importa. Gostar de uma possibilidade e agir para torná-la real descrevem etapas distintas. Seu modo de demonstrar apreço pode ser diferente do modo como enfrenta obstáculos. A leitura ganha precisão ao distinguir a intenção de aproximação da força usada para defendê-la.",
+          "factIds": [
+            "position-venus",
+            "position-mars",
+            "house-10",
+            "house-11"
+          ],
+          "relation": "venus/mars; composição temática sem aspecto maior; signos Áries/Touro modulam ritmos e necessidades; casas 10/11 delimitam campos. Gostar de uma possibilidade e agir para torná-la real descrevem etapas distintas. Seu modo de demonstrar apreço pode ser diferente do modo como enfrenta obstáculos. A leitura ganha precisão ao distinguir a intenção de aproximação da força usada para defendê-la."
+        },
+        {
+          "section": 5,
+          "claim": "Marte em Touro, na casa 11 e Saturno em Áries, na casa 10 relacionam a maneira de enfrentar um obstáculo com a maneira de dar continuidade e assumir um limite. Seu modo de entrar em ação e seu modo de lidar com responsabilidade são duas referências diferentes. Uma decisão pode ser fácil de começar e difícil de manter, ou exigir preparação antes de ganhar movimento. O mapa oferece essas duas perspectivas sem presumir um conflito calculado entre elas.",
+          "factIds": [
+            "position-mars",
+            "position-saturn",
+            "house-11",
+            "house-10"
+          ],
+          "relation": "mars/saturn; composição temática sem aspecto maior; signos Touro/Áries modulam ritmos e necessidades; casas 11/10 delimitam campos. Seu modo de entrar em ação e seu modo de lidar com responsabilidade são duas referências diferentes. Uma decisão pode ser fácil de começar e difícil de manter, ou exigir preparação antes de ganhar movimento. O mapa oferece essas duas perspectivas sem presumir um conflito calculado entre elas."
+        },
+        {
+          "section": 6,
+          "claim": "Júpiter em Peixes, na casa 9 e Saturno em Áries, na casa 10 relacionam o que amplia seu horizonte com o que dá medida aos compromissos. A leitura coloca lado a lado sua busca de possibilidades e sua maneira de dar forma a compromissos. Elas ajudam a distinguir uma direção desejável de uma decisão viável agora, sem transformar a condição presente numa sentença sobre o futuro.",
+          "factIds": [
+            "position-jupiter",
+            "position-saturn",
+            "house-9",
+            "house-10"
+          ],
+          "relation": "jupiter/saturn; composição temática sem aspecto maior; signos Peixes/Áries modulam ritmos e necessidades; casas 9/10 delimitam campos. A leitura coloca lado a lado sua busca de possibilidades e sua maneira de dar forma a compromissos. Elas ajudam a distinguir uma direção desejável de uma decisão viável agora, sem transformar a condição presente numa sentença sobre o futuro."
+        },
+        {
+          "section": 7,
+          "claim": "Com o Meio do Céu em Áries, participar por iniciativa própria e descobrir o que consegue começar descreve uma direção simbólica de contribuição. Seu regente, Marte em Touro, na casa 11, leva essa intenção a transformar vontade em atitude, pela tendência a concentrar esforço em uma direção e sustentar a execução. O ideal de contribuição e os meios para sustentá-lo têm ritmos diferentes. Dar espaço a ambos evita que a identificação com um resultado torne invisível o trabalho necessário para construí-lo.",
+          "factIds": [
+            "angle-midheaven",
+            "career-mc-ruler",
+            "position-mars",
+            "private-angle-contact-2",
+            "position-neptune"
+          ],
+          "relation": "MC em Áries lido com regente mars em Touro, casa 11; mudança de ritmo entre intenção e execução; contato neptune/sextile."
+        },
+        {
+          "section": 8,
+          "claim": "Ao reunir o mapa, aparece uma distinção entre querer construir algo que possa reconhecer, usar e manter ao longo do tempo e precisar perceber possibilidades e conservar espaço para explorar. Sem um aspecto maior entre Sol e Lua nesta política, a leitura conserva essas duas referências distintas: nem todo desejo precisa oferecer conforto imediato, e nem todo conforto precisa virar direção de vida.",
+          "factIds": [
+            "position-sun",
+            "position-moon",
+            "angle-ascendant",
+            "natal-asc-ruler",
+            "position-mercury"
+          ],
+          "relation": "Sol Touro + Lua Sagitário sem aspecto maior; entrada Gêmeos e continuidade pelo regente mercury/Áries. Integra direção, recomposição e execução; necessidades distintas preservadas."
+        }
+      ]
+    },
+    "nameRevision": "atv-offer-name/2026-10-15"
+  },
+  "approval": {
+    "status": "approved",
+    "scope": "private-free-test",
+    "policy": "atv-current-interpretation-review/1.0.0",
+    "digest": "a5b60e83097c14d586122b9f9705e24cc4a55d2b3f2b6500191121e5c1ead84e"
+  }
+}
