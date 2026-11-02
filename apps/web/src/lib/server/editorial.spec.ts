@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { SITE } from '$lib/data/site';
-import { legacySeo, robotsPolicy, safeJsonLd } from '$lib/seo';
+import { legacyPublicPaths, legacySeo, robotsPolicy, safeJsonLd } from '$lib/seo';
 import {
 	approvalPayload,
 	approvedDocuments,
@@ -361,7 +361,7 @@ describe('feeds and search surfaces', () => {
 			'/ferramentas/carta-do-amor'
 		])
 			expect(body).toContain(`https://atuavidanosastros.com.br${path}</loc>`);
-		for (const path of ['/atv-plus', '/bussola-de-carreira'])
+		for (const path of ['/atv-plus', '/bussola-de-carreira', '/loja'])
 			expect(body).not.toContain(`https://atuavidanosastros.com.br${path}</loc>`);
 		expect(body).toContain('https://atuavidanosastros.com.br/mapa-de-proposito</loc>');
 		expect(body).toContain('https://atuavidanosastros.com.br/leituras');
@@ -371,6 +371,15 @@ describe('feeds and search surfaces', () => {
 		expect(body).not.toContain('https://atuavidanosastros.com.br/caderno</loc>');
 		expect(body).not.toContain('/signos');
 		expect(body).not.toContain('/noticias');
+	});
+	it('does not advertise legacy pages excluded by their public robots policy', () => {
+		for (const documents of [[], [fixture()]]) {
+			const body = pagesSitemap(documents);
+			for (const path of legacyPublicPaths) {
+				if (robotsPolicy(legacySeo(path), new URL(SITE.url + path)).includes('noindex'))
+					expect(body, path).not.toContain(`<loc>${SITE.url}${path === '/' ? '' : path}</loc>`);
+			}
+		}
 	});
 	it('only indexes nonempty approved hubs', () => {
 		expect(hubSeo('/noticias', []).indexable).toBe(false);

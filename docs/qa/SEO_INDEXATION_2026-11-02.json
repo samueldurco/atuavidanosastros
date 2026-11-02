@@ -1,0 +1,42 @@
+{
+  "run_id": "ATV-20260902-170644Z-01A0630F",
+  "date": "2026-11-02",
+  "scope": "Public sitemap and indexability consistency",
+  "base_sha": "5a95b5b9681d0356c509f84da4b67f20e0ce952d",
+  "origin": "https://atuavidanosastros.com.br",
+  "observed_production": {
+    "sitemap_urls": 105,
+    "http_200": 105,
+    "indexable_with_self_canonical": 104,
+    "inconsistency": {
+      "path": "/loja",
+      "in_pages_sitemap": true,
+      "robots": "noindex, nofollow",
+      "reason": "Physical commerce has not been released; the existing noindex policy is intentional."
+    },
+    "http_and_www_redirect_to_canonical_https": true,
+    "googlebot_globally_blocked": false
+  },
+  "change": "Filter legacy sitemap entries by their existing public SEO indexability policy; retain approved editorial hubs and horoscope archives.",
+  "preserved": [
+    "Private, unpublished, staging and unknown pages remain noindex or unavailable.",
+    "Physical commerce and all editorial approval gates remain unchanged.",
+    "No Search Console removal, robots disallow, canonical migration or DNS change."
+  ],
+  "validation": {
+    "focused_unit_tests": "42 passed across editorial and public-discovery suites",
+    "format_and_diff_check": "passed",
+    "focused_eslint": "passed",
+    "independent_code_review": "no blocking findings",
+    "pages_preflight": "passed",
+    "release_gate": "Exact candidate CI and hosted verification are required before release."
+  },
+  "search_console_limit": {
+    "user_screenshot": "7 not indexed and 1 indexed; exclusion reasons and URLs are not visible.",
+    "connected_property_count": 0,
+    "conclusion": "The sitemap inconsistency is independently verified. It cannot be attributed to any of the seven exclusions without their details, and Google indexing is not proven by HTTP checks.",
+    "remaining": "Obtain legitimate property access or the exclusion reasons and example URLs; inspect affected public URLs and request validation where appropriate."
+  },
+  "external_evidence": "C:/ATVNA/evidence/ATV-20260902-170644Z-01A0630F/seo-indexation-20261102",
+  "rollback": "Revert this scoped sitemap change; preserve concurrent application and content changes."
+}

@@ -1,6 +1,6 @@
 import { SITE } from '$lib/data/site';
 import { publicEditorialAuthor } from '$lib/data/editorial-author';
-import { editorialHubs, legacyPublicPaths } from '$lib/seo';
+import { editorialHubs, legacyPublicPaths, legacySeo } from '$lib/seo';
 import { hubDocuments, type EditorialSummary } from './editorial';
 import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
 
@@ -61,8 +61,9 @@ export function pagesSitemap(documents: readonly EditorialSummary[]): string {
 			? horoscopeSigns.length > 0
 			: hubDocuments(documents, path as keyof typeof editorialHubs).length > 0
 	);
+	const publicPaths = legacyPublicPaths.filter((path) => legacySeo(path)?.indexable);
 	return urlset(
-		[...new Set([...legacyPublicPaths, ...hubs, ...horoscopeSigns])]
+		[...new Set([...publicPaths, ...hubs, ...horoscopeSigns])]
 			.map((path) => `<url><loc>${xml(SITE.url + (path === '/' ? '' : path))}</loc></url>`)
 			.join('')
 	);
