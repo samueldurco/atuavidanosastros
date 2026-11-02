@@ -61,6 +61,7 @@ const commerceConfig = {
   vars: {
     ...config.vars,
     FEATURE_PHYSICAL_CHECKOUT: "true",
+    SHOP_ARIES_SINGLE_UNIT_ONLY: "false",
     SHOP_SELLER_DISCLOSURE_APPROVED: "true",
     SHOP_DELIVERY_MAX_BUSINESS_DAYS: "40",
     SHOP_VERIFIED_FLAT_SHIPPING_BRL: "29.90",
@@ -325,6 +326,8 @@ test("reviewed physical commerce requires encrypted access and preserves zero-sp
     { SHOPIFY_DIAGNOSTIC_ENABLED: "true" },
     { SHOPIFY_PREVIEW_ENABLED: "true" },
     { SHOPIFY_CHECKOUT_HOSTS: "unreviewed.example" },
+    { SHOP_ARIES_SINGLE_UNIT_ONLY: undefined },
+    { SHOP_ARIES_SINGLE_UNIT_ONLY: "tru" },
     { SHOPIFY_STOREFRONT_PRIVATE_TOKEN: "credential-do-not-print" },
     { AUTOMATIC_SPEND_CAP_BRL: "1" },
     { FEATURE_AI: "true" },
@@ -399,6 +402,22 @@ test("physical postflight verifies every eligible product without creating carts
     ),
     false,
   );
+});
+
+test("physical postflight refuses an unspecified or malformed scope before any provider request", async () => {
+  for (const scope of [undefined, "tru"]) {
+    const result = await postflight(
+      {
+        ...commerceConfig,
+        vars: { ...commerceConfig.vars, SHOP_ARIES_SINGLE_UNIT_ONLY: scope },
+      },
+      {
+        fetchImpl: () => assert.fail("unexpected HTTP request"),
+        readProject: () => assert.fail("unexpected project request"),
+      },
+    );
+    assert.equal(result.pass, false);
+  }
 });
 
 test("the one-unit release checks the reviewed deadline, exact variant and a closed neighboring mug", async () => {

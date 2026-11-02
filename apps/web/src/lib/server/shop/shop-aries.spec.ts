@@ -51,23 +51,43 @@ const productAt = (amount: string) =>
 		}
 	});
 
-const cartAt = (amount: string, currencyCode = 'BRL') =>
-	json({
+const cash = (amount: string, currencyCode = 'BRL') => ({ amount, currencyCode });
+const rate = (amount = '29.90', currency = 'BRL') => ({
+	title: 'Entrega padrão nacional',
+	estimatedCost: cash(amount, currency)
+});
+const delivery = {
+	subtotal: cash('79.90'),
+	total: cash('109.80'),
+	groups: [{ deliveryOptions: [rate()] }],
+	hasNextPage: false,
+	addresses: [{ selected: true, oneTimeUse: true }],
+	warnings: [] as { code: string }[]
+};
+const cartAt = (overrides: Partial<typeof delivery> = {}) => {
+	const d = { ...delivery, ...overrides };
+	return json({
 		cartCreate: {
 			cart: {
 				id: 'gid://shopify/Cart/example',
 				checkoutUrl: 'https://test-shop.myshopify.com/checkouts/example',
 				totalQuantity: 1,
-				cost: { subtotalAmount: { amount, currencyCode } }
+				cost: { subtotalAmount: d.subtotal, totalAmount: d.total },
+				delivery: { addresses: d.addresses },
+				deliveryGroups: { nodes: d.groups, pageInfo: { hasNextPage: d.hasNextPage } }
 			},
-			userErrors: []
+			userErrors: [],
+			warnings: d.warnings
 		}
 	});
+};
 
 describe('Compra de uma caneca Áries em Pocrane', () => {
 	it('requires the reviewed deadline and preserves the public identity gate', async () => {
 		for (const overrides of [
 			{ SHOP_DELIVERY_MAX_BUSINESS_DAYS: '9' },
+			{ SHOP_ARIES_SINGLE_UNIT_ONLY: undefined },
+			{ SHOP_ARIES_SINGLE_UNIT_ONLY: 'tru' },
 			{ SHOP_SELLER_DISCLOSURE_APPROVED: 'false' },
 			{ FEATURE_PHYSICAL_CHECKOUT: 'false' }
 		]) {
@@ -116,15 +136,28 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 		).toBe(true);
 	});
 	it.each([
-		['79.91', 'BRL'],
-		['79.90', 'USD']
-	])(
-		'withholds the checkout URL if Shopify changes the subtotal to %s %s',
-		async (amount, currency) => {
+		['subtotal', { subtotal: cash('79.91') }],
+		['subtotal currency', { subtotal: cash('79.90', 'USD') }],
+		['total', { total: cash('109.81') }],
+		['total currency', { total: cash('109.80', 'USD') }],
+		['delivery rate', { groups: [{ deliveryOptions: [rate('29.91')] }] }],
+		['delivery currency', { groups: [{ deliveryOptions: [rate('29.90', 'USD')] }] }],
+		['no group', { groups: [] }],
+		['no option', { groups: [{ deliveryOptions: [] }] }],
+		['extra group', { groups: [...delivery.groups, ...delivery.groups] }],
+		['extra option', { groups: [{ deliveryOptions: [rate(), rate()] }] }],
+		['additional delivery page', { hasNextPage: true }],
+		['unselected location', { addresses: [{ selected: false, oneTimeUse: true }] }],
+		['persistent location', { addresses: [{ selected: true, oneTimeUse: false }] }],
+		['missing location', { addresses: [] }],
+		['provider warning', { warnings: [{ code: 'DELIVERY_ADDRESS_INVALID' }] }]
+	] satisfies [string, Partial<typeof delivery>][])(
+		'withholds the checkout URL if Shopify returns a different %s',
+		async (_label, overrides) => {
 			const provider = vi
 				.fn<typeof fetch>()
 				.mockResolvedValueOnce(productAt('79.90'))
-				.mockResolvedValueOnce(cartAt(amount, currency));
+				.mockResolvedValueOnce(cartAt(overrides));
 			const cart = await shopCart(request([line], '36960-000'), enabled, provider);
 			expect(cart.status).toBe(503);
 			expect(await cart.json()).toEqual({ ok: false, code: 'invalid_provider_response' });
@@ -136,7 +169,7 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 			const provider = vi
 				.fn<typeof fetch>()
 				.mockResolvedValueOnce(productAt('79.90'))
-				.mockResolvedValueOnce(cartAt('79.90'));
+				.mockResolvedValueOnce(cartAt());
 			const response = await shopCart(request([line], cep), enabled, provider);
 			expect(await response.json()).toEqual({
 				ok: true,
@@ -145,7 +178,26 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 			});
 			expect(provider).toHaveBeenCalledTimes(2);
 			const mutation = JSON.parse(String(provider.mock.calls[1][1]?.body));
-			expect(mutation.variables.input.lines).toEqual([line]);
+			expect(mutation.variables.input).toEqual({
+				lines: [line],
+				buyerIdentity: { countryCode: 'BR' },
+				delivery: {
+					addresses: [
+						{
+							selected: true,
+							oneTimeUse: true,
+							address: {
+								deliveryAddress: {
+									countryCode: 'BR',
+									provinceCode: 'MG',
+									city: 'Pocrane',
+									zip: '36960000'
+								}
+							}
+						}
+					]
+				}
+			});
 		}
 	);
 });

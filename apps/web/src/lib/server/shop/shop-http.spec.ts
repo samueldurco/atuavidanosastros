@@ -21,6 +21,7 @@ const configured = {
 const enabled = {
 	...configured,
 	FEATURE_PHYSICAL_CHECKOUT: 'true',
+	SHOP_ARIES_SINGLE_UNIT_ONLY: 'false',
 	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
 	SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
 	SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',

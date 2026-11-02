@@ -12,10 +12,15 @@ export type ShopSellerIdentity = {
 export function readShopSale(
 	env: Record<string, string | undefined>
 ): { seller: ShopSellerIdentity; deliveryBusinessDays: number; ariesOnly: boolean } | null {
-	if (env.FEATURE_PHYSICAL_CHECKOUT !== 'true' || env.SHOP_SELLER_DISCLOSURE_APPROVED !== 'true')
+	const scope = env.SHOP_ARIES_SINGLE_UNIT_ONLY;
+	if (
+		env.FEATURE_PHYSICAL_CHECKOUT !== 'true' ||
+		env.SHOP_SELLER_DISCLOSURE_APPROVED !== 'true' ||
+		(scope !== 'true' && scope !== 'false')
+	)
 		return null;
 	const days = env.SHOP_DELIVERY_MAX_BUSINESS_DAYS ?? '';
-	const ariesOnly = env.SHOP_ARIES_SINGLE_UNIT_ONLY === 'true';
+	const ariesOnly = scope === 'true';
 	if (
 		!/^[1-9][0-9]?$/.test(days) ||
 		(ariesOnly && Number(days) !== shopAriesRoute.deliveryBusinessDays)

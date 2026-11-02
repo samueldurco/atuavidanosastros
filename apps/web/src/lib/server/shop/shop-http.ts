@@ -320,13 +320,7 @@ export async function shopCart(
 		);
 		if (lines.some((line) => !available.has(line.merchandiseId)))
 			throw new ShopHttpError('variant_unavailable', 409);
-		const cart = await createShopCart(
-			shop,
-			fetcher,
-			lines,
-			buyerIp,
-			sale.ariesOnly ? shopAriesRoute.itemPriceBrl : undefined
-		);
+		const cart = await createShopCart(shop, fetcher, lines, buyerIp, sale.ariesOnly);
 		return reply({ ok: true, checkoutUrl: cart.checkoutUrl, totalQuantity: cart.totalQuantity });
 	} catch (error) {
 		return failure(error);

@@ -70,6 +70,7 @@ export function commerceConfigurationChecks(
       "physical-commerce-reviewed-configuration",
       vars.FEATURE_PHYSICAL_CHECKOUT === "true" &&
         vars.SHOP_SELLER_DISCLOSURE_APPROVED === "true" &&
+        ["true", "false"].includes(vars.SHOP_ARIES_SINGLE_UNIT_ONLY) &&
         /^[1-9][0-9]?$/.test(vars.SHOP_DELIVERY_MAX_BUSINESS_DAYS ?? "") &&
         vars.SHOPIFY_STORE_DOMAIN === "bhvc0w-kk.myshopify.com" &&
         vars.SHOPIFY_STOREFRONT_API_VERSION === "2026-10" &&
