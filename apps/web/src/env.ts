@@ -10,6 +10,7 @@ export const variables = defineEnvVars({
 	SHOP_SELLER_DISCLOSURE_APPROVED: { schema: optional },
 	SHOP_SELLER_PUBLIC_NAME: { schema: optional },
 	SHOP_SELLER_PUBLIC_ADDRESS: { schema: optional },
+	SHOP_SELLER_PUBLIC_POSTCODE: { schema: optional },
 	SHOP_SELLER_PUBLIC_EMAIL: { schema: optional },
 	SHOP_SELLER_PUBLIC_DOCUMENT: { schema: optional },
 	SHOP_SELLER_PRIVATE_RETURN_LOCATION: { schema: optional },

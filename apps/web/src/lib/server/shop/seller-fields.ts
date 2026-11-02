@@ -92,6 +92,32 @@ export function publicAddressIssue(
 	return null;
 }
 
+export function readPublicAddress(
+	address: string,
+	privateLocation?: string,
+	commercialPostcode?: string
+) {
+	const issue = publicAddressIssue(address, privateLocation);
+	const original = { address, issue };
+	if (issue !== 'address_postcode' || !commercialPostcode) return original;
+	const digits = /^(\d{2})\.?(\d{3})[ -]?(\d{3})$/.exec(commercialPostcode.trim());
+	if (!digits) return original;
+
+	const labels = [...address.matchAll(/\bCEP\b/gi)];
+	if (labels.length > 1) return original;
+	let base = address;
+	if (labels.length) {
+		const index = labels[0].index;
+		// Replace a single trailing numeric CEP only. Any ambiguous label needs a correction at source.
+		if (!/^CEP\s*:?\s*\d+(?:\.\d+)?(?:-\d+)?$/i.test(address.slice(index))) return original;
+		base = address.slice(0, index);
+	}
+	if (!base.trim() || /\b(?:\d{6,}|\d{3,5}[.-]\d{2,4})\b/.test(base)) return original;
+	if (!labels.length) base += /[,;]$/.test(base) ? ' ' : ', ';
+	const complete = `${base}CEP ${digits[1]}${digits[2]}-${digits[3]}`;
+	return { address: complete, issue: publicAddressIssue(complete, privateLocation) };
+}
+
 function checkDigit(body: string, weights: number[]): string {
 	const sum = Array.from(body, (char, i) => (char.charCodeAt(0) - 48) * weights[i]).reduce(
 		(a, b) => a + b,
