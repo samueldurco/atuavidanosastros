@@ -4,6 +4,11 @@ import { defineEnvVars } from '@sveltejs/kit/env';
 const optional = (value: string | undefined) => value;
 
 export const variables = defineEnvVars({
+	DIMONA_FRETE_TOKEN: { schema: optional },
+	ATVNA_CHECKOUT_SIGNING_KEY: { schema: optional },
+	SHOPIFY_DRAFT_CLIENT_ID: { schema: optional },
+	SHOPIFY_DRAFT_CLIENT_SECRET: { schema: optional },
+	SHOPIFY_DRAFT_ORDERS_TOKEN: { schema: optional },
 	SHOP_ARIES_SINGLE_UNIT_ONLY: { schema: optional },
 	SHOP_DELIVERY_MAX_BUSINESS_DAYS: { schema: optional },
 	SHOP_VERIFIED_FLAT_SHIPPING_BRL: { schema: optional },
