@@ -523,6 +523,7 @@ export async function createShopCart(
 		cart.deliveryGroupsHasNextPage ||
 		cart.deliveryGroups.length !== 1 ||
 		group.options.length !== 1 ||
+		group.options[0].title !== shopAriesRoute.deliveryOptionTitle ||
 		!matches(group.options[0].estimatedCost, shipping) ||
 		!matches(cart.cost.subtotalAmount, price) ||
 		!matches(cart.cost.totalAmount, (Math.round(price * 100) + Math.round(shipping * 100)) / 100)

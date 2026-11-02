@@ -141,6 +141,10 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 		['total', { total: cash('109.81') }],
 		['total currency', { total: cash('109.80', 'USD') }],
 		['delivery rate', { groups: [{ deliveryOptions: [rate('29.91')] }] }],
+		[
+			'delivery method',
+			{ groups: [{ deliveryOptions: [{ ...rate(), title: 'Retirada no balcão' }] }] }
+		],
 		['delivery currency', { groups: [{ deliveryOptions: [rate('29.90', 'USD')] }] }],
 		['no group', { groups: [] }],
 		['no option', { groups: [{ deliveryOptions: [] }] }],
