@@ -1,5 +1,5 @@
 import { shopAriesRoute, shopDelivery } from '$lib/data/shop-commerce';
-import { publicAddressIssue, validSellerDocument, validSellerName } from './seller-fields';
+import { readPublicAddress, validSellerDocument, validSellerName } from './seller-fields';
 
 let loggedIdentityIssue = false;
 
@@ -31,12 +31,16 @@ export function readShopSale(
 		return null;
 	if (env.SHOP_VERIFIED_FLAT_SHIPPING_BRL !== shopDelivery.priceBrl.toFixed(2)) return null;
 	const name = env.SHOP_SELLER_PUBLIC_NAME?.trim() ?? '';
-	const address = env.SHOP_SELLER_PUBLIC_ADDRESS?.trim() ?? '';
+	const { address, issue: addressIssue } = readPublicAddress(
+		env.SHOP_SELLER_PUBLIC_ADDRESS?.trim() ?? '',
+		env.SHOP_SELLER_PRIVATE_RETURN_LOCATION,
+		env.SHOP_SELLER_PUBLIC_POSTCODE
+	);
 	const email = env.SHOP_SELLER_PUBLIC_EMAIL?.trim() ?? '';
 	const document = env.SHOP_SELLER_PUBLIC_DOCUMENT?.trim() ?? '';
 	const issues = [
 		validSellerName(name) ? null : 'name',
-		publicAddressIssue(address, env.SHOP_SELLER_PRIVATE_RETURN_LOCATION),
+		addressIssue,
 		/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? null : 'email',
 		validSellerDocument(document) ? null : 'document'
 	].filter(Boolean);

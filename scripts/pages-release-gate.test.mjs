@@ -322,6 +322,7 @@ test("reviewed physical commerce requires encrypted access and preserves zero-sp
     { SHOP_VERIFIED_FLAT_SHIPPING_BRL: "" },
     { SHOP_VERIFIED_FLAT_SHIPPING_BRL: "35.00" },
     { SHOP_SELLER_PUBLIC_ADDRESS: "credential-do-not-print" },
+    { SHOP_SELLER_PUBLIC_POSTCODE: "credential-do-not-print" },
     { SHOPIFY_STORE_DOMAIN: "other.myshopify.com" },
     { SHOPIFY_STOREFRONT_API_VERSION: "2025-01" },
     { SHOPIFY_DIAGNOSTIC_ENABLED: "true" },

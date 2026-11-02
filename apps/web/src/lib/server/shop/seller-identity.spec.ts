@@ -108,6 +108,67 @@ describe('public seller disclosure', () => {
 			issue
 		);
 	});
+	const commercialStreet = 'Rua da Aurora, 210, Centro, Vila Azul, MG';
+	const separatePostcode = {
+		...enabled,
+		SHOP_SELLER_PUBLIC_ADDRESS: commercialStreet,
+		SHOP_SELLER_PUBLIC_POSTCODE: '00000-001'
+	};
+	it.each(['00000001', '00.000-001', '00000-001', '00000 001'])(
+		'appends a complete, separately supplied commercial postcode %#',
+		(postcode) => {
+			expect(
+				readShopSale({ ...separatePostcode, SHOP_SELLER_PUBLIC_POSTCODE: postcode })?.seller.address
+			).toBe(`${commercialStreet}, CEP 00000-001`);
+		}
+	);
+	it('replaces only an unambiguous trailing numeric CEP', () => {
+		const prefix = commercialStreet + ' — ';
+		expect(
+			readShopSale({ ...separatePostcode, SHOP_SELLER_PUBLIC_ADDRESS: prefix + 'Cep: 0000-001' })
+				?.seller.address
+		).toBe(prefix + 'CEP 00000-001');
+	});
+	it('preserves an existing recognizable commercial postcode literally', () => {
+		const original = commercialStreet + ', CEP 00.000-002';
+		expect(
+			readShopSale({ ...separatePostcode, SHOP_SELLER_PUBLIC_ADDRESS: original })?.seller.address
+		).toBe(original);
+	});
+	it.each([undefined, '', '0000-001', '000000001', 'CEP 00000-001', '00000-001 e 00000-002'])(
+		'does not complete an address from an invalid standalone postcode %#',
+		(postcode) => {
+			expect(
+				readShopSale({ ...separatePostcode, SHOP_SELLER_PUBLIC_POSTCODE: postcode })
+			).toBeNull();
+		}
+	);
+	it.each([
+		'',
+		'CEP: 0000-001',
+		'Rua do Lírio, nº 21',
+		'Endereço do vendedor',
+		commercialStreet + ', CEP 0000-001, CEP 0000-002',
+		commercialStreet + ', CEP 0000-001, outra localidade',
+		commercialStreet + ', CEP 0000-001 0000-002',
+		commercialStreet + ', CEP 0000-001-002',
+		commercialStreet + ', 0000-001',
+		commercialStreet + ', CEP',
+		commercialStreet + ', CEP 0000-001-A'
+	])('leaves absent, reserved, placeholder and ambiguous addresses unusable %#', (address) => {
+		expect(readShopSale({ ...separatePostcode, SHOP_SELLER_PUBLIC_ADDRESS: address })).toBeNull();
+	});
+	it('keeps the private location, document and shipping checks with a separate postcode', () => {
+		expect(
+			readShopSale({ ...separatePostcode, SHOP_SELLER_PRIVATE_RETURN_LOCATION: undefined })
+		).toBeNull();
+		expect(
+			readShopSale({ ...separatePostcode, SHOP_SELLER_PUBLIC_DOCUMENT: 'invalid' })
+		).toBeNull();
+		expect(
+			readShopSale({ ...separatePostcode, SHOP_VERIFIED_FLAT_SHIPPING_BRL: '0.00' })
+		).toBeNull();
+	});
 	it.each([
 		'ATVNA',
 		'Loja ATVNA',

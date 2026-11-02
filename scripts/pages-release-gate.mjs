@@ -146,6 +146,7 @@ export function configurationChecks(config) {
         ...publicKeys,
         ...requiredSecrets,
         ...shopSecrets,
+        "SHOP_SELLER_PUBLIC_POSTCODE",
         "SHOPIFY_DIAGNOSTIC_TOKEN",
       ].every((name) => !Object.hasOwn(vars, name)),
     ),
