@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
+import { publicAddressIssue } from './seller-fields';
 import { readShopSale } from './seller-identity';
 
 const enabled = {
@@ -75,6 +76,37 @@ describe('public seller disclosure', () => {
 				SHOP_SELLER_PUBLIC_ADDRESS: 'Rua do Lírio, 210, Vila Azul, MG, CEP 00000-001'
 			})
 		).not.toBeNull();
+	});
+	it.each(['12345678', '12345-678', '12.345-678', '12345 678'])(
+		'accepts a Brazilian commercial address with postal code %s',
+		(postcode) => {
+			expect(
+				readShopSale({
+					...enabled,
+					SHOP_SELLER_PUBLIC_ADDRESS: `Rua do Vendedor, s/n, Vila Azul/MG, CEP ${postcode}`
+				})
+			).not.toBeNull();
+		}
+	);
+	it.each([
+		['', 'address_missing'],
+		['Rua das Flores, 50, CEP 1234-678', 'address_postcode'],
+		['Rua das Flores, 50, CEP 123456789', 'address_postcode'],
+		['CEP 12.345-678', 'address_location_missing'],
+		['12345678', 'address_location_missing'],
+		['Endereço: CEP 12345-678', 'address_location_missing'],
+		['Endereço do vendedor, CEP 12345-678', 'address_placeholder'],
+		['Endereço informado depois, CEP 12345-678', 'address_placeholder'],
+		['Local a cadastrar, CEP 12345-678', 'address_placeholder'],
+		['Endereço a informar, CEP 12345-678', 'address_placeholder'],
+		['Endereço a definir, CEP 12345-678', 'address_placeholder'],
+		['Não informado, CEP 12345-678', 'address_placeholder'],
+		['Pendente, CEP 12345-678', 'address_placeholder'],
+		['Rua do Lírio, 021, CEP 12.345-678', 'reserved_address']
+	])('reports only the reason for an unusable address %#', (address, issue) => {
+		expect(publicAddressIssue(address, testShopSeller.SHOP_SELLER_PRIVATE_RETURN_LOCATION)).toBe(
+			issue
+		);
 	});
 	it.each([
 		'ATVNA',
