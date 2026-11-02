@@ -83,7 +83,7 @@ export function publicAddressIssue(
 	const addressPrompt =
 		/\b(placeholder|pendente|preencher|exemplo|teste|ficticio|ficticia|cadastrar|endereco (?:do |da )?(?:responsavel|vendedor)|(?:nao|a ser) informad[oa]|informad[oa] (?:depois|posteriormente)|a (?:informar|definir)|sem informacao)\b/;
 	if (
-		addressPrompt.test(locationWords.join(' ')) ||
+		addressPrompt.test(tokens.join(' ')) ||
 		locationWords.every(
 			(word) => word === 'endereco' || word === 'local' || placeholders.test(word)
 		)
