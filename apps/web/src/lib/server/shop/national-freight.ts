@@ -2,6 +2,7 @@ import offers from '$lib/data/shop-reviewed-offers.json';
 import industrialSkus from './national-skus.json';
 import { reviewedDestination } from '$lib/data/shop-commerce';
 import { config, readApprovedProduct, ShopHttpError } from './shop-http';
+import { hasControlCharacters } from './shopify-storefront';
 
 export type PrivateEnv = Record<string, string | undefined>;
 export const fail = (code: string, status = 422): never => {
@@ -145,7 +146,8 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate {
 			typeof name !== 'string' ||
 			!name.trim() ||
 			name.length > 100 ||
-			/[\u0000-\u001f\u007f<>]/.test(name) ||
+			hasControlCharacters(name, 0x7f) ||
+			/[<>]/.test(name) ||
 			(secret && name.includes(secret)) ||
 			[currency, currency_code].some((v) => v != null && v !== 'BRL')
 		)

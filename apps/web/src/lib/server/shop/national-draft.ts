@@ -1,4 +1,5 @@
 import { fail, normal, provider, record, zip, type PrivateEnv } from './national-freight';
+import { hasControlCharacters } from './shopify-storefront';
 export interface SealedQuote {
 	nonce: string;
 	expires: number;
@@ -70,7 +71,8 @@ function fld(s: unknown, max: number, min = 1) {
 		typeof s !== 'string' ||
 		s.trim().length < min ||
 		s.trim().length > max ||
-		/[\u0000-\u001f\u007f<>]/.test(s)
+		hasControlCharacters(s, 0x7f) ||
+		/[<>]/.test(s)
 	)
 		return fail('invalid_address');
 	return s.trim().replace(/\s+/g, ' ');
@@ -209,10 +211,10 @@ export async function prepareDraft(
 		return fail('checkout_unavailable', 503);
 	const addr = record(draft.shippingAddress),
 		nodes = record(draft.lineItems).nodes;
-	let url: URL | undefined;
-	try {
-		url = new URL(String(draft.invoiceUrl));
-	} catch {}
+	const url =
+		typeof draft.invoiceUrl === 'string' && URL.canParse(draft.invoiceUrl)
+			? new URL(draft.invoiceUrl)
+			: undefined;
 	const matches =
 		addr.countryCodeV2 === 'BR' &&
 		addr.provinceCode === a.provinceCode &&
