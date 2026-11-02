@@ -205,7 +205,6 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 				'/vocacao-no-mapa-astral',
 				'/carreira-no-mapa-astral',
 				'/casa-10',
-				'/loja',
 				'/leituras',
 				'/atv-mais',
 				'/canais-oficiais',
@@ -215,6 +214,7 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 				...new Set(datedForecasts.map((document) => document.path.split('/').slice(0, 3).join('/')))
 			];
 			const locations = [...body.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+			expect(locations).not.toContain('https://atuavidanosastros.com.br/loja');
 			expect(locations.sort()).toEqual(
 				expectedPaths.map((path) => `https://atuavidanosastros.com.br${path}`).sort()
 			);

@@ -60,7 +60,7 @@ Metadados novos não substituem title/canonical das páginas legadas. Páginas p
 | Endpoint | Inventário |
 | --- | --- |
 | `/sitemap.xml` | Índice dos sitemaps de páginas, editorial e notícias |
-| `/sitemap-pages.xml` | Os 14 caminhos legados anteriores e somente hubs com documentos aprovados |
+| `/sitemap-pages.xml` | Caminhos legados com política pública de indexação habilitada, hubs com documentos aprovados e arquivos de horóscopo publicados; páginas `noindex`, como a Loja enquanto seu gate estiver fechado, ficam excluídas |
 | `/sitemap-editorial.xml` | Documentos aprovados e seus perfis de autoria; `lastmod` da modificação real |
 | `/news-sitemap.xml` | Somente reportagens aprovadas, publicadas originalmente há menos de 48 horas |
 | `/news-sitemap/2.xml` e seguintes | Partições adicionais quando necessárias; máximo de 1.000 notícias por arquivo, sem truncamento |
