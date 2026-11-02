@@ -22,6 +22,7 @@
 		showLink={false}
 		headingLevel="h1"
 		collection={data.collection}
+		ariesOnly={data.ariesOnly}
 		commerceEnabled={data.shopCommerceEnabled}
 	/>
 </div>

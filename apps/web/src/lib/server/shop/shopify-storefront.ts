@@ -1,4 +1,6 @@
 /** Server-only Shopify transport. Routes own authorization, feature gates and release decisions. */
+import { shopAriesRoute, shopDelivery } from '$lib/data/shop-commerce';
+
 export const STOREFRONT_API_VERSION = '2026-10' as const;
 export const STOREFRONT_TIMEOUT_MS = 8_000;
 export const CATALOG_PAGE_SIZE = 25;
@@ -124,7 +126,7 @@ const CATALOG_QUERY = `query ShopRuntimeCatalog($cursor: String) @inContext(coun
 }`;
 const CART_MUTATION = `mutation ShopRuntimeCart($input: CartInput!) {
   cartCreate(input: $input) {
-    cart { id checkoutUrl totalQuantity }
+    cart { id checkoutUrl totalQuantity cost { subtotalAmount { amount currencyCode } } }
     userErrors { field message code }
   }
 }`;
@@ -144,12 +146,14 @@ const PREVIEW_CART_MUTATION = `mutation ShopPreviewCart($input: CartInput!) {
     cart {
       id checkoutUrl totalQuantity
       cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
+      delivery { addresses { selected oneTimeUse } }
       deliveryGroups(first: 20) {
         nodes { deliveryOptions { title estimatedCost { amount currencyCode } } }
         pageInfo { hasNextPage }
       }
     }
     userErrors { field message code }
+    warnings { code }
   }
 }`;
 
@@ -478,16 +482,54 @@ export async function createShopCart(
 	config: StorefrontConfig,
 	fetcher: typeof fetch,
 	lines: readonly ShopCartLine[],
-	buyerIp?: string
+	buyerIp?: string,
+	verifyAriesDelivery = false
 ): Promise<ShopCart> {
-	const data = await graphql(
-		config,
-		fetcher,
-		CART_MUTATION,
-		{ input: { lines: cartLines(lines), buyerIdentity: { countryCode: 'BR' } } },
-		buyerIp
-	);
-	return parsedCart(data, config, lines);
+	const input: JsonRecord = { lines: cartLines(lines), buyerIdentity: { countryCode: 'BR' } };
+	if (!verifyAriesDelivery) {
+		const data = await graphql(config, fetcher, CART_MUTATION, { input }, buyerIp);
+		return parsedCart(data, config, lines);
+	}
+	input.delivery = {
+		addresses: [
+			{
+				selected: true,
+				oneTimeUse: true,
+				address: {
+					deliveryAddress: {
+						countryCode: 'BR',
+						provinceCode: 'MG',
+						city: 'Pocrane',
+						zip: shopAriesRoute.postalCode.replace('-', '')
+					}
+				}
+			}
+		]
+	};
+	const data = await graphql(config, fetcher, PREVIEW_CART_MUTATION, { input }, buyerIp);
+	const result = record(data.cartCreate);
+	const cart = parsedDeliveryCart(data, config, lines);
+	const addresses = array(record(record(result.cart).delivery).addresses, 1);
+	const selected = record(addresses[0]);
+	const [group] = cart.deliveryGroups;
+	const price = shopAriesRoute.itemPriceBrl;
+	const shipping = shopDelivery.priceBrl;
+	const matches = (money: ShopMoney, expected: number) =>
+		money.currencyCode === 'BRL' && Number(money.amount) === expected;
+	if (
+		array(result.warnings, 250).length ||
+		selected.selected !== true ||
+		selected.oneTimeUse !== true ||
+		cart.deliveryGroupsHasNextPage ||
+		cart.deliveryGroups.length !== 1 ||
+		group.options.length !== 1 ||
+		group.options[0].title !== shopAriesRoute.deliveryOptionTitle ||
+		!matches(group.options[0].estimatedCost, shipping) ||
+		!matches(cart.cost.subtotalAmount, price) ||
+		!matches(cart.cost.totalAmount, (Math.round(price * 100) + Math.round(shipping * 100)) / 100)
+	)
+		throw new ShopStorefrontError('invalid_provider_response');
+	return cart;
 }
 
 function deliveryAddress(value: ShopDeliveryAddress): ShopDeliveryAddress {
@@ -563,6 +605,14 @@ export async function createShopPreviewCart(
 			]
 		};
 	const data = await graphql(config, fetcher, PREVIEW_CART_MUTATION, { input }, buyerIp);
+	return parsedDeliveryCart(data, config, lines);
+}
+
+function parsedDeliveryCart(
+	data: JsonRecord,
+	config: StorefrontConfig,
+	lines: readonly ShopCartLine[]
+): ShopPreviewCart {
 	const base = parsedCart(data, config, lines);
 	const cart = record(record(data.cartCreate).cart),
 		cost = record(cart.cost);

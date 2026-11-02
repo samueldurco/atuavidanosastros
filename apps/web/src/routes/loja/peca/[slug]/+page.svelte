@@ -88,6 +88,7 @@
 			<ShopPurchase
 				slug={data.piece.slug}
 				deliveryBusinessDays={data.deliveryBusinessDays}
+				ariesOnly={data.ariesOnly}
 				enabled={data.shopCommerceEnabled && data.purchaseEligible}
 			/>
 			<dl>

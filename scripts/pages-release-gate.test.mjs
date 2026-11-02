@@ -61,6 +61,7 @@ const commerceConfig = {
   vars: {
     ...config.vars,
     FEATURE_PHYSICAL_CHECKOUT: "true",
+    SHOP_ARIES_SINGLE_UNIT_ONLY: "false",
     SHOP_SELLER_DISCLOSURE_APPROVED: "true",
     SHOP_DELIVERY_MAX_BUSINESS_DAYS: "40",
     SHOP_VERIFIED_FLAT_SHIPPING_BRL: "29.90",
@@ -325,6 +326,8 @@ test("reviewed physical commerce requires encrypted access and preserves zero-sp
     { SHOPIFY_DIAGNOSTIC_ENABLED: "true" },
     { SHOPIFY_PREVIEW_ENABLED: "true" },
     { SHOPIFY_CHECKOUT_HOSTS: "unreviewed.example" },
+    { SHOP_ARIES_SINGLE_UNIT_ONLY: undefined },
+    { SHOP_ARIES_SINGLE_UNIT_ONLY: "tru" },
     { SHOPIFY_STOREFRONT_PRIVATE_TOKEN: "credential-do-not-print" },
     { AUTOMATIC_SPEND_CAP_BRL: "1" },
     { FEATURE_AI: "true" },
@@ -399,6 +402,90 @@ test("physical postflight verifies every eligible product without creating carts
     ),
     false,
   );
+});
+
+test("physical postflight refuses an unspecified or malformed scope before any provider request", async () => {
+  for (const scope of [undefined, "tru"]) {
+    const result = await postflight(
+      {
+        ...commerceConfig,
+        vars: { ...commerceConfig.vars, SHOP_ARIES_SINGLE_UNIT_ONLY: scope },
+      },
+      {
+        fetchImpl: () => assert.fail("unexpected HTTP request"),
+        readProject: () => assert.fail("unexpected project request"),
+      },
+    );
+    assert.equal(result.pass, false);
+  }
+});
+
+test("the one-unit release checks the reviewed deadline, exact variant and a closed neighboring mug", async () => {
+  const pilot = {
+    ...commerceConfig,
+    vars: {
+      ...commerceConfig.vars,
+      SHOP_ARIES_SINGLE_UNIT_ONLY: "true",
+      SHOP_DELIVERY_MAX_BUSINESS_DAYS: "8",
+    },
+  };
+  assert.ok(commerceConfigurationChecks(pilot).every((item) => item.pass));
+  assert.ok(
+    commerceConfigurationChecks(pilot, ["caneca-cancer"]).some(
+      (item) => !item.pass,
+    ),
+  );
+  assert.ok(
+    commerceConfigurationChecks({
+      ...pilot,
+      vars: { ...pilot.vars, SHOP_DELIVERY_MAX_BUSINESS_DAYS: "7" },
+    }).some((item) => !item.pass),
+  );
+  for (const [id, amount, neighborClosed, expected] of [
+    ["gid://shopify/ProductVariant/68006922223984", "79.90", true, true],
+    ["gid://shopify/ProductVariant/68006922223984", "79.91", true, false],
+    ["gid://shopify/ProductVariant/other", "79.90", true, false],
+    ["gid://shopify/ProductVariant/68006922223984", "79.90", false, false],
+  ]) {
+    const initial = replies();
+    const requests = [];
+    const result = await postflight(pilot, {
+      fetchImpl: async (url) => {
+        if (initial.length) return initial.shift();
+        requests.push(new URL(url).pathname);
+        if (url.endsWith("/diagnostic"))
+          return Response.json(
+            { code: "diagnostic_disabled" },
+            { status: 404 },
+          );
+        if (url.endsWith("/caneca-cancer"))
+          return Response.json(
+            { code: "product_not_found" },
+            { status: neighborClosed ? 404 : 200 },
+          );
+        return Response.json({
+          ok: true,
+          product: {
+            handle: "caneca-aries",
+            availableForSale: true,
+            variants: [
+              {
+                id,
+                availableForSale: true,
+                price: { amount, currencyCode: "BRL" },
+              },
+            ],
+          },
+        });
+      },
+    });
+    assert.equal(result.pass, expected);
+    assert.deepEqual(requests, [
+      "/api/shop/product/caneca-aries",
+      "/api/shop/product/caneca-cancer",
+      "/api/shop/diagnostic",
+    ]);
+  }
 });
 
 test("physical postflight rejects unavailable, free, or non-BRL offers", async () => {

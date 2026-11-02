@@ -8,12 +8,14 @@
 		showLink = true,
 		headingLevel = 'h2',
 		collection,
+		ariesOnly = false,
 		commerceEnabled = false
 	}: {
 		showLink?: boolean;
 		headingLevel?: 'h1' | 'h2';
 		collection?: ShopCollection;
 		commerceEnabled?: boolean;
+		ariesOnly?: boolean;
 	} = $props();
 	let sign = $state('Todos');
 	let category = $state('Todas');
@@ -30,7 +32,9 @@
 		const products = collection?.products ?? shopPreviews;
 		return commerceEnabled
 			? [...products].sort(
-					(a, b) => Number(isShopCommerceEligible(b.slug)) - Number(isShopCommerceEligible(a.slug))
+					(a, b) =>
+						Number(isShopCommerceEligible(b.slug, ariesOnly)) -
+						Number(isShopCommerceEligible(a.slug, ariesOnly))
 				)
 			: products;
 	});
@@ -145,7 +149,7 @@
 						loading="lazy"
 					/>
 					<span class="preview-label"
-						>{commerceEnabled && isShopCommerceEligible(piece.slug)
+						>{commerceEnabled && isShopCommerceEligible(piece.slug, ariesOnly)
 							? 'Compra online'
 							: 'Prévia da coleção'}</span
 					>
@@ -158,7 +162,7 @@
 					<p class="colors">{piece.colors.map((color) => color.name).join(' / ')}</p>
 					<div class="card-end">
 						<span
-							>{commerceEnabled && isShopCommerceEligible(piece.slug)
+							>{commerceEnabled && isShopCommerceEligible(piece.slug, ariesOnly)
 								? 'Consultar compra'
 								: 'Em preparação'}</span
 						><a href={`/loja/peca/${piece.slug}`}>Ver peça <span aria-hidden="true">↗</span></a>
