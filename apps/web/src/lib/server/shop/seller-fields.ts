@@ -30,7 +30,14 @@ export function validSellerName(name: string): boolean {
 export function publicAddressIssue(
 	address: string,
 	privateLocation?: string
-): 'address' | 'reserved_address' | 'private_location_config' | null {
+):
+	| 'address_missing'
+	| 'address_postcode'
+	| 'address_location_missing'
+	| 'address_placeholder'
+	| 'reserved_address'
+	| 'private_location_config'
+	| null {
 	if (!privateLocation) return 'private_location_config';
 	let location;
 	try {
@@ -64,12 +71,21 @@ export function publicAddressIssue(
 		(token) => /^\d+$/.test(token) && Number(token) === Number(number)
 	);
 	if (containsStreet && containsNumber) return 'reserved_address';
+	if (!address.trim()) return 'address_missing';
+	const postcode = address.match(/\b\d{2}\.?\d{3}[-\s]?\d{3}\b/);
+	if (!postcode) return 'address_postcode';
+	const locationWords = words(address.replace(postcode[0], '')).filter(
+		(token) => token !== 'cep' && /^\p{L}{2,}$/u.test(token)
+	);
+	if (!locationWords.length) return 'address_location_missing';
+	// A word such as “vendedor” can be part of a real street name.
+	const addressPrompt =
+		/\b(placeholder|pendente|preencher|exemplo|teste|ficticio|ficticia|cadastrar|endereco (?:do |da )?(?:responsavel|vendedor)|nao informad[oa])\b/;
 	if (
-		!/\b\d{5}[-\s]?\d{3}\b/.test(address) ||
-		placeholders.test(tokens.join(' ')) ||
-		!tokens.some((token) => /^\p{L}{2,}$/u.test(token))
+		addressPrompt.test(locationWords.join(' ')) ||
+		locationWords.every((word) => placeholders.test(word))
 	)
-		return 'address';
+		return 'address_placeholder';
 	return null;
 }
 
