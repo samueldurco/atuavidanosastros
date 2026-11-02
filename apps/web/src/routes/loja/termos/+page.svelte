@@ -4,4 +4,8 @@
 	let { data }: PageProps = $props();
 </script>
 
-<ShopPolicyDocument kind="termos" deliveryBusinessDays={data.deliveryBusinessDays} />
+<ShopPolicyDocument
+	kind="termos"
+	ariesOnly={data.ariesOnly}
+	deliveryBusinessDays={data.deliveryBusinessDays}
+/>

@@ -124,7 +124,7 @@ const CATALOG_QUERY = `query ShopRuntimeCatalog($cursor: String) @inContext(coun
 }`;
 const CART_MUTATION = `mutation ShopRuntimeCart($input: CartInput!) {
   cartCreate(input: $input) {
-    cart { id checkoutUrl totalQuantity }
+    cart { id checkoutUrl totalQuantity cost { subtotalAmount { amount currencyCode } } }
     userErrors { field message code }
   }
 }`;
@@ -478,7 +478,8 @@ export async function createShopCart(
 	config: StorefrontConfig,
 	fetcher: typeof fetch,
 	lines: readonly ShopCartLine[],
-	buyerIp?: string
+	buyerIp?: string,
+	expectedSubtotalBrl?: number
 ): Promise<ShopCart> {
 	const data = await graphql(
 		config,
@@ -487,7 +488,13 @@ export async function createShopCart(
 		{ input: { lines: cartLines(lines), buyerIdentity: { countryCode: 'BR' } } },
 		buyerIp
 	);
-	return parsedCart(data, config, lines);
+	const cart = parsedCart(data, config, lines);
+	if (expectedSubtotalBrl !== undefined) {
+		const price = money(record(record(record(data.cartCreate).cart).cost).subtotalAmount);
+		if (price.currencyCode !== 'BRL' || Number(price.amount) !== expectedSubtotalBrl)
+			throw new ShopStorefrontError('invalid_provider_response');
+	}
+	return cart;
 }
 
 function deliveryAddress(value: ShopDeliveryAddress): ShopDeliveryAddress {

@@ -5,12 +5,13 @@
 		type ShopPolicyKind
 	} from '$lib/data/shop-policies';
 	import approvedPolicies from '$lib/data/shop-policies.json';
-	import { shopDelivery } from '$lib/data/shop-commerce';
+	import { shopAriesTerms, shopDelivery } from '$lib/data/shop-commerce';
 	import ShopPolicyLinks from './ShopPolicyLinks.svelte';
 	let {
 		kind,
+		ariesOnly = false,
 		deliveryBusinessDays = null
-	}: { kind: ShopPolicyKind; deliveryBusinessDays?: number | null } = $props();
+	}: { kind: ShopPolicyKind; ariesOnly?: boolean; deliveryBusinessDays?: number | null } = $props();
 	const metadata = $derived(shopPolicyDocuments[kind]);
 	// Static, reviewed bodies also applied in Shopify on 2026-10-27. This curated
 	// copy contains no operational notes or private identification/address data.
@@ -40,20 +41,30 @@
 	{#if deliveryBusinessDays && (kind === 'frete' || kind === 'termos')}
 		<section aria-labelledby="current-shipping-policy">
 			<h2 id="current-shipping-policy">Condições das peças com compra online</h2>
-			<p>
-				Produção nacional sob demanda, com frete fixo de {new Intl.NumberFormat('pt-BR', {
-					style: 'currency',
-					currency: 'BRL'
-				}).format(shopDelivery.priceBrl)} por pedido nos destinos habilitados no checkout. O frete é cobrado
-				uma única vez, inclusive quando o pedido contém mais de uma peça. As peças podem chegar em remessas
-				separadas, sem novo frete para você.
-			</p>
-			<p>
-				O prazo total de fabricação e entrega é de até {deliveryBusinessDays} dias úteis após a aprovação
-				do pagamento. O total apresentado inclui a entrega, sem cobrança adicional de importação ao receber.
-				Se houver uma dificuldade que impeça cumprir o combinado, a loja entrará em contato para apresentar
-				as opções de solução, inclusive o cancelamento e o reembolso.
-			</p>
+			{#if ariesOnly}
+				<p>{shopAriesTerms}</p>
+				<p>
+					O frete é de {new Intl.NumberFormat('pt-BR', {
+						style: 'currency',
+						currency: 'BRL'
+					}).format(shopDelivery.priceBrl)} por pedido.
+				</p>
+			{:else}
+				<p>
+					Produção nacional sob demanda, com frete fixo de {new Intl.NumberFormat('pt-BR', {
+						style: 'currency',
+						currency: 'BRL'
+					}).format(shopDelivery.priceBrl)} por pedido nos destinos habilitados no checkout. O frete é
+					cobrado uma única vez, inclusive quando o pedido contém mais de uma peça. As peças podem chegar
+					em remessas separadas, sem novo frete para você.
+				</p>
+				<p>
+					O prazo total de fabricação e entrega é de até {deliveryBusinessDays} dias úteis após a aprovação
+					do pagamento. O total apresentado inclui a entrega, sem cobrança adicional de importação ao
+					receber. Se houver uma dificuldade que impeça cumprir o combinado, a loja entrará em contato
+					para apresentar as opções de solução, inclusive o cancelamento e o reembolso.
+				</p>
+			{/if}
 		</section>
 	{/if}
 	{#if kind === 'devolucoes'}

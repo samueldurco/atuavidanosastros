@@ -20,7 +20,12 @@
 			>Ver o catálogo de leituras digitais</a
 		>.
 	</p>
-	<ShopShowcase showLink={false} headingLevel="h1" commerceEnabled={data.shopCommerceEnabled} />
+	<ShopShowcase
+		showLink={false}
+		headingLevel="h1"
+		ariesOnly={data.ariesOnly}
+		commerceEnabled={data.shopCommerceEnabled}
+	/>
 	<ShopPolicyLinks />
 	<aside class="shop-reading" aria-labelledby="shop-reading-title">
 		<div>

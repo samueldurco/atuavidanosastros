@@ -35,6 +35,13 @@ const shopSecrets = [
   "SHOP_SELLER_PUBLIC_DOCUMENT",
 ];
 
+const ariesRoute = JSON.parse(
+  readFileSync(
+    new URL("../apps/web/src/lib/data/shop-aries-route.json", import.meta.url),
+    "utf8",
+  ),
+);
+
 function commerceAllowlist(workspace = root) {
   try {
     return JSON.parse(
@@ -72,6 +79,10 @@ export function commerceConfigurationChecks(
           vars.SHOPIFY_CHECKOUT_HOSTS ===
             "bhvc0w-kk.myshopify.com,checkout.shopify.com") &&
         Array.isArray(slugs) &&
+        (vars.SHOP_ARIES_SINGLE_UNIT_ONLY !== "true" ||
+          (Number(vars.SHOP_DELIVERY_MAX_BUSINESS_DAYS) ===
+            ariesRoute.deliveryBusinessDays &&
+            slugs.includes(ariesRoute.slug))) &&
         slugs.length > 0 &&
         slugs.every(
           (slug) =>
@@ -330,23 +341,44 @@ export async function postflight(
   const commerceProbes =
     config.vars.FEATURE_PHYSICAL_CHECKOUT === "true"
       ? [
-          ...commerceAllowlist().map((slug) => ({
-            id: `physical-commerce-${slug}`,
-            path: `/api/shop/product/${slug}`,
-            method: "GET",
-            status: 200,
-            valid: (body) =>
-              body?.ok === true &&
-              body.product?.handle === slug &&
-              body.product?.availableForSale === true &&
-              Array.isArray(body.product.variants) &&
-              body.product.variants.some(
-                (variant) =>
-                  variant.availableForSale === true &&
-                  variant.price?.currencyCode === "BRL" &&
-                  Number(variant.price?.amount) > 0,
-              ),
-          })),
+          ...commerceAllowlist()
+            .filter(
+              (slug) =>
+                config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY !== "true" ||
+                slug === ariesRoute.slug,
+            )
+            .map((slug) => ({
+              id: `physical-commerce-${slug}`,
+              path: `/api/shop/product/${slug}`,
+              method: "GET",
+              status: 200,
+              valid: (body) =>
+                body?.ok === true &&
+                body.product?.handle === slug &&
+                body.product?.availableForSale === true &&
+                Array.isArray(body.product.variants) &&
+                body.product.variants.some(
+                  (variant) =>
+                    variant.availableForSale === true &&
+                    (config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY !== "true" ||
+                      (variant.id === ariesRoute.variantId &&
+                        Number(variant.price?.amount) ===
+                          ariesRoute.itemPriceBrl)) &&
+                    variant.price?.currencyCode === "BRL" &&
+                    Number(variant.price?.amount) > 0,
+                ),
+            })),
+          ...(config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY === "true"
+            ? [
+                {
+                  id: "physical-commerce-scope-excludes-caneca-cancer",
+                  path: "/api/shop/product/caneca-cancer",
+                  method: "GET",
+                  status: 404,
+                  valid: (body) => body?.code === "product_not_found",
+                },
+              ]
+            : []),
           {
             id: "physical-diagnostic-disabled",
             path: "/api/shop/diagnostic",

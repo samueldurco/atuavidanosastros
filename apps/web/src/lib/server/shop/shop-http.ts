@@ -1,5 +1,9 @@
 import { json } from '@sveltejs/kit';
-import { isShopCommerceEligible } from '$lib/data/shop-commerce';
+import {
+	isShopCommerceEligible,
+	matchesAriesPostalCode,
+	shopAriesRoute
+} from '$lib/data/shop-commerce';
 import { readShopSale } from './seller-identity';
 import { approvedShopProducts } from './shop-catalog-map';
 import {
@@ -23,6 +27,15 @@ const approvedVariantSlugs = new Map(
 		isShopCommerceEligible(slug) ? product.variantIds.map((id) => [id, slug] as const) : []
 	)
 );
+function isReviewedAriesOffer(variant: ShopCatalogProduct['variants'][number]): boolean {
+	return (
+		variant.id === shopAriesRoute.variantId &&
+		variant.availableForSale &&
+		variant.price.currencyCode === 'BRL' &&
+		Number(variant.price.amount) === shopAriesRoute.itemPriceBrl
+	);
+}
+
 class ShopHttpError extends Error {
 	constructor(
 		readonly code: string,
@@ -133,7 +146,8 @@ export async function shopCatalog(
 	buyerIp?: string,
 	cursor?: string
 ) {
-	if (!readShopSale(env)) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	const sale = readShopSale(env);
+	if (!sale) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
 	const shop = config(env);
 	if (!shop) return reply({ ok: false, code: 'shop_not_configured' }, 503);
 	try {
@@ -143,8 +157,10 @@ export async function shopCatalog(
 			...catalog,
 			products: catalog.products.filter(
 				(product) =>
-					isShopCommerceEligible(product.handle) &&
-					approvedShopProducts[product.handle]?.productId === product.id
+					isShopCommerceEligible(product.handle, sale.ariesOnly) &&
+					approvedShopProducts[product.handle]?.productId === product.id &&
+					(!sale.ariesOnly ||
+						(product.availableForSale && product.variants.some(isReviewedAriesOffer)))
 			)
 		});
 	} catch (error) {
@@ -207,13 +223,20 @@ export async function shopProduct(
 	slug: string,
 	buyerIp?: string
 ) {
-	if (!readShopSale(env)) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
-	if (!Object.hasOwn(approvedShopProducts, slug) || !isShopCommerceEligible(slug))
+	const sale = readShopSale(env);
+	if (!sale) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	if (!Object.hasOwn(approvedShopProducts, slug) || !isShopCommerceEligible(slug, sale.ariesOnly))
 		return reply({ ok: false, code: 'product_not_found' }, 404);
 	const shop = config(env);
 	if (!shop) return reply({ ok: false, code: 'shop_not_configured' }, 503);
 	try {
-		return reply({ ok: true, product: await readApprovedProduct(shop, fetcher, slug, buyerIp) });
+		const product = await readApprovedProduct(shop, fetcher, slug, buyerIp);
+		if (
+			sale.ariesOnly &&
+			!(product?.availableForSale && product.variants.some(isReviewedAriesOffer))
+		)
+			throw new ShopHttpError('variant_unavailable', 409);
+		return reply({ ok: true, product });
 	} catch (error) {
 		return failure(error);
 	}
@@ -225,7 +248,8 @@ export async function shopCart(
 	fetcher: typeof fetch,
 	buyerIp?: string
 ) {
-	if (!readShopSale(env)) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
+	const sale = readShopSale(env);
+	if (!sale) return reply({ ok: false, code: 'physical_commerce_disabled' }, 503);
 	const url = new URL(request.url);
 	if (
 		request.headers.get('origin') !== url.origin ||
@@ -240,7 +264,9 @@ export async function shopCart(
 			!body ||
 			typeof body !== 'object' ||
 			Array.isArray(body) ||
-			Object.keys(body).some((key) => key !== 'lines') ||
+			Object.keys(body).some(
+				(key) => key !== 'lines' && !(sale.ariesOnly && key === 'postalCode')
+			) ||
 			!Array.isArray((body as { lines?: unknown }).lines) ||
 			!(body as { lines: unknown[] }).lines.length
 		)
@@ -263,6 +289,16 @@ export async function shopCart(
 		)
 			throw new ShopHttpError('invalid_lines', 400);
 		const lines = submittedLines as ShopCartLine[];
+		if (sale.ariesOnly) {
+			if (
+				lines.length !== 1 ||
+				lines[0].quantity !== 1 ||
+				lines[0].merchandiseId !== shopAriesRoute.variantId
+			)
+				throw new ShopHttpError('invalid_lines', 400);
+			if (!matchesAriesPostalCode((body as { postalCode?: unknown }).postalCode))
+				throw new ShopHttpError('delivery_unavailable', 422);
+		}
 		if (new Set(lines.map((line) => line.merchandiseId)).size !== lines.length)
 			throw new ShopHttpError('invalid_lines', 400);
 		// POST clients cannot bypass current availability, BRL or positive-price checks.
@@ -274,14 +310,23 @@ export async function shopCart(
 			products.flatMap((product) =>
 				product?.availableForSale
 					? product.variants
-							.filter((variant) => variant.availableForSale)
+							.filter(
+								(variant) =>
+									variant.availableForSale && (!sale.ariesOnly || isReviewedAriesOffer(variant))
+							)
 							.map((variant) => variant.id)
 					: []
 			)
 		);
 		if (lines.some((line) => !available.has(line.merchandiseId)))
 			throw new ShopHttpError('variant_unavailable', 409);
-		const cart = await createShopCart(shop, fetcher, lines, buyerIp);
+		const cart = await createShopCart(
+			shop,
+			fetcher,
+			lines,
+			buyerIp,
+			sale.ariesOnly ? shopAriesRoute.itemPriceBrl : undefined
+		);
 		return reply({ ok: true, checkoutUrl: cart.checkoutUrl, totalQuantity: cart.totalQuantity });
 	} catch (error) {
 		return failure(error);

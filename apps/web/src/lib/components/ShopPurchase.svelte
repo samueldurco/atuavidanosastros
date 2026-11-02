@@ -1,15 +1,27 @@
 <script lang="ts">
 	import type { ShopCatalogProduct } from '$lib/server/shop/shopify-storefront';
-	import { shopDelivery } from '$lib/data/shop-commerce';
+	import {
+		matchesAriesPostalCode,
+		shopAriesRoute,
+		shopAriesTerms,
+		shopDelivery
+	} from '$lib/data/shop-commerce';
 	let {
 		slug,
 		enabled,
+		ariesOnly = false,
 		deliveryBusinessDays
-	}: { slug: string; enabled: boolean; deliveryBusinessDays: number | null } = $props();
+	}: {
+		slug: string;
+		enabled: boolean;
+		ariesOnly?: boolean;
+		deliveryBusinessDays: number | null;
+	} = $props();
 	let product = $state<ShopCatalogProduct | null>(null);
 	let purchaseState = $state<'loading' | 'ready' | 'unavailable' | 'error'>('loading');
 	let variantId = $state('');
 	let quantity = $state(1);
+	let postalCode = $state('');
 	let submitting = $state(false);
 	let errorMessage = $state('');
 	let retry = $state(0);
@@ -23,6 +35,10 @@
 			Number.isInteger(quantity) &&
 			quantity >= 1 &&
 			quantity <= 10 &&
+			(!ariesOnly ||
+				(quantity === 1 &&
+					variant.id === shopAriesRoute.variantId &&
+					matchesAriesPostalCode(postalCode))) &&
 			!submitting
 	);
 	const money = (amount: number) =>
@@ -76,7 +92,10 @@
 			const response = await fetch('/api/shop/cart', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({ lines: [{ merchandiseId: variant.id, quantity }] })
+				body: JSON.stringify({
+					lines: [{ merchandiseId: variant.id, quantity }],
+					...(ariesOnly ? { postalCode } : {})
+				})
 			});
 			const body = (await response.json()) as { ok?: boolean; checkoutUrl?: unknown };
 			if (!response.ok || body.ok !== true || typeof body.checkoutUrl !== 'string') {
@@ -129,16 +148,38 @@
 				<p class="preview-note">
 					A escolha acima define a peça comprada. As cores da galeria são apenas prévias.
 				</p>
-				<label for="shop-quantity">Quantidade</label>
-				<input
-					id="shop-quantity"
-					type="number"
-					min="1"
-					max="10"
-					step="1"
-					bind:value={quantity}
-					required
-				/>
+				{#if ariesOnly}
+					<p>{shopAriesTerms}</p>
+					<label for="shop-postal-code">CEP de entrega</label>
+					<input
+						id="shop-postal-code"
+						type="text"
+						inputmode="numeric"
+						autocomplete="postal-code"
+						maxlength="9"
+						bind:value={postalCode}
+						required
+						aria-describedby="shop-postal-help"
+					/>
+					<p id="shop-postal-help" aria-live="polite">
+						{postalCode && !matchesAriesPostalCode(postalCode)
+							? 'A entrega desta peça está disponível somente para o CEP ' +
+								shopAriesRoute.postalCode +
+								'.'
+							: 'Confirme o mesmo CEP no checkout.'}
+					</p>
+				{:else}
+					<label for="shop-quantity">Quantidade</label>
+					<input
+						id="shop-quantity"
+						type="number"
+						min="1"
+						max="10"
+						step="1"
+						bind:value={quantity}
+						required
+					/>
+				{/if}
 				<div class="price" aria-live="polite">
 					{#if variant}
 						<p>{money(Number(variant.price.amount))} <span>por peça</span></p>
@@ -165,7 +206,8 @@
 			{#if errorMessage}<p class="error" role="alert">{errorMessage}</p>{/if}
 			<p class="checkout-note">
 				Frete fixo de {money(shopDelivery.priceBrl)} por pedido nos destinos habilitados no checkout.
-				Fabricação e entrega em até {deliveryBusinessDays} dias úteis após a aprovação do pagamento.
+				{#if !ariesOnly}Fabricação e entrega em até {deliveryBusinessDays} dias úteis após a aprovação
+					do pagamento.{/if}
 			</p>
 			<p class="checkout-note">
 				Revise o endereço, a entrega e o valor total antes de confirmar o pagamento.
