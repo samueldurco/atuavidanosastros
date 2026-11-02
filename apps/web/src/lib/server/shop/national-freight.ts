@@ -172,7 +172,12 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { 
 	// replacing one carrier with another at the same price still requires a fresh quote.
 	return { ...result, basis: JSON.stringify(mug ? [first] : [first, standard]) };
 }
-export async function rateFor(env: PrivateEnv, fetcher: typeof fetch, cep: string, offer: Offer) {
+export async function rateFor(
+	env: PrivateEnv,
+	fetcher: typeof fetch,
+	cep: string,
+	offer: Offer
+): Promise<Rate & { basis: string; destination?: { city: string; provinceCode: string } }> {
 	if (offer.digipixSku) return digipixRate(fetcher, offer.digipixSku, cep);
 	if (offer.gubo) return guboRate(env, fetcher, cep, offer.gubo);
 	if (!env.DIMONA_FRETE_TOKEN) return fail('carrier_unavailable', 503);

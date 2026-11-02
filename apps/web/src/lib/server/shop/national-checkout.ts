@@ -154,7 +154,7 @@ export async function nationalCheckout(
 				canIssue()
 			]);
 			if (
-				'destination' in rate &&
+				rate.destination &&
 				(rate.destination.provinceCode !== destination.provinceCode ||
 					normal(rate.destination.city) !== normal(destination.city))
 			)
