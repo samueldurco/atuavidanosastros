@@ -1,6 +1,7 @@
 import offers from '$lib/data/shop-reviewed-offers.json' with { type: 'json' };
 import industrialSkus from './national-skus.json' with { type: 'json' };
 import { digipixAvailable, digipixRate, digipixSku, type DigipixSku } from './digipix-freight';
+import { graphimaxAvailable, graphimaxNotebook, graphimaxRate } from './graphimax-freight';
 import { supplierText } from './supplier-response';
 import { reviewedDestination } from '$lib/data/shop-commerce';
 import { config, readApprovedProduct, ShopHttpError } from './shop-http';
@@ -23,8 +24,10 @@ export interface Offer {
 	priceBrl: number;
 	dimonaSku?: string;
 	digipixSku?: DigipixSku;
+	graphimaxSku?: '143';
 }
 export function supplierItem(offer: Offer) {
+	if (offer.graphimaxSku) return 'graphimax/' + offer.graphimaxSku;
 	return offer.digipixSku ? 'digipix/' + offer.digipixSku : (offer.dimonaSku ?? 'varejo-94');
 }
 export function physicalOffer(id: unknown): Offer {
@@ -32,6 +35,7 @@ export function physicalOffer(id: unknown): Offer {
 	if (!o) return fail('product_unavailable', 409);
 	const wallSku = digipixSku(o.slug, o.variantId);
 	if (wallSku) return { ...o, digipixSku: wallSku };
+	if (graphimaxNotebook(o.slug, o.variantId)) return { ...o, graphimaxSku: '143' };
 	const dimonaSku = (industrialSkus as Record<string, string>)[o.variantId.split('/').at(-1)!];
 	if (!(o.slug === 'caneca-aries' || /^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')))
 		return fail('product_unavailable', 409);
@@ -79,6 +83,7 @@ function supplierHeaders(env: PrivateEnv) {
 	return { 'api-key': token, Accept: 'application/json', 'Content-Type': 'application/json' };
 }
 export async function manufacturingAvailable(env: PrivateEnv, fetcher: typeof fetch, offer: Offer) {
+	if (offer.graphimaxSku) return graphimaxAvailable(fetcher);
 	if (offer.digipixSku) return digipixAvailable(fetcher, offer.digipixSku);
 	// The 325 ml mug is a retail pilot; the Dropsimples 310 ml SKU is a different item.
 	return offer.slug === 'caneca-aries'
@@ -176,6 +181,7 @@ export async function rateFor(
 	cep: string,
 	offer: Offer
 ): Promise<Rate & { basis: string; destination?: { city: string; provinceCode: string } }> {
+	if (offer.graphimaxSku) return graphimaxRate(fetcher, cep);
 	if (offer.digipixSku) return digipixRate(fetcher, offer.digipixSku, cep);
 	return shippingRate(
 		await provider(fetcher, dimona + '/shipping', {

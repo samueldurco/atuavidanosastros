@@ -25,7 +25,7 @@ export interface ShopPreview {
 	description: string;
 	model: string;
 	material: string;
-	provider: 'Printful' | 'Gelato' | 'Dimona' | 'Digipix Pro';
+	provider: 'Printful' | 'Gelato' | 'Dimona' | 'Digipix Pro' | 'GraphiMax';
 	imageNote?: string;
 	artOnly?: boolean;
 	measurements?: readonly (readonly string[])[];
@@ -182,6 +182,21 @@ const tankSizes = [
 	['XGG', '58–62', '72–76']
 ];
 export const shopPreviews: ShopPreview[] = previews.map((piece) => {
+	if (reviewedSlugs.has(piece.slug) && piece.slug.startsWith('caderno-')) {
+		return {
+			...piece,
+			provider: 'GraphiMax',
+			model: 'Caderno A5 de capa dura · 96 folhas pautadas',
+			material: 'Capa dura com laminação fosca e encadernação Wire-o preta',
+			construction: {
+				label: 'Miolo e formato',
+				value: '96 folhas pautadas. Formato A5 de 14,8 × 21 cm.'
+			},
+			printDescription: 'Impressão colorida da arte zodiacal ATVNA na capa.',
+			imageNote:
+				'As imagens mostram a estampa no caderno de referência. O modelo de produção nacional tem capa dura fosca, espiral preta e miolo pautado.'
+		};
+	}
 	const framed = piece.slug.startsWith('quadro-');
 	if (reviewedSlugs.has(piece.slug) && (framed || piece.slug.startsWith('poster-'))) {
 		return {
