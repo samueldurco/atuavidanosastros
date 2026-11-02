@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { ShopCatalogProduct } from '$lib/server/shop/shopify-storefront';
 	import {
-		matchesAriesPostalCode,
-		shopAriesRoute,
-		shopAriesTerms,
+		reviewedDestination,
+		reviewedUnitPrice,
+		shopSingleUnitTerms,
 		shopDelivery
 	} from '$lib/data/shop-commerce';
 	let {
@@ -26,6 +26,12 @@
 	let errorMessage = $state('');
 	let retry = $state(0);
 	const variant = $derived(product?.variants.find((item) => item.id === variantId));
+	const destination = $derived(reviewedDestination(postalCode));
+	const deliveryDays = $derived(
+		slug.startsWith('caneca-')
+			? destination?.deliveryBusinessDays
+			: destination?.bagDeliveryBusinessDays
+	);
 	const canBuy = $derived(
 		enabled &&
 			product?.availableForSale &&
@@ -37,8 +43,8 @@
 			quantity <= 10 &&
 			(!ariesOnly ||
 				(quantity === 1 &&
-					variant.id === shopAriesRoute.variantId &&
-					matchesAriesPostalCode(postalCode))) &&
+					Number(variant.price.amount) === reviewedUnitPrice(variant.id) &&
+					destination !== undefined)) &&
 			!submitting
 	);
 	const money = (amount: number) =>
@@ -55,6 +61,7 @@
 		product = null;
 		variantId = '';
 		quantity = 1;
+		postalCode = '';
 		errorMessage = '';
 		submitting = false;
 		purchaseState = 'loading';
@@ -149,7 +156,7 @@
 					A escolha acima define a peça comprada. As cores da galeria são apenas prévias.
 				</p>
 				{#if ariesOnly}
-					<p>{shopAriesTerms}</p>
+					<p>{shopSingleUnitTerms}</p>
 					<label for="shop-postal-code">CEP de entrega</label>
 					<input
 						id="shop-postal-code"
@@ -162,11 +169,14 @@
 						aria-describedby="shop-postal-help"
 					/>
 					<p id="shop-postal-help" aria-live="polite">
-						{postalCode && !matchesAriesPostalCode(postalCode)
-							? 'A entrega desta peça está disponível somente para o CEP ' +
-								shopAriesRoute.postalCode +
-								'.'
-							: 'Confirme o mesmo CEP no checkout.'}
+						{#if destination}
+							Entrega em {destination.city} ({destination.provinceCode}) em até {deliveryDays} dias úteis.
+							Confirme o mesmo CEP no checkout.
+						{:else if postalCode.replace('-', '').length >= 8}
+							Ainda não temos entrega confirmada para este CEP.
+						{:else}
+							Informe os oito dígitos do CEP para consultar a entrega.
+						{/if}
 					</p>
 				{:else}
 					<label for="shop-quantity">Quantidade</label>
@@ -188,7 +198,7 @@
 								Subtotal: {money((Math.round(Number(variant.price.amount) * 100) * quantity) / 100)}
 							</p>
 						{/if}
-						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10}
+						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10 && (!ariesOnly || destination)}
 							<p class="subtotal">
 								Total com frete: {money(
 									(Math.round(Number(variant.price.amount) * 100) * quantity +

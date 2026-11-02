@@ -1,0 +1,177 @@
+[
+	{
+		"postalCode": "36960-000",
+		"city": "Pocrane",
+		"provinceCode": "MG",
+		"deliveryBusinessDays": 8,
+		"bagDeliveryBusinessDays": 20
+	},
+	{
+		"postalCode": "35160-001",
+		"city": "Ipatinga",
+		"provinceCode": "MG",
+		"deliveryBusinessDays": 14,
+		"bagDeliveryBusinessDays": 17
+	},
+	{
+		"postalCode": "01001-000",
+		"city": "São Paulo",
+		"provinceCode": "SP",
+		"deliveryBusinessDays": 8,
+		"bagDeliveryBusinessDays": 16
+	},
+	{
+		"postalCode": "20040-002",
+		"city": "Rio de Janeiro",
+		"provinceCode": "RJ",
+		"deliveryBusinessDays": 7,
+		"bagDeliveryBusinessDays": 14
+	},
+	{
+		"postalCode": "40020-000",
+		"city": "Salvador",
+		"provinceCode": "BA",
+		"deliveryBusinessDays": 9,
+		"bagDeliveryBusinessDays": 18
+	},
+	{
+		"postalCode": "69005-010",
+		"city": "Manaus",
+		"provinceCode": "AM",
+		"deliveryBusinessDays": 17,
+		"bagDeliveryBusinessDays": 25
+	},
+	{
+		"postalCode": "90010-150",
+		"city": "Porto Alegre",
+		"provinceCode": "RS",
+		"deliveryBusinessDays": 17,
+		"bagDeliveryBusinessDays": 20
+	},
+	{
+		"postalCode": "68900-073",
+		"city": "Macapá",
+		"provinceCode": "AP",
+		"deliveryBusinessDays": 24,
+		"bagDeliveryBusinessDays": 25
+	},
+	{
+		"postalCode": "70160-900",
+		"city": "Brasília",
+		"provinceCode": "DF",
+		"deliveryBusinessDays": 15,
+		"bagDeliveryBusinessDays": 16
+	},
+	{
+		"postalCode": "57041-350",
+		"city": "Maceió",
+		"provinceCode": "AL",
+		"deliveryBusinessDays": 18,
+		"bagDeliveryBusinessDays": 20
+	},
+	{
+		"postalCode": "59012-000",
+		"city": "Natal",
+		"provinceCode": "RN",
+		"deliveryBusinessDays": 19,
+		"bagDeliveryBusinessDays": 20
+	},
+	{
+		"postalCode": "65010-490",
+		"city": "São Luís",
+		"provinceCode": "MA",
+		"deliveryBusinessDays": 19,
+		"bagDeliveryBusinessDays": 24
+	},
+	{
+		"postalCode": "64000-020",
+		"city": "Teresina",
+		"provinceCode": "PI",
+		"deliveryBusinessDays": 18,
+		"bagDeliveryBusinessDays": 19
+	},
+	{
+		"postalCode": "60060-090",
+		"city": "Fortaleza",
+		"provinceCode": "CE",
+		"deliveryBusinessDays": 19,
+		"bagDeliveryBusinessDays": 21
+	},
+	{
+		"postalCode": "66025-290",
+		"city": "Belém",
+		"provinceCode": "PA",
+		"deliveryBusinessDays": 19,
+		"bagDeliveryBusinessDays": 22
+	},
+	{
+		"postalCode": "76801-028",
+		"city": "Porto Velho",
+		"provinceCode": "RO",
+		"deliveryBusinessDays": 21,
+		"bagDeliveryBusinessDays": 24
+	},
+	{
+		"postalCode": "78005-370",
+		"city": "Cuiabá",
+		"provinceCode": "MT",
+		"deliveryBusinessDays": 16,
+		"bagDeliveryBusinessDays": 20
+	},
+	{
+		"postalCode": "79002-070",
+		"city": "Campo Grande",
+		"provinceCode": "MS",
+		"deliveryBusinessDays": 16,
+		"bagDeliveryBusinessDays": 19
+	},
+	{
+		"postalCode": "74005-010",
+		"city": "Goiânia",
+		"provinceCode": "GO",
+		"deliveryBusinessDays": 17,
+		"bagDeliveryBusinessDays": 19
+	},
+	{
+		"postalCode": "29010-001",
+		"city": "Vitória",
+		"provinceCode": "ES",
+		"deliveryBusinessDays": 15,
+		"bagDeliveryBusinessDays": 16
+	},
+	{
+		"postalCode": "80020-310",
+		"city": "Curitiba",
+		"provinceCode": "PR",
+		"deliveryBusinessDays": 15,
+		"bagDeliveryBusinessDays": 17
+	},
+	{
+		"postalCode": "49010-030",
+		"city": "Aracaju",
+		"provinceCode": "SE",
+		"deliveryBusinessDays": 18,
+		"bagDeliveryBusinessDays": 21
+	},
+	{
+		"postalCode": "58013-475",
+		"city": "João Pessoa",
+		"provinceCode": "PB",
+		"deliveryBusinessDays": 19,
+		"bagDeliveryBusinessDays": 20
+	},
+	{
+		"postalCode": "77001-014",
+		"city": "Palmas",
+		"provinceCode": "TO",
+		"deliveryBusinessDays": 20,
+		"bagDeliveryBusinessDays": 21
+	},
+	{
+		"postalCode": "88010-000",
+		"city": "Florianópolis",
+		"provinceCode": "SC",
+		"deliveryBusinessDays": 16,
+		"bagDeliveryBusinessDays": 19
+	}
+]
