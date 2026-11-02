@@ -2,6 +2,7 @@ import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
 import { describe, expect, it, vi } from 'vitest';
 import { shopAriesRoute } from '$lib/data/shop-commerce';
 import { shopCart, shopProduct } from './shop-http';
+import { approvedShopProducts } from './shop-catalog-map';
 
 const enabled = {
 	FEATURE_PHYSICAL_CHECKOUT: 'true',
@@ -16,6 +17,7 @@ const enabled = {
 };
 const line = { merchandiseId: shopAriesRoute.variantId, quantity: 1 };
 const secondMug = { merchandiseId: 'gid://shopify/ProductVariant/68006922322288', quantity: 1 };
+const bag = { merchandiseId: approvedShopProducts['ecobag-aries'].variantIds[0], quantity: 1 };
 const request = (lines: unknown[], postalCode?: unknown) =>
 	new Request('https://site.example/api/shop/cart', {
 		method: 'POST',
@@ -25,19 +27,19 @@ const request = (lines: unknown[], postalCode?: unknown) =>
 const json = (data: unknown) =>
 	new Response(JSON.stringify({ data }), { headers: { 'content-type': 'application/json' } });
 
-const productAt = (amount: string) =>
+const productAt = (amount: string, slug = 'caneca-aries') =>
 	json({
 		product: {
-			id: 'gid://shopify/Product/15455054201200',
-			handle: 'caneca-aries',
-			title: 'Caneca Áries',
+			id: approvedShopProducts[slug].productId,
+			handle: slug,
+			title: slug,
 			description: 'Fixture',
 			availableForSale: true,
 			featuredImage: null,
 			variants: {
 				nodes: [
 					{
-						id: line.merchandiseId,
+						id: approvedShopProducts[slug].variantIds[0],
 						title: 'Default Title',
 						availableForSale: true,
 						price: { amount: amount, currencyCode: 'BRL' },
@@ -54,12 +56,17 @@ const rate = (amount = '29.90', currency = 'BRL') => ({
 	title: 'Entrega padrão nacional',
 	estimatedCost: cash(amount, currency)
 });
+const location = (zip = '36960000', provinceCode = 'MG', countryCode = 'BR') => ({
+	selected: true,
+	oneTimeUse: true,
+	address: { zip, provinceCode, countryCode }
+});
 const delivery = {
 	subtotal: cash('79.90'),
 	total: cash('109.80'),
 	groups: [{ deliveryOptions: [rate()] }],
 	hasNextPage: false,
-	addresses: [{ selected: true, oneTimeUse: true }],
+	addresses: [location()],
 	warnings: [] as { code: string }[]
 };
 const cartAt = (overrides: Partial<typeof delivery> = {}) => {
@@ -80,7 +87,7 @@ const cartAt = (overrides: Partial<typeof delivery> = {}) => {
 	});
 };
 
-describe('Compra de uma caneca Áries em Pocrane', () => {
+describe('Compra de uma unidade com preço e destino conferidos', () => {
 	it('requires the reviewed deadline and preserves the public identity gate', async () => {
 		for (const overrides of [
 			{ SHOP_DELIVERY_MAX_BUSINESS_DAYS: '9' },
@@ -104,7 +111,7 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 		['quantity 2', [{ ...line, quantity: 2 }], '36960-000', 400],
 		['two lines', [line, secondMug], '36960-000', 400],
 		['no CEP', [line], undefined, 422],
-		['different CEP', [line], '35170-001', 422],
+		['unreviewed CEP', [line], '00000-000', 422],
 		['unexpected characters', [line], '36960+000', 422]
 	] as const)('rejects %s before calling Shopify', async (_label, lines, cep, code) => {
 		const provider = vi.fn<typeof fetch>();
@@ -149,8 +156,11 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 		['extra group', { groups: [...delivery.groups, ...delivery.groups] }],
 		['extra option', { groups: [{ deliveryOptions: [rate(), rate()] }] }],
 		['additional delivery page', { hasNextPage: true }],
-		['unselected location', { addresses: [{ selected: false, oneTimeUse: true }] }],
-		['persistent location', { addresses: [{ selected: true, oneTimeUse: false }] }],
+		['unselected location', { addresses: [{ ...location(), selected: false }] }],
+		['persistent location', { addresses: [{ ...location(), oneTimeUse: false }] }],
+		['changed CEP', { addresses: [location('35160001')] }],
+		['changed UF', { addresses: [location('36960000', 'SP')] }],
+		['changed country', { addresses: [location('36960000', 'MG', 'PT')] }],
 		['missing location', { addresses: [] }],
 		['provider warning', { warnings: [{ code: 'DELIVERY_ADDRESS_INVALID' }] }]
 	] satisfies [string, Partial<typeof delivery>][])(
@@ -165,6 +175,35 @@ describe('Compra de uma caneca Áries em Pocrane', () => {
 			expect(await cart.json()).toEqual({ ok: false, code: 'invalid_provider_response' });
 		}
 	);
+	it('uses the ecobag price and the Ipatinga destination in the Shopify handoff', async () => {
+		const provider = vi
+			.fn<typeof fetch>()
+			.mockResolvedValueOnce(productAt('49.90', 'ecobag-aries'))
+			.mockResolvedValueOnce(
+				cartAt({
+					subtotal: cash('49.90'),
+					total: cash('79.80'),
+					addresses: [location('35160-001')]
+				})
+			);
+		const response = await shopCart(request([bag], '35160-001'), enabled, provider);
+		expect(response.status).toBe(200);
+		const mutation = JSON.parse(String(provider.mock.calls[1][1]?.body));
+		expect(mutation.variables.input.delivery.addresses[0].address.deliveryAddress).toEqual({
+			countryCode: 'BR',
+			provinceCode: 'MG',
+			city: 'Ipatinga',
+			zip: '35160001'
+		});
+	});
+	it('refuses a bag checkout calculated at the mug price', async () => {
+		const provider = vi
+			.fn<typeof fetch>()
+			.mockResolvedValueOnce(productAt('49.90', 'ecobag-aries'))
+			.mockResolvedValueOnce(cartAt());
+		const response = await shopCart(request([bag], '36960-000'), enabled, provider);
+		expect(response.status).toBe(503);
+	});
 	it.each(['36960000', '36960-000'])(
 		'opens the verified one-unit handoff for %s through mocked Shopify',
 		async (cep) => {

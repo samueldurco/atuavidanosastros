@@ -5,7 +5,7 @@
 		type ShopPolicyKind
 	} from '$lib/data/shop-policies';
 	import approvedPolicies from '$lib/data/shop-policies.json';
-	import { shopAriesTerms, shopDelivery } from '$lib/data/shop-commerce';
+	import { shopSingleUnitTerms, shopDelivery } from '$lib/data/shop-commerce';
 	import ShopPolicyLinks from './ShopPolicyLinks.svelte';
 	let {
 		kind,
@@ -42,7 +42,7 @@
 		<section aria-labelledby="current-shipping-policy">
 			<h2 id="current-shipping-policy">Condições das peças com compra online</h2>
 			{#if ariesOnly}
-				<p>{shopAriesTerms}</p>
+				<p>{shopSingleUnitTerms}</p>
 				<p>
 					O frete é de {new Intl.NumberFormat('pt-BR', {
 						style: 'currency',

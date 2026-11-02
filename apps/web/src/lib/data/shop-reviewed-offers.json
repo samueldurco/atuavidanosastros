@@ -1,0 +1,67 @@
+[
+	{
+		"slug": "caneca-aries",
+		"variantId": "gid://shopify/ProductVariant/68006922223984",
+		"priceBrl": 79.9
+	},
+	{
+		"slug": "ecobag-aquarius",
+		"variantId": "gid://shopify/ProductVariant/68006902235504",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-aries",
+		"variantId": "gid://shopify/ProductVariant/68006901842288",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006901940592",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-capricornus",
+		"variantId": "gid://shopify/ProductVariant/68006902202736",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-gemini",
+		"variantId": "gid://shopify/ProductVariant/68006901907824",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-leo",
+		"variantId": "gid://shopify/ProductVariant/68006901973360",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-libra",
+		"variantId": "gid://shopify/ProductVariant/68006902071664",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-pisces",
+		"variantId": "gid://shopify/ProductVariant/68006904168816",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-sagittarius",
+		"variantId": "gid://shopify/ProductVariant/68006902137200",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-scorpio",
+		"variantId": "gid://shopify/ProductVariant/68006902104432",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-taurus",
+		"variantId": "gid://shopify/ProductVariant/68006824608112",
+		"priceBrl": 49.9
+	},
+	{
+		"slug": "ecobag-virgo",
+		"variantId": "gid://shopify/ProductVariant/68006902006128",
+		"priceBrl": 49.9
+	}
+]

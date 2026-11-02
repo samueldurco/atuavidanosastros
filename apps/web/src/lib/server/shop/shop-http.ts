@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import {
 	isShopCommerceEligible,
-	matchesAriesPostalCode,
-	shopAriesRoute
+	reviewedDestination,
+	reviewedUnitPrice
 } from '$lib/data/shop-commerce';
 import { readShopSale } from './seller-identity';
 import { approvedShopProducts } from './shop-catalog-map';
@@ -27,12 +27,13 @@ const approvedVariantSlugs = new Map(
 		isShopCommerceEligible(slug) ? product.variantIds.map((id) => [id, slug] as const) : []
 	)
 );
-function isReviewedAriesOffer(variant: ShopCatalogProduct['variants'][number]): boolean {
+function isReviewedOffer(variant: ShopCatalogProduct['variants'][number]): boolean {
+	const price = reviewedUnitPrice(variant.id);
 	return (
-		variant.id === shopAriesRoute.variantId &&
+		price !== undefined &&
 		variant.availableForSale &&
 		variant.price.currencyCode === 'BRL' &&
-		Number(variant.price.amount) === shopAriesRoute.itemPriceBrl
+		Number(variant.price.amount) === price
 	);
 }
 
@@ -155,13 +156,19 @@ export async function shopCatalog(
 		return reply({
 			ok: true,
 			...catalog,
-			products: catalog.products.filter(
-				(product) =>
-					isShopCommerceEligible(product.handle, sale.ariesOnly) &&
-					approvedShopProducts[product.handle]?.productId === product.id &&
-					(!sale.ariesOnly ||
-						(product.availableForSale && product.variants.some(isReviewedAriesOffer)))
-			)
+			products: catalog.products.flatMap((product) => {
+				if (
+					!isShopCommerceEligible(product.handle, sale.ariesOnly) ||
+					approvedShopProducts[product.handle]?.productId !== product.id
+				)
+					return [];
+				if (!sale.ariesOnly) return [product];
+				const variants = product.variants.filter(
+					(variant) =>
+						approvedVariantSlugs.get(variant.id) === product.handle && isReviewedOffer(variant)
+				);
+				return product.availableForSale && variants.length ? [{ ...product, variants }] : [];
+			})
 		});
 	} catch (error) {
 		return failure(error);
@@ -231,11 +238,12 @@ export async function shopProduct(
 	if (!shop) return reply({ ok: false, code: 'shop_not_configured' }, 503);
 	try {
 		const product = await readApprovedProduct(shop, fetcher, slug, buyerIp);
-		if (
-			sale.ariesOnly &&
-			!(product?.availableForSale && product.variants.some(isReviewedAriesOffer))
-		)
-			throw new ShopHttpError('variant_unavailable', 409);
+		if (sale.ariesOnly) {
+			const variants = product?.variants.filter(isReviewedOffer) ?? [];
+			if (!product?.availableForSale || !variants.length)
+				throw new ShopHttpError('variant_unavailable', 409);
+			return reply({ ok: true, product: { ...product, variants } });
+		}
 		return reply({ ok: true, product });
 	} catch (error) {
 		return failure(error);
@@ -289,15 +297,18 @@ export async function shopCart(
 		)
 			throw new ShopHttpError('invalid_lines', 400);
 		const lines = submittedLines as ShopCartLine[];
+		const destination = sale.ariesOnly
+			? reviewedDestination((body as { postalCode?: unknown }).postalCode)
+			: undefined;
 		if (sale.ariesOnly) {
 			if (
 				lines.length !== 1 ||
 				lines[0].quantity !== 1 ||
-				lines[0].merchandiseId !== shopAriesRoute.variantId
+				reviewedUnitPrice(lines[0].merchandiseId) === undefined ||
+				!isShopCommerceEligible(approvedVariantSlugs.get(lines[0].merchandiseId)!, true)
 			)
 				throw new ShopHttpError('invalid_lines', 400);
-			if (!matchesAriesPostalCode((body as { postalCode?: unknown }).postalCode))
-				throw new ShopHttpError('delivery_unavailable', 422);
+			if (!destination) throw new ShopHttpError('delivery_unavailable', 422);
 		}
 		if (new Set(lines.map((line) => line.merchandiseId)).size !== lines.length)
 			throw new ShopHttpError('invalid_lines', 400);
@@ -312,7 +323,7 @@ export async function shopCart(
 					? product.variants
 							.filter(
 								(variant) =>
-									variant.availableForSale && (!sale.ariesOnly || isReviewedAriesOffer(variant))
+									variant.availableForSale && (!sale.ariesOnly || isReviewedOffer(variant))
 							)
 							.map((variant) => variant.id)
 					: []
@@ -320,7 +331,7 @@ export async function shopCart(
 		);
 		if (lines.some((line) => !available.has(line.merchandiseId)))
 			throw new ShopHttpError('variant_unavailable', 409);
-		const cart = await createShopCart(shop, fetcher, lines, buyerIp, sale.ariesOnly);
+		const cart = await createShopCart(shop, fetcher, lines, buyerIp, destination);
 		return reply({ ok: true, checkoutUrl: cart.checkoutUrl, totalQuantity: cart.totalQuantity });
 	} catch (error) {
 		return failure(error);

@@ -1,5 +1,10 @@
 /** Server-only Shopify transport. Routes own authorization, feature gates and release decisions. */
-import { shopAriesRoute, shopDelivery } from '$lib/data/shop-commerce';
+import {
+	reviewedDestination,
+	reviewedUnitPrice,
+	shopAriesRoute,
+	shopDelivery
+} from '$lib/data/shop-commerce';
 
 export const STOREFRONT_API_VERSION = '2026-10' as const;
 export const STOREFRONT_TIMEOUT_MS = 8_000;
@@ -146,7 +151,7 @@ const PREVIEW_CART_MUTATION = `mutation ShopPreviewCart($input: CartInput!) {
     cart {
       id checkoutUrl totalQuantity
       cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
-      delivery { addresses { selected oneTimeUse } }
+      delivery { addresses { selected oneTimeUse address { ... on CartDeliveryAddress { countryCode provinceCode zip } } } }
       deliveryGroups(first: 20) {
         nodes { deliveryOptions { title estimatedCost { amount currencyCode } } }
         pageInfo { hasNextPage }
@@ -483,13 +488,19 @@ export async function createShopCart(
 	fetcher: typeof fetch,
 	lines: readonly ShopCartLine[],
 	buyerIp?: string,
-	verifyAriesDelivery = false
+	destination?: NonNullable<ReturnType<typeof reviewedDestination>>
 ): Promise<ShopCart> {
 	const input: JsonRecord = { lines: cartLines(lines), buyerIdentity: { countryCode: 'BR' } };
-	if (!verifyAriesDelivery) {
+	if (!destination) {
 		const data = await graphql(config, fetcher, CART_MUTATION, { input }, buyerIp);
 		return parsedCart(data, config, lines);
 	}
+	const price =
+		lines.length === 1 && lines[0].quantity === 1
+			? reviewedUnitPrice(lines[0].merchandiseId)
+			: undefined;
+	if (price === undefined) throw new ShopStorefrontError('invalid_cart');
+	const zip = destination.postalCode.replace('-', '');
 	input.delivery = {
 		addresses: [
 			{
@@ -498,9 +509,9 @@ export async function createShopCart(
 				address: {
 					deliveryAddress: {
 						countryCode: 'BR',
-						provinceCode: 'MG',
-						city: 'Pocrane',
-						zip: shopAriesRoute.postalCode.replace('-', '')
+						provinceCode: destination.provinceCode,
+						city: destination.city,
+						zip
 					}
 				}
 			}
@@ -511,8 +522,8 @@ export async function createShopCart(
 	const cart = parsedDeliveryCart(data, config, lines);
 	const addresses = array(record(record(result.cart).delivery).addresses, 1);
 	const selected = record(addresses[0]);
+	const address = record(selected.address);
 	const [group] = cart.deliveryGroups;
-	const price = shopAriesRoute.itemPriceBrl;
 	const shipping = shopDelivery.priceBrl;
 	const matches = (money: ShopMoney, expected: number) =>
 		money.currencyCode === 'BRL' && Number(money.amount) === expected;
@@ -520,6 +531,10 @@ export async function createShopCart(
 		array(result.warnings, 250).length ||
 		selected.selected !== true ||
 		selected.oneTimeUse !== true ||
+		address.countryCode !== 'BR' ||
+		address.provinceCode !== destination.provinceCode ||
+		typeof address.zip !== 'string' ||
+		address.zip.replace('-', '') !== zip ||
 		cart.deliveryGroupsHasNextPage ||
 		cart.deliveryGroups.length !== 1 ||
 		group.options.length !== 1 ||
