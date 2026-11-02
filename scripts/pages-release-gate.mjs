@@ -56,6 +56,10 @@ export function commerceConfigurationChecks(
   if (vars.FEATURE_PHYSICAL_CHECKOUT === "false") return [];
   return [
     check(
+      "shopify-flat-shipping-verified-at-brl-29-90",
+      vars.SHOP_VERIFIED_FLAT_SHIPPING_BRL === "29.90",
+    ),
+    check(
       "physical-commerce-reviewed-configuration",
       vars.FEATURE_PHYSICAL_CHECKOUT === "true" &&
         vars.SHOP_SELLER_DISCLOSURE_APPROVED === "true" &&

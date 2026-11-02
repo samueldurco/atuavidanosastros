@@ -13,7 +13,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -56,7 +56,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -99,7 +99,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -142,7 +142,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -185,7 +185,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -228,7 +228,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -271,7 +271,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -314,7 +314,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -357,7 +357,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -400,7 +400,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -443,7 +443,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',
@@ -486,7 +486,7 @@ export const mugPreviews = [
 		material: 'Porcelana branca',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma caneca de referência. A peça vendida é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+			'As imagens ilustram a arte em uma caneca de referência. O modelo da coleção é a caneca Dimona de porcelana branca, 325 ml, com produção nacional. O formato da caneca e a aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
 		care: 'Lavar à mão, sem produtos abrasivos. Não usar lava-louças.',
 		construction: {
 			label: 'Capacidade e produção',

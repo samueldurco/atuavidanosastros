@@ -1,3 +1,5 @@
+import { shopDelivery } from '$lib/data/shop-commerce';
+
 export type ShopSellerIdentity = {
 	name: string;
 	address: string;
@@ -14,6 +16,7 @@ export function readShopSale(
 		return null;
 	const days = env.SHOP_DELIVERY_MAX_BUSINESS_DAYS ?? '';
 	if (!/^[1-9][0-9]?$/.test(days)) return null;
+	if (env.SHOP_VERIFIED_FLAT_SHIPPING_BRL !== shopDelivery.priceBrl.toFixed(2)) return null;
 	const name = env.SHOP_SELLER_PUBLIC_NAME?.trim();
 	const address = env.SHOP_SELLER_PUBLIC_ADDRESS?.trim();
 	const email = env.SHOP_SELLER_PUBLIC_EMAIL?.trim();

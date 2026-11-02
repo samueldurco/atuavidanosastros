@@ -23,6 +23,7 @@ const enabled = {
 	FEATURE_PHYSICAL_CHECKOUT: 'true',
 	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
 	SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
+	SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
 	SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
 	SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
 	SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
@@ -77,6 +78,7 @@ describe('Shop HTTP boundaries', () => {
 		const fetcher = provider(emptyCatalog);
 		for (const key of [
 			'SHOP_DELIVERY_MAX_BUSINESS_DAYS',
+			'SHOP_VERIFIED_FLAT_SHIPPING_BRL',
 			'SHOP_SELLER_DISCLOSURE_APPROVED',
 			'SHOP_SELLER_PUBLIC_NAME',
 			'SHOP_SELLER_PUBLIC_ADDRESS',
@@ -87,6 +89,12 @@ describe('Shop HTTP boundaries', () => {
 			expect((await shopCatalog(incomplete, fetcher)).status).toBe(503);
 			expect((await shopCart(request({ lines: [] }), incomplete, fetcher)).status).toBe(503);
 		}
+		expect(fetcher).not.toHaveBeenCalled();
+	});
+	it('rejects carts for shipping configurations not covered by the uniform price', async () => {
+		const fetcher = provider(emptyCatalog);
+		const unreviewed = { ...enabled, SHOP_VERIFIED_FLAT_SHIPPING_BRL: '35.00' };
+		expect((await shopCart(request({ lines: [] }), unreviewed, fetcher)).status).toBe(503);
 		expect(fetcher).not.toHaveBeenCalled();
 	});
 	it('requires an explicit diagnostic gate and correct Bearer authorization', async () => {

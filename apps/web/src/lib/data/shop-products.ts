@@ -123,8 +123,11 @@ export const shopPreviews: ShopPreview[] = [
 		material: 'Algodão cru',
 		provider: 'Dimona',
 		imageNote:
-			'As imagens ilustram a arte em uma ecobag de referência. A peça vendida é a ecobag Dimona de algodão cru, 36 × 30 cm, com produção nacional. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
-		construction: { label: 'Dimensões', value: '36 × 30 cm. Produção nacional sob demanda.' },
+			'As imagens ilustram a arte em uma ecobag de referência. A ecobag Dimona é produzida no Brasil em algodão cru e mede cerca de 36 × 30 cm. O formato, as alças e a proporção da aplicação podem diferir da prévia; as cores podem variar conforme a tela e a impressão.',
+		construction: {
+			label: 'Dimensões',
+			value: 'Aproximadamente 36 × 30 cm. Produção nacional sob demanda.'
+		},
 		printDescription:
 			'Estampa frontal por DTF. Arquivo aplicado sem corte nem distorção, em área de 15,24 × 15,24 cm, incluindo as margens transparentes da composição.',
 		imageSize: 1000,

@@ -12,6 +12,7 @@ export default defineConfig({
 			FEATURE_PHYSICAL_CHECKOUT: 'true',
 			SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
 			SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40',
+			SHOP_VERIFIED_FLAT_SHIPPING_BRL: '29.90',
 			SHOP_SELLER_PUBLIC_NAME: 'Responsável de exemplo',
 			SHOP_SELLER_PUBLIC_ADDRESS: 'Endereço fictício para teste de layout, Brasil',
 			SHOP_SELLER_PUBLIC_EMAIL: 'seller@example.test',
