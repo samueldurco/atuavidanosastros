@@ -1,19 +1,15 @@
 import offers from '$lib/data/shop-reviewed-offers.json' with { type: 'json' };
 import industrialSkus from './national-skus.json' with { type: 'json' };
-import { digipixAvailable, digipixRate, digipixSku, type DigipixSku } from './digipix-freight';
-import { supplierText } from './supplier-response';
 import { reviewedDestination } from '$lib/data/shop-commerce';
-import { config, readApprovedProduct, ShopHttpError } from './shop-http';
+import { config, readApprovedProduct } from './shop-http';
 import { hasControlCharacters } from './shopify-storefront';
 
-export type PrivateEnv = Record<string, string | undefined>;
-export const fail = (code: string, status = 422): never => {
-	throw new ShopHttpError(code, status);
-};
-export const record = (v: unknown): Record<string, unknown> =>
-	v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, unknown>) : {};
-export const zip = (v: unknown): string =>
-	typeof v === 'string' && /^\d{5}-?\d{3}$/.test(v.trim()) ? v.trim().replace('-', '') : '';
+import { digipixAvailable, digipixRate, digipixSku, type DigipixSku } from './digipix-freight';
+import guboSkus from './national-gubo-skus.json' with { type: 'json' };
+import { guboAvailable, guboRate, type GuboVariant } from './gubo-freight';
+import { fail, provider, record, zip, type PrivateEnv } from './freight-provider';
+export { fail, provider, record, zip, type PrivateEnv } from './freight-provider';
+
 export const normal = (v: string) =>
 	v.normalize('NFD').replace(/\p{M}/gu, '').toUpperCase().replace(/\s+/g, ' ').trim();
 const uf = /^(AC|AL|AM|AP|BA|CE|DF|ES|GO|MA|MG|MS|MT|PA|PB|PE|PI|PR|RJ|RN|RO|RR|RS|SC|SE|SP|TO)$/;
@@ -22,23 +18,27 @@ export interface Offer {
 	variantId: string;
 	priceBrl: number;
 	dimonaSku?: string;
+	gubo?: GuboVariant;
 	digipixSku?: DigipixSku;
-}
-export function supplierItem(offer: Offer) {
-	return offer.digipixSku ? 'digipix/' + offer.digipixSku : (offer.dimonaSku ?? 'varejo-94');
 }
 export function physicalOffer(id: unknown): Offer {
 	const o = (offers as Offer[]).find((o) => o.variantId === id);
 	if (!o) return fail('product_unavailable', 409);
-	const wallSku = digipixSku(o.slug, o.variantId);
-	if (wallSku) return { ...o, digipixSku: wallSku };
-	const dimonaSku = (industrialSkus as Record<string, string>)[o.variantId.split('/').at(-1)!];
-	if (!(o.slug === 'caneca-aries' || /^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')))
+	const variant = o.variantId.split('/').at(-1)!;
+	const dimonaSku = (industrialSkus as Record<string, string>)[variant];
+	const gubo = (guboSkus as Record<string, GuboVariant>)[variant];
+	const wall = digipixSku(o.slug, o.variantId);
+	if ([Boolean(dimonaSku), Boolean(gubo), Boolean(wall)].filter(Boolean).length > 1)
 		return fail('product_unavailable', 409);
-	return { ...o, dimonaSku: o.slug === 'caneca-aries' ? undefined : dimonaSku };
+	if (gubo && o.slug !== 'caneca-aries') return { ...o, gubo };
+	if (wall) return { ...o, digipixSku: wall };
+	if (!gubo && o.slug === 'caneca-aries') return o;
+	if (/^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')) return { ...o, dimonaSku };
+	return fail('product_unavailable', 409);
 }
-export async function provider(fetcher: typeof fetch, url: string, init: RequestInit = {}) {
-	return JSON.parse(await supplierText(fetcher, url, init, 128 * 1024)) as unknown;
+export function supplierItem(o: Offer) {
+	if (o.digipixSku) return 'digipix/' + o.digipixSku;
+	return o.gubo ? 'gubo:' + o.gubo.sku : (o.dimonaSku ?? 'varejo-94');
 }
 export async function locality(fetcher: typeof fetch, cep: string) {
 	const known = reviewedDestination(cep);
@@ -73,13 +73,15 @@ export async function locality(fetcher: typeof fetch, cep: string) {
 	);
 }
 export const dimona = 'https://admin.camisadimona.com.br/api/v2';
-function supplierHeaders(env: PrivateEnv) {
-	const token = env.DIMONA_FRETE_TOKEN;
-	if (!token) return fail('shop_unavailable', 503);
-	return { 'api-key': token, Accept: 'application/json', 'Content-Type': 'application/json' };
-}
+const supplierHeaders = (env: PrivateEnv) => ({
+	'api-key': env.DIMONA_FRETE_TOKEN!,
+	Accept: 'application/json',
+	'Content-Type': 'application/json'
+});
 export async function manufacturingAvailable(env: PrivateEnv, fetcher: typeof fetch, offer: Offer) {
 	if (offer.digipixSku) return digipixAvailable(fetcher, offer.digipixSku);
+	if (offer.gubo) return guboAvailable(env, fetcher, offer.gubo);
+	if (!env.DIMONA_FRETE_TOKEN) return fail('carrier_unavailable', 503);
 	// The 325 ml mug is a retail pilot; the Dropsimples 310 ml SKU is a different item.
 	return offer.slug === 'caneca-aries'
 		? Promise.resolve(true)
@@ -172,6 +174,8 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { 
 }
 export async function rateFor(env: PrivateEnv, fetcher: typeof fetch, cep: string, offer: Offer) {
 	if (offer.digipixSku) return digipixRate(fetcher, offer.digipixSku, cep);
+	if (offer.gubo) return guboRate(env, fetcher, cep, offer.gubo);
+	if (!env.DIMONA_FRETE_TOKEN) return fail('carrier_unavailable', 503);
 	return shippingRate(
 		await provider(fetcher, dimona + '/shipping', {
 			method: 'POST',
