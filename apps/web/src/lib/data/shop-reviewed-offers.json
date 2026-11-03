@@ -42,6 +42,36 @@
 		"dimonaRetailProductionDays": 3
 	},
 	{
+		"slug": "caneca-capricornus",
+		"variantId": "gid://shopify/ProductVariant/68006922551664",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-aquarius",
+		"variantId": "gid://shopify/ProductVariant/68006922584432",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-pisces",
+		"variantId": "gid://shopify/ProductVariant/68006922617200",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-taurus",
+		"variantId": "gid://shopify/ProductVariant/68006922256752",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-gemini",
+		"variantId": "gid://shopify/ProductVariant/68006922289520",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
 		"slug": "ecobag-aquarius",
 		"variantId": "gid://shopify/ProductVariant/68006902235504",
 		"priceBrl": 49.9
