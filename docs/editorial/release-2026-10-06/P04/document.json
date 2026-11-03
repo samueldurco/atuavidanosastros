@@ -1,11 +1,11 @@
 {
   "id": "guide-horario-nascimento",
-  "revision": 3,
+  "revision": 4,
   "state": "PUBLISHED",
   "path": "/noticias/2026/10/horario-nascimento-mapa-astral",
   "kind": "guide",
-  "title": "Horário de nascimento: como conferir os dados do mapa",
-  "description": "Confira o horário de nascimento, registre a origem do dado e entenda como lidar com aproximações sem inventar precisão no mapa astral.",
+  "title": "Como ler o mapa astral quando a hora de nascimento é incerta",
+  "description": "Entenda o que fazer com uma hora registrada, aproximada ou desconhecida e por que uma estimativa muda a leitura do ascendente e das casas.",
   "author": {
     "id": "atvna-redacao-automatizada",
     "type": "Organization",
@@ -18,59 +18,35 @@
     "reviewMode": "separate-pass"
   },
   "publishedAt": "2026-10-06T16:08:48.728Z",
-  "modifiedAt": "2026-10-06T16:08:48.728Z",
+  "modifiedAt": "2026-11-02T14:47:45.307Z",
   "sections": [
     {
-      "heading": "A incerteza precisa aparecer",
+      "heading": "Que partes do mapa dependem da hora?",
       "paragraphs": [
-        "O horário de nascimento participa da identificação do Ascendente junto com o local. Cafe Astrology explica essa referência como o signo e o grau que surgem no horizonte leste para o momento e o lugar considerados.",
-        "Por isso, 'não sei o horário' e 'nasci às 8h' não são informações equivalentes. Um horário aproximado também não deve ser apresentado como exato. O primeiro passo é descrever o que você realmente sabe.",
-        "Este guia ajuda a organizar a pesquisa do dado. Ele não calcula resultados, não fixa um intervalo universal de mudança de Ascendente e não promete descobrir a hora pelo comportamento de alguém."
+        "Sem uma hora confiável, deixe em aberto o ascendente e as casas. Na astrologia, o ascendente corresponde ao ponto do zodíaco que se ergue no horizonte leste no momento e no lugar do nascimento. A cidade ajuda a definir qual horizonte observar. A data, sozinha, não fixa esse ponto.",
+        "A divisão do mapa em casas também depende de como o céu se apresenta naquele momento e do sistema de casas escolhido. Um gráfico traçado com uma hora qualquer pode ter linhas perfeitamente nítidas. A aparência do desenho não torna a hora mais confiável."
       ]
     },
     {
-      "heading": "Procure a origem, não a descrição que agrada",
+      "heading": "Três situações, três próximos passos",
       "paragraphs": [
-        "Anote onde viu ou ouviu o horário. Pode ser um registro disponível, uma anotação antiga ou a lembrança de uma pessoa. Preserve a forma original: 'por volta das oito' contém uma incerteza que desapareceria se você escrevesse apenas '08:00'.",
-        "Se houver um registro acessível, confira o campo e sua legibilidade. Se duas informações divergem, registre a divergência. Não descarte uma versão apenas porque outro horário produz um texto mais parecido com a sua personalidade.",
-        "Você pode perguntar a um familiar de onde vem a lembrança e se ele está citando uma anotação ou uma estimativa. Essa conversa organiza a fonte; não transforma automaticamente uma lembrança em documento.",
-        "Guarde as anotações em um local que você considere adequado. Não é preciso publicar uma certidão, uma fotografia ou os dados de outra pessoa para pedir ajuda com uma dúvida de vocabulário."
+        "Hora registrada. Imagine que um documento registra 8h12. Anote a hora, a cidade e qual documento você consultou. Ao usar uma ferramenta, transcreva o horário local registrado. A procedência importa mesmo quando o relógio aparece com precisão de minutos.",
+        "Hora aproximada. Na mesma família, alguém só se lembra de que foi “depois do café, entre oito e nove”. Guarde esse intervalo e a origem da lembrança. Se estiver comparando gráficos para estudar o efeito da incerteza, identifique os dois extremos como hipóteses. Uma diferença entre eles mostra o que a imprecisão pode mudar. A semelhança não confirma a hora.",
+        "Hora desconhecida. Se a única informação for o dia, escreva “hora desconhecida”. Uma próxima ação possível é consultar o registro de nascimento ou perguntar qual foi a fonte de uma lembrança. Se a hora continuar ausente, você ainda pode estudar como o ascendente é definido, sem atribuir um signo ascendente a si."
       ]
     },
     {
-      "heading": "Modelo de registro",
+      "heading": "Antes de usar um formulário",
       "paragraphs": [
-        "Use os campos: data informada; local informado; horário como aparece na origem; tipo de origem; pessoa ou documento que forneceu a informação; dúvida pendente. Evite incluir identificadores pessoais que não tenham relação com a sua pesquisa.",
-        "Exemplo fictício: 'horário: perto de 14h; origem: lembrança familiar; dúvida: verificar se existe anotação da época'. Outro exemplo: 'horário: 14:12; origem: registro consultado; dúvida: conferir se a cidade foi selecionada corretamente'. Nenhum deles produz um resultado astrológico neste guia.",
-        "A ficha serve para conversar sobre o dado com clareza. Ela não mede a validade de um método de retificação nem prova qual descrição astrológica se ajusta à pessoa."
-      ]
-    },
-    {
-      "heading": "Quando o horário continua desconhecido",
-      "paragraphs": [
-        "Declare a limitação antes de ler qualquer resultado que dependa dela. Não aceite uma afirmação de precisão se o serviço não explicar como lida com a falta do dado.",
-        "Se um formulário exigir um horário que você não conhece, não escolha um valor arbitrário para depois tratá-lo como verdadeiro. Procure uma opção explícita de dado desconhecido ou interrompa o preenchimento até entender o efeito dessa escolha.",
-        "Você ainda pode estudar o vocabulário e realizar exercícios de observação sem atribuir um Ascendente. A utilidade de um guia não precisa depender de uma personalização que ele não consegue sustentar.",
-        "Se decidir pesquisar métodos especializados, peça que sejam explicadas as hipóteses e incertezas. Este texto não oferece nem valida esse serviço."
-      ]
-    },
-    {
-      "heading": "Uma tarefa pequena para concluir",
-      "paragraphs": [
-        "Separe dez minutos para completar a ficha com o que já está disponível. Marque cada campo como confirmado, aproximado ou desconhecido, sem tentar preencher todas as lacunas no mesmo dia.",
-        "Escolha apenas uma próxima ação verificável: conferir uma anotação, perguntar pela origem de uma lembrança ou revisar a cidade usada em um resultado anterior. A ação termina quando a informação é consultada e a ficha é atualizada de forma honesta.",
-        "Se a resposta continuar desconhecida, mantenha essa palavra. Um registro claro de limites é mais útil para uma leitura responsável do que uma precisão inventada."
+        "O formulário natal do ATVNA pede data, hora e local para montar o instante do cálculo. Com uma hora documentada, você pode conferir os três campos. Se conhece apenas uma faixa, conserve-a nas suas anotações. Se só conhece o dia, evite digitar meio-dia para passar pelo campo obrigatório.",
+        "Uma ficha curta basta para guardar o que se sabe. Escreva “cidade”, “hora ou intervalo”, “origem” e “o que continua incerto”. Se uma nova fonte aparecer, você terá como comparar os registros antes de refazer a leitura."
       ]
     }
   ],
   "sources": [
     {
-      "title": "Ascendant — Cafe Astrology",
+      "title": "Cafe Astrology — The Ascendant",
       "url": "https://cafeastrology.com/ascendant.html"
-    },
-    {
-      "title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
-      "url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
     }
   ]
 }

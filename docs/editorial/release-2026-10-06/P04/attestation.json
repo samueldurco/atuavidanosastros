@@ -3,15 +3,15 @@
   "keyId": "github-actions-editorial-20261006-01",
   "reviewerId": "atvna-editorial-service",
   "documentId": "guide-horario-nascimento",
-  "revision": 3,
-  "digest": "1cd98b263e4707c4d1abba55166f44828e45509f899ee420c471cd48bebb802e",
+  "revision": 4,
+  "digest": "fe73119f1a13c995a6f67b9764f831cb7d69ed8adc9fc83ac197b6a47dcbb186",
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "decision": "APROVADO_AUTOMATICAMENTE",
   "reviewMode": "separate-pass",
   "risk": "low-educational-evergreen",
-  "reportDigest": "4385eb32c27e426b7f9ab63657c39f913671f969803c6dd9edd1a7ceea335e02",
-  "evidenceManifestDigest": "1ffc2b4030dc5878ae4078517ab02b8e6353f48e8e4a899630bfdaa08c23bce6",
-  "approvedAt": "2026-10-06T16:10:44.839Z",
-  "expiresAt": "2026-10-07T16:10:44.839Z",
-  "signature": "66qvklzCLXYrFj8bSNhH6dqPFH35w5rSUL1vnqilsuP3SyX4LERDzMdc2iYHIjwxJldtbrohTVEcRtqOsHzCAg=="
+  "reportDigest": "0e17d55d9ae8d4ecc71f99d5268e9ed12e5a8fe4ee4402956d8669dbb201c709",
+  "evidenceManifestDigest": "186417e1f8dc615ea7df68770166ae412d02d05560bbfce334a03358ece6cd21",
+  "approvedAt": "2026-11-03T10:13:34.304Z",
+  "expiresAt": "2026-11-04T10:13:34.304Z",
+  "signature": "3IiBJ/dARQJE1uwqhPwYJzIqTRPg0gIoGqVpja66wCnDB9j6QhWZ7wRTc7s+qQo4xDLKJ4V8PCxSYKVmxrwxAQ=="
 }

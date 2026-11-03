@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "atvna-editorial-candidate-gates-v1",
+  "candidateCommit": "00fba88d6465cc8a1fcfea8d9dbf7c2ebf5c5981",
+  "signingRun": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617446337",
+  "candidateWorkflow": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523",
+  "checkedAt": "2026-11-03T10:32:43.730Z",
+  "objectIds": [
+    {
+      "slot": "P04",
+      "documentId": "guide-horario-nascimento",
+      "revision": 4,
+      "digest": "fe73119f1a13c995a6f67b9764f831cb7d69ed8adc9fc83ac197b6a47dcbb186"
+    },
+    {
+      "slot": "P05",
+      "documentId": "guide-mercurio-retrogrado",
+      "revision": 4,
+      "digest": "41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc"
+    },
+    {
+      "slot": "P07",
+      "documentId": "guide-sinastria-limites",
+      "revision": 4,
+      "digest": "9240f7c6f13e8e9bc76ed74793eb2db60d8b002f2e4a4cd2b5a06719106c1604"
+    },
+    {
+      "slot": "P09",
+      "documentId": "guide-arcanos-maiores-menores",
+      "revision": 4,
+      "digest": "f97755aed66617d9bef7d37ce65c7f2e85c8b74b0d8165914a04eedb5e079de2"
+    },
+    {
+      "slot": "P11",
+      "documentId": "guide-meio-ceu-reflexao",
+      "revision": 4,
+      "digest": "b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56"
+    },
+    {
+      "slot": "P12",
+      "documentId": "guide-diario-sonhos",
+      "revision": 4,
+      "digest": "4a8590c623fd3c2a1e4946ab54663e36daa2454827b11d0f095b4edf512b2554"
+    }
+  ],
+  "checks": [
+    {
+      "name": "dispatch-guard",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125854987510",
+      "conclusion": "success"
+    },
+    {
+      "name": "accessibility",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041451",
+      "conclusion": "success"
+    },
+    {
+      "name": "current-readings",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041520",
+      "conclusion": "success"
+    },
+    {
+      "name": "shop",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041577",
+      "conclusion": "success"
+    },
+    {
+      "name": "quality",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041590",
+      "conclusion": "success"
+    },
+    {
+      "name": "secrets",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041610",
+      "conclusion": "success"
+    },
+    {
+      "name": "user-area",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041615",
+      "conclusion": "success"
+    },
+    {
+      "name": "sbom",
+      "url": "https://github.com/samueldurco/atuavidanosastros/actions/runs/41617643523/job/125855041640",
+      "conclusion": "success"
+    }
+  ],
+  "editorialSteps": [
+    {
+      "name": "Render externally signed editorial candidates before admission",
+      "conclusion": "success",
+      "completedAt": "2026-11-03T10:15:52Z"
+    },
+    {
+      "name": "Editorial candidate Gate B and public SEO",
+      "conclusion": "success",
+      "completedAt": "2026-11-03T10:18:43Z"
+    }
+  ],
+  "digestMethod": "SHA-256 do JSON canônico, com as chaves ordenadas e arrays em ordem original."
+}

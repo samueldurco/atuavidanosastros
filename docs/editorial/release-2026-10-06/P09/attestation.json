@@ -3,15 +3,15 @@
   "keyId": "github-actions-editorial-20261006-01",
   "reviewerId": "atvna-editorial-service",
   "documentId": "guide-arcanos-maiores-menores",
-  "revision": 3,
-  "digest": "b5e290a708ea9bc8a7fd533f1eaaa0101616d57098e64a920b5510b4e2c1023a",
+  "revision": 4,
+  "digest": "f97755aed66617d9bef7d37ce65c7f2e85c8b74b0d8165914a04eedb5e079de2",
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "decision": "APROVADO_AUTOMATICAMENTE",
   "reviewMode": "separate-pass",
   "risk": "low-educational-evergreen",
-  "reportDigest": "48994e9ea3c919d034a81a9c91b9ac4688c2db12ff124bd436df672f7b37a497",
-  "evidenceManifestDigest": "d6efb66b04a9e83324aac1651bb7882ee1bab213d5f1e7ab54e4dfefcad3878b",
-  "approvedAt": "2026-10-06T16:10:44.863Z",
-  "expiresAt": "2026-10-07T16:10:44.863Z",
-  "signature": "IXzw32xjUi701FpaROcpq4WJFipMeEIEKhHWdxxmNM0HR/lISvXP8i2p2qt6mgJcbsW6fjMOXL5ibvWMjpjDCQ=="
+  "reportDigest": "b984040bc18a281f13085cbd7910bf07cc2eaebbbdf997e9fb684011c840df13",
+  "evidenceManifestDigest": "ec9861f34278053296fe47372e5b5f1f3db3eafa11f065dd4475c8ee5533e43e",
+  "approvedAt": "2026-11-03T10:13:34.311Z",
+  "expiresAt": "2026-11-04T10:13:34.311Z",
+  "signature": "AsJ4ujX2s7jRIYSYStbS7F1y7AJMqKaOOIvunRop9FoVhqTjw1Bv5n/lMwA/VALBFjotT/NFqTUv0udY6HPOBQ=="
 }
