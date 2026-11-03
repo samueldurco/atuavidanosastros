@@ -5,6 +5,13 @@ const optional = (value: string | undefined) => value;
 
 export const variables = defineEnvVars({
 	DIMONA_FRETE_TOKEN: { schema: optional },
+	ATVNA_FACTORY_RUNNER_KEY: { schema: optional },
+	DIMONA_ASSET_SIGNING_KEY: { schema: optional },
+	DIMONA_ORDER_DISPATCH: { schema: optional },
+	SHOPIFY_FULFILLMENT_CLIENT_ID: { schema: optional },
+	SHOPIFY_FULFILLMENT_CLIENT_SECRET: { schema: optional },
+	SHOPIFY_FULFILLMENT_ADMIN_TOKEN: { schema: optional },
+	GUBO_FRETE_TOKEN: { schema: optional },
 	ATVNA_CHECKOUT_SIGNING_KEY: { schema: optional },
 	SHOPIFY_DRAFT_CLIENT_ID: { schema: optional },
 	SHOPIFY_DRAFT_CLIENT_SECRET: { schema: optional },

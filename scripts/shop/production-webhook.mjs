@@ -1,33 +1,10 @@
 // Run with --register only after deploying the receiver and its app secret.
 // Inject the app credentials via the environment. Never print the grant or the upstream body.
-const domain = "bhvc0w-kk.myshopify.com";
-const url = "https://atuavidanosastros.com.br/api/shop/production/paid";
-const fields = [
-  "admin_graphql_api_id",
-  "cancelled_at",
-  "financial_status",
-  "test",
-];
-const required = [
-  "read_orders",
-  "read_products",
-  "write_merchant_managed_fulfillment_orders",
-];
-const appName = "ATVNA Produção Dimona";
-const statusQuery = `query ProductionWebhookStatus {
-  shop {myshopifyDomain}
-  currentAppInstallation {app {title} accessScopes {handle}}
-  webhookSubscriptions(first:10,topics:[ORDERS_PAID]) {
-    nodes {id uri topic includeFields}
-    pageInfo {hasNextPage endCursor}
-  }
-}`;
-const createQuery = `mutation RegisterProductionWebhook($subscription:WebhookSubscriptionInput!) {
-  webhookSubscriptionCreate(topic:ORDERS_PAID,webhookSubscription:$subscription) {
-    webhookSubscription {id uri topic includeFields}
-    userErrors {field}
-  }
-}`;
+import {
+  domain,
+  managePaidWebhook,
+  probePaidReceiver,
+} from "../../apps/web/src/lib/server/shop/shopify-webhook-contract.mjs";
 const request = async (target, init) =>
   fetch(target, {
     ...init,
@@ -37,15 +14,6 @@ const request = async (target, init) =>
 const abort = (message) => {
   throw new Error(message);
 };
-function matches(webhook) {
-  return (
-    webhook?.uri === url &&
-    webhook.topic === "ORDERS_PAID" &&
-    Array.isArray(webhook.includeFields) &&
-    webhook.includeFields.length === fields.length &&
-    fields.every((f) => webhook.includeFields.includes(f))
-  );
-}
 async function run() {
   const args = process.argv.slice(2);
   if (
@@ -96,60 +64,14 @@ async function run() {
       );
     return result.data;
   }
-  async function status() {
-    const data = await graphql(statusQuery);
-    const app = data.currentAppInstallation;
-    if (data.shop?.myshopifyDomain !== domain || app?.app?.title !== appName)
-      abort(
-        "O aplicativo ou a loja não correspondem à integração de produção.",
-      );
-    if (!required.every((s) => app.accessScopes.some((a) => a.handle === s)))
-      abort("Faltam permissões no aplicativo de produção.");
-    const existing = data.webhookSubscriptions;
-    if (
-      !Array.isArray(existing?.nodes) ||
-      existing.pageInfo?.hasNextPage !== false
-    )
-      abort("Listagem de webhooks incompleta.");
-    if (!existing.nodes.length) return false;
-    if (existing.nodes.length !== 1 || !matches(existing.nodes[0]))
-      abort(
-        "Já existe uma assinatura divergente. Revise antes de configurar outra.",
-      );
-    return true;
-  }
-  if (await status()) {
+  const state = await managePaidWebhook(args[0] === "--register", graphql, () =>
+    probePaidReceiver(fetch, secret),
+  );
+  if (state === "registered")
     console.log("Webhook de pedidos pagos conferido.");
-    return;
-  }
-  if (args[0] !== "--register") {
+  else if (state === "absent")
     console.log("Aplicativo e permissões conferidos. Webhook ainda ausente.");
-    return;
-  }
-  const probe = await request(url, {
-    method: "POST",
-    body: "{}",
-    headers: { "content-type": "application/json" },
-  });
-  if (probe.status !== 401)
-    abort(
-      "O domínio oficial ainda não recusou a sonda sem assinatura com HTTP 401.",
-    );
-  const created = (
-    await graphql(createQuery, {
-      subscription: { uri: url, format: "JSON", includeFields: fields },
-    })
-  ).webhookSubscriptionCreate;
-  if (
-    !Array.isArray(created?.userErrors) ||
-    created.userErrors.length ||
-    !matches(created.webhookSubscription) ||
-    !(await status())
-  )
-    abort(
-      "Não foi possível confirmar a assinatura. Consulte --status antes de tentar novamente.",
-    );
-  console.log("Webhook de pedidos pagos registrado e conferido.");
+  else abort("A verificação do webhook retornou " + state);
 }
 run().catch((error) => {
   console.error(

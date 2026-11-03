@@ -1,3 +1,4 @@
+import { readFile, readdir } from 'node:fs/promises';
 import { expect, it } from 'vitest';
 import { env as privateEnv } from '$env/dynamic/private';
 import { env as publicEnv } from '$env/dynamic/public';
@@ -10,6 +11,13 @@ const publicBindings = [
 ];
 const privateBindings = [
 	'DIMONA_FRETE_TOKEN',
+	'ATVNA_FACTORY_RUNNER_KEY',
+	'DIMONA_ASSET_SIGNING_KEY',
+	'DIMONA_ORDER_DISPATCH',
+	'SHOPIFY_FULFILLMENT_CLIENT_ID',
+	'SHOPIFY_FULFILLMENT_CLIENT_SECRET',
+	'SHOPIFY_FULFILLMENT_ADMIN_TOKEN',
+	'GUBO_FRETE_TOKEN',
 	'ATVNA_CHECKOUT_SIGNING_KEY',
 	'SHOPIFY_DRAFT_CLIENT_ID',
 	'SHOPIFY_DRAFT_CLIENT_SECRET',
@@ -61,5 +69,19 @@ it('accepts absent optional bindings while preserving values for runtime initial
 		expect(await config.schema['~standard'].validate('synthetic-runtime-binding'), name).toEqual({
 			value: 'synthetic-runtime-binding'
 		});
+	}
+});
+
+it('declares all runtime bindings consumed by the shop server as private', async () => {
+	const dir = new URL('./lib/server/shop/', import.meta.url);
+	const modules = (await readdir(dir)).filter(
+		(name) => name.endsWith('.ts') && !name.endsWith('.spec.ts')
+	);
+	for (const name of modules) {
+		const source = await readFile(new URL(name, dir), 'utf8');
+		for (const match of source.matchAll(/\benv\.([A-Z][A-Z0-9_]+)\b/g)) {
+			expect(Object.hasOwn(privateEnv, match[1]), name + ': ' + match[1]).toBe(true);
+			expect(Object.hasOwn(publicEnv, match[1]), name + ': ' + match[1]).toBe(false);
+		}
 	}
 });

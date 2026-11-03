@@ -105,6 +105,22 @@ describe('public endpoints used by Shopify, Dimona and the scheduled reconciliat
 			expect(ensureCheckoutSchema).not.toHaveBeenCalled();
 		}
 	);
+	it('guards webhook maintenance with the runner key and never falls through to the production queue', async () => {
+		const header = { 'X-ATVNA-Maintenance': 'verify-webhook' };
+		expect((await post('reconcile', undefined, header)).status).toBe(401);
+		expect(
+			(await post('reconcile', undefined, { ...runner, ...header }, 'https://preview.pages.dev'))
+				.status
+		).toBe(404);
+		const wrongShop = await post('reconcile', undefined, { ...runner, ...header });
+		expect(wrongShop.status).toBe(409);
+		expect(await wrongShop.json()).toEqual({ webhook: 'wrong_installation' });
+		expect(
+			(await post('reconcile', undefined, { ...runner, 'X-ATVNA-Maintenance': 'other' })).status
+		).toBe(400);
+		expect(reconcile).not.toHaveBeenCalled();
+		expect(recordPaid).not.toHaveBeenCalled();
+	});
 	it('requires the correct Shopify shop, topic and signature over the actual request body', async () => {
 		for (const headers of [
 			json,
