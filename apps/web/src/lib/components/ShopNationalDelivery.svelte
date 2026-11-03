@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { reviewedDestination, shopDelivery } from '$lib/data/shop-commerce';
+	const postalCodePattern = '[0-9]{5}-?[0-9]{3}';
 	let {
 		variantId,
 		price,
@@ -170,7 +171,7 @@
 			bind:value={postalCode}
 			inputmode="numeric"
 			autocomplete="postal-code"
-			pattern="[0-9]{5}-?[0-9]{3}"
+			pattern={postalCodePattern}
 			maxlength="9"
 			placeholder="00000-000"
 			required

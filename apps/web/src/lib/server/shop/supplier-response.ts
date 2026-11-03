@@ -5,7 +5,7 @@ export async function supplierText(
 	maxBytes: number,
 	encoding: 'utf-8' | 'latin1' = 'utf-8'
 ) {
-	const res = await fetcher(url, { ...init, redirect: 'error', signal: AbortSignal.timeout(7000) });
+	const res = await fetcher(url, { ...init, redirect: 'manual', signal: AbortSignal.timeout(7000) });
 	if (!res.ok) throw new Error('upstream');
 	const reader = res.body?.getReader();
 	if (!reader) throw new Error('upstream');
