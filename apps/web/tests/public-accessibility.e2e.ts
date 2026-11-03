@@ -116,7 +116,7 @@ for (const width of [320, 1440]) {
 			true
 		);
 		const free = page.locator('#ferramentas');
-		await expect(free.locator('.tool-card[data-tool]')).toHaveCount(9);
+		await expect(free.locator('.tool-card[data-tool]')).toHaveCount(10);
 		const firstTool = free.locator('.tool-card[data-tool]').first();
 		await firstTool.locator('button.tool-open').click();
 		await expect(

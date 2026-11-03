@@ -9,6 +9,7 @@ const canonicalHostCases = [
 	['/meu-ceu', '/temas/mapa-astral'],
 	['/ciclos', '/temas/previsoes'],
 	['/amor', '/temas/amor'],
+	['/sinastria', '/ferramentas/combinacao-do-casal'],
 	['/proposito', '/temas/carreira'],
 	['/tarot', '/temas/tarot'],
 	['/sonhos', '/temas/sonhos'],
@@ -85,6 +86,14 @@ describe('public URL migration', () => {
 			}
 		}
 	);
+	it('moves only the former synastry landing and preserves its query', () => {
+		const url = (path: string) => new URL(path, 'https://atuavidanosastros.com.br');
+		expect(permanentPublicDestination(url('/sinastria/?utm_source=arquivo'))).toBe(
+			'/ferramentas/combinacao-do-casal?utm_source=arquivo'
+		);
+		expect(permanentPublicDestination(url('/ferramentas/combinacao-do-casal'))).toBeNull();
+		expect(permanentPublicDestination(url('/sinastria/exemplo'))).toBeNull();
+	});
 	it('retains query parameters when moving topics and the magazine', () => {
 		expect(
 			permanentPublicDestination(

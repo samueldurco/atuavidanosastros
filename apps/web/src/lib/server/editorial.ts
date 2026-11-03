@@ -1,6 +1,6 @@
 import { SITE, signs } from '$lib/data/site';
 import { publicEditorialAuthor } from '$lib/data/editorial-author';
-import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
+import { parseHoroscopeArchivePath, periodNames } from '$lib/public-horoscope';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
 import {
 	verifiedPublicHoroscopeFacts,
@@ -390,15 +390,27 @@ export function hubSeo(path: EditorialHub, documents: readonly EditorialSummary[
 		title: `${hub.title} — ${SITE.name}`,
 		description: hub.description,
 		path,
-		indexable: hubDocuments(documents, path).length > 0,
+		indexable:
+			hubDocuments(documents, path).length > 0 ||
+			(path === '/signos' && documents.some((doc) => signWithHoroscope(doc) !== null)),
 		managePrimary: true
 	};
+}
+// A sign directory may link to a dated reading even before a sign profile is published.
+export function signWithHoroscope(doc: EditorialSummary) {
+	return doc.kind === 'horoscope' && doc.calculation
+		? (parseHoroscopeArchivePath(doc.path)?.sign ?? null)
+		: null;
 }
 export function articleSeo(document: EditorialDocument): PageSeo {
 	const image = document.image;
 	const author = publicEditorialAuthor(document.author);
+	const archive = document.kind === 'horoscope' ? parseHoroscopeArchivePath(document.path) : null;
+	const edition = archive
+		? `${periodNames[archive.period]} de ${archive.startDate.split('-').reverse().join('/')}`
+		: '';
 	return {
-		title: `${document.title} — ${SITE.name}`,
+		title: `${edition ? edition + ' · ' : ''}${document.title} — ${SITE.name}`,
 		description: document.description,
 		path: document.path,
 		indexable: true,

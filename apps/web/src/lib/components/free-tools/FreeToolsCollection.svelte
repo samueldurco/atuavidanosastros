@@ -5,6 +5,7 @@
 	import { interestNavigation } from '$lib/data/public-navigation';
 	import { freeToolDesign } from './free-tool-design';
 	import FreeToolExperience from './FreeToolExperience.svelte';
+	import PersonalArcanaTool from './PersonalArcanaTool.svelte';
 	import { trackHomeEvent } from '$lib/analytics/home-events';
 	let {
 		onToolOpenChange
@@ -106,7 +107,7 @@
 			<h2 id="tools-heading">Ferramentas grátis</h2>
 			<p>Uma pergunta, um ponto de partida. Explore seu céu, seus vínculos e seus símbolos.</p>
 		</div>
-		<span class="collection-note">Nove caminhos.<br />Comece pelo que faz sentido hoje.</span>
+		<span class="collection-note">Comece pelo que<br />faz sentido hoje.</span>
 	</div>
 	<div class="interest-picker wrap" role="group" aria-label="Escolha seu interesse">
 		<button
@@ -190,7 +191,11 @@
 							<p class="requirements">{tool.requirements}</p>
 						</div>
 					</div>
-					<FreeToolExperience data={{ tool }} embedded active={selected === tool.id} />
+					{#if tool.id === 'arcano-pessoal'}
+						<PersonalArcanaTool {tool} embedded />
+					{:else}
+						<FreeToolExperience data={{ tool }} embedded active={selected === tool.id} />
+					{/if}
 				{/if}
 			</div>
 		{/each}

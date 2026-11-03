@@ -9,6 +9,7 @@ const artByTool: Record<string, string> = {
 	'meio-do-ceu': 'bussola-gravada',
 	'dinheiro-no-mapa': 'micro-ramo',
 	'carta-do-dia': 'cartas-gravadas',
+	'arcano-pessoal': 'cartas-gravadas',
 	'carta-do-amor': 'flor-gravada',
 	'registro-de-sonho': 'sonhos-gravados'
 };

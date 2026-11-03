@@ -9,7 +9,7 @@
 		<h1 class="h1">Ferramentas grátis</h1>
 		<p class="lead">
 			Escolha um assunto e experimente aqui mesmo. Abra uma ferramenta, informe seus dados e veja o
-			resultado. Você pode criar sua conta depois, se quiser salvar.
+			resultado.
 		</p>
 	</div>
 </section>

@@ -20,6 +20,7 @@ export type HoroscopeEntry = {
 	publishedAt: string;
 	modifiedAt: string;
 };
+export type HoroscopeEditionLink = Pick<HoroscopeEntry, 'path' | 'startDate' | 'endDateExclusive'>;
 export function parseHoroscopeArchivePath(path: string) {
 	const match = /^\/horoscopo\/([a-z]+)\/(daily|weekly|monthly)\/(\d{4}-\d{2}-\d{2})$/.exec(path);
 	if (!match) return null;

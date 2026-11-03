@@ -3,15 +3,6 @@
 	import { publicChannels, publicContactEmail } from '$lib/data/public-channels';
 </script>
 
-<svelte:head>
-	<title>Canais oficiais — A Tua Vida nos Astros</title>
-	<meta
-		name="description"
-		content="Encontre os perfis oficiais da ATVNA no Instagram, Facebook, YouTube, Threads, X, TikTok, Pinterest, LinkedIn e Reddit."
-	/>
-	<link rel="canonical" href="https://atuavidanosastros.com.br/canais-oficiais" />
-</svelte:head>
-
 <section class="section channels-page">
 	<div class="container">
 		<header class="channels-header">

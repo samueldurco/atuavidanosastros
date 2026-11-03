@@ -8,6 +8,7 @@ export interface PageSeo {
 	path: string;
 	indexable: boolean;
 	managePrimary: boolean;
+	internalSearch?: boolean;
 	image?: { url: string; alt: string; large: boolean };
 	article?: { publishedAt: string; modifiedAt: string };
 	jsonLd?: string;
@@ -39,8 +40,9 @@ export const editorialHubs = {
 		kind: 'news'
 	},
 	'/signos': {
-		title: 'Os 12 signos',
-		description: 'Conheça as características dos signos no amor, no trabalho e nas relações.',
+		title: 'Os 12 signos do zodíaco: datas e elementos',
+		description:
+			'Consulte as datas aproximadas e o elemento dos 12 signos. Encontre o horóscopo do seu signo ou descubra o signo solar no mapa de nascimento.',
 		kind: 'sign-profile'
 	},
 	'/horoscopo': {
@@ -136,6 +138,29 @@ export function legacySeo(path: string): PageSeo | null {
 		path,
 		indexable: path !== '/loja' && !shopSign,
 		managePrimary: false,
+		jsonLd:
+			path === '/'
+				? safeJsonLd({
+						'@context': 'https://schema.org',
+						'@graph': [
+							{
+								'@type': 'WebSite',
+								'@id': SITE.url + '/#website',
+								url: SITE.url,
+								name: SITE.name,
+								publisher: { '@id': SITE.url + '/#organizacao' }
+							},
+							{
+								'@type': 'Organization',
+								'@id': SITE.url + '/#organizacao',
+								url: SITE.url,
+								name: SITE.name,
+								alternateName: 'ATVNA',
+								logo: SITE.url + '/brand/mvp/assets/marca-escura.svg'
+							}
+						]
+					})
+				: undefined,
 		image: { url: `${SITE.url}/brand/social/og-default-1200x630.png`, alt: SITE.name, large: false }
 	};
 }
@@ -205,7 +230,9 @@ export function robotsPolicy(
 	url: Pick<URL, 'origin'>,
 	status = 200
 ): string {
-	if (!seo?.indexable || status !== 200 || !isProductionOrigin(url)) return 'noindex, nofollow';
+	if (status !== 200 || !isProductionOrigin(url)) return 'noindex, nofollow';
+	if (seo?.internalSearch) return 'noindex, follow';
+	if (!seo?.indexable) return 'noindex, nofollow';
 	return seo.image?.large ? 'index, follow, max-image-preview:large' : 'index, follow';
 }
 export function safeJsonLd(value: unknown): string {

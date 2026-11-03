@@ -8,7 +8,8 @@ Esta implementação prepara a arquitetura aprovada em `docs/seo/MAPA_MESTRE_SEO
 
 | Superfície | Comportamento |
 | --- | --- |
-| `/noticias`, `/signos`, `/horoscopo`, `/compatibilidade` | Hubs SSR; sem publicações aprovadas, mostram o estado vazio e permanecem `noindex` |
+| `/noticias`, `/horoscopo`, `/compatibilidade` | Hubs SSR. Sem publicações aprovadas, mostram o estado vazio e permanecem `noindex` |
+| `/signos` | Diretório SSR dos doze signos, com datas aproximadas e elementos. Entra no sitemap quando há pelo menos um perfil admitido ou uma edição datada admitida que sustente o link de um signo. Sem leituras fica `noindex`. |
 | `/signos/{signo}`, `/horoscopo/{signo}` | Somente os 12 signos conhecidos; documento não aprovado retorna 404 |
 | `/compatibilidade/{a}-{b}` | Ordem zodiacal canônica, incluindo pares do mesmo signo; inversão retorna 301 somente se o documento canônico estiver publicado |
 | `/noticias/YYYY/MM/slug` | Reportagens, colunas e guias com mês válido |

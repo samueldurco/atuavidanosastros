@@ -2,11 +2,13 @@
 	import { onMount, tick } from 'svelte';
 	import { trackHomeEvent } from '$lib/analytics/home-events';
 	import MvpProductArt from '$lib/components/MvpProductArt.svelte';
+	import HoroscopeAlternatives from '$lib/components/HoroscopeAlternatives.svelte';
 	import { signs, signNames, type SignSlug } from '$lib/data/site';
 	import {
 		horoscopePeriods,
 		periodNames,
 		horoscopeRange,
+		type HoroscopeEditionLink,
 		type HoroscopeEntry,
 		type PublicPeriod
 	} from '$lib/public-horoscope';
@@ -22,6 +24,8 @@
 		sign: SignSlug;
 		period: PublicPeriod;
 		current: (HoroscopeEntry & { sections: { heading: string; paragraphs: string[] }[] }) | null;
+		lastDaily: HoroscopeEditionLink | null;
+		currentWeek: HoroscopeEditionLink | null;
 		hasHistory: boolean;
 		supportingGuides: { path: string; title: string; description: string }[];
 		archive: string;
@@ -102,6 +106,16 @@
 </script>
 
 <div class:embedded class="horoscope-tool">
+	{#if !embedded}
+		<header>
+			<h1>Consultar o horóscopo de hoje</h1>
+			<p>
+				Escolha seu signo e o período. Se a previsão ainda não estiver disponível, você pode <a
+					href="/horoscopo">consultar as edições já publicadas</a
+				>.
+			</p>
+		</header>
+	{/if}
 	<form
 		onsubmit={(event) => {
 			event.preventDefault();
@@ -140,8 +154,8 @@
 			{:else}<p>
 					A leitura de {periodNames[result.period].toLowerCase()} para {signNames[result.sign]} ainda
 					não está disponível.
-					{#if result.hasHistory}Você pode consultar as publicações anteriores.{/if}
 				</p>
+				<HoroscopeAlternatives lastDaily={result.lastDaily} currentWeek={result.currentWeek} />
 				<p>
 					<a href={result.archive}
 						>{result.hasHistory ? 'Ver o histórico' : 'Consultar a disponibilidade'} de {signNames[

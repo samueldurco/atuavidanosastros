@@ -48,7 +48,7 @@ test.beforeEach(async ({ page }, testInfo) => {
 });
 
 for (const width of [320, 390, 768, 1440]) {
-	test(`nove ferramentas: painel abaixo da linha, foco e estado em ${width}px`, async ({
+	test(`ferramentas: painel abaixo da linha, foco e estado em ${width}px`, async ({
 		page
 	}, testInfo) => {
 		test.setTimeout(120_000);
@@ -57,7 +57,7 @@ for (const width of [320, 390, 768, 1440]) {
 		await expect(page.locator('.nav-trigger').first()).toBeEnabled({ timeout: 30_000 });
 		const grid = page.locator('#ferramentas > .tool-grid.wrap');
 		const cards = grid.locator('.tool-card[data-tool]');
-		await expect(cards).toHaveCount(9);
+		await expect(cards).toHaveCount(freeTools.length);
 		await expect(page.locator('.interest-picker [data-interest="all"]')).toHaveAttribute(
 			'aria-pressed',
 			'true'

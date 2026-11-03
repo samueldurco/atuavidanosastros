@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { signs, signNames } from '$lib/data/site';
+	import { signNames } from '$lib/data/site';
 	import { horoscopePeriods, periodNames, horoscopeRange } from '$lib/public-horoscope';
 	import type { PublicHoroscopeIndex } from '$lib/server/public-horoscope-index';
 	import HoroscopeFollow from './HoroscopeFollow.svelte';
+	import HoroscopeAlternatives from './HoroscopeAlternatives.svelte';
 	let { data }: { data: PublicHoroscopeIndex } = $props();
 	const path = $derived(data.sign ? `/horoscopo/${data.sign}` : '/horoscopo');
 </script>
@@ -29,6 +30,7 @@
 				>{/each}
 		</nav>
 		{#if !data.sign}
+			<p>Não sabe qual é o seu signo? Consulte as <a href="/signos">datas dos 12 signos</a>.</p>
 			{#if !data.currentSigns.length}
 				<section class="current card" aria-labelledby="availability-heading">
 					<p class="eyebrow">{periodNames[data.period]} atual · períodos em UTC</p>
@@ -43,16 +45,20 @@
 				</section>
 			{/if}
 			<div class="sign-grid">
-				{#each signs as sign (sign)}
+				{#each data.signReadings as reading (reading.sign)}
 					<a
 						class="sign-card card"
-						href={`/horoscopo/${sign}?period=${data.period}&year=${data.year}`}
+						href={`/horoscopo/${reading.sign}?period=${data.period}&year=${data.year}`}
 					>
-						<h2>{signNames[sign]}</h2>
+						<h2>{signNames[reading.sign]}</h2>
 						<span>
-							{data.currentSigns.includes(sign)
-								? 'Ler a publicação atual'
-								: 'Consultar disponibilidade e histórico'}
+							{#if reading.current}Ler a publicação atual
+							{:else if reading.lastDaily}Última edição diária disponível · {horoscopeRange(
+									reading.lastDaily
+								)}
+							{:else}Consultar disponibilidade e histórico{/if}
+							{#if !reading.current && reading.currentWeek}
+								· Semanal vigente disponível{/if}
 							<span aria-hidden="true">→</span>
 						</span>
 					</a>
@@ -68,10 +74,10 @@
 					<p>{horoscopeRange(data.current)}</p>
 					<p>{data.current.description}</p>
 					<a class="button" href={data.current.path}>Ler o horóscopo completo</a>
-				{:else}<p>
-						Não há uma leitura atual de {signNames[data.sign]} para este período. Você pode consultar
-						publicações anteriores, quando disponíveis, ou guardar sua preferência neste navegador.
-					</p>{/if}
+				{:else}
+					<p>Não há uma leitura atual de {signNames[data.sign]} para este período.</p>
+					<HoroscopeAlternatives lastDaily={data.lastDaily} currentWeek={data.currentWeek} />
+				{/if}
 			</section>
 		{/if}
 		{#if data.supportingGuides.length}
@@ -130,8 +136,11 @@
 				initialPeriod={data.period}
 			/>{/key}
 		<p class="method">
-			<a href="/metodo">Método e limites das leituras</a> ·
-			<a href="/testar-produtos/week-reading">Conhecer a leitura personalizada da semana</a>
+			<a href="/metodo">Método e limites das leituras</a>
+			{#if data.weekReadingHref}
+				·
+				<a href={data.weekReadingHref}>Conhecer a leitura personalizada da semana</a>
+			{/if}
 		</p>
 	</div>
 </section>

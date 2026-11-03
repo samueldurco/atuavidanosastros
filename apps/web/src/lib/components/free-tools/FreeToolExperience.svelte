@@ -29,7 +29,7 @@
 		embedded = false,
 		active = true
 	}: {
-		data: { tool: FreeTool };
+		data: { tool: FreeTool; consentGuidePath?: string | null };
 		embedded?: boolean;
 		active?: boolean;
 	} = $props();
@@ -902,6 +902,12 @@
 					hidden={!!result && !editing}
 					onsubmit={submit}
 				>
+					{#if data.consentGuidePath}
+						<p>
+							Antes de preencher, consulte o guia sobre
+							<a href={data.consentGuidePath}>dados e consentimento na sinastria</a>.
+						</p>
+					{/if}
 					<fieldset disabled={!hydrated || pending || !serverReady || recovering}>
 						<legend class="sr-only">{tool.label}</legend>
 						{#if isNatal}

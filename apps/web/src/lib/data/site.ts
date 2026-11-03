@@ -114,14 +114,14 @@ export const editorialPages = {
 		description:
 			'Entenda como Meio do Céu, casas e planetas entram na leitura da sua vida profissional.',
 		cta: 'Calcular meu Meio do Céu',
-		href: '/bussola-de-carreira'
+		href: '/ferramentas/meio-do-ceu'
 	},
 	'carreira-no-mapa-astral': {
 		eyebrow: 'Guia',
 		title: 'Carreira no mapa astral',
 		description: 'Conheça os fatores do mapa ligados a trabalho, rotina e carreira.',
 		cta: 'Calcular meu Meio do Céu',
-		href: '/bussola-de-carreira'
+		href: '/ferramentas/meio-do-ceu'
 	},
 	'casa-10': {
 		eyebrow: 'Mapa astral',

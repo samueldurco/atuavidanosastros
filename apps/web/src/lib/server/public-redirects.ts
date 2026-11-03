@@ -5,6 +5,7 @@ const publicAliases: Readonly<Record<string, string>> = {
 	'/meu-ceu': '/temas/mapa-astral',
 	'/ciclos': '/temas/previsoes',
 	'/amor': '/temas/amor',
+	'/sinastria': '/ferramentas/combinacao-do-casal',
 	'/proposito': '/temas/carreira',
 	'/tarot': '/temas/tarot',
 	'/sonhos': '/temas/sonhos',

@@ -90,6 +90,19 @@ export const freeTools: readonly FreeTool[] = [
 		offerIds: ['purpose-career', 'career-forecast-30d']
 	},
 	{
+		id: 'arcano-pessoal',
+		label: 'Calculadora de Arcano Pessoal',
+		href: '/ferramentas/arcano-pessoal',
+		topicId: 'tarot',
+		description:
+			'Descubra seu arcano pessoal pela data de nascimento. Veja a soma passo a passo e a carta correspondente entre os 22 arcanos maiores do Tarot.',
+		action: 'Calcular meu arcano pessoal',
+		availability: 'available',
+		availabilityLabel: 'Grátis',
+		requirements: 'Somente a data de nascimento. O cálculo acontece no seu navegador.',
+		offerIds: ['tarot-situation-challenge-advice']
+	},
+	{
 		id: 'carta-do-dia',
 		label: 'Carta do Dia',
 		href: '/ferramentas/carta-do-dia',

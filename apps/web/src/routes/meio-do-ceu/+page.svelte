@@ -15,9 +15,10 @@
 		<h2>O que a leitura considera</h2>
 		<p>
 			Uma leitura de carreira considera o signo do Meio do Céu, o planeta que rege esse signo e
-			outros fatores do mapa, como as Casas 2, 6 e 10. O cálculo gratuito abaixo mostra o signo e o
-			grau do seu Meio do Céu.
+			outros fatores do mapa, como as Casas 2 e 6 e a <a href="/casa-10">Casa 10</a>. Veja
+			<a href="/carreira-no-mapa-astral">como esses fatores entram na leitura de carreira</a>.
 		</p>
-		<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu grátis</a>
+		<p>A calculadora gratuita mostra o signo e o grau do seu Meio do Céu.</p>
+		<a class="button" href="/ferramentas/meio-do-ceu">Calcular meu Meio do Céu grátis</a>
 	</div>
 </section>

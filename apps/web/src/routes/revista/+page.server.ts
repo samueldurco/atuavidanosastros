@@ -65,27 +65,31 @@ export const load: PageServerLoad = async ({ url }) => {
 		total: documents.length,
 		seo: {
 			...legacySeo('/revista')!,
+			internalSearch: Boolean(query),
+			indexable: !query,
 			title: selected
 				? `${selected.label} — Revista ATVNA`
 				: 'Revista ATVNA — A Tua Vida nos Astros',
 			description:
 				'Artigos para entender seu mapa, acompanhar os ciclos e explorar amor, carreira, Tarot e sonhos. Escolha um assunto e continue a leitura.',
 			managePrimary: true,
-			jsonLd: safeJsonLd({
-				'@context': 'https://schema.org',
-				'@type': 'CollectionPage',
-				name: 'Revista ATVNA',
-				url: `${SITE.url}/revista`,
-				mainEntity: {
-					'@type': 'ItemList',
-					itemListElement: articles.map((document, index) => ({
-						'@type': 'ListItem',
-						position: index + 1,
-						name: document.title,
-						url: `${SITE.url}${document.path}`
-					}))
-				}
-			})
+			jsonLd: query
+				? undefined
+				: safeJsonLd({
+						'@context': 'https://schema.org',
+						'@type': 'CollectionPage',
+						name: 'Revista ATVNA',
+						url: `${SITE.url}/revista`,
+						mainEntity: {
+							'@type': 'ItemList',
+							itemListElement: articles.map((document, index) => ({
+								'@type': 'ListItem',
+								position: index + 1,
+								name: document.title,
+								url: `${SITE.url}${document.path}`
+							}))
+						}
+					})
 		}
 	};
 };

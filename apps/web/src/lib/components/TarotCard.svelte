@@ -5,13 +5,15 @@
 		name,
 		caption = 'Carta sorteada',
 		compact = false,
-		credit = true
+		credit = true,
+		showOrientation = true
 	}: {
 		cardId: string;
 		name: string;
 		caption?: string;
 		compact?: boolean;
 		credit?: boolean;
+		showOrientation?: boolean;
 	} = $props();
 </script>
 
@@ -27,7 +29,7 @@
 	<figcaption>
 		<span class="eyebrow">{caption}</span>
 		<strong>{name}</strong>
-		<span class="orientation">Posição direta</span>
+		{#if showOrientation}<span class="orientation">Posição direta</span>{/if}
 		{#if credit}
 			<a class="credit" href={tarotArtworkCredit.source} target="_blank" rel="noreferrer"
 				>Arte de Pamela Colman Smith · RWS</a

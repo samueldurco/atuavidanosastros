@@ -32,16 +32,19 @@ test('Mapa Astral stays recognizable from homepage to its offer on mobile', asyn
 	await page.setViewportSize({ width: 390, height: 844 });
 	await page.goto('/');
 	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
-	await page.getByRole('link', { name: 'Conhecer meu mapa astral', exact: true }).first().click();
-	await expect(page).toHaveURL(/\/meu-ceu$/);
-	await page.locator('a[href="/produtos/mapa-astral"]').first().click();
-	await expect(page).toHaveURL(/\/produtos\/mapa-astral$/);
+	await page
+		.locator('#universos')
+		.getByRole('link', { name: /Mapa astral/i })
+		.click();
+	await expect(page).toHaveURL(/\/temas\/mapa-astral$/);
+	await page.getByRole('link', { name: 'Mapa Astral Completo', exact: true }).click();
+	await expect(page).toHaveURL(/\/produtos\/mapa-astral-completo$/);
 	await expect(
-		page.getByRole('heading', { name: 'Mapa Astral', exact: true, level: 1 })
+		page.getByRole('heading', { name: 'Mapa Astral Completo', exact: true, level: 1 })
 	).toBeVisible();
 	await page.evaluate(() => window.scrollTo(0, 0));
 	await expect(
-		page.getByRole('heading', { name: 'Mapa Astral', exact: true, level: 1 })
+		page.getByRole('heading', { name: 'Mapa Astral Completo', exact: true, level: 1 })
 	).toBeInViewport();
 	await page.screenshot({ path: testInfo.outputPath('mapa-astral-mobile.png'), fullPage: true });
 	const overflow = await page.evaluate(

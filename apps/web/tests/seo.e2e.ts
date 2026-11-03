@@ -23,6 +23,7 @@ const expectedFreeToolPaths = [
 	'/ferramentas/meio-do-ceu',
 	'/ferramentas/dinheiro-no-mapa',
 	'/ferramentas/carta-do-dia',
+	'/ferramentas/arcano-pessoal',
 	'/ferramentas/carta-do-amor',
 	'/ferramentas/registro-de-sonho'
 ];
@@ -53,6 +54,11 @@ test('editorial hubs reflect admitted content with one canonical', async ({ page
 		const html = await response.text();
 		if (path === '/noticias' && news.length > 0) {
 			for (const document of news) expect(html).toContain(document.title);
+		} else if (path === '/signos') {
+			expect(html).toContain('Os 12 signos do zodíaco');
+			for (const sign of new Set(datedForecasts.map((doc) => doc.path.split('/')[2]))) {
+				expect(html).toContain(`href="/horoscopo/${sign}"`);
+			}
 		} else if (path === '/horoscopo') {
 			expect(html).toContain('Horóscopo dos 12 signos');
 			if (dailyHistory.length)
@@ -139,7 +145,7 @@ test('sign horoscope indexes show only admitted current readings and history', a
 		page.getByText('Ainda não há leituras publicadas para este período e ano.', { exact: true })
 	).toBeVisible();
 });
-test('all nine free tools emit one primary metadata set in SSR and the browser', async ({
+test('all free tools emit one primary metadata set in SSR and the browser', async ({
 	page,
 	request
 }) => {
@@ -210,6 +216,9 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 				'/canais-oficiais',
 				'/fale-conosco',
 				...(news.length > 0 ? ['/noticias'] : []),
+				...(datedForecasts.length || publishedEditorial.some((doc) => doc.kind === 'sign-profile')
+					? ['/signos']
+					: []),
 				...(datedForecasts.length ? ['/horoscopo'] : []),
 				...new Set(datedForecasts.map((document) => document.path.split('/').slice(0, 3).join('/')))
 			];

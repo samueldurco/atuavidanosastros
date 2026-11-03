@@ -51,7 +51,7 @@
 						</section>{/each}
 					{#if !data.products.length}<Button href={data.page.href}>{data.page.cta}</Button>{/if}
 					{#if data.slug === 'proposito'}<p class="free-tool">
-							<Button href="/bussola-de-carreira">Calcular meu Meio do Céu grátis</Button>
+							<Button href="/ferramentas/meio-do-ceu">Calcular meu Meio do Céu grátis</Button>
 						</p>
 					{:else if data.slug === 'caderno'}<ul class="guide-links">
 							<li><a href="/vocacao-no-mapa-astral">Vocação no mapa astral</a></li>

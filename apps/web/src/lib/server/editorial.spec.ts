@@ -386,6 +386,35 @@ describe('feeds and search surfaces', () => {
 		expect(hubSeo('/noticias', [fixture()]).indexable).toBe(true);
 		expect(pagesSitemap([fixture()])).toContain('/noticias');
 	});
+	it('uses the same availability rule for the sign directory and sitemap', () => {
+		const archive = fixture({
+			kind: 'horoscope',
+			path: '/horoscopo/capricornio/daily/2026-10-24',
+			calculation: {
+				engine: 'fixture',
+				version: '1',
+				factsDigest: 'test',
+				coverageStart: '2026-10-24T00:00:00Z',
+				coverageEnd: '2026-10-25T00:00:00Z'
+			}
+		});
+		for (const [docs, enabled] of [
+			[[], false],
+			[[fixture()], false],
+			[[{ ...archive, calculation: undefined }], false],
+			[[archive], true]
+		] as const) {
+			expect(hubSeo('/signos', docs).indexable).toBe(enabled);
+			expect(pagesSitemap(docs).includes(`<loc>${SITE.url}/signos</loc>`)).toBe(enabled);
+		}
+		expect(articleSeo(archive).title).toContain('24/10/2026');
+		expect(JSON.parse(articleSeo(archive).jsonLd!).headline).toBe(archive.title);
+	});
+	it('excludes internal search results while allowing contextual links on the production origin', () => {
+		const seo = { ...legacySeo('/revista')!, internalSearch: true, indexable: false };
+		expect(robotsPolicy(seo, new URL(SITE.url))).toBe('noindex, follow');
+		expect(robotsPolicy(seo, new URL('https://preview.example'))).toBe('noindex, nofollow');
+	});
 	it('uses original publication within an exclusive 48-hour window, not modifiedAt', () => {
 		const old = fixture({
 				publishedAt: '2026-10-03T11:59:59Z',
