@@ -4,6 +4,7 @@ import { signNames } from './site';
 
 const modelIds: Record<string, string> = {
 	'Quadro vertical 30 × 40 cm · moldura preta': 'GE-quadro-12x16',
+	'Quadro Classic 34 × 44 cm · moldura preta': 'GE-quadro-12x16',
 	'Gildan 64000 · camiseta unissex de gola redonda': 'GE-camiseta-unissex',
 	'Camiseta Dimona de corte masculino': 'GE-camiseta-unissex',
 	'Regata unissex premium': 'GE-regata-unissex',
