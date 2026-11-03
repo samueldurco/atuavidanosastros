@@ -9,7 +9,7 @@ export async function supplierText(
 ) {
 	const res = await fetcher(url, {
 		...init,
-		redirect: 'error',
+		redirect: 'manual',
 		signal: AbortSignal.timeout(timeoutMs)
 	});
 	observeHeaders?.(res.headers);
