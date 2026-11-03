@@ -116,12 +116,13 @@ function signQuote(
 			sku: 'local'
 		})
 	).toString('base64url');
-	return;
-	payload +
+	return (
+		payload +
 		'.' +
 		createHmac('sha256', testShopQuoteKey)
 			.update('quote:' + payload)
-			.digest('base64url');
+			.digest('base64url')
+	);
 }
 
 test('O checkout recusa cotação vencida, preço divergente e token de outra peça', async ({
