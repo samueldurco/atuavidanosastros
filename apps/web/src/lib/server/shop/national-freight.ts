@@ -127,7 +127,8 @@ export async function checkOffer(
 		variant.price.currencyCode !== 'BRL' ||
 		Number(variant.price.amount) !== offer.priceBrl
 	)
-		fail('offer_changed', 409);
+		return fail('offer_changed', 409);
+	return variant.title === 'Default Title' ? undefined : variant.title.slice(0, 120);
 }
 export interface Rate {
 	id: string;

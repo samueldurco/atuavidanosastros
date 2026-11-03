@@ -6,3 +6,5 @@ export const testShopSeller = {
 	SHOP_SELLER_PUBLIC_DOCUMENT: '000.000.001-91',
 	SHOP_SELLER_PRIVATE_RETURN_LOCATION: JSON.stringify({ street: 'Rua do Lírio', number: '21' })
 };
+
+export const testShopQuoteKey = 'local-playwright-checkout-synthetic-signature-only';

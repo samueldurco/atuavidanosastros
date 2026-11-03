@@ -1,3 +1,5 @@
+import { createHmac, randomUUID } from 'node:crypto';
+import { testShopQuoteKey } from './fixtures/shop-seller';
 import { expect, test, type Page } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
 import reviewedOffers from '../src/lib/data/shop-reviewed-offers.json' with { type: 'json' };
@@ -90,11 +92,75 @@ test('Escolha explícita, disponibilidade, quantidade e encaminhamento ao checko
 	});
 });
 
+function signQuote(
+	variantId: string,
+	priceBrl: number,
+	nonce: string,
+	expires = Math.floor(Date.now() / 1000) + 600
+) {
+	const payload = Buffer.from(
+		JSON.stringify({
+			nonce,
+			expires,
+			variantId,
+			variantLabel: 'Natural',
+			postalCode: '35160001',
+			city: 'Ipatinga',
+			provinceCode: 'MG',
+			unit: Math.round(priceBrl * 100),
+			shipping: 1400,
+			service: 'Entrega de teste',
+			serviceId: 'test',
+			days: 9,
+			rateBasis: 'local',
+			sku: 'local'
+		})
+	).toString('base64url');
+	return (
+		payload +
+		'.' +
+		createHmac('sha256', testShopQuoteKey)
+			.update('quote:' + payload)
+			.digest('base64url')
+	);
+}
+
+test('O checkout recusa cotação vencida, preço divergente e token de outra peça', async ({
+	request,
+	baseURL
+}) => {
+	const slug = 'caneca-aries';
+	const { variantId, priceBrl } = reviewedOffers.find((offer) => offer.slug === slug)!;
+	const nonce = randomUUID();
+	for (const [target, token] of [
+		[slug, signQuote(variantId, priceBrl, nonce, Math.floor(Date.now() / 1000) - 1)],
+		[slug, signQuote(variantId, priceBrl + 1, nonce)],
+		['ecobag-aries', signQuote(variantId, priceBrl, nonce)]
+	]) {
+		const result = await request.post('/loja/checkout/' + target, {
+			form: { token },
+			headers: { origin: baseURL!, accept: 'text/html' },
+			maxRedirects: 0
+		});
+		expect(result.status()).toBe(409);
+		expect(result.headers()['set-cookie']).toBeUndefined();
+	}
+	const allowed = await request.post('/loja/checkout/' + slug, {
+		form: { token: signQuote(variantId, priceBrl, nonce) },
+		headers: { origin: baseURL!, accept: 'text/html' },
+		maxRedirects: 0
+	});
+	expect(allowed.status()).toBe(303);
+	expect(allowed.headers().location).toBe('/loja/checkout/' + slug + '/' + nonce);
+});
+
 test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo de canecas', async ({
 	page
 }) => {
 	const slug = 'ecobag-aries';
 	const { variantId, priceBrl } = reviewedOffers.find((offer) => offer.slug === slug)!;
+	const nonce = randomUUID();
+	const token = signQuote(variantId, priceBrl, nonce);
 	const variant = {
 		...product.variants[0],
 		id: variantId,
@@ -119,13 +185,13 @@ test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo 
 			postalCode: '35160001'
 		});
 		if (quotes === 1) return route.fulfill({ status: 503, json: { ok: false } });
-		const checkoutReady = quotes === 3;
+		const checkoutReady = quotes >= 3;
 		return route.fulfill({
 			json: {
 				ok: true,
 				quote: {
 					checkoutReady,
-					token: checkoutReady ? 'local-proof' : undefined,
+					token: checkoutReady ? token : undefined,
 					factoryAddress: true,
 					variantId,
 					postalCode: '35160-001',
@@ -163,16 +229,33 @@ test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo 
 	);
 	await expect(purchase.getByRole('button', { name: /Comprar/ })).toHaveCount(0);
 	await calculate.click();
-	const address = purchase.getByRole('form', { name: 'Endereço para pagamento' });
+	const buy = purchase.getByRole('button', { name: 'Comprar agora' });
+	await expect(buy).toBeEnabled();
+	await expect(purchase.getByRole('textbox', { name: /nome|rua|e-mail/i })).toHaveCount(0);
+	await purchase.getByLabel('CEP de entrega').fill('36960-000');
+	await expect(buy).toHaveCount(0);
+	await purchase.getByLabel('CEP de entrega').fill('35160-001');
+	await calculate.click();
+	await buy.click();
+	await expect(page).toHaveURL(new RegExp('/loja/checkout/' + slug + '/' + nonce + '$'));
+	expect(sent).toBeUndefined();
+	await page.reload();
+	const summary = page.getByRole('region', { name: 'Resumo da compra' });
+	await expect(summary).toContainText('35160-001');
+	await expect(summary).toContainText('Natural');
+	const address = page.getByRole('form', { name: 'Endereço para pagamento' });
+	await expect(address).toHaveAttribute('method', 'post');
+	await address.getByLabel('E-mail').fill('pessoa@example.test');
 	await address.getByLabel('Nome', { exact: true }).fill('Pessoa');
 	await address.getByLabel('Sobrenome').fill('Exemplo');
 	await address.getByLabel('Rua ou avenida').fill('Rua de Teste');
 	await address.getByLabel('Número (ou S/N)').fill('123');
 	await address.getByLabel('Bairro ou localidade').fill('Centro');
-	await address.getByRole('button', { name: 'Comprar agora' }).click();
+	await address.getByRole('button', { name: 'Continuar para pagamento' }).click();
 	await expect(page).toHaveURL('https://checkout.example.test/industrial-local');
 	expect(sent).toEqual({
-		token: 'local-proof',
+		token,
+		email: 'pessoa@example.test',
 		address: {
 			firstName: 'Pessoa',
 			lastName: 'Exemplo',
@@ -184,6 +267,10 @@ test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo 
 		}
 	});
 	expect(cartCalls).toBe(0);
+	await page.context().clearCookies();
+	await page.goto('/loja/checkout/' + slug + '/' + nonce);
+	await expect(page.getByRole('link', { name: 'Recalcular frete' })).toBeVisible();
+	await expect(page.getByRole('form', { name: 'Endereço para pagamento' })).toHaveCount(0);
 });
 
 test('A abertura do MVP mantém as outras peças em vitrine e apresenta as condições nacionais', async ({

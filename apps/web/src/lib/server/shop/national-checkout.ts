@@ -2,6 +2,7 @@ import { splitFactoryAddress } from './dimona-address';
 import { json } from '@sveltejs/kit';
 import { ensureCheckoutSchema } from './checkout-schema';
 import { readShopSale } from './seller-identity';
+import { hasControlCharacters } from './shopify-storefront';
 import { readBody, ShopHttpError } from './shop-http';
 import {
 	checkOffer,
@@ -149,7 +150,7 @@ export async function nationalCheckout(
 					return false;
 				}
 			};
-			const [, destination, rate, checkoutReady] = await Promise.all([
+			const [variantLabel, destination, rate, checkoutReady] = await Promise.all([
 				checkOffer(env, fetcher, o, ip),
 				locality(fetcher, cep),
 				rateFor(env, fetcher, cep, o),
@@ -165,6 +166,7 @@ export async function nationalCheckout(
 				nonce: crypto.randomUUID(),
 				expires: now + ttl,
 				variantId: o.variantId,
+				variantLabel,
 				sku: checkoutReady ? await mac(secret!, 'sku:' + supplierItem(o)) : '',
 				postalCode: cep,
 				...destination,
@@ -204,7 +206,20 @@ export async function nationalCheckout(
 			o = physicalOffer(q.variantId),
 			address = addressFor(input.address, q);
 		if (o.dimonaSku) splitFactoryAddress(address.address1);
-		const fingerprint = await mac(secret!, 'ship:' + JSON.stringify(address));
+		const addressFingerprint = await mac(secret!, 'ship:' + JSON.stringify(address));
+		// Existing clients can still hand contact collection off to Shopify.
+		const email = typeof input.email === 'string' ? input.email.trim() : undefined;
+		if (
+			input.email !== undefined &&
+			(!email ||
+				email.length > 254 ||
+				hasControlCharacters(email) ||
+				!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email))
+		)
+			return fail('invalid_email');
+		const fingerprint = email
+			? await mac(secret!, 'checkout:' + JSON.stringify([address, email]))
+			: addressFingerprint;
 		const previous = () =>
 			attempt(db, q, fingerprint, () => recoverDraft(env, fetcher, q, address));
 		const old = await previous();
@@ -242,7 +257,7 @@ export async function nationalCheckout(
 						rate.factoryCarrier!,
 						q.unit,
 						q.shipping,
-						fingerprint,
+						addressFingerprint,
 						now + 60 * 86400
 					)
 			);
@@ -256,7 +271,7 @@ export async function nationalCheckout(
 		// Once reserved, never repeat a create on a retry, even if Shopify's response was lost.
 		let checkoutUrl: string;
 		try {
-			checkoutUrl = await prepareDraft(env, fetcher, q, address, o.gubo?.sku);
+			checkoutUrl = await prepareDraft(env, fetcher, q, address, o.gubo?.sku, email);
 		} catch (e) {
 			if (e instanceof ShopHttpError && e.code === 'offer_changed') {
 				await db
