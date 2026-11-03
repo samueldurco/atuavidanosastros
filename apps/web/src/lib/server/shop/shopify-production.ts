@@ -316,7 +316,7 @@ export async function syncShopifyTracking(
 		!gid('Order', t.orderId) ||
 		!t.number?.trim() ||
 		t.number.length > 160 ||
-		/[\u0000-\u001f]/.test(t.number) ||
+		Array.from(t.number).some((character) => character.charCodeAt(0) < 32) ||
 		!desired.size ||
 		desired.size !== t.items.length ||
 		t.items.some(
