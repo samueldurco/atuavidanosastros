@@ -117,7 +117,7 @@ export async function serveDimonaAsset(
 		};
 		const response = await fetcher(sealedOrigin + '/v1/' + hash + '.bin', {
 			method: request.method,
-			redirect: 'error',
+			redirect: 'manual',
 			signal: AbortSignal.timeout(20000)
 		});
 		const length = response.headers.get('content-length');
