@@ -51,9 +51,9 @@ describe('customer language across the complete catalog', () => {
 			)
 		).toBe(true);
 	});
-	it('connects all nine tools to actual public offers and preserves old tool aliases', () => {
-		expect(freeTools).toHaveLength(9);
-		expect(new Set(freeTools.map((tool) => tool.id)).size).toBe(9);
+	it('connects the ten tools to actual public offers and preserves old tool aliases', () => {
+		expect(freeTools).toHaveLength(10);
+		expect(new Set(freeTools.map((tool) => tool.id)).size).toBe(freeTools.length);
 		for (const tool of freeTools) {
 			expect(tool.offerIds.length).toBeGreaterThan(0);
 			for (const id of tool.offerIds)

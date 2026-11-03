@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Bootstrap current day/week/month, or prepare the next UTC period
+        description: Bootstrap today or yesterday (archive recovery), or prepare the next UTC period
         required: true
         default: bootstrap
         type: choice
-        options: [bootstrap, next]
+        options: [bootstrap, next, bootstrap-yesterday]
       delivery:
         description: Signed artifact for owner CLI, or the separately enabled GitHub token publisher
         required: true
@@ -48,7 +48,13 @@ jobs:
       - name: Prepare finite period batch
         env:
           BATCH_MODE: ${{ inputs.mode || 'next' }}
-        run: node scripts/prepare-dated-horoscope.mjs --schedule "$BATCH_MODE" "$(date -u +%F)" output/dated-horoscope-prepared
+        run: |
+          reference="$(date -u +%F)"
+          if [ "$BATCH_MODE" = bootstrap-yesterday ]; then
+            reference="$(date -u --date="$reference - 1 day" +%F)"
+            BATCH_MODE=bootstrap
+          fi
+          node scripts/prepare-dated-horoscope.mjs --schedule "$BATCH_MODE" "$reference" output/dated-horoscope-prepared
       - name: Reproduce, verify and sign with existing external custody
         env:
           ATVNA_EDITORIAL_SIGNING_KEY: ${{ secrets.ATVNA_EDITORIAL_SIGNING_KEY }}

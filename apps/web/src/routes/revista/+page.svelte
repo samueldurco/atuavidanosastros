@@ -32,6 +32,7 @@
 			Leia sobre astrologia, relacionamentos, carreira, Tarot e sonhos. Encontre uma dúvida sua e
 			comece por ela.
 		</p>
+		<p><a href="/noticias">Ver notícias, colunas e guias publicados</a></p>
 	</header>
 	<nav class="topics" aria-label="Assuntos da Revista">
 		<a href={topicHref()} aria-current={!data.selected ? 'page' : undefined}>Todos os assuntos</a>

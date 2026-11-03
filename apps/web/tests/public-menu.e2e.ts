@@ -38,7 +38,7 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await expect(tools).toBeEnabled();
 		await tools.focus();
 		await page.keyboard.press('Enter');
-		await expect(page.locator('#nav-ferramentas .nav-item')).toHaveCount(9);
+		await expect(page.locator('#nav-ferramentas .nav-item')).toHaveCount(10);
 		for (const tool of freeTools)
 			await expect(
 				page.locator(`#nav-ferramentas a[href="/?ferramenta=${tool.id}#ferramentas"]`)

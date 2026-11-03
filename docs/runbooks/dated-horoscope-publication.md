@@ -38,6 +38,8 @@ A restrição atual é concreta: sem credencial de publicação já disponível 
    node --experimental-strip-types scripts/bootstrap-dated-horoscope.mjs <ID_NUMERICO_DO_RUN>
    ```
 
+Para recuperar uma edição que perdeu a janela de admissão no dia anterior, use `-f mode=bootstrap-yesterday` no mesmo comando. O runner usa exclusivamente o dia UTC anterior e os períodos que o contêm; o relógio de cálculo, a emissão e a assinatura continuam registrando os horários reais. A diária vencida entra no arquivo. Em seguida, use `bootstrap` no novo SHA de `main` para cobrir o dia corrente. Períodos coincidentes já admitidos são verificados e preservados.
+
 O bootstrap verifica repositório, workflow, evento, SHA, branch, tentativa, job e artefato recente. Baixa apenas o pacote público assinado; a chave privada permanece no environment externo. O token da autenticação do `gh` permanece na memória do processo. O diretório de saída por run/tentativa precisa ser novo.
 
 O mesmo publicador usado no job futuro verifica assinaturas e reprodução, admite o lote, cria um branch somente com o índice e até três arquivos estáticos imutáveis, abre PR e dispara CI explicitamente no SHA exato. Exige sucesso de `dispatch-guard`, `quality`, `accessibility`, `secrets`, `current-readings`, `user-area` e `sbom`. Antes do merge, verifica `main`, SHA do PR, estado de merge e lista fechada dos arquivos permitidos. Não envia aprovação humana, bypass ou opção administrativa.

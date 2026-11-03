@@ -1,13 +1,20 @@
 <script lang="ts">
 	import type { EditorialDocument } from '$lib/server/editorial';
-	import { editorialTopic } from '$lib/data/editorial-topics';
+	import { editorialTopic, reviewedGuideLink } from '$lib/data/editorial-topics';
 	import { interestNavigation } from '$lib/data/public-navigation';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
 	import { publicEditorialAuthor } from '$lib/data/editorial-author';
 	let {
 		document,
+		nextStep: previewNextStep,
 		related = []
-	}: { document: EditorialDocument; related?: { path: string; title: string }[] } = $props();
+	}: {
+		document: EditorialDocument;
+		nextStep?: { path: string; title: string };
+		related?: { path: string; title: string }[];
+	} = $props();
+	const nextStep = $derived(previewNextStep ?? reviewedGuideLink(document));
+	const relatedArticles = $derived(related.filter((item) => item.path !== nextStep?.path));
 	const topic = $derived(
 		interestNavigation.find((item) => item.id === editorialTopic(document.path))
 	);
@@ -120,9 +127,12 @@
 					<p class="eyebrow">Explore por você</p>
 					<h2>Seu próximo passo em {topic.label.toLowerCase()}.</h2>
 					<p>{topic.description}</p>
-					<a class="button" href={topic.toolHref}
-						>{topic.action} <span aria-hidden="true">↗</span></a
-					><a class="universe-link" href={topic.href}>Conhecer as leituras deste universo</a>
+					<a class="button" href={nextStep?.path ?? topic.toolHref}
+						>{nextStep?.title ?? topic.action} <span aria-hidden="true">↗</span></a
+					>
+					{#if nextStep?.path !== topic.href}
+						<a class="universe-link" href={topic.href}>Conhecer as leituras deste universo</a>
+					{/if}
 				</aside>{/if}
 			<div class="article-service">
 				<a href="/metodo">Conheça nosso método</a><a href="/fale-conosco?assunto=correcao"
@@ -131,13 +141,13 @@
 			</div>
 		</div>
 	</div>
-	{#if related.length}<nav class="related-articles" aria-label="Artigos relacionados">
+	{#if relatedArticles.length}<nav class="related-articles" aria-label="Artigos relacionados">
 			<div class="related-heading">
 				<h2>Continue a leitura</h2>
 				<a href="/revista">Ver a Revista <span aria-hidden="true">↗</span></a>
 			</div>
 			<ul>
-				{#each related as guide (guide.path)}<li>
+				{#each relatedArticles as guide (guide.path)}<li>
 						<a href={guide.path}>{guide.title}<span aria-hidden="true">↗</span></a>
 					</li>{/each}
 			</ul>

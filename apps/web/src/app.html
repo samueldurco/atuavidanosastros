@@ -7,16 +7,40 @@
 		<meta name="theme-color" content="#FCFBF8" />
 		<script>
 			(function (w, d, id) {
-				try {
-					if (w.localStorage.getItem('atv-analytics-consent') !== 'granted') return;
-					w.dataLayer = w.dataLayer || [];
-					w.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
-					var first = d.getElementsByTagName('script')[0];
-					var script = d.createElement('script');
-					script.async = true;
-					script.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
-					first.parentNode.insertBefore(script, first);
-				} catch (_) {}
+				var started = false;
+				function startIfGranted() {
+					try {
+						if (started || d.documentElement.hasAttribute('data-atv-internal-navigation')) return;
+						if (w.localStorage.getItem('atv-analytics-consent') !== 'granted') return;
+						started = true;
+						w.dataLayer = w.dataLayer || [];
+						w.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+						var first = d.getElementsByTagName('script')[0];
+						var script = d.createElement('script');
+						script.async = true;
+						script.src = 'https://www.googletagmanager.com/gtm.js?id=' + id;
+						first.parentNode.insertBefore(script, first);
+					} catch (_) {}
+				}
+				w.addEventListener('hashchange', function () {
+					d.documentElement.setAttribute('data-atv-internal-navigation', '');
+				});
+				function stopIfRevoked() {
+					if (started && w.localStorage.getItem('atv-analytics-consent') !== 'granted') {
+						w.location.reload();
+					}
+				}
+				w.addEventListener('atv-analytics-consent-change', function () {
+					if (started) stopIfRevoked();
+					else startIfGranted();
+				});
+				w.addEventListener('storage', function (event) {
+					if (event.key === 'atv-analytics-consent' || event.key === null) stopIfRevoked();
+				});
+				w.addEventListener('pageshow', function (event) {
+					if (event.persisted) stopIfRevoked();
+				});
+				startIfGranted();
 			})(window, document, 'GTM-T576R9MR');
 		</script>
 		%sveltekit.head%

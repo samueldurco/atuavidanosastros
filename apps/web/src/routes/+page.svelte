@@ -23,6 +23,14 @@
 <svelte:head>
 	<title>{SITE.name} — uma descoberta de cada vez</title>
 	<link rel="canonical" href={SITE.url} />
+	<link
+		rel="preload"
+		as="image"
+		type="image/webp"
+		href="/brand/mvp/assets/universos/fundo-home.webp"
+		media="(min-width: 681px)"
+		fetchpriority="high"
+	/>
 	<meta
 		name="description"
 		content="Ferramentas grátis, produtos digitais e histórias para ampliar seu olhar. Explore astrologia, Tarot, sonhos e a Loja dos Signos."

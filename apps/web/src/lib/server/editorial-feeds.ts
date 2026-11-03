@@ -1,8 +1,7 @@
 import { SITE } from '$lib/data/site';
 import { publicEditorialAuthor } from '$lib/data/editorial-author';
 import { editorialHubs, legacyPublicPaths, legacySeo } from '$lib/seo';
-import { hubDocuments, type EditorialSummary } from './editorial';
-import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
+import { hubSeo, signWithHoroscope, type EditorialSummary } from './editorial';
 
 export const NEWS_WINDOW_MS = 48 * 60 * 60 * 1000;
 export const NEWS_LIMIT = 1000;
@@ -50,16 +49,15 @@ export function pagesSitemap(documents: readonly EditorialSummary[]): string {
 	const horoscopeSigns = [
 		...new Set(
 			documents.flatMap((document) => {
-				const archive =
-					document.kind === 'horoscope' ? parseHoroscopeArchivePath(document.path) : null;
-				return archive ? [`/horoscopo/${archive.sign}`] : [];
+				const sign = signWithHoroscope(document);
+				return sign ? [`/horoscopo/${sign}`] : [];
 			})
 		)
 	];
 	const hubs = Object.keys(editorialHubs).filter((path) =>
 		path === '/horoscopo'
 			? horoscopeSigns.length > 0
-			: hubDocuments(documents, path as keyof typeof editorialHubs).length > 0
+			: hubSeo(path as keyof typeof editorialHubs, documents).indexable
 	);
 	const publicPaths = legacyPublicPaths.filter((path) => legacySeo(path)?.indexable);
 	return urlset(

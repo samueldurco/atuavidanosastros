@@ -1,23 +1,27 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
+	import { onNavigate } from '$app/navigation';
+	import { changeAnalyticsConsent } from '$lib/analytics/consent';
 	import { onMount } from 'svelte';
 	let visible = $state(false);
 	if (browser) visible = !localStorage.getItem('atv-analytics-consent');
+	onNavigate(({ from }) => {
+		if (from) document.documentElement.setAttribute('data-atv-internal-navigation', '');
+	});
 	onMount(() => {
 		const reopen = () => {
 			visible = true;
 		};
+		const close = () => {
+			visible = false;
+		};
 		window.addEventListener('atv-cookie-preferences', reopen);
-		return () => window.removeEventListener('atv-cookie-preferences', reopen);
+		window.addEventListener('atv-analytics-consent-change', close);
+		return () => {
+			window.removeEventListener('atv-cookie-preferences', reopen);
+			window.removeEventListener('atv-analytics-consent-change', close);
+		};
 	});
-	function choose(value: 'granted' | 'denied') {
-		const previous = localStorage.getItem('atv-analytics-consent');
-		localStorage.setItem('atv-analytics-consent', value);
-		visible = false;
-		// The first refusal has no analytics running and must preserve the current task.
-		// Reload only when enabling analytics or stopping a previously granted session.
-		if (previous !== value && (value === 'granted' || previous === 'granted')) location.reload();
-	}
 </script>
 
 {#if visible}<aside class="consent" aria-label="Preferências de cookies">
@@ -30,9 +34,9 @@
 			<a href="/privacidade">Privacidade e cookies</a>
 		</div>
 		<div class="actions">
-			<button class="secondary" onclick={() => choose('denied')}>Recusar opcionais</button><button
-				onclick={() => choose('granted')}>Aceitar opcionais</button
-			>
+			<button class="secondary" onclick={() => changeAnalyticsConsent('denied')}
+				>Recusar opcionais</button
+			><button onclick={() => changeAnalyticsConsent('granted')}>Aceitar opcionais</button>
 		</div>
 	</aside>{/if}
 

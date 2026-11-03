@@ -69,7 +69,7 @@ test('Ascendente e mapa real aparecem antes do cadastro; mandala, mobile e acess
 	page
 }, testInfo) => {
 	await page.goto('/');
-	await expect(page.locator('#ferramentas .tool-card[data-tool]')).toHaveCount(9);
+	await expect(page.locator('#ferramentas .tool-card[data-tool]')).toHaveCount(10);
 	await expect(page.locator('.tool-open').first()).toBeVisible();
 	await page.screenshot({
 		path: testInfo.outputPath('home-free-tools-desktop.png'),
@@ -233,6 +233,28 @@ test('Registro de sonho respeita relato, escape, privacidade e limpeza explícit
 	expect(
 		await page.evaluate(() => sessionStorage.getItem('atv-free-tool:registro-de-sonho'))
 	).toBeNull();
+});
+
+test('Combinação do Casal apresenta o guia de consentimento no HTML antes dos dados de nascimento', async ({
+	page
+}) => {
+	const path = '/noticias/2026/10/sinastria-dados-e-consentimento';
+	const response = await page.goto('/ferramentas/combinacao-do-casal');
+	expect(response?.status()).toBe(200);
+	const html = await response!.text();
+	const linkIndex = html.indexOf(`href="${path}"`);
+	expect(linkIndex).toBeGreaterThan(-1);
+	expect(html.indexOf('id="combinacao-do-casal-first-birth-date"')).toBeGreaterThan(linkIndex);
+	const guide = page.locator('form.tool-form').getByRole('link', {
+		name: 'dados e consentimento na sinastria'
+	});
+	await expect(guide).toHaveAttribute('href', path);
+	await expect(page.getByRole('checkbox', { name: /Tenho autorização/ })).not.toBeChecked();
+	await guide.click();
+	await expect(page).toHaveURL(new RegExp(path + '$'));
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+		'Sinastria: dados, consentimento e limites da leitura'
+	);
 });
 
 test('Combinação do Casal usa os dois mapas e requer autorização para comparar', async ({

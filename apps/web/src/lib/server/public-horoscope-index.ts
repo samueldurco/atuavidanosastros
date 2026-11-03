@@ -1,5 +1,6 @@
 import { error } from '@sveltejs/kit';
 import { SITE, signs, signNames, type SignSlug } from '$lib/data/site';
+import { customerProduct } from '$lib/data/product-copy';
 import {
 	horoscopePeriods,
 	parseHoroscopeArchivePath,
@@ -46,12 +47,29 @@ export function publicHoroscopeIndex(
 		(entry) => entry.period === period && entry.startDate.startsWith(`${year}-`)
 	);
 	const today = now.toISOString().slice(0, 10);
-	const currentSigns = entries
-		.filter(
-			(entry) =>
-				entry.period === period && entry.startDate <= today && today < entry.endDateExclusive
-		)
-		.map((entry) => entry.sign);
+	const inPeriod = (entry: HoroscopeEntry) =>
+		entry.startDate <= today && today < entry.endDateExclusive;
+	const signReadings = signs.map((sign) => {
+		const editions = entries.filter((entry) => entry.sign === sign);
+		return {
+			sign,
+			current: editions.find((entry) => entry.period === period && inPeriod(entry)) ?? null,
+			lastDaily:
+				period === 'daily'
+					? (editions.find(
+							(entry) => entry.period === 'daily' && entry.endDateExclusive <= today
+						) ?? null)
+					: null,
+			currentWeek:
+				period === 'daily'
+					? (editions.find((entry) => entry.period === 'weekly' && inPeriod(entry)) ?? null)
+					: null
+		};
+	});
+	const selected = signReadings.find((reading) => reading.sign === sign);
+	const currentSigns = signReadings
+		.filter((reading) => reading.current)
+		.map((reading) => reading.sign);
 	// Supporting guides retain their own editorial identity and never stand in for a dated reading.
 	const supportingGuides = ['/noticias/2026/10/fases-da-lua', '/mercurio-retrogrado'].flatMap(
 		(guidePath) => {
@@ -63,12 +81,6 @@ export function publicHoroscopeIndex(
 				: [];
 		}
 	);
-	const current = sign
-		? (own.find(
-				(entry) =>
-					entry.period === period && entry.startDate <= today && today < entry.endDateExclusive
-			) ?? null)
-		: null;
 	const path = sign ? `/horoscopo/${sign}` : '/horoscopo';
 	const seo: PageSeo = {
 		path,
@@ -86,9 +98,13 @@ export function publicHoroscopeIndex(
 		serverNow: now.toISOString(),
 		entries,
 		history,
-		current,
+		current: selected?.current ?? null,
+		lastDaily: selected?.lastDaily ?? null,
+		currentWeek: selected?.currentWeek ?? null,
+		signReadings,
 		currentSigns,
 		supportingGuides,
+		weekReadingHref: customerProduct('week-reading')?.href,
 		seo
 	};
 }

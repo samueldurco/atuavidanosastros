@@ -15,8 +15,13 @@ export const load: PageServerLoad = async ({ params }) => {
 	const author = publicEditorialAuthor(sourceAuthor);
 	const path = `/pessoas/${author.id}`;
 	if (params.slug !== author.id) redirect(308, path);
+	const profileLabels: Record<string, string> = {
+		atvna: 'Guias e artigos',
+		'atvna-horoscopo-automatizado': 'Horóscopos por signo'
+	};
+	const label = profileLabels[author.id];
 	const seo: PageSeo = {
-		title: `${author.name} — ${SITE.name}`,
+		title: `${author.name}${label ? ' · ' + label : ''} — ${SITE.name}`,
 		description: author.bio,
 		path,
 		indexable: true,

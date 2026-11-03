@@ -17,7 +17,7 @@
 				Carreira está em preparação. Você já pode calcular seu Meio do Céu gratuitamente.
 			</p>
 			<div class="actions">
-				<a class="button" href="/bussola-de-carreira">Calcular meu Meio do Céu</a>
+				<a class="button" href="/ferramentas/meio-do-ceu">Calcular meu Meio do Céu</a>
 				<a class="button secondary" href="#metodo">O que o mapa vai analisar</a>
 			</div>
 		</div>
@@ -40,6 +40,7 @@
 			<article class="card">
 				<h3>Vocação e carreira</h3>
 				<p>Meio do Céu, casa 10 e os fatores ligados à vida profissional.</p>
+				<a href="/vocacao-no-mapa-astral">Como ler a vocação no mapa astral</a>
 			</article>
 			<article class="card">
 				<h3>Dinheiro e recursos</h3>

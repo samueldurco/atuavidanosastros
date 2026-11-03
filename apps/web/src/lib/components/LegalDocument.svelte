@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
+	import { changeAnalyticsConsent } from '$lib/analytics/consent';
 	import { legalContact, legalDocuments, legalUpdatedAt } from '$lib/data/legal';
 	let { kind }: { kind: keyof typeof legalDocuments } = $props();
 	const document = $derived(legalDocuments[kind]);
-	function changeConsent(value: 'granted' | 'denied') {
-		if (!browser) return;
-		localStorage.setItem('atv-analytics-consent', value);
-		location.reload();
-	}
 </script>
 
 <svelte:head>
@@ -36,10 +31,10 @@
 			<h2>Preferência de medição neste navegador</h2>
 			<p>A escolha vale para este navegador e pode ser alterada a qualquer momento.</p>
 			<div class="controls">
-				<button class="button" onclick={() => changeConsent('denied')}
+				<button class="button" onclick={() => changeAnalyticsConsent('denied')}
 					>Recusar medição opcional</button
 				>
-				<button class="button" onclick={() => changeConsent('granted')}
+				<button class="button" onclick={() => changeAnalyticsConsent('granted')}
 					>Aceitar medição opcional</button
 				>
 			</div>

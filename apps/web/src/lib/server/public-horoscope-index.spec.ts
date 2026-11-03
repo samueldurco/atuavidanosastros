@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { publicHoroscopeIndex, loadPublicHoroscopeIndex } from './public-horoscope-index';
 import type { EditorialDocument } from './editorial';
 import { pagesSitemap } from './editorial-feeds';
-import { SITE } from '$lib/data/site';
+import { SITE, signs } from '$lib/data/site';
 import {
 	horoscopeRange,
 	parseHoroscopeArchivePath,
@@ -104,6 +104,50 @@ describe('public horoscope archives', () => {
 		expect(weeklyIndex.current).toBeNull();
 		expect(project([]).supportingGuides).toEqual([]);
 		expect(project([{ ...guide, kind: 'reporting' }]).supportingGuides).toEqual([]);
+	});
+	it('projects each sign independently and offers only a past daily and an unexpired weekly edition', () => {
+		const last = fixture('/horoscopo/aries/daily/2026-10-07', '2026-10-08');
+		const older = fixture('/horoscopo/aries/daily/2026-10-05', '2026-10-06', now.toISOString());
+		const taurus = fixture('/horoscopo/touro/daily/2026-10-08', '2026-10-09');
+		const editions = [
+			older,
+			weekly,
+			taurus,
+			last,
+			fixture('/horoscopo/aries/daily/2026-10-09', '2026-10-10'),
+			fixture('/horoscopo/gemeos/weekly/2026-09-28', '2026-10-05'),
+			fixture('/horoscopo/gemeos/weekly/2026-10-12', '2026-10-19')
+		];
+		const selected = project(editions, '?year=1900');
+		expect(selected.current).toBeNull();
+		expect(selected.history).toEqual([]);
+		expect(selected.lastDaily?.path).toBe(last.path);
+		expect(selected.currentWeek?.path).toBe(weekly.path);
+		const hub = project(editions, '', null);
+		expect(hub.signReadings.map((row) => row.sign)).toEqual(signs);
+		expect(hub.signReadings.find((row) => row.sign === 'touro')).toMatchObject({
+			current: { path: taurus.path },
+			lastDaily: null,
+			currentWeek: null
+		});
+		expect(hub.signReadings.find((row) => row.sign === 'gemeos')).toMatchObject({
+			current: null,
+			lastDaily: null,
+			currentWeek: null
+		});
+		const nextMonday = publicHoroscopeIndex(
+			[weekly, last],
+			new URL('https://example.org/horoscopo/aries'),
+			'aries',
+			new Date('2026-10-12T00:00:00.000Z')
+		);
+		expect(nextMonday.currentWeek).toBeNull();
+		expect(nextMonday.lastDaily?.path).toBe(last.path);
+		expect(project([last, weekly], '?period=weekly')).toMatchObject({
+			current: { path: weekly.path },
+			lastDaily: null,
+			currentWeek: null
+		});
 	});
 	it.each(['?period=annual', '?year=1899', '?year=2100', '?year=2026.0', '?year=26'])(
 		'rejects invalid filters %s',

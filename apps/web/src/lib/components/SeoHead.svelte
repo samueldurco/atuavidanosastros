@@ -21,7 +21,7 @@
 		{#if visible.managePrimary}
 			<title>{visible.title}</title>
 			<meta name="description" content={visible.description} />
-			<link rel="canonical" href={canonical} />
+			{#if !visible.internalSearch}<link rel="canonical" href={canonical} />{/if}
 		{/if}
 		<meta property="og:type" content={visible.article ? 'article' : 'website'} />
 		<meta property="og:locale" content="pt_BR" />
