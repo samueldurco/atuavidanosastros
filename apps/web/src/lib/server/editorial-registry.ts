@@ -29,7 +29,7 @@ type StoredRelease = {
 	evidenceByDigest: Record<string, string>;
 };
 const stored = release as unknown as StoredRelease;
-const datedIndex = freezeEditorialJson(storedDatedIndex) as unknown as DatedArchiveRelease;
+const datedIndex = freezeEditorialJson(storedDatedIndex, false) as unknown as DatedArchiveRelease;
 for (const entry of datedIndex.entries) {
 	freezeEditorialJson(entry.index);
 	freezeEditorialJson(entry.scope);
@@ -67,14 +67,38 @@ const automated: AutomatedRegistry = {
 const documents: readonly EditorialDocument[] = automated.packages.map((entry) => entry.document);
 const approvals: readonly EditorialApproval[] = [];
 const authorities: Readonly<Record<string, EditorialAuthority>> = {};
+type Select = (document: EditorialSummary) => boolean;
+
+// Only narrow a read when doing so cannot hide a competing identity or author.
+// An ambiguous release uses the original full verification and collision rules.
+const identities = [...documents, ...datedIndex.entries.flatMap((entry) => entry.index.documents)];
+const authorIdentities = new Map<string, string>();
+const canNarrow =
+	new Set(identities.map((item) => item.id)).size === identities.length &&
+	new Set(identities.map((item) => item.path)).size === identities.length &&
+	identities.every(({ author }) => {
+		const identity = JSON.stringify(author);
+		const previous = authorIdentities.get(author.id);
+		authorIdentities.set(author.id, identity);
+		return previous === undefined || previous === identity;
+	});
 
 async function readPublishedEditorial(
 	now: Date,
-	archive: ReturnType<typeof createDatedArchiveRead>
+	archive: ReturnType<typeof createDatedArchiveRead>,
+	select?: Select
 ): Promise<EditorialSummary[]> {
+	const selection = canNarrow ? select : undefined;
+	const candidates = selection ? documents.filter(selection) : documents;
+	const registry = selection
+		? {
+				authorities: automated.authorities,
+				packages: automated.packages.filter((item) => selection(item.document))
+			}
+		: automated;
 	const combined = [
-		...(await approvedDocuments(documents, approvals, authorities, now, automated, horoscopeFacts)),
-		...(await archive.summaries())
+		...(await approvedDocuments(candidates, approvals, authorities, now, registry, horoscopeFacts)),
+		...(await archive.summaries(selection))
 	];
 	const ids = new Map<string, number>(),
 		paths = new Map<string, number>();
@@ -93,6 +117,7 @@ async function readPublishedEditorial(
 				paths.get(document.path) === 1 &&
 				authors.get(document.author.id)?.size === 1
 		)
+		.filter((document) => !select || select(document))
 		.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 }
 
@@ -101,11 +126,15 @@ export function createEditorialRead(now = new Date()) {
 	const readAt = new Date(now.getTime());
 	const archive = createDatedArchiveRead(datedIndex, stored.authorities, readAt);
 	let summaries: Promise<EditorialSummary[]> | undefined;
-	const readSummaries = () => (summaries ??= readPublishedEditorial(readAt, archive));
+	const readSummaries = (select?: Select) => {
+		if (select && !summaries) return readPublishedEditorial(readAt, archive, select);
+		const all = (summaries ??= readPublishedEditorial(readAt, archive));
+		return select ? all.then((items) => items.filter(select)) : all;
+	};
 	return {
 		summaries: readSummaries,
 		async document(path: string, fetchAsset?: EditorialAssetFetch) {
-			const summary = (await readSummaries()).find((document) => document.path === path);
+			const [summary] = await readSummaries((document) => document.path === path);
 			if (!summary) return;
 			if (summary.sections) return summary as EditorialDocument;
 			if (fetchAsset) return archive.document(path, fetchAsset);

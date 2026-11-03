@@ -10,6 +10,11 @@ import {
 	type EditorialReviewReport
 } from './editorial-automation.ts';
 import { assertRuntimeComposition } from '../../../../../scripts/lib/public-horoscope-compose.mjs';
+import {
+	replayedComposition,
+	replayedClaimsDigest,
+	replayedSnapshotDigest
+} from './dated-replay.ts';
 import type { PublicHoroscopeSnapshot } from './public-horoscope-facts.ts';
 import { editorialVerificationKey, verifyEditorialSignature } from './editorial-signature.ts';
 
@@ -458,7 +463,8 @@ export async function validateDatedHoroscopePackage(input: AutomatedApprovalInpu
 		)
 			return reject('DATED_SCOPE');
 		const { scope: s, claims: c, facts: f, corpusReview: cr, runtimeReport: r } = p;
-		assertRuntimeComposition({ document: d, claims: c, facts: f, scope: s });
+		const composition = { document: d, claims: c, facts: f, scope: s };
+		if (!replayedComposition(composition)) assertRuntimeComposition(composition);
 		const signIndex = SIGNS.indexOf(c.sign as (typeof SIGNS)[number]);
 		if (
 			signIndex < 0 ||
@@ -504,7 +510,12 @@ export async function validateDatedHoroscopePackage(input: AutomatedApprovalInpu
 			d.calculation?.version !== f.version
 		)
 			return reject('DATED_COVERAGE');
-		const [dd, fd, cd, sd] = await Promise.all([digest(d), digest(f), digest(c), digest(s)]);
+		const [dd, fd, cd, sd] = await Promise.all([
+			digest(d),
+			replayedSnapshotDigest(f) ?? digest(f),
+			replayedClaimsDigest(c) ?? digest(c),
+			digest(s)
+		]);
 		const ids = SIGNS.map((sign) => `horoscopo-${sign}-${s.period}-${s.startDate}`);
 		if (
 			!exactKeys(s.documentDigests, ids) ||
@@ -726,8 +737,8 @@ export async function verifyDatedHoroscopeApproval(input: AutomatedApprovalInput
 			a.revision !== d.revision ||
 			a.digest !== (await digest(d)) ||
 			a.scopeDigest !== (await digest(p.scope)) ||
-			a.claimsDigest !== (await digest(p.claims)) ||
-			a.factsDigest !== (await digest(p.facts)) ||
+			a.claimsDigest !== (replayedClaimsDigest(p.claims) ?? (await digest(p.claims))) ||
+			a.factsDigest !== (replayedSnapshotDigest(p.facts) ?? (await digest(p.facts))) ||
 			a.corpusReviewDigest !== (await digest(p.corpusReview)) ||
 			g.corpusReviewDigest !== a.corpusReviewDigest ||
 			a.runtimeReportDigest !== (await digest(p.runtimeReport)) ||

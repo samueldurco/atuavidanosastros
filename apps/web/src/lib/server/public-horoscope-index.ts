@@ -9,7 +9,9 @@ import {
 } from '$lib/public-horoscope';
 import type { PageSeo } from '$lib/seo';
 import type { EditorialSummary } from './editorial';
-import { publishedEditorial } from './editorial-registry';
+import { createEditorialRead } from './editorial-registry';
+
+const guidePaths = ['/noticias/2026/10/fases-da-lua', '/mercurio-retrogrado'];
 
 // Call only with the admitted registry. This projection never grants publication.
 export function publicHoroscopeIndex(
@@ -71,16 +73,12 @@ export function publicHoroscopeIndex(
 		.filter((reading) => reading.current)
 		.map((reading) => reading.sign);
 	// Supporting guides retain their own editorial identity and never stand in for a dated reading.
-	const supportingGuides = ['/noticias/2026/10/fases-da-lua', '/mercurio-retrogrado'].flatMap(
-		(guidePath) => {
-			const guide = documents.find(
-				(document) => document.kind === 'guide' && document.path === guidePath
-			);
-			return guide
-				? [{ path: guide.path, title: guide.title, description: guide.description }]
-				: [];
-		}
-	);
+	const supportingGuides = guidePaths.flatMap((guidePath) => {
+		const guide = documents.find(
+			(document) => document.kind === 'guide' && document.path === guidePath
+		);
+		return guide ? [{ path: guide.path, title: guide.title, description: guide.description }] : [];
+	});
 	const path = sign ? `/horoscopo/${sign}` : '/horoscopo';
 	const seo: PageSeo = {
 		path,
@@ -112,5 +110,8 @@ export type PublicHoroscopeIndex = ReturnType<typeof publicHoroscopeIndex>;
 export async function loadPublicHoroscopeIndex(url: URL, rawSign?: string) {
 	const sign = rawSign === undefined ? null : signs.find((value) => value === rawSign);
 	if (sign === undefined) error(404, 'Signo não encontrado.');
-	return publicHoroscopeIndex(await publishedEditorial(), url, sign);
+	const documents = await createEditorialRead().summaries(
+		(document) => document.kind === 'horoscope' || guidePaths.includes(document.path)
+	);
+	return publicHoroscopeIndex(documents, url, sign);
 }

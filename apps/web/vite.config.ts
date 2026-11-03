@@ -1,8 +1,10 @@
 import { defineConfig } from 'vitest/config';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { datedReplayProofs } from '../../scripts/dated-horoscope-replay-proofs.mjs';
 
 export default defineConfig({
+	define: { __ATV_DATED_REPLAYS__: JSON.stringify(await datedReplayProofs()) },
 	plugins: [
 		sveltekit({
 			alias: { $lib: './src/lib' },

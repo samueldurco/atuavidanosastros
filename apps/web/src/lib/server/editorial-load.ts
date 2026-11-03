@@ -10,7 +10,6 @@ export async function loadEditorialHub(path: EditorialHub) {
 }
 export async function loadEditorialDocument(path: string, fetchAsset?: EditorialAssetFetch) {
 	const read = createEditorialRead();
-	const documents = await read.summaries();
 	const pair = path.match(/^\/compatibilidade\/([a-z]+)-([a-z]+)$/);
 	const canonical = pair ? canonicalPair(pair[1], pair[2]) : path;
 	if (!canonical) error(404, 'Esta leitura ainda não está publicada.');
@@ -34,8 +33,11 @@ export async function loadEditorialDocument(path: string, fetchAsset?: Editorial
 		['/noticias/2026/10/diario-de-sonhos']
 	];
 	const group = groups.find((paths) => paths.includes(document.path)) ?? [];
-	const related = documents
-		.filter((entry) => entry.id !== document.id && group.includes(entry.path))
+	const related = (
+		group.length
+			? await read.summaries((entry) => entry.id !== document.id && group.includes(entry.path))
+			: []
+	)
 		.slice(0, 3)
 		.map(({ path, title }) => ({ path, title }));
 	return { document, related, seo: articleSeo(document) };
