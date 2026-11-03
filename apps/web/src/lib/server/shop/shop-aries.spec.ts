@@ -7,8 +7,7 @@ import { approvedShopProducts } from './shop-catalog-map';
 
 // This legacy-route fixture keeps one known product outside the reviewed list.
 vi.mock('$lib/data/shop-reviewed-offers.json', async (importOriginal) => {
-	const { default: offers } =
-		await importOriginal<typeof import('$lib/data/shop-reviewed-offers.json')>();
+	const { default: offers } = await importOriginal<{ default: typeof reviewedOffers }>();
 	return { default: offers.filter((offer) => offer.slug !== 'caneca-cancer') };
 });
 

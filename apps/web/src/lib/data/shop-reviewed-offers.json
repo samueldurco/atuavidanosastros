@@ -12,6 +12,12 @@
 		"dimonaRetailProductionDays": 3
 	},
 	{
+		"slug": "caneca-leo",
+		"variantId": "gid://shopify/ProductVariant/68006922355056",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
 		"slug": "ecobag-aquarius",
 		"variantId": "gid://shopify/ProductVariant/68006902235504",
 		"priceBrl": 49.9
