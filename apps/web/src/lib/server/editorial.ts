@@ -1,4 +1,4 @@
-import { SITE, signs } from '$lib/data/site';
+import { SITE, signs, signNames } from '$lib/data/site';
 import { publicEditorialAuthor } from '$lib/data/editorial-author';
 import { parseHoroscopeArchivePath, periodNames } from '$lib/public-horoscope';
 import { inspectEditorialStyle } from '@atv/ai/editorial-style';
@@ -402,16 +402,18 @@ export function signWithHoroscope(doc: EditorialSummary) {
 		? (parseHoroscopeArchivePath(doc.path)?.sign ?? null)
 		: null;
 }
+const horoscopeCadence = { daily: 'diário', weekly: 'semanal', monthly: 'mensal' } as const;
 export function articleSeo(document: EditorialDocument): PageSeo {
 	const image = document.image;
 	const author = publicEditorialAuthor(document.author);
 	const archive = document.kind === 'horoscope' ? parseHoroscopeArchivePath(document.path) : null;
-	const edition = archive
-		? `${periodNames[archive.period]} de ${archive.startDate.split('-').reverse().join('/')}`
-		: '';
+	const date = archive?.startDate.split('-').reverse().join('/');
+	const edition = archive ? `${periodNames[archive.period]} de ${date}` : '';
 	return {
 		title: `${edition ? edition + ' · ' : ''}${document.title} — ${SITE.name}`,
-		description: document.description,
+		description: archive
+			? `Horóscopo ${horoscopeCadence[archive.period]} de ${signNames[archive.sign]}, edição de ${date}. ${document.description}`
+			: document.description,
 		path: document.path,
 		indexable: true,
 		managePrimary: true,

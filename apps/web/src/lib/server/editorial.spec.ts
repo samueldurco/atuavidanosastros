@@ -410,6 +410,24 @@ describe('feeds and search surfaces', () => {
 		expect(articleSeo(archive).title).toContain('24/10/2026');
 		expect(JSON.parse(articleSeo(archive).jsonLd!).headline).toBe(archive.title);
 	});
+	it('distinguishes dated readings with the same summary by sign, period and edition date', () => {
+		const paths = [
+			'/horoscopo/capricornio/daily/2026-11-02',
+			'/horoscopo/capricornio/daily/2026-11-03',
+			'/horoscopo/capricornio/weekly/2026-11-02',
+			'/horoscopo/capricornio/monthly/2026-11-02',
+			'/horoscopo/aries/daily/2026-11-02'
+		];
+		const summary = 'Uma pergunta sobre escolhas no trabalho.';
+		const descriptions = paths.map(
+			(path) => articleSeo(fixture({ kind: 'horoscope', path, description: summary })).description
+		);
+		expect(new Set(descriptions).size).toBe(paths.length);
+		expect(descriptions[2]).toBe(
+			`Horóscopo semanal de Capricórnio, edição de 02/11/2026. ${summary}`
+		);
+		expect(articleSeo(fixture({ kind: 'guide', description: summary })).description).toBe(summary);
+	});
 	it('excludes internal search results while allowing contextual links on the production origin', () => {
 		const seo = { ...legacySeo('/revista')!, internalSearch: true, indexable: false };
 		expect(robotsPolicy(seo, new URL(SITE.url))).toBe('noindex, follow');
