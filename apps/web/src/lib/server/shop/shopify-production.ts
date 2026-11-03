@@ -129,7 +129,7 @@ async function tokenFor(env: PrivateEnv, fetcher: typeof fetch, domain: string) 
 	};
 	return grant.token;
 }
-async function admin(
+export async function admin(
 	env: PrivateEnv,
 	fetcher: typeof fetch,
 	query: string,

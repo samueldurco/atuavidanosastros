@@ -1,3 +1,4 @@
+import { webhookMaintenance } from './production-webhook';
 import { ensureCheckoutSchema } from './checkout-schema';
 import { ShopHttpError, readBody } from './shop-http';
 import { type PrivateEnv } from './freight-provider';
@@ -52,6 +53,8 @@ export async function productionHandler(
 					{ headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' } }
 				);
 			}
+			const mode = request.headers.get('X-ATVNA-Maintenance');
+			if (mode !== null) return webhookMaintenance(mode, env, db, f);
 			const result = await reconcile(db, env, f);
 			if (!result.enabled || !result.scanned) return reply(503);
 			return reply(204);
