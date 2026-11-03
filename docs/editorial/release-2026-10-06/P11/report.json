@@ -1,89 +1,75 @@
 {
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "documentId": "guide-meio-ceu-reflexao",
-  "revision": 3,
-  "digest": "6875afdede4d37cd631291847d92a85865ae814dee5c565d9b9dda71ca030129",
-  "reviewedAt": "2026-10-06T16:08:49.466Z",
+  "revision": 4,
+  "digest": "b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56",
   "reviewMode": "separate-pass",
+  "reviewedAt": "2026-11-03T10:12:25.880Z",
+  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
   "risk": "low-educational-evergreen",
   "checks": [
     {
       "id": "scope",
       "status": "PASS",
-      "reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
+      "reason": "Guia sobre o uso simbólico de um ângulo do mapa, com exercício de reflexão de carreira.",
       "evidence": [
-        "document.json#kind",
-        "evidencias/claims.json",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "claims",
       "status": "PASS",
-      "reason": "MC apresentado como associação tradicional a carreira/projeção, sem equivalência universal com casa 10; inventário e personagem fictícia baseados em atividades, sem destino profissional ou renda. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
+      "reason": "A literatura astrológica associa o Meio do Céu à atuação pública e à carreira. O texto identifica a natureza tradicional dessa leitura.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "rights",
       "status": "PASS",
-      "reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
+      "reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
       "evidence": [
-        "evidencias/identity-rights.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "identity",
       "status": "PASS",
-      "reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
+      "reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
       "evidence": [
-        "document.json#author",
-        "document.json#automationDisclosure",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "safety",
       "status": "PASS",
-      "reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
+      "reason": "A escolha de carreira leva em conta experiência e preferências. O roteiro propõe um teste pequeno, que pode ser interrompido ou repetido.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "originality",
       "status": "PASS",
-      "reason": "Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
+      "reason": "No caso fictício de Bia a colega experimenta as instruções e indica em que passo precisou de ajuda.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/originality.json",
-        "evidencias/competition.json",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "tools",
       "status": "PASS",
-      "reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
+      "reason": "O cálculo do Meio do Céu usa hora e local de nascimento. Quem não dispõe deles consegue fazer a parte prática do guia.",
       "evidence": [
-        "evidencias/journeys.json",
-        "document.json#sections"
+        "evidencias/liberacao-r4.md#jornada"
       ]
     },
     {
       "id": "integrity",
       "status": "PASS",
-      "reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
+      "reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
       "evidence": [
-        "document.json",
-        "evidencias/review-pass.json",
-        "evidencias/authority-provisioning.json",
-        "evidencias/owner-authorization.json"
+        "evidencias/liberacao-r4.md#integridade"
       ]
     }
   ],
@@ -91,77 +77,68 @@
     {
       "id": "intent",
       "points": 19,
-      "reason": "Título e escopo respondem à intenção conceitual; observação específica: MC apresentado como associação tradicional a carreira/projeção, sem equivalência universal com casa 10; inventário e personagem fictícia baseados em atividades, sem destino profissional ou renda.",
+      "reason": "Define Meio do Céu antes de pedir ao leitor que procure uma ocasião de reconhecimento no trabalho.",
       "evidence": [
-        "document.json#title",
-        "document.json#sections",
-        "evidencias/briefs.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "value",
-      "points": 19,
-      "reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
+      "points": 20,
+      "reason": "A colega pode testar o roteiro e Bia pode decidir se aprecia esse tipo de tarefa, mesmo com resultado misto.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "accuracy",
       "points": 14,
-      "reason": "Afirmações centrais limitadas ao apoio das fontes S07,S10; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
+      "reason": "A literatura astrológica associa o Meio do Céu à atuação pública e à carreira. O texto identifica a natureza tradicional dessa leitura.",
       "evidence": [
-        "evidencias/claims.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "trust",
       "points": 9,
-      "reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
+      "reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
       "evidence": [
-        "document.json#author",
-        "document.json#sources",
-        "document.json#automationDisclosure"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "language",
-      "points": 8,
-      "reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
+      "points": 9,
+      "reason": "A pergunta sobre como explicar uma tarefa dá sentido concreto ao termo reconhecimento.",
       "evidence": [
-        "document.json#sections"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "journey",
       "points": 9,
-      "reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
+      "reason": "O cálculo do Meio do Céu usa hora e local de nascimento. Quem não dispõe deles consegue fazer a parte prática do guia.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/journeys.json"
+        "evidencias/liberacao-r4.md#jornada"
       ]
     },
     {
       "id": "metadata",
-      "points": 8,
-      "reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
+      "points": 9,
+      "reason": "O exemplo de carreira oferecido corresponde à descrição de um pequeno teste observável.",
       "evidence": [
-        "document.json",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#integridade"
       ]
     },
     {
       "id": "maintenance",
-      "points": 4,
-      "reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
+      "points": 5,
+      "reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
       "evidence": [
-        "evidencias/maintenance.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     }
   ],
-  "decision": "APROVADO_AUTOMATICAMENTE",
   "corrections": [],
-  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+  "decision": "APROVADO_AUTOMATICAMENTE"
 }

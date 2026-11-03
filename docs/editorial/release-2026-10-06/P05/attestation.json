@@ -3,15 +3,15 @@
   "keyId": "github-actions-editorial-20261006-01",
   "reviewerId": "atvna-editorial-service",
   "documentId": "guide-mercurio-retrogrado",
-  "revision": 3,
-  "digest": "98c31e609297622fed096268aa9115cb3c417345378a02791e689d15afa7db6c",
+  "revision": 4,
+  "digest": "41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc",
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "decision": "APROVADO_AUTOMATICAMENTE",
   "reviewMode": "separate-pass",
   "risk": "low-educational-evergreen",
-  "reportDigest": "11bf0d6baeff2c43d3b88df6fdd9d1564360876f753dc33ba4bfb851c247ad5b",
-  "evidenceManifestDigest": "2528a38c22a08d180f74688bf8ef7d4c0bdc35eef11883f6dbc2b790197bb2eb",
-  "approvedAt": "2026-10-06T16:10:44.842Z",
-  "expiresAt": "2026-10-07T16:10:44.842Z",
-  "signature": "eTErUY22wykB2zySSbuMmH5/YPnumEVVspgR8UQ1WBEsAnrVCZz71QIE6nkvGUc9Ig4/g/d47bkWmNENMAoZBQ=="
+  "reportDigest": "a59ef5e83bb9b33c36c9bb40f00e4295f43e49ef446fc8b11956f018ffc2c813",
+  "evidenceManifestDigest": "a73296f49c06241f6f92e15aafc134ef44a4e1c9d2aefb8f5c8325998208d3f8",
+  "approvedAt": "2026-11-03T10:13:34.308Z",
+  "expiresAt": "2026-11-04T10:13:34.308Z",
+  "signature": "QTxmZypQOmjQD3xmk8gr5WogyvFZNOZLVpRNp5/6YQlBEoEozNV6C0TvCI0eFH8SDszV9K+8945lIKVjsVxECg=="
 }

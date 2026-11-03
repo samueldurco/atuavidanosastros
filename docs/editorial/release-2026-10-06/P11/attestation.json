@@ -3,15 +3,15 @@
   "keyId": "github-actions-editorial-20261006-01",
   "reviewerId": "atvna-editorial-service",
   "documentId": "guide-meio-ceu-reflexao",
-  "revision": 3,
-  "digest": "6875afdede4d37cd631291847d92a85865ae814dee5c565d9b9dda71ca030129",
+  "revision": 4,
+  "digest": "b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56",
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "decision": "APROVADO_AUTOMATICAMENTE",
   "reviewMode": "separate-pass",
   "risk": "low-educational-evergreen",
-  "reportDigest": "888ddeea757414f07607bf125030da524b8cc649d0e589fbaa84f589eadd7c70",
-  "evidenceManifestDigest": "76d9eba49fdb2f13bbb21083bbf334e58eefc3bed7611806424b7fe13c18572e",
-  "approvedAt": "2026-10-06T16:10:44.868Z",
-  "expiresAt": "2026-10-07T16:10:44.868Z",
-  "signature": "3Rm0i6NkcJ9jgYucFz5Dw8RNSkjSxMUMIryJGf3Jz35Hc26xpHuygVD7PwLDXgdyNwsLt5/kY8iHjVnllAosAg=="
+  "reportDigest": "ba3a7bea21dbb3d0fea01cd8df8b8944862878ab46c5e2f7b242978daeeb7310",
+  "evidenceManifestDigest": "d0ba1d7a0c3f0037ba0eaaa14e0337d7069ac7a6d573069f75ed818f87ff0f19",
+  "approvedAt": "2026-11-03T10:13:34.312Z",
+  "expiresAt": "2026-11-04T10:13:34.312Z",
+  "signature": "ektRDii8SR2FbiDPA1FNG4Irs0+FyYUz5XRmcpN8DDZctf9zlWF4lKYaPcKoV7I8rBoUzYCk4Smh7693DMqXDQ=="
 }
