@@ -904,12 +904,12 @@
 		{
 			"document": {
 				"id": "guide-horario-nascimento",
-				"revision": 3,
+				"revision": 4,
 				"state": "PUBLISHED",
 				"path": "/noticias/2026/10/horario-nascimento-mapa-astral",
 				"kind": "guide",
-				"title": "Horário de nascimento: como conferir os dados do mapa",
-				"description": "Confira o horário de nascimento, registre a origem do dado e entenda como lidar com aproximações sem inventar precisão no mapa astral.",
+				"title": "Como ler o mapa astral quando a hora de nascimento é incerta",
+				"description": "Entenda o que fazer com uma hora registrada, aproximada ou desconhecida e por que uma estimativa muda a leitura do ascendente e das casas.",
 				"author": {
 					"id": "atvna-redacao-automatizada",
 					"type": "Organization",
@@ -922,253 +922,159 @@
 					"reviewMode": "separate-pass"
 				},
 				"publishedAt": "2026-10-06T16:08:48.728Z",
-				"modifiedAt": "2026-10-06T16:08:48.728Z",
+				"modifiedAt": "2026-11-02T14:47:45.307Z",
 				"sections": [
 					{
-						"heading": "A incerteza precisa aparecer",
+						"heading": "Que partes do mapa dependem da hora?",
 						"paragraphs": [
-							"O horário de nascimento participa da identificação do Ascendente junto com o local. Cafe Astrology explica essa referência como o signo e o grau que surgem no horizonte leste para o momento e o lugar considerados.",
-							"Por isso, 'não sei o horário' e 'nasci às 8h' não são informações equivalentes. Um horário aproximado também não deve ser apresentado como exato. O primeiro passo é descrever o que você realmente sabe.",
-							"Este guia ajuda a organizar a pesquisa do dado. Ele não calcula resultados, não fixa um intervalo universal de mudança de Ascendente e não promete descobrir a hora pelo comportamento de alguém."
+							"Sem uma hora confiável, deixe em aberto o ascendente e as casas. Na astrologia, o ascendente corresponde ao ponto do zodíaco que se ergue no horizonte leste no momento e no lugar do nascimento. A cidade ajuda a definir qual horizonte observar. A data, sozinha, não fixa esse ponto.",
+							"A divisão do mapa em casas também depende de como o céu se apresenta naquele momento e do sistema de casas escolhido. Um gráfico traçado com uma hora qualquer pode ter linhas perfeitamente nítidas. A aparência do desenho não torna a hora mais confiável."
 						]
 					},
 					{
-						"heading": "Procure a origem, não a descrição que agrada",
+						"heading": "Três situações, três próximos passos",
 						"paragraphs": [
-							"Anote onde viu ou ouviu o horário. Pode ser um registro disponível, uma anotação antiga ou a lembrança de uma pessoa. Preserve a forma original: 'por volta das oito' contém uma incerteza que desapareceria se você escrevesse apenas '08:00'.",
-							"Se houver um registro acessível, confira o campo e sua legibilidade. Se duas informações divergem, registre a divergência. Não descarte uma versão apenas porque outro horário produz um texto mais parecido com a sua personalidade.",
-							"Você pode perguntar a um familiar de onde vem a lembrança e se ele está citando uma anotação ou uma estimativa. Essa conversa organiza a fonte; não transforma automaticamente uma lembrança em documento.",
-							"Guarde as anotações em um local que você considere adequado. Não é preciso publicar uma certidão, uma fotografia ou os dados de outra pessoa para pedir ajuda com uma dúvida de vocabulário."
+							"Hora registrada. Imagine que um documento registra 8h12. Anote a hora, a cidade e qual documento você consultou. Ao usar uma ferramenta, transcreva o horário local registrado. A procedência importa mesmo quando o relógio aparece com precisão de minutos.",
+							"Hora aproximada. Na mesma família, alguém só se lembra de que foi “depois do café, entre oito e nove”. Guarde esse intervalo e a origem da lembrança. Se estiver comparando gráficos para estudar o efeito da incerteza, identifique os dois extremos como hipóteses. Uma diferença entre eles mostra o que a imprecisão pode mudar. A semelhança não confirma a hora.",
+							"Hora desconhecida. Se a única informação for o dia, escreva “hora desconhecida”. Uma próxima ação possível é consultar o registro de nascimento ou perguntar qual foi a fonte de uma lembrança. Se a hora continuar ausente, você ainda pode estudar como o ascendente é definido, sem atribuir um signo ascendente a si."
 						]
 					},
 					{
-						"heading": "Modelo de registro",
+						"heading": "Antes de usar um formulário",
 						"paragraphs": [
-							"Use os campos: data informada; local informado; horário como aparece na origem; tipo de origem; pessoa ou documento que forneceu a informação; dúvida pendente. Evite incluir identificadores pessoais que não tenham relação com a sua pesquisa.",
-							"Exemplo fictício: 'horário: perto de 14h; origem: lembrança familiar; dúvida: verificar se existe anotação da época'. Outro exemplo: 'horário: 14:12; origem: registro consultado; dúvida: conferir se a cidade foi selecionada corretamente'. Nenhum deles produz um resultado astrológico neste guia.",
-							"A ficha serve para conversar sobre o dado com clareza. Ela não mede a validade de um método de retificação nem prova qual descrição astrológica se ajusta à pessoa."
-						]
-					},
-					{
-						"heading": "Quando o horário continua desconhecido",
-						"paragraphs": [
-							"Declare a limitação antes de ler qualquer resultado que dependa dela. Não aceite uma afirmação de precisão se o serviço não explicar como lida com a falta do dado.",
-							"Se um formulário exigir um horário que você não conhece, não escolha um valor arbitrário para depois tratá-lo como verdadeiro. Procure uma opção explícita de dado desconhecido ou interrompa o preenchimento até entender o efeito dessa escolha.",
-							"Você ainda pode estudar o vocabulário e realizar exercícios de observação sem atribuir um Ascendente. A utilidade de um guia não precisa depender de uma personalização que ele não consegue sustentar.",
-							"Se decidir pesquisar métodos especializados, peça que sejam explicadas as hipóteses e incertezas. Este texto não oferece nem valida esse serviço."
-						]
-					},
-					{
-						"heading": "Uma tarefa pequena para concluir",
-						"paragraphs": [
-							"Separe dez minutos para completar a ficha com o que já está disponível. Marque cada campo como confirmado, aproximado ou desconhecido, sem tentar preencher todas as lacunas no mesmo dia.",
-							"Escolha apenas uma próxima ação verificável: conferir uma anotação, perguntar pela origem de uma lembrança ou revisar a cidade usada em um resultado anterior. A ação termina quando a informação é consultada e a ficha é atualizada de forma honesta.",
-							"Se a resposta continuar desconhecida, mantenha essa palavra. Um registro claro de limites é mais útil para uma leitura responsável do que uma precisão inventada."
+							"O formulário natal do ATVNA pede data, hora e local para montar o instante do cálculo. Com uma hora documentada, você pode conferir os três campos. Se conhece apenas uma faixa, conserve-a nas suas anotações. Se só conhece o dia, evite digitar meio-dia para passar pelo campo obrigatório.",
+							"Uma ficha curta basta para guardar o que se sabe. Escreva “cidade”, “hora ou intervalo”, “origem” e “o que continua incerto”. Se uma nova fonte aparecer, você terá como comparar os registros antes de refazer a leitura."
 						]
 					}
 				],
 				"sources": [
 					{
-						"title": "Ascendant — Cafe Astrology",
+						"title": "Cafe Astrology — The Ascendant",
 						"url": "https://cafeastrology.com/ascendant.html"
-					},
-					{
-						"title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
-						"url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
 					}
 				]
 			},
 			"report": {
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"documentId": "guide-horario-nascimento",
-				"revision": 3,
-				"digest": "1cd98b263e4707c4d1abba55166f44828e45509f899ee420c471cd48bebb802e",
-				"reviewedAt": "2026-10-06T16:08:49.121Z",
+				"revision": 4,
+				"digest": "fe73119f1a13c995a6f67b9764f831cb7d69ed8adc9fc83ac197b6a47dcbb186",
 				"reviewMode": "separate-pass",
+				"reviewedAt": "2026-11-03T10:12:25.795Z",
+				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
 				"risk": "low-educational-evergreen",
 				"checks": [
 					{
 						"id": "scope",
 						"status": "PASS",
-						"reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
-						"evidence": [
-							"document.json#kind",
-							"evidencias/claims.json",
-							"evidencias/review-pass.json"
-						]
+						"reason": "Ascendente com horário incerto, tratado como conceito de um guia de iniciação.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "claims",
 						"status": "PASS",
-						"reason": "Organiza origem e incerteza do horário; exemplos declarados fictícios; evita intervalo universal ou retificação pelo comportamento. S03 consta como contexto adicional, sem nova afirmação dependente dela. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/claims.json",
-							"evidencias/sources-rights.json"
-						]
+						"reason": "A referência liga o ascendente ao horizonte leste, à hora e ao lugar. O formulário exige dados compatíveis com essa definição.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "rights",
 						"status": "PASS",
-						"reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
-						"evidence": ["evidencias/identity-rights.json", "evidencias/sources-rights.json"]
+						"reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "identity",
 						"status": "PASS",
-						"reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
-						"evidence": [
-							"document.json#author",
-							"document.json#automationDisclosure",
-							"evidencias/review-pass.json"
-						]
+						"reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "safety",
 						"status": "PASS",
-						"reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "Distinguir minuto registrado, faixa lembrada e dado ausente evita atribuir um ascendente calculado com uma hora inventada.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "originality",
 						"status": "PASS",
-						"reason": "Há contribuição prática própria: sections[1], sections[2], sections[4]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/originality.json",
-							"evidencias/competition.json",
-							"evidencias/claims.json"
-						]
+						"reason": "As três fichas fictícias mostram como registrar a origem e a precisão de cada horário.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "tools",
 						"status": "PASS",
-						"reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
-						"evidence": ["evidencias/journeys.json", "document.json#sections"]
+						"reason": "O guia de ascendente corresponde ao passo seguinte proposto para quem conhece apenas o dia.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "integrity",
 						"status": "PASS",
-						"reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
-						"evidence": [
-							"document.json",
-							"evidencias/review-pass.json",
-							"evidencias/authority-provisioning.json",
-							"evidencias/owner-authorization.json"
-						]
+						"reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					}
 				],
 				"scores": [
 					{
 						"id": "intent",
 						"points": 19,
-						"reason": "Título e escopo respondem à intenção conceitual; observação específica: Organiza origem e incerteza do horário; exemplos declarados fictícios; evita intervalo universal ou retificação pelo comportamento. S03 consta como contexto adicional, sem nova afirmação dependente dela.",
-						"evidence": ["document.json#title", "document.json#sections", "evidencias/briefs.json"]
+						"reason": "A pergunta sobre o que se pode ler com hora desconhecida é respondida já na abertura.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "value",
 						"points": 19,
-						"reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "A ficha pode ser preenchida com dados incompletos e revista quando surgir uma informação melhor.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "accuracy",
 						"points": 14,
-						"reason": "Afirmações centrais limitadas ao apoio das fontes S07; S03 contextual; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
-						"evidence": ["evidencias/claims.json", "evidencias/sources-rights.json"]
+						"reason": "A referência liga o ascendente ao horizonte leste, à hora e ao lugar. O formulário exige dados compatíveis com essa definição.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "trust",
 						"points": 9,
-						"reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
-						"evidence": [
-							"document.json#author",
-							"document.json#sources",
-							"document.json#automationDisclosure"
-						]
+						"reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "language",
-						"points": 8,
-						"reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
-						"evidence": ["document.json#sections"]
+						"points": 10,
+						"reason": "O exemplo de 8h12 e a lembrança entre oito e nove tornam concreta a diferença entre registro e aproximação.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "journey",
 						"points": 9,
-						"reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
-						"evidence": ["document.json#sections", "evidencias/journeys.json"]
+						"reason": "O guia de ascendente corresponde ao passo seguinte proposto para quem conhece apenas o dia.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "metadata",
-						"points": 8,
-						"reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
-						"evidence": ["document.json", "evidencias/review-pass.json"]
+						"points": 9,
+						"reason": "Título e descrição delimitam a questão da hora incerta no mapa natal.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					},
 					{
 						"id": "maintenance",
-						"points": 4,
-						"reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
-						"evidence": ["evidencias/maintenance.json"]
+						"points": 5,
+						"reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					}
 				],
-				"decision": "APROVADO_AUTOMATICAMENTE",
 				"corrections": [],
-				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+				"decision": "APROVADO_AUTOMATICAMENTE"
 			},
 			"evidenceManifest": {
 				"schemaVersion": "atv-editorial-evidence-manifest-v1",
 				"documentId": "guide-horario-nascimento",
-				"revision": 3,
-				"documentDigest": "1cd98b263e4707c4d1abba55166f44828e45509f899ee420c471cd48bebb802e",
+				"revision": 4,
+				"documentDigest": "fe73119f1a13c995a6f67b9764f831cb7d69ed8adc9fc83ac197b6a47dcbb186",
 				"files": [
 					{
-						"path": "document.json",
-						"sha256": "300620e55dd6afb469663e8f75e721343b04d13324ff030a9e1ee93de7e6f9d5"
-					},
-					{
-						"path": "evidencias/sources-rights.json",
-						"sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
-					},
-					{
-						"path": "evidencias/journeys.json",
-						"sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
-					},
-					{
-						"path": "evidencias/originality.json",
-						"sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
-					},
-					{
-						"path": "evidencias/competition.json",
-						"sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
-					},
-					{
-						"path": "evidencias/briefs.json",
-						"sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
-					},
-					{
-						"path": "evidencias/claims.json",
-						"sha256": "eb0cead42960f377b04da1a15748af4637a08a453b31762a5bbdd2bd0bb69af0"
-					},
-					{
-						"path": "evidencias/identity-rights.json",
-						"sha256": "b23fde7527ef68f525e9af99309819b0b05dce07da32ebe61a1c2256ac244dde"
-					},
-					{
-						"path": "evidencias/maintenance.json",
-						"sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
-					},
-					{
-						"path": "evidencias/review-pass.json",
-						"sha256": "f78ba122ca3dd16c366f1c06f4c723e5e7642166845fa52820a5f9935db686e5"
-					},
-					{
-						"path": "evidencias/authority-provisioning.json",
-						"sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
-					},
-					{
-						"path": "evidencias/owner-authorization.json",
-						"sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+						"path": "evidencias/liberacao-r4.md",
+						"sha256": "95ff8914033f73b612eca6e124dccedd2026a7d2c6a1a035e174ada8c82253e1"
 					}
 				]
 			},
@@ -1177,33 +1083,33 @@
 				"keyId": "github-actions-editorial-20261006-01",
 				"reviewerId": "atvna-editorial-service",
 				"documentId": "guide-horario-nascimento",
-				"revision": 3,
-				"digest": "1cd98b263e4707c4d1abba55166f44828e45509f899ee420c471cd48bebb802e",
+				"revision": 4,
+				"digest": "fe73119f1a13c995a6f67b9764f831cb7d69ed8adc9fc83ac197b6a47dcbb186",
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"decision": "APROVADO_AUTOMATICAMENTE",
 				"reviewMode": "separate-pass",
 				"risk": "low-educational-evergreen",
-				"reportDigest": "4385eb32c27e426b7f9ab63657c39f913671f969803c6dd9edd1a7ceea335e02",
-				"evidenceManifestDigest": "1ffc2b4030dc5878ae4078517ab02b8e6353f48e8e4a899630bfdaa08c23bce6",
-				"approvedAt": "2026-10-06T16:10:44.839Z",
-				"expiresAt": "2026-10-07T16:10:44.839Z",
-				"signature": "66qvklzCLXYrFj8bSNhH6dqPFH35w5rSUL1vnqilsuP3SyX4LERDzMdc2iYHIjwxJldtbrohTVEcRtqOsHzCAg=="
+				"reportDigest": "0e17d55d9ae8d4ecc71f99d5268e9ed12e5a8fe4ee4402956d8669dbb201c709",
+				"evidenceManifestDigest": "186417e1f8dc615ea7df68770166ae412d02d05560bbfce334a03358ece6cd21",
+				"approvedAt": "2026-11-03T10:13:34.304Z",
+				"expiresAt": "2026-11-04T10:13:34.304Z",
+				"signature": "3IiBJ/dARQJE1uwqhPwYJzIqTRPg0gIoGqVpja66wCnDB9j6QhWZ7wRTc7s+qQo4xDLKJ4V8PCxSYKVmxrwxAQ=="
 			},
 			"admission": {
-				"acceptedAt": "2026-10-06T16:40:28.960Z",
-				"attestationDigest": "8f076b09005bcd76f9234d89c5f72de05d92f1a9696c07975c96fed051b52b7a",
-				"gateEvidenceDigest": "939c37f07abda6f365e49213ff3f1931139a47a8639d38cf1d721a261b65d862"
+				"acceptedAt": "2026-11-03T10:32:43.825Z",
+				"attestationDigest": "6cb0a2de9574042f826324ff02d8a3c6d97a24de36098d9814290a5638b0efac",
+				"gateEvidenceDigest": "b95e77f756fe8cc0505c51d21f2371d942fabfc9a708db714a558308338df8e1"
 			}
 		},
 		{
 			"document": {
 				"id": "guide-mercurio-retrogrado",
-				"revision": 3,
+				"revision": 4,
 				"state": "PUBLISHED",
 				"path": "/mercurio-retrogrado",
 				"kind": "guide",
-				"title": "Mercúrio retrógrado: movimento aparente e simbolismo",
-				"description": "Entenda o movimento retrógrado aparente e separe a explicação astronômica das interpretações astrológicas sobre Mercúrio.",
+				"title": "O que significa Mercúrio retrógrado?",
+				"description": "Veja por que Mercúrio parece inverter o rumo no céu, acompanhe um esquema do movimento e distinga a observação astronômica de uma leitura simbólica.",
 				"author": {
 					"id": "atvna-redacao-automatizada",
 					"type": "Organization",
@@ -1216,249 +1122,162 @@
 					"reviewMode": "separate-pass"
 				},
 				"publishedAt": "2026-10-06T16:08:48.728Z",
-				"modifiedAt": "2026-10-06T16:08:48.728Z",
+				"modifiedAt": "2026-11-02T14:47:45.307Z",
 				"sections": [
 					{
-						"heading": "O que significa retrógrado",
+						"heading": "Por que Mercúrio parece voltar no céu?",
 						"paragraphs": [
-							"Em astronomia, movimento retrógrado aparente descreve uma mudança temporária na direção em que um planeta parece se deslocar em relação às estrelas de fundo, visto da Terra. A explicação educacional da NASA relaciona essa aparência ao movimento relativo dos planetas.",
-							"Isso não significa que o planeta interrompa sua órbita e comece a percorrê-la no sentido contrário. A palavra 'aparente' indica a perspectiva do observador. Já os significados atribuídos a Mercúrio retrógrado em horóscopos pertencem à interpretação astrológica.",
-							"Este guia explica a diferença entre essas duas camadas. Não anuncia um período atual de retrogradação nem oferece uma efeméride. Para afirmar datas e posições de um período concreto, seria necessário consultar uma fonte de cálculo apropriada e conferir o intervalo."
+							"Mercúrio retrógrado é o nome dado ao período em que, visto da Terra, Mercúrio parece caminhar temporariamente no sentido contrário ao habitual em relação às estrelas de fundo. A mudança acontece na direção em que vemos o planeta. Ele continua percorrendo sua órbita ao redor do Sol.",
+							"Mercúrio está mais perto do Sol e completa sua órbita mais depressa do que a Terra. Enquanto os dois se movem, muda a direção da linha que sai de um observador na Terra e aponta para Mercúrio. É essa direção, projetada no fundo do céu em observações sucessivas, que pode inverter o sentido."
 						]
 					},
 					{
-						"heading": "Uma analogia para entender a perspectiva",
+						"heading": "Um esquema para acompanhar com o dedo",
 						"paragraphs": [
-							"Imagine dois objetos que se deslocam por trajetórias diferentes e um observador que acompanha um deles. A direção aparente do outro em relação a um fundo distante pode mudar conforme mudam as posições dos dois. Essa é uma analogia de perspectiva, não uma simulação das órbitas.",
-							"A analogia ajuda a evitar a imagem de um planeta 'dando marcha à ré'. Ela não permite calcular datas de Mercúrio, duração de um período ou efeitos sobre acontecimentos humanos.",
-							"Quando um texto passa da descrição do movimento a uma previsão sobre mensagens, contratos ou relacionamentos, ele mudou de assunto: está oferecendo uma interpretação. Essa passagem precisa ficar explícita para o leitor."
+							"Fundo do céu, com leste à direita: A · B · C. Imagine três marcas fixas num papel. Mantenha o papel parado e use a ponta de um lápis para representar a posição aparente do planeta.",
+							"Percurso habitual no esquema: A → B → C. Trecho retrógrado: C → B → A. As letras são referências inventadas, e as setas mostram apenas a ordem em que as posições aparecem. Na volta, quem acompanhou o lápis viu a direção mudar sem ter movido as marcas. O desenho omite distâncias, datas e a forma da trajetória real."
 						]
 					},
 					{
-						"heading": "O que uma afirmação permite concluir",
+						"heading": "O que fazer com a interpretação astrológica",
 						"paragraphs": [
-							"Separe frases em três grupos. O primeiro descreve um fenômeno observável, como o movimento aparente em relação às estrelas. O segundo atribui um significado simbólico. O terceiro prevê um resultado concreto na vida de alguém.",
-							"Uma explicação do primeiro grupo não comprova as frases dos demais. A existência de um fenômeno astronômico não demonstra, por si, que uma mensagem será perdida ou que uma decisão terá determinado resultado.",
-							"Evite usar o termo para explicar qualquer imprevisto depois que ele aconteceu. Uma explicação útil precisa de critérios claros e de informações sobre o caso, e não apenas de uma coincidência com uma expressão conhecida.",
-							"Se você se interessa pela leitura simbólica, pode tratá-la como convite para refletir sobre um tema. Mantenha suas decisões ligadas às informações reais da situação."
-						]
-					},
-					{
-						"heading": "Roteiro de revisão que funciona em qualquer data",
-						"paragraphs": [
-							"Escolha uma tarefa concreta de comunicação. Antes de enviar uma mensagem, confira destinatário, anexo, informação principal e ação esperada. Para um compromisso, confirme horário e local. São práticas de organização, sem promessa astrológica.",
-							"Em um exemplo hipotético, alguém precisa combinar uma reunião. A anotação pode ser: 'confirmar o fuso do participante; escrever o horário por extenso; pedir confirmação'. O exercício termina quando os dados da reunião estão claros.",
-							"Se você deseja usar uma leitura simbólica como lembrete, registre isso: 'escolhi revisar minha comunicação'. Evite escrever 'o planeta causou o problema' quando essa relação não foi demonstrada.",
-							"Uma lista curta permite avaliar o que foi feito e o que continua pendente. Ela oferece uma entrega prática sem exigir um calendário astrológico nem uma compra."
-						]
-					},
-					{
-						"heading": "Dúvidas frequentes",
-						"paragraphs": [
-							"Mercúrio muda o sentido de sua órbita? A expressão tratada aqui se refere ao movimento aparente observado da Terra, não à inversão física da órbita.",
-							"Este texto informa as datas de Mercúrio retrógrado? Não. Ele é um guia conceitual. Datas atuais exigem consulta e verificação próprias.",
-							"É preciso adiar decisões por causa do termo? Este guia não prescreve adiamentos. Avalie informações, prazos e consequências reais; a interpretação simbólica não substitui essa análise."
+							"Na linguagem astrológica, algumas pessoas usam esse período como convite para revisar combinados. Isso é uma proposta de reflexão. A posição aparente do planeta, por si só, não fornece a causa de uma mensagem atrasada ou de uma passagem emitida com erro.",
+							"Imagine receber dois convites com horários diferentes para a mesma reunião. Você pode confirmar o fuso e pedir ao organizador um único horário por escrito. O gesto resolve uma dúvida verificável em qualquer época do ano. Se a ideia simbólica lhe interessa, formule uma pergunta que possa responder agora: “qual detalhe desse combinado ainda precisa de confirmação?”"
 						]
 					}
 				],
 				"sources": [
 					{
-						"title": "The Planets — NASA/Goddard, arquivo educacional",
-						"url": "https://cdaweb.gsfc.nasa.gov/pub/documents/archived_websites/pwg.gsfc.nasa.gov/stargaze/Splanets.htm"
+						"title": "The Planetary Society — What does “Mercury in retrograde” actually mean?",
+						"url": "https://www.planetary.org/articles/what-does-mercury-in-retrograde-actually-mean"
+					},
+					{
+						"title": "NASA Goddard — The Planets",
+						"url": "https://pwg.gsfc.nasa.gov/stargaze/Splanets.htm"
 					}
 				]
 			},
 			"report": {
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"documentId": "guide-mercurio-retrogrado",
-				"revision": 3,
-				"digest": "98c31e609297622fed096268aa9115cb3c417345378a02791e689d15afa7db6c",
-				"reviewedAt": "2026-10-06T16:08:49.279Z",
+				"revision": 4,
+				"digest": "41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc",
 				"reviewMode": "separate-pass",
+				"reviewedAt": "2026-11-03T10:12:25.816Z",
+				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
 				"risk": "low-educational-evergreen",
 				"checks": [
 					{
 						"id": "scope",
 						"status": "PASS",
-						"reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
-						"evidence": [
-							"document.json#kind",
-							"evidencias/claims.json",
-							"evidencias/review-pass.json"
-						]
+						"reason": "Guia atemporal sobre um fenômeno astronômico e sua leitura cultural, sem previsão de trânsito vigente.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "claims",
 						"status": "PASS",
-						"reason": "Movimento retrógrado aparente apoiado na NASA; analogia identificada como não calculadora; checklist de comunicação sem período atual nem causalidade planetária. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/claims.json",
-							"evidencias/sources-rights.json"
-						]
+						"reason": "A direção é aparente em relação às estrelas. A explicação parte de órbitas em torno do Sol e identifica Mercúrio como mais rápido que a Terra.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "rights",
 						"status": "PASS",
-						"reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
-						"evidence": ["evidencias/identity-rights.json", "evidencias/sources-rights.json"]
+						"reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "identity",
 						"status": "PASS",
-						"reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
-						"evidence": [
-							"document.json#author",
-							"document.json#automationDisclosure",
-							"evidencias/review-pass.json"
-						]
+						"reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "safety",
 						"status": "PASS",
-						"reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "O convite com fusos diferentes serve para conferir um horário, sem atribuir falha de comunicação ao planeta.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "originality",
 						"status": "PASS",
-						"reason": "Há contribuição prática própria: sections[1], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/originality.json",
-							"evidencias/competition.json",
-							"evidencias/claims.json"
-						]
+						"reason": "A sequência A/B/C é um esquema autoral com direção descrita em palavras. O convite é um exemplo hipotético.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "tools",
 						"status": "PASS",
-						"reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
-						"evidence": ["evidencias/journeys.json", "document.json#sections"]
+						"reason": "O esquema pode ser usado direto no texto e o destino complementar reúne outros temas de previsões.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "integrity",
 						"status": "PASS",
-						"reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
-						"evidence": [
-							"document.json",
-							"evidencias/review-pass.json",
-							"evidencias/authority-provisioning.json",
-							"evidencias/owner-authorization.json"
-						]
+						"reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					}
 				],
 				"scores": [
 					{
 						"id": "intent",
-						"points": 19,
-						"reason": "Título e escopo respondem à intenção conceitual; observação específica: Movimento retrógrado aparente apoiado na NASA; analogia identificada como não calculadora; checklist de comunicação sem período atual nem causalidade planetária.",
-						"evidence": ["document.json#title", "document.json#sections", "evidencias/briefs.json"]
+						"points": 20,
+						"reason": "O primeiro parágrafo responde o que se vê quando Mercúrio parece inverter o movimento.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "value",
 						"points": 18,
-						"reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "Seguir a mesma referência em ordem inversa dá ao leitor uma maneira concreta de entender o deslocamento.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "accuracy",
 						"points": 15,
-						"reason": "Afirmações centrais limitadas ao apoio das fontes S02; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
-						"evidence": ["evidencias/claims.json", "evidencias/sources-rights.json"]
+						"reason": "A direção é aparente em relação às estrelas. A explicação parte de órbitas em torno do Sol e identifica Mercúrio como mais rápido que a Terra.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "trust",
-						"points": 9,
-						"reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
-						"evidence": [
-							"document.json#author",
-							"document.json#sources",
-							"document.json#automationDisclosure"
-						]
+						"points": 10,
+						"reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "language",
-						"points": 8,
-						"reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
-						"evidence": ["document.json#sections"]
+						"points": 9,
+						"reason": "A legenda em palavras torna o raciocínio das setas acessível mesmo em leitura linear.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "journey",
-						"points": 9,
-						"reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
-						"evidence": ["document.json#sections", "evidencias/journeys.json"]
+						"points": 8,
+						"reason": "O esquema pode ser usado direto no texto e o destino complementar reúne outros temas de previsões.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "metadata",
-						"points": 8,
-						"reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
-						"evidence": ["document.json", "evidencias/review-pass.json"]
+						"points": 9,
+						"reason": "O título corresponde à definição que o texto oferece e evita promessas de datas ou prognósticos.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					},
 					{
 						"id": "maintenance",
-						"points": 4,
-						"reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
-						"evidence": ["evidencias/maintenance.json"]
+						"points": 5,
+						"reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					}
 				],
-				"decision": "APROVADO_AUTOMATICAMENTE",
 				"corrections": [],
-				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+				"decision": "APROVADO_AUTOMATICAMENTE"
 			},
 			"evidenceManifest": {
 				"schemaVersion": "atv-editorial-evidence-manifest-v1",
 				"documentId": "guide-mercurio-retrogrado",
-				"revision": 3,
-				"documentDigest": "98c31e609297622fed096268aa9115cb3c417345378a02791e689d15afa7db6c",
+				"revision": 4,
+				"documentDigest": "41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc",
 				"files": [
 					{
-						"path": "document.json",
-						"sha256": "7fa2531636210722a213d713732907d59f5cfd3fba85465e6e6e62159ade4181"
-					},
-					{
-						"path": "evidencias/sources-rights.json",
-						"sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
-					},
-					{
-						"path": "evidencias/journeys.json",
-						"sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
-					},
-					{
-						"path": "evidencias/originality.json",
-						"sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
-					},
-					{
-						"path": "evidencias/competition.json",
-						"sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
-					},
-					{
-						"path": "evidencias/briefs.json",
-						"sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
-					},
-					{
-						"path": "evidencias/claims.json",
-						"sha256": "f6ac3e48cc269f697de65b1e2117011bcc7457615ad80f3dc36de782a9a0521e"
-					},
-					{
-						"path": "evidencias/identity-rights.json",
-						"sha256": "636ae9679f7f9932af9a4ac0ef8d7e91b666ce0c98597ab7834eca34b8083e9e"
-					},
-					{
-						"path": "evidencias/maintenance.json",
-						"sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
-					},
-					{
-						"path": "evidencias/review-pass.json",
-						"sha256": "5ff95a8bce389708d3cf85dbda10231c6f7977f09c9c884c7ce93cf4443f348e"
-					},
-					{
-						"path": "evidencias/authority-provisioning.json",
-						"sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
-					},
-					{
-						"path": "evidencias/owner-authorization.json",
-						"sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+						"path": "evidencias/liberacao-r4.md",
+						"sha256": "eb2bceb415091f1d81f2701b64203aef6ea0a139caa6ee6c54b4c2ed23435498"
 					}
 				]
 			},
@@ -1467,22 +1286,22 @@
 				"keyId": "github-actions-editorial-20261006-01",
 				"reviewerId": "atvna-editorial-service",
 				"documentId": "guide-mercurio-retrogrado",
-				"revision": 3,
-				"digest": "98c31e609297622fed096268aa9115cb3c417345378a02791e689d15afa7db6c",
+				"revision": 4,
+				"digest": "41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc",
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"decision": "APROVADO_AUTOMATICAMENTE",
 				"reviewMode": "separate-pass",
 				"risk": "low-educational-evergreen",
-				"reportDigest": "11bf0d6baeff2c43d3b88df6fdd9d1564360876f753dc33ba4bfb851c247ad5b",
-				"evidenceManifestDigest": "2528a38c22a08d180f74688bf8ef7d4c0bdc35eef11883f6dbc2b790197bb2eb",
-				"approvedAt": "2026-10-06T16:10:44.842Z",
-				"expiresAt": "2026-10-07T16:10:44.842Z",
-				"signature": "eTErUY22wykB2zySSbuMmH5/YPnumEVVspgR8UQ1WBEsAnrVCZz71QIE6nkvGUc9Ig4/g/d47bkWmNENMAoZBQ=="
+				"reportDigest": "a59ef5e83bb9b33c36c9bb40f00e4295f43e49ef446fc8b11956f018ffc2c813",
+				"evidenceManifestDigest": "a73296f49c06241f6f92e15aafc134ef44a4e1c9d2aefb8f5c8325998208d3f8",
+				"approvedAt": "2026-11-03T10:13:34.308Z",
+				"expiresAt": "2026-11-04T10:13:34.308Z",
+				"signature": "QTxmZypQOmjQD3xmk8gr5WogyvFZNOZLVpRNp5/6YQlBEoEozNV6C0TvCI0eFH8SDszV9K+8945lIKVjsVxECg=="
 			},
 			"admission": {
-				"acceptedAt": "2026-10-06T16:55:49.256Z",
-				"attestationDigest": "abb75f57f7c1a996ad8250652976cf83ad6d52a4ba6224894617f528ab373314",
-				"gateEvidenceDigest": "3f965b8d0587a4ef666980fbef07d5b6c06f44a868293a93f1f746f376f9c039"
+				"acceptedAt": "2026-11-03T10:32:43.827Z",
+				"attestationDigest": "54bb105baa1c35a166102678f14c1db8289d7c45577f34600a0fc6f3ed5bb74d",
+				"gateEvidenceDigest": "b95e77f756fe8cc0505c51d21f2371d942fabfc9a708db714a558308338df8e1"
 			}
 		},
 		{
@@ -1778,12 +1597,12 @@
 		{
 			"document": {
 				"id": "guide-sinastria-limites",
-				"revision": 3,
+				"revision": 4,
 				"state": "PUBLISHED",
 				"path": "/noticias/2026/10/sinastria-e-combinacao-de-signos",
 				"kind": "guide",
-				"title": "Sinastria e combinação de signos: entenda a diferença",
-				"description": "Entenda a diferença entre combinação de signos solares e sinastria, com limites para interpretar relações e um exercício de conversa.",
+				"title": "Comparação de signos e sinastria são a mesma coisa?",
+				"description": "Compare dois signos solares e depois dois mapas natais pelo exemplo de um casal fictício. Veja que dados e que consentimento cada leitura pede.",
 				"author": {
 					"id": "atvna-redacao-automatizada",
 					"type": "Organization",
@@ -1796,254 +1615,158 @@
 					"reviewMode": "separate-pass"
 				},
 				"publishedAt": "2026-10-06T16:08:48.728Z",
-				"modifiedAt": "2026-10-06T16:08:48.728Z",
+				"modifiedAt": "2026-11-02T14:47:45.307Z",
 				"sections": [
 					{
-						"heading": "Um recorte e uma comparação",
+						"heading": "Quando o casal conhece apenas os signos solares",
 						"paragraphs": [
-							"Na tradição astrológica consultada no Horóscopo Virtual, sinastria é a comparação de mapas. A combinação de signos solares usa um recorte mais estreito. A diferença ajuda a entender o que um texto está comparando; não transforma a leitura em previsão do resultado de uma relação.",
-							"Uma combinação solar pode servir como introdução ao vocabulário. Ela não descreve todas as referências consideradas em uma comparação de mapas e não explica a história de duas pessoas.",
-							"Mesmo uma leitura com mais detalhes continua sendo interpretativa. Quantidade de símbolos não equivale a comprovação de compatibilidade, fidelidade ou futuro do casal. Este guia não atribui uma porcentagem nem realiza cálculo."
+							"A comparação de signos solares usa um elemento de cada mapa. A sinastria, na tradição astrológica, coloca dois mapas natais em relação para interpretar simbolicamente seus contatos. A diferença está no que a pessoa que faz a leitura tem em mãos e na pergunta que esses dados permitem fazer.",
+							"Imagine Lia e Dani, um casal fictício. Lia conhece seu signo solar, Áries, e Dani conhece o seu, Libra. Elas querem entender por que planejam o fim de semana de jeitos diferentes. Uma comparação solar pode sugerir temas para conversar. Só esses dois rótulos não mostram a posição das luas, os ascendentes ou como Lia e Dani tomam decisões na prática."
 						]
 					},
 					{
-						"heading": "Como reconhecer o alcance de um resultado",
+						"heading": "O que muda quando existem dois mapas",
 						"paragraphs": [
-							"Antes de ler a conclusão, confira quais informações o serviço usou. Compare a entrega anunciada com o resultado: combinação de signos solares, comparação de algumas referências ou uma análise descrita de outra forma.",
-							"Um nome amplo pode esconder um recorte limitado. Se o serviço não explicar o método ou a cobertura, mantenha a dúvida aberta. Não chame uma comparação parcial de 'análise completa' por causa de um título atraente.",
-							"Procure também a distinção entre cálculo e interpretação. Dados de nascimento podem entrar em um cálculo, mas o texto sobre dinâmica de relacionamento acrescenta significados da tradição.",
-							"Não forneça informações de outra pessoa sem combinar o uso com ela. O interesse em uma leitura não autoriza concluir o que alguém sente ou pretende."
+							"Suponha agora que ambas tenham a data, a hora e o lugar de nascimento e concordem em usar os dados para essa leitura. Com os dois mapas calculados, quem faz a sinastria pode considerar, por exemplo, a relação entre a Lua de um mapa e o Sol do outro. O exemplo não atribui posições a Lia e Dani: isso exigiria um cálculo com dados reais.",
+							"O horário faz diferença sobretudo para os ângulos e as casas. Se uma pessoa não o conhece, vale explicar quais partes da comparação ficarão em aberto. Antes de digitar informações de alguém, combine a finalidade e pergunte o que a pessoa aceita compartilhar. Se preferir guardar os dados, a conversa sobre o fim de semana continua possível."
 						]
 					},
 					{
-						"heading": "Troque vereditos por perguntas",
+						"heading": "Uma pergunta que as duas podem responder",
 						"paragraphs": [
-							"Uma descrição pode mencionar ritmos diferentes, formas de demonstrar afeto ou preferências de conversa. Se desejar usar a leitura, converta o tema em uma pergunta que permita à outra pessoa responder por si.",
-							"Em um exemplo hipotético, a frase 'vocês têm ritmos diferentes' vira 'como cada um prefere combinar um compromisso?'. A resposta pode abordar antecedência, horários e mudanças de plano. Esses detalhes vêm da conversa, não do mapa.",
-							"Outro exemplo: em vez de perguntar 'qual signo é mais fiel?', pergunte 'quais acordos consideramos importantes?'. A leitura simbólica não permite afirmar a fidelidade de ninguém.",
-							"Se a outra pessoa não quiser participar, respeite essa decisão. Você pode refletir sobre suas próprias preferências sem calcular ou divulgar dados de terceiros."
-						]
-					},
-					{
-						"heading": "Exercício: uma conversa com três campos",
-						"paragraphs": [
-							"Escolha um tema cotidiano de baixo impacto, como organizar um passeio. Cada pessoa preenche: o que prefere; o que pode flexibilizar; o que precisa ser combinado.",
-							"Leiam os campos e escolham um acordo simples, como definir um horário com antecedência. Depois do passeio, avaliem se o acordo funcionou. Essa avaliação se apoia no que aconteceu, não em uma nota de compatibilidade.",
-							"O exercício é uma proposta original deste guia. Não é terapia, diagnóstico de relação nem método para resolver situações de risco. Sua entrega é tornar uma combinação cotidiana mais explícita.",
-							"Vocês podem realizá-lo sem nenhuma leitura astrológica. Se uma descrição simbólica inspirou o tema, indiquem essa origem e mantenham o acordo fundamentado na conversa."
-						]
-					},
-					{
-						"heading": "O que uma leitura não decide",
-						"paragraphs": [
-							"Um texto de compatibilidade não determina se uma relação deve começar, continuar ou terminar. Contexto, consentimento, respeito e acordos reais não cabem em um veredito de signos.",
-							"Este guia não recomenda usar sinastria para avaliar candidatos a emprego, descobrir intenções ocultas ou julgar pessoas ausentes. A comparação simbólica tem limites, e a outra pessoa conserva o direito de falar sobre si.",
-							"Para concluir, identifique o recorte da leitura e escreva uma pergunta que possa ser respondida numa conversa real. Essa é uma utilização mais clara do conteúdo do que buscar uma sentença sobre a relação."
+							"Lia pode contar que gosta de sair com um plano pronto. Dani pode contar que prefere decidir no sábado. Agora elas têm algo mais concreto do que dois signos: duas preferências expressas por quem vai vivê-las. Um acordo possível seria reservar uma atividade e deixar outra parte do dia em aberto.",
+							"Depois do passeio, cada uma pode dizer o que funcionou e o que mudaria. Uma leitura pode ter dado início à conversa. O acordo e sua revisão pertencem às duas pessoas."
 						]
 					}
 				],
 				"sources": [
 					{
-						"title": "Combinação dos signos e sinastria — Horóscopo Virtual",
+						"title": "Horóscopo Virtual — Combinação de signos e sinastria",
 						"url": "https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria"
-					},
-					{
-						"title": "Qual é a diferença entre Sol, Ascendente e Lua? — Personare",
-						"url": "https://www.personare.com.br/conteudo/diferenca-sol-ascendente-e-lua-m187636"
 					}
 				]
 			},
 			"report": {
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"documentId": "guide-sinastria-limites",
-				"revision": 3,
-				"digest": "e308941277e4e9c1740dde06235d0c999701ba1de159e74afa96f8f6fd4a9e3d",
-				"reviewedAt": "2026-10-06T16:08:49.347Z",
+				"revision": 4,
+				"digest": "9240f7c6f13e8e9bc76ed74793eb2db60d8b002f2e4a4cd2b5a06719106c1604",
 				"reviewMode": "separate-pass",
+				"reviewedAt": "2026-11-03T10:12:25.850Z",
+				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
 				"risk": "low-educational-evergreen",
 				"checks": [
 					{
 						"id": "scope",
 						"status": "PASS",
-						"reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
-						"evidence": [
-							"document.json#kind",
-							"evidencias/claims.json",
-							"evidencias/review-pass.json"
-						]
+						"reason": "Comparação educativa entre duas formas de leitura astrológica, com exemplo de casal fictício.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "claims",
 						"status": "PASS",
-						"reason": "Distingue recorte solar e comparação de mapas conforme Horóscopo Virtual; exercício de acordo para passeio, sem cálculo, porcentagem ou veredito sobre relação. S03 é contexto adicional. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/claims.json",
-							"evidencias/sources-rights.json"
-						]
+						"reason": "A sinastria examina relações entre mapas natais. A comparação por signos solares usa um recorte menor, como evidencia a segunda situação do casal.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "rights",
 						"status": "PASS",
-						"reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
-						"evidence": ["evidencias/identity-rights.json", "evidencias/sources-rights.json"]
+						"reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "identity",
 						"status": "PASS",
-						"reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
-						"evidence": [
-							"document.json#author",
-							"document.json#automationDisclosure",
-							"evidencias/review-pass.json"
-						]
+						"reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "safety",
 						"status": "PASS",
-						"reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "O consentimento precede o uso dos dados da outra pessoa. A conversa proposta deixa a decisão com o casal.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "originality",
 						"status": "PASS",
-						"reason": "Há contribuição prática própria: sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/originality.json",
-							"evidencias/competition.json",
-							"evidencias/claims.json"
-						]
+						"reason": "A mesma dupla reaparece sob duas condições de informação. A conversa traduz uma diferença de método em um acordo observável.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "tools",
 						"status": "PASS",
-						"reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
-						"evidence": ["evidencias/journeys.json", "document.json#sections"]
+						"reason": "A ferramenta indicada usa dois conjuntos de dados natais e exige o consentimento descrito no guia.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "integrity",
 						"status": "PASS",
-						"reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
-						"evidence": [
-							"document.json",
-							"evidencias/review-pass.json",
-							"evidencias/authority-provisioning.json",
-							"evidencias/owner-authorization.json"
-						]
+						"reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					}
 				],
 				"scores": [
 					{
 						"id": "intent",
-						"points": 19,
-						"reason": "Título e escopo respondem à intenção conceitual; observação específica: Distingue recorte solar e comparação de mapas conforme Horóscopo Virtual; exercício de acordo para passeio, sem cálculo, porcentagem ou veredito sobre relação. S03 é contexto adicional.",
-						"evidence": ["document.json#title", "document.json#sections", "evidencias/briefs.json"]
+						"points": 20,
+						"reason": "A comparação entre signo solar e sinastria responde diretamente à pergunta do título.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "value",
-						"points": 18,
-						"reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"points": 19,
+						"reason": "O leitor identifica que dados possui e pode escolher uma conversa mesmo sem o mapa completo.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "accuracy",
 						"points": 14,
-						"reason": "Afirmações centrais limitadas ao apoio das fontes S04; S03 contextual; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
-						"evidence": ["evidencias/claims.json", "evidencias/sources-rights.json"]
+						"reason": "A sinastria examina relações entre mapas natais. A comparação por signos solares usa um recorte menor, como evidencia a segunda situação do casal.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "trust",
 						"points": 9,
-						"reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
-						"evidence": [
-							"document.json#author",
-							"document.json#sources",
-							"document.json#automationDisclosure"
-						]
+						"reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "language",
-						"points": 8,
-						"reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
-						"evidence": ["document.json#sections"]
+						"points": 9,
+						"reason": "O exemplo com Lia e Dani esclarece linguagem abstrata por meio de uma conversa.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "journey",
 						"points": 9,
-						"reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
-						"evidence": ["document.json#sections", "evidencias/journeys.json"]
+						"reason": "A ferramenta indicada usa dois conjuntos de dados natais e exige o consentimento descrito no guia.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "metadata",
-						"points": 8,
-						"reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
-						"evidence": ["document.json", "evidencias/review-pass.json"]
+						"points": 9,
+						"reason": "A descrição anuncia a comparação que o título pede e a URL preserva o tema.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					},
 					{
 						"id": "maintenance",
-						"points": 4,
-						"reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
-						"evidence": ["evidencias/maintenance.json"]
+						"points": 5,
+						"reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					}
 				],
-				"decision": "APROVADO_AUTOMATICAMENTE",
 				"corrections": [],
-				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+				"decision": "APROVADO_AUTOMATICAMENTE"
 			},
 			"evidenceManifest": {
 				"schemaVersion": "atv-editorial-evidence-manifest-v1",
 				"documentId": "guide-sinastria-limites",
-				"revision": 3,
-				"documentDigest": "e308941277e4e9c1740dde06235d0c999701ba1de159e74afa96f8f6fd4a9e3d",
+				"revision": 4,
+				"documentDigest": "9240f7c6f13e8e9bc76ed74793eb2db60d8b002f2e4a4cd2b5a06719106c1604",
 				"files": [
 					{
-						"path": "document.json",
-						"sha256": "d8d62660bba5219681feddb5a616114de01e9b8c49430474f6e1e4136a7f838b"
-					},
-					{
-						"path": "evidencias/sources-rights.json",
-						"sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
-					},
-					{
-						"path": "evidencias/journeys.json",
-						"sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
-					},
-					{
-						"path": "evidencias/originality.json",
-						"sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
-					},
-					{
-						"path": "evidencias/competition.json",
-						"sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
-					},
-					{
-						"path": "evidencias/briefs.json",
-						"sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
-					},
-					{
-						"path": "evidencias/claims.json",
-						"sha256": "d0a0ac43ef790c83907074cd558311b614acde19ec7dd64895ebc07f1eca9ef4"
-					},
-					{
-						"path": "evidencias/identity-rights.json",
-						"sha256": "d0477f284762d70773f2c8a5e667c29254436a2d2b936ba90fcd27504dd89dc7"
-					},
-					{
-						"path": "evidencias/maintenance.json",
-						"sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
-					},
-					{
-						"path": "evidencias/review-pass.json",
-						"sha256": "c9777c3063ed1b3c59122d877ef128629019f8f6c301576d0dc20b3591b24bc3"
-					},
-					{
-						"path": "evidencias/authority-provisioning.json",
-						"sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
-					},
-					{
-						"path": "evidencias/owner-authorization.json",
-						"sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+						"path": "evidencias/liberacao-r4.md",
+						"sha256": "da76aa56335fcce8ac7cbd23afaae3a8a8cb9376d12967b4a473f63df0041a60"
 					}
 				]
 			},
@@ -2052,22 +1775,22 @@
 				"keyId": "github-actions-editorial-20261006-01",
 				"reviewerId": "atvna-editorial-service",
 				"documentId": "guide-sinastria-limites",
-				"revision": 3,
-				"digest": "e308941277e4e9c1740dde06235d0c999701ba1de159e74afa96f8f6fd4a9e3d",
+				"revision": 4,
+				"digest": "9240f7c6f13e8e9bc76ed74793eb2db60d8b002f2e4a4cd2b5a06719106c1604",
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"decision": "APROVADO_AUTOMATICAMENTE",
 				"reviewMode": "separate-pass",
 				"risk": "low-educational-evergreen",
-				"reportDigest": "0aed7bce148c411e7d5e0f0c39c0a2c24767f8aa074b314dbb0a286e4fdf9922",
-				"evidenceManifestDigest": "e74a9d07917ba67c9767dfab48807c6ec1a0b7abfaa0d72c3ea9f4e3541b1933",
-				"approvedAt": "2026-10-06T16:10:44.853Z",
-				"expiresAt": "2026-10-07T16:10:44.853Z",
-				"signature": "Ouse2r0mJJ2EUFkDAbu7P5R8IDV0dXffUKjbMabmYSdDJ6xOQ+UxdDj+KgyNjtH/rcWi90CmM8n47Zn4Owg+DQ=="
+				"reportDigest": "b712982baaa40ad0b73cd5cad134f95e39329324f15baf93f45f49436c55168d",
+				"evidenceManifestDigest": "bba38adb796ad964b0ca983b89f2e77f7b44982172c7f31021f5359d9adb097a",
+				"approvedAt": "2026-11-03T10:13:34.310Z",
+				"expiresAt": "2026-11-04T10:13:34.310Z",
+				"signature": "Hs5J40z+AzO6RdlvfoZgYq8lsWvFcdoYwoxX7VdPM6znwZ+H9V/NeI/d7ttCemw8TZsLG4Kbx4p+syIpEYjxDg=="
 			},
 			"admission": {
-				"acceptedAt": "2026-10-06T16:55:49.256Z",
-				"attestationDigest": "b9d3d74dc39c599713c50c904b8253e52bc6bd3b4769a5ddcd8f0d1f95086908",
-				"gateEvidenceDigest": "3f965b8d0587a4ef666980fbef07d5b6c06f44a868293a93f1f746f376f9c039"
+				"acceptedAt": "2026-11-03T10:32:43.828Z",
+				"attestationDigest": "4c57976c1571777c23420e75df612c62825c4f32adf3eead3d831605e5e01bb9",
+				"gateEvidenceDigest": "b95e77f756fe8cc0505c51d21f2371d942fabfc9a708db714a558308338df8e1"
 			}
 		},
 		{
@@ -2368,12 +2091,12 @@
 		{
 			"document": {
 				"id": "guide-arcanos-maiores-menores",
-				"revision": 3,
+				"revision": 4,
 				"state": "PUBLISHED",
 				"path": "/noticias/2026/10/arcanos-maiores-e-menores",
 				"kind": "guide",
-				"title": "Arcanos maiores e menores: como o tarot se organiza",
-				"description": "Conheça a estrutura comum do tarot, compare arcanos maiores e menores e monte uma ficha de leitura sem previsão garantida.",
+				"title": "Arcanos maiores e menores, com um exemplo do Louco",
+				"description": "Entenda a organização do tarot de Waite e Smith e use um detalhe do Louco para separar o que está na carta de uma interpretação possível.",
 				"author": {
 					"id": "atvna-redacao-automatizada",
 					"type": "Organization",
@@ -2386,257 +2109,162 @@
 					"reviewMode": "separate-pass"
 				},
 				"publishedAt": "2026-10-06T16:08:48.728Z",
-				"modifiedAt": "2026-10-06T16:08:48.728Z",
+				"modifiedAt": "2026-11-02T14:47:45.307Z",
 				"sections": [
 					{
-						"heading": "Uma estrutura comum, com variações",
+						"heading": "Como se organizam as cartas desse baralho",
 						"paragraphs": [
-							"Um modelo contemporâneo comum de tarot reúne 78 cartas: 22 arcanos maiores e 56 menores. A fonte de João Bidu apresenta essa divisão. É um ponto de partida para reconhecer o baralho, não uma regra para qualquer conjunto de cartas chamado de oráculo.",
-							"Os maiores e os menores pertencem à mesma leitura, mas usam conjuntos distintos de imagens e organização. Para estudar um baralho específico, confira seu manual e seus nomes, em vez de assumir que todas as edições são iguais.",
-							"O uso simbólico das cartas não comprova que elas revelem acontecimentos futuros. Neste guia, a leitura serve para estudar linguagem visual e formular perguntas; não para emitir diagnósticos ou decisões sobre a vida de alguém."
+							"No tarot de Arthur Edward Waite e Pamela Colman Smith, as 78 cartas se distribuem em 22 arcanos maiores e 56 menores. Os maiores formam uma sequência própria que inclui o Louco. Os menores pertencem a quatro naipes, com 14 cartas cada: ás a dez e quatro figuras. Você pode conferir essa estrutura separando o baralho em cinco montes, um para os maiores e um para cada naipe.",
+							"O Louco pertence ao primeiro monte mesmo quando traz o número zero. O Dois de Ouros pertence ao monte do seu naipe, junto das cartas numeradas e das figuras de Ouros. A palavra “menores” identifica um grupo. Se uma pergunta diz respeito a um detalhe do cotidiano, uma dessas cartas pode ocupar o centro da leitura."
 						]
 					},
 					{
-						"heading": "O que a história ajuda a esclarecer",
+						"heading": "O que se vê no Louco de Waite e Smith",
 						"paragraphs": [
-							"O Metropolitan Museum of Art apresenta registros históricos do tarot no norte da Itália em meados do século XV. Esse contexto é útil para evitar histórias de origem apresentadas como certeza sem referência.",
-							"Conhecer um contexto histórico não exige reproduzir cartas antigas. Imagens de acervos, traduções e edições podem ter condições próprias de uso. Aqui, não usamos imagens de terceiros nem tratamos uma página pública como licença de reprodução.",
-							"A história de um jogo de cartas e seus usos simbólicos posteriores são perguntas diferentes. Um registro histórico não comprova uma promessa de adivinhação."
+							"Na ilustração do Louco apresentada em The Pictorial Key to the Tarot, de Waite, com desenhos de Smith, a figura está junto à beira de um precipício e tem um cão próximo aos pés. Esses são detalhes que outra pessoa pode conferir na mesma edição. Você não precisa copiar a imagem para montar uma ficha de estudo.",
+							"Agora entra a interpretação. Alguém pode ver na proximidade da borda uma tensão entre começar e prestar atenção ao próximo passo. Outra pessoa pode reparar primeiro no cão e pensar em companhia. Em ambos os casos, o sentido nasce de uma escolha de foco feita por quem lê."
 						]
 					},
 					{
-						"heading": "Maiores e menores na sua ficha de estudo",
+						"heading": "Uma ficha para experimentar",
 						"paragraphs": [
-							"Crie uma ficha com quatro campos: nome da carta; conjunto a que pertence; elementos visuais que você observa; interpretação que o manual atribui. Separe a descrição da imagem da interpretação escrita.",
-							"Nos menores, identifique também o naipe conforme a edição. Não use apenas uma palavra-chave encontrada na internet para concluir o significado de toda carta ou de uma situação pessoal.",
-							"Astrolink descreve diferenças de representação entre modelos como Marselha e Rider-Waite. Assim, uma explicação feita para determinada imagem pode precisar de contexto quando você observa outro baralho.",
-							"Em vez de procurar uma lista definitiva de significados, registre onde a interpretação foi consultada e quais detalhes da imagem ela destaca. O objetivo é aprender a ler com atribuição, sem inventar uma tradição uniforme."
-						]
-					},
-					{
-						"heading": "Exercício: descrição antes de interpretação",
-						"paragraphs": [
-							"Escolha uma carta do seu próprio baralho ou de um manual que você possa consultar legitimamente. Sem reproduzir a imagem, anote três detalhes que consegue descrever: objeto, posição, cor ou relação entre figuras.",
-							"Depois, consulte o texto da edição e escreva uma associação que a fonte apresenta. Identifique a diferença entre 'vejo uma figura segurando um objeto' e 'o manual associa esse detalhe a determinada ideia'.",
-							"Por fim, formule uma pergunta sobre uma tarefa cotidiana. Exemplo criado para este roteiro: 'o que preciso esclarecer antes de organizar meu projeto?'. A pergunta vem do exercício; não é uma mensagem descoberta no baralho.",
-							"Não é necessário sortear cartas nem comprar uma leitura. Você termina com uma ficha de observação e uma fonte identificada, que podem ser revisadas depois."
-						]
-					},
-					{
-						"heading": "Limites para uma leitura educativa",
-						"paragraphs": [
-							"Evite transformar uma carta em sentença sobre doença, dinheiro, morte, gravidez, fidelidade ou destino. Esses temas não podem ser resolvidos por uma descrição simbólica.",
-							"Uma carta difícil ou uma imagem dramática não exige uma compra para afastar um suposto perigo. Este guia não apresenta ameaças nem soluções mágicas.",
-							"Para conferir seu estudo, faça três perguntas: identifiquei a edição? Distingui o que vejo do que a fonte interpreta? Minha conclusão conserva a liberdade de decisão? Se sim, a ficha já cumpre seu propósito educativo."
+							"Divida uma folha em três partes. Em “observação”, registre um detalhe visível da carta que está à sua frente. Em “associação”, escreva a ideia que o detalhe lhe sugere. Em “pergunta”, formule algo que sua experiência possa esclarecer. Para o exemplo da borda, uma pergunta seria “o que ainda posso verificar antes de começar?”.",
+							"Se a dúvida for “meu projeto vai dar certo?”, essa tiragem não determina o resultado. Você pode anotar qual informação ainda falta, buscá-la e depois voltar à ficha. Guarde também o nome do baralho: o desenho de outra edição pode levar sua atenção para outro detalhe."
 						]
 					}
 				],
 				"sources": [
 					{
-						"title": "Before Fortune-Telling: The History and Structure of Tarot Cards — The Met",
+						"title": "Arthur Edward Waite e Pamela Colman Smith — The Pictorial Key to the Tarot (digitalização)",
+						"url": "https://en.wikisource.org/wiki/File:The_Pictorial_Key_to_the_Tarot.pdf"
+					},
+					{
+						"title": "The Metropolitan Museum of Art — Before Fortune-Telling: The History and Structure of Tarot Cards",
 						"url": "https://www.metmuseum.org/perspectives/tarot-2"
-					},
-					{
-						"title": "Arcanos maiores e menores — João Bidu",
-						"url": "https://controle.joaobidu.com.br/tarot/arcanos-maiores-e-menores-entenda-o-que-as-cartas-do-tarot-diz-para-voce.phtml"
-					},
-					{
-						"title": "Tarot de Marselha e Rider-Waite — Astrolink",
-						"url": "https://www.astrolink.com.br/artigo/diferenca-entre-o-tarot-de-marselha-e-rider-waite"
 					}
 				]
 			},
 			"report": {
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"documentId": "guide-arcanos-maiores-menores",
-				"revision": 3,
-				"digest": "b5e290a708ea9bc8a7fd533f1eaaa0101616d57098e64a920b5510b4e2c1023a",
-				"reviewedAt": "2026-10-06T16:08:49.402Z",
+				"revision": 4,
+				"digest": "f97755aed66617d9bef7d37ce65c7f2e85c8b74b0d8165914a04eedb5e079de2",
 				"reviewMode": "separate-pass",
+				"reviewedAt": "2026-11-03T10:12:25.865Z",
+				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
 				"risk": "low-educational-evergreen",
 				"checks": [
 					{
 						"id": "scope",
 						"status": "PASS",
-						"reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
-						"evidence": [
-							"document.json#kind",
-							"evidencias/claims.json",
-							"evidencias/review-pass.json"
-						]
+						"reason": "Guia de iniciação aos dois grupos de cartas de um baralho de Tarot, sem leitura individual.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "claims",
 						"status": "PASS",
-						"reason": "Estrutura 22/56 qualificada como modelo comum; história limitada a registros norte-italianos do século XV e apoiada no Met; diferenças visuais atribuídas; nenhum significado ou imagem de carta copiado. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/claims.json",
-							"evidencias/sources-rights.json"
-						]
+						"reason": "A contagem fecha em 78. A descrição do Louco no texto ilustrado de Waite confirma o personagem junto ao precipício e ao cão.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "rights",
 						"status": "PASS",
-						"reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
-						"evidence": ["evidencias/identity-rights.json", "evidencias/sources-rights.json"]
+						"reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "identity",
 						"status": "PASS",
-						"reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
-						"evidence": [
-							"document.json#author",
-							"document.json#automationDisclosure",
-							"evidencias/review-pass.json"
-						]
+						"reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "safety",
 						"status": "PASS",
-						"reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "A observação do desenho vem antes da pergunta simbólica. Nenhuma carta é usada como previsão individual.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "originality",
 						"status": "PASS",
-						"reason": "Há contribuição prática própria: sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/originality.json",
-							"evidencias/competition.json",
-							"evidencias/claims.json"
-						]
+						"reason": "A divisão em cinco montes e a comparação com o Dois de Ouros oferecem um procedimento de estudo próprio.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "tools",
 						"status": "PASS",
-						"reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
-						"evidence": ["evidencias/journeys.json", "document.json#sections"]
+						"reason": "A atividade funciona com o exemplo descrito. A carta do dia é um próximo passo opcional para experimentar a observação.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "integrity",
 						"status": "PASS",
-						"reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
-						"evidence": [
-							"document.json",
-							"evidencias/review-pass.json",
-							"evidencias/authority-provisioning.json",
-							"evidencias/owner-authorization.json"
-						]
+						"reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					}
 				],
 				"scores": [
 					{
 						"id": "intent",
 						"points": 19,
-						"reason": "Título e escopo respondem à intenção conceitual; observação específica: Estrutura 22/56 qualificada como modelo comum; história limitada a registros norte-italianos do século XV e apoiada no Met; diferenças visuais atribuídas; nenhum significado ou imagem de carta copiado.",
-						"evidence": ["document.json#title", "document.json#sections", "evidencias/briefs.json"]
+						"reason": "Classifica os dois grupos logo no início e situa o Louco no grupo correspondente.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "value",
-						"points": 18,
-						"reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"points": 19,
+						"reason": "Os cinco montes e a distinção entre descrição e interpretação tornam o exercício reproduzível.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "accuracy",
-						"points": 14,
-						"reason": "Afirmações centrais limitadas ao apoio das fontes S05,S06,S09; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
-						"evidence": ["evidencias/claims.json", "evidencias/sources-rights.json"]
+						"points": 15,
+						"reason": "A contagem fecha em 78. A descrição do Louco no texto ilustrado de Waite confirma o personagem junto ao precipício e ao cão.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "trust",
-						"points": 9,
-						"reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
-						"evidence": [
-							"document.json#author",
-							"document.json#sources",
-							"document.json#automationDisclosure"
-						]
+						"points": 10,
+						"reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "language",
-						"points": 8,
-						"reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
-						"evidence": ["document.json#sections"]
+						"points": 9,
+						"reason": "A conta e o vocabulário de naipes acompanham exemplos de cartas que o leitor pode identificar.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "journey",
 						"points": 9,
-						"reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
-						"evidence": ["document.json#sections", "evidencias/journeys.json"]
+						"reason": "A atividade funciona com o exemplo descrito. A carta do dia é um próximo passo opcional para experimentar a observação.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "metadata",
-						"points": 8,
-						"reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
-						"evidence": ["document.json", "evidencias/review-pass.json"]
+						"points": 9,
+						"reason": "O Louco anunciado no título tem um exemplo completo dentro do texto.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					},
 					{
 						"id": "maintenance",
-						"points": 4,
-						"reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
-						"evidence": ["evidencias/maintenance.json"]
+						"points": 5,
+						"reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					}
 				],
-				"decision": "APROVADO_AUTOMATICAMENTE",
 				"corrections": [],
-				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+				"decision": "APROVADO_AUTOMATICAMENTE"
 			},
 			"evidenceManifest": {
 				"schemaVersion": "atv-editorial-evidence-manifest-v1",
 				"documentId": "guide-arcanos-maiores-menores",
-				"revision": 3,
-				"documentDigest": "b5e290a708ea9bc8a7fd533f1eaaa0101616d57098e64a920b5510b4e2c1023a",
+				"revision": 4,
+				"documentDigest": "f97755aed66617d9bef7d37ce65c7f2e85c8b74b0d8165914a04eedb5e079de2",
 				"files": [
 					{
-						"path": "document.json",
-						"sha256": "337949ee1666e0033367c0fe1b2a7d6d333fe0ec84f332fcfec512ccddc2082a"
-					},
-					{
-						"path": "evidencias/sources-rights.json",
-						"sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
-					},
-					{
-						"path": "evidencias/journeys.json",
-						"sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
-					},
-					{
-						"path": "evidencias/originality.json",
-						"sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
-					},
-					{
-						"path": "evidencias/competition.json",
-						"sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
-					},
-					{
-						"path": "evidencias/briefs.json",
-						"sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
-					},
-					{
-						"path": "evidencias/claims.json",
-						"sha256": "4508d6cff6fa3a2f756d1dae59f3331a820e85849d9da3cd05bd26f6a44d3bfa"
-					},
-					{
-						"path": "evidencias/identity-rights.json",
-						"sha256": "c551194ade65fc3fdc5947d3e297a76d8e83568beaf902f5eb1964dd7173f248"
-					},
-					{
-						"path": "evidencias/maintenance.json",
-						"sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
-					},
-					{
-						"path": "evidencias/review-pass.json",
-						"sha256": "9e77ecd036b1415a4e33742faa21cfc93e3bb6522cac6729f0fd84af0fbab52f"
-					},
-					{
-						"path": "evidencias/authority-provisioning.json",
-						"sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
-					},
-					{
-						"path": "evidencias/owner-authorization.json",
-						"sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+						"path": "evidencias/liberacao-r4.md",
+						"sha256": "69e4238b0d64a18cb840802adf350d4b21ceee73b5f775133ed18b0696f7c563"
 					}
 				]
 			},
@@ -2645,22 +2273,22 @@
 				"keyId": "github-actions-editorial-20261006-01",
 				"reviewerId": "atvna-editorial-service",
 				"documentId": "guide-arcanos-maiores-menores",
-				"revision": 3,
-				"digest": "b5e290a708ea9bc8a7fd533f1eaaa0101616d57098e64a920b5510b4e2c1023a",
+				"revision": 4,
+				"digest": "f97755aed66617d9bef7d37ce65c7f2e85c8b74b0d8165914a04eedb5e079de2",
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"decision": "APROVADO_AUTOMATICAMENTE",
 				"reviewMode": "separate-pass",
 				"risk": "low-educational-evergreen",
-				"reportDigest": "48994e9ea3c919d034a81a9c91b9ac4688c2db12ff124bd436df672f7b37a497",
-				"evidenceManifestDigest": "d6efb66b04a9e83324aac1651bb7882ee1bab213d5f1e7ab54e4dfefcad3878b",
-				"approvedAt": "2026-10-06T16:10:44.863Z",
-				"expiresAt": "2026-10-07T16:10:44.863Z",
-				"signature": "IXzw32xjUi701FpaROcpq4WJFipMeEIEKhHWdxxmNM0HR/lISvXP8i2p2qt6mgJcbsW6fjMOXL5ibvWMjpjDCQ=="
+				"reportDigest": "b984040bc18a281f13085cbd7910bf07cc2eaebbbdf997e9fb684011c840df13",
+				"evidenceManifestDigest": "ec9861f34278053296fe47372e5b5f1f3db3eafa11f065dd4475c8ee5533e43e",
+				"approvedAt": "2026-11-03T10:13:34.311Z",
+				"expiresAt": "2026-11-04T10:13:34.311Z",
+				"signature": "AsJ4ujX2s7jRIYSYStbS7F1y7AJMqKaOOIvunRop9FoVhqTjw1Bv5n/lMwA/VALBFjotT/NFqTUv0udY6HPOBQ=="
 			},
 			"admission": {
-				"acceptedAt": "2026-10-06T17:08:20.258Z",
-				"attestationDigest": "ecd49604a95b89cd0e893bb670714f1f0fb6efab206659c4d74f77b3d912cde7",
-				"gateEvidenceDigest": "c427f067e29450040c996e4854fb4e39412efffe0ac689f69c895770300bb83b"
+				"acceptedAt": "2026-11-03T10:32:43.829Z",
+				"attestationDigest": "0e66725dcfce2b1228adf5a1aef897ffe154898c47e4fbb6b242dd554ef34f1b",
+				"gateEvidenceDigest": "b95e77f756fe8cc0505c51d21f2371d942fabfc9a708db714a558308338df8e1"
 			}
 		},
 		{
@@ -2962,12 +2590,12 @@
 		{
 			"document": {
 				"id": "guide-meio-ceu-reflexao",
-				"revision": 3,
+				"revision": 4,
 				"state": "PUBLISHED",
 				"path": "/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira",
 				"kind": "guide",
-				"title": "Meio do Céu: reflexão sobre carreira sem destino fixo",
-				"description": "Entenda a associação simbólica do Meio do Céu com carreira e faça um inventário de atividades reais, sem escolher profissão pelo mapa.",
+				"title": "Meio do Céu e escolhas de carreira: por onde começar?",
+				"description": "Veja como a astrologia interpreta o Meio do Céu e transforme uma pergunta sobre trabalho em um pequeno teste com resultado observável.",
 				"author": {
 					"id": "atvna-redacao-automatizada",
 					"type": "Organization",
@@ -2980,254 +2608,158 @@
 					"reviewMode": "separate-pass"
 				},
 				"publishedAt": "2026-10-06T16:08:48.728Z",
-				"modifiedAt": "2026-10-06T16:08:48.728Z",
+				"modifiedAt": "2026-11-02T14:47:45.307Z",
 				"sections": [
 					{
-						"heading": "O significado pertence à tradição",
+						"heading": "O que a astrologia chama de Meio do Céu",
 						"paragraphs": [
-							"Na astrologia, o Meio do Céu é tratado como um dos ângulos tradicionais do mapa. A fonte de Personare o associa simbolicamente à projeção pública e à carreira. Cafe Astrology inclui o MC entre as referências angulares.",
-							"Essa associação pode inspirar perguntas sobre como você deseja participar do mundo. Ela não demonstra qual profissão alguém deve exercer, quanto ganhará ou se terá sucesso.",
-							"Este guia não calcula o MC e não oferece uma lista de profissões por signo. Também não presume que MC e cúspide da casa 10 sejam equivalentes em todo sistema de casas. O foco é uma reflexão educativa com exemplos observáveis."
+							"O Meio do Céu é um dos ângulos do mapa natal. Na tradição astrológica, sua leitura costuma envolver atuação pública, carreira e a maneira como alguém gostaria de ser reconhecido. Para localizá-lo num mapa, é preciso conhecer o horário e o lugar do nascimento. Saber onde ele está pode dar assunto para uma conversa sobre trabalho. A escolha de uma profissão pede também experiência, condições e preferências que o mapa não registra.",
+							"Você pode começar com uma pergunta menor do que “qual é a minha vocação?”. Experimente lembrar de uma tarefa em que alguém percebeu o valor da sua contribuição. O que você fez, para quem e como soube que ajudou?"
 						]
 					},
 					{
-						"heading": "Comece pelas atividades, não pelo rótulo",
+						"heading": "Quando uma frase do mapa encontra uma tarefa real",
 						"paragraphs": [
-							"Antes de ler uma interpretação, liste atividades que você realizou em estudo, trabalho, projetos pessoais ou colaboração. Descreva verbos e situações: organizar uma tarefa, explicar um conceito, revisar um material ou cuidar de um processo.",
-							"Evite começar com 'sou destinado a liderar' ou 'nasci para determinada profissão'. Essas frases antecipam uma conclusão que o inventário ainda não sustenta.",
-							"Para cada atividade, anote o que você fez, o contexto e uma evidência simples. A evidência pode ser um material produzido, uma tarefa concluída ou uma observação que você consegue descrever. Não precisa publicar documentos ou informações de outras pessoas.",
-							"Depois, registre o que gostou, o que não gostou e o que ainda não experimentou. Interesse, experiência e habilidade não são a mesma pergunta, e podem receber respostas diferentes."
+							"Considere uma situação fictícia. Ao ler sobre o Meio do Céu, Bia se interessa pelo tema do reconhecimento público. Para ela, ser reconhecida não necessariamente significa falar para uma plateia. Na semana anterior, alguém lhe agradeceu pelas instruções escritas que preparou para uma pessoa nova na equipe.",
+							"Bia transforma a lembrança numa pergunta que admite uma resposta concreta: “consigo explicar essa tarefa por escrito de um jeito que outra pessoa consiga repeti-la?”. Ela escolhe uma rotina simples e redige um roteiro curto. Convida uma colega a experimentar, anotando em qual passo foi preciso pedir ajuda."
 						]
 					},
 					{
-						"heading": "Um exemplo sem profissão predestinada",
+						"heading": "Que resultado observar",
 						"paragraphs": [
-							"Considere uma personagem fictícia que organizou um encontro de estudos. Ela dividiu tarefas, explicou o objetivo e conferiu se o material estava pronto. O exemplo não atribui uma profissão nem um signo à personagem.",
-							"Na ficha, ela pode escrever: 'atividade: organizar etapas; evidência: roteiro do encontro; interesse: gostei de tornar a sequência clara; dúvida: quero saber se gosto disso em outros contextos'.",
-							"Se uma interpretação de MC mencionar visibilidade ou contribuição, a personagem pode perguntar o que isso significa para ela. O roteiro produzido continua sendo a evidência da atividade; a interpretação não se transforma em prova de aptidão.",
-							"Uma frase simbólica pode ser o início de uma pergunta. A resposta precisa considerar sua experiência, oportunidades, limites e informações reais."
-						]
-					},
-					{
-						"heading": "Ficha de reflexão em cinco campos",
-						"paragraphs": [
-							"Use: atividade; exemplo concreto; interesse percebido; dificuldade; próximo experimento pequeno. Escolha três atividades para começar, sem tentar definir toda a carreira.",
-							"Um experimento pode ser explicar um tema conhecido a um grupo pequeno, revisar um material próprio ou ajudar a organizar uma tarefa voluntária. Escolha algo compatível com seu contexto, sem promessa de renda ou de mudança profissional.",
-							"Antes de realizar o experimento, escreva o que pretende observar. Depois, registre o que aconteceu e o que deseja investigar. Essa sequência permite revisar a hipótese sem depender de uma leitura.",
-							"Se usar uma interpretação astrológica, coloque-a numa coluna separada e identifique a fonte. Não altere uma decisão importante apenas para encaixar a experiência numa descrição."
-						]
-					},
-					{
-						"heading": "Uma conclusão provisória também é útil",
-						"paragraphs": [
-							"Você pode terminar com 'quero explorar melhor esta atividade' ou 'ainda não tenho experiência suficiente'. Essas respostas preservam a possibilidade de aprender e mudar de ideia.",
-							"O inventário não mede empregabilidade, não aconselha investimento e não substitui informações sobre formação, condições de trabalho ou uma oportunidade específica.",
-							"A entrega do exercício é uma lista de atividades com evidências e uma próxima observação. Isso pode ajudar a organizar a reflexão sobre propósito sem prometer uma carreira definida pelo céu."
+							"Se a colega precisar perguntar onde encontrar o arquivo, Bia terá um detalhe para corrigir no roteiro. Se conseguir concluir a rotina sem ajuda, Bia poderá perguntar qual instrução fez diferença. Os dois resultados dizem algo sobre uma habilidade praticada naquela situação. Nenhum deles define uma profissão para Bia.",
+							"Para fazer seu próprio teste, anote a tarefa, quem pode experimentá-la e o que você observará ao final. Escreva ainda se gostou de executá-la. O retorno de outra pessoa e sua vontade de repetir a experiência são duas informações diferentes, e vale a pena guardar as duas."
 						]
 					}
 				],
 				"sources": [
 					{
-						"title": "Meio do Céu no Mapa Astral — Personare",
+						"title": "Personare — Meio do Céu: o que significa na Astrologia",
 						"url": "https://www.personare.com.br/conteudo/meio-do-ceu-astrologia-m2247"
-					},
-					{
-						"title": "Ascendant — Cafe Astrology",
-						"url": "https://cafeastrology.com/ascendant.html"
 					}
 				]
 			},
 			"report": {
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"documentId": "guide-meio-ceu-reflexao",
-				"revision": 3,
-				"digest": "6875afdede4d37cd631291847d92a85865ae814dee5c565d9b9dda71ca030129",
-				"reviewedAt": "2026-10-06T16:08:49.466Z",
+				"revision": 4,
+				"digest": "b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56",
 				"reviewMode": "separate-pass",
+				"reviewedAt": "2026-11-03T10:12:25.880Z",
+				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
 				"risk": "low-educational-evergreen",
 				"checks": [
 					{
 						"id": "scope",
 						"status": "PASS",
-						"reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
-						"evidence": [
-							"document.json#kind",
-							"evidencias/claims.json",
-							"evidencias/review-pass.json"
-						]
+						"reason": "Guia sobre o uso simbólico de um ângulo do mapa, com exercício de reflexão de carreira.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "claims",
 						"status": "PASS",
-						"reason": "MC apresentado como associação tradicional a carreira/projeção, sem equivalência universal com casa 10; inventário e personagem fictícia baseados em atividades, sem destino profissional ou renda. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/claims.json",
-							"evidencias/sources-rights.json"
-						]
+						"reason": "A literatura astrológica associa o Meio do Céu à atuação pública e à carreira. O texto identifica a natureza tradicional dessa leitura.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "rights",
 						"status": "PASS",
-						"reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
-						"evidence": ["evidencias/identity-rights.json", "evidencias/sources-rights.json"]
+						"reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "identity",
 						"status": "PASS",
-						"reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
-						"evidence": [
-							"document.json#author",
-							"document.json#automationDisclosure",
-							"evidencias/review-pass.json"
-						]
+						"reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "safety",
 						"status": "PASS",
-						"reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "A escolha de carreira leva em conta experiência e preferências. O roteiro propõe um teste pequeno, que pode ser interrompido ou repetido.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "originality",
 						"status": "PASS",
-						"reason": "Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/originality.json",
-							"evidencias/competition.json",
-							"evidencias/claims.json"
-						]
+						"reason": "No caso fictício de Bia a colega experimenta as instruções e indica em que passo precisou de ajuda.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "tools",
 						"status": "PASS",
-						"reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
-						"evidence": ["evidencias/journeys.json", "document.json#sections"]
+						"reason": "O cálculo do Meio do Céu usa hora e local de nascimento. Quem não dispõe deles consegue fazer a parte prática do guia.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "integrity",
 						"status": "PASS",
-						"reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
-						"evidence": [
-							"document.json",
-							"evidencias/review-pass.json",
-							"evidencias/authority-provisioning.json",
-							"evidencias/owner-authorization.json"
-						]
+						"reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					}
 				],
 				"scores": [
 					{
 						"id": "intent",
 						"points": 19,
-						"reason": "Título e escopo respondem à intenção conceitual; observação específica: MC apresentado como associação tradicional a carreira/projeção, sem equivalência universal com casa 10; inventário e personagem fictícia baseados em atividades, sem destino profissional ou renda.",
-						"evidence": ["document.json#title", "document.json#sections", "evidencias/briefs.json"]
+						"reason": "Define Meio do Céu antes de pedir ao leitor que procure uma ocasião de reconhecimento no trabalho.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "value",
-						"points": 19,
-						"reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"points": 20,
+						"reason": "A colega pode testar o roteiro e Bia pode decidir se aprecia esse tipo de tarefa, mesmo com resultado misto.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "accuracy",
 						"points": 14,
-						"reason": "Afirmações centrais limitadas ao apoio das fontes S07,S10; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
-						"evidence": ["evidencias/claims.json", "evidencias/sources-rights.json"]
+						"reason": "A literatura astrológica associa o Meio do Céu à atuação pública e à carreira. O texto identifica a natureza tradicional dessa leitura.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "trust",
 						"points": 9,
-						"reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
-						"evidence": [
-							"document.json#author",
-							"document.json#sources",
-							"document.json#automationDisclosure"
-						]
+						"reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "language",
-						"points": 8,
-						"reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
-						"evidence": ["document.json#sections"]
+						"points": 9,
+						"reason": "A pergunta sobre como explicar uma tarefa dá sentido concreto ao termo reconhecimento.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "journey",
 						"points": 9,
-						"reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
-						"evidence": ["document.json#sections", "evidencias/journeys.json"]
+						"reason": "O cálculo do Meio do Céu usa hora e local de nascimento. Quem não dispõe deles consegue fazer a parte prática do guia.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "metadata",
-						"points": 8,
-						"reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
-						"evidence": ["document.json", "evidencias/review-pass.json"]
+						"points": 9,
+						"reason": "O exemplo de carreira oferecido corresponde à descrição de um pequeno teste observável.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					},
 					{
 						"id": "maintenance",
-						"points": 4,
-						"reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
-						"evidence": ["evidencias/maintenance.json"]
+						"points": 5,
+						"reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					}
 				],
-				"decision": "APROVADO_AUTOMATICAMENTE",
 				"corrections": [],
-				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+				"decision": "APROVADO_AUTOMATICAMENTE"
 			},
 			"evidenceManifest": {
 				"schemaVersion": "atv-editorial-evidence-manifest-v1",
 				"documentId": "guide-meio-ceu-reflexao",
-				"revision": 3,
-				"documentDigest": "6875afdede4d37cd631291847d92a85865ae814dee5c565d9b9dda71ca030129",
+				"revision": 4,
+				"documentDigest": "b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56",
 				"files": [
 					{
-						"path": "document.json",
-						"sha256": "ad5d44d669fb8be95551bdcd4895029612979186ac94d2e74e568437fcd8e867"
-					},
-					{
-						"path": "evidencias/sources-rights.json",
-						"sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
-					},
-					{
-						"path": "evidencias/journeys.json",
-						"sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
-					},
-					{
-						"path": "evidencias/originality.json",
-						"sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
-					},
-					{
-						"path": "evidencias/competition.json",
-						"sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
-					},
-					{
-						"path": "evidencias/briefs.json",
-						"sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
-					},
-					{
-						"path": "evidencias/claims.json",
-						"sha256": "f2733b1174a9c0e464ad1832f2c5c0de9db6500f3c0fc35cb9e0d1e539ded875"
-					},
-					{
-						"path": "evidencias/identity-rights.json",
-						"sha256": "e7e0c33cc6597baa3d140c8a5a9d9a8ade9ce05b99bfbe8af41825d0a4163b5c"
-					},
-					{
-						"path": "evidencias/maintenance.json",
-						"sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
-					},
-					{
-						"path": "evidencias/review-pass.json",
-						"sha256": "f24d0cab7abf853dcb6e88229a0595ff15c43fed19ae9cd88d4a0d2de428ba86"
-					},
-					{
-						"path": "evidencias/authority-provisioning.json",
-						"sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
-					},
-					{
-						"path": "evidencias/owner-authorization.json",
-						"sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+						"path": "evidencias/liberacao-r4.md",
+						"sha256": "cdeca7b33b4d219298648a33301bbb01977db4f649809d59361f2e2262f6f333"
 					}
 				]
 			},
@@ -3236,33 +2768,33 @@
 				"keyId": "github-actions-editorial-20261006-01",
 				"reviewerId": "atvna-editorial-service",
 				"documentId": "guide-meio-ceu-reflexao",
-				"revision": 3,
-				"digest": "6875afdede4d37cd631291847d92a85865ae814dee5c565d9b9dda71ca030129",
+				"revision": 4,
+				"digest": "b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56",
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"decision": "APROVADO_AUTOMATICAMENTE",
 				"reviewMode": "separate-pass",
 				"risk": "low-educational-evergreen",
-				"reportDigest": "888ddeea757414f07607bf125030da524b8cc649d0e589fbaa84f589eadd7c70",
-				"evidenceManifestDigest": "76d9eba49fdb2f13bbb21083bbf334e58eefc3bed7611806424b7fe13c18572e",
-				"approvedAt": "2026-10-06T16:10:44.868Z",
-				"expiresAt": "2026-10-07T16:10:44.868Z",
-				"signature": "3Rm0i6NkcJ9jgYucFz5Dw8RNSkjSxMUMIryJGf3Jz35Hc26xpHuygVD7PwLDXgdyNwsLt5/kY8iHjVnllAosAg=="
+				"reportDigest": "ba3a7bea21dbb3d0fea01cd8df8b8944862878ab46c5e2f7b242978daeeb7310",
+				"evidenceManifestDigest": "d0ba1d7a0c3f0037ba0eaaa14e0337d7069ac7a6d573069f75ed818f87ff0f19",
+				"approvedAt": "2026-11-03T10:13:34.312Z",
+				"expiresAt": "2026-11-04T10:13:34.312Z",
+				"signature": "ektRDii8SR2FbiDPA1FNG4Irs0+FyYUz5XRmcpN8DDZctf9zlWF4lKYaPcKoV7I8rBoUzYCk4Smh7693DMqXDQ=="
 			},
 			"admission": {
-				"acceptedAt": "2026-10-06T17:08:20.258Z",
-				"attestationDigest": "8ce0d9d3a14870a77db04f6e430fdc2dbca9a4b260b1715de96de1294465f28b",
-				"gateEvidenceDigest": "c427f067e29450040c996e4854fb4e39412efffe0ac689f69c895770300bb83b"
+				"acceptedAt": "2026-11-03T10:32:43.832Z",
+				"attestationDigest": "aff501d939b9ded6264860661b4a0dce28b4ccadf458aedda779db39ac8567ff",
+				"gateEvidenceDigest": "b95e77f756fe8cc0505c51d21f2371d942fabfc9a708db714a558308338df8e1"
 			}
 		},
 		{
 			"document": {
 				"id": "guide-diario-sonhos",
-				"revision": 3,
+				"revision": 4,
 				"state": "PUBLISHED",
 				"path": "/noticias/2026/10/diario-de-sonhos",
 				"kind": "guide",
-				"title": "Diário de sonhos: um modelo simples de registro",
-				"description": "Monte um diário de sonhos com cena, lembrança e contexto, sem dicionário universal de símbolos nem previsão do futuro.",
+				"title": "Como começar um diário de sonhos com quatro campos",
+				"description": "Copie um modelo em papel e registre cena, emoção, associação e pergunta. Dois exemplos mostram como separar a lembrança do que você pensou depois.",
 				"author": {
 					"id": "atvna-redacao-automatizada",
 					"type": "Organization",
@@ -3275,55 +2807,33 @@
 					"reviewMode": "separate-pass"
 				},
 				"publishedAt": "2026-10-06T16:08:48.728Z",
-				"modifiedAt": "2026-10-06T16:08:48.728Z",
+				"modifiedAt": "2026-11-02T14:47:45.307Z",
 				"sections": [
 					{
-						"heading": "Um registro antes de um significado",
+						"heading": "Quatro campos para a primeira página",
 						"paragraphs": [
-							"Um diário de sonhos pode começar como uma anotação do que você lembra. O exemplo de Sonheiro organiza o registro com cena, emoção e contexto. Neste guia, usamos esses campos como ponto de partida, sem prometer benefício clínico ou capacidade de prever acontecimentos.",
-							"Você não precisa interpretar cada imagem para que a página fique completa. Separar lembrança, associação e pergunta já torna o registro mais claro.",
-							"Este roteiro não explica a causa de um sonho, não diagnostica condições e não oferece um significado universal para qualquer símbolo. Sua entrega é um modelo de anotação."
+							"Um diário de sonhos pode começar com quatro linhas numa folha: cena, emoção, associação e pergunta. Na primeira, registre o fragmento que você lembra. Na segunda, nomeie o que sentiu e, se souber, distinga a emoção no sonho da emoção ao despertar. As duas últimas linhas guardam o que lhe ocorreu depois.",
+							"Se a lembrança acabar no meio de uma ação, deixe a frase terminar ali. Você pode escrever “não lembro” ou deixar uma linha vazia. Um registro curto preserva melhor a diferença entre um detalhe lembrado e um final que você acabou de imaginar."
 						]
 					},
 					{
-						"heading": "A primeira página",
+						"heading": "Como fica um registro preenchido",
 						"paragraphs": [
-							"Use os campos: data da anotação; trecho de que se lembra; emoção que percebe ao recordar; contexto que deseja registrar; dúvida ou associação pessoal. Não complete partes esquecidas só para tornar a história mais bonita.",
-							"Você pode escrever 'não lembro do começo' ou 'a ordem das cenas está incerta'. Essas frases ajudam a distinguir uma lembrança parcial de uma narrativa reconstruída.",
-							"Se houver outras pessoas na cena, use descrições ou nomes fictícios ao compartilhar a anotação. Não publique detalhes íntimos de terceiros para obter uma interpretação.",
-							"Uma frase curta pode bastar. A frequência e o tamanho do registro são escolhas deste exercício, sem metas de desempenho ou promessa de resultado."
+							"Cena — “Estou numa estação. As portas do trem se fecham. Não lembro onde eu ia.” Emoção — “Senti pressa no sonho e curiosidade ao despertar.” Associação — “Ontem esperei uma resposta de alguém. Pensei nisso quando reli a cena.” Pergunta — “O que, na espera de ontem, chamou minha atenção?”",
+							"A estação e as portas fazem parte da lembrança narrada. A espera por uma resposta entrou no registro depois de acordar. Você pode guardar as duas coisas sem transformar a segunda na explicação da primeira. O exemplo é inventado e serve para mostrar como preencher as linhas."
 						]
 					},
 					{
-						"heading": "Exemplo de anotação",
+						"heading": "Como comparar duas páginas",
 						"paragraphs": [
-							"Exemplo inteiramente criado para este guia: 'lembro de procurar uma porta num corredor; não sei o que veio antes; ao recordar, percebo curiosidade; ontem pensei numa tarefa que ainda não organizei'.",
-							"Na coluna de associação, a pessoa poderia escrever 'o corredor me lembrou a sensação de procurar uma forma de começar'. Essa associação é pessoal. O guia não afirma que corredores tenham esse significado para todos.",
-							"Na coluna de pergunta, ela poderia anotar 'qual é a primeira etapa da tarefa?'. A pergunta se refere ao contexto descrito e pode ser respondida com uma lista concreta.",
-							"Nenhuma dessas frases comprova uma previsão. O exemplo mostra apenas como registrar uma cena e conservar a distinção entre memória, associação e ação cotidiana."
-						]
-					},
-					{
-						"heading": "Como comparar páginas sem criar um dicionário",
-						"paragraphs": [
-							"Depois de algumas anotações, escolha dois registros e observe o que se repete no texto: uma palavra, um lugar descrito ou uma pergunta. Anote também diferenças e trechos incompletos.",
-							"Não atribua automaticamente um significado fixo à repetição. Você pode escrever 'essa imagem apareceu nas minhas anotações' sem concluir que ela explica uma condição ou anuncia um acontecimento.",
-							"Se consultar uma interpretação externa, identifique a fonte e mantenha a leitura separada do relato. Uma interpretação não deve substituir o que você efetivamente anotou.",
-							"Evite copiar longos textos de dicionários de sonhos ou usar imagens sem licença. Seu diário pode conter descrições e desenhos próprios, guardados como registros pessoais."
-						]
-					},
-					{
-						"heading": "Uma conclusão simples",
-						"paragraphs": [
-							"Escolha uma pergunta que o registro despertou e diga se ela trata de algo observável. 'Que tarefa quero organizar?' pode levar a uma pequena lista. 'O que vai acontecer amanhã?' continua sendo uma pergunta de previsão que este roteiro não responde.",
-							"Não use a anotação para gerar números de aposta, acusar alguém ou decidir sobre saúde, dinheiro ou destino. Esses usos ultrapassam a atividade educativa proposta.",
-							"Você pode encerrar a página com 'não quero interpretar agora'. O diário não precisa produzir uma resposta em toda anotação, nem depender de uma ferramenta ou de uma compra para ter utilidade."
+							"Imagine que a estação volte em outra noite. Na segunda página, você se lembra de sentar num banco e sentir alívio. Coloque os registros lado a lado: a estação se repete, mas mudam a ação e a emoção. Vale anotar essa diferença antes de tirar alguma conclusão sobre o que uma estação significa para você.",
+							"Para usar hoje, copie os quatro nomes, coloque a data se quiser e escreva uma frase em cada linha que fizer sentido. Você pode manter o caderno consigo e omitir nomes ou detalhes que prefere não guardar. O exercício em papel se completa ali, mesmo que você não queira compartilhar o relato."
 						]
 					}
 				],
 				"sources": [
 					{
-						"title": "Como manter um diário de sonhos — Sonheiro",
+						"title": "Sonheiro — Como manter um diário de sonhos",
 						"url": "https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos"
 					}
 				]
@@ -3331,194 +2841,124 @@
 			"report": {
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"documentId": "guide-diario-sonhos",
-				"revision": 3,
-				"digest": "fbf7a530d2614fb2c25e2f4f6520e3efe9ea1a0545ae285dd1a976b632784dfb",
-				"reviewedAt": "2026-10-06T16:08:49.501Z",
+				"revision": 4,
+				"digest": "4a8590c623fd3c2a1e4946ab54663e36daa2454827b11d0f095b4edf512b2554",
 				"reviewMode": "separate-pass",
+				"reviewedAt": "2026-11-03T10:12:25.900Z",
+				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
 				"risk": "low-educational-evergreen",
 				"checks": [
 					{
 						"id": "scope",
 						"status": "PASS",
-						"reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
-						"evidence": [
-							"document.json#kind",
-							"evidencias/claims.json",
-							"evidencias/review-pass.json"
-						]
+						"reason": "Exercício de escrita sobre sonhos com registro pessoal e exemplo inventado.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "claims",
 						"status": "PASS",
-						"reason": "Modelo próprio de registro; sonho inteiramente criado e declarado; mantém lembrança e associação separadas; não reproduz alegações clínicas, prazo de hábito ou apostas da fonte. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/claims.json",
-							"evidencias/sources-rights.json"
-						]
+						"reason": "A fonte descreve anotar cena, contexto e emoção. A ficha de quatro campos é uma escolha editorial para organizar uma anotação.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "rights",
 						"status": "PASS",
-						"reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
-						"evidence": ["evidencias/identity-rights.json", "evidencias/sources-rights.json"]
+						"reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "identity",
 						"status": "PASS",
-						"reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
-						"evidence": [
-							"document.json#author",
-							"document.json#automationDisclosure",
-							"evidencias/review-pass.json"
-						]
+						"reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "safety",
 						"status": "PASS",
-						"reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"reason": "A pergunta permanece aberta à associação do leitor. O exemplo evita diagnósticos e previsões.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "originality",
 						"status": "PASS",
-						"reason": "Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
-						"evidence": [
-							"document.json#sections",
-							"evidencias/originality.json",
-							"evidencias/competition.json",
-							"evidencias/claims.json"
-						]
+						"reason": "A estação imaginada aparece em dois registros que mantêm a cena e alteram a emoção para testar outra associação.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "tools",
 						"status": "PASS",
-						"reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
-						"evidence": ["evidencias/journeys.json", "document.json#sections"]
+						"reason": "A ficha pode ser copiada para o papel ou usada ao abrir o registro de sonho.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "integrity",
 						"status": "PASS",
-						"reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
-						"evidence": [
-							"document.json",
-							"evidencias/review-pass.json",
-							"evidencias/authority-provisioning.json",
-							"evidencias/owner-authorization.json"
-						]
+						"reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					}
 				],
 				"scores": [
 					{
 						"id": "intent",
-						"points": 19,
-						"reason": "Título e escopo respondem à intenção conceitual; observação específica: Modelo próprio de registro; sonho inteiramente criado e declarado; mantém lembrança e associação separadas; não reproduz alegações clínicas, prazo de hábito ou apostas da fonte.",
-						"evidence": ["document.json#title", "document.json#sections", "evidencias/briefs.json"]
+						"points": 20,
+						"reason": "O título pede um começo simples e o texto oferece concretamente quatro campos.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "value",
-						"points": 18,
-						"reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
-						"evidence": ["document.json#sections", "evidencias/claims.json"]
+						"points": 19,
+						"reason": "O contraponto entre pressa e alívio permite reler a própria anotação e rever o sentido que se atribuiu à cena.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "accuracy",
 						"points": 14,
-						"reason": "Afirmações centrais limitadas ao apoio das fontes S08; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
-						"evidence": ["evidencias/claims.json", "evidencias/sources-rights.json"]
+						"reason": "A fonte descreve anotar cena, contexto e emoção. A ficha de quatro campos é uma escolha editorial para organizar uma anotação.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "trust",
 						"points": 9,
-						"reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
-						"evidence": [
-							"document.json#author",
-							"document.json#sources",
-							"document.json#automationDisclosure"
-						]
+						"reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
+						"evidence": ["evidencias/liberacao-r4.md#autoria-e-direitos"]
 					},
 					{
 						"id": "language",
-						"points": 8,
-						"reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
-						"evidence": ["document.json#sections"]
+						"points": 10,
+						"reason": "Separar cena, emoção, associação e pergunta dá instruções fáceis de seguir em um primeiro registro.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					},
 					{
 						"id": "journey",
 						"points": 9,
-						"reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
-						"evidence": ["document.json#sections", "evidencias/journeys.json"]
+						"reason": "A ficha pode ser copiada para o papel ou usada ao abrir o registro de sonho.",
+						"evidence": ["evidencias/liberacao-r4.md#jornada"]
 					},
 					{
 						"id": "metadata",
-						"points": 8,
-						"reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
-						"evidence": ["document.json", "evidencias/review-pass.json"]
+						"points": 9,
+						"reason": "O número de campos e o objetivo descritos nos metadados coincidem com o exercício entregue.",
+						"evidence": ["evidencias/liberacao-r4.md#integridade"]
 					},
 					{
 						"id": "maintenance",
-						"points": 4,
-						"reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
-						"evidence": ["evidencias/maintenance.json"]
+						"points": 5,
+						"reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
+						"evidence": ["evidencias/liberacao-r4.md#texto-e-fontes"]
 					}
 				],
-				"decision": "APROVADO_AUTOMATICAMENTE",
 				"corrections": [],
-				"publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+				"decision": "APROVADO_AUTOMATICAMENTE"
 			},
 			"evidenceManifest": {
 				"schemaVersion": "atv-editorial-evidence-manifest-v1",
 				"documentId": "guide-diario-sonhos",
-				"revision": 3,
-				"documentDigest": "fbf7a530d2614fb2c25e2f4f6520e3efe9ea1a0545ae285dd1a976b632784dfb",
+				"revision": 4,
+				"documentDigest": "4a8590c623fd3c2a1e4946ab54663e36daa2454827b11d0f095b4edf512b2554",
 				"files": [
 					{
-						"path": "document.json",
-						"sha256": "4666c2b45654f780953eef6250ecedf5e9b09c67da596ee0060b860c8bc088ce"
-					},
-					{
-						"path": "evidencias/sources-rights.json",
-						"sha256": "7497a548d0cd4e8a47f137d53052a0b1f484dd1581ec3a06cc552429d201d08e"
-					},
-					{
-						"path": "evidencias/journeys.json",
-						"sha256": "4c646e55e49a02e50ed8059f586b4fe3d4465748f8f540945ad5d718b43b6832"
-					},
-					{
-						"path": "evidencias/originality.json",
-						"sha256": "9479f30d9d7b36ab487aa6b747b540fbc83d2c40b13ae770eac0ef3b0bcf0bb5"
-					},
-					{
-						"path": "evidencias/competition.json",
-						"sha256": "cebf071af33aed7d12c12a58295cfafa9cba1d0124f4db9e11a4bda767b0b931"
-					},
-					{
-						"path": "evidencias/briefs.json",
-						"sha256": "4816d045c7eb1038236e73d41375eeb7f3cb43fd4913cb2260fda60605765535"
-					},
-					{
-						"path": "evidencias/claims.json",
-						"sha256": "f44a174dadcca957aa73bf3e2954c0b1b092c936028c89e043826e47c30bd638"
-					},
-					{
-						"path": "evidencias/identity-rights.json",
-						"sha256": "55453ee6c0dec6f6aed88a22a72f403057948d056919ee3a3b3b66d595d8d3b0"
-					},
-					{
-						"path": "evidencias/maintenance.json",
-						"sha256": "2d19447a5aa243e47c50beca4ca10ddc9b0038be712c2c2db37ea0136825aad1"
-					},
-					{
-						"path": "evidencias/review-pass.json",
-						"sha256": "d113e5bcfa5c0b19ca24458e95d24bd0d805621b84e23cdd20107415a5cb4801"
-					},
-					{
-						"path": "evidencias/authority-provisioning.json",
-						"sha256": "3c67bd6199b7ec8de6d54c2daa944e2f5dac3a08054e996d8329597e1a8caddd"
-					},
-					{
-						"path": "evidencias/owner-authorization.json",
-						"sha256": "4858d40e2830ca237532fe3a2e68e66c811cf6a1587a6d13bb372c39ee767e0c"
+						"path": "evidencias/liberacao-r4.md",
+						"sha256": "42f0fe88a0aef9e43121728b15332fdf29829a6d4e0362f161ee29cfcb7f85bb"
 					}
 				]
 			},
@@ -3527,22 +2967,22 @@
 				"keyId": "github-actions-editorial-20261006-01",
 				"reviewerId": "atvna-editorial-service",
 				"documentId": "guide-diario-sonhos",
-				"revision": 3,
-				"digest": "fbf7a530d2614fb2c25e2f4f6520e3efe9ea1a0545ae285dd1a976b632784dfb",
+				"revision": 4,
+				"digest": "4a8590c623fd3c2a1e4946ab54663e36daa2454827b11d0f095b4edf512b2554",
 				"policyVersion": "atvna-editorial-policy-2026-10-06-v1",
 				"decision": "APROVADO_AUTOMATICAMENTE",
 				"reviewMode": "separate-pass",
 				"risk": "low-educational-evergreen",
-				"reportDigest": "746f845c9d18b1ee748b7f97fb2ed04af9d4ad9a9be8cf73df934c766a7c48c4",
-				"evidenceManifestDigest": "78a7e50fa52ae5a90c4f9ee634a80a28e8f5b7616ecb6f1937590491c6359a71",
-				"approvedAt": "2026-10-06T16:10:44.870Z",
-				"expiresAt": "2026-10-07T16:10:44.870Z",
-				"signature": "VE7qwxB+IHuxxfLPSh80mFeP4QidokYxMSb5pxMls50SMQwmlu87INBOP+BzHV5hkiuNgT62gZWerjpSg5+ICw=="
+				"reportDigest": "7e7ad22f86a780305d821893490b64790645da60e5eaff07699f42443aeaacfe",
+				"evidenceManifestDigest": "efb1e1cae18f168a9fec9724362946dfe3f73d0a740343d1486eb4150c5372ef",
+				"approvedAt": "2026-11-03T10:13:34.313Z",
+				"expiresAt": "2026-11-04T10:13:34.313Z",
+				"signature": "ckhS9+hj27wE129xGnIcOFgf1aDX79w7363cb+MU+EElMSmeSajJj9M3/N1Z0nyqSX+Gz81XElc+W+OgktFEDA=="
 			},
 			"admission": {
-				"acceptedAt": "2026-10-06T17:08:20.258Z",
-				"attestationDigest": "18b83e37b2ac21eee6796400ef22051c98e326159f7208c1868084d984bcd974",
-				"gateEvidenceDigest": "c427f067e29450040c996e4854fb4e39412efffe0ac689f69c895770300bb83b"
+				"acceptedAt": "2026-11-03T10:32:43.833Z",
+				"attestationDigest": "49080d608abae4b6fb4e115493da5c3589ac63956ae1ad53991de9d6aade9a0d",
+				"gateEvidenceDigest": "b95e77f756fe8cc0505c51d21f2371d942fabfc9a708db714a558308338df8e1"
 			}
 		}
 	],
@@ -3602,6 +3042,12 @@
 		"4666c2b45654f780953eef6250ecedf5e9b09c67da596ee0060b860c8bc088ce": "{\n  \"id\": \"guide-diario-sonhos\",\n  \"revision\": 3,\n  \"state\": \"PUBLISHED\",\n  \"path\": \"/noticias/2026/10/diario-de-sonhos\",\n  \"kind\": \"guide\",\n  \"title\": \"Diário de sonhos: um modelo simples de registro\",\n  \"description\": \"Monte um diário de sonhos com cena, lembrança e contexto, sem dicionário universal de símbolos nem previsão do futuro.\",\n  \"author\": {\n    \"id\": \"atvna-redacao-automatizada\",\n    \"type\": \"Organization\",\n    \"name\": \"ATVNA — produção editorial automatizada\",\n    \"bio\": \"Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente.\"\n  },\n  \"automationDisclosure\": {\n    \"generatedWithAI\": true,\n    \"humanReview\": false,\n    \"reviewMode\": \"separate-pass\"\n  },\n  \"publishedAt\": \"2026-10-06T16:08:48.728Z\",\n  \"modifiedAt\": \"2026-10-06T16:08:48.728Z\",\n  \"sections\": [\n    {\n      \"heading\": \"Um registro antes de um significado\",\n      \"paragraphs\": [\n        \"Um diário de sonhos pode começar como uma anotação do que você lembra. O exemplo de Sonheiro organiza o registro com cena, emoção e contexto. Neste guia, usamos esses campos como ponto de partida, sem prometer benefício clínico ou capacidade de prever acontecimentos.\",\n        \"Você não precisa interpretar cada imagem para que a página fique completa. Separar lembrança, associação e pergunta já torna o registro mais claro.\",\n        \"Este roteiro não explica a causa de um sonho, não diagnostica condições e não oferece um significado universal para qualquer símbolo. Sua entrega é um modelo de anotação.\"\n      ]\n    },\n    {\n      \"heading\": \"A primeira página\",\n      \"paragraphs\": [\n        \"Use os campos: data da anotação; trecho de que se lembra; emoção que percebe ao recordar; contexto que deseja registrar; dúvida ou associação pessoal. Não complete partes esquecidas só para tornar a história mais bonita.\",\n        \"Você pode escrever 'não lembro do começo' ou 'a ordem das cenas está incerta'. Essas frases ajudam a distinguir uma lembrança parcial de uma narrativa reconstruída.\",\n        \"Se houver outras pessoas na cena, use descrições ou nomes fictícios ao compartilhar a anotação. Não publique detalhes íntimos de terceiros para obter uma interpretação.\",\n        \"Uma frase curta pode bastar. A frequência e o tamanho do registro são escolhas deste exercício, sem metas de desempenho ou promessa de resultado.\"\n      ]\n    },\n    {\n      \"heading\": \"Exemplo de anotação\",\n      \"paragraphs\": [\n        \"Exemplo inteiramente criado para este guia: 'lembro de procurar uma porta num corredor; não sei o que veio antes; ao recordar, percebo curiosidade; ontem pensei numa tarefa que ainda não organizei'.\",\n        \"Na coluna de associação, a pessoa poderia escrever 'o corredor me lembrou a sensação de procurar uma forma de começar'. Essa associação é pessoal. O guia não afirma que corredores tenham esse significado para todos.\",\n        \"Na coluna de pergunta, ela poderia anotar 'qual é a primeira etapa da tarefa?'. A pergunta se refere ao contexto descrito e pode ser respondida com uma lista concreta.\",\n        \"Nenhuma dessas frases comprova uma previsão. O exemplo mostra apenas como registrar uma cena e conservar a distinção entre memória, associação e ação cotidiana.\"\n      ]\n    },\n    {\n      \"heading\": \"Como comparar páginas sem criar um dicionário\",\n      \"paragraphs\": [\n        \"Depois de algumas anotações, escolha dois registros e observe o que se repete no texto: uma palavra, um lugar descrito ou uma pergunta. Anote também diferenças e trechos incompletos.\",\n        \"Não atribua automaticamente um significado fixo à repetição. Você pode escrever 'essa imagem apareceu nas minhas anotações' sem concluir que ela explica uma condição ou anuncia um acontecimento.\",\n        \"Se consultar uma interpretação externa, identifique a fonte e mantenha a leitura separada do relato. Uma interpretação não deve substituir o que você efetivamente anotou.\",\n        \"Evite copiar longos textos de dicionários de sonhos ou usar imagens sem licença. Seu diário pode conter descrições e desenhos próprios, guardados como registros pessoais.\"\n      ]\n    },\n    {\n      \"heading\": \"Uma conclusão simples\",\n      \"paragraphs\": [\n        \"Escolha uma pergunta que o registro despertou e diga se ela trata de algo observável. 'Que tarefa quero organizar?' pode levar a uma pequena lista. 'O que vai acontecer amanhã?' continua sendo uma pergunta de previsão que este roteiro não responde.\",\n        \"Não use a anotação para gerar números de aposta, acusar alguém ou decidir sobre saúde, dinheiro ou destino. Esses usos ultrapassam a atividade educativa proposta.\",\n        \"Você pode encerrar a página com 'não quero interpretar agora'. O diário não precisa produzir uma resposta em toda anotação, nem depender de uma ferramenta ou de uma compra para ter utilidade.\"\n      ]\n    }\n  ],\n  \"sources\": [\n    {\n      \"title\": \"Como manter um diário de sonhos — Sonheiro\",\n      \"url\": \"https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos\"\n    }\n  ]\n}\n",
 		"f44a174dadcca957aa73bf3e2954c0b1b092c936028c89e043826e47c30bd638": "{\n  \"documentId\": \"guide-diario-sonhos\",\n  \"revision\": 1,\n  \"claims\": [\n    {\n      \"claim\": \"Modelo de registro com cena, emoção e contexto.\",\n      \"type\": \"source-example-not-clinical-evidence\",\n      \"sources\": [\n        \"S08\"\n      ],\n      \"limitation\": \"Não reproduz alegações de memória, terapia, hábitos ou previsão.\"\n    },\n    {\n      \"claim\": \"Ficha, sonho fictício e comparação de páginas.\",\n      \"type\": \"original-editorial-exercise\",\n      \"sources\": [],\n      \"evidence\": \"sections[1] a sections[4]; sonho declarado fictício.\"\n    },\n    {\n      \"claim\": \"Sem significado universal, promessa clínica ou números de aposta.\",\n      \"type\": \"scope-limitation\",\n      \"sources\": [],\n      \"evidence\": \"sections[0], sections[3] e sections[4].\"\n    }\n  ],\n  \"sourceEvidence\": \"../../05-fontes-direitos.json\",\n  \"rights\": {\n    \"text\": \"Redação original nesta sessão; sem tradução, excerto ou citação literal.\",\n    \"images\": \"Nenhuma imagem usada.\"\n  },\n  \"originalContribution\": [\n    \"sections[1] a sections[4]; sonho declarado fictício.\"\n  ],\n  \"ctaEvidence\": \"../../01-probes-api-http.json\",\n  \"adoptedAt\": \"2026-10-06T14:25:10.670Z\",\n  \"inputSha256\": \"bb2bc71c893ece8f22b62ce224f8aa3060c2081c5879044e1c34c24e6853b669\"\n}\n",
 		"55453ee6c0dec6f6aed88a22a72f403057948d056919ee3a3b3b66d595d8d3b0": "{\n  \"briefId\": \"P12\",\n  \"documentId\": \"guide-diario-sonhos\",\n  \"author\": {\n    \"id\": \"atvna-redacao-automatizada\",\n    \"type\": \"Organization\",\n    \"name\": \"ATVNA — produção editorial automatizada\",\n    \"bio\": \"Conteúdo produzido com auxílio de inteligência artificial. Não representa experiência pessoal nem revisão humana independente.\"\n  },\n  \"publisher\": {\n    \"name\": \"ATVNA\",\n    \"role\": \"publicador responsável pela eventual liberação\"\n  },\n  \"sourceIds\": [\n    \"S08\"\n  ],\n  \"sources\": [\n    {\n      \"id\": \"S08\",\n      \"url\": \"https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos\",\n      \"title\": \"Como manter um diário de sonhos — Sonheiro\",\n      \"type\": \"competitor-practice\",\n      \"read\": \"corpo 11–44, 53–106\",\n      \"claims\": [\n        \"Exemplo de registro de cena, emoção e contexto em diário.\"\n      ],\n      \"rights\": \"Texto protegido; elaborar modelo próprio. Não reproduzir alegações de memória, prazo de hábito ou números de sorte.\",\n      \"checkedOn\": \"2026-10-06\",\n      \"opened\": true,\n      \"access\": \"HTTP público via web\",\n      \"usedImages\": false,\n      \"usedQuotes\": false\n    }\n  ],\n  \"rights\": {\n    \"text\": \"Redação original nesta sessão; sem tradução, excerto ou citação literal.\",\n    \"images\": \"Nenhuma imagem usada.\"\n  },\n  \"bookExcerptsUsed\": false,\n  \"thirdPartyImagesUsed\": false,\n  \"humanReview\": false,\n  \"personalExperienceClaimed\": false,\n  \"serviceAuthority\": {\n    \"status\": \"PENDING_EXTERNAL_AUTHORIZATION\",\n    \"authorIsNotAuthority\": true\n  },\n  \"limitations\": [\n    \"Acesso público não transfere direitos.\",\n    \"Paráfrase factual e tradicional atribuída; nenhum texto, imagem ou leitura de terceiros reproduzido.\",\n    \"Nenhum livro foi usado como corpus publicável.\"\n  ]\n}\n",
-		"d113e5bcfa5c0b19ca24458e95d24bd0d805621b84e23cdd20107415a5cb4801": "{\n  \"schemaVersion\": \"atvna-public-final-separate-pass-v1\",\n  \"runId\": \"ATV-20260902-170644Z-01A0630F\",\n  \"reviewedAt\": \"2026-10-06T16:08:49.501Z\",\n  \"reviewerKind\": \"same-agent-separate-pass\",\n  \"humanReview\": false,\n  \"independentReviewer\": false,\n  \"ownerEditorialAuthorization\": true,\n  \"priorDigest\": \"4976b895ce7e13635483a20e34792c84d8416a594c13565b5a925f27e8a3d596\",\n  \"documentDigest\": \"fbf7a530d2614fb2c25e2f4f6520e3efe9ea1a0545ae285dd1a976b632784dfb\",\n  \"revision\": 3,\n  \"bodyUnchanged\": true,\n  \"completeBodyRead\": true,\n  \"sourceEvidence\": \"Trechos e direitos do corpus efetivamente consultado; não se alega nova consulta dos sites nesta passagem.\",\n  \"observations\": [\n    {\n      \"id\": \"scope\",\n      \"status\": \"PASS\",\n      \"reason\": \"Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.\",\n      \"evidence\": [\n        \"document.json#kind\",\n        \"evidencias/claims.json\",\n        \"evidencias/review-pass.json\"\n      ]\n    },\n    {\n      \"id\": \"claims\",\n      \"status\": \"PASS\",\n      \"reason\": \"Modelo próprio de registro; sonho inteiramente criado e declarado; mantém lembrança e associação separadas; não reproduz alegações clínicas, prazo de hábito ou apostas da fonte. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.\",\n      \"evidence\": [\n        \"document.json#sections\",\n        \"evidencias/claims.json\",\n        \"evidencias/sources-rights.json\"\n      ]\n    },\n    {\n      \"id\": \"rights\",\n      \"status\": \"PASS\",\n      \"reason\": \"Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.\",\n      \"evidence\": [\n        \"evidencias/identity-rights.json\",\n        \"evidencias/sources-rights.json\"\n      ]\n    },\n    {\n      \"id\": \"identity\",\n      \"status\": \"PASS\",\n      \"reason\": \"Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.\",\n      \"evidence\": [\n        \"document.json#author\",\n        \"document.json#automationDisclosure\",\n        \"evidencias/review-pass.json\"\n      ]\n    },\n    {\n      \"id\": \"safety\",\n      \"status\": \"PASS\",\n      \"reason\": \"Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.\",\n      \"evidence\": [\n        \"document.json#sections\",\n        \"evidencias/claims.json\"\n      ]\n    },\n    {\n      \"id\": \"originality\",\n      \"status\": \"PASS\",\n      \"reason\": \"Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.\",\n      \"evidence\": [\n        \"document.json#sections\",\n        \"evidencias/originality.json\",\n        \"evidencias/competition.json\",\n        \"evidencias/claims.json\"\n      ]\n    },\n    {\n      \"id\": \"tools\",\n      \"status\": \"PASS\",\n      \"reason\": \"Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.\",\n      \"evidence\": [\n        \"evidencias/journeys.json\",\n        \"document.json#sections\"\n      ]\n    },\n    {\n      \"id\": \"integrity\",\n      \"status\": \"PASS\",\n      \"reason\": \"Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.\",\n      \"evidence\": [\n        \"document.json\",\n        \"evidencias/review-pass.json\",\n        \"evidencias/authority-provisioning.json\",\n        \"evidencias/owner-authorization.json\"\n      ]\n    }\n  ],\n  \"currentMetadataReview\": {\n    \"authorType\": \"Organization\",\n    \"publishedAt\": \"2026-10-06T16:08:48.728Z\",\n    \"modifiedAt\": \"2026-10-06T16:08:48.728Z\",\n    \"noImages\": true,\n    \"structuredData\": \"Article\",\n    \"automationDisclosure\": {\n      \"generatedWithAI\": true,\n      \"humanReview\": false,\n      \"reviewMode\": \"separate-pass\"\n    }\n  },\n  \"publicationGate\": \"PENDING_INTEGRATION_AND_RELEASE_GATES\"\n}\n"
+		"d113e5bcfa5c0b19ca24458e95d24bd0d805621b84e23cdd20107415a5cb4801": "{\n  \"schemaVersion\": \"atvna-public-final-separate-pass-v1\",\n  \"runId\": \"ATV-20260902-170644Z-01A0630F\",\n  \"reviewedAt\": \"2026-10-06T16:08:49.501Z\",\n  \"reviewerKind\": \"same-agent-separate-pass\",\n  \"humanReview\": false,\n  \"independentReviewer\": false,\n  \"ownerEditorialAuthorization\": true,\n  \"priorDigest\": \"4976b895ce7e13635483a20e34792c84d8416a594c13565b5a925f27e8a3d596\",\n  \"documentDigest\": \"fbf7a530d2614fb2c25e2f4f6520e3efe9ea1a0545ae285dd1a976b632784dfb\",\n  \"revision\": 3,\n  \"bodyUnchanged\": true,\n  \"completeBodyRead\": true,\n  \"sourceEvidence\": \"Trechos e direitos do corpus efetivamente consultado; não se alega nova consulta dos sites nesta passagem.\",\n  \"observations\": [\n    {\n      \"id\": \"scope\",\n      \"status\": \"PASS\",\n      \"reason\": \"Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.\",\n      \"evidence\": [\n        \"document.json#kind\",\n        \"evidencias/claims.json\",\n        \"evidencias/review-pass.json\"\n      ]\n    },\n    {\n      \"id\": \"claims\",\n      \"status\": \"PASS\",\n      \"reason\": \"Modelo próprio de registro; sonho inteiramente criado e declarado; mantém lembrança e associação separadas; não reproduz alegações clínicas, prazo de hábito ou apostas da fonte. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.\",\n      \"evidence\": [\n        \"document.json#sections\",\n        \"evidencias/claims.json\",\n        \"evidencias/sources-rights.json\"\n      ]\n    },\n    {\n      \"id\": \"rights\",\n      \"status\": \"PASS\",\n      \"reason\": \"Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.\",\n      \"evidence\": [\n        \"evidencias/identity-rights.json\",\n        \"evidencias/sources-rights.json\"\n      ]\n    },\n    {\n      \"id\": \"identity\",\n      \"status\": \"PASS\",\n      \"reason\": \"Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.\",\n      \"evidence\": [\n        \"document.json#author\",\n        \"document.json#automationDisclosure\",\n        \"evidencias/review-pass.json\"\n      ]\n    },\n    {\n      \"id\": \"safety\",\n      \"status\": \"PASS\",\n      \"reason\": \"Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.\",\n      \"evidence\": [\n        \"document.json#sections\",\n        \"evidencias/claims.json\"\n      ]\n    },\n    {\n      \"id\": \"originality\",\n      \"status\": \"PASS\",\n      \"reason\": \"Há contribuição prática própria: sections[1], sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.\",\n      \"evidence\": [\n        \"document.json#sections\",\n        \"evidencias/originality.json\",\n        \"evidencias/competition.json\",\n        \"evidencias/claims.json\"\n      ]\n    },\n    {\n      \"id\": \"tools\",\n      \"status\": \"PASS\",\n      \"reason\": \"Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.\",\n      \"evidence\": [\n        \"evidencias/journeys.json\",\n        \"document.json#sections\"\n      ]\n    },\n    {\n      \"id\": \"integrity\",\n      \"status\": \"PASS\",\n      \"reason\": \"Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.\",\n      \"evidence\": [\n        \"document.json\",\n        \"evidencias/review-pass.json\",\n        \"evidencias/authority-provisioning.json\",\n        \"evidencias/owner-authorization.json\"\n      ]\n    }\n  ],\n  \"currentMetadataReview\": {\n    \"authorType\": \"Organization\",\n    \"publishedAt\": \"2026-10-06T16:08:48.728Z\",\n    \"modifiedAt\": \"2026-10-06T16:08:48.728Z\",\n    \"noImages\": true,\n    \"structuredData\": \"Article\",\n    \"automationDisclosure\": {\n      \"generatedWithAI\": true,\n      \"humanReview\": false,\n      \"reviewMode\": \"separate-pass\"\n    }\n  },\n  \"publicationGate\": \"PENDING_INTEGRATION_AND_RELEASE_GATES\"\n}\n",
+		"95ff8914033f73b612eca6e124dccedd2026a7d2c6a1a035e174ada8c82253e1": "# Revisão editorial de publicação\n\nComo ler o mapa astral quando a hora de nascimento é incerta\n\n## Texto e fontes\n\nA definição situa o ascendente no horizonte leste e o relaciona ao horário local e ao lugar do nascimento. A ficha funciona com 8h12 documentados, com a lembrança de um intervalo ou com hora ausente. A orientação de manter a incerteza é coerente com os campos exigidos pelo formulário. O próximo passo é o guia `/ascendente`. [Cafe Astrology, The Ascendant](https://cafeastrology.com/ascendant.html).\n\n**Meu Céu.** Cafe Astrology descreve a relação entre horizonte leste, momento, local e ascendente. O formulário natal local pede hora e cidade. O artigo limita a utilidade de uma faixa e não fornece posição de mapa.\n\nOs três registros fictícios distinguem fonte documental, lembrança com intervalo e ausência de hora. Mesmo uma simulação com dois horários não identifica o instante verdadeiro. A consulta “descobrir ascendente sem horário” recebe uma resposta antes da ficha. O exemplo dá uma próxima ação nas três situações.\n\nO corpo contém 331 palavras pelo critério acima. Destino atual `/noticias/2026/10/horario-nascimento-mapa-astral` (P04). Próximo passo previsto: “Entender o ascendente”, em `/ascendente`. Fontes consultadas em 2 de novembro de 2026: [Cafe Astrology — The Ascendant](https://cafeastrology.com/ascendant.html).\n\n## Integridade\n\nA revisão de liberação comparou os valores de todos os campos com a revisão aprovada pela redação. O campo state passou de APPROVED para PUBLISHED. A identidade do guia, a rota e a data da primeira publicação foram conferidas com a edição pública anterior. O resumo SHA-256 do documento em PUBLISHED é fe73119f1a13c995a6f67b9764f831cb7d69ed8adc9fc83ac197b6a47dcbb186.\n\n## Autoria e direitos\n\nA autoria organizacional e o auxílio de IA estão declarados nos metadados do documento. Os exemplos e exercícios são próprios. A comparação independente com os doze guias da edição anterior e os outros cinco textos deste lote encontrou zero correspondências de dez palavras consecutivas. Foram examinados os parágrafos normalizados para caixa e acentos. Nenhuma imagem externa foi incorporada.\n\n## Jornada\n\nO parecer de integração conferiu o destino proposto com a rota da ferramenta ou área de leitura correspondente. A suíte de publicação testa a renderização do guia, os links e os metadados.\n",
+		"eb2bceb415091f1d81f2701b64203aef6ea0a139caa6ee6c54b4c2ed23435498": "# Revisão editorial de publicação\n\nO que significa Mercúrio retrógrado?\n\n## Texto e fontes\n\nA descrição usa estrelas de fundo como referência e explica a mudança de direção aparente observada da Terra. A figura em letras e sua legenda funcionam sem calendário ou observação datada. A troca de fuso num convite ilustra uma ação verificável. O próximo passo é a área de previsões em `/temas/previsoes`. [The Planetary Society](https://www.planetary.org/articles/what-does-mercury-in-retrograde-actually-mean) e [NASA Goddard, The Planets](https://pwg.gsfc.nasa.gov/stargaze/Splanets.htm).\n\n**Ciclos.** A explicação da Planetary Society distingue o movimento aparente da órbita real. NASA Goddard descreve os movimentos relativos de observadores e planetas. O trecho de reflexão não contém afirmação causal nem calendário.\n\nO diagrama textual A/B/C tem legenda e orientação leste. A → B → C e C → B → A trocam de sentido no mesmo referencial. O esquema original simplifica a trajetória, sem imagem ou efeméride importada. A primeira seção responde ao fenômeno. O leitor pode percorrer o diagrama ou seguir sua descrição em palavras.\n\nO corpo contém 288 palavras pelo critério acima. Destino atual `/mercurio-retrogrado` (P05). Próximo passo previsto: “Ver outros temas de previsões”, em `/temas/previsoes`. Fontes consultadas em 2 de novembro de 2026: [The Planetary Society — What does “Mercury in retrograde” actually mean?](https://www.planetary.org/articles/what-does-mercury-in-retrograde-actually-mean) e [NASA Goddard — The Planets](https://pwg.gsfc.nasa.gov/stargaze/Splanets.htm).\n\n## Integridade\n\nA revisão de liberação comparou os valores de todos os campos com a revisão aprovada pela redação. O campo state passou de APPROVED para PUBLISHED. A identidade do guia, a rota e a data da primeira publicação foram conferidas com a edição pública anterior. O resumo SHA-256 do documento em PUBLISHED é 41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc.\n\n## Autoria e direitos\n\nA autoria organizacional e o auxílio de IA estão declarados nos metadados do documento. Os exemplos e exercícios são próprios. A comparação independente com os doze guias da edição anterior e os outros cinco textos deste lote encontrou zero correspondências de dez palavras consecutivas. Foram examinados os parágrafos normalizados para caixa e acentos. Nenhuma imagem externa foi incorporada.\n\n## Jornada\n\nO parecer de integração conferiu o destino proposto com a rota da ferramenta ou área de leitura correspondente. A suíte de publicação testa a renderização do guia, os links e os metadados.\n",
+		"da76aa56335fcce8ac7cbd23afaae3a8a8cb9376d12967b4a473f63df0041a60": "# Revisão editorial de publicação\n\nComparação de signos e sinastria são a mesma coisa?\n\n## Texto e fontes\n\nA fonte documenta o uso de mapas em conjunto na prática astrológica. Lia e Dani, identificadas como personagens fictícias, ilustram a diferença entre dispor de dois signos solares e decidir comparar os dois mapas. A necessidade de consentimento para usar os dados da outra pessoa é coerente com o formulário da ATVNA. O próximo passo é `/ferramentas/combinacao-do-casal`. [Horóscopo Virtual, Combinação dos signos na Sinastria](https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria).\n\n**Amor.** O Horóscopo Virtual descreve sinastria como comparação entre dois mapas. O formulário do ATVNA exige consentimento, dois conjuntos de dados natais e cidade/hora para o cálculo.\n\nLia e Dani são fictícias. A mesma dupla aparece com signos solares e depois com disponibilidade de dados completos. Nenhuma posição lunar ou condição real de relacionamento é atribuída ao par. O contraste entre os dois cenários ajuda a escolher a leitura. O relato termina num acordo concreto entre as pessoas.\n\nO corpo contém 315 palavras pelo critério acima. Destino atual `/noticias/2026/10/sinastria-e-combinacao-de-signos` (P07). Próximo passo previsto: “Explorar a combinação do casal”, em `/ferramentas/combinacao-do-casal`. Fontes consultadas em 2 de novembro de 2026: [Horóscopo Virtual — Combinação de signos e sinastria](https://www.horoscopovirtual.com.br/artigos/combinacao-signos-sinastria).\n\n## Integridade\n\nA revisão de liberação comparou os valores de todos os campos com a revisão aprovada pela redação. O campo state passou de APPROVED para PUBLISHED. A identidade do guia, a rota e a data da primeira publicação foram conferidas com a edição pública anterior. O resumo SHA-256 do documento em PUBLISHED é 9240f7c6f13e8e9bc76ed74793eb2db60d8b002f2e4a4cd2b5a06719106c1604.\n\n## Autoria e direitos\n\nA autoria organizacional e o auxílio de IA estão declarados nos metadados do documento. Os exemplos e exercícios são próprios. A comparação independente com os doze guias da edição anterior e os outros cinco textos deste lote encontrou zero correspondências de dez palavras consecutivas. Foram examinados os parágrafos normalizados para caixa e acentos. Nenhuma imagem externa foi incorporada.\n\n## Jornada\n\nO parecer de integração conferiu o destino proposto com a rota da ferramenta ou área de leitura correspondente. A suíte de publicação testa a renderização do guia, os links e os metadados.\n",
+		"69e4238b0d64a18cb840802adf350d4b21ceee73b5f775133ed18b0696f7c563": "# Revisão editorial de publicação\n\nArcanos maiores e menores, com um exemplo do Louco\n\n## Texto e fontes\n\nA contagem para o baralho descrito fecha em 22 arcanos maiores e quatro grupos de 14 menores, perfazendo 78 cartas. O texto ilustrado de Waite descreve o limite do precipício e o cão junto ao Louco. O exercício distingue um detalhe visível de uma leitura possível e oferece uma segunda carta para praticar. O próximo passo é `/ferramentas/carta-do-dia`. [Digitalização da obra](https://en.wikisource.org/wiki/File:The_Pictorial_Key_to_the_Tarot.pdf), [texto ilustrado de Waite, seção The Fool](https://www.awakening-intuition.com/Arthur_Edward_Waite_-_The_Pictorial_Key_to_the_Tarot.pdf) e [contexto histórico do Metropolitan Museum of Art](https://www.metmuseum.org/perspectives/tarot-2).\n\n**Tarot.** O Metropolitan Museum of Art documenta quatro naipes, cartas de 1 a 10, quatro figuras por naipe e os trunfos. A edição de Waite, ilustrada por Smith, distingue as séries. A descrição do Louco segue a prancha e a parte II, seção II, entrada Zero da obra original, consultada também em transcrição ilustrada.\n\nA ficha separa precipício e cão (detalhes conferíveis) de duas associações possíveis. A pergunta sobre o resultado de um projeto permanece em aberto. Uma verificação aritmética confirma 4 × 14 = 56 e 22 + 56 = 78. O texto identifica a edição antes de contar as cartas e descreve a figura em palavras sem reproduzir a ilustração.\n\nO corpo contém 330 palavras pelo critério acima. Destino atual `/noticias/2026/10/arcanos-maiores-e-menores` (P09). Próximo passo previsto: “Experimentar a carta do dia”, em `/ferramentas/carta-do-dia`. Fontes consultadas em 2 de novembro de 2026: [Arthur Edward Waite e Pamela Colman Smith — The Pictorial Key to the Tarot (digitalização)](https://en.wikisource.org/wiki/File:The_Pictorial_Key_to_the_Tarot.pdf) e [The Metropolitan Museum of Art — Before Fortune-Telling: The History and Structure of Tarot Cards](https://www.metmuseum.org/perspectives/tarot-2). A passagem sobre o Louco foi cotejada com [o texto ilustrado de Waite](https://www.awakening-intuition.com/Arthur_Edward_Waite_-_The_Pictorial_Key_to_the_Tarot.pdf).\n\n## Integridade\n\nA revisão de liberação comparou os valores de todos os campos com a revisão aprovada pela redação. O campo state passou de APPROVED para PUBLISHED. A identidade do guia, a rota e a data da primeira publicação foram conferidas com a edição pública anterior. O resumo SHA-256 do documento em PUBLISHED é f97755aed66617d9bef7d37ce65c7f2e85c8b74b0d8165914a04eedb5e079de2.\n\n## Autoria e direitos\n\nA autoria organizacional e o auxílio de IA estão declarados nos metadados do documento. Os exemplos e exercícios são próprios. A comparação independente com os doze guias da edição anterior e os outros cinco textos deste lote encontrou zero correspondências de dez palavras consecutivas. Foram examinados os parágrafos normalizados para caixa e acentos. Nenhuma imagem externa foi incorporada.\n\n## Jornada\n\nO parecer de integração conferiu o destino proposto com a rota da ferramenta ou área de leitura correspondente. A suíte de publicação testa a renderização do guia, os links e os metadados.\n",
+		"cdeca7b33b4d219298648a33301bbb01977db4f649809d59361f2e2262f6f333": "# Revisão editorial de publicação\n\nMeio do Céu e escolhas de carreira: por onde começar?\n\n## Texto e fontes\n\nO uso astrológico do Meio do Céu para discutir reconhecimento e carreira está documentado na referência. O guia conduz uma experiência simples de trabalho a partir do exemplo de Bia. A colega pode testar o roteiro e relatar onde precisou de ajuda. O leitor pode avaliar preferências e circunstâncias reais antes de tomar uma decisão. O próximo passo é `/ferramentas/meio-do-ceu`. [Personare, Meio do Céu no Mapa Astral](https://www.personare.com.br/conteudo/meio-do-ceu-astrologia-m2247).\n\n**Carreira.** Personare descreve a associação do Meio do Céu com carreira e projeção pública. O texto atribui isso à tradição e não transfere as listas de profissões da fonte. A ferramenta natal pede hora e local.\n\nBia é fictícia. A pergunta sobre reconhecimento vira um roteiro, uma colega que o testa e um resultado observável. A conclusão diferencia o retorno da colega da vontade de repetir a atividade. A experiência se encerra com duas observações possíveis. O texto não prescreve mudanças de emprego nem avalia vocação.\n\nO corpo contém 306 palavras pelo critério acima. Destino atual `/noticias/2026/10/meio-do-ceu-e-reflexao-de-carreira` (P11). Próximo passo previsto: “Calcular meu Meio do Céu”, em `/ferramentas/meio-do-ceu`. Fontes consultadas em 2 de novembro de 2026: [Personare — Meio do Céu: o que significa na Astrologia](https://www.personare.com.br/conteudo/meio-do-ceu-astrologia-m2247).\n\n## Integridade\n\nA revisão de liberação comparou os valores de todos os campos com a revisão aprovada pela redação. O campo state passou de APPROVED para PUBLISHED. A identidade do guia, a rota e a data da primeira publicação foram conferidas com a edição pública anterior. O resumo SHA-256 do documento em PUBLISHED é b90beb0b88e49eb1b9ca63ec485397a6ad4c8f89cfc62ea0c42a216747764a56.\n\n## Autoria e direitos\n\nA autoria organizacional e o auxílio de IA estão declarados nos metadados do documento. Os exemplos e exercícios são próprios. A comparação independente com os doze guias da edição anterior e os outros cinco textos deste lote encontrou zero correspondências de dez palavras consecutivas. Foram examinados os parágrafos normalizados para caixa e acentos. Nenhuma imagem externa foi incorporada.\n\n## Jornada\n\nO parecer de integração conferiu o destino proposto com a rota da ferramenta ou área de leitura correspondente. A suíte de publicação testa a renderização do guia, os links e os metadados.\n",
+		"42f0fe88a0aef9e43121728b15332fdf29829a6d4e0362f161ee29cfcb7f85bb": "# Revisão editorial de publicação\n\nComo começar um diário de sonhos com quatro campos\n\n## Texto e fontes\n\nA referência descreve o registro da cena, de sua emoção e do contexto em que a pessoa acordou. O modelo de quatro campos é uma proposta própria da ATVNA. Na estação imaginada, alterar a emoção permite formular outra pergunta mantendo a mesma cena. A atividade pode ser feita no papel. O próximo passo é `/ferramentas/registro-de-sonho`. [Sonheiro, como manter um diário de sonhos](https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos).\n\n**Sonhos.** Sonheiro descreve uma prática de diário baseada em lembrança, emoção e contexto. Os quatro campos constituem um modelo editorial proposto. O texto não apresenta inferência clínica ou interpretação universal.\n\nUma estação aparece em dois relatos imaginados. O primeiro contém os quatro campos preenchidos, o segundo modifica ação e emoção. A associação com uma espera do dia anterior entra depois do despertar. Os quatro nomes e dois exemplos são reproduzíveis em papel. O leitor pode concluir o exercício sem cadastro.\n\nO corpo contém 296 palavras pelo critério acima. Destino atual `/noticias/2026/10/diario-de-sonhos` (P12). Próximo passo previsto: “Registrar um sonho”, em `/ferramentas/registro-de-sonho`. Fontes consultadas em 2 de novembro de 2026: [Sonheiro — Como manter um diário de sonhos](https://www.sonheiro.com.br/blog/como-manter-um-diario-de-sonhos).\n\n## Integridade\n\nA revisão de liberação comparou os valores de todos os campos com a revisão aprovada pela redação. O campo state passou de APPROVED para PUBLISHED. A identidade do guia, a rota e a data da primeira publicação foram conferidas com a edição pública anterior. O resumo SHA-256 do documento em PUBLISHED é 4a8590c623fd3c2a1e4946ab54663e36daa2454827b11d0f095b4edf512b2554.\n\n## Autoria e direitos\n\nA autoria organizacional e o auxílio de IA estão declarados nos metadados do documento. Os exemplos e exercícios são próprios. A comparação independente com os doze guias da edição anterior e os outros cinco textos deste lote encontrou zero correspondências de dez palavras consecutivas. Foram examinados os parágrafos normalizados para caixa e acentos. Nenhuma imagem externa foi incorporada.\n\n## Jornada\n\nO parecer de integração conferiu o destino proposto com a rota da ferramenta ou área de leitura correspondente. A suíte de publicação testa a renderização do guia, os links e os metadados.\n"
 	}
 }
