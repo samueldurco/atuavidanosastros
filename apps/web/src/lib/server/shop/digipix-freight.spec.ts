@@ -146,6 +146,40 @@ describe('Digipix national fulfillment', () => {
 			}
 		}
 	);
+	it('quotes the printed Colegial notebook using its dedicated form and response table', async () => {
+		const offerUrl = 'https://www.digipix.com.br/produto/cadernos';
+		const offer = { ...catalogOffer, sku: '2176', price: 39.9, url: offerUrl };
+		expect(await digipixAvailable(fetchHtml(catalog([offer]).replace(url, offerUrl)), '2176')).toBe(
+			true
+		);
+		const notebookHtml = quoteHtml
+			.replace('iddecoracao', 'idfotopresente')
+			.replace('value="9250"', 'value="2176"')
+			.replace('cep_dc', 'cep_fp')
+			.replace('quantidade_dc', 'quantidade_fp')
+			.replace('box-val-decoracao', 'box-val-fotopresente')
+			.replace('41,90', '33,90')
+			.replace('32,90', '26,90');
+		const otherTable =
+			'<div class="box-val-fotopresente box-val-estojo col-xs-12"><div><table></table></div></div>';
+		const fetcher = fetchHtml(quoteHtml + otherTable + notebookHtml, true);
+		expect(await digipixRate(fetcher, '2176', cep)).toMatchObject({ cents: 2690, days: 17 });
+		expect(Object.fromEntries(fetcher.mock.calls[0][1]?.body as URLSearchParams)).toEqual({
+			idfotopresente: '2176',
+			quantidade_fp: '1',
+			cep_fp: cep
+		});
+		for (const field of [
+			'value="2176"',
+			'name="cep_fp"',
+			'name="quantidade_fp"',
+			'box-val-fotopresente'
+		]) {
+			await expect(
+				digipixRate(fetchHtml(quoteHtml + notebookHtml.replace(field, ''), true), '2176', cep)
+			).rejects.toThrow();
+		}
+	});
 	it.each([
 		['wrong CEP', quoteHtml.replace(cep, '36960000')],
 		['wrong geometry', quoteHtml.replace('value="9250"', 'value="3462"')],
