@@ -134,7 +134,16 @@ const immutableBytes = new WeakMap<object, Uint8Array<ArrayBuffer>>();
 const deeplyFrozen = new WeakSet<object>();
 
 /** Pre-encode server-owned JSON only after making every nested value immutable. */
-export function freezeEditorialJson<T extends object>(value: T, preencode = true): T {
+export function freezeEditorialJson<T extends object>(value: T): T {
+	deepFreezeEditorialJson(value);
+	if (immutableCanonical.has(value)) return value;
+	const canonical = canonicalJson(value);
+	immutableCanonical.set(value, canonical);
+	immutableBytes.set(value, new TextEncoder().encode(canonical));
+	return value;
+}
+
+export function deepFreezeEditorialJson<T extends object>(value: T): T {
 	const freeze = (item: unknown) => {
 		if (item === null || typeof item !== 'object' || deeplyFrozen.has(item)) return;
 		const prototype = Object.getPrototypeOf(item);
@@ -151,10 +160,6 @@ export function freezeEditorialJson<T extends object>(value: T, preencode = true
 		deeplyFrozen.add(item);
 	};
 	freeze(value);
-	if (!preencode || immutableCanonical.has(value)) return value;
-	const canonical = canonicalJson(value);
-	immutableCanonical.set(value, canonical);
-	immutableBytes.set(value, new TextEncoder().encode(canonical));
 	return value;
 }
 

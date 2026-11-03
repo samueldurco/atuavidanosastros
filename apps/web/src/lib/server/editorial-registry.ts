@@ -7,6 +7,7 @@ import {
 	type EditorialAuthority
 } from './editorial';
 import {
+	deepFreezeEditorialJson,
 	freezeEditorialJson,
 	type AutomatedPublication,
 	type AutomatedRegistry
@@ -29,7 +30,7 @@ type StoredRelease = {
 	evidenceByDigest: Record<string, string>;
 };
 const stored = release as unknown as StoredRelease;
-const datedIndex = freezeEditorialJson(storedDatedIndex, false) as unknown as DatedArchiveRelease;
+const datedIndex = deepFreezeEditorialJson(storedDatedIndex) as unknown as DatedArchiveRelease;
 for (const entry of datedIndex.entries) {
 	freezeEditorialJson(entry.index);
 	freezeEditorialJson(entry.scope);
