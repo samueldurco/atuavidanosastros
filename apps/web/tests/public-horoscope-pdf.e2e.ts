@@ -61,7 +61,12 @@ for (const width of [1440, 390]) {
 		await page.getByRole('button', { name: 'Consultar meu signo' }).click();
 		const offer = page.locator('[data-free-offer="week-reading"]');
 		await expect(offer.getByRole('link')).toHaveAttribute('href', landing);
-		await expect(page.locator('.horoscope-tool').getByRole('link')).toHaveCount(1);
+		const tool = page.locator('.horoscope-tool');
+		await expect(
+			tool.getByRole('link', { name: 'consultar as edições já publicadas' })
+		).toHaveAttribute('href', '/horoscopo');
+		// The archive and the reviewed offer are the only links; PDF access stays behind the offer.
+		await expect(tool.getByRole('link')).toHaveCount(2);
 		await offer.getByRole('link').click();
 		const block = page.locator('.free-download');
 		await expect(block.getByRole('button', { name: 'Baixar meu PDF gratuito' })).toBeVisible();
