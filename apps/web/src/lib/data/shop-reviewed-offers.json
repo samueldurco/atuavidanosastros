@@ -6,6 +6,12 @@
 		"dimonaRetailProductionDays": 3
 	},
 	{
+		"slug": "caneca-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006922322288",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
 		"slug": "ecobag-aquarius",
 		"variantId": "gid://shopify/ProductVariant/68006902235504",
 		"priceBrl": 49.9

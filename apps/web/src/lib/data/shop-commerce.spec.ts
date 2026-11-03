@@ -7,6 +7,15 @@ import { approvedShopProducts } from '$lib/server/shop/shop-catalog-map';
 import { physicalOffer } from '$lib/server/shop/national-freight';
 
 describe('Commercial product references', () => {
+	it('uses the reviewed 325 ml model and retail production time for each enabled mug', () => {
+		for (const offer of reviewedOffers.filter(({ slug }) => slug.startsWith('caneca-'))) {
+			expect(isShopCommerceEligible(offer.slug, true)).toBe(true);
+			expect(approvedShopProducts[offer.slug].variantIds).toContain(offer.variantId);
+			expect(physicalOffer(offer.variantId)).toMatchObject(offer);
+			expect(offer.dimonaRetailProductionDays).toBeGreaterThan(0);
+			expect(shopPreviews.find(({ slug }) => slug === offer.slug)?.model).toContain('325 ml');
+		}
+	});
 	it.each([
 		['bone-', 59.9, ['300100237', '300100283']],
 		['cropped-', 79.9, ['11910110110', '11910110111']]

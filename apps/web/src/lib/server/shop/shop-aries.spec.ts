@@ -5,6 +5,13 @@ import reviewedOffers from '$lib/data/shop-reviewed-offers.json' with { type: 'j
 import { shopCart, shopProduct } from './shop-http';
 import { approvedShopProducts } from './shop-catalog-map';
 
+// This legacy-route fixture keeps one known product outside the reviewed list.
+vi.mock('$lib/data/shop-reviewed-offers.json', async (importOriginal) => {
+	const { default: offers } =
+		await importOriginal<typeof import('$lib/data/shop-reviewed-offers.json')>();
+	return { default: offers.filter((offer) => offer.slug !== 'caneca-cancer') };
+});
+
 const enabled = {
 	FEATURE_PHYSICAL_CHECKOUT: 'true',
 	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
