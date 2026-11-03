@@ -206,9 +206,14 @@
 		</form>
 		{#if nationalDelivery}
 			<ShopNationalDelivery
+				{slug}
 				{variantId}
 				bind:postalCode
-				price={variant?.availableForSale ? reviewedUnitPrice(variant.id) : undefined}
+				price={variant?.availableForSale &&
+				variant.price.currencyCode === 'BRL' &&
+				Number(variant.price.amount) === reviewedUnitPrice(variant.id)
+					? Number(variant.price.amount)
+					: undefined}
 				{submitting}
 				fallbackBuy={() => buy()}
 				allowFixedRate={isRetailMug(slug)}

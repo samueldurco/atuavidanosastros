@@ -4,6 +4,7 @@ export interface SealedQuote {
 	nonce: string;
 	expires: number;
 	variantId: string;
+	variantLabel?: string;
 	postalCode: string;
 	city: string;
 	provinceCode: string;
@@ -204,7 +205,8 @@ export async function prepareDraft(
 	fetcher: typeof fetch,
 	q: SealedQuote,
 	a: BuyerAddress,
-	guboSku?: string
+	guboSku?: string,
+	email?: string
 ) {
 	const input = {
 		presentmentCurrencyCode: 'BRL',
@@ -212,6 +214,7 @@ export async function prepareDraft(
 		allowDiscountCodesInCheckout: false,
 		lineItems: [{ variantId: q.variantId, quantity: 1 }],
 		shippingAddress: a,
+		...(email ? { email } : {}),
 		shippingLine: {
 			title: shippingTitle(q),
 			priceWithCurrency: { amount: (q.shipping / 100).toFixed(2), currencyCode: 'BRL' }

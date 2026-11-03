@@ -5,6 +5,7 @@ import ShopNationalDelivery from './ShopNationalDelivery.svelte';
 it('renders a postal-code pattern accepting Brazilian CEPs with or without a hyphen', () => {
 	const { body } = render(ShopNationalDelivery, {
 		props: {
+			slug: 'caneca-aries',
 			variantId: 'gid://shopify/ProductVariant/1',
 			price: 79.9,
 			postalCode: '',

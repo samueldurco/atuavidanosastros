@@ -2,6 +2,7 @@
 	import { reviewedDestination, shopDelivery } from '$lib/data/shop-commerce';
 	const postalCodePattern = '[0-9]{5}-?[0-9]{3}';
 	let {
+		slug,
 		variantId,
 		price,
 		postalCode = $bindable(''),
@@ -9,6 +10,7 @@
 		submitting = false,
 		allowFixedRate
 	}: {
+		slug: string;
 		variantId: string;
 		price: number | undefined;
 		postalCode: string;
@@ -32,15 +34,8 @@
 	};
 	let quote = $state<Quote | null>(null);
 	let quoting = $state(false);
-	let paying = $state(false);
 	let failed = $state(false);
 	let message = $state('');
-	let firstName = $state('');
-	let lastName = $state('');
-	let address1 = $state('');
-	let address2 = $state('');
-	let number = $state('');
-	let district = $state('');
 	const postal = $derived(postalCode.trim().replace('-', ''));
 	const fallback = $derived(allowFixedRate ? reviewedDestination(postalCode) : undefined);
 	const money = (value: number) =>
@@ -52,17 +47,12 @@
 		generation++;
 		quote = null;
 		quoting = false;
-		paying = false;
 		failed = false;
 		message = '';
-		address1 = '';
-		address2 = '';
-		number = '';
-		district = '';
 	});
 	async function calculate(event: SubmitEvent) {
 		event.preventDefault();
-		if (quoting || paying || !variantId || !/^\d{8}$/.test(postal)) return;
+		if (quoting || !variantId || !/^\d{8}$/.test(postal)) return;
 		const current = ++generation;
 		quote = null;
 		quoting = true;
@@ -98,6 +88,9 @@
 				q.unitPriceBrl !== price ||
 				!Number.isFinite(q.totalBrl) ||
 				!Number.isFinite(q.shippingBrl) ||
+				q.shippingBrl < 0 ||
+				Math.round(q.totalBrl * 100) !==
+					Math.round(q.unitPriceBrl * 100) + Math.round(q.shippingBrl * 100) ||
 				!q.city ||
 				!q.provinceCode
 			)
@@ -110,62 +103,6 @@
 			}
 		} finally {
 			if (current === generation) quoting = false;
-		}
-	}
-	async function openPayment(event: SubmitEvent) {
-		event.preventDefault();
-		if (!quote?.checkoutReady || !quote.token || paying) return;
-		const current = generation;
-		paying = true;
-		message = '';
-		try {
-			const res = await fetch('/api/shop/delivery/checkout', {
-				method: 'POST',
-				headers: { 'content-type': 'application/json' },
-				body: JSON.stringify({
-					token: quote.token,
-					address: {
-						firstName: firstName.trim(),
-						lastName: lastName.trim(),
-						address1: quote.factoryAddress
-							? [address1, number, district].map((x) => x.trim()).join(', ')
-							: address1.trim(),
-						address2: address2.trim(),
-						postalCode: postal,
-						city: quote.city,
-						provinceCode: quote.provinceCode
-					}
-				})
-			});
-			if (current !== generation) return;
-			if (res.status === 409) {
-				const error = (await res.json()) as { code?: string };
-				if (current !== generation) return;
-				if (error.code === 'checkout_pending') {
-					message =
-						'Seu checkout está sendo preparado. Aguarde alguns instantes e tente abrir o mesmo pagamento novamente.';
-					return;
-				}
-				quote = null;
-				message = 'A cotação mudou ou expirou. Calcule novamente o frete para continuar.';
-				return;
-			}
-			if (res.status === 422) {
-				message = 'Confira o nome, o endereço e o número antes de continuar.';
-				return;
-			}
-			if (!res.ok) throw new Error();
-			const data = (await res.json()) as { ok?: boolean; checkoutUrl?: string };
-			if (current !== generation) return;
-			if (!data.checkoutUrl) throw new Error();
-			const url = new URL(data.checkoutUrl);
-			if (!data.ok || url.protocol !== 'https:' || url.username || url.password) throw new Error();
-			window.location.assign(url.href);
-		} catch {
-			if (current === generation)
-				message = 'Não foi possível abrir o pagamento. Tente novamente. Nenhum valor foi cobrado.';
-		} finally {
-			if (current === generation) paying = false;
 		}
 	}
 </script>
@@ -182,12 +119,12 @@
 			maxlength="9"
 			placeholder="00000-000"
 			required
-			disabled={paying || submitting}
+			disabled={submitting}
 		/>
 		<p>Consulte um CEP brasileiro para ver o frete e o prazo até seu endereço.</p>
 		<button
 			class="button secondary"
-			disabled={!price || !variantId || !/^\d{8}$/.test(postal) || quoting || paying || submitting}
+			disabled={!price || !variantId || !/^\d{8}$/.test(postal) || quoting || submitting}
 			>{quoting ? 'Consultando…' : 'Calcular frete'}</button
 		>
 	</form>
@@ -199,51 +136,9 @@
 		</p>
 		<p class="total"><strong>Total com frete: {money(quote.totalBrl)}</strong></p>
 		{#if quote.checkoutReady}
-			<form onsubmit={openPayment} aria-label="Endereço para pagamento">
-				<fieldset disabled={paying}>
-					<legend>Quem vai receber?</legend>
-					<label
-						>Nome<input
-							bind:value={firstName}
-							autocomplete="given-name"
-							maxlength="80"
-							required
-						/></label
-					>
-					<label
-						>Sobrenome<input
-							bind:value={lastName}
-							autocomplete="family-name"
-							maxlength="80"
-							required
-						/></label
-					>
-					<label
-						>{quote.factoryAddress ? 'Rua ou avenida' : 'Rua, número e bairro'}<input
-							bind:value={address1}
-							autocomplete="address-line1"
-							maxlength={quote.factoryAddress ? 110 : 200}
-							required
-						/></label
-					>
-					{#if quote.factoryAddress}
-						<label>Número (ou S/N)<input bind:value={number} maxlength="15" required /></label>
-						<label
-							>Bairro ou localidade<input bind:value={district} maxlength="60" required /></label
-						>
-					{/if}
-					<label
-						>Complemento (opcional)<input
-							bind:value={address2}
-							autocomplete="address-line2"
-							maxlength="100"
-						/></label
-					>
-					<p>Confira o endereço. A entrega será vinculada a ele no pagamento.</p>
-					<button class="button" type="submit"
-						>{paying ? 'Abrindo pagamento…' : 'Comprar agora'}</button
-					>
-				</fieldset>
+			<form method="POST" action={'/loja/checkout/' + slug} aria-label="Continuar para checkout">
+				<input type="hidden" name="token" value={quote.token} />
+				<button type="submit" class="button">Comprar agora</button>
 			</form>
 		{:else}
 			<p>
@@ -268,23 +163,12 @@
 <style>
 	.delivery,
 	form,
-	fieldset,
 	label {
 		display: grid;
 		gap: 0.65rem;
 	}
 	.delivery {
 		margin-top: 1rem;
-	}
-	fieldset {
-		border: 0;
-		padding: 0;
-		margin: 0;
-		min-width: 0;
-	}
-	legend {
-		margin-bottom: 0.75rem;
-		font-weight: 600;
 	}
 	input {
 		padding: 0.65rem;

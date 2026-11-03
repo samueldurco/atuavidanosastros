@@ -628,7 +628,7 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 		);
 		await expect(checkOffer(env, upstream, offer, '203.0.113.44')).rejects.toThrow('offer_changed');
 		available = 1;
-		await expect(checkOffer(env, upstream, offer, '203.0.113.44')).resolves.toBeUndefined();
+		await expect(checkOffer(env, upstream, offer, '203.0.113.44')).resolves.toBe('Ecobag');
 	});
 	it('usa uma única fatura nas tentativas repetidas e recusa a troca do endereço', async () => {
 		const s = scenario(),
@@ -647,6 +647,22 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 				.status
 		).toBe(409);
 		expect(s.up.created()).toBe(1);
+	});
+	it('envia o contato do checkout à fatura uma vez e protege a repetição com outro e-mail', async () => {
+		const s = scenario(),
+			token = await s.quote(),
+			email = 'cliente@example.test';
+		expect((await s.call('checkout', { token, address, email: 'inválido' })).status).toBe(422);
+		expect((await s.call('checkout', { token, address, email })).status).toBe(200);
+		expect((await s.call('checkout', { token, address, email })).status).toBe(200);
+		expect((await s.call('checkout', { token, address, email: 'outro@example.test' })).status).toBe(
+			409
+		);
+		const created = s.up.fetcher.mock.calls
+			.map(([, init]) => (typeof init?.body === 'string' ? JSON.parse(init.body) : {}))
+			.filter((b) => b.query?.includes('draftOrderCreate('));
+		expect(created).toHaveLength(1);
+		expect(created[0].variables.input.email).toBe(email);
 	});
 	it('exige nova cotação quando o frete muda ou o prazo do token expira, e rejeita adulteração', async () => {
 		const s = scenario(),
