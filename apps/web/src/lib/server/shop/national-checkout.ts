@@ -233,7 +233,7 @@ export async function nationalCheckout(
 		// Once reserved, never repeat a create on a retry, even if Shopify's response was lost.
 		let checkoutUrl: string;
 		try {
-			checkoutUrl = await prepareDraft(env, fetcher, q, address);
+			checkoutUrl = await prepareDraft(env, fetcher, q, address, o.gubo?.sku);
 		} catch (e) {
 			if (e instanceof ShopHttpError && e.code === 'offer_changed') {
 				await db
