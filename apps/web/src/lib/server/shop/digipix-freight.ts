@@ -3,6 +3,8 @@ import { ShopHttpError } from './shop-http';
 import { supplierText } from './supplier-response';
 
 const models = {
+	'12': { path: 'fotos-premium', shippingModel: 'photo', production: 3.19 },
+	'3461': { path: 'quadro-classic', shippingModel: '3456', production: 114.9 },
 	'9250': { path: 'poster', shippingModel: '9250', production: 14.9 },
 	// The calculator groups all frames of the same size under a single geometry.
 	'3467': { path: 'quadro-classic', shippingModel: '3462', production: 179.9 }
@@ -11,6 +13,20 @@ export type DigipixSku = keyof typeof models;
 const calculator = 'https://direto.digipix.com.br/navprazos.php';
 const limit = 512 * 1024;
 const unavailable = () => new ShopHttpError('carrier_unavailable', 503);
+const photoSettings = { tamanho_ft: '15 x 21 ', tipopapel_ft: ' Fosco ', corpb_ft: ' Cor' };
+
+function selectedValue(html: string, name: string, value: string) {
+	const options = html.match(
+		new RegExp('<select\\b[^>]*name="' + name + '"[^>]*>([\\s\\S]*?)</select>', 'i')
+	)?.[1];
+	const selected = [...(options ?? '').matchAll(/<option\b[^>]*\sselected\b[^>]*>/gi)];
+	return selected.length === 1 && selected[0][0].match(/\svalue="([^"]*)"/i)?.[1] === value;
+}
+
+function inputValue(html: string, name: string, value: string) {
+	const input = html.match(new RegExp('<input\\b[^>]*name="' + name + '"[^>]*>', 'i'))?.[0];
+	return input?.match(/\svalue="([^"]*)"/i)?.[1] === value;
+}
 
 export function digipixSku(slug: string, variantId: string): DigipixSku | undefined {
 	const variants = approvedShopProducts[slug]?.variantIds;
@@ -47,7 +63,10 @@ export async function digipixAvailable(fetcher: typeof fetch, sku: DigipixSku) {
 export async function digipixRate(fetcher: typeof fetch, sku: DigipixSku, cep: string) {
 	if (!/^\d{8}$/.test(cep)) throw new ShopHttpError('invalid_postal_code', 422);
 	const { shippingModel } = models[sku];
-	const form = new URLSearchParams({ iddecoracao: shippingModel, quantidade_dc: '1', cep_dc: cep });
+	const photo = shippingModel === 'photo';
+	const form = photo
+		? new URLSearchParams({ ...photoSettings, copias_ft: '1', cep })
+		: new URLSearchParams({ iddecoracao: shippingModel, quantidade_dc: '1', cep_dc: cep });
 	const html = await supplierText(
 		fetcher,
 		calculator,
@@ -55,19 +74,22 @@ export async function digipixRate(fetcher: typeof fetch, sku: DigipixSku, cep: s
 		limit,
 		'latin1'
 	);
-	const selected = html.match(/<select\b[^>]*name="iddecoracao"[^>]*>([\s\S]*?)<\/select>/i)?.[1];
-	const quotedCep = html.match(/<input\b[^>]*name="cep_dc"[^>]*value="(\d+)"[^>]*>/i)?.[1];
-	const quantity = html.match(/<input\b[^>]*name="quantidade_dc"[^>]*value="(\d+)"[^>]*>/i)?.[1];
+	const settings = photo ? photoSettings : { iddecoracao: shippingModel };
 	if (
-		quotedCep !== cep ||
-		quantity !== '1' ||
-		!selected ||
-		!new RegExp('<option\\s+value="' + shippingModel + '"\\s+selected\\s*>', 'i').test(selected)
+		!inputValue(html, photo ? 'cep' : 'cep_dc', cep) ||
+		!inputValue(html, photo ? 'copias_ft' : 'quantidade_dc', '1') ||
+		!Object.entries(settings).every(([name, value]) => selectedValue(html, name, value))
 	) {
 		throw unavailable();
 	}
+	const section = photo ? 'photo' : 'decoracao';
 	const table = html.match(
-		/<div\s+class="box-val-decoracao\b[^"]*"[^>]*>\s*<div[^>]*>\s*<table[^>]*>([\s\S]*?)<\/table>/i
+		new RegExp(
+			'<div\\s+class="box-val-' +
+				section +
+				'\\b[^"]*"[^>]*>\\s*<div[^>]*>\\s*<table[^>]*>([\\s\\S]*?)</table>',
+			'i'
+		)
 	)?.[1];
 	if (table === undefined) throw unavailable();
 	const plain = table
