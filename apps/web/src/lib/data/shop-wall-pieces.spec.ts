@@ -3,7 +3,7 @@ import { shopCollections } from './shop-collections';
 import { shopPreviews } from './shop-products';
 
 vi.mock('./shop-reviewed-offers.json', () => ({
-	default: [{ slug: 'poster-aries' }, { slug: 'quadro-aries' }]
+	default: [{ slug: 'poster-aries' }, { slug: 'quadro-aries' }, { slug: 'caderno-aries' }]
 }));
 
 describe('wall pieces with reviewed national offers', () => {
@@ -24,5 +24,14 @@ describe('wall pieces with reviewed national offers', () => {
 			}
 		}
 		expect(shopPreviews.find((p) => p.slug === 'poster-touro')?.provider).toBe('Gelato');
+	});
+	it('describes the domestic notebook only after review and preserves its collection', () => {
+		const piece = shopPreviews.find((p) => p.slug === 'caderno-aries')!;
+		expect(piece.provider).toBe('GraphiMax');
+		expect(piece.material).toContain('Wire-o');
+		expect(piece.model).toContain('96 folhas');
+		expect(piece.imageNote).toContain('referência');
+		expect(shopCollections.find((c) => c.slug === 'aries')!.products).toContain(piece);
+		expect(shopPreviews.find((p) => p.slug === 'caderno-touro')?.provider).toBe('Printful');
 	});
 });

@@ -1,5 +1,6 @@
 import offers from '$lib/data/shop-reviewed-offers.json' with { type: 'json' };
 import industrialSkus from './national-skus.json' with { type: 'json' };
+import { graphimaxAvailable, graphimaxNotebook, graphimaxRate } from './graphimax-freight';
 import { reviewedDestination } from '$lib/data/shop-commerce';
 import { config, readApprovedProduct } from './shop-http';
 import { hasControlCharacters } from './shopify-storefront';
@@ -20,6 +21,7 @@ export interface Offer {
 	dimonaSku?: string;
 	gubo?: GuboVariant;
 	digipixSku?: DigipixSku;
+	graphimaxSku?: '143';
 }
 export function physicalOffer(id: unknown): Offer {
 	const o = (offers as Offer[]).find((o) => o.variantId === id);
@@ -28,15 +30,18 @@ export function physicalOffer(id: unknown): Offer {
 	const dimonaSku = (industrialSkus as Record<string, string>)[variant];
 	const gubo = (guboSkus as Record<string, GuboVariant>)[variant];
 	const wall = digipixSku(o.slug, o.variantId);
-	if ([Boolean(dimonaSku), Boolean(gubo), Boolean(wall)].filter(Boolean).length > 1)
+	const notebook = graphimaxNotebook(o.slug, o.variantId);
+	if ([dimonaSku, gubo, wall, notebook].filter(Boolean).length > 1)
 		return fail('product_unavailable', 409);
 	if (gubo && o.slug !== 'caneca-aries') return { ...o, gubo };
+	if (notebook) return { ...o, graphimaxSku: '143' };
 	if (wall) return { ...o, digipixSku: wall };
 	if (!gubo && o.slug === 'caneca-aries') return o;
 	if (/^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')) return { ...o, dimonaSku };
 	return fail('product_unavailable', 409);
 }
 export function supplierItem(o: Offer) {
+	if (o.graphimaxSku) return 'graphimax/' + o.graphimaxSku;
 	if (o.digipixSku) return 'digipix/' + o.digipixSku;
 	return o.gubo ? 'gubo:' + o.gubo.sku : (o.dimonaSku ?? 'varejo-94');
 }
@@ -79,6 +84,7 @@ const supplierHeaders = (env: PrivateEnv) => ({
 	'Content-Type': 'application/json'
 });
 export async function manufacturingAvailable(env: PrivateEnv, fetcher: typeof fetch, offer: Offer) {
+	if (offer.graphimaxSku) return graphimaxAvailable(fetcher);
 	if (offer.digipixSku) return digipixAvailable(fetcher, offer.digipixSku);
 	if (offer.gubo) return guboAvailable(env, fetcher, offer.gubo);
 	if (!env.DIMONA_FRETE_TOKEN) return fail('carrier_unavailable', 503);
@@ -178,6 +184,7 @@ export async function rateFor(
 	cep: string,
 	offer: Offer
 ): Promise<Rate & { basis: string; destination?: { city: string; provinceCode: string } }> {
+	if (offer.graphimaxSku) return graphimaxRate(fetcher, cep);
 	if (offer.digipixSku) return digipixRate(fetcher, offer.digipixSku, cep);
 	if (offer.gubo) return guboRate(env, fetcher, cep, offer.gubo);
 	if (!env.DIMONA_FRETE_TOKEN) return fail('carrier_unavailable', 503);
