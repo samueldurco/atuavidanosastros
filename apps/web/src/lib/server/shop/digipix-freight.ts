@@ -62,7 +62,8 @@ function inputValue(html: string, name: string, value: string) {
 export function digipixSku(slug: string, variantId: string): DigipixSku | undefined {
 	const variants = approvedShopProducts[slug]?.variantIds;
 	if (variants?.length !== 1 || variants[0] !== variantId) return undefined;
-	if (slug.startsWith('poster-')) return '9250';
+	if (slug.startsWith('poster-')) return '12';
+	if (slug.startsWith('caderno-')) return '2176';
 	if (slug.startsWith('quadro-')) return '3467';
 	return undefined;
 }

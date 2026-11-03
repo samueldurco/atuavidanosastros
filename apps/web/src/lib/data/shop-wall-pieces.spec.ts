@@ -13,9 +13,10 @@ describe('wall pieces with reviewed national offers', () => {
 			const piece = shopPreviews.find((p) => p.slug === slug)!;
 			expect(piece.provider).toBe('Digipix Pro');
 			expect(aries.products).toContain(piece);
-			expect(piece.imageNote).toContain('referência');
 			if (slug === 'poster-aries') {
-				expect(piece.material).toContain('verniz brilhante');
+				expect(piece.material).toContain('fosco');
+				expect(piece.model).toContain('15 × 21');
+				expect(piece.colors[0].images[0].src).toContain('poster-aries-digipix');
 				expect(piece.construction.value).toContain('sem moldura');
 			} else {
 				expect(piece.material).toContain('vidro');
@@ -27,10 +28,11 @@ describe('wall pieces with reviewed national offers', () => {
 	});
 	it('describes the domestic notebook only after review and preserves its collection', () => {
 		const piece = shopPreviews.find((p) => p.slug === 'caderno-aries')!;
-		expect(piece.provider).toBe('GraphiMax');
-		expect(piece.material).toContain('Wire-o');
-		expect(piece.model).toContain('96 folhas');
-		expect(piece.imageNote).toContain('referência');
+		expect(piece.provider).toBe('Digipix Pro');
+		expect(piece.material).toContain('Wire-O');
+		expect(piece.model).toContain('100 folhas');
+		expect(piece.colors[0].images[0].src).toContain('caderno-aries-digipix');
+		expect(piece.construction.value).toContain('14 × 20');
 		expect(shopCollections.find((c) => c.slug === 'aries')!.products).toContain(piece);
 		expect(shopPreviews.find((p) => p.slug === 'caderno-touro')?.provider).toBe('Printful');
 	});

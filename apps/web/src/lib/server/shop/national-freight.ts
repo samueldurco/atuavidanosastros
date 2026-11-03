@@ -30,7 +30,7 @@ export function physicalOffer(id: unknown): Offer {
 	const dimonaSku = (industrialSkus as Record<string, string>)[variant];
 	const gubo = (guboSkus as Record<string, GuboVariant>)[variant];
 	const wall = digipixSku(o.slug, o.variantId);
-	const notebook = graphimaxNotebook(o.slug, o.variantId);
+	const notebook = !wall && graphimaxNotebook(o.slug, o.variantId);
 	if ([dimonaSku, gubo, wall, notebook].filter(Boolean).length > 1)
 		return fail('product_unavailable', 409);
 	if (gubo && o.slug !== 'caneca-aries') return { ...o, gubo };
