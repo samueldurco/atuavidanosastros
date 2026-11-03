@@ -3,13 +3,16 @@ export async function supplierText(
 	url: string,
 	init: RequestInit,
 	maxBytes: number,
-	encoding: 'utf-8' | 'latin1' = 'utf-8'
+	encoding: 'utf-8' | 'latin1' = 'utf-8',
+	timeoutMs = 7000,
+	observeHeaders?: (headers: Headers) => void
 ) {
 	const res = await fetcher(url, {
 		...init,
 		redirect: 'manual',
-		signal: AbortSignal.timeout(7000)
+		signal: AbortSignal.timeout(timeoutMs)
 	});
+	observeHeaders?.(res.headers);
 	if (!res.ok) throw new Error('upstream');
 	const reader = res.body?.getReader();
 	if (!reader) throw new Error('upstream');

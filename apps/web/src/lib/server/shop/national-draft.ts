@@ -200,7 +200,8 @@ export async function prepareDraft(
 	env: PrivateEnv,
 	fetcher: typeof fetch,
 	q: SealedQuote,
-	a: BuyerAddress
+	a: BuyerAddress,
+	guboSku?: string
 ) {
 	const input = {
 		presentmentCurrencyCode: 'BRL',
@@ -214,7 +215,13 @@ export async function prepareDraft(
 		},
 		tags: ['atvna-entrega-nacional', 'atvna-q-' + q.nonce],
 		note:
-			'Entrega Dimona: ' + q.service + ' / ' + q.serviceId + '; prazo: ' + q.days + ' dias úteis.'
+			(guboSku ? 'Gubo SKU ' + guboSku + ' / entrega: ' : 'Entrega Dimona: ') +
+			q.service +
+			' / ' +
+			q.serviceId +
+			'; prazo: ' +
+			q.days +
+			' dias úteis.'
 	};
 	const data = await admin(env, fetcher, createQuery, input);
 	const payload = record(data.draftOrderCreate),
