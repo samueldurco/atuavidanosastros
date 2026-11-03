@@ -4,6 +4,7 @@ import { supplierText } from './supplier-response';
 
 const models = {
 	'12': { path: 'fotos-premium', shippingModel: 'photo', production: 3.19 },
+	'2176': { path: 'cadernos', shippingModel: '2176', production: 39.9 },
 	'3461': { path: 'quadro-classic', shippingModel: '3456', production: 114.9 },
 	'9250': { path: 'poster', shippingModel: '9250', production: 14.9 },
 	// The calculator groups all frames of the same size under a single geometry.
@@ -14,6 +15,36 @@ const calculator = 'https://direto.digipix.com.br/navprazos.php';
 const limit = 512 * 1024;
 const unavailable = () => new ShopHttpError('carrier_unavailable', 503);
 const photoSettings = { tamanho_ft: '15 x 21 ', tipopapel_ft: ' Fosco ', corpb_ft: ' Cor' };
+
+function freightForm(shippingModel: string): {
+	settings: Record<string, string>;
+	quantityField: string;
+	cepField: string;
+	section: string;
+} {
+	if (shippingModel === 'photo') {
+		return {
+			settings: photoSettings,
+			quantityField: 'copias_ft',
+			cepField: 'cep',
+			section: 'photo'
+		};
+	}
+	if (shippingModel === '2176') {
+		return {
+			settings: { idfotopresente: shippingModel },
+			quantityField: 'quantidade_fp',
+			cepField: 'cep_fp',
+			section: 'fotopresente'
+		};
+	}
+	return {
+		settings: { iddecoracao: shippingModel },
+		quantityField: 'quantidade_dc',
+		cepField: 'cep_dc',
+		section: 'decoracao'
+	};
+}
 
 function selectedValue(html: string, name: string, value: string) {
 	const options = html.match(
@@ -63,10 +94,10 @@ export async function digipixAvailable(fetcher: typeof fetch, sku: DigipixSku) {
 export async function digipixRate(fetcher: typeof fetch, sku: DigipixSku, cep: string) {
 	if (!/^\d{8}$/.test(cep)) throw new ShopHttpError('invalid_postal_code', 422);
 	const { shippingModel } = models[sku];
-	const photo = shippingModel === 'photo';
-	const form = photo
-		? new URLSearchParams({ ...photoSettings, copias_ft: '1', cep })
-		: new URLSearchParams({ iddecoracao: shippingModel, quantidade_dc: '1', cep_dc: cep });
+	const { settings, quantityField, cepField, section } = freightForm(shippingModel);
+	const form = new URLSearchParams(Object.entries(settings));
+	form.set(quantityField, '1');
+	form.set(cepField, cep);
 	const html = await supplierText(
 		fetcher,
 		calculator,
@@ -74,20 +105,18 @@ export async function digipixRate(fetcher: typeof fetch, sku: DigipixSku, cep: s
 		limit,
 		'latin1'
 	);
-	const settings = photo ? photoSettings : { iddecoracao: shippingModel };
 	if (
-		!inputValue(html, photo ? 'cep' : 'cep_dc', cep) ||
-		!inputValue(html, photo ? 'copias_ft' : 'quantidade_dc', '1') ||
+		!inputValue(html, cepField, cep) ||
+		!inputValue(html, quantityField, '1') ||
 		!Object.entries(settings).every(([name, value]) => selectedValue(html, name, value))
 	) {
 		throw unavailable();
 	}
-	const section = photo ? 'photo' : 'decoracao';
 	const table = html.match(
 		new RegExp(
 			'<div\\s+class="box-val-' +
 				section +
-				'\\b[^"]*"[^>]*>\\s*<div[^>]*>\\s*<table[^>]*>([\\s\\S]*?)</table>',
+				'\\b(?![^"]*\\bbox-val-)[^"]*"[^>]*>\\s*<div[^>]*>\\s*<table[^>]*>([\\s\\S]*?)</table>',
 			'i'
 		)
 	)?.[1];
