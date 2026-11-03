@@ -374,15 +374,16 @@ export async function approvedDocuments(
 		(a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt) || a.path.localeCompare(b.path)
 	);
 }
+export function belongsToEditorialHub(document: EditorialSummary, path: EditorialHub) {
+	return editorialHubs[path].kind === 'news'
+		? document.path.startsWith('/noticias/')
+		: document.kind === editorialHubs[path].kind;
+}
 export function hubDocuments(
 	documents: readonly EditorialSummary[],
 	path: EditorialHub
 ): EditorialSummary[] {
-	return documents.filter((document) =>
-		editorialHubs[path].kind === 'news'
-			? document.path.startsWith('/noticias/')
-			: document.kind === editorialHubs[path].kind
-	);
+	return documents.filter((document) => belongsToEditorialHub(document, path));
 }
 export function hubSeo(path: EditorialHub, documents: readonly EditorialSummary[]): PageSeo {
 	const hub = editorialHubs[path];
