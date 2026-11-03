@@ -7,18 +7,19 @@
 		postalCode = $bindable(''),
 		fallbackBuy,
 		submitting = false,
-		mug
+		allowFixedRate
 	}: {
 		variantId: string;
 		price: number | undefined;
 		postalCode: string;
 		fallbackBuy: () => Promise<void>;
 		submitting: boolean;
-		mug: boolean;
+		allowFixedRate: boolean;
 	} = $props();
 	type Quote = {
 		token?: string;
 		checkoutReady: boolean;
+		factoryAddress?: boolean;
 		variantId: string;
 		postalCode: string;
 		unitPriceBrl: number;
@@ -38,8 +39,10 @@
 	let lastName = $state('');
 	let address1 = $state('');
 	let address2 = $state('');
+	let number = $state('');
+	let district = $state('');
 	const postal = $derived(postalCode.trim().replace('-', ''));
-	const fallback = $derived(reviewedDestination(postalCode));
+	const fallback = $derived(allowFixedRate ? reviewedDestination(postalCode) : undefined);
 	const money = (value: number) =>
 		new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
 	let generation = 0;
@@ -54,6 +57,8 @@
 		message = '';
 		address1 = '';
 		address2 = '';
+		number = '';
+		district = '';
 	});
 	async function calculate(event: SubmitEvent) {
 		event.preventDefault();
@@ -122,7 +127,9 @@
 					address: {
 						firstName: firstName.trim(),
 						lastName: lastName.trim(),
-						address1: address1.trim(),
+						address1: quote.factoryAddress
+							? [address1, number, district].map((x) => x.trim()).join(', ')
+							: address1.trim(),
 						address2: address2.trim(),
 						postalCode: postal,
 						city: quote.city,
@@ -212,13 +219,19 @@
 						/></label
 					>
 					<label
-						>Rua, número e bairro<input
+						>{quote.factoryAddress ? 'Rua ou avenida' : 'Rua, número e bairro'}<input
 							bind:value={address1}
 							autocomplete="address-line1"
-							maxlength="200"
+							maxlength={quote.factoryAddress ? 110 : 200}
 							required
 						/></label
 					>
+					{#if quote.factoryAddress}
+						<label>Número (ou S/N)<input bind:value={number} maxlength="15" required /></label>
+						<label
+							>Bairro ou localidade<input bind:value={district} maxlength="60" required /></label
+						>
+					{/if}
 					<label
 						>Complemento (opcional)<input
 							bind:value={address2}
@@ -243,8 +256,7 @@
 		<p>
 			Também há entrega com tarifa fixa para {fallback.city} ({fallback.provinceCode}). Frete de {money(
 				shopDelivery.priceBrl
-			)} e prazo de até {mug ? fallback.deliveryBusinessDays : fallback.bagDeliveryBusinessDays} dias
-			úteis.
+			)} e prazo de até {fallback.deliveryBusinessDays} dias úteis.
 		</p>
 		<p><strong>Total com frete: {money(price + shopDelivery.priceBrl)}</strong></p>
 		<button type="button" class="button" disabled={submitting} onclick={fallbackBuy}

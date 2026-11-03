@@ -1,9 +1,12 @@
 import { DatabaseSync, type SQLInputValue } from 'node:sqlite';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, onTestFinished, vi } from 'vitest';
 import { testShopSeller } from '../../../../tests/fixtures/shop-seller';
 import { nationalCheckout } from './national-checkout';
 import { ensureCheckoutSchema } from './checkout-schema';
 import { draftToken } from './national-draft';
+import { bridge, processOrder, reconcile, recordPaid, recordSignal } from './dimona-queue';
+import { ShopHttpError } from './shop-http';
+import type { PaidShopifyOrder } from './shopify-production';
 import { approvedShopProducts } from './shop-catalog-map';
 import { checkOffer, locality, physicalOffer, provider, shippingRate } from './national-freight';
 const env = {
@@ -34,12 +37,23 @@ const newDB = (db = new DatabaseSync(':memory:')) => {
 		return {
 			bind: (...v: SQLInputValue[]) => prepare(sql, v),
 			first: async () => db.prepare(sql).get(...vals) ?? null,
-			run: async () => ({ success: true, meta: db.prepare(sql).run(...vals) })
+			all: async () => ({ results: db.prepare(sql).all(...vals) }),
+			run: () => ({ success: true, meta: db.prepare(sql).run(...vals) })
 		};
 	}
 	return {
 		prepare,
-		batch: async (xs: ReturnType<typeof prepare>[]) => Promise.all(xs.map((x) => x.run()))
+		batch: async (xs: ReturnType<typeof prepare>[]) => {
+			db.exec('BEGIN');
+			try {
+				const result = xs.map((x) => x.run());
+				db.exec('COMMIT');
+				return result;
+			} catch (e) {
+				db.exec('ROLLBACK');
+				throw e;
+			}
+		}
 	} as unknown as D1Database;
 };
 const req = (body: unknown) =>
@@ -69,11 +83,13 @@ it('recusa redirecionamentos do fornecedor sem repassar credenciais a outro dest
 	).rejects.toThrow('upstream');
 	expect(fetcher).toHaveBeenCalledTimes(1);
 });
-function upstream() {
+function upstream(selectedVariant = variantId) {
+	const selected = physicalOffer(selectedVariant);
+	const selectedProduct = approvedShopProducts[selected.slug];
 	let shipping = '15.50',
 		extraTax = '0',
 		carrier = 'J&T';
-	let savedVariantId = variantId.split('/').at(-1);
+	let savedVariantId = selectedVariant.split('/').at(-1);
 	let failAfterCreate = false;
 	let stored: Record<string, unknown> | undefined;
 	let transform: (draft: Record<string, unknown>) => void = () => undefined;
@@ -84,6 +100,8 @@ function upstream() {
 		if (s.includes('brasilapi') || s.includes('viacep'))
 			return json({ cep: '35160-001', city: 'Ipatinga', state: 'MG' });
 		if (s.endsWith('/shipping')) return json([rate(shipping, carrier)]);
+		if (selected.dimonaSku && s.endsWith('/sku/' + selected.dimonaSku + '/availability'))
+			return json({ [selected.dimonaSku]: 10 });
 		if (s.endsWith('/draft_orders/123.json?fields=id,line_items')) {
 			expect(opts?.method ?? 'GET').toBe('GET');
 			return json({
@@ -130,8 +148,8 @@ function upstream() {
 				},
 				shippingAddress: { ...addr, countryCodeV2: 'BR' },
 				lineItems: { nodes: [{ quantity: 1, custom: false }] },
-				totalPriceSet: money(79.9 + Number(shipping) + Number(extraTax)),
-				subtotalPriceSet: money(79.9),
+				totalPriceSet: money(selected.priceBrl + Number(shipping) + Number(extraTax)),
+				subtotalPriceSet: money(selected.priceBrl),
 				totalShippingPriceSet: money(Number(shipping))
 			};
 			transform(stored);
@@ -142,8 +160,8 @@ function upstream() {
 			return json({
 				data: {
 					product: {
-						id: product.productId,
-						handle: product.handle,
+						id: selectedProduct.productId,
+						handle: selectedProduct.handle,
 						title: 'Caneca',
 						description: 'Fixture',
 						availableForSale: true,
@@ -151,10 +169,10 @@ function upstream() {
 						variants: {
 							nodes: [
 								{
-									id: variantId,
+									id: selectedVariant,
 									title: 'Caneca',
 									availableForSale: true,
-									price: { amount: '79.90', currencyCode: 'BRL' },
+									price: { amount: selected.priceBrl.toFixed(2), currencyCode: 'BRL' },
 									selectedOptions: []
 								}
 							],
@@ -174,9 +192,246 @@ function upstream() {
 		changeDraft: (fn: typeof transform) => (transform = fn),
 		addTax: () => (extraTax = '8'),
 		created: () => drafts,
+		tags: () => stored?.tags as string[],
 		removed: () => deletes
 	};
 }
+const productionEnv = { ...env, DIMONA_ORDER_DISPATCH: 'manual_pix' };
+const industrialVariant = 'gid://shopify/ProductVariant/68006902235504';
+const sellerOrder = '901234';
+const shopifyOrder = 'gid://shopify/Order/' + sellerOrder;
+const factoryOrder = '878787';
+const shipped = {
+	factoryOrderId: factoryOrder,
+	sellerOrderId: sellerOrder,
+	statusId: 15,
+	status: 'Enviado',
+	trackingCode: 'BR123456789',
+	trackingUrl: null,
+	shipped: true
+};
+const numberedAddress = { ...address, address1: 'Rua Exemplo, 101, Centro' };
+
+async function factoryScenario() {
+	const sqlite = new DatabaseSync(':memory:');
+	onTestFinished(() => sqlite.close());
+	const db = newDB(sqlite),
+		up = upstream(industrialVariant);
+	const offer = physicalOffer(industrialVariant);
+	const call = (kind: 'quote' | 'checkout', data: unknown) =>
+		nationalCheckout(kind, req(data), productionEnv, db, up.fetcher, '203.0.113.49', now);
+	const res = await call('quote', {
+		variantId: industrialVariant,
+		quantity: 1,
+		postalCode: '35160001'
+	});
+	const { quote } = (await res.json()) as {
+		quote: { token: string; factoryAddress: boolean; checkoutReady: boolean };
+	};
+	expect(res.status).toBe(200);
+	expect(quote).toMatchObject({ factoryAddress: true, checkoutReady: true });
+	const invoice = (a = numberedAddress) => call('checkout', { token: quote.token, address: a });
+	const paidOrder = (): PaidShopifyOrder => ({
+		id: shopifyOrder,
+		note: '',
+		tags: up.tags(),
+		email: '',
+		document: '',
+		phone: '',
+		totalBrl: (offer.priceBrl + 15.5).toFixed(2),
+		shippingBrl: '15.50',
+		address: { ...numberedAddress, zip: '35160-001', countryCode: 'BR', phone: '' },
+		items: [
+			{
+				lineId: 'gid://shopify/LineItem/567',
+				variantId: industrialVariant,
+				quantity: 1,
+				unitBrl: offer.priceBrl.toFixed(2)
+			}
+		]
+	});
+	const ops = {
+		...bridge,
+		readPaidOrder: vi.fn<typeof bridge.readPaidOrder>(async () => paidOrder()),
+		listPaidOrders: vi
+			.fn<typeof bridge.listPaidOrders>()
+			.mockResolvedValue({ ids: [shopifyOrder], endCursor: null }),
+		dimonaAssetUrls: vi.fn<typeof bridge.dimonaAssetUrls>().mockResolvedValue({
+			design: 'https://fixture.example/art',
+			mock: 'https://fixture.example/mock'
+		}),
+		createDimonaOrder: vi
+			.fn<typeof bridge.createDimonaOrder>()
+			.mockResolvedValue({ factoryOrderId: factoryOrder }),
+		readDimonaOrder: vi.fn<typeof bridge.readDimonaOrder>().mockResolvedValue(null),
+		syncShopifyTracking: vi
+			.fn<typeof bridge.syncShopifyTracking>()
+			.mockResolvedValue('gid://shopify/Fulfillment/7')
+	};
+	const process = (time = now) =>
+		processOrder(db, productionEnv, up.fetcher, shopifyOrder, ops, time);
+	const state = () =>
+		sqlite.prepare('SELECT * FROM shop_factory_jobs WHERE order_id=?').get(shopifyOrder);
+	return { sqlite, db, up, ops, invoice, paidOrder, process, state, offer };
+}
+
+describe('Pedido industrial do checkout nacional ao rastreio', () => {
+	it('exige bairro e registra frete, preço e destino atomicamente antes de criar o rascunho', async () => {
+		const s = await factoryScenario();
+		expect(await (await s.invoice(address)).json()).toMatchObject({
+			ok: false,
+			code: 'invalid_address'
+		});
+		s.sqlite.exec(
+			"CREATE TRIGGER prevent_quote BEFORE INSERT ON shop_factory_quotes BEGIN SELECT RAISE(ABORT,'fixture'); END"
+		);
+		expect((await s.invoice()).status).toBe(503);
+		expect(s.sqlite.prepare('SELECT * FROM shop_checkout_attempts').all()).toEqual([]);
+		expect(s.up.created()).toBe(0);
+		s.sqlite.exec('DROP TRIGGER prevent_quote');
+		expect((await s.invoice()).status).toBe(200);
+		expect((await s.invoice()).status).toBe(200);
+		const rows = s.sqlite.prepare('SELECT * FROM shop_factory_quotes').all();
+		expect(rows).toHaveLength(1);
+		expect(rows[0]).toMatchObject({
+			variant: industrialVariant,
+			carrier: '5',
+			unit_cents: Math.round(s.offer.priceBrl * 100),
+			shipping_cents: 1550,
+			order_id: null
+		});
+		expect(s.up.tags()).toContain('atvna-q-' + rows[0].nonce);
+		expect(
+			s.sqlite.prepare('SELECT address_hash FROM shop_checkout_attempts').get()?.address_hash
+		).toBe(rows[0].address_hash);
+		expect(s.up.created()).toBe(1);
+	});
+	it('deduplica pagamento, aguarda a produção e devolve um único rastreio após consulta autenticada', async () => {
+		const s = await factoryScenario();
+		expect((await s.invoice()).status).toBe(200);
+		expect(await recordSignal(s.db, sellerOrder, factoryOrder, now)).toBe(false);
+		await Promise.all([recordPaid(s.db, shopifyOrder, now), recordPaid(s.db, shopifyOrder, now)]);
+		await Promise.all([s.process(), s.process()]);
+		expect(s.ops.createDimonaOrder).toHaveBeenCalledTimes(1);
+		const sent = s.ops.createDimonaOrder.mock.calls[0][2];
+		expect(sent).toMatchObject({
+			orderId: sellerOrder,
+			deliveryMethodId: '5',
+			address: {
+				street: 'Rua Exemplo',
+				number: '101',
+				neighborhood: 'Centro',
+				zipcode: '35160001'
+			},
+			items: [
+				{
+					dimonaSkuId: s.offer.dimonaSku,
+					quantity: 1,
+					designs: { front: 'https://fixture.example/art' },
+					mocks: { front: 'https://fixture.example/mock' }
+				}
+			]
+		});
+		expect(s.state()).toMatchObject({ stage: 'pix_or_production', factory_id: factoryOrder });
+		expect(s.sqlite.prepare('SELECT order_id FROM shop_factory_quotes').get()?.order_id).toBe(
+			shopifyOrder
+		);
+		expect(await recordSignal(s.db, sellerOrder, '999', now + 1)).toBe(false);
+		expect(await recordSignal(s.db, sellerOrder, factoryOrder, now + 1)).toBe(true);
+		s.ops.readDimonaOrder.mockResolvedValueOnce({
+			...shipped,
+			shipped: false,
+			status: 'Produzindo',
+			trackingCode: null
+		});
+		await s.process(now + 1);
+		expect(s.ops.syncShopifyTracking).not.toHaveBeenCalled();
+		await recordSignal(s.db, sellerOrder, factoryOrder, now + 2);
+		s.ops.readDimonaOrder.mockResolvedValueOnce(shipped);
+		await s.process(now + 2);
+		expect(s.ops.readDimonaOrder).toHaveBeenLastCalledWith(
+			productionEnv,
+			s.up.fetcher,
+			factoryOrder,
+			sellerOrder
+		);
+		expect(s.ops.syncShopifyTracking.mock.calls[0][2]).toMatchObject({
+			orderId: shopifyOrder,
+			number: shipped.trackingCode,
+			items: [{ lineId: 'gid://shopify/LineItem/567', quantity: 1 }]
+		});
+		expect(s.state()).toMatchObject({
+			stage: 'done',
+			fulfillment_id: 'gid://shopify/Fulfillment/7'
+		});
+		await reconcile(s.db, productionEnv, s.up.fetcher, s.ops, now + 9000);
+		expect(s.ops.syncShopifyTracking).toHaveBeenCalledTimes(1);
+		expect(s.ops.createDimonaOrder).toHaveBeenCalledTimes(1);
+	});
+	it('não permite que dois pedidos consumam a mesma cotação, mesmo processados juntos', async () => {
+		const s = await factoryScenario();
+		expect((await s.invoice()).status).toBe(200);
+		const ids = [shopifyOrder, 'gid://shopify/Order/901235'];
+		s.ops.readPaidOrder.mockImplementation(async (_env, _f, id) => ({ ...s.paidOrder(), id }));
+		await Promise.all(ids.map((id) => recordPaid(s.db, id, now)));
+		await Promise.all(
+			ids.map((id) => processOrder(s.db, productionEnv, s.up.fetcher, id, s.ops, now))
+		);
+		expect(s.ops.createDimonaOrder).toHaveBeenCalledTimes(1);
+		expect(s.sqlite.prepare('SELECT stage FROM shop_factory_jobs ORDER BY stage').all()).toEqual([
+			{ stage: 'pix_or_production' },
+			{ stage: 'review' }
+		]);
+	});
+	it.each([
+		['dimona_order_exists', 409],
+		['dimona_response_unknown', 503]
+	] as const)('recupera %s sem repetir fabricação mesmo após 404', async (code, status) => {
+		const s = await factoryScenario();
+		expect((await s.invoice()).status).toBe(200);
+		s.ops.createDimonaOrder.mockRejectedValueOnce(new ShopHttpError(code, status));
+		await reconcile(s.db, productionEnv, s.up.fetcher, s.ops, now);
+		expect(s.state()).toMatchObject({ stage: 'uncertain', factory_id: null });
+		s.ops.listPaidOrders.mockRejectedValue(new Error('list unavailable'));
+		await reconcile(s.db, productionEnv, s.up.fetcher, s.ops, now + 3600);
+		expect(s.ops.readDimonaOrder).toHaveBeenCalledWith(
+			productionEnv,
+			s.up.fetcher,
+			sellerOrder,
+			sellerOrder
+		);
+		expect(s.state()?.stage).toBe('uncertain');
+		await recordSignal(s.db, sellerOrder, factoryOrder, now + 3601);
+		s.ops.readDimonaOrder.mockResolvedValue(shipped);
+		await s.process(now + 3601);
+		expect(s.state()?.stage).toBe('done');
+		expect(s.ops.createDimonaOrder).toHaveBeenCalledTimes(1);
+		expect(s.ops.syncShopifyTracking).toHaveBeenCalledTimes(1);
+	});
+	it.each(['unpaid', 'outside_manifest', 'price', 'address', 'missing_quote'] as const)(
+		'barra %s antes do envio à fábrica',
+		async (mode) => {
+			const s = await factoryScenario();
+			expect((await s.invoice()).status).toBe(200);
+			const order = s.paidOrder();
+			if (mode === 'outside_manifest') order.items[0].variantId = variantId;
+			if (mode === 'price') order.totalBrl = '1.00';
+			if (mode === 'address') order.address.address1 = 'Rua Outra, 101, Centro';
+			if (mode === 'missing_quote') order.tags = ['atvna-entrega-nacional'];
+			s.ops.readPaidOrder.mockResolvedValue(mode === 'unpaid' ? null : order);
+			await recordPaid(s.db, shopifyOrder, now);
+			await processOrder(s.db, env, s.up.fetcher, shopifyOrder, s.ops, now);
+			expect(s.ops.readPaidOrder).not.toHaveBeenCalled();
+			await s.process();
+			expect(s.state()?.stage).toBe(
+				['unpaid', 'outside_manifest'].includes(mode) ? 'ignored' : 'review'
+			);
+			expect(s.ops.createDimonaOrder).not.toHaveBeenCalled();
+			expect(s.ops.dimonaAssetUrls).not.toHaveBeenCalled();
+		}
+	);
+});
+
 function scenario() {
 	const db = newDB(),
 		up = upstream();

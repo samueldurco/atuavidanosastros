@@ -78,7 +78,10 @@ function fld(s: unknown, max: number, min = 1) {
 		return fail('invalid_address');
 	return s.trim().replace(/\s+/g, ' ');
 }
-export function addressFor(input: unknown, q: SealedQuote): BuyerAddress {
+export function addressFor(
+	input: unknown,
+	q: Pick<SealedQuote, 'postalCode' | 'provinceCode' | 'city'>
+): BuyerAddress {
 	const a = record(input),
 		city = fld(a.city, 100),
 		street = fld(a.address1, 220, 4);

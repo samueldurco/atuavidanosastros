@@ -6,6 +6,12 @@ import reviewedDestinations from './shop-reviewed-destinations.json' with { type
 export const shopCommerceSlugs: readonly string[] = slugs;
 const eligible = new Set<string>(shopCommerceSlugs);
 const reviewedSlugs = new Set(reviewedOffers.map((offer) => offer.slug));
+const retailMugSlugs = new Set(
+	reviewedOffers
+		.filter((offer) => (offer.dimonaRetailProductionDays ?? 0) > 0)
+		.map((offer) => offer.slug)
+);
+export const isRetailMug = (slug: string): boolean => retailMugSlugs.has(slug);
 const reviewedPrices = new Map(reviewedOffers.map((offer) => [offer.variantId, offer.priceBrl]));
 const destinations = new Map(
 	reviewedDestinations.map((entry) => [entry.postalCode.replace('-', ''), entry])

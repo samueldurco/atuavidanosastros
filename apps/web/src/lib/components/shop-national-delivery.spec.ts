@@ -10,7 +10,7 @@ it('renders a postal-code pattern accepting Brazilian CEPs with or without a hyp
 			postalCode: '',
 			fallbackBuy: async () => {},
 			submitting: false,
-			mug: true
+			allowFixedRate: true
 		}
 	});
 	const pattern = /<input\b[^>]*\bid="shop-postal-code"[^>]*\bpattern="([^"]+)"/.exec(body)?.[1];

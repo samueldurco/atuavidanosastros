@@ -1,5 +1,6 @@
 import { json } from '@sveltejs/kit';
 import {
+	isRetailMug,
 	isShopCommerceEligible,
 	reviewedDestination,
 	reviewedUnitPrice
@@ -317,7 +318,9 @@ export async function shopCart(
 		}
 		if (new Set(lines.map((line) => line.merchandiseId)).size !== lines.length)
 			throw new ShopHttpError('invalid_lines', 400);
-		// POST clients cannot bypass current availability, BRL or positive-price checks.
+		// Only retail mugs can bypass the national quote that records the address and carrier.
+		if (lines.some((line) => !isRetailMug(approvedVariantSlugs.get(line.merchandiseId)!)))
+			throw new ShopHttpError('national_checkout_required', 409);
 		const slugs = [...new Set(lines.map((line) => approvedVariantSlugs.get(line.merchandiseId)!))];
 		const products = await Promise.all(
 			slugs.map((slug) => readApprovedProduct(shop, fetcher, slug, buyerIp))
