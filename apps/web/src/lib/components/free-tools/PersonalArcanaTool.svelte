@@ -88,7 +88,7 @@
 						<strong>{result.cardNumber}</strong>.
 					</p>
 					<ol aria-label="Etapas da soma">
-						{#each result.steps as step}
+						{#each result.steps as step (step)}
 							<li>{step.digits.join(' + ')} = <strong>{step.total}</strong></li>
 						{/each}
 					</ol>
