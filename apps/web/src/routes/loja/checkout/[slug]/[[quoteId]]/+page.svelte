@@ -1,7 +1,12 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
+	import { onMount } from 'svelte';
 	let { data, form }: PageProps = $props();
 	let pending = $state(false);
+	let ready = $state(false);
+	onMount(() => {
+		ready = true;
+	});
 	let refresh = $state(false);
 	let message = $state('');
 	const money = (cents: number) =>
@@ -96,7 +101,7 @@
 				</p>
 				<a href={'/loja/peca/' + data.slug}>Alterar peça ou CEP</a>
 			</section>
-			<form onsubmit={pay} aria-label="Endereço para pagamento">
+			<form method="post" onsubmit={pay} aria-label="Endereço para pagamento">
 				<fieldset disabled={pending}>
 					<legend>Contato</legend>
 					<label
@@ -143,7 +148,8 @@
 					>
 				</fieldset>
 				{#if message}<p role="status">{message}</p>{/if}
-				<button type="submit" class="button" disabled={pending}
+				<noscript><p>Ative o JavaScript para continuar ao pagamento.</p></noscript>
+				<button type="submit" class="button" disabled={!ready || pending}
 					>{pending ? 'Abrindo pagamento…' : 'Continuar para pagamento'}</button
 				>
 			</form>

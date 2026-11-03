@@ -139,7 +139,7 @@ test('O checkout recusa cotação vencida, preço divergente e token de outra pe
 	]) {
 		const result = await request.post('/loja/checkout/' + target, {
 			form: { token },
-			headers: { origin: baseURL! },
+			headers: { origin: baseURL!, accept: 'text/html' },
 			maxRedirects: 0
 		});
 		expect(result.status()).toBe(409);
@@ -147,7 +147,7 @@ test('O checkout recusa cotação vencida, preço divergente e token de outra pe
 	}
 	const allowed = await request.post('/loja/checkout/' + slug, {
 		form: { token: signQuote(variantId, priceBrl, nonce) },
-		headers: { origin: baseURL! },
+		headers: { origin: baseURL!, accept: 'text/html' },
 		maxRedirects: 0
 	});
 	expect(allowed.status()).toBe(303);
@@ -244,6 +244,7 @@ test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo 
 	await expect(summary).toContainText('35160-001');
 	await expect(summary).toContainText('Natural');
 	const address = page.getByRole('form', { name: 'Endereço para pagamento' });
+	await expect(address).toHaveAttribute('method', 'post');
 	await address.getByLabel('E-mail').fill('pessoa@example.test');
 	await address.getByLabel('Nome', { exact: true }).fill('Pessoa');
 	await address.getByLabel('Sobrenome').fill('Exemplo');
