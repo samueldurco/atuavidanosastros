@@ -1,167 +1,144 @@
 {
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "documentId": "guide-mercurio-retrogrado",
-  "revision": 3,
-  "digest": "98c31e609297622fed096268aa9115cb3c417345378a02791e689d15afa7db6c",
-  "reviewedAt": "2026-10-06T16:08:49.279Z",
+  "revision": 4,
+  "digest": "41917816c07ed84995b981213248d8fe60c5bf41ca0684a40c284bfea4515cbc",
   "reviewMode": "separate-pass",
+  "reviewedAt": "2026-11-03T10:12:25.816Z",
+  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
   "risk": "low-educational-evergreen",
   "checks": [
     {
       "id": "scope",
       "status": "PASS",
-      "reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
+      "reason": "Guia atemporal sobre um fenômeno astronômico e sua leitura cultural, sem previsão de trânsito vigente.",
       "evidence": [
-        "document.json#kind",
-        "evidencias/claims.json",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "claims",
       "status": "PASS",
-      "reason": "Movimento retrógrado aparente apoiado na NASA; analogia identificada como não calculadora; checklist de comunicação sem período atual nem causalidade planetária. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
+      "reason": "A direção é aparente em relação às estrelas. A explicação parte de órbitas em torno do Sol e identifica Mercúrio como mais rápido que a Terra.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "rights",
       "status": "PASS",
-      "reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
+      "reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
       "evidence": [
-        "evidencias/identity-rights.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "identity",
       "status": "PASS",
-      "reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
+      "reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
       "evidence": [
-        "document.json#author",
-        "document.json#automationDisclosure",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "safety",
       "status": "PASS",
-      "reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
+      "reason": "O convite com fusos diferentes serve para conferir um horário, sem atribuir falha de comunicação ao planeta.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "originality",
       "status": "PASS",
-      "reason": "Há contribuição prática própria: sections[1], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
+      "reason": "A sequência A/B/C é um esquema autoral com direção descrita em palavras. O convite é um exemplo hipotético.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/originality.json",
-        "evidencias/competition.json",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "tools",
       "status": "PASS",
-      "reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
+      "reason": "O esquema pode ser usado direto no texto e o destino complementar reúne outros temas de previsões.",
       "evidence": [
-        "evidencias/journeys.json",
-        "document.json#sections"
+        "evidencias/liberacao-r4.md#jornada"
       ]
     },
     {
       "id": "integrity",
       "status": "PASS",
-      "reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
+      "reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
       "evidence": [
-        "document.json",
-        "evidencias/review-pass.json",
-        "evidencias/authority-provisioning.json",
-        "evidencias/owner-authorization.json"
+        "evidencias/liberacao-r4.md#integridade"
       ]
     }
   ],
   "scores": [
     {
       "id": "intent",
-      "points": 19,
-      "reason": "Título e escopo respondem à intenção conceitual; observação específica: Movimento retrógrado aparente apoiado na NASA; analogia identificada como não calculadora; checklist de comunicação sem período atual nem causalidade planetária.",
+      "points": 20,
+      "reason": "O primeiro parágrafo responde o que se vê quando Mercúrio parece inverter o movimento.",
       "evidence": [
-        "document.json#title",
-        "document.json#sections",
-        "evidencias/briefs.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "value",
       "points": 18,
-      "reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
+      "reason": "Seguir a mesma referência em ordem inversa dá ao leitor uma maneira concreta de entender o deslocamento.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "accuracy",
       "points": 15,
-      "reason": "Afirmações centrais limitadas ao apoio das fontes S02; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
+      "reason": "A direção é aparente em relação às estrelas. A explicação parte de órbitas em torno do Sol e identifica Mercúrio como mais rápido que a Terra.",
       "evidence": [
-        "evidencias/claims.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "trust",
-      "points": 9,
-      "reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
+      "points": 10,
+      "reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
       "evidence": [
-        "document.json#author",
-        "document.json#sources",
-        "document.json#automationDisclosure"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "language",
-      "points": 8,
-      "reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
+      "points": 9,
+      "reason": "A legenda em palavras torna o raciocínio das setas acessível mesmo em leitura linear.",
       "evidence": [
-        "document.json#sections"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "journey",
-      "points": 9,
-      "reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
+      "points": 8,
+      "reason": "O esquema pode ser usado direto no texto e o destino complementar reúne outros temas de previsões.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/journeys.json"
+        "evidencias/liberacao-r4.md#jornada"
       ]
     },
     {
       "id": "metadata",
-      "points": 8,
-      "reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
+      "points": 9,
+      "reason": "O título corresponde à definição que o texto oferece e evita promessas de datas ou prognósticos.",
       "evidence": [
-        "document.json",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#integridade"
       ]
     },
     {
       "id": "maintenance",
-      "points": 4,
-      "reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
+      "points": 5,
+      "reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
       "evidence": [
-        "evidencias/maintenance.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     }
   ],
-  "decision": "APROVADO_AUTOMATICAMENTE",
   "corrections": [],
-  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+  "decision": "APROVADO_AUTOMATICAMENTE"
 }

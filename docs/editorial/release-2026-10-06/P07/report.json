@@ -1,167 +1,144 @@
 {
   "policyVersion": "atvna-editorial-policy-2026-10-06-v1",
   "documentId": "guide-sinastria-limites",
-  "revision": 3,
-  "digest": "e308941277e4e9c1740dde06235d0c999701ba1de159e74afa96f8f6fd4a9e3d",
-  "reviewedAt": "2026-10-06T16:08:49.347Z",
+  "revision": 4,
+  "digest": "9240f7c6f13e8e9bc76ed74793eb2db60d8b002f2e4a4cd2b5a06719106c1604",
   "reviewMode": "separate-pass",
+  "reviewedAt": "2026-11-03T10:12:25.850Z",
+  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES",
   "risk": "low-educational-evergreen",
   "checks": [
     {
       "id": "scope",
       "status": "PASS",
-      "reason": "Guia conceitual educativo de baixo risco e durável; não publica efemérides, leitura personalizada ou decisão sensível.",
+      "reason": "Comparação educativa entre duas formas de leitura astrológica, com exemplo de casal fictício.",
       "evidence": [
-        "document.json#kind",
-        "evidencias/claims.json",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "claims",
       "status": "PASS",
-      "reason": "Distingue recorte solar e comparação de mapas conforme Horóscopo Virtual; exercício de acordo para passeio, sem cálculo, porcentagem ou veredito sobre relação. S03 é contexto adicional. Afirmações centrais confrontadas com os trechos efetivamente abertos, sem usar snippets como prova.",
+      "reason": "A sinastria examina relações entre mapas natais. A comparação por signos solares usa um recorte menor, como evidencia a segunda situação do casal.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "rights",
       "status": "PASS",
-      "reason": "Redação e exemplos próprios; síntese factual/tradicional atribuída; sem excerto, tradução integral, imagem ou material considerado livre apenas por estar na web.",
+      "reason": "A redação descreve o exemplo com palavras próprias e cita as referências consultadas. Nenhum ativo externo é incorporado ao documento.",
       "evidence": [
-        "evidencias/identity-rights.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "identity",
       "status": "PASS",
-      "reason": "Autoria Organization e automação declaradas no schema do runtime e no template implementado; sem pessoa, credencial ou revisão humana fictícias.",
+      "reason": "A produção com IA é declarada pela redação organizacional, sem atribuição de testemunho ou de revisão humana.",
       "evidence": [
-        "document.json#author",
-        "document.json#automationDisclosure",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "safety",
       "status": "PASS",
-      "reason": "Não há resultado garantido, manipulação por medo, cálculo inventado ou recomendação clínica/financeira; exemplos e limites constam no texto.",
+      "reason": "O consentimento precede o uso dos dados da outra pessoa. A conversa proposta deixa a decisão com o casal.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "originality",
       "status": "PASS",
-      "reason": "Há contribuição prática própria: sections[2], sections[3]. Não foram encontrados parágrafos idênticos ou sequências de oito palavras entre estes 12 corpos; fontes concorrentes foram confrontadas qualitativamente. Escopo limitado, sem certificação universal de plágio.",
+      "reason": "A mesma dupla reaparece sob duas condições de informação. A conversa traduz uma diferença de método em um acordo observável.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/originality.json",
-        "evidencias/competition.json",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "tools",
       "status": "PASS",
-      "reason": "Não há CTA ativo para ferramenta ou oferta paga não comprovada. O exercício entrega valor no próprio guia; rotas relacionadas são candidatas não renderizáveis até a publicação.",
+      "reason": "A ferramenta indicada usa dois conjuntos de dados natais e exige o consentimento descrito no guia.",
       "evidence": [
-        "evidencias/journeys.json",
-        "document.json#sections"
+        "evidencias/liberacao-r4.md#jornada"
       ]
     },
     {
       "id": "integrity",
       "status": "PASS",
-      "reason": "Corpo completo relido em passagem separada; fontes e limites do corpus preservados. Revisão, datas reais, autoria Organization, declaração de automação e digest final congelados. Autoridade Ed25519 provisionada pelo serviço remoto autorizado, chave privada sob custódia GitHub. A atestação e a admissão serão verificadas nos gates posteriores; este relatório não libera hospedagem.",
+      "reason": "O documento final da revisão 4 preserva os valores da versão aprovada, com state em PUBLISHED. Identidade, rota e primeira publicação foram comparadas com a revisão 3. O digest identifica a revisão avaliada.",
       "evidence": [
-        "document.json",
-        "evidencias/review-pass.json",
-        "evidencias/authority-provisioning.json",
-        "evidencias/owner-authorization.json"
+        "evidencias/liberacao-r4.md#integridade"
       ]
     }
   ],
   "scores": [
     {
       "id": "intent",
-      "points": 19,
-      "reason": "Título e escopo respondem à intenção conceitual; observação específica: Distingue recorte solar e comparação de mapas conforme Horóscopo Virtual; exercício de acordo para passeio, sem cálculo, porcentagem ou veredito sobre relação. S03 é contexto adicional.",
+      "points": 20,
+      "reason": "A comparação entre signo solar e sinastria responde diretamente à pergunta do título.",
       "evidence": [
-        "document.json#title",
-        "document.json#sections",
-        "evidencias/briefs.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "value",
-      "points": 18,
-      "reason": "Exercício original utilizável e com entrega finita, sem compra; permanece introdutório e sem ferramenta calculada.",
+      "points": 19,
+      "reason": "O leitor identifica que dados possui e pode escolher uma conversa mesmo sem o mapa completo.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/claims.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "accuracy",
       "points": 14,
-      "reason": "Afirmações centrais limitadas ao apoio das fontes S04; S03 contextual; tradição é identificada e exemplos não são prova. Não é validação de um motor.",
+      "reason": "A sinastria examina relações entre mapas natais. A comparação por signos solares usa um recorte menor, como evidencia a segunda situação do casal.",
       "evidence": [
-        "evidencias/claims.json",
-        "evidencias/sources-rights.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "trust",
       "points": 9,
-      "reason": "Fonte, publicador e automação explícitos; revisão humana independente ausente e declarada.",
+      "reason": "A autoria automatizada, a fonte do conceito e a condição fictícia do exemplo são identificáveis.",
       "evidence": [
-        "document.json#author",
-        "document.json#sources",
-        "document.json#automationDisclosure"
+        "evidencias/liberacao-r4.md#autoria-e-direitos"
       ]
     },
     {
       "id": "language",
-      "points": 8,
-      "reason": "Perguntas e exemplos concretos, sem experiência pessoal inventada. Repetição de limites torna alguns trechos mais densos.",
+      "points": 9,
+      "reason": "O exemplo com Lia e Dani esclarece linguagem abstrata por meio de uma conversa.",
       "evidence": [
-        "document.json#sections"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     },
     {
       "id": "journey",
       "points": 9,
-      "reason": "Valor gratuito completo no texto; nenhum destino liberado de ferramenta ou oferta foi comprovado para acrescentar CTA.",
+      "reason": "A ferramenta indicada usa dois conjuntos de dados natais e exige o consentimento descrito no guia.",
       "evidence": [
-        "document.json#sections",
-        "evidencias/journeys.json"
+        "evidencias/liberacao-r4.md#jornada"
       ]
     },
     {
       "id": "metadata",
-      "points": 8,
-      "reason": "Título, descrição, caminho e datas finais reais conferidos; Article, Organization e automação explícitos. Canonical, navegação e admissão hospedada exigem os gates posteriores.",
+      "points": 9,
+      "reason": "A descrição anuncia a comparação que o título pede e a URL preserva o tema.",
       "evidence": [
-        "document.json",
-        "evidencias/review-pass.json"
+        "evidencias/liberacao-r4.md#integridade"
       ]
     },
     {
       "id": "maintenance",
-      "points": 4,
-      "reason": "Publicador e gatilhos finitos de revisão definidos; ainda falta vinculá-los ao registro operacional publicado.",
+      "points": 5,
+      "reason": "Conteúdo atemporal. A manutenção envolve verificar a referência e a continuidade do destino quando forem alterados.",
       "evidence": [
-        "evidencias/maintenance.json"
+        "evidencias/liberacao-r4.md#texto-e-fontes"
       ]
     }
   ],
-  "decision": "APROVADO_AUTOMATICAMENTE",
   "corrections": [],
-  "publicationGate": "PENDING_INTEGRATION_AND_RELEASE_GATES"
+  "decision": "APROVADO_AUTOMATICAMENTE"
 }

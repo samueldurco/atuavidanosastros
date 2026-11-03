@@ -158,7 +158,15 @@ if (request.operation === "provision") {
   )
     throw Error("Custodied key does not match audited authority");
   const attestations = [];
-  for (const code of request.scope) {
+  const signingScope = request.signOnly ?? request.scope;
+  if (
+    !Array.isArray(signingScope) ||
+    signingScope.length === 0 ||
+    new Set(signingScope).size !== signingScope.length ||
+    signingScope.some((code) => !request.scope.includes(code))
+  )
+    throw Error("Signing subset must belong to the authorized scope");
+  for (const code of signingScope) {
     const dir = `docs/editorial/release-2026-10-06/${code}`;
     const document = JSON.parse(
       fs.readFileSync(`${dir}/document.json`, "utf8"),
