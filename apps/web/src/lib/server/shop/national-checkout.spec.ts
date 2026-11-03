@@ -5,7 +5,7 @@ import { nationalCheckout } from './national-checkout';
 import { ensureCheckoutSchema } from './checkout-schema';
 import { draftToken } from './national-draft';
 import { approvedShopProducts } from './shop-catalog-map';
-import { checkOffer, locality, physicalOffer, shippingRate } from './national-freight';
+import { checkOffer, locality, physicalOffer, provider, shippingRate } from './national-freight';
 const env = {
 	FEATURE_PHYSICAL_CHECKOUT: 'true',
 	SHOP_SELLER_DISCLOSURE_APPROVED: 'true',
@@ -59,6 +59,16 @@ const address = {
 };
 const json = (v: unknown) =>
 	new Response(JSON.stringify(v), { headers: { 'content-type': 'application/json' } });
+it('recusa redirecionamentos do fornecedor sem repassar credenciais a outro destino', async () => {
+	const fetcher = vi.fn<typeof fetch>(async (_url, init) => {
+		expect(init?.redirect).toBe('manual');
+		return new Response(null, { status: 307, headers: { location: 'https://other.example' } });
+	});
+	await expect(
+		provider(fetcher, 'https://supplier.example', { headers: { 'api-key': 'fixture' } })
+	).rejects.toThrow('upstream');
+	expect(fetcher).toHaveBeenCalledTimes(1);
+});
 function upstream() {
 	let shipping = '15.50',
 		extraTax = '0',
