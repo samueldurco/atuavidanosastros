@@ -64,7 +64,7 @@ for (const [slug, guide, tool] of entries) {
 		page
 	}) => {
 		await page.goto('/temas/' + slug);
-		await page.getByRole('link', { name: 'Por onde começar?' }).click();
+		await page.getByRole('link', { name: 'Por onde começar?', exact: true }).click();
 		const entry = page.locator('#por-onde-comecar');
 		await expect(entry.getByRole('heading', { level: 2 })).toBeInViewport();
 		const action = entry.locator(`a[href="${tool}"]`);

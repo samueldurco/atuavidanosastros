@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import reviewedOffers from "../apps/web/src/lib/data/shop-reviewed-offers.json" with { type: "json" };
+import { approvedShopProducts } from "../apps/web/src/lib/server/shop/shop-catalog-map.ts";
 import {
   commerceConfigurationChecks,
   configurationChecks,
@@ -422,7 +424,7 @@ test("physical postflight refuses an unspecified or malformed scope before any p
   }
 });
 
-test("the one-unit release checks the reviewed deadline, exact variant and a closed neighboring mug", async () => {
+test("the one-unit release checks its deadline, admitted mug offers and an excluded catalog product", async () => {
   const pilot = {
     ...commerceConfig,
     vars: {
@@ -443,11 +445,18 @@ test("the one-unit release checks the reviewed deadline, exact variant and a clo
       vars: { ...pilot.vars, SHOP_DELIVERY_MAX_BUSINESS_DAYS: "7" },
     }).some((item) => !item.pass),
   );
-  for (const [id, amount, neighborClosed, expected] of [
-    ["gid://shopify/ProductVariant/68006922223984", "79.90", true, true],
-    ["gid://shopify/ProductVariant/68006922223984", "79.91", true, false],
-    ["gid://shopify/ProductVariant/other", "79.90", true, false],
-    ["gid://shopify/ProductVariant/68006922223984", "79.90", false, false],
+  const admittedMugs = {
+    "caneca-aries": "gid://shopify/ProductVariant/68006922223984",
+    "caneca-cancer": "gid://shopify/ProductVariant/68006922322288",
+  };
+  for (const fault of [
+    undefined,
+    "caneca-aries-price",
+    "caneca-aries-id",
+    "caneca-cancer-price",
+    "caneca-cancer-id",
+    "extra-variant",
+    "excluded-open",
   ]) {
     const initial = replies();
     const requests = [];
@@ -460,31 +469,41 @@ test("the one-unit release checks the reviewed deadline, exact variant and a clo
             { code: "diagnostic_disabled" },
             { status: 404 },
           );
-        if (url.endsWith("/caneca-cancer"))
+        const slug = new URL(url).pathname.split("/").pop();
+        if (!Object.hasOwn(admittedMugs, slug))
           return Response.json(
             { code: "product_not_found" },
-            { status: neighborClosed ? 404 : 200 },
+            { status: fault === "excluded-open" ? 200 : 404 },
           );
+        const variant = {
+          id: fault === `${slug}-id` ? "unexpected" : admittedMugs[slug],
+          availableForSale: true,
+          price: {
+            amount: fault === `${slug}-price` ? "79.91" : "79.90",
+            currencyCode: "BRL",
+          },
+        };
         return Response.json({
           ok: true,
           product: {
-            handle: "caneca-aries",
+            handle: slug,
             availableForSale: true,
-            variants: [
-              {
-                id,
-                availableForSale: true,
-                price: { amount, currencyCode: "BRL" },
-              },
-            ],
+            variants:
+              fault === "extra-variant"
+                ? [variant, { ...variant, id: "unexpected" }]
+                : [variant],
           },
         });
       },
     });
-    assert.equal(result.pass, expected);
+    assert.equal(result.pass, fault === undefined, fault);
+    const excludedSlug = requests[2]?.split("/").pop();
+    assert.ok(Object.hasOwn(approvedShopProducts, excludedSlug));
+    assert.ok(!reviewedOffers.some((offer) => offer.slug === excludedSlug));
     assert.deepEqual(requests, [
       "/api/shop/product/caneca-aries",
       "/api/shop/product/caneca-cancer",
+      `/api/shop/product/${excludedSlug}`,
       "/api/shop/diagnostic",
     ]);
   }

@@ -6,6 +6,8 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import ts from "typescript";
+import reviewedOffers from "../apps/web/src/lib/data/shop-reviewed-offers.json" with { type: "json" };
+import { approvedShopProducts } from "../apps/web/src/lib/server/shop/shop-catalog-map.ts";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const project = "atuavidanosastros";
@@ -341,41 +343,64 @@ export async function postflight(
   checks.push(await readConfigurationCheck(readProject));
   if (checks.some((item) => !item.pass))
     return report("pages-postflight", checks);
+  const restricted =
+    config.vars.FEATURE_PHYSICAL_CHECKOUT === "true" &&
+    config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY === "true";
+  const sampledOffers = [
+    {
+      slug: ariesRoute.slug,
+      variantId: ariesRoute.variantId,
+      priceBrl: ariesRoute.itemPriceBrl,
+    },
+    ...reviewedOffers.filter((offer) => offer.slug === "caneca-cancer"),
+  ];
+  const reviewedSlugs = new Set(reviewedOffers.map((offer) => offer.slug));
+  const excludedSlug = Object.keys(approvedShopProducts).find(
+    (slug) => !reviewedSlugs.has(slug),
+  );
+  if (restricted && !excludedSlug)
+    return report("pages-postflight", [
+      ...checks,
+      check("physical-commerce-scope-has-excluded-product", false),
+    ]);
+  const probeSlugs = restricted
+    ? [...new Set(sampledOffers.map((offer) => offer.slug))]
+    : commerceAllowlist();
   const commerceProbes =
     config.vars.FEATURE_PHYSICAL_CHECKOUT === "true"
       ? [
-          ...commerceAllowlist()
-            .filter(
-              (slug) =>
-                config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY !== "true" ||
-                slug === ariesRoute.slug,
-            )
-            .map((slug) => ({
-              id: `physical-commerce-${slug}`,
-              path: `/api/shop/product/${slug}`,
-              method: "GET",
-              status: 200,
-              valid: (body) =>
-                body?.ok === true &&
-                body.product?.handle === slug &&
-                body.product?.availableForSale === true &&
-                Array.isArray(body.product.variants) &&
-                body.product.variants.some(
-                  (variant) =>
-                    variant.availableForSale === true &&
-                    (config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY !== "true" ||
-                      (variant.id === ariesRoute.variantId &&
-                        Number(variant.price?.amount) ===
-                          ariesRoute.itemPriceBrl)) &&
-                    variant.price?.currencyCode === "BRL" &&
-                    Number(variant.price?.amount) > 0,
-                ),
-            })),
-          ...(config.vars.SHOP_ARIES_SINGLE_UNIT_ONLY === "true"
+          ...probeSlugs.map((slug) => ({
+            id: `physical-commerce-${slug}`,
+            path: `/api/shop/product/${slug}`,
+            method: "GET",
+            status: 200,
+            valid: (body) =>
+              body?.ok === true &&
+              body.product?.handle === slug &&
+              body.product?.availableForSale === true &&
+              Array.isArray(body.product.variants) &&
+              (!restricted ||
+                body.product.variants.every((variant) =>
+                  sampledOffers.some(
+                    (offer) =>
+                      offer.slug === slug &&
+                      offer.variantId === variant.id &&
+                      variant.price?.currencyCode === "BRL" &&
+                      Number(variant.price?.amount) === offer.priceBrl,
+                  ),
+                )) &&
+              body.product.variants.some(
+                (variant) =>
+                  variant.availableForSale === true &&
+                  variant.price?.currencyCode === "BRL" &&
+                  Number(variant.price?.amount) > 0,
+              ),
+          })),
+          ...(restricted
             ? [
                 {
-                  id: "physical-commerce-scope-excludes-caneca-cancer",
-                  path: "/api/shop/product/caneca-cancer",
+                  id: `physical-commerce-scope-excludes-${excludedSlug}`,
+                  path: `/api/shop/product/${excludedSlug}`,
                   method: "GET",
                   status: 404,
                   valid: (body) => body?.code === "product_not_found",
