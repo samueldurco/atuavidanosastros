@@ -6,7 +6,8 @@ export async function webhookMaintenance(
 	mode: string,
 	env: PrivateEnv,
 	db: D1Database,
-	f: typeof fetch
+	f: typeof fetch,
+	receiver: typeof fetch = f
 ) {
 	const report = (webhook: string, status: number) =>
 		Response.json(
@@ -63,7 +64,7 @@ export async function webhookMaintenance(
 			},
 			() => {
 				failure = 'receiver_unavailable';
-				return probePaidReceiver(f, secret);
+				return probePaidReceiver(receiver, secret);
 			}
 		);
 		failure = 'storage_unavailable';

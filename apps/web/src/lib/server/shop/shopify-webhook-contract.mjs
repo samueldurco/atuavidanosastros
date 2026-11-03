@@ -91,7 +91,7 @@ export async function probePaidReceiver(send, secret) {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', ...headers },
 			body,
-			redirect: 'error',
+			redirect: 'manual',
 			credentials: 'omit',
 			signal: AbortSignal.timeout(7000)
 		});

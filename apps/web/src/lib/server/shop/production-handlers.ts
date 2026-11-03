@@ -54,7 +54,13 @@ export async function productionHandler(
 				);
 			}
 			const mode = request.headers.get('X-ATVNA-Maintenance');
-			if (mode !== null) return webhookMaintenance(mode, env, db, f);
+			if (mode !== null) {
+				// Pages cannot reliably fetch its own public Worker. Exercise the same signed
+				// handler in this isolate; monitoring checks the public route separately.
+				const receiver: typeof fetch = (input, init) =>
+					productionHandler('paid', new Request(input, init), env, db, f);
+				return webhookMaintenance(mode, env, db, f, receiver);
+			}
 			const result = await reconcile(db, env, f);
 			if (!result.enabled || !result.scanned) return reply(503);
 			return reply(204);

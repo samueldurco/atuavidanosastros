@@ -2,6 +2,7 @@ import { createHmac } from 'node:crypto';
 import { DatabaseSync } from 'node:sqlite';
 import { afterEach, describe, expect, it } from 'vitest';
 import { webhookMaintenance } from './production-webhook';
+import { productionHandler } from './production-handlers';
 import { domain, url } from './shopify-webhook-contract.mjs';
 
 const fields = ['admin_graphql_api_id', 'cancelled_at', 'financial_status', 'test'];
@@ -60,7 +61,7 @@ function setup() {
 		}
 		if (endpoint === url) {
 			expect(headers.has('Authorization') || headers.has('x-shopify-access-token')).toBe(false);
-			expect(init?.redirect).toBe('error');
+			expect(init?.redirect).toBe('manual');
 			expect(init?.credentials).toBe('omit');
 			const body = String(init?.body);
 			if (body === '{}') {
@@ -104,9 +105,24 @@ function setup() {
 			data: { webhookSubscriptionCreate: { webhookSubscription: webhook, userErrors: [] } }
 		});
 	};
-	return { state, calls, run: (mode: string) => webhookMaintenance(mode, env, db, fetcher) };
+	return {
+		state,
+		calls,
+		env,
+		db,
+		fetcher,
+		run: (mode: string) => webhookMaintenance(mode, env, db, fetcher)
+	};
 }
 describe('maintenance of the fixed Shopify paid webhook', () => {
+	it('checks the real receiver without a public self-fetch or a synthetic production job', async () => {
+		const { env, db, fetcher, calls } = setup();
+		const receiver: typeof fetch = (input, init) =>
+			productionHandler('paid', new Request(input, init), env, db, fetcher);
+		const result = await webhookMaintenance('verify-webhook', env, db, fetcher, receiver);
+		expect(await result.json()).toEqual({ webhook: 'absent' });
+		expect(calls).toEqual(['grant', 'read']);
+	});
 	it('checks the official shop, permissions and both signatures without mutating or leaking the grant', async () => {
 		const { run, calls } = setup();
 		const r = await run('verify-webhook');

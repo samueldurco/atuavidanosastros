@@ -75,7 +75,7 @@ it('decrypts only the exact content and lets the factory check the file type and
 	expect(await good.text()).toBe('industrial test');
 	expect(fetcher).toHaveBeenCalledWith(
 		'https://atvna-matrizes-seladas.pages.dev/v1/' + hash + '.bin',
-		expect.objectContaining({ redirect: 'error' })
+		expect.objectContaining({ redirect: 'manual' })
 	);
 	const head = await serveDimonaAsset(new Request(design, { method: 'HEAD' }), env, fetcher, t);
 	expect(head.headers.get('content-length')).toBe('15');
@@ -84,4 +84,13 @@ it('decrypts only the exact content and lets the factory check the file type and
 	const corrupt = await serveDimonaAsset(new Request(design), env, fetcher, t);
 	expect(corrupt.status).toBe(503);
 	expect(await corrupt.text()).toBe('');
+});
+
+it('rejects a redirect from the encrypted object host without following it', async () => {
+	const { design } = await dimonaAssetUrls(env, variant, order, t);
+	const fetcher = vi.fn(async () => Response.redirect('https://elsewhere.example/asset', 302));
+	const response = await serveDimonaAsset(new Request(design), env, fetcher, t);
+	expect(response.status).toBe(503);
+	expect(response.headers.has('location')).toBe(false);
+	expect(fetcher).toHaveBeenCalledTimes(1);
 });
