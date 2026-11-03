@@ -4,7 +4,10 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { handle } from '../../../hooks.server';
 import { POST as paid } from '../../../routes/api/shop/production/paid/+server';
 import { POST as dimona } from '../../../routes/api/shop/production/dimona/+server';
-import { GET as readiness, POST as reconcileRoute } from '../../../routes/api/shop/production/reconcile/+server';
+import {
+	GET as readiness,
+	POST as reconcileRoute
+} from '../../../routes/api/shop/production/reconcile/+server';
 import { HEAD as assetHead } from '../../../routes/api/shop/dimona/assets/[file]/+server';
 import { ensureCheckoutSchema } from './checkout-schema';
 import { dimonaAssetUrls } from './dimona-assets';
@@ -192,12 +195,18 @@ describe('public endpoints used by Shopify, Dimona and the scheduled reconciliat
 		prepare.mockReturnValueOnce({
 			all: async () => ({ results: [{ stage: 'pix_or_production', count: 3 }] })
 		});
-		const result = await call(new Request(url, { headers: { Authorization: runner.Authorization } }), readiness);
+		const result = await call(
+			new Request(url, { headers: { Authorization: runner.Authorization } }),
+			readiness
+		);
 		expect(result.status).toBe(200);
 		expect(result.headers.get('cache-control')).toBe('no-store');
 		expect(await result.json()).toEqual({
-			dispatchEnabled: false, shopifyCredentialsPresent: false, factoryCredentialsPresent: true,
-			assetKeyPresent: true, stages: { pix_or_production: 3 }
+			dispatchEnabled: false,
+			shopifyCredentialsPresent: false,
+			factoryCredentialsPresent: true,
+			assetKeyPresent: true,
+			stages: { pix_or_production: 3 }
 		});
 		expect(reconcile).not.toHaveBeenCalled();
 		expect(processOrder).not.toHaveBeenCalled();

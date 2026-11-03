@@ -1,5 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { scanAccessibility } from './fixtures/accessibility';
+import reviewedOffers from '../src/lib/data/shop-reviewed-offers.json' with { type: 'json' };
 
 const product = {
 	id: 'gid://shopify/Product/1',
@@ -87,6 +88,102 @@ test('Escolha explícita, disponibilidade, quantidade e encaminhamento ao checko
 	expect(sent).toEqual({
 		lines: [{ merchandiseId: 'gid://shopify/ProductVariant/3', quantity: 2 }]
 	});
+});
+
+test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo de canecas', async ({
+	page
+}) => {
+	const slug = 'ecobag-aries';
+	const { variantId, priceBrl } = reviewedOffers.find((offer) => offer.slug === slug)!;
+	const variant = {
+		...product.variants[0],
+		id: variantId,
+		price: { amount: priceBrl.toFixed(2), currencyCode: 'BRL' }
+	};
+	await page.route('**/api/shop/product/*', (route) =>
+		route.fulfill({
+			json: { ok: true, product: { ...product, handle: slug, variants: [variant] } }
+		})
+	);
+	let quotes = 0;
+	let cartCalls = 0;
+	await page.route('**/api/shop/cart', (route) => {
+		cartCalls++;
+		return route.abort();
+	});
+	await page.route('**/api/shop/delivery/quote', (route) => {
+		quotes++;
+		expect(route.request().postDataJSON()).toEqual({
+			variantId,
+			quantity: 1,
+			postalCode: '35160001'
+		});
+		if (quotes === 1) return route.fulfill({ status: 503, json: { ok: false } });
+		const checkoutReady = quotes === 3;
+		return route.fulfill({
+			json: {
+				ok: true,
+				quote: {
+					checkoutReady,
+					token: checkoutReady ? 'local-proof' : undefined,
+					factoryAddress: true,
+					variantId,
+					postalCode: '35160-001',
+					unitPriceBrl: priceBrl,
+					shippingBrl: 14,
+					totalBrl: priceBrl + 14,
+					deliveryBusinessDays: 9,
+					service: 'Entrega de teste',
+					city: 'Ipatinga',
+					provinceCode: 'MG'
+				}
+			}
+		});
+	});
+	let sent: unknown;
+	await page.route('**/api/shop/delivery/checkout', (route) => {
+		sent = route.request().postDataJSON();
+		return route.fulfill({
+			json: { ok: true, checkoutUrl: 'https://checkout.example.test/industrial-local' }
+		});
+	});
+	await page.route('https://checkout.example.test/**', (route) =>
+		route.fulfill({ body: 'Pagamento de teste' })
+	);
+	await page.goto('/loja/peca/' + slug);
+	const purchase = page.getByRole('region', { name: 'Disponibilidade e compra' });
+	await purchase.getByLabel('CEP de entrega').fill('35160-001');
+	const calculate = purchase.getByRole('button', { name: 'Calcular frete' });
+	await calculate.click();
+	await expect(purchase.getByRole('status')).toContainText('Não foi possível calcular');
+	await expect(purchase.getByRole('button', { name: /Comprar/ })).toHaveCount(0);
+	await calculate.click();
+	await expect(purchase).toContainText(
+		'O pagamento com o frete desta cotação ainda não está disponível.'
+	);
+	await expect(purchase.getByRole('button', { name: /Comprar/ })).toHaveCount(0);
+	await calculate.click();
+	const address = purchase.getByRole('form', { name: 'Endereço para pagamento' });
+	await address.getByLabel('Nome', { exact: true }).fill('Pessoa');
+	await address.getByLabel('Sobrenome').fill('Exemplo');
+	await address.getByLabel('Rua ou avenida').fill('Rua de Teste');
+	await address.getByLabel('Número (ou S/N)').fill('123');
+	await address.getByLabel('Bairro ou localidade').fill('Centro');
+	await address.getByRole('button', { name: 'Comprar agora' }).click();
+	await expect(page).toHaveURL('https://checkout.example.test/industrial-local');
+	expect(sent).toEqual({
+		token: 'local-proof',
+		address: {
+			firstName: 'Pessoa',
+			lastName: 'Exemplo',
+			address1: 'Rua de Teste, 123, Centro',
+			address2: '',
+			postalCode: '35160001',
+			city: 'Ipatinga',
+			provinceCode: 'MG'
+		}
+	});
+	expect(cartCalls).toBe(0);
 });
 
 test('A abertura do MVP mantém as outras peças em vitrine e apresenta as condições nacionais', async ({
