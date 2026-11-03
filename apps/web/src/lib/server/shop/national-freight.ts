@@ -1,5 +1,8 @@
 import offers from '$lib/data/shop-reviewed-offers.json' with { type: 'json' };
 import industrialSkus from './national-skus.json' with { type: 'json' };
+import { digipixAvailable, digipixRate, digipixSku, type DigipixSku } from './digipix-freight';
+import { graphimaxAvailable, graphimaxNotebook, graphimaxRate } from './graphimax-freight';
+import { supplierText } from './supplier-response';
 import { reviewedDestination } from '$lib/data/shop-commerce';
 import { config, readApprovedProduct, ShopHttpError } from './shop-http';
 import { hasControlCharacters } from './shopify-storefront';
@@ -21,52 +24,31 @@ export interface Offer {
 	priceBrl: number;
 	dimonaSku?: string;
 	dimonaRetailProductionDays?: number;
+	digipixSku?: DigipixSku;
+	graphimaxSku?: '143';
+}
+export function supplierItem(offer: Offer) {
+	if (offer.graphimaxSku) return 'graphimax/' + offer.graphimaxSku;
+	return offer.digipixSku ? 'digipix/' + offer.digipixSku : (offer.dimonaSku ?? 'varejo-94');
 }
 export function physicalOffer(id: unknown): Offer {
 	const o = (offers as Offer[]).find((o) => o.variantId === id);
-	const dimonaSku = o && (industrialSkus as Record<string, string>)[o.variantId.split('/').at(-1)!];
 	if (!o) return fail('product_unavailable', 409);
+	const wallSku = digipixSku(o.slug, o.variantId);
+	if (wallSku) return { ...o, digipixSku: wallSku };
+	if (graphimaxNotebook(o.slug, o.variantId)) return { ...o, graphimaxSku: '143' };
 	if (o.dimonaRetailProductionDays !== undefined) {
 		const days = o.dimonaRetailProductionDays;
 		if (!/^caneca-[a-z]+$/.test(o.slug) || !Number.isInteger(days) || days < 1 || days > 60)
 			return fail('product_unavailable', 409);
 		return o;
 	}
+	const dimonaSku = (industrialSkus as Record<string, string>)[o.variantId.split('/').at(-1)!];
 	if (!/^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')) return fail('product_unavailable', 409);
 	return { ...o, dimonaSku };
 }
 export async function provider(fetcher: typeof fetch, url: string, init: RequestInit = {}) {
-	const res = await fetcher(url, {
-		...init,
-		redirect: 'manual',
-		signal: AbortSignal.timeout(7000)
-	});
-	if (!res.ok) throw new Error('upstream');
-	const reader = res.body?.getReader();
-	if (!reader) throw new Error('upstream');
-	const bytes: Uint8Array[] = [];
-	let n = 0;
-	try {
-		for (;;) {
-			const { value, done } = await reader.read();
-			if (done) break;
-			n += value.length;
-			if (n > 128 * 1024) {
-				await reader.cancel();
-				throw new Error('upstream');
-			}
-			bytes.push(value);
-		}
-	} finally {
-		reader.releaseLock();
-	}
-	const all = new Uint8Array(n);
-	let pos = 0;
-	for (const b of bytes) {
-		all.set(b, pos);
-		pos += b.length;
-	}
-	return JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(all)) as unknown;
+	return JSON.parse(await supplierText(fetcher, url, init, 128 * 1024)) as unknown;
 }
 export async function locality(fetcher: typeof fetch, cep: string) {
 	const known = reviewedDestination(cep);
@@ -101,12 +83,14 @@ export async function locality(fetcher: typeof fetch, cep: string) {
 	);
 }
 export const dimona = 'https://admin.camisadimona.com.br/api/v2';
-const supplierHeaders = (env: PrivateEnv) => ({
-	'api-key': env.DIMONA_FRETE_TOKEN!,
-	Accept: 'application/json',
-	'Content-Type': 'application/json'
-});
+function supplierHeaders(env: PrivateEnv) {
+	const token = env.DIMONA_FRETE_TOKEN;
+	if (!token) return fail('shop_unavailable', 503);
+	return { 'api-key': token, Accept: 'application/json', 'Content-Type': 'application/json' };
+}
 export async function manufacturingAvailable(env: PrivateEnv, fetcher: typeof fetch, offer: Offer) {
+	if (offer.graphimaxSku) return graphimaxAvailable(fetcher);
+	if (offer.digipixSku) return digipixAvailable(fetcher, offer.digipixSku);
 	// The reviewed retail model 94 and the Dropsimples SKU for 310 ml are distinct.
 	return offer.dimonaRetailProductionDays !== undefined
 		? Promise.resolve(true)
@@ -205,7 +189,14 @@ export function shippingRate(
 		basis: JSON.stringify(retailDays !== undefined ? [first] : [first, standard])
 	};
 }
-export async function rateFor(env: PrivateEnv, fetcher: typeof fetch, cep: string, offer: Offer) {
+export async function rateFor(
+	env: PrivateEnv,
+	fetcher: typeof fetch,
+	cep: string,
+	offer: Offer
+): Promise<Rate & { basis: string; destination?: { city: string; provinceCode: string } }> {
+	if (offer.graphimaxSku) return graphimaxRate(fetcher, cep);
+	if (offer.digipixSku) return digipixRate(fetcher, offer.digipixSku, cep);
 	return shippingRate(
 		await provider(fetcher, dimona + '/shipping', {
 			method: 'POST',
