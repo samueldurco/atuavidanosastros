@@ -2,7 +2,74 @@
 	{
 		"slug": "caneca-aries",
 		"variantId": "gid://shopify/ProductVariant/68006922223984",
-		"priceBrl": 79.9
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-cancer",
+		"variantId": "gid://shopify/ProductVariant/68006922322288",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-leo",
+		"variantId": "gid://shopify/ProductVariant/68006922355056",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-virgo",
+		"variantId": "gid://shopify/ProductVariant/68006922387824",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-libra",
+		"variantId": "gid://shopify/ProductVariant/68006922420592",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-scorpio",
+		"variantId": "gid://shopify/ProductVariant/68006922453360",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-sagittarius",
+		"variantId": "gid://shopify/ProductVariant/68006922486128",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-capricornus",
+		"variantId": "gid://shopify/ProductVariant/68006922551664",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-aquarius",
+		"variantId": "gid://shopify/ProductVariant/68006922584432",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-pisces",
+		"variantId": "gid://shopify/ProductVariant/68006922617200",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-taurus",
+		"variantId": "gid://shopify/ProductVariant/68006922256752",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-gemini",
+		"variantId": "gid://shopify/ProductVariant/68006922289520",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
 	},
 	{
 		"slug": "ecobag-aquarius",

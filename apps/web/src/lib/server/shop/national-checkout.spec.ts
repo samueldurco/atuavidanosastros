@@ -503,13 +503,16 @@ describe('Entrega nacional com endereço e frete fixados no checkout', () => {
 		expect(s.up.removed()).toBe(1);
 	});
 	it('não promete entrega grátis ou em dólar; cobre a variação do serviço padrão do Dropsimples', () => {
-		expect(() => shippingRate([], false)).toThrow('delivery_unavailable');
-		expect(() => shippingRate([{ ...rate('12.74'), currency: 'USD' }], true)).toThrow(
+		expect(() => shippingRate([])).toThrow('delivery_unavailable');
+		expect(() => shippingRate([{ ...rate('12.74'), currency: 'USD' }], 3)).toThrow(
 			'carrier_unavailable'
 		);
-		expect(shippingRate([rate('15.50'), rate('22.80', 'PAC', '1', 12)], false)).toMatchObject({
+		expect(shippingRate([rate('15.50'), rate('22.80', 'PAC', '1', 12)])).toMatchObject({
 			cents: 2280,
 			days: 18
 		});
+		const mugRates = [rate('15.50', 'PAC', '1', 4)];
+		expect(shippingRate(mugRates, 3).days).toBe(9);
+		expect(shippingRate(mugRates, 5).days).toBe(11);
 	});
 });

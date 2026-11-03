@@ -19,6 +19,7 @@ export interface Offer {
 	variantId: string;
 	priceBrl: number;
 	dimonaSku?: string;
+	dimonaRetailProductionDays?: number;
 	gubo?: GuboVariant;
 	digipixSku?: DigipixSku;
 	graphimaxSku?: '143';
@@ -31,12 +32,18 @@ export function physicalOffer(id: unknown): Offer {
 	const gubo = (guboSkus as Record<string, GuboVariant>)[variant];
 	const wall = digipixSku(o.slug, o.variantId);
 	const notebook = !wall && graphimaxNotebook(o.slug, o.variantId);
-	if ([dimonaSku, gubo, wall, notebook].filter(Boolean).length > 1)
+	const retailMug = o.dimonaRetailProductionDays !== undefined;
+	if ([dimonaSku, gubo, wall, notebook, retailMug].filter(Boolean).length > 1)
 		return fail('product_unavailable', 409);
-	if (gubo && o.slug !== 'caneca-aries') return { ...o, gubo };
+	if (retailMug) {
+		const days = o.dimonaRetailProductionDays!;
+		if (!/^caneca-[a-z]+$/.test(o.slug) || !Number.isInteger(days) || days < 1 || days > 60)
+			return fail('product_unavailable', 409);
+		return o;
+	}
+	if (gubo) return { ...o, gubo };
 	if (notebook) return { ...o, graphimaxSku: '143' };
 	if (wall) return { ...o, digipixSku: wall };
-	if (!gubo && o.slug === 'caneca-aries') return o;
 	if (/^[A-Za-z0-9_-]{1,40}$/.test(dimonaSku ?? '')) return { ...o, dimonaSku };
 	return fail('product_unavailable', 409);
 }
@@ -88,8 +95,8 @@ export async function manufacturingAvailable(env: PrivateEnv, fetcher: typeof fe
 	if (offer.digipixSku) return digipixAvailable(fetcher, offer.digipixSku);
 	if (offer.gubo) return guboAvailable(env, fetcher, offer.gubo);
 	if (!env.DIMONA_FRETE_TOKEN) return fail('carrier_unavailable', 503);
-	// The 325 ml mug is a retail pilot; the Dropsimples 310 ml SKU is a different item.
-	return offer.slug === 'caneca-aries'
+	// The reviewed retail model 94 and the Dropsimples SKU for 310 ml are distinct.
+	return offer.dimonaRetailProductionDays !== undefined
 		? Promise.resolve(true)
 		: provider(fetcher, dimona + '/sku/' + offer.dimonaSku + '/availability', {
 				headers: supplierHeaders(env)
@@ -128,7 +135,11 @@ export interface Rate {
 	cents: number;
 	days: number;
 }
-export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { basis: string } {
+export function shippingRate(
+	raw: unknown,
+	retailDays?: number,
+	secret = ''
+): Rate & { basis: string } {
 	if (!Array.isArray(raw) || raw.length > 128) return fail('carrier_unavailable', 503);
 	const rates: Rate[] = [];
 	for (const item of raw) {
@@ -165,18 +176,22 @@ export function shippingRate(raw: unknown, mug: boolean, secret = ''): Rate & { 
 	rates.sort((a, b) => a.cents - b.cents || b.days - a.days || a.id.localeCompare(b.id));
 	const first = rates[0],
 		standard = rates.find((x) => ['16594', '1', '2'].includes(x.id)) ?? first;
-	const result = mug
-		? { ...first, days: first.days + 5 }
-		: {
-				name: 'Entrega padrão',
-				id: 'standard',
-				cents: Math.max(first.cents, standard.cents),
-				days: Math.max(first.days, standard.days) + 6
-			};
+	const result =
+		retailDays !== undefined
+			? { ...first, days: first.days + retailDays + 2 }
+			: {
+					name: 'Entrega padrão',
+					id: 'standard',
+					cents: Math.max(first.cents, standard.cents),
+					days: Math.max(first.days, standard.days) + 6
+				};
 	if (result.days > 90 || result.cents > 50000) return fail('delivery_unavailable');
 	// Both lists can determine the standard service. Seal their identities and terms so
 	// replacing one carrier with another at the same price still requires a fresh quote.
-	return { ...result, basis: JSON.stringify(mug ? [first] : [first, standard]) };
+	return {
+		...result,
+		basis: JSON.stringify(retailDays !== undefined ? [first] : [first, standard])
+	};
 }
 export async function rateFor(
 	env: PrivateEnv,
@@ -194,7 +209,7 @@ export async function rateFor(
 			headers: supplierHeaders(env),
 			body: JSON.stringify({ zipcode: cep, quantity: '1' })
 		}),
-		offer.slug === 'caneca-aries',
+		offer.dimonaRetailProductionDays,
 		env.DIMONA_FRETE_TOKEN
 	);
 }
