@@ -1,6 +1,8 @@
 import schema from '../../../../d1-checkout/0001_checkout.sql?raw';
 
-const statements = schema
+import factory from '../../../../d1-checkout/0002_dimona_production.sql?raw';
+
+const statements = (schema + '\n' + factory)
 	.split(';')
 	.map((sql) => sql.trim())
 	.filter(Boolean);
@@ -14,5 +16,5 @@ export async function ensureCheckoutSchema(db: D1Database) {
 		throw new Error('checkout_schema_unavailable');
 	}
 	initialized.add(db);
-	console.info('shop.checkout_schema_ready', { version: '0001' });
+	console.info('shop.checkout_schema_ready', { version: '0002' });
 }

@@ -1,3 +1,4 @@
+import { splitFactoryAddress } from './dimona-address';
 import { json } from '@sveltejs/kit';
 import { ensureCheckoutSchema } from './checkout-schema';
 import { readShopSale } from './seller-identity';
@@ -64,6 +65,7 @@ async function prune(db: D1Database, now: number) {
 	if (hour === lastCleanup) return;
 	await db.batch([
 		db.prepare('DELETE FROM shop_checkout_limits WHERE expires<=?').bind(now),
+		db.prepare('DELETE FROM shop_factory_quotes WHERE expires<=? AND order_id IS NULL').bind(now),
 		db.prepare('DELETE FROM shop_checkout_attempts WHERE expires<=?').bind(now)
 	]);
 	lastCleanup = hour;
@@ -185,6 +187,7 @@ export async function nationalCheckout(
 					totalBrl: (q.unit + q.shipping) / 100,
 					deliveryBusinessDays: q.days,
 					service: q.service,
+					factoryAddress: Boolean(o.dimonaSku),
 					expiresAt: new Date(q.expires * 1000).toISOString(),
 					checkoutReady,
 					...(checkoutReady ? { token: await seal(q, secret!) } : {})
@@ -200,6 +203,7 @@ export async function nationalCheckout(
 		const q = await openQuote(input.token, secret!, now),
 			o = physicalOffer(q.variantId),
 			address = addressFor(input.address, q);
+		if (o.dimonaSku) splitFactoryAddress(address.address1);
 		const fingerprint = await mac(secret!, 'ship:' + JSON.stringify(address));
 		const previous = () =>
 			attempt(db, q, fingerprint, () => recoverDraft(env, fetcher, q, address));
@@ -219,12 +223,31 @@ export async function nationalCheckout(
 			q.rateBasis !== (await mac(secret!, 'rate-basis:' + rate.basis))
 		)
 			fail('quote_changed', 409);
-		const reservation = await db
+		const reserve = db
 			.prepare(
 				"INSERT OR IGNORE INTO shop_checkout_attempts(nonce,address_hash,state,expires) VALUES (?,?,'pending',?)"
 			)
-			.bind(q.nonce, fingerprint, q.expires + 86400)
-			.run();
+			.bind(q.nonce, fingerprint, q.expires + 86400);
+		const statements = [reserve];
+		if (o.dimonaSku) {
+			if (!rate.factoryCarrier) fail('carrier_unavailable', 503);
+			statements.push(
+				db
+					.prepare(
+						'INSERT OR IGNORE INTO shop_factory_quotes(nonce,variant,carrier,unit_cents,shipping_cents,address_hash,expires) VALUES(?,?,?,?,?,?,?)'
+					)
+					.bind(
+						q.nonce,
+						q.variantId,
+						rate.factoryCarrier!,
+						q.unit,
+						q.shipping,
+						fingerprint,
+						now + 60 * 86400
+					)
+			);
+		}
+		const [reservation] = await db.batch(statements);
 		if (!reservation.meta.changes) {
 			const url = await previous();
 			if (url) return reply({ ok: true, checkoutUrl: url });

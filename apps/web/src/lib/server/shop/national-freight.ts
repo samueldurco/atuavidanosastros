@@ -139,7 +139,7 @@ export function shippingRate(
 	raw: unknown,
 	retailDays?: number,
 	secret = ''
-): Rate & { basis: string } {
+): Rate & { factoryCarrier?: string; basis: string } {
 	if (!Array.isArray(raw) || raw.length > 128) return fail('carrier_unavailable', 503);
 	const rates: Rate[] = [];
 	for (const item of raw) {
@@ -190,6 +190,7 @@ export function shippingRate(
 	// replacing one carrier with another at the same price still requires a fresh quote.
 	return {
 		...result,
+		...(retailDays === undefined ? { factoryCarrier: standard.id } : {}),
 		basis: JSON.stringify(retailDays !== undefined ? [first] : [first, standard])
 	};
 }
@@ -198,7 +199,13 @@ export async function rateFor(
 	fetcher: typeof fetch,
 	cep: string,
 	offer: Offer
-): Promise<Rate & { basis: string; destination?: { city: string; provinceCode: string } }> {
+): Promise<
+	Rate & {
+		factoryCarrier?: string;
+		basis: string;
+		destination?: { city: string; provinceCode: string };
+	}
+> {
 	if (offer.graphimaxSku) return graphimaxRate(fetcher, cep);
 	if (offer.digipixSku) return digipixRate(fetcher, offer.digipixSku, cep);
 	if (offer.gubo) return guboRate(env, fetcher, cep, offer.gubo);

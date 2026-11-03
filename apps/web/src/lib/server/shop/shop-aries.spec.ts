@@ -24,7 +24,6 @@ const enabled = {
 };
 const line = { merchandiseId: shopAriesRoute.variantId, quantity: 1 };
 const secondMug = { merchandiseId: 'gid://shopify/ProductVariant/68006922322288', quantity: 1 };
-const bag = { merchandiseId: approvedShopProducts['ecobag-aries'].variantIds[0], quantity: 1 };
 const request = (lines: unknown[], postalCode?: unknown) =>
 	new Request('https://site.example/api/shop/cart', {
 		method: 'POST',
@@ -186,92 +185,38 @@ describe('Compra de uma unidade com preço e destino conferidos', () => {
 			expect(await cart.json()).toEqual({ ok: false, code: 'invalid_provider_response' });
 		}
 	);
-	it('uses the ecobag price and the Ipatinga destination in the Shopify handoff', async () => {
-		const provider = vi
-			.fn<typeof fetch>()
-			.mockResolvedValueOnce(productAt('49.90', 'ecobag-aries'))
-			.mockResolvedValueOnce(
-				cartAt({
-					subtotal: cash('49.90'),
-					total: cash('79.80'),
-					addresses: [location('35160-001')]
-				})
-			);
-		const response = await shopCart(request([bag], '35160-001'), enabled, provider);
-		expect(response.status).toBe(200);
-		const mutation = JSON.parse(String(provider.mock.calls[1][1]?.body));
-		expect(mutation.variables.input.delivery.addresses[0].address.deliveryAddress).toEqual({
-			countryCode: 'BR',
-			provinceCode: 'MG',
-			city: 'Ipatinga',
-			zip: '35160001'
-		});
-	});
-	it('refuses a bag checkout calculated at the mug price', async () => {
-		const provider = vi
-			.fn<typeof fetch>()
-			.mockResolvedValueOnce(productAt('49.90', 'ecobag-aries'))
-			.mockResolvedValueOnce(cartAt());
-		const response = await shopCart(request([bag], '36960-000'), enabled, provider);
-		expect(response.status).toBe(503);
-	});
-	it.each(['bone-aries', 'cropped-touro'])(
-		'hands off a reviewed %s to checkout only in the reviewed catalog',
+	it.each(['ecobag-aries', 'bone-aries', 'cropped-touro'])(
+		'requires a national checkout with a saved address and carrier for %s, including verified CEPs',
 		async (slug) => {
-			const { variantId, priceBrl } = reviewedOffers.find((offer) => offer.slug === slug)!;
-			const variant = { merchandiseId: variantId, quantity: 1 };
-			const provider = vi
-				.fn<typeof fetch>()
-				.mockResolvedValueOnce(productAt(priceBrl.toFixed(2), slug, variantId))
-				.mockResolvedValueOnce(
-					cartAt({
-						subtotal: cash(priceBrl.toFixed(2)),
-						total: cash((priceBrl + 29.9).toFixed(2)),
-						addresses: [location('35160-001')]
-					})
+			const { variantId } = reviewedOffers.find((offer) => offer.slug === slug)!;
+			const provider = vi.fn<typeof fetch>();
+			for (const token of [undefined, 'test-only']) {
+				const response = await shopCart(
+					request([{ merchandiseId: variantId, quantity: 1 }], '35160-001'),
+					{ ...enabled, DIMONA_FRETE_TOKEN: token },
+					provider
 				);
-			const response = await shopCart(request([variant], '35160-001'), enabled, provider);
-			expect(response.status).toBe(200);
-			expect(JSON.parse(String(provider.mock.calls[1][1]?.body)).variables.input.lines).toEqual([
-				variant
-			]);
-			const legacy = await shopCart(
-				request([variant], '35160-001'),
-				{
-					...enabled,
-					SHOP_ARIES_SINGLE_UNIT_ONLY: 'false',
-					SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40'
-				},
-				provider
-			);
-			expect(legacy.status).toBe(400);
-			expect(provider).toHaveBeenCalledTimes(2);
+				expect(response.status).toBe(409);
+				expect(await response.json()).toEqual({ ok: false, code: 'national_checkout_required' });
+			}
+			expect(provider).not.toHaveBeenCalled();
 		}
 	);
-	it('não inclui uma peça no frete fixo quando a Dimona esgota a base ou o transporte supera o valor aceito', async () => {
-		for (const [skuStock, shipping, status] of [
-			[0, '12.00', 409],
-			[2, '38.00', 422]
-		] as const) {
-			const provider = vi.fn<typeof fetch>(async (url, init) => {
-				if (String(url).endsWith('/availability')) return Response.json({ bolsaecom: skuStock });
-				if (String(url).endsWith('/shipping'))
-					return Response.json([
-						{ value: shipping, name: 'PAC', delivery_method_id: '1', business_days: 9 }
-					]);
-				if (String(init?.body).includes('cartCreate')) throw new Error('unexpected cart');
-				return productAt('49.90', 'ecobag-aries');
-			});
-			expect(
-				(
-					await shopCart(
-						request([bag], '35160-001'),
-						{ ...enabled, DIMONA_FRETE_TOKEN: 'test-only' },
-						provider
-					)
-				).status
-			).toBe(status);
-		}
+	it('rejects an industrial order through the legacy cart even without the restricted sale flag', async () => {
+		const provider = vi.fn<typeof fetch>();
+		const line = { merchandiseId: approvedShopProducts['ecobag-aries'].variantIds[0], quantity: 1 };
+		const response = await shopCart(
+			request([line]),
+			{
+				...enabled,
+				SHOP_ARIES_SINGLE_UNIT_ONLY: 'false',
+				SHOP_DELIVERY_MAX_BUSINESS_DAYS: '40'
+			},
+			provider
+		);
+		expect(response.status).toBe(409);
+		expect(await response.json()).toEqual({ ok: false, code: 'national_checkout_required' });
+		expect(provider).not.toHaveBeenCalled();
 	});
 	it.each(['36960000', '36960-000'])(
 		'opens the verified one-unit handoff for %s through mocked Shopify',

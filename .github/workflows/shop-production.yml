@@ -1,0 +1,21 @@
+name: Reconcile paid shop orders
+on:
+  schedule:
+    - cron: '9,29,49 * * * *'
+  workflow_dispatch:
+permissions: {}
+concurrency:
+  group: atvna-dimona-production
+  cancel-in-progress: false
+jobs:
+  reconcile:
+    if: github.repository == 'samueldurco/atuavidanosastros' && github.ref == 'refs/heads/main' && vars.ATVNA_FACTORY_RECONCILE == 'enabled'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Reconcile on the official shop
+        env:
+          FACTORY_KEY: ${{ secrets.ATVNA_FACTORY_RUNNER_KEY }}
+        run: |
+          test -n "$FACTORY_KEY"
+          curl --silent --show-error --fail --output /dev/null --max-time 110 --request POST --header "Content-Type: application/json" --header "Authorization: Bearer $FACTORY_KEY" https://atuavidanosastros.com.br/api/shop/production/reconcile

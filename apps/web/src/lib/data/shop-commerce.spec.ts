@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { isShopCommerceEligible, reviewedUnitPrice, shopCommerceSlugs } from './shop-commerce';
+import {
+	isRetailMug,
+	isShopCommerceEligible,
+	reviewedUnitPrice,
+	shopCommerceSlugs
+} from './shop-commerce';
 import reviewedOffers from './shop-reviewed-offers.json' with { type: 'json' };
 import { shopPreviews } from './shop-products';
 import { shopCollections } from './shop-collections';
@@ -7,6 +12,14 @@ import { approvedShopProducts } from '$lib/server/shop/shop-catalog-map';
 import { physicalOffer } from '$lib/server/shop/national-freight';
 
 describe('Commercial product references', () => {
+	it('reserves the fixed-rate checkout for reviewed retail mugs across the whole catalog', () => {
+		for (const offer of reviewedOffers) {
+			expect(isRetailMug(offer.slug)).toBe(
+				physicalOffer(offer.variantId).dimonaRetailProductionDays !== undefined
+			);
+		}
+		expect(isRetailMug('unknown')).toBe(false);
+	});
 	it('uses the reviewed 325 ml model and retail production time for each enabled mug', () => {
 		for (const offer of reviewedOffers.filter(({ slug }) => slug.startsWith('caneca-'))) {
 			expect(isShopCommerceEligible(offer.slug, true)).toBe(true);

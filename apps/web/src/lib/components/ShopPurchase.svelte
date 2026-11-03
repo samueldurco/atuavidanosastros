@@ -2,6 +2,7 @@
 	import ShopNationalDelivery from './ShopNationalDelivery.svelte';
 	import type { ShopCatalogProduct } from '$lib/server/shop/shopify-storefront';
 	import {
+		isRetailMug,
 		reviewedDestination,
 		reviewedUnitPrice,
 		shopSingleUnitTerms,
@@ -26,6 +27,7 @@
 	let submitting = $state(false);
 	let errorMessage = $state('');
 	let retry = $state(0);
+	const nationalDelivery = $derived(ariesOnly || !isRetailMug(slug));
 	const variant = $derived(product?.variants.find((item) => item.id === variantId));
 	const destination = $derived(reviewedDestination(postalCode));
 	const canBuy = $derived(
@@ -37,7 +39,7 @@
 			Number.isInteger(quantity) &&
 			quantity >= 1 &&
 			quantity <= 10 &&
-			(!ariesOnly ||
+			(!nationalDelivery ||
 				(quantity === 1 &&
 					Number(variant.price.amount) === reviewedUnitPrice(variant.id) &&
 					destination !== undefined)) &&
@@ -87,7 +89,7 @@
 
 	async function buy(event?: SubmitEvent) {
 		event?.preventDefault();
-		if (!canBuy || !variant) return;
+		if (!canBuy || !variant || !isRetailMug(slug)) return;
 		submitting = true;
 		errorMessage = '';
 		const currentSlug = slug;
@@ -97,7 +99,7 @@
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify({
 					lines: [{ merchandiseId: variant.id, quantity }],
-					...(ariesOnly ? { postalCode } : {})
+					...(nationalDelivery ? { postalCode } : {})
 				})
 			});
 			const body = (await response.json()) as { ok?: boolean; checkoutUrl?: unknown };
@@ -137,7 +139,7 @@
 		<button type="button" class="button secondary" onclick={() => retry++}>Tentar novamente</button>
 	{:else if product}
 		<form
-			onsubmit={(event) => (ariesOnly ? event.preventDefault() : buy(event))}
+			onsubmit={(event) => (nationalDelivery ? event.preventDefault() : buy(event))}
 			aria-label="Comprar esta peça"
 		>
 			<fieldset disabled={submitting}>
@@ -154,7 +156,7 @@
 				<p class="preview-note">
 					A escolha acima define a peça comprada. As cores da galeria são apenas prévias.
 				</p>
-				{#if ariesOnly}
+				{#if nationalDelivery}
 					<p>{shopSingleUnitTerms}</p>
 				{:else}
 					<label for="shop-quantity">Quantidade</label>
@@ -176,7 +178,7 @@
 								Subtotal: {money((Math.round(Number(variant.price.amount) * 100) * quantity) / 100)}
 							</p>
 						{/if}
-						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10 && !ariesOnly}
+						{#if Number.isInteger(quantity) && quantity >= 1 && quantity <= 10 && !nationalDelivery}
 							<p class="subtotal">
 								Total com frete: {money(
 									(Math.round(Number(variant.price.amount) * 100) * quantity +
@@ -187,29 +189,29 @@
 						{/if}
 					{/if}
 				</div>
-				{#if !ariesOnly}<button class="button" type="submit" disabled={!canBuy}>
+				{#if !nationalDelivery}<button class="button" type="submit" disabled={!canBuy}>
 						{submitting ? 'Abrindo pagamento…' : 'Comprar agora'}
 					</button>{/if}
 			</fieldset>
 			{#if errorMessage}<p class="error" role="alert">{errorMessage}</p>{/if}
 			<p class="checkout-note">
-				{#if !ariesOnly}Frete fixo de {money(shopDelivery.priceBrl)} por pedido nos destinos habilitados
+				{#if !nationalDelivery}Frete fixo de {money(shopDelivery.priceBrl)} por pedido nos destinos habilitados
 					no checkout.{/if}
-				{#if !ariesOnly}Fabricação e entrega em até {deliveryBusinessDays} dias úteis após a aprovação
+				{#if !nationalDelivery}Fabricação e entrega em até {deliveryBusinessDays} dias úteis após a aprovação
 					do pagamento.{/if}
 			</p>
 			<p class="checkout-note">
 				Revise o endereço, a entrega e o valor total antes de confirmar o pagamento.
 			</p>
 		</form>
-		{#if ariesOnly}
+		{#if nationalDelivery}
 			<ShopNationalDelivery
 				{variantId}
 				bind:postalCode
 				price={variant?.availableForSale ? reviewedUnitPrice(variant.id) : undefined}
 				{submitting}
 				fallbackBuy={() => buy()}
-				mug={slug.startsWith('caneca-')}
+				allowFixedRate={isRetailMug(slug)}
 			/>
 		{/if}
 	{/if}
