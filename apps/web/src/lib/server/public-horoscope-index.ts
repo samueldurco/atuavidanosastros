@@ -83,8 +83,9 @@ export function publicHoroscopeIndex(
 	const seo: PageSeo = {
 		path,
 		title: `${sign ? `Horóscopo de ${signNames[sign]}` : 'Horóscopo dos 12 signos'} — ${SITE.name}`,
-		description:
-			'Leituras gerais por signo, com períodos de dia, semana e mês e histórico de publicações.',
+		description: sign
+			? `Consulte o horóscopo de ${signNames[sign]} para o dia, a semana e o mês. Confira as datas das leituras disponíveis e explore as edições anteriores do seu signo.`
+			: 'Escolha entre os 12 signos para consultar o horóscopo do dia, da semana ou do mês. Confira a data de cada leitura e explore as edições anteriores.',
 		indexable: own.length > 0,
 		managePrimary: true
 	};

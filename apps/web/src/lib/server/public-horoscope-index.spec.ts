@@ -41,6 +41,16 @@ const daily = fixture('/horoscopo/aries/daily/2026-10-08', '2026-10-09');
 const weekly = fixture('/horoscopo/aries/weekly/2026-10-05', '2026-10-12');
 
 describe('public horoscope archives', () => {
+	it('identifies the general hub and each sign in search without promising a current reading', () => {
+		const url = new URL('https://example.org/horoscopo');
+		const descriptions = signs.map(
+			(sign) => publicHoroscopeIndex([], url, sign, now).seo.description
+		);
+		const general = project([], '', null).seo.description;
+		expect(general).toContain('12 signos');
+		expect(descriptions).toContainEqual(expect.stringContaining('Capricórnio'));
+		expect(new Set([general, ...descriptions]).size).toBe(13);
+	});
 	it('exposes only sign indexes backed by admitted dated archives in the pages sitemap', () => {
 		const empty = pagesSitemap([fixture('/horoscopo/aries', '2026-10-09')]);
 		expect(empty).toContain(`<loc>${SITE.url}/ferramentas/horoscopo</loc>`);
