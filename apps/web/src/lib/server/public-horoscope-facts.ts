@@ -1,6 +1,7 @@
 import type { PublicHoroscopeSnapshot } from '../../../../worker/src/public-horoscope-calculation';
 import type { EditorialDocument } from './editorial';
 import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
+import { replayedSnapshotDigest } from './dated-replay';
 
 function canonical(value: unknown): string {
 	if (Array.isArray(value)) return `[${value.map(canonical).join(',')}]`;
@@ -13,6 +14,8 @@ function canonical(value: unknown): string {
 }
 
 export async function publicHoroscopeDigest(snapshot: PublicHoroscopeSnapshot): Promise<string> {
+	const replayed = replayedSnapshotDigest(snapshot);
+	if (replayed) return replayed;
 	const { assertPublicHoroscopeSnapshot } =
 		await import('../../../../worker/src/public-horoscope-calculation');
 	assertPublicHoroscopeSnapshot(snapshot);

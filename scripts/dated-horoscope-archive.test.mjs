@@ -13,6 +13,7 @@ import {
   digest,
 } from "../apps/web/src/lib/server/editorial-automation.ts";
 import { signedHoroscopeFixture } from "./test-support/dated-horoscope-fixture.mjs";
+import { datedReplayProofs } from "./dated-horoscope-replay-proofs.mjs";
 
 const repository = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -106,6 +107,101 @@ const load = (f, now = f.now) =>
     f.fetchAsset,
     now,
   );
+
+test("the production replay bundle reads exact editions, falls back for new input and never grants admission", async (t) => {
+  const proofs = await datedReplayProofs();
+  const source = path.join(repository, "apps/web/src/lib/server");
+  const result = await build({
+    stdin: {
+      contents:
+        'export * from "./dated-horoscope-archive.ts"; export * from "./dated-replay.ts";',
+      resolveDir: source,
+    },
+    bundle: true,
+    platform: "node",
+    format: "esm",
+    write: false,
+    alias: { $lib: path.join(repository, "apps/web/src/lib") },
+    define: { __ATV_DATED_REPLAYS__: JSON.stringify(proofs) },
+  });
+  const runtime = await import(
+    `data:text/javascript;base64,${Buffer.from(result.outputFiles[0].contents).toString("base64")}`
+  );
+  const release = readJson(path.join(repository, DATED_INDEX_PATH));
+  const { authorities } = readJson(path.join(repository, RELEASE_PATH));
+  const now = new Date(
+    Math.max(
+      ...release.entries.map((entry) => Date.parse(entry.admission.acceptedAt)),
+    ) + 1000,
+  );
+  for (const period of new Set(
+    release.entries.map((entry) => entry.scope.period),
+  )) {
+    const entry = release.entries.find(
+      (candidate) => candidate.scope.period === period,
+    );
+    const raw = fs.readFileSync(
+      path.join(repository, "apps/web/static", entry.asset.path),
+    );
+    const pkg = JSON.parse(raw).packages[0];
+    const inputs = {
+      document: pkg.document,
+      claims: pkg.dated.claims,
+      facts: pkg.dated.facts,
+      scope: pkg.dated.scope,
+    };
+    assert.ok(runtime.datedArchiveSpans(entry.asset.sha256));
+    assert.equal(runtime.replayedComposition(inputs), false);
+    runtime.markDatedReplayInputs(...Object.values(inputs));
+    assert.equal(runtime.replayedComposition(inputs), true);
+    assert.equal(
+      runtime.replayedSnapshotDigest(inputs.facts),
+      await digest(inputs.facts),
+    );
+    assert.equal(
+      runtime.replayedClaimsDigest(inputs.claims),
+      await digest(inputs.claims),
+    );
+    inputs.facts.stepHours++;
+    assert.equal(runtime.replayedComposition(inputs), false);
+    assert.equal(runtime.replayedSnapshotDigest(inputs.facts), undefined);
+    const requested = pkg.document.path;
+    const document = (bytes, keys = authorities) =>
+      runtime.archivedEditorialDocument(
+        requested,
+        release,
+        keys,
+        async () => new Response(bytes),
+        now,
+      );
+    assert.deepEqual(await document(raw), pkg.document);
+    assert.equal(
+      await document(Buffer.concat([raw, Buffer.from(" ")])),
+      undefined,
+    );
+    const revoked = clone(authorities);
+    revoked[entry.index.keyId].revokedAt = now.toISOString();
+    assert.equal(await document(raw, revoked), undefined);
+  }
+  const fresh = await workspace(t);
+  assert.equal(
+    runtime.datedArchiveSpans(fresh.release.entries[0].asset.sha256),
+    undefined,
+  );
+  const readFresh = () =>
+    runtime.archivedEditorialDocument(
+      fresh.requested,
+      fresh.release,
+      fresh.authorities,
+      fresh.fetchAsset,
+      fresh.now,
+    );
+  assert.deepEqual(await readFresh(), fresh.batch.packages[0].document);
+  await rewriteAsset(fresh, (asset) => {
+    asset.packages[0].document.title += " alterado";
+  });
+  assert.equal(await readFresh(), undefined);
+});
 
 test("complete signed admission creates a compact index and fetches exactly one immutable edition", async (t) => {
   const f = await workspace(t);

@@ -1,4 +1,5 @@
 import { approvedDocuments, type EditorialDocument, type EditorialSummary } from './editorial';
+import { datedArchiveSpans, markDatedReplayInputs } from './dated-replay';
 import {
 	byteDigest,
 	canonicalJson,
@@ -27,6 +28,30 @@ interface ArchiveAsset {
 	evidenceByDigest: Record<string, string>;
 }
 export type EditorialAssetFetch = (path: string) => Promise<Response>;
+const decoder = new TextDecoder();
+function archivePackage(bytes: Uint8Array, sha256: string, id: string) {
+	const spans = datedArchiveSpans(sha256);
+	if (spans) {
+		const decode = (span: [number, number]) => JSON.parse(decoder.decode(bytes.subarray(...span)));
+		if (!Object.hasOwn(spans.packages, id)) return;
+		const item = decode(spans.packages[id]) as ArchiveAsset['packages'][number];
+		return {
+			item,
+			evidence: (digest: string): string =>
+				Object.hasOwn(spans.evidence, digest) ? decode(spans.evidence[digest]) : ''
+		};
+	}
+	const asset = JSON.parse(decoder.decode(bytes)) as ArchiveAsset;
+	if (
+		asset.schemaVersion !== 'atv-dated-horoscope-archive-v1' ||
+		!Array.isArray(asset.packages) ||
+		asset.packages.length !== 12
+	)
+		return;
+	const matches = asset.packages.filter((item) => item.document.id === id);
+	if (matches.length === 1)
+		return { item: matches[0], evidence: (digest: string) => asset.evidenceByDigest[digest] ?? '' };
+}
 type IndexAdmission = (entry: DatedArchiveEntry) => Promise<boolean>;
 const hex = (value: unknown): value is string =>
 	typeof value === 'string' && /^[a-f0-9]{64}$/.test(value);
@@ -57,7 +82,8 @@ async function admittedIndex(
 async function readSummaries(
 	release: DatedArchiveRelease,
 	now: Date,
-	admit: IndexAdmission
+	admit: IndexAdmission,
+	select?: (document: EditorialSummary) => boolean
 ): Promise<EditorialSummary[]> {
 	if (release.schemaVersion !== 'atv-dated-horoscope-index-release-v1') return [];
 	const ids = new Map<string, number>();
@@ -71,10 +97,12 @@ async function readSummaries(
 	}
 	const documents: EditorialSummary[] = [];
 	for (const entry of release.entries) {
+		if (select && !entry.index.documents.some(select)) continue;
 		if (!(await admit(entry))) continue;
 		documents.push(
 			...entry.index.documents.filter(
 				(d) =>
+					(!select || select(d)) &&
 					ids.get(d.id) === 1 &&
 					paths.get(d.path) === 1 &&
 					Date.parse(d.publishedAt) <= now.getTime() &&
@@ -112,16 +140,10 @@ async function readDocument(
 		if (!response.ok) return;
 		const bytes = new Uint8Array(await response.arrayBuffer());
 		if ((await byteDigest(bytes)) !== entry.asset.sha256) return;
-		const asset = JSON.parse(new TextDecoder().decode(bytes)) as ArchiveAsset;
-		if (
-			asset.schemaVersion !== 'atv-dated-horoscope-archive-v1' ||
-			!Array.isArray(asset.packages) ||
-			asset.packages.length !== 12
-		)
-			return;
-		const candidates = asset.packages.filter((item) => item.document.id === summary.id);
-		if (candidates.length !== 1) return;
-		const item = candidates[0];
+		const selected = archivePackage(bytes, entry.asset.sha256, summary.id);
+		if (!selected) return;
+		const { item, evidence } = selected;
+		freezeEditorialJson(item.document);
 		if (
 			canonicalJson(datedHoroscopeIndexDocument(item.document)) !== canonicalJson(summary) ||
 			(await digest(item.document)) !== entry.index.documentDigests[summary.id] ||
@@ -135,10 +157,10 @@ async function readDocument(
 		const evidenceFiles = new Map(
 			(item.evidenceManifest?.files ?? []).map((file) => [
 				file.path,
-				new TextEncoder().encode(asset.evidenceByDigest[file.sha256] ?? '')
+				new TextEncoder().encode(evidence(file.sha256))
 			])
 		);
-		freezeEditorialJson(item);
+		markDatedReplayInputs(item.document, item.dated.claims, item.dated.facts, item.dated.scope);
 		const packages = [{ ...item, evidenceFiles }];
 		return (
 			await approvedDocuments([item.document], [], {}, now, { authorities, packages }, [
@@ -168,7 +190,8 @@ export function createDatedArchiveRead(
 		return result;
 	};
 	return {
-		summaries: () => readSummaries(release, readAt, admit),
+		summaries: (select?: (document: EditorialSummary) => boolean) =>
+			readSummaries(release, readAt, admit, select),
 		document: (path: string, fetchAsset: EditorialAssetFetch) =>
 			readDocument(path, release, authorities, fetchAsset, readAt, admit)
 	};
