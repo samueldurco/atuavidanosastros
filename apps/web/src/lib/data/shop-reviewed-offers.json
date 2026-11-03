@@ -18,6 +18,30 @@
 		"dimonaRetailProductionDays": 3
 	},
 	{
+		"slug": "caneca-virgo",
+		"variantId": "gid://shopify/ProductVariant/68006922387824",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-libra",
+		"variantId": "gid://shopify/ProductVariant/68006922420592",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-scorpio",
+		"variantId": "gid://shopify/ProductVariant/68006922453360",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
+		"slug": "caneca-sagittarius",
+		"variantId": "gid://shopify/ProductVariant/68006922486128",
+		"priceBrl": 79.9,
+		"dimonaRetailProductionDays": 3
+	},
+	{
 		"slug": "ecobag-aquarius",
 		"variantId": "gid://shopify/ProductVariant/68006902235504",
 		"priceBrl": 49.9
