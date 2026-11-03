@@ -182,50 +182,60 @@ const tankSizes = [
 	['XGG', '58–62', '72–76']
 ];
 export const shopPreviews: ShopPreview[] = previews.map((piece) => {
-	if (reviewedSlugs.has(piece.slug) && piece.slug.startsWith('caderno-')) {
-		return {
-			...piece,
-			provider: 'GraphiMax',
-			model: 'Caderno A5 de capa dura · 96 folhas pautadas',
-			material: 'Capa dura com laminação fosca e encadernação Wire-o preta',
-			construction: {
-				label: 'Miolo e formato',
-				value: '96 folhas pautadas. Formato A5 de 14,8 × 21 cm.'
-			},
-			printDescription: 'Impressão colorida da arte zodiacal ATVNA na capa.',
-			imageNote:
-				'As imagens mostram a estampa no caderno de referência. O modelo de produção nacional tem capa dura fosca, espiral preta e miolo pautado.'
-		};
-	}
-	const framed = piece.slug.startsWith('quadro-');
-	if (reviewedSlugs.has(piece.slug) && (framed || piece.slug.startsWith('poster-'))) {
+	const notebook = piece.slug.startsWith('caderno-');
+	if (reviewedSlugs.has(piece.slug) && (notebook || piece.slug.startsWith('poster-'))) {
 		return {
 			...piece,
 			provider: 'Digipix Pro',
-			model: framed ? 'Quadro Classic 34 × 44 cm · moldura preta' : 'Pôster vertical 30 × 40 cm',
-			material: framed
-				? 'Papel fotográfico de 180 g/m², moldura preta laqueada e vidro'
-				: 'Papel couché de 170 g/m² com verniz brilhante',
-			description: framed
-				? `Arte de ${piece.sign} em papel fotográfico, protegida por vidro e emoldurada em preto. O quadro acompanha pendurador e niveladores de silicone.`
-				: `A arte de ${piece.sign} ocupa o centro do pôster vertical. O verniz brilhante cobre o papel couché.`,
-			construction: {
-				label: 'Dimensões',
-				value: framed ? '34 × 44 cm incluindo a moldura.' : '30 × 40 cm. Vendido sem moldura.'
-			},
+			model: notebook ? 'Caderno Colegial · 100 folhas pautadas' : 'Pôster fotográfico 15 × 21 cm',
+			material: notebook
+				? 'Capa dura com laminação brilhante e encadernação Wire-O'
+				: 'Papel fotográfico premium com acabamento fosco',
+			description: notebook
+				? `A arte de ${piece.sign} ocupa a capa deste caderno de 100 folhas brancas pautadas.`
+				: `A arte de ${piece.sign} ocupa o centro desta impressão fotográfica vertical de 15 × 21 cm.`,
+			construction: notebook
+				? { label: 'Miolo e formato', value: '100 folhas pautadas. Formato de 14 × 20 cm.' }
+				: { label: 'Dimensões', value: '15 × 21 cm. Vendido sem moldura.' },
+			printDescription: notebook
+				? 'Estampa colorida da ATVNA na frente da capa, com impressão UV.'
+				: 'Impressão fotográfica da arte zodiacal ATVNA em orientação vertical.',
+			imageNote: notebook
+				? 'A prévia mostra a arte da capa frontal. A encadernação e o brilho do acabamento aparecem na peça impressa.'
+				: 'A prévia mostra a composição da impressão. As cores podem variar entre a tela e o papel fotográfico fosco.',
+			artOnly: true,
+			colors: [
+				{
+					name: notebook ? 'Arte da capa' : 'Arte impressa',
+					images: [
+						{
+							src: `${base}/${piece.slug}-digipix.jpg`,
+							label: notebook ? 'Capa frontal' : 'Composição completa',
+							alt: `Arte zodiacal de ${piece.sign} para ${notebook ? 'a capa do caderno' : 'o pôster fotográfico'}.`
+						}
+					]
+				}
+			]
+		};
+	}
+	if (reviewedSlugs.has(piece.slug) && piece.slug.startsWith('quadro-')) {
+		return {
+			...piece,
+			provider: 'Digipix Pro',
+			model: 'Quadro Classic 34 × 44 cm · moldura preta',
+			material: 'Papel fotográfico de 180 g/m², moldura preta laqueada e vidro',
+			description: `Arte de ${piece.sign} em papel fotográfico, protegida por vidro e emoldurada em preto. O quadro acompanha pendurador e niveladores de silicone.`,
+			construction: { label: 'Dimensões', value: '34 × 44 cm incluindo a moldura.' },
 			printDescription: 'Impressão da arte zodiacal ATVNA em orientação vertical.',
-			colors: framed
-				? piece.colors.map((color) => ({
-						...color,
-						images: color.images.map((image) => ({
-							...image,
-							alt: image.alt.replace('de 30 × 40 cm', 'de referência')
-						}))
-					}))
-				: piece.colors,
-			imageNote: framed
-				? 'A imagem ilustra a arte em um quadro de referência. A moldura e o reflexo do vidro podem diferir da prévia.'
-				: 'A imagem ilustra a arte em um pôster de referência. O brilho do papel e as cores podem variar em relação à prévia.'
+			colors: piece.colors.map((color) => ({
+				...color,
+				images: color.images.map((image) => ({
+					...image,
+					alt: image.alt.replace('de 30 × 40 cm', 'de referência')
+				}))
+			})),
+			imageNote:
+				'A imagem ilustra a arte em um quadro de referência. A moldura e o reflexo do vidro podem diferir da prévia.'
 		};
 	}
 	const cap = capPreviews[piece.slug];

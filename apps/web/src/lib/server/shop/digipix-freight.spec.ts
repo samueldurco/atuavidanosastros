@@ -32,14 +32,17 @@ const fetchHtml = (html: string, latin = false) =>
 	);
 
 describe('Digipix national fulfillment', () => {
-	it('identifies the 16 existing single-variant wall pieces and respects the separate commercial review', () => {
+	it('identifies the 28 existing single-variant wall pieces and notebooks and respects the separate commercial review', () => {
 		const pieces = Object.values(approvedShopProducts).filter((p) =>
-			/^(?:poster|quadro)-/.test(p.handle)
+			/^(?:poster|quadro|caderno)-/.test(p.handle)
 		);
-		expect(pieces).toHaveLength(16);
+		expect(pieces).toHaveLength(28);
 		for (const p of pieces) {
 			const id = p.variantIds[0];
-			expect(digipixSku(p.handle, id)).toBe(p.handle.startsWith('poster-') ? '9250' : '3467');
+			const skuByType = { poster: '12', caderno: '2176', quadro: '3467' } as const;
+			expect(digipixSku(p.handle, id)).toBe(
+				skuByType[p.handle.split('-')[0] as keyof typeof skuByType]
+			);
 			expect(digipixSku(p.handle, id + '0')).toBeUndefined();
 			if (!reviewedOffers.some((o) => o.variantId === id))
 				expect(() => physicalOffer(id)).toThrow();

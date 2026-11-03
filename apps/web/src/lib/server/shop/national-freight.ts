@@ -31,7 +31,7 @@ export function physicalOffer(id: unknown): Offer {
 	const dimonaSku = (industrialSkus as Record<string, string>)[variant];
 	const gubo = (guboSkus as Record<string, GuboVariant>)[variant];
 	const wall = digipixSku(o.slug, o.variantId);
-	const notebook = graphimaxNotebook(o.slug, o.variantId);
+	const notebook = !wall && graphimaxNotebook(o.slug, o.variantId);
 	const retailMug = o.dimonaRetailProductionDays !== undefined;
 	if ([dimonaSku, gubo, wall, notebook, retailMug].filter(Boolean).length > 1)
 		return fail('product_unavailable', 409);

@@ -21,8 +21,10 @@ const modelIds: Record<string, string> = {
 	'Caneca branca de porcelana · 325 ml': 'GE-caneca-branca',
 	'Garrafa térmica branca de 17 oz': 'GE-garrafa-500ml',
 	'Pôster vertical 30 × 40 cm': 'GE-poster-30x40',
+	'Pôster fotográfico 15 × 21 cm': 'GE-poster-30x40',
 	'Caderno espiral · 140 páginas pontilhadas': 'PF-caderno-espiral',
 	'Caderno A5 de capa dura · 96 folhas pautadas': 'PF-caderno-espiral',
+	'Caderno Colegial · 100 folhas pautadas': 'PF-caderno-espiral',
 	'Yupoong 6245CM · boné ajustável': 'PF-bone-bordado',
 	'Boné americano Dimona': 'PF-bone-bordado',
 	'Yupoong 1501KC · gorro com dobra': 'PF-gorro-bordado'
