@@ -22,7 +22,7 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	await expect(offers).toHaveCount(0);
 	await expect(button).toBeFocused();
 	await menu.locator('[aria-controls="nav-loja"]').click();
-	await page.locator('#nav-loja a[href="/loja"]').click();
+	await page.locator('#nav-loja .nav-item[href="/loja"]').click();
 	await expect(page).toHaveURL(/\/loja$/);
 	await expect(page.locator('.nav-panel')).toHaveCount(0);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
@@ -59,7 +59,7 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 			})
 			.toBeLessThanOrEqual(0);
 		await menu.locator('[aria-controls="nav-loja"]').click();
-		const store = page.locator('#nav-loja a[href="/loja"]');
+		const store = page.locator('#nav-loja .nav-item[href="/loja"]');
 		await store.scrollIntoViewIfNeeded();
 		await expect(store).toBeInViewport();
 		await store.click({ trial: true });
