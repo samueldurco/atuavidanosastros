@@ -31,7 +31,7 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 			'Produtos digitais⌄',
 			'Universos⌄',
 			'Revista⌄',
-			'Loja dos Signos⌄'
+			'Loja do ATVNA⌄'
 		]);
 		await expect(nav.locator('.account-link')).toHaveAttribute('href', '/entrar');
 		const tools = nav.locator('[aria-controls="nav-ferramentas"]');

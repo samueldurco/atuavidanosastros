@@ -1,7 +1,8 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { mkdir, writeFile } from 'node:fs/promises';
 import {
-	productCatalog,
+	launchProductIds,
+	workflows,
 	workflowFor,
 	type CalculationSnapshot,
 	type WorkflowInput,
@@ -48,7 +49,7 @@ const sources: DreamAtlasFactSource[] = [
 		includeInSynthesis: true
 	}
 ];
-const cases = productCatalog.filter((p) => p.universe !== 'global');
+const cases = workflows;
 function inputFor(productId: string): WorkflowInput {
 	const kind = workflowFor(productId)!.kind;
 	const input: WorkflowInput = {
@@ -120,6 +121,14 @@ function inputFor(productId: string): WorkflowInput {
 const saved = new Map<string, SavedTrial>();
 const measurements: unknown[] = [];
 describe('preserved historical editions against real calculations and editorial corpus', () => {
+	it('covers all 27 historical workflows while launches retain their separate calculation pipeline', () => {
+		expect(cases).toHaveLength(27);
+		expect(launchProductIds).toHaveLength(11);
+		for (const productId of launchProductIds) {
+			expect(workflowFor(productId)).toBeUndefined();
+			expect(cases.some((product) => product.id === productId)).toBe(false);
+		}
+	});
 	for (const product of cases)
 		it(`${product.id}: complete fact-bound reading receives private approval`, async () => {
 			const input = inputFor(product.id),

@@ -1,0 +1,688 @@
+{
+  "timestamp": "2026-11-04T11:48:23.314Z",
+  "complete": true,
+  "results": [
+    {
+      "id": "wedding-date-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 6,
+      "sectionCount": 6,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Data de Casamento",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 20,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.75
+      }
+    },
+    {
+      "id": "ex-tarot",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 7,
+      "sectionCount": 7,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Tarot do Ex: Saudade e Arrependimento",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 19,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.0625
+      }
+    },
+    {
+      "id": "love-restart-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 11,
+      "sectionCount": 11,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa do Recomeço Amoroso",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 57,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 33.8125
+      }
+    },
+    {
+      "id": "sexuality-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 9,
+      "sectionCount": 9,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Sexualidade",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 26,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.46875
+      }
+    },
+    {
+      "id": "intimacy-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 8,
+      "sectionCount": 8,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Intimidade a Dois",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 23,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.28125
+      }
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 7,
+      "sectionCount": 7,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa das Reações Emocionais",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 20,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.09375
+      }
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 7,
+      "sectionCount": 7,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Tarot dos Bloqueios Financeiros",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 19,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.4375
+      }
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 13,
+      "sectionCount": 13,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa do Talento Oculto",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 38,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.15625
+      }
+    },
+    {
+      "id": "ascendant-style",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 8,
+      "sectionCount": 8,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Meu Estilo pelo Ascendente",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 23,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.71875
+      }
+    },
+    {
+      "id": "conversation-timing",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 11,
+      "sectionCount": 11,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "A Hora da Conversa — Horóscopo Amoroso",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 33,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.03125
+      }
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 12,
+      "sectionCount": 12,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Convivência a Dois",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 35,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.578125
+      }
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 6,
+      "sectionCount": 6,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Data de Casamento",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 20,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 348.9375
+      }
+    },
+    {
+      "id": "ex-tarot",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 7,
+      "sectionCount": 7,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Tarot do Ex: Saudade e Arrependimento",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 19,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.84375
+      }
+    },
+    {
+      "id": "love-restart-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 11,
+      "sectionCount": 11,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa do Recomeço Amoroso",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 57,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.28125
+      }
+    },
+    {
+      "id": "sexuality-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 9,
+      "sectionCount": 9,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Sexualidade",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 26,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.109375
+      }
+    },
+    {
+      "id": "intimacy-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 8,
+      "sectionCount": 8,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Intimidade a Dois",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 23,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.765625
+      }
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 7,
+      "sectionCount": 7,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa das Reações Emocionais",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 20,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.421875
+      }
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 7,
+      "sectionCount": 7,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Tarot dos Bloqueios Financeiros",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 19,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.734375
+      }
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 13,
+      "sectionCount": 13,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa do Talento Oculto",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 38,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.921875
+      }
+    },
+    {
+      "id": "ascendant-style",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 8,
+      "sectionCount": 8,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Meu Estilo pelo Ascendente",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 23,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.53125
+      }
+    },
+    {
+      "id": "conversation-timing",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 11,
+      "sectionCount": 11,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "A Hora da Conversa — Horóscopo Amoroso",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 33,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.59375
+      }
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 12,
+      "sectionCount": 12,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "Mapa da Convivência a Dois",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 35,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 31.703125
+      }
+    }
+  ]
+}

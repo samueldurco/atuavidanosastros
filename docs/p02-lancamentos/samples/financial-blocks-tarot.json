@@ -1,0 +1,411 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "financial-blocks-tarot",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 2.4135999999998603,
+      "composition": 5.379299999998693,
+      "review": 10.643300000001545,
+      "total": 18.4362000000001
+    },
+    "jsonBytes": {
+      "input": 374,
+      "calculation": 2961,
+      "reading": 9779,
+      "review": 2467
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "financial-blocks-tarot",
+    "answers": {
+      "impasse": "Adio mostrar uma primeira versão do meu trabalho.",
+      "attemptedAction": "Preparei muitos rascunhos e ainda não mostrei nenhum.",
+      "availableStep": "Tenho uma hora para escolher uma versão e pedir retorno a uma pessoa."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000007",
+    "productId": "financial-blocks-tarot",
+    "inputDigest": "0d494e57960c9fb19d3508f1047667ae6dfa2f5fce8a0577e6606d89af1d8eb3",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-impasse-1",
+        "kind": "reported",
+        "display": "Adio mostrar uma primeira versão do meu trabalho.",
+        "source": "input.answers.impasse"
+      },
+      {
+        "id": "reported-attemptedAction-1",
+        "kind": "reported",
+        "display": "Preparei muitos rascunhos e ainda não mostrei nenhum.",
+        "source": "input.answers.attemptedAction"
+      },
+      {
+        "id": "reported-availableStep-1",
+        "kind": "reported",
+        "display": "Tenho uma hora para escolher uma versão e pedir retorno a uma pessoa.",
+        "source": "input.answers.availableStep"
+      },
+      {
+        "id": "card-1",
+        "kind": "drawn",
+        "display": "Impasse: Seis de Copas (posição direta)",
+        "source": "atv-tarot-78/1.0.0;sha256-counter-rejection-fisher-yates/1;atv-launch-financial-blocks-tarot-method/1.0.0;financial-blocks-tarot"
+      },
+      {
+        "id": "card-2",
+        "kind": "drawn",
+        "display": "Possível bloqueio: Dez de Ouros (posição direta)",
+        "source": "atv-tarot-78/1.0.0;sha256-counter-rejection-fisher-yates/1;atv-launch-financial-blocks-tarot-method/1.0.0;financial-blocks-tarot"
+      },
+      {
+        "id": "card-3",
+        "kind": "drawn",
+        "display": "Primeiro passo: Oito de Ouros (posição direta)",
+        "source": "atv-tarot-78/1.0.0;sha256-counter-rejection-fisher-yates/1;atv-launch-financial-blocks-tarot-method/1.0.0;financial-blocks-tarot"
+      }
+    ],
+    "data": {
+      "method": {
+        "id": "financial-blocks-tarot",
+        "version": "atv-launch-financial-blocks-tarot-method/1.0.0",
+        "positions": [
+          {
+            "id": "impasse",
+            "name": "Impasse",
+            "function": "Examinar o impasse concreto declarado, sem inventar condição financeira."
+          },
+          {
+            "id": "possible-block",
+            "name": "Possível bloqueio",
+            "function": "Formular uma hipótese simbólica a conferir nas ações relatadas."
+          },
+          {
+            "id": "first-step",
+            "name": "Primeiro passo",
+            "function": "Relacionar um passo observável aos recursos e limites declarados."
+          }
+        ]
+      },
+      "deckVersion": "atv-tarot-78/1.0.0",
+      "drawAlgorithm": "sha256-counter-rejection-fisher-yates/1",
+      "executionId": "8c6d9da2-d296-4b63-a30c-000000000007",
+      "reversals": false,
+      "replacement": false,
+      "drawStatus": "UNPERSISTED",
+      "cards": [
+        {
+          "position": 1,
+          "positionId": "impasse",
+          "positionName": "Impasse",
+          "cardId": "cups-6",
+          "name": "Seis de Copas",
+          "orientation": "upright"
+        },
+        {
+          "position": 2,
+          "positionId": "possible-block",
+          "positionName": "Possível bloqueio",
+          "cardId": "pentacles-10",
+          "name": "Dez de Ouros",
+          "orientation": "upright"
+        },
+        {
+          "position": 3,
+          "positionId": "first-step",
+          "positionName": "Primeiro passo",
+          "cardId": "pentacles-8",
+          "name": "Oito de Ouros",
+          "orientation": "upright"
+        }
+      ]
+    },
+    "limits": [
+      "Sorteio ainda não persistido; não constitui leitura ou entrega.",
+      "As cartas não comprovam a existência ou a causa de um bloqueio financeiro.",
+      "Não prevê renda, retorno, resultado financeiro ou investimento; a hipótese e o passo ainda exigem revisão."
+    ],
+    "provenance": {
+      "calculation": "deterministic-tarot",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "23a0a8e4ad7d822063e282f465f5b77ca79e9ec00f1b2639d4850e0e24d2d434",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000007",
+    "productId": "financial-blocks-tarot",
+    "inputDigest": "0d494e57960c9fb19d3508f1047667ae6dfa2f5fce8a0577e6606d89af1d8eb3",
+    "title": "Tarot dos Bloqueios Financeiros",
+    "summary": "Para “Adio mostrar uma primeira versão do meu trabalho.”, a leitura propõe uma hipótese testável, com alternativa material. O próximo passo é definir a menor primeira versão que caiba no recurso disponível e mostrá-la a uma pessoa.",
+    "sections": [
+      {
+        "id": "financial-position-1",
+        "title": "Impasse: Seis de Copas",
+        "paragraphs": [
+          "Na posição Impasse, Seis de Copas oferece o espelho simbólico memória afetiva e troca com o passado, inclusive a forma como lembrança seleciona e suaviza experiência. No trabalho, conhecimento institucional, cliente antigo, técnica já usada, cultura de equipe ou recurso que pode ser recuperado. Compare com o impasse “Adio mostrar uma primeira versão do meu trabalho.”; a carta não acrescenta uma condição financeira ao relato.",
+          "No espelho do impasse, confira se a imagem ajuda a nomear o problema sem criar uma causa. Critério observável para este contexto: uma primeira versão pequena foi mostrada a uma pessoa, com pedido de retorno concreto. Registre o que aconteceu depois da ação e o que continua sem informação; o resultado pode contrariar a hipótese da carta."
+        ],
+        "evidenceIds": [
+          "card-1",
+          "reported-impasse-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "financial-position-2",
+        "title": "Possível bloqueio: Dez de Ouros",
+        "paragraphs": [
+          "Na posição Possível bloqueio, Dez de Ouros propõe a hipótese tradição rígida, patrimônio como controle, obrigação familiar, preservar sistema apenas porque é antigo ou confundir legado com status. Ela precisa ser confrontada com a tentativa “Preparei muitos rascunhos e ainda não mostrei nenhum.”. A alternativa é haver uma restrição concreta de tempo, recurso, demanda ou acordo; a carta não demonstra que o obstáculo é interno.",
+          "Na hipótese de bloqueio, procure um dado que a contrarie antes de tratá-la como explicação. Critério observável para este contexto: uma primeira versão pequena foi mostrada a uma pessoa, com pedido de retorno concreto. Registre o que aconteceu depois da ação e o que continua sem informação; o resultado pode contrariar a hipótese da carta."
+        ],
+        "evidenceIds": [
+          "card-2",
+          "reported-attemptedAction-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "financial-position-3",
+        "title": "Primeiro passo: Oito de Ouros",
+        "paragraphs": [
+          "Na posição Primeiro passo, Oito de Ouros oferece técnica, disciplina, aprendizagem, craft, revisão, capacidade de melhorar qualidade por prática. A pergunta da carta é identificar que repetição realmente melhora resultado e onde só reproduz erro em escala. O passo que você declarou disponível foi “Tenho uma hora para escolher uma versão e pedir retorno a uma pessoa.”; verifique se ele permite definir a menor primeira versão que caiba no recurso disponível e mostrá-la a uma pessoa, sem assumir custo novo.",
+          "No primeiro passo, avalie se a ação cabe no recurso e no tempo que você declarou. Critério observável para este contexto: uma primeira versão pequena foi mostrada a uma pessoa, com pedido de retorno concreto. Registre o que aconteceu depois da ação e o que continua sem informação; o resultado pode contrariar a hipótese da carta."
+        ],
+        "evidenceIds": [
+          "card-3",
+          "reported-availableStep-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "financial-joint-reading",
+        "title": "Hipótese, restrição e teste",
+        "paragraphs": [
+          "O recurso da primeira carta, gentileza, continuidade, reencontro com recurso antigo, capacidade de recuperar algo que ainda tem função, contrasta com o risco da segunda, tradição rígida, patrimônio como controle, obrigação familiar, preservar sistema apenas porque é antigo ou confundir legado com status. A terceira oferece técnica, disciplina, aprendizagem, craft, revisão, capacidade de melhorar qualidade por prática para testar uma ação, e não explicar toda a sua situação financeira. Para o impasse “Adio mostrar uma primeira versão do meu trabalho.”, o critério é observar se uma primeira versão pequena foi mostrada a uma pessoa, com pedido de retorno concreto, sem concluir que uma carta revelou a causa.",
+          "A tentativa já relatada foi “Preparei muitos rascunhos e ainda não mostrei nenhum.”. Se o teste mostrar falta de tempo, recurso, informação ou demanda, trate essa restrição como dado e revise o plano; não converta uma limitação material em culpa pessoal."
+        ],
+        "evidenceIds": [
+          "card-1",
+          "card-2",
+          "card-3",
+          "reported-impasse-1",
+          "reported-attemptedAction-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-financial-1",
+        "sectionId": "financial-position-1",
+        "rule": "concrete-impasse-mirror",
+        "evidenceIds": [
+          "card-1"
+        ],
+        "factors": {
+          "cardId": "cups-6",
+          "positionId": "impasse",
+          "sourceLine": 3060,
+          "contextClass": "small-exposure"
+        },
+        "interpretation": "Na posição Impasse, Seis de Copas oferece o espelho simbólico memória afetiva e troca com o passado, inclusive a forma como lembrança seleciona e suaviza experiência. No trabalho, conhecimento institucional, cliente antigo, técnica já usada, cultura de equipe ou recurso que pode ser recuperado. Compare com o impasse “Adio mostrar uma primeira versão do meu trabalho.”; a carta não acrescenta uma condição financeira ao relato."
+      },
+      {
+        "id": "claim-financial-2",
+        "sectionId": "financial-position-2",
+        "rule": "falsifiable-block-hypothesis",
+        "evidenceIds": [
+          "card-2"
+        ],
+        "factors": {
+          "cardId": "pentacles-10",
+          "positionId": "possible-block",
+          "sourceLine": 3966,
+          "contextClass": "small-exposure"
+        },
+        "interpretation": "Na posição Possível bloqueio, Dez de Ouros propõe a hipótese tradição rígida, patrimônio como controle, obrigação familiar, preservar sistema apenas porque é antigo ou confundir legado com status. Ela precisa ser confrontada com a tentativa “Preparei muitos rascunhos e ainda não mostrei nenhum.”. A alternativa é haver uma restrição concreta de tempo, recurso, demanda ou acordo; a carta não demonstra que o obstáculo é interno."
+      },
+      {
+        "id": "claim-financial-3",
+        "sectionId": "financial-position-3",
+        "rule": "available-observable-step",
+        "evidenceIds": [
+          "card-3"
+        ],
+        "factors": {
+          "cardId": "pentacles-8",
+          "positionId": "first-step",
+          "sourceLine": 3910,
+          "contextClass": "small-exposure"
+        },
+        "interpretation": "Na posição Primeiro passo, Oito de Ouros oferece técnica, disciplina, aprendizagem, craft, revisão, capacidade de melhorar qualidade por prática. A pergunta da carta é identificar que repetição realmente melhora resultado e onde só reproduz erro em escala. O passo que você declarou disponível foi “Tenho uma hora para escolher uma versão e pedir retorno a uma pessoa.”; verifique se ele permite definir a menor primeira versão que caiba no recurso disponível e mostrá-la a uma pessoa, sem assumir custo novo."
+      },
+      {
+        "id": "claim-financial-joint",
+        "sectionId": "financial-joint-reading",
+        "rule": "resource-risk-observable-test",
+        "evidenceIds": [
+          "card-1",
+          "card-2",
+          "card-3"
+        ],
+        "factors": {
+          "cards": [
+            "cups-6",
+            "pentacles-10",
+            "pentacles-8"
+          ],
+          "contextClass": "small-exposure"
+        },
+        "interpretation": "O recurso da primeira carta, gentileza, continuidade, reencontro com recurso antigo, capacidade de recuperar algo que ainda tem função, contrasta com o risco da segunda, tradição rígida, patrimônio como controle, obrigação familiar, preservar sistema apenas porque é antigo ou confundir legado com status. A terceira oferece técnica, disciplina, aprendizagem, craft, revisão, capacidade de melhorar qualidade por prática para testar uma ação, e não explicar toda a sua situação financeira. Para o impasse “Adio mostrar uma primeira versão do meu trabalho.”, o critério é observar se uma primeira versão pequena foi mostrada a uma pessoa, com pedido de retorno concreto, sem concluir que uma carta revelou a causa."
+      }
+    ],
+    "practicalAction": "Use o passo disponível “Tenho uma hora para escolher uma versão e pedir retorno a uma pessoa.” para definir a menor primeira versão que caiba no recurso disponível e mostrá-la a uma pessoa. Compare com a tentativa “Preparei muitos rascunhos e ainda não mostrei nenhum.”; registre uma resposta observável, sem comprar recurso novo ou prever receita.",
+    "reflection": "Que informação concreta faria você abandonar a hipótese de bloqueio e mudar o próximo passo?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "Não identifica causa comprovada de bloqueio, não recomenda investimento e não prevê renda ou retorno."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "deterministic-tarot",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-rws-interpretive-canon/1.0.0",
+          "version": "atv-rws-interpretive-canon/1.0.0",
+          "origin": "Verbetes locais das três cartas, compilados do Livro 19, capítulos 3–7; SHA256 0390dc4eab1c1dd57dfe3313c05f1675de88e03fe4a210ad8c4331eb6c24544c."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "11535f1930aa8e90852973a16aad44b900415176358a6532e34d9b67afa3f77e",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "financial-positional-meaning",
+        "passed": true,
+        "detail": "Cada carta cumpre sua posição: relato, hipótese falsificável com alternativa material e passo disponível."
+      },
+      {
+        "id": "financial-joint-counterhypothesis",
+        "passed": true,
+        "detail": "Síntese depende de três cartas diferentes e muda o teste conforme o impasse e a ação possível."
+      }
+    ],
+    "reasons": [],
+    "digest": "11535f1930aa8e90852973a16aad44b900415176358a6532e34d9b67afa3f77e",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "deterministic-tarot",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import { offeredProductIds } from '@atv/domain';
+import { workflowOfferProductIds } from '@atv/domain';
 import TrialLibrary from './TrialLibrary.svelte';
 import { latestReadingVersion, CONTENT_VERSION } from '$lib/trials/versions';
 import type { TrialLibraryData } from '$lib/trials/library';
@@ -17,10 +17,10 @@ const renderLibrary = (readings: TrialLibraryData['readings']) =>
 describe('trial library edition labels', () => {
 	it('recognizes the latest edition of every current catalog product', () => {
 		const body = renderLibrary(
-			offeredProductIds.map((id) => edition(id, latestReadingVersion(id)))
+			workflowOfferProductIds.map((id) => edition(id, latestReadingVersion(id)))
 		);
 		expect(body).not.toContain('Edição anterior preservada');
-		expect(body.match(/Continuar leitura/g)).toHaveLength(offeredProductIds.length);
+		expect(body.match(/Continuar leitura/g)).toHaveLength(workflowOfferProductIds.length);
 	});
 
 	it('preserves an earlier edition and offers a separate new edition', () => {

@@ -22,7 +22,7 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	await expect(offers).toHaveCount(0);
 	await expect(button).toBeFocused();
 	await menu.locator('[aria-controls="nav-loja"]').click();
-	await page.locator('#nav-loja a[href="/loja"]').click();
+	await page.locator('#nav-loja .nav-item[href="/loja"]').click();
 	await expect(page).toHaveURL(/\/loja$/);
 	await expect(page.locator('.nav-panel')).toHaveCount(0);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
@@ -59,7 +59,7 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 			})
 			.toBeLessThanOrEqual(0);
 		await menu.locator('[aria-controls="nav-loja"]').click();
-		const store = page.locator('#nav-loja a[href="/loja"]');
+		const store = page.locator('#nav-loja .nav-item[href="/loja"]');
 		await store.scrollIntoViewIfNeeded();
 		await expect(store).toBeInViewport();
 		await store.click({ trial: true });
@@ -120,7 +120,7 @@ test('home, universos, produto e ATV+ mantêm o contexto de cada oferta', async 
 	await page.screenshot({ path: testInfo.outputPath('home-catalogos.png') });
 	await catalogs.getByRole('link', { name: 'Ver todas as leituras' }).click();
 	await expect(page).toHaveTitle(/Leituras digitais/);
-	await expect(page.locator('.public-product-card')).toHaveCount(19);
+	await expect(page.locator('.public-product-card')).toHaveCount(30);
 	await page.locator('.public-product-card h3 a').first().click();
 	await expect(page.locator('main')).toContainText('Leitura digital · produto avulso');
 	await page.getByRole('link', { name: 'Catálogo de leituras digitais', exact: true }).click();

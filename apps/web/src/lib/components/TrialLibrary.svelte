@@ -34,6 +34,7 @@
 	</p>
 	<div class="actions">
 		<Button href="/testar-produtos">Escolher produto para testar</Button>
+		<Button href="/testar-lancamentos">Preparações e leituras dos lançamentos</Button>
 		<Button href="/atv-mais" variant="secondary">Conhecer os planos do ATV+</Button>
 		<Button href="/testar-produtos/atv-plus" variant="secondary">Leituras e anotações</Button>
 	</div>

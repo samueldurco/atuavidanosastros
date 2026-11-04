@@ -1,0 +1,61 @@
+{
+  "timestamp": "2026-11-04T11:15:39.079Z",
+  "results": [
+    {
+      "width": 1440,
+      "isolatedMountOnly": true,
+      "allPostsIntercepted": true,
+      "fixtureNoForm": true,
+      "errors": [],
+      "focus": {
+        "focused": true,
+        "outline": "3px"
+      },
+      "emptyRejectedBlocked": true,
+      "errorAnnounced": "Não foi possível salvar sua avaliação. Tente novamente.",
+      "disabledDuringSave": true,
+      "successAnnounced": "Sua avaliação foi registrada. Obrigado por contar como foi a leitura.",
+      "sameKeyOnRetry": true,
+      "newKeyAfterSuccess": true,
+      "approvalOptional": true,
+      "requestCount": 3,
+      "unavailableHistory": true,
+      "overflow": false,
+      "buttonHeight": 53.984375,
+      "choiceHeights": [
+        44,
+        44
+      ],
+      "history": "Ajustes solicitados · 04/11/2026, 08:00:00 Exemplo sintético: gostaria de um próximo passo mais específico.",
+      "rawDigestVisible": false
+    },
+    {
+      "width": 390,
+      "isolatedMountOnly": true,
+      "allPostsIntercepted": true,
+      "fixtureNoForm": true,
+      "errors": [],
+      "focus": {
+        "focused": true,
+        "outline": "3px"
+      },
+      "emptyRejectedBlocked": true,
+      "errorAnnounced": "Não foi possível salvar sua avaliação. Tente novamente.",
+      "disabledDuringSave": true,
+      "successAnnounced": "Sua avaliação foi registrada. Obrigado por contar como foi a leitura.",
+      "sameKeyOnRetry": true,
+      "newKeyAfterSuccess": true,
+      "approvalOptional": true,
+      "requestCount": 3,
+      "unavailableHistory": true,
+      "overflow": false,
+      "buttonHeight": 53.984375,
+      "choiceHeights": [
+        44,
+        44
+      ],
+      "history": "Ajustes solicitados · 04/11/2026, 08:00:00 Exemplo sintético: gostaria de um próximo passo mais específico.",
+      "rawDigestVisible": false
+    }
+  ]
+}

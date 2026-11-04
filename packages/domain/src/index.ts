@@ -12,3 +12,4 @@ export * from "./dream-atlas-facts.ts";
 
 export * from "./tarot-methods.ts";
 export * from "./tarot-method-calculation.ts";
+export * from "./launches.ts";

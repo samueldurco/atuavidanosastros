@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { offeredProductIds } from '@atv/domain';
+	import { offeredProductIds, productTrialHref } from '@atv/domain';
 	import TrialLibrary from '$lib/components/TrialLibrary.svelte';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import PageIntro from '$lib/components/ui/PageIntro.svelte';
@@ -72,7 +72,7 @@
 								: 'Aguardando seu teste'}
 						variant="product"
 					>
-						<p><a href={`/testar-produtos/${product.id}`}>Testar {product.name}</a></p>
+						<p><a href={productTrialHref(product.id)}>Testar {product.name}</a></p>
 						{#if feedback}<p>
 								<a href={`/testar-produtos/leituras/${feedback.reading_id}`}
 									>Reabrir a leitura avaliada</a
@@ -113,7 +113,7 @@
 			<div class="products">
 				{#each products as product (product.id)}
 					<Card title={product.name} eyebrow="Teste privado" variant="product">
-						<a href={`/testar-produtos/${product.id}`}>Testar {product.name}</a>
+						<a href={productTrialHref(product.id)}>Testar {product.name}</a>
 					</Card>
 				{/each}
 			</div>

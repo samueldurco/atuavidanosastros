@@ -1,8 +1,9 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { productCatalog } from '@atv/domain';
+import { launchProductIds, productCatalog, productTrialHref } from '@atv/domain';
 import { load as rootLoad } from '../../routes/+layout.server';
 import { load as legacyLoad } from '../../routes/biblioteca/nova/[productId]/+page.server';
+import { load as workflowTrialLoad } from '../../routes/testar-produtos/[productId]/+page.server';
 import { readTrialLibrary } from './trial-library';
 import { handle } from '../../hooks.server';
 vi.mock('$env/dynamic/public', () => ({ env: {} }));
@@ -59,7 +60,22 @@ describe('nominal trial access in the normal app', () => {
 					locals: {},
 					setHeaders: vi.fn()
 				} as unknown as Parameters<typeof legacyLoad>[0])
-			).rejects.toMatchObject({ status: 303, location: `/testar-produtos/${productId}` });
+			).rejects.toMatchObject({ status: 303, location: productTrialHref(productId) });
+		}
+	);
+	it.each(launchProductIds)(
+		'canonicalizes old trial %s before touching the legacy engine',
+		async (productId) => {
+			const parent = vi.fn();
+			await expect(
+				workflowTrialLoad({
+					params: { productId },
+					parent,
+					locals: {},
+					url: new URL(`https://example.test/testar-produtos/${productId}?atvPlusCycle=ignored`)
+				} as unknown as Parameters<typeof workflowTrialLoad>[0])
+			).rejects.toMatchObject({ status: 303, location: `/testar-lancamentos/${productId}` });
+			expect(parent).not.toHaveBeenCalled();
 		}
 	);
 	it('retains the login return path for anonymous legacy visits', async () => {

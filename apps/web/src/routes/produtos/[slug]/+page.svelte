@@ -95,7 +95,15 @@
 		}
 	};
 	const freeEntry = $derived(
-		freeEntryByProduct[data.product.id] ?? freeEntryByUniverse[data.product.universe]
+		data.launch
+			? ['ex-tarot', 'financial-blocks-tarot'].includes(data.product.id)
+				? freeEntryByUniverse['tarot-arcanos']
+				: data.product.id === 'wedding-date-map'
+					? undefined
+					: data.product.id === 'conversation-timing' || data.product.id === 'love-restart-map'
+						? freeEntryByProduct.horoscope
+						: freeEntryByProduct['birth-chart']
+			: (freeEntryByProduct[data.product.id] ?? freeEntryByUniverse[data.product.universe])
 	);
 
 	const design = $derived(mvpProductDesign(data.product.id));
@@ -113,16 +121,23 @@
 		<section class="product-offer-hero">
 			<div class="wrap product-offer-hero-inner">
 				<div class="product-offer-copy">
-					<a class="back-link" href="/leituras"
-						>Catálogo de leituras digitais <span aria-hidden="true">↗</span></a
+					<a class="back-link" href={data.launch ? '/lancamentos' : '/leituras'}
+						>{data.launch ? 'Lançamentos digitais' : 'Catálogo de leituras digitais'}
+						<span aria-hidden="true">↗</span></a
 					>
 					<p class="eyebrow">Leitura digital · produto avulso</p>
-					{#if design}<p class="product-offer-caption">{design.caption}</p>{/if}
+					{#if design && design.caption !== data.launch?.subtitle}<p class="product-offer-caption">
+							{design.caption}
+						</p>{/if}
 					<h1>{data.product.name}</h1>
+					{#if data.launch?.subtitle}<p class="eyebrow">{data.launch.subtitle}</p>{/if}
 					<p class="lead">{data.product.summary}</p>
 					<div class="product-offer-actions">
-						<a class="button product-primary" href="#disponibilidade"
-							>Ver disponibilidade <span aria-hidden="true">↗</span></a
+						<a
+							class="button product-primary"
+							href={data.launch ? `/testar-lancamentos/${data.product.id}` : '#disponibilidade'}
+							>{data.launch ? 'Testar gratuitamente' : 'Ver disponibilidade'}
+							<span aria-hidden="true">↗</span></a
 						><a class="text-link" href="#conteudo">Conhecer o conteúdo</a>
 					</div>
 				</div>
@@ -145,18 +160,58 @@
 				</section>
 				<section>
 					<p class="eyebrow">A entrega</p>
-					<h2>Formatos digitais previstos</h2>
+					<h2>{data.launch ? 'Sua leitura digital' : 'Formatos digitais previstos'}</h2>
 					<ul class="product-formats">
 						{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
 					</ul>
 				</section>
+				{#if data.launch}
+					<section>
+						<p class="eyebrow">O resultado</p>
+						<h2>O que você recebe</h2>
+						<ul>
+							{#each data.launch.receive as item (item)}<li>{item}</li>{/each}
+						</ul>
+					</section>
+					<section>
+						<p class="eyebrow">Como fazemos</p>
+						<h2>O método desta leitura</h2>
+						<p>{data.launch.method}</p>
+					</section>
+					<section>
+						<h2>Quando escolher este produto</h2>
+						<p>{data.launch.distinction}</p>
+					</section>
+					<section>
+						<h2>Limites da leitura</h2>
+						<ul>
+							{#each data.launch.boundaries as item (item)}<li>{item}</li>{/each}
+						</ul>
+					</section>
+					<section>
+						<h2>Exemplo ilustrativo</h2>
+						<p>{data.launch.sampleInput}</p>
+						<p>{data.launch.sampleDelivery}</p>
+						<p class="eyebrow">
+							Dados fictícios · demonstração do recorte · não é uma leitura calculada
+						</p>
+					</section>
+				{/if}
 			</div>
 			<aside
 				class="product-availability"
 				id="disponibilidade"
 				aria-label="Disponibilidade e acesso"
 			>
-				{#if data.trialAccess}
+				{#if data.launch}
+					<h2>Teste gratuito disponível</h2>
+					<p>
+						{data.trialAccess
+							? 'Seu acesso está ativo. Gere a leitura, guarde o resultado e registre sua avaliação.'
+							: 'Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente.'}
+					</p>
+					<Button href={'/testar-lancamentos/' + data.product.id}>Abrir teste gratuito</Button>
+				{:else if data.trialAccess}
 					<div class="trial-status">
 						<h2>Teste gratuito disponível</h2>
 						<p>

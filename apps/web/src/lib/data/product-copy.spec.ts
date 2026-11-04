@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { offeredProductIds, productCatalog } from '@atv/domain';
+import {
+	offeredProductIds,
+	productCatalog,
+	isLaunchProductId,
+	launchProductIds,
+	workflowFor
+} from '@atv/domain';
 import { customerOffers, customerProducts, productCopy } from './product-copy';
 import { productDetails } from './product-details';
 import { freeTools, freeToolById } from './free-tools';
@@ -19,6 +25,11 @@ describe('customer language across the complete catalog', () => {
 		expect(customer.cta).toBe(`Conhecer ${product.name}`);
 		expect(customer.summary.length).toBeGreaterThan(30);
 		if (!product.personalized) return;
+		if (isLaunchProductId(product.id)) {
+			expect(product.state).toBe('PREPARING');
+			expect(workflowFor(product.id)).toBeUndefined();
+			return;
+		}
 		const intake = `/biblioteca/nova/${product.id}`;
 		expect(authReturnPath(intake)).toBe(intake);
 		expect(loginHref(intake)).toBe(`/entrar?next=${encodeURIComponent(intake)}`);
@@ -39,11 +50,13 @@ describe('customer language across the complete catalog', () => {
 			].includes(product.id);
 		expect(Boolean(supported)).toBe(true);
 	});
-	it('keeps historical entries separate from the 19 public offers and ATV+', () => {
-		expect(customerProducts).toHaveLength(28);
-		expect(customerProducts.filter((product) => product.personalized)).toHaveLength(27);
+	it('adds launch proposals while preserving historical entries and separate ATV+', () => {
+		expect(customerProducts).toHaveLength(28 + launchProductIds.length);
+		expect(customerProducts.filter((product) => product.personalized)).toHaveLength(
+			27 + launchProductIds.length
+		);
 		expect(customerOffers.map((product) => product.id)).toEqual(offeredProductIds);
-		expect(customerOffers).toHaveLength(19);
+		expect(customerOffers).toHaveLength(19 + launchProductIds.length);
 		expect(customerOffers.every((product) => product.id !== 'atv-plus')).toBe(true);
 		expect(
 			customerOffers.every(

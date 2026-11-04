@@ -4,6 +4,7 @@
 		atvPlusPlans,
 		atvPlusPlanFor,
 		atvPlusSelectionAllowed,
+		productTrialHref,
 		productCatalog
 	} from '@atv/domain';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
@@ -137,7 +138,7 @@
 						<div class="choices">
 							{#each availableIds as id (id)}<a
 									class="choice"
-									href={`/testar-produtos/${id}?atvPlusCycle=${current.id}`}
+									href={`${productTrialHref(id)}?atvPlusCycle=${current.id}`}
 									>{nameFor(id)} <span aria-hidden="true">↗</span></a
 								>{/each}
 						</div>

@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { workflows, workflowFor, parseWorkflowInput, transitionRun, WORKFLOW_VERSION, validDate } from './src/workflows.ts';
+import { launchProductIds } from './src/launches.ts';
 
 const birth = { localDateTime:'2000-01-01T12:00:00', utcInstant:'2000-01-01T15:00:00Z', timezone:'America/Sao_Paulo', latitude:-23.5, longitude:-46.6, locationSource:'synthetic' };
 const consent = { storage:true, policyVersion:'atv-input-consent/1', partner:false, continuity:false };
@@ -24,6 +25,7 @@ test('27 retained workflows cover six universes, with six Tarot methods and gate
   assert.equal(workflows.filter(p=>p.kind==='tarot').length,6);
   for (const id of ['daily-card','tarot-focus','tarot-yes-no','three-questions','tarot-journey']) assert.equal(workflows.some(p=>p.id===id),false,id);
   assert.equal(new Set(workflows.map(p=>p.kind)).size,6);
+  for (const id of launchProductIds) assert.equal(workflowFor(id), undefined, `${id} requires its dedicated P02 contract`);
   for (const p of workflows) {
     assert.equal(p.release,'blocked');
     const value=inputFor(p), parsed=parseWorkflowInput(value);

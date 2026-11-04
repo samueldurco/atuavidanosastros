@@ -1,0 +1,1434 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:37:17.995Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "wedding-date-map",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 6756.9499,
+      "composition": 237.60319999999956,
+      "review": 7.828000000001339,
+      "total": 7002.3811000000005
+    },
+    "jsonBytes": {
+      "input": 752,
+      "calculation": 27120,
+      "reading": 9024,
+      "review": 3060
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "wedding-date-map",
+    "answers": {
+      "ceremonies": [
+        {
+          "localDateTime": "2027-03-20T10:30:00",
+          "utcInstant": "2027-03-20T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example",
+          "label": "Início da cerimônia A",
+          "city": "Cidade fictícia"
+        },
+        {
+          "localDateTime": "2027-04-17T10:30:00",
+          "utcInstant": "2027-04-17T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example",
+          "label": "Início da cerimônia B",
+          "city": "Cidade fictícia"
+        }
+      ],
+      "priorities": "Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000001",
+    "productId": "wedding-date-map",
+    "inputDigest": "08a94893b2a0b3426bea1dd628c43ba421fec1b587bc6e21b7cc63a1505ce057",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-ceremonies-1",
+        "kind": "reported",
+        "display": "{\"city\":\"Cidade fictícia\",\"label\":\"Início da cerimônia A\",\"latitude\":-23.55,\"localDateTime\":\"2027-03-20T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"2027-03-20T13:30:00Z\"}",
+        "source": "input.answers.ceremonies[0]"
+      },
+      {
+        "id": "reported-ceremonies-2",
+        "kind": "reported",
+        "display": "{\"city\":\"Cidade fictícia\",\"label\":\"Início da cerimônia B\",\"latitude\":-23.55,\"localDateTime\":\"2027-04-17T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"2027-04-17T13:30:00Z\"}",
+        "source": "input.answers.ceremonies[1]"
+      },
+      {
+        "id": "reported-priorities-1",
+        "kind": "reported",
+        "display": "Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.",
+        "source": "input.answers.priorities"
+      },
+      {
+        "id": "option-1-sun",
+        "kind": "calculated",
+        "display": "sun: longitude tropical 359.713924°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-moon",
+        "kind": "calculated",
+        "display": "moon: longitude tropical 154.728872°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-mercury",
+        "kind": "calculated",
+        "display": "mercury: longitude tropical 332.342951°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-venus",
+        "kind": "calculated",
+        "display": "venus: longitude tropical 323.046011°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-mars",
+        "kind": "calculated",
+        "display": "mars: longitude tropical 141.841124°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-jupiter",
+        "kind": "calculated",
+        "display": "jupiter: longitude tropical 137.860330°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-saturn",
+        "kind": "calculated",
+        "display": "saturn: longitude tropical 15.394596°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-uranus",
+        "kind": "calculated",
+        "display": "uranus: longitude tropical 62.373340°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-neptune",
+        "kind": "calculated",
+        "display": "neptune: longitude tropical 3.918083°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-pluto",
+        "kind": "calculated",
+        "display": "pluto: longitude tropical 306.637273°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-ascendant",
+        "kind": "calculated",
+        "display": "Ascendente: longitude tropical 57.130124°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-1-aspect-1",
+        "kind": "calculated",
+        "display": "sun sextile uranus; orbe 2.659416°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-2",
+        "kind": "calculated",
+        "display": "moon opposition mercury; orbe 2.385921°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-3",
+        "kind": "calculated",
+        "display": "moon square uranus; orbe 2.355532°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-4",
+        "kind": "calculated",
+        "display": "mercury square uranus; orbe 0.030389°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-5",
+        "kind": "calculated",
+        "display": "venus opposition mars; orbe 1.204887°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-6",
+        "kind": "calculated",
+        "display": "jupiter trine saturn; orbe 2.465734°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-7",
+        "kind": "calculated",
+        "display": "uranus sextile neptune; orbe 1.544743°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-1-aspect-8",
+        "kind": "calculated",
+        "display": "neptune sextile pluto; orbe 2.719190°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-2-sun",
+        "kind": "calculated",
+        "display": "sun: longitude tropical 27.321581°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-moon",
+        "kind": "calculated",
+        "display": "moon: longitude tropical 164.472705°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-mercury",
+        "kind": "calculated",
+        "display": "mercury: longitude tropical 15.346631°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-venus",
+        "kind": "calculated",
+        "display": "venus: longitude tropical 356.847712°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-mars",
+        "kind": "calculated",
+        "display": "mars: longitude tropical 142.385654°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-jupiter",
+        "kind": "calculated",
+        "display": "jupiter: longitude tropical 137.026664°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-saturn",
+        "kind": "calculated",
+        "display": "saturn: longitude tropical 18.907087°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-uranus",
+        "kind": "calculated",
+        "display": "uranus: longitude tropical 63.553143°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-neptune",
+        "kind": "calculated",
+        "display": "neptune: longitude tropical 4.961505°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-pluto",
+        "kind": "calculated",
+        "display": "pluto: longitude tropical 307.076833°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-ascendant",
+        "kind": "calculated",
+        "display": "Ascendente: longitude tropical 81.349428°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "option-2-aspect-1",
+        "kind": "calculated",
+        "display": "mercury trine jupiter; orbe 1.680033°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-2-aspect-2",
+        "kind": "calculated",
+        "display": "jupiter trine saturn; orbe 1.880423°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-2-aspect-3",
+        "kind": "calculated",
+        "display": "uranus sextile neptune; orbe 1.408362°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "option-2-aspect-4",
+        "kind": "calculated",
+        "display": "neptune sextile pluto; orbe 2.115328°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-event-major-aspects/1.0.0"
+      },
+      {
+        "id": "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition",
+        "kind": "calculated",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-wedding-declared-profile/1.0.0",
+        "display": "Início da cerimônia A: venus opposition mars; separação 178.7951133261171°; orbe 1.2048866738828963°; geometria sem avaliação de movimento."
+      }
+    ],
+    "data": {
+      "method": "atv-launch-event-comparison/1.0.0",
+      "events": [
+        {
+          "label": "Início da cerimônia A",
+          "city": "Cidade fictícia",
+          "chart": {
+            "input": {
+              "localDateTime": "2027-03-20T10:30:00",
+              "utcInstant": "2027-03-20T13:30:00Z",
+              "timezone": "America/Sao_Paulo",
+              "latitude": -23.55,
+              "longitude": -46.63,
+              "locationSource": "synthetic/local-example"
+            },
+            "positions": [
+              {
+                "body": "sun",
+                "longitude": 359.71392389331265,
+                "latitude": -0.000027409276101399303,
+                "distanceAu": 0.9957570762804444,
+                "retrograde": false
+              },
+              {
+                "body": "moon",
+                "longitude": 154.7288717204308,
+                "latitude": -1.3151281784894906,
+                "distanceAu": 0.0024565918476245245,
+                "retrograde": false
+              },
+              {
+                "body": "mercury",
+                "longitude": 332.3429511790116,
+                "latitude": -1.3880852492883597,
+                "distanceAu": 0.9698575846368727,
+                "retrograde": false
+              },
+              {
+                "body": "venus",
+                "longitude": 323.04601061932016,
+                "latitude": -0.3949938633198472,
+                "distanceAu": 1.2166275767274088,
+                "retrograde": false
+              },
+              {
+                "body": "mars",
+                "longitude": 141.84112394543726,
+                "latitude": 3.697571292019367,
+                "distanceAu": 0.7633916173039269,
+                "retrograde": true
+              },
+              {
+                "body": "jupiter",
+                "longitude": 137.86033003675215,
+                "latitude": 1.0642569034989253,
+                "distanceAu": 4.575369967458507,
+                "retrograde": true
+              },
+              {
+                "body": "saturn",
+                "longitude": 15.394596015119577,
+                "latitude": -2.240360123314953,
+                "distanceAu": 10.33696694525023,
+                "retrograde": false
+              },
+              {
+                "body": "uranus",
+                "longitude": 62.373339760824486,
+                "latitude": -0.1203403009741534,
+                "distanceAu": 19.845666621116735,
+                "retrograde": false
+              },
+              {
+                "body": "neptune",
+                "longitude": 3.9180830374518303,
+                "latitude": -1.3477621893588376,
+                "distanceAu": 30.866439667748583,
+                "retrograde": false
+              },
+              {
+                "body": "pluto",
+                "longitude": 306.63727290408747,
+                "latitude": -4.3969307772151724,
+                "distanceAu": 36.3161583134075,
+                "retrograde": false
+              }
+            ],
+            "houses": {
+              "system": "placidus",
+              "ascendant": 57.130123596350074,
+              "midheaven": 331.72128040386974,
+              "cusps": [
+                57.130123596350074,
+                86.77235701709589,
+                118.4942865321683,
+                151.72128040386968,
+                183.82380202319075,
+                212.2897276631577,
+                237.13012359635013,
+                266.7723570170958,
+                298.4942865321684,
+                331.72128040386974,
+                3.8238020231907512,
+                32.28972766315769
+              ],
+              "status": "ok"
+            },
+            "provenance": {
+              "provider": "caelus",
+              "providerVersion": "0.24.1",
+              "algorithmVersion": "atv-caelus-adapter-v3",
+              "zodiac": "tropical",
+              "houseSystem": "placidus",
+              "calculatedAt": "2026-11-04T11:37:21.384Z",
+              "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+              "dataManifest": {
+                "provider": "caelus",
+                "version": "0.24.1",
+                "tier": "embedded",
+                "files": [
+                  {
+                    "path": "src/data-embedded.js",
+                    "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+                  },
+                  {
+                    "path": "data/vsop87d_mercury.embedded.json",
+                    "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+                  },
+                  {
+                    "path": "data/vsop87d_venus.embedded.json",
+                    "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+                  },
+                  {
+                    "path": "data/vsop87d_earth.embedded.json",
+                    "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+                  },
+                  {
+                    "path": "data/vsop87d_mars.embedded.json",
+                    "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+                  },
+                  {
+                    "path": "data/vsop87d_jupiter.embedded.json",
+                    "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+                  },
+                  {
+                    "path": "data/vsop87d_saturn.embedded.json",
+                    "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+                  },
+                  {
+                    "path": "data/vsop87d_uranus.embedded.json",
+                    "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+                  },
+                  {
+                    "path": "data/vsop87d_neptune.embedded.json",
+                    "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+                  },
+                  {
+                    "path": "data/nutation_iau1980.json",
+                    "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+                  },
+                  {
+                    "path": "data/moon_meeus47.json",
+                    "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+                  },
+                  {
+                    "path": "data/pluto_meeus37.json",
+                    "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+                  },
+                  {
+                    "path": "data/chiron_cheb.json",
+                    "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+                  },
+                  {
+                    "path": "data/fixed_stars.json",
+                    "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+                  },
+                  {
+                    "path": "data/constellations.json",
+                    "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+                  }
+                ]
+              },
+              "contract": {
+                "version": "atv-deterministic-contract/1",
+                "minUtcInstant": "1900-01-01T00:00:00.000Z",
+                "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+                "calendar": "proleptic-gregorian",
+                "inputResolutionMilliseconds": 1,
+                "leapSecondInput": "rejected",
+                "placidusAbsoluteLatitudeExclusive": 66,
+                "accuracy": "experimental-sampled",
+                "guaranteedLongitudeErrorDegrees": null,
+                "retrogradeStationTiming": "not-certified",
+                "productionPromotion": false
+              },
+              "temporal": {
+                "utcInstant": "2027-03-20T13:30:00.000Z",
+                "julianDayUt1Approx": 2461485.0625,
+                "dut1Seconds": null,
+                "timezoneMode": "iana",
+                "timezoneRules": "runtime-intl/unpinned",
+                "offsetSeconds": -10800,
+                "inputScale": "UTC",
+                "engineScale": "UT1-approximated-by-UTC",
+                "deltaTSeconds": 69.12711521048516
+              },
+              "accuracyStatus": "experimental",
+              "warnings": [
+                "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+                "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+                "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+                "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+              ]
+            }
+          },
+          "aspects": {
+            "algorithmVersion": "atv-major-aspects/1",
+            "coordinate": "ecliptic-longitude",
+            "motion": "not-evaluated",
+            "inputPrecision": "not-certified",
+            "inputPositions": [
+              {
+                "body": "sun",
+                "longitude": 359.71392389331265
+              },
+              {
+                "body": "moon",
+                "longitude": 154.7288717204308
+              },
+              {
+                "body": "mercury",
+                "longitude": 332.3429511790116
+              },
+              {
+                "body": "venus",
+                "longitude": 323.04601061932016
+              },
+              {
+                "body": "mars",
+                "longitude": 141.84112394543726
+              },
+              {
+                "body": "jupiter",
+                "longitude": 137.86033003675215
+              },
+              {
+                "body": "saturn",
+                "longitude": 15.394596015119577
+              },
+              {
+                "body": "uranus",
+                "longitude": 62.373339760824486
+              },
+              {
+                "body": "neptune",
+                "longitude": 3.9180830374518303
+              },
+              {
+                "body": "pluto",
+                "longitude": 306.63727290408747
+              }
+            ],
+            "policy": {
+              "id": "atv-launch-event-major-aspects",
+              "version": "1.0.0",
+              "aspects": [
+                {
+                  "kind": "conjunction",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "sextile",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "square",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "trine",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "opposition",
+                  "orbDegrees": 3
+                }
+              ]
+            },
+            "pairsEvaluated": 45,
+            "aspects": [
+              {
+                "first": "sun",
+                "second": "uranus",
+                "kind": "sextile",
+                "exactAngleDegrees": 60,
+                "separationDegrees": 62.659415867511825,
+                "orbDegrees": 2.659415867511825
+              },
+              {
+                "first": "moon",
+                "second": "mercury",
+                "kind": "opposition",
+                "exactAngleDegrees": 180,
+                "separationDegrees": 177.61407945858082,
+                "orbDegrees": 2.385920541419182
+              },
+              {
+                "first": "moon",
+                "second": "uranus",
+                "kind": "square",
+                "exactAngleDegrees": 90,
+                "separationDegrees": 92.35553195960631,
+                "orbDegrees": 2.35553195960631
+              },
+              {
+                "first": "mercury",
+                "second": "uranus",
+                "kind": "square",
+                "exactAngleDegrees": 90,
+                "separationDegrees": 90.03038858181287,
+                "orbDegrees": 0.030388581812871962
+              },
+              {
+                "first": "venus",
+                "second": "mars",
+                "kind": "opposition",
+                "exactAngleDegrees": 180,
+                "separationDegrees": 178.7951133261171,
+                "orbDegrees": 1.2048866738828963
+              },
+              {
+                "first": "jupiter",
+                "second": "saturn",
+                "kind": "trine",
+                "exactAngleDegrees": 120,
+                "separationDegrees": 122.46573402163257,
+                "orbDegrees": 2.4657340216325707
+              },
+              {
+                "first": "uranus",
+                "second": "neptune",
+                "kind": "sextile",
+                "exactAngleDegrees": 60,
+                "separationDegrees": 58.455256723372656,
+                "orbDegrees": 1.5447432766273437
+              },
+              {
+                "first": "neptune",
+                "second": "pluto",
+                "kind": "sextile",
+                "exactAngleDegrees": 60,
+                "separationDegrees": 57.280810133364355,
+                "orbDegrees": 2.719189866635645
+              }
+            ]
+          }
+        },
+        {
+          "label": "Início da cerimônia B",
+          "city": "Cidade fictícia",
+          "chart": {
+            "input": {
+              "localDateTime": "2027-04-17T10:30:00",
+              "utcInstant": "2027-04-17T13:30:00Z",
+              "timezone": "America/Sao_Paulo",
+              "latitude": -23.55,
+              "longitude": -46.63,
+              "locationSource": "synthetic/local-example"
+            },
+            "positions": [
+              {
+                "body": "sun",
+                "longitude": 27.32158067805543,
+                "latitude": -0.00007375443943085294,
+                "distanceAu": 1.0037348837438385,
+                "retrograde": false
+              },
+              {
+                "body": "moon",
+                "longitude": 164.47270506604283,
+                "latitude": -2.246007845658594,
+                "distanceAu": 0.002495358258021045,
+                "retrograde": false
+              },
+              {
+                "body": "mercury",
+                "longitude": 15.346630963418935,
+                "latitude": -1.8817520534421492,
+                "distanceAu": 1.2966418206220145,
+                "retrograde": false
+              },
+              {
+                "body": "venus",
+                "longitude": 356.84771167262875,
+                "latitude": -1.4712333298937483,
+                "distanceAu": 1.3850795330500696,
+                "retrograde": false
+              },
+              {
+                "body": "mars",
+                "longitude": 142.38565399392445,
+                "latitude": 2.5856117320771297,
+                "distanceAu": 0.9600192644694111,
+                "retrograde": false
+              },
+              {
+                "body": "jupiter",
+                "longitude": 137.0266644029881,
+                "latitude": 1.0243376470541543,
+                "distanceAu": 4.943545692382635,
+                "retrograde": false
+              },
+              {
+                "body": "saturn",
+                "longitude": 18.90708715711206,
+                "latitude": -2.2363436528137295,
+                "distanceAu": 10.365983417024559,
+                "retrograde": false
+              },
+              {
+                "body": "uranus",
+                "longitude": 63.55314301073231,
+                "latitude": -0.11405284817413516,
+                "distanceAu": 20.204464814130635,
+                "retrograde": false
+              },
+              {
+                "body": "neptune",
+                "longitude": 4.961505180333135,
+                "latitude": -1.3537612408187454,
+                "distanceAu": 30.800049712073545,
+                "retrograde": false
+              },
+              {
+                "body": "pluto",
+                "longitude": 307.07683322096517,
+                "latitude": -4.487199556941674,
+                "distanceAu": 35.90395920826336,
+                "retrograde": false
+              }
+            ],
+            "houses": {
+              "system": "placidus",
+              "ascendant": 81.3494283058784,
+              "midheaven": 1.447299766028948,
+              "cusps": [
+                81.3494283058784,
+                112.91786044783225,
+                147.29181797869268,
+                181.447299766029,
+                211.70787153381923,
+                237.63530722182134,
+                261.3494283058784,
+                292.91786044783225,
+                327.29181797869273,
+                1.447299766028948,
+                31.707871533819173,
+                57.635307221821336
+              ],
+              "status": "ok"
+            },
+            "provenance": {
+              "provider": "caelus",
+              "providerVersion": "0.24.1",
+              "algorithmVersion": "atv-caelus-adapter-v3",
+              "zodiac": "tropical",
+              "houseSystem": "placidus",
+              "calculatedAt": "2026-11-04T11:37:21.394Z",
+              "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+              "dataManifest": {
+                "provider": "caelus",
+                "version": "0.24.1",
+                "tier": "embedded",
+                "files": [
+                  {
+                    "path": "src/data-embedded.js",
+                    "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+                  },
+                  {
+                    "path": "data/vsop87d_mercury.embedded.json",
+                    "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+                  },
+                  {
+                    "path": "data/vsop87d_venus.embedded.json",
+                    "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+                  },
+                  {
+                    "path": "data/vsop87d_earth.embedded.json",
+                    "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+                  },
+                  {
+                    "path": "data/vsop87d_mars.embedded.json",
+                    "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+                  },
+                  {
+                    "path": "data/vsop87d_jupiter.embedded.json",
+                    "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+                  },
+                  {
+                    "path": "data/vsop87d_saturn.embedded.json",
+                    "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+                  },
+                  {
+                    "path": "data/vsop87d_uranus.embedded.json",
+                    "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+                  },
+                  {
+                    "path": "data/vsop87d_neptune.embedded.json",
+                    "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+                  },
+                  {
+                    "path": "data/nutation_iau1980.json",
+                    "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+                  },
+                  {
+                    "path": "data/moon_meeus47.json",
+                    "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+                  },
+                  {
+                    "path": "data/pluto_meeus37.json",
+                    "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+                  },
+                  {
+                    "path": "data/chiron_cheb.json",
+                    "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+                  },
+                  {
+                    "path": "data/fixed_stars.json",
+                    "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+                  },
+                  {
+                    "path": "data/constellations.json",
+                    "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+                  }
+                ]
+              },
+              "contract": {
+                "version": "atv-deterministic-contract/1",
+                "minUtcInstant": "1900-01-01T00:00:00.000Z",
+                "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+                "calendar": "proleptic-gregorian",
+                "inputResolutionMilliseconds": 1,
+                "leapSecondInput": "rejected",
+                "placidusAbsoluteLatitudeExclusive": 66,
+                "accuracy": "experimental-sampled",
+                "guaranteedLongitudeErrorDegrees": null,
+                "retrogradeStationTiming": "not-certified",
+                "productionPromotion": false
+              },
+              "temporal": {
+                "utcInstant": "2027-04-17T13:30:00.000Z",
+                "julianDayUt1Approx": 2461513.0625,
+                "dut1Seconds": null,
+                "timezoneMode": "iana",
+                "timezoneRules": "runtime-intl/unpinned",
+                "offsetSeconds": -10800,
+                "inputScale": "UTC",
+                "engineScale": "UT1-approximated-by-UTC",
+                "deltaTSeconds": 69.12515406229313
+              },
+              "accuracyStatus": "experimental",
+              "warnings": [
+                "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+                "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+                "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+                "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+              ]
+            }
+          },
+          "aspects": {
+            "algorithmVersion": "atv-major-aspects/1",
+            "coordinate": "ecliptic-longitude",
+            "motion": "not-evaluated",
+            "inputPrecision": "not-certified",
+            "inputPositions": [
+              {
+                "body": "sun",
+                "longitude": 27.32158067805543
+              },
+              {
+                "body": "moon",
+                "longitude": 164.47270506604283
+              },
+              {
+                "body": "mercury",
+                "longitude": 15.346630963418935
+              },
+              {
+                "body": "venus",
+                "longitude": 356.84771167262875
+              },
+              {
+                "body": "mars",
+                "longitude": 142.38565399392445
+              },
+              {
+                "body": "jupiter",
+                "longitude": 137.0266644029881
+              },
+              {
+                "body": "saturn",
+                "longitude": 18.90708715711206
+              },
+              {
+                "body": "uranus",
+                "longitude": 63.55314301073231
+              },
+              {
+                "body": "neptune",
+                "longitude": 4.961505180333135
+              },
+              {
+                "body": "pluto",
+                "longitude": 307.07683322096517
+              }
+            ],
+            "policy": {
+              "id": "atv-launch-event-major-aspects",
+              "version": "1.0.0",
+              "aspects": [
+                {
+                  "kind": "conjunction",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "sextile",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "square",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "trine",
+                  "orbDegrees": 3
+                },
+                {
+                  "kind": "opposition",
+                  "orbDegrees": 3
+                }
+              ]
+            },
+            "pairsEvaluated": 45,
+            "aspects": [
+              {
+                "first": "mercury",
+                "second": "jupiter",
+                "kind": "trine",
+                "exactAngleDegrees": 120,
+                "separationDegrees": 121.68003343956917,
+                "orbDegrees": 1.680033439569172
+              },
+              {
+                "first": "jupiter",
+                "second": "saturn",
+                "kind": "trine",
+                "exactAngleDegrees": 120,
+                "separationDegrees": 118.11957724587604,
+                "orbDegrees": 1.8804227541239555
+              },
+              {
+                "first": "uranus",
+                "second": "neptune",
+                "kind": "sextile",
+                "exactAngleDegrees": 60,
+                "separationDegrees": 58.59163783039918,
+                "orbDegrees": 1.4083621696008208
+              },
+              {
+                "first": "neptune",
+                "second": "pluto",
+                "kind": "sextile",
+                "exactAngleDegrees": 60,
+                "separationDegrees": 57.88467195936795,
+                "orbDegrees": 2.1153280406320505
+              }
+            ]
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "label": "Início da cerimônia A",
+          "utcInstant": "2027-03-20T13:30:00Z",
+          "housesAvailable": true,
+          "aspectsByKind": {
+            "conjunction": 0,
+            "sextile": 3,
+            "square": 2,
+            "trine": 1,
+            "opposition": 2
+          }
+        },
+        {
+          "label": "Início da cerimônia B",
+          "utcInstant": "2027-04-17T13:30:00Z",
+          "housesAvailable": true,
+          "aspectsByKind": {
+            "conjunction": 0,
+            "sextile": 2,
+            "square": 0,
+            "trine": 2,
+            "opposition": 0
+          }
+        }
+      ],
+      "declaredProfile": {
+        "methodVersion": "atv-wedding-declared-profile/1.0.0",
+        "executionId": "8c6d9da2-d296-4b63-a30c-000000000001",
+        "productId": "wedding-date-map",
+        "inputDigest": "08a94893b2a0b3426bea1dd628c43ba421fec1b587bc6e21b7cc63a1505ce057",
+        "geometryPolicyId": "atv-launch-event-major-aspects",
+        "geometryPolicyVersion": "1.0.0",
+        "angularPolicyVersion": "atv-wedding-ecliptic-angle-proximity/1.0.0",
+        "profiles": [
+          {
+            "optionId": "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc",
+            "inputOptionDigest": "0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc",
+            "label": "Início da cerimônia B",
+            "city": "Cidade fictícia",
+            "localDateTime": "2027-04-17T10:30:00",
+            "utcInstant": "2027-04-17T13:30:00Z",
+            "timezone": "America/Sao_Paulo",
+            "coverage": "COMPLETE",
+            "reasons": [],
+            "supports": {
+              "moon": [],
+              "angularMoonVenus": []
+            },
+            "cautions": {
+              "moon": [],
+              "venus": [],
+              "angularMarsSaturn": []
+            },
+            "evidence": [],
+            "notEvaluated": [
+              "rulership-and-dignities",
+              "house-occupancy",
+              "reception",
+              "application-and-separation",
+              "void-of-course",
+              "lunar-phase",
+              "combustion-and-cazimi",
+              "eclipses",
+              "participant-natal-charts"
+            ]
+          },
+          {
+            "optionId": "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd",
+            "inputOptionDigest": "86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd",
+            "label": "Início da cerimônia A",
+            "city": "Cidade fictícia",
+            "localDateTime": "2027-03-20T10:30:00",
+            "utcInstant": "2027-03-20T13:30:00Z",
+            "timezone": "America/Sao_Paulo",
+            "coverage": "COMPLETE",
+            "reasons": [],
+            "supports": {
+              "moon": [],
+              "angularMoonVenus": []
+            },
+            "cautions": {
+              "moon": [],
+              "venus": [
+                "venus-mars"
+              ],
+              "angularMarsSaturn": []
+            },
+            "evidence": [
+              {
+                "id": "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition-evidence",
+                "criterionId": "venus-mars",
+                "family": "venus-caution",
+                "evidenceIds": [
+                  "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition"
+                ],
+                "sourceIds": [
+                  "atv-wedding-original-restricted-method"
+                ],
+                "geometry": {
+                  "first": "venus",
+                  "second": "mars",
+                  "kind": "opposition",
+                  "separationDegrees": 178.7951133261171,
+                  "orbDegrees": 1.2048866738828963
+                }
+              }
+            ],
+            "notEvaluated": [
+              "rulership-and-dignities",
+              "house-occupancy",
+              "reception",
+              "application-and-separation",
+              "void-of-course",
+              "lunar-phase",
+              "combustion-and-cazimi",
+              "eclipses",
+              "participant-natal-charts"
+            ]
+          }
+        ],
+        "dominates": [
+          {
+            "optionId": "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc",
+            "otherOptionId": "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd",
+            "criterionIds": [
+              "absent-caution:venus-mars"
+            ]
+          }
+        ],
+        "frontier": [
+          "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc"
+        ],
+        "outcome": "PREFERENCE_IN_DECLARED_PROFILE",
+        "preferredOptionId": "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc",
+        "reasons": [],
+        "derivedFacts": [
+          {
+            "id": "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition",
+            "kind": "calculated",
+            "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-wedding-declared-profile/1.0.0",
+            "display": "Início da cerimônia A: venus opposition mars; separação 178.7951133261171°; orbe 1.2048866738828963°; geometria sem avaliação de movimento."
+          }
+        ],
+        "provenance": {
+          "scope": "private-symbolic-profile",
+          "precision": "experimental-not-certified",
+          "comparison": "original-partial-order-without-weights",
+          "angularDistance": "ecliptic-longitude-within-3-degrees-inclusive",
+          "commercialPrecisionApproved": false,
+          "commercialReleaseApproved": false,
+          "externalModelCalled": false,
+          "sources": [
+            {
+              "id": "chani-electional-practice",
+              "url": "https://www.chani.com/astro-education/what-is-electional-astrology-how-do-astrologers-pick-key-dates-for-the-year-and-how-can-i-use-astrology-to-plan-for-the-future"
+            },
+            {
+              "id": "gillman-marriage-elections",
+              "url": "https://www.skyscript.co.uk/marriage.html"
+            },
+            {
+              "id": "atv-wedding-original-restricted-method",
+              "url": null
+            }
+          ]
+        }
+      },
+      "selectionStatus": "PREFERENCE_IN_DECLARED_PROFILE",
+      "preferredOption": "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc"
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "Comparação geométrica experimental; contagens de aspectos não são notas de qualidade da data.",
+      "Perfil simbólico original restrito ao início da cerimônia; a relação parcial permite empate e trocas sem inventar desempate.",
+      "Casas indisponíveis não foram substituídas. Não há promessa sobre o resultado do casamento."
+    ],
+    "provenance": {
+      "calculation": "experimental-astrology",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "6f570d1a139b8cb8c69609f5c7e542c972dd74215a516a0c860f6e8a4e16bc65",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000001",
+    "productId": "wedding-date-map",
+    "inputDigest": "08a94893b2a0b3426bea1dd628c43ba421fec1b587bc6e21b7cc63a1505ce057",
+    "title": "Mapa da Data de Casamento",
+    "summary": "Comparação das 2 opções para o mesmo início da cerimônia, pelo perfil simbólico original restrito. Início da cerimônia B é a preferência somente neste perfil declarado: preserva todos os apoios e não acrescenta nenhuma ressalva das outras opções, com ao menos uma diferença estrita (frente a Início da cerimônia A: ausência da ressalva Vênus–Marte). Isso não escolhe o resultado do casamento nem substitui as prioridades práticas.",
+    "sections": [
+      {
+        "id": "option-1",
+        "title": "Início da cerimônia A: apoios e ressalvas",
+        "paragraphs": [
+          "Início da cerimônia A: início da cerimônia em 20/03/2027 às 10h30 (horário de Cidade fictícia). Vênus em oposição com Marte, orbe 1.205°: ressalva à negociação e à aproximação simbolizadas por Vênus.",
+          "Para “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”, Início da cerimônia A pede confirmar disponibilidade e deslocamento para 20/03/2027 às 10h30 (horário de Cidade fictícia), com quem participa da cerimônia. As ressalvas convidam a discutir ritmo, flexibilidade e responsabilidades antes de confirmar; não anunciam conflito. Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos."
+        ],
+        "evidenceIds": [
+          "reported-ceremonies-1",
+          "option-1-moon",
+          "option-1-venus",
+          "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition"
+        ],
+        "sourceIds": [
+          "atv-wedding-original-restricted-method",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "option-2",
+        "title": "Início da cerimônia B: apoios e ressalvas",
+        "paragraphs": [
+          "Início da cerimônia B: início da cerimônia em 17/04/2027 às 10h30 (horário de Cidade fictícia). Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades.",
+          "Para “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”, Início da cerimônia B pede confirmar disponibilidade e deslocamento para 17/04/2027 às 10h30 (horário de Cidade fictícia), com quem participa da cerimônia. A ausência dessas ressalvas não dispensa combinar ritmo, flexibilidade e responsabilidades. Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos."
+        ],
+        "evidenceIds": [
+          "reported-ceremonies-2",
+          "option-2-moon",
+          "option-2-venus"
+        ],
+        "sourceIds": [
+          "atv-wedding-original-restricted-method",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "declared-comparison",
+        "title": "Comparação e decisão possível",
+        "paragraphs": [
+          "Início da cerimônia B é a preferência somente neste perfil declarado: preserva todos os apoios e não acrescenta nenhuma ressalva das outras opções, com ao menos uma diferença estrita (frente a Início da cerimônia A: ausência da ressalva Vênus–Marte). Isso não escolhe o resultado do casamento nem substitui as prioridades práticas.",
+          "O método compara conjuntos, sem pontuação. Lua em conjunção, sextil ou trígono com Vênus/Júpiter entra como apoio; Lua ou Vênus em conjunção, quadratura ou oposição com Marte/Saturno entra como ressalva. Proximidade eclíptica de até 3° dos quatro ângulos dá ênfase de Lua/Vênus ou ressalva de Marte/Saturno, sem determinar casa ocupada. Compare sempre o início da cerimônia e submeta qualquer preferência a “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”."
+        ],
+        "evidenceIds": [
+          "reported-ceremonies-1",
+          "option-1-moon",
+          "option-1-venus",
+          "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition",
+          "reported-ceremonies-2",
+          "option-2-moon",
+          "option-2-venus"
+        ],
+        "sourceIds": [
+          "atv-wedding-original-restricted-method",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-option-1",
+        "sectionId": "option-1",
+        "rule": "declared-profile-candidate-evidence",
+        "evidenceIds": [
+          "reported-ceremonies-1",
+          "option-1-moon",
+          "option-1-venus",
+          "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition"
+        ],
+        "factors": {
+          "optionId": "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd",
+          "utcInstant": "2027-03-20T13:30:00Z",
+          "evidence": [
+            "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition-evidence"
+          ]
+        },
+        "interpretation": "Início da cerimônia A: início da cerimônia em 20/03/2027 às 10h30 (horário de Cidade fictícia). Vênus em oposição com Marte, orbe 1.205°: ressalva à negociação e à aproximação simbolizadas por Vênus."
+      },
+      {
+        "id": "claim-option-2",
+        "sectionId": "option-2",
+        "rule": "declared-profile-candidate-evidence",
+        "evidenceIds": [
+          "reported-ceremonies-2",
+          "option-2-moon",
+          "option-2-venus"
+        ],
+        "factors": {
+          "optionId": "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc",
+          "utcInstant": "2027-04-17T13:30:00Z",
+          "evidence": []
+        },
+        "interpretation": "Início da cerimônia B: início da cerimônia em 17/04/2027 às 10h30 (horário de Cidade fictícia). Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades."
+      },
+      {
+        "id": "claim-comparison",
+        "sectionId": "declared-comparison",
+        "rule": "unweighted-set-partial-order",
+        "evidenceIds": [
+          "reported-ceremonies-1",
+          "option-1-moon",
+          "option-1-venus",
+          "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition",
+          "reported-ceremonies-2",
+          "option-2-moon",
+          "option-2-venus"
+        ],
+        "factors": {
+          "outcome": "PREFERENCE_IN_DECLARED_PROFILE",
+          "preferredOptionId": "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc",
+          "frontier": [
+            "ceremony-0cd598890743ac0f7f236997aaeed55993f8b87efe95b152800d6a976fa4bdfc"
+          ]
+        },
+        "interpretation": "Início da cerimônia B é a preferência somente neste perfil declarado: preserva todos os apoios e não acrescenta nenhuma ressalva das outras opções, com ao menos uma diferença estrita (frente a Início da cerimônia A: ausência da ressalva Vênus–Marte). Isso não escolhe o resultado do casamento nem substitui as prioridades práticas."
+      }
+    ],
+    "practicalAction": "Confira nas opções que permanecem viáveis a prioridade “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”. Anote um acordo concreto sobre horário de chegada, responsabilidades e margem para ajustes; uma preferência restrita só continua útil se essas condições puderem ser confirmadas.",
+    "reflection": "Qual apoio ou ressalva desta comparação altera uma preparação concreta da cerimônia, e qual condição prática ainda precisa ser confirmada antes da escolha?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "Perfil simbólico original e parcial, sem homologação de precisão nem eleição completa.",
+      "Não avalia regências, dignidades, casas ocupadas, recepções, aplicação/separação, Lua fora de curso, fase lunar, combustão, eclipses ou mapas natais dos participantes.",
+      "As fontes contextualizam a prática eletiva; a regra de comparação sem pesos é original ATVNA e não é atribuída a essas autoras ou autores.",
+      "Motor astrológico experimental. A bateria independente de precisão continua pendente; esta revisão não homologa precisão comercial.",
+      "A comparação restrita ao início da cerimônia admite empate e trocas; não força uma data nem promete o resultado do casamento."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "experimental-astrology",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "chani-electional-practice",
+          "version": "atv-wedding-declared-profile/1.0.0",
+          "origin": "https://www.chani.com/astro-education/what-is-electional-astrology-how-do-astrologers-pick-key-dates-for-the-year-and-how-can-i-use-astrology-to-plan-for-the-future"
+        },
+        {
+          "id": "gillman-marriage-elections",
+          "version": "atv-wedding-declared-profile/1.0.0",
+          "origin": "https://www.skyscript.co.uk/marriage.html"
+        },
+        {
+          "id": "atv-wedding-original-restricted-method",
+          "version": "atv-wedding-declared-profile/1.0.0",
+          "origin": "Método original ATVNA: inclusão de apoios e ausência de ressalvas, sem pesos, aplicado ao mesmo início da cerimônia."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "acb7b73465783e77e8f778c0dd03b64396d9694a1ae7a7133a66755ee82e5179",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "bound-wedding-profile",
+        "passed": true,
+        "detail": "Perfil completo reconstruído dos eventos e opções originais; preferência e evidências não são autoridade do cliente."
+      },
+      {
+        "id": "wedding-derived-facts",
+        "passed": true,
+        "detail": "Toda relação interpretada conserva seu fato derivado e sua proveniência."
+      },
+      {
+        "id": "wedding-candidate-semantic-dependency",
+        "passed": true,
+        "detail": "Cada apoio e ressalva depende do par, geometria, família, candidata original e prioridade relatada; coordenadas sem mecanismo não bastam."
+      },
+      {
+        "id": "wedding-partial-order-decision",
+        "passed": true,
+        "detail": "Decisão verificada por inclusão independente de conjuntos, diferença estrita e cobertura; empate e trocas não recebem preferência inventada."
+      },
+      {
+        "id": "wedding-restricted-scope",
+        "passed": true,
+        "detail": "Mesmo início da cerimônia, limites calculados e condições práticas explícitos; nenhuma alegação de eleição completa ou sucesso."
+      }
+    ],
+    "reasons": [],
+    "digest": "acb7b73465783e77e8f778c0dd03b64396d9694a1ae7a7133a66755ee82e5179",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "experimental-astrology",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

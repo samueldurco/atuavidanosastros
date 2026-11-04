@@ -1,0 +1,917 @@
+{
+  "extractedAt": "2026-11-04",
+  "scope": "historical owner datasets; not fresh demand, not purchase conversion",
+  "sources": [
+    {
+      "path": "C:\\ATVNA\\SEO\\INTELIGENCIA-MERCADO\\04-fonte-bruta\\keywords-merged-consolidado.csv",
+      "sha256": "12e1a0620ddef29a2aa525d8d0ac852dd2beec389ee888560e1edc736f1ed4b7",
+      "rows": 19519,
+      "columns": [
+        "keyword",
+        "avg_monthly_searches",
+        "competition",
+        "cpc_low",
+        "cpc_high"
+      ]
+    },
+    {
+      "path": "C:\\ATVNA\\SEO\\INTELIGENCIA-MERCADO\\01-seo-intelligence\\KEYWORD_MASTER.csv",
+      "sha256": "921aa445dabdaaebab1cb155bb08895545b0873f709c5e5d2c07e025af3ef12c",
+      "rows": 19519,
+      "columns": [
+        "keyword_raw",
+        "keyword_normalized",
+        "cluster",
+        "subcluster",
+        "entity_primary",
+        "intent_primary",
+        "journey_stage",
+        "serp_equivalence_group",
+        "group_size",
+        "group_volume_total",
+        "volume_band",
+        "volume_monthly_source",
+        "is_group_head",
+        "proposed_owner_url",
+        "page_type",
+        "business_value",
+        "organic_difficulty",
+        "differentiation_asset",
+        "confidence",
+        "decision",
+        "evidence_date"
+      ]
+    },
+    {
+      "path": "C:\\ATVNA\\SEO\\INTELIGENCIA-MERCADO\\01-seo-intelligence\\KEYWORD_PLANNER_TAROT_2026-07-29.csv",
+      "sha256": "3caf0d00fe8d8e7796ab052f18afdeb485cd05cf567be266b3bc8461015344e1",
+      "rows": 478,
+      "columns": [
+        "keyword_raw",
+        "keyword_normalized",
+        "cluster",
+        "subcluster",
+        "intent_primary",
+        "volume_band",
+        "volume_band_label",
+        "volume_band_floor",
+        "volume_kp_shorthand",
+        "competition",
+        "competition_indexed",
+        "cpc_low",
+        "cpc_high",
+        "ads_safe_sem_termo_tarot",
+        "confidence",
+        "volume_monthly_source",
+        "decision",
+        "evidence_date"
+      ]
+    },
+    {
+      "path": "C:\\ATVNA\\SEO\\INTELIGENCIA-MERCADO\\01-seo-intelligence\\KEYWORD_URL_MAP.csv",
+      "sha256": "3aceb8f79b5db28a2d7df6415403c810e392a9deedb0ca09a5d67de9e720b775",
+      "rows": 47,
+      "columns": [
+        "keyword_raw",
+        "keyword_normalized",
+        "cluster",
+        "subcluster",
+        "entity_primary",
+        "intent_primary",
+        "journey_stage",
+        "serp_equivalence_group",
+        "proposed_owner_url",
+        "page_type",
+        "business_value",
+        "organic_difficulty",
+        "differentiation_asset",
+        "confidence",
+        "decision",
+        "evidence_date",
+        "serp_data",
+        "top3_competitors",
+        "dominant_feature",
+        "source_row",
+        "conflict_reason",
+        "reviewer",
+        "decision_date",
+        "lifecycle_status",
+        "published_at",
+        "last_updated_at",
+        "perf_clicks_28d",
+        "perf_impressions_28d",
+        "perf_ctr_28d",
+        "perf_position_avg",
+        "perf_measured_at",
+        "review_outcome",
+        "review_outcome_at"
+      ]
+    },
+    {
+      "path": "C:\\ATVNA\\SEO\\INTELIGENCIA-MERCADO\\01-seo-intelligence\\KEYWORD_DATA_DICTIONARY.md",
+      "sha256": "e6cd51d85573495428f1a2603dffbde7a8330876f420ff6b9b500517cbb2541e",
+      "kind": "dictionary"
+    }
+  ],
+  "products": {
+    "wedding-date-map": {
+      "terms": [
+        "signos que combinam para casar",
+        "aquário e gêmeos no casamento"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 3910,
+          "keywordRaw": "signos que combinam para casar",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 4157,
+          "keywordRaw": "aquário e gêmeos no casamento",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 9549,
+          "keywordRaw": "aquário e gêmeos no casamento",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 10281,
+          "keywordRaw": "signos que combinam para casar",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "ex-tarot": {
+      "terms": [
+        "signos que voltam com ex",
+        "taurino arrependido"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 3920,
+          "keywordRaw": "signos que voltam com ex",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 17898,
+          "keywordRaw": "taurino arrependido",
+          "avg_monthly_searches": "50"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 10289,
+          "keywordRaw": "signos que voltam com ex",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 17735,
+          "keywordRaw": "taurino arrependido",
+          "intent_primary": "informational",
+          "volume_band": "<100",
+          "volume_monthly_source": "50",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "love-restart-map": {
+      "terms": [
+        "signos que voltam com ex",
+        "mapa astral amoroso"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 3920,
+          "keywordRaw": "signos que voltam com ex",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 7417,
+          "keywordRaw": "mapa astral amoroso",
+          "avg_monthly_searches": "50"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 10289,
+          "keywordRaw": "signos que voltam com ex",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 18377,
+          "keywordRaw": "mapa astral amoroso",
+          "intent_primary": "informational",
+          "volume_band": "<100",
+          "volume_monthly_source": "50",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "sexuality-map": {
+      "terms": [
+        "áries no sexo",
+        "venus capricórnio"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 2088,
+          "keywordRaw": "venus capricórnio",
+          "avg_monthly_searches": "5000"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 2359,
+          "keywordRaw": "áries no sexo",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 3197,
+          "keywordRaw": "venus capricornio",
+          "intent_primary": "informational",
+          "volume_band": "10k-100k",
+          "volume_monthly_source": "5000",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 8863,
+          "keywordRaw": "aries no sexo",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "intimacy-map": {
+      "terms": [
+        "libra no sexo",
+        "áries no sexo"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 2359,
+          "keywordRaw": "áries no sexo",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 3074,
+          "keywordRaw": "libra no sexo",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 8415,
+          "keywordRaw": "libra no sexo",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 8863,
+          "keywordRaw": "aries no sexo",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "emotional-reactions-map": {
+      "terms": [
+        "lua em touro significado",
+        "capricórnio com raiva"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 5270,
+          "keywordRaw": "lua em touro significado",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 10409,
+          "keywordRaw": "capricórnio com raiva",
+          "avg_monthly_searches": "50"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 9723,
+          "keywordRaw": "lua em touro significado",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 15399,
+          "keywordRaw": "capricórnio com raiva",
+          "intent_primary": "informational",
+          "volume_band": "<100",
+          "volume_monthly_source": "50",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "financial-blocks-tarot": {
+      "terms": [
+        "mapa astral financeiro",
+        "dinheiro para o signo de peixes hoje"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 810,
+          "keywordRaw": "dinheiro para o signo de peixes hoje",
+          "avg_monthly_searches": "5000"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 7799,
+          "keywordRaw": "mapa astral financeiro",
+          "avg_monthly_searches": "50"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 4705,
+          "keywordRaw": "dinheiro para o signo de peixes hoje",
+          "intent_primary": "informational",
+          "volume_band": "1k-10k",
+          "volume_monthly_source": "5000",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 18476,
+          "keywordRaw": "mapa astral financeiro",
+          "intent_primary": "informational",
+          "volume_band": "<100",
+          "volume_monthly_source": "50",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "hidden-talent-map": {
+      "terms": [
+        "mapa astral vocacional",
+        "mapa astral profissional gratuito"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 3132,
+          "keywordRaw": "mapa astral profissional gratuito",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 6485,
+          "keywordRaw": "mapa astral vocacional",
+          "avg_monthly_searches": "50"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 9457,
+          "keywordRaw": "mapa astral profissional gratuito",
+          "intent_primary": "interactive",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 18020,
+          "keywordRaw": "mapa astral vocacional",
+          "intent_primary": "informational",
+          "volume_band": "<100",
+          "volume_monthly_source": "50",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+          "sourceRow": 6,
+          "keywordRaw": "mapa astral profissional gratuito",
+          "intent_primary": "ferramenta",
+          "proposed_owner_url": "/prosperidade",
+          "evidence_date": "2026-08-02",
+          "confidence": "alta",
+          "decision": "CONSOLIDAR"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "ascendant-style": {
+      "terms": [
+        "ascendente em áries",
+        "ascendente em touro"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 408,
+          "keywordRaw": "ascendente em touro",
+          "avg_monthly_searches": "5000"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 447,
+          "keywordRaw": "ascendente em áries",
+          "avg_monthly_searches": "5000"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 1980,
+          "keywordRaw": "ascendente em aries",
+          "intent_primary": "informational",
+          "volume_band": "10k-100k",
+          "volume_monthly_source": "5000",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 2493,
+          "keywordRaw": "ascendente em touro",
+          "intent_primary": "informational",
+          "volume_band": "10k-100k",
+          "volume_monthly_source": "5000",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "conversation-timing": {
+      "terms": [
+        "horóscopo do amor hoje",
+        "horóscopo semanal amor"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 375,
+          "keywordRaw": "horóscopo do amor hoje",
+          "avg_monthly_searches": "5000"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 2157,
+          "keywordRaw": "horóscopo semanal amor",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 4082,
+          "keywordRaw": "horóscopo do amor hoje",
+          "intent_primary": "informational",
+          "volume_band": "1k-10k",
+          "volume_monthly_source": "5000",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 9947,
+          "keywordRaw": "horóscopo semanal amor",
+          "intent_primary": "informational",
+          "volume_band": "100-1k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    },
+    "cohabitation-map": {
+      "terms": [
+        "sinastria",
+        "mapa astral casal"
+      ],
+      "evidence": [
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 358,
+          "keywordRaw": "sinastria",
+          "avg_monthly_searches": "5000"
+        },
+        {
+          "source": "04-fonte-bruta/keywords-merged-consolidado.csv",
+          "sourceRow": 2141,
+          "keywordRaw": "mapa astral casal",
+          "avg_monthly_searches": "500"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 4825,
+          "keywordRaw": "sinastria",
+          "intent_primary": "informational",
+          "volume_band": "1k-10k",
+          "volume_monthly_source": "5000",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_MASTER.csv",
+          "sourceRow": 6497,
+          "keywordRaw": "mapa astral casal",
+          "intent_primary": "informational",
+          "volume_band": "1k-10k",
+          "volume_monthly_source": "500",
+          "proposed_owner_url": "PENDENTE_MCI-03",
+          "evidence_date": "PENDENTE_SERP",
+          "confidence": "proxy_lexical",
+          "decision": "PENDENTE"
+        },
+        {
+          "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+          "sourceRow": 7,
+          "keywordRaw": "sinastria",
+          "intent_primary": "informacional/ferramenta",
+          "proposed_owner_url": "/sinastria",
+          "evidence_date": "2026-07-28",
+          "confidence": "media",
+          "decision": "PENDENTE"
+        }
+      ],
+      "commercialDemandMeasured": false
+    }
+  },
+  "candidateCountsBeforeSemanticReview": {
+    "wedding-date-map": 28,
+    "ex-tarot": 18,
+    "love-restart-map": 157,
+    "sexuality-map": 278,
+    "intimacy-map": 248,
+    "emotional-reactions-map": 139,
+    "financial-blocks-tarot": 100,
+    "hidden-talent-map": 47,
+    "ascendant-style": 2695,
+    "conversation-timing": 592,
+    "cohabitation-map": 548
+  },
+  "candidateCountWarning": "Regex candidates contain false positives and repeated source records. Counts are not demand, keyword totals or product opportunities.",
+  "tarotSupplementContext": [
+    {
+      "source": "01-seo-intelligence/KEYWORD_PLANNER_TAROT_2026-07-29.csv",
+      "sourceRow": 46,
+      "keyword_raw": "a carta da estrela no amor",
+      "keyword_normalized": "a carta da estrela no amor",
+      "cluster": "tarot",
+      "subcluster": "cartas_maiores",
+      "intent_primary": "informational",
+      "volume_band": "10-100",
+      "volume_band_label": "10-100",
+      "volume_band_floor": "10",
+      "volume_kp_shorthand": "50",
+      "competition": "Baixo",
+      "competition_indexed": "2",
+      "cpc_low": "",
+      "cpc_high": "",
+      "ads_safe_sem_termo_tarot": "sim",
+      "confidence": "keyword_planner_faixa",
+      "volume_monthly_source": "google_keyword_planner_2026-07-29",
+      "decision": "PENDENTE_GATE",
+      "evidence_date": "2026-07-29"
+    },
+    {
+      "source": "01-seo-intelligence/KEYWORD_PLANNER_TAROT_2026-07-29.csv",
+      "sourceRow": 239,
+      "keyword_raw": "carta a torre no amor",
+      "keyword_normalized": "carta a torre no amor",
+      "cluster": "tarot",
+      "subcluster": "cartas_maiores",
+      "intent_primary": "informational",
+      "volume_band": "10-100",
+      "volume_band_label": "10-100",
+      "volume_band_floor": "10",
+      "volume_kp_shorthand": "50",
+      "competition": "Baixo",
+      "competition_indexed": "2",
+      "cpc_low": "",
+      "cpc_high": "",
+      "ads_safe_sem_termo_tarot": "sim",
+      "confidence": "keyword_planner_faixa",
+      "volume_monthly_source": "google_keyword_planner_2026-07-29",
+      "decision": "PENDENTE_GATE",
+      "evidence_date": "2026-07-29"
+    }
+  ],
+  "existingIntentOwners": [
+    {
+      "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+      "sourceRow": 3,
+      "keyword_raw": "horoscopo",
+      "keyword_normalized": "horoscopo",
+      "cluster": "horoscopo",
+      "subcluster": "hub",
+      "entity_primary": "horoscopo",
+      "intent_primary": "informacional",
+      "journey_stage": "descoberta",
+      "serp_equivalence_group": "PENDENTE_SERP",
+      "proposed_owner_url": "/horoscopo",
+      "page_type": "hub",
+      "business_value": "alto",
+      "organic_difficulty": "PENDENTE_SERP",
+      "differentiation_asset": "horoscopo diario proprio",
+      "confidence": "media",
+      "decision": "PENDENTE",
+      "evidence_date": "2026-07-17",
+      "serp_data": "",
+      "top3_competitors": "",
+      "dominant_feature": "",
+      "source_row": "3",
+      "conflict_reason": "rota dual C-04",
+      "reviewer": "",
+      "decision_date": "",
+      "lifecycle_status": "publicada",
+      "published_at": "",
+      "last_updated_at": "",
+      "perf_clicks_28d": "",
+      "perf_impressions_28d": "",
+      "perf_ctr_28d": "",
+      "perf_position_avg": "",
+      "perf_measured_at": "",
+      "review_outcome": "",
+      "review_outcome_at": ""
+    },
+    {
+      "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+      "sourceRow": 4,
+      "keyword_raw": "ascendente",
+      "keyword_normalized": "ascendente",
+      "cluster": "ascendente",
+      "subcluster": "core",
+      "entity_primary": "ascendente",
+      "intent_primary": "ferramenta",
+      "journey_stage": "descoberta",
+      "serp_equivalence_group": "SERP-ASC-01-v1",
+      "proposed_owner_url": "/ascendente",
+      "page_type": "ferramenta",
+      "business_value": "alto",
+      "organic_difficulty": "NAO_MEDIDA",
+      "differentiation_asset": "calculadora funcional existente",
+      "confidence": "media",
+      "decision": "PENDENTE",
+      "evidence_date": "2026-07-28",
+      "serp_data": "SERP_EVIDENCE/2026-07-28/ASC-01.json",
+      "top3_competitors": "personare.com.br|perfilanalisado.com|astrolink.com.br",
+      "dominant_feature": "ai_overview",
+      "source_row": "",
+      "conflict_reason": "",
+      "reviewer": "codex_execucao_M-02",
+      "decision_date": "",
+      "lifecycle_status": "publicada",
+      "published_at": "",
+      "last_updated_at": "",
+      "perf_clicks_28d": "",
+      "perf_impressions_28d": "",
+      "perf_ctr_28d": "",
+      "perf_position_avg": "",
+      "perf_measured_at": "",
+      "review_outcome": "",
+      "review_outcome_at": ""
+    },
+    {
+      "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+      "sourceRow": 5,
+      "keyword_raw": "mapa astral completo",
+      "keyword_normalized": "mapa astral completo",
+      "cluster": "mapa_astral",
+      "subcluster": "completo",
+      "entity_primary": "mapa-astral",
+      "intent_primary": "comparativa/transacional",
+      "journey_stage": "consideracao",
+      "serp_equivalence_group": "SERP-MAP-GRATUITO-v1",
+      "proposed_owner_url": "/mapa-astral-completo",
+      "page_type": "landing",
+      "business_value": "alto",
+      "organic_difficulty": "NAO_MEDIDA",
+      "differentiation_asset": "leitura editorial + PDF",
+      "confidence": "baixa",
+      "decision": "PENDENTE",
+      "evidence_date": "2026-07-28",
+      "serp_data": "SERP_EVIDENCE/2026-07-28/MAP-05.json",
+      "top3_competitors": "personare.com.br|astrolink.com.br|astralmapa.com.br",
+      "dominant_feature": "none",
+      "source_row": "",
+      "conflict_reason": "SERP compartilhada com consultas gratuitas; revisar canibalizacao sem migrar rota",
+      "reviewer": "codex_execucao_M-02",
+      "decision_date": "",
+      "lifecycle_status": "publicada",
+      "published_at": "",
+      "last_updated_at": "",
+      "perf_clicks_28d": "",
+      "perf_impressions_28d": "",
+      "perf_ctr_28d": "",
+      "perf_position_avg": "",
+      "perf_measured_at": "",
+      "review_outcome": "",
+      "review_outcome_at": ""
+    },
+    {
+      "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+      "sourceRow": 6,
+      "keyword_raw": "mapa astral profissional gratuito",
+      "keyword_normalized": "mapa astral profissional gratuito",
+      "cluster": "mapa_astral",
+      "subcluster": "profissional",
+      "entity_primary": "mapa-profissional",
+      "intent_primary": "ferramenta",
+      "journey_stage": "consideracao",
+      "serp_equivalence_group": "SERP-MAPA-PROFISSIONAL-2026-08-02",
+      "proposed_owner_url": "/prosperidade",
+      "page_type": "ferramenta",
+      "business_value": "alto",
+      "organic_difficulty": "NAO_MEDIDA",
+      "differentiation_asset": "Meio do Ceu calculado + insight de carreira",
+      "confidence": "alta",
+      "decision": "CONSOLIDAR",
+      "evidence_date": "2026-08-02",
+      "serp_data": "SERP_EVIDENCE/2026-08-02-lote-7-hubs-tematicos",
+      "top3_competitors": "horoscopo.gshow.globo.com|personare.com.br|viastral.com.br",
+      "dominant_feature": "ferramenta+conteudo",
+      "source_row": "",
+      "conflict_reason": "ownership existente evita canibalizacao com novo hub",
+      "reviewer": "codex_lote_7",
+      "decision_date": "2026-08-02",
+      "lifecycle_status": "publicada",
+      "published_at": "",
+      "last_updated_at": "",
+      "perf_clicks_28d": "",
+      "perf_impressions_28d": "",
+      "perf_ctr_28d": "",
+      "perf_position_avg": "",
+      "perf_measured_at": "",
+      "review_outcome": "",
+      "review_outcome_at": ""
+    },
+    {
+      "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+      "sourceRow": 7,
+      "keyword_raw": "sinastria",
+      "keyword_normalized": "sinastria",
+      "cluster": "sinastria_compat",
+      "subcluster": "core",
+      "entity_primary": "sinastria",
+      "intent_primary": "informacional/ferramenta",
+      "journey_stage": "consideracao",
+      "serp_equivalence_group": "SERP-CMP-03-v1",
+      "proposed_owner_url": "/sinastria",
+      "page_type": "hub",
+      "business_value": "alto",
+      "organic_difficulty": "NAO_MEDIDA",
+      "differentiation_asset": "produto do casal",
+      "confidence": "media",
+      "decision": "PENDENTE",
+      "evidence_date": "2026-07-28",
+      "serp_data": "SERP_EVIDENCE/2026-07-28/CMP-03.json",
+      "top3_competitors": "viastral.com.br|personare.com.br|astrolink.com.br",
+      "dominant_feature": "ai_overview",
+      "source_row": "",
+      "conflict_reason": "",
+      "reviewer": "codex_execucao_M-02",
+      "decision_date": "",
+      "lifecycle_status": "publicada",
+      "published_at": "",
+      "last_updated_at": "",
+      "perf_clicks_28d": "",
+      "perf_impressions_28d": "",
+      "perf_ctr_28d": "",
+      "perf_position_avg": "",
+      "perf_measured_at": "",
+      "review_outcome": "",
+      "review_outcome_at": ""
+    },
+    {
+      "source": "01-seo-intelligence/KEYWORD_URL_MAP.csv",
+      "sourceRow": 9,
+      "keyword_raw": "tarot online",
+      "keyword_normalized": "tarot online",
+      "cluster": "tarot",
+      "subcluster": "core",
+      "entity_primary": "tarot",
+      "intent_primary": "ferramenta",
+      "journey_stage": "descoberta",
+      "serp_equivalence_group": "PENDENTE_SERP",
+      "proposed_owner_url": "/tarot-online",
+      "page_type": "ferramenta",
+      "business_value": "medio",
+      "organic_difficulty": "PENDENTE_SERP",
+      "differentiation_asset": "tiragem propria no app",
+      "confidence": "baixa",
+      "decision": "PENDENTE",
+      "evidence_date": "2026-07-17",
+      "serp_data": "",
+      "top3_competitors": "",
+      "dominant_feature": "",
+      "source_row": "",
+      "conflict_reason": "dataset tarot insuficiente C-11",
+      "reviewer": "",
+      "decision_date": "",
+      "lifecycle_status": "publicada",
+      "published_at": "",
+      "last_updated_at": "",
+      "perf_clicks_28d": "",
+      "perf_impressions_28d": "",
+      "perf_ctr_28d": "",
+      "perf_position_avg": "",
+      "perf_measured_at": "",
+      "review_outcome": "",
+      "review_outcome_at": ""
+    }
+  ]
+}

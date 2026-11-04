@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isLaunchProductId, productTrialHref } from '@atv/domain';
 	import MvpProductArt from './MvpProductArt.svelte';
 	import { mvpProductDesign } from '$lib/data/mvp-visual';
 	type Product = {
@@ -13,11 +14,18 @@
 	let {
 		product,
 		trialAccess = false,
+		trialHref,
 		showInput = false
-	}: { product: Product; trialAccess?: boolean; showInput?: boolean } = $props();
+	}: {
+		product: Product;
+		trialAccess?: boolean;
+		trialHref?: string;
+		showInput?: boolean;
+	} = $props();
 	const design = $derived(mvpProductDesign(product.id));
+	const availableTrial = $derived(trialAccess || isLaunchProductId(product.id));
 	const status = $derived(
-		trialAccess
+		availableTrial
 			? 'Teste gratuito disponível'
 			: product.state === 'ACTIVE'
 				? 'Disponível'
@@ -44,8 +52,15 @@
 		{#if showInput && product.details?.input}<p class="requirements">
 				{product.details.input}
 			</p>{/if}
-		<a class="text-link" href={trialAccess ? `/testar-produtos/${product.id}` : product.href}
-			>{trialAccess ? `Testar ${product.name} grátis` : product.cta || 'Conhecer a leitura'}
+		<a
+			class="text-link"
+			href={availableTrial ? trialHref || productTrialHref(product.id) : product.href}
+			aria-label={availableTrial && trialHref ? `Testar ${product.name} gratuitamente` : undefined}
+			>{availableTrial
+				? trialHref
+					? 'Testar gratuitamente'
+					: `Testar ${product.name} grátis`
+				: product.cta || 'Conhecer a leitura'}
 			<span aria-hidden="true">↗</span></a
 		>
 	</div>
