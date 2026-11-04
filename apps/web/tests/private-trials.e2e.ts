@@ -272,14 +272,25 @@ test('ATV+ shows three public plans while simulation stays restricted to the own
 	expect(response?.status()).toBe(200);
 	expect(response?.headers()['cache-control']).toContain('no-store');
 	await expect(page.getByRole('heading', { name: 'ATV+', exact: true })).toBeVisible();
-	const plans = page.locator('.plans article');
+	const plans = page.locator('.commercial-plans article');
 	await expect(plans).toHaveCount(3);
 	for (const plan of atvPlusPlans) {
 		const card = plans.filter({ has: page.getByRole('heading', { name: plan.name, exact: true }) });
 		await expect(card).toBeVisible();
-		await expect(card.getByText('Assinaturas em preparação', { exact: true })).toBeVisible();
+		await expect(card.getByText('Contratação em preparação', { exact: true })).toBeVisible();
 		await expect(card.locator('form')).toHaveCount(0);
 	}
+	for (const term of [3, 6, 12]) {
+		await page.getByLabel('Duração da assinatura').selectOption(String(term));
+		for (const plan of atvPlusPlans) {
+			await expect(
+				plans.filter({ has: page.getByRole('heading', { name: plan.name, exact: true }) })
+			).toHaveAttribute('data-offer-id', `atv-plus-${plan.id}-${term}m`);
+		}
+	}
+	await expect(page.locator('.first-delivery')).toContainText(
+		'mesmo que o aniversário aconteça depois do fim da assinatura'
+	);
 	await expect(page.getByRole('heading', { name: 'Experimente cada plano' })).toHaveCount(0);
 	await expect(
 		page.getByRole('button', { name: /Testar este plano|Reiniciar este teste|Encerrar simulação/ })
@@ -293,6 +304,18 @@ test('ATV+ shows three public plans while simulation stays restricted to the own
 	expect(alias.status()).toBe(308);
 	expect(alias.headers().location).toBe('/atv-mais?source=library');
 	const origin = new URL(page.url()).origin;
+	for (const action of ['checkout', 'onboard']) {
+		const crossOrigin = await request.post(`/atv-mais?/${action}`, {
+			headers: { origin: 'https://example.invalid' },
+			form: {}
+		});
+		expect(crossOrigin.status()).toBe(403);
+	}
+	const closedCheckout = await request.post('/atv-mais?/checkout', {
+		headers: { origin },
+		form: { offerId: 'atv-plus-essencial-3m' }
+	});
+	expect(closedCheckout.status()).toBe(409);
 	for (const action of ['start', 'cancel']) {
 		const form: Record<string, string> =
 			action === 'start'
