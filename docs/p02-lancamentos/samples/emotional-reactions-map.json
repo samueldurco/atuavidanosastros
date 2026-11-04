@@ -1,0 +1,669 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "emotional-reactions-map",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 17.672599999999875,
+      "composition": 11.168499999999767,
+      "review": 13.861399999999776,
+      "total": 42.70249999999942
+    },
+    "jsonBytes": {
+      "input": 534,
+      "calculation": 8558,
+      "reading": 8730,
+      "review": 3240
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "emotional-reactions-map",
+    "birth": {
+      "localDateTime": "1990-05-10T10:30:00",
+      "utcInstant": "1990-05-10T13:30:00Z",
+      "timezone": "America/Sao_Paulo",
+      "latitude": -23.55,
+      "longitude": -46.63,
+      "locationSource": "synthetic/local-example"
+    },
+    "answers": {
+      "trigger": "Quando me interrompem e não consigo terminar uma frase.",
+      "reaction": "Falo mais alto e tento terminar rapidamente.",
+      "effect": "A conversa fica mais tensa e eu desisto de explicar."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000006",
+    "productId": "emotional-reactions-map",
+    "inputDigest": "9479125e152e6bcd2f374a5804f3c6bc592c876d9d3f5b4ae7208d50bea528e0",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-birth",
+        "kind": "reported",
+        "display": "{\"latitude\":-23.55,\"localDateTime\":\"1990-05-10T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"1990-05-10T13:30:00Z\"}",
+        "source": "input.birth"
+      },
+      {
+        "id": "reported-trigger-1",
+        "kind": "reported",
+        "display": "Quando me interrompem e não consigo terminar uma frase.",
+        "source": "input.answers.trigger"
+      },
+      {
+        "id": "reported-reaction-1",
+        "kind": "reported",
+        "display": "Falo mais alto e tento terminar rapidamente.",
+        "source": "input.answers.reaction"
+      },
+      {
+        "id": "reported-effect-1",
+        "kind": "reported",
+        "display": "A conversa fica mais tensa e eu desisto de explicar.",
+        "source": "input.answers.effect"
+      },
+      {
+        "id": "natal-moon",
+        "kind": "calculated",
+        "display": "moon: longitude tropical 237.806257°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-emotional-reactions-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-1",
+        "kind": "calculated",
+        "display": "moon sextile saturn; orbe 2.492754°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-emotional-reactions-natal-factors/1.0.0"
+      }
+    ],
+    "data": {
+      "method": "atv-launch-emotional-reactions-natal-factors/1.0.0",
+      "natal": {
+        "input": {
+          "localDateTime": "1990-05-10T10:30:00",
+          "utcInstant": "1990-05-10T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example"
+        },
+        "positions": [
+          {
+            "body": "sun",
+            "longitude": 49.630765489505,
+            "latitude": -0.00012413843431320973,
+            "distanceAu": 1.0097848031952548,
+            "retrograde": false
+          },
+          {
+            "body": "moon",
+            "longitude": 237.8062568542146,
+            "latitude": -4.780080153647267,
+            "distanceAu": 0.002716142274168556,
+            "retrograde": false
+          },
+          {
+            "body": "mercury",
+            "longitude": 39.46967553343799,
+            "latitude": -1.3799830662189247,
+            "distanceAu": 0.5674396458007673,
+            "retrograde": true
+          },
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false
+          },
+          {
+            "body": "jupiter",
+            "longitude": 98.62327624297204,
+            "latitude": 0.13566385836016723,
+            "distanceAu": 5.8037664917108716,
+            "retrograde": false
+          },
+          {
+            "body": "saturn",
+            "longitude": 295.3135027258837,
+            "latitude": 0.1607030417484806,
+            "distanceAu": 9.559133099774483,
+            "retrograde": true
+          },
+          {
+            "body": "uranus",
+            "longitude": 279.2971192221684,
+            "latitude": -0.31293871077310864,
+            "distanceAu": 18.73563526420331,
+            "retrograde": true
+          },
+          {
+            "body": "neptune",
+            "longitude": 284.42011654569893,
+            "latitude": 0.871239761390012,
+            "distanceAu": 29.61626878865766,
+            "retrograde": true
+          },
+          {
+            "body": "pluto",
+            "longitude": 226.305100605131,
+            "latitude": 16.000063364231448,
+            "distanceAu": 28.687932876024348,
+            "retrograde": true
+          }
+        ],
+        "houses": {
+          "system": "placidus",
+          "ascendant": 102.2959408454617,
+          "midheaven": 25.843624131358354,
+          "cusps": [
+            102.2959408454617,
+            136.78009641808518,
+            172.97985011902506,
+            205.8436241313583,
+            233.52530577364917,
+            257.93755608311426,
+            282.2959408454617,
+            316.7800964180851,
+            352.97985011902506,
+            25.843624131358354,
+            53.525305773649166,
+            77.93755608311432
+          ],
+          "status": "ok"
+        },
+        "provenance": {
+          "provider": "caelus",
+          "providerVersion": "0.24.1",
+          "algorithmVersion": "atv-caelus-adapter-v3",
+          "zodiac": "tropical",
+          "houseSystem": "placidus",
+          "calculatedAt": "2026-11-04T11:10:44.440Z",
+          "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+          "dataManifest": {
+            "provider": "caelus",
+            "version": "0.24.1",
+            "tier": "embedded",
+            "files": [
+              {
+                "path": "src/data-embedded.js",
+                "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+              },
+              {
+                "path": "data/vsop87d_mercury.embedded.json",
+                "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+              },
+              {
+                "path": "data/vsop87d_venus.embedded.json",
+                "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+              },
+              {
+                "path": "data/vsop87d_earth.embedded.json",
+                "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+              },
+              {
+                "path": "data/vsop87d_mars.embedded.json",
+                "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+              },
+              {
+                "path": "data/vsop87d_jupiter.embedded.json",
+                "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+              },
+              {
+                "path": "data/vsop87d_saturn.embedded.json",
+                "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+              },
+              {
+                "path": "data/vsop87d_uranus.embedded.json",
+                "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+              },
+              {
+                "path": "data/vsop87d_neptune.embedded.json",
+                "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+              },
+              {
+                "path": "data/nutation_iau1980.json",
+                "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+              },
+              {
+                "path": "data/moon_meeus47.json",
+                "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+              },
+              {
+                "path": "data/pluto_meeus37.json",
+                "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+              },
+              {
+                "path": "data/chiron_cheb.json",
+                "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+              },
+              {
+                "path": "data/fixed_stars.json",
+                "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+              },
+              {
+                "path": "data/constellations.json",
+                "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+              }
+            ]
+          },
+          "contract": {
+            "version": "atv-deterministic-contract/1",
+            "minUtcInstant": "1900-01-01T00:00:00.000Z",
+            "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+            "calendar": "proleptic-gregorian",
+            "inputResolutionMilliseconds": 1,
+            "leapSecondInput": "rejected",
+            "placidusAbsoluteLatitudeExclusive": 66,
+            "accuracy": "experimental-sampled",
+            "guaranteedLongitudeErrorDegrees": null,
+            "retrogradeStationTiming": "not-certified",
+            "productionPromotion": false
+          },
+          "temporal": {
+            "utcInstant": "1990-05-10T13:30:00.000Z",
+            "julianDayUt1Approx": 2448022.0625,
+            "dut1Seconds": null,
+            "timezoneMode": "iana",
+            "timezoneRules": "runtime-intl/unpinned",
+            "offsetSeconds": -10800,
+            "inputScale": "UTC",
+            "engineScale": "UT1-approximated-by-UTC",
+            "deltaTSeconds": 57.176683778234114
+          },
+          "accuracyStatus": "experimental",
+          "warnings": [
+            "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+            "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+            "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+            "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+          ]
+        }
+      },
+      "scope": {
+        "version": "atv-launch-emotional-reactions-natal-factors/1.0.0",
+        "bodies": [
+          "moon"
+        ],
+        "angles": [],
+        "houseCusps": [],
+        "contextKeys": [
+          "trigger",
+          "reaction",
+          "effect"
+        ]
+      },
+      "factors": {
+        "positions": [
+          {
+            "body": "moon",
+            "longitude": 237.8062568542146,
+            "latitude": -4.780080153647267,
+            "distanceAu": 0.002716142274168556,
+            "retrograde": false,
+            "sign": "scorpio",
+            "degreeWithinSign": 27.80625685421461
+          }
+        ],
+        "angles": [],
+        "houseCusps": []
+      },
+      "aspects": {
+        "algorithmVersion": "atv-major-aspects/1",
+        "policy": {
+          "id": "atv-launch-natal-selected-major-aspects",
+          "version": "1.0.0",
+          "aspects": [
+            {
+              "kind": "conjunction",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "sextile",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "square",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "trine",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "opposition",
+              "orbDegrees": 3
+            }
+          ]
+        },
+        "pairsEvaluated": 45,
+        "selection": "at-least-one-declared-body",
+        "aspects": [
+          {
+            "first": "moon",
+            "second": "saturn",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 57.50724587166911,
+            "orbDegrees": 2.492754128330887
+          }
+        ],
+        "motion": "not-evaluated",
+        "inputPrecision": "not-certified"
+      },
+      "contextReferences": [
+        "reported-trigger-1",
+        "reported-reaction-1",
+        "reported-effect-1"
+      ],
+      "interpretation": "not-produced"
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "O escopo temático seleciona coordenadas e geometria; não comprova preferências, habilidades, reações ou hábitos.",
+      "Casas indisponíveis não são substituídas; ângulos calculados são preservados separadamente.",
+      "Relacionar estes fatores aos relatos e produzir a entrega específica exige método editorial e revisão próprios."
+    ],
+    "provenance": {
+      "calculation": "experimental-astrology",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "a44ada4f702f77cf6560e86ba41437d91722e63d6ff8d0a6437fdeea182399ef",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000006",
+    "productId": "emotional-reactions-map",
+    "inputDigest": "9479125e152e6bcd2f374a5804f3c6bc592c876d9d3f5b4ae7208d50bea528e0",
+    "title": "Mapa das Reações Emocionais",
+    "summary": "A leitura parte de “Quando me interrompem e não consigo terminar uma frase.”. A prioridade é distinguir gatilho relatado, resposta própria e efeito observado; os relatos e o resultado do experimento podem contrariar a hipótese simbólica.",
+    "sections": [
+      {
+        "id": "function-moon",
+        "title": "Lua: uma função em contexto",
+        "paragraphs": [
+          "Lua em Escorpião, a 237.806257° de longitude tropical, é usado aqui para observar segurança e pertencimento. A hipótese própria dessa função é ter confiança suficiente para expor algo que considera íntimo; o risco a examinar é tomar uma hipótese sobre a intenção alheia como certeza. Um ajuste possível é conferir o que foi observado e perguntar antes de concluir o que outra pessoa quis. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe o que traz segurança antes da resposta automática, e se a necessidade pode ser dita sem pedir que alguém a adivinhe. O gatilho relatado foi “Quando me interrompem e não consigo terminar uma frase.”; a sua resposta foi “Falo mais alto e tento terminar rapidamente.” e o efeito que percebeu foi “A conversa fica mais tensa e eu desisto de explicar.”. A Lua é uma hipótese de necessidade; não é diagnóstico nem prova da causa dessa sequência."
+        ],
+        "evidenceIds": [
+          "natal-moon",
+          "reported-trigger-1",
+          "reported-reaction-1",
+          "reported-effect-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "calculated-relation",
+        "title": "Duas funções em relação",
+        "paragraphs": [
+          "Lua em sextil com Saturno (orbe 2.493°): a cooperação entre as funções depende de uma atividade deliberada; a oportunidade simbólica não substitui a iniciativa. A relação liga segurança e pertencimento a responsabilidade e continuidade; é uma hipótese de observação, não a causa comprovada do comportamento.",
+          "No seu contexto “Quando me interrompem e não consigo terminar uma frase.”, observe onde uma necessidade reduz o espaço da outra e experimente uma mudança pequena. O ajuste é comparar o efeito real, não tentar eliminar um planeta, um signo ou uma parte de si."
+        ],
+        "evidenceIds": [
+          "natal-selected-aspect-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "seven-day-observation",
+        "title": "Uma semana de observação",
+        "paragraphs": [
+          "Durante sete dias, registre somente episódios que acontecerem: situação, primeira reação, frase ou pausa escolhida e efeito percebido. Compare no máximo dois episódios semelhantes a “Quando me interrompem e não consigo terminar uma frase.”; ausência de episódio também é um resultado, sem fabricar uma ocasião.",
+          "A alternativa a testar é “Quero terminar esta frase; depois escuto você.” Ao final, avalie se ela mudou o efeito “A conversa fica mais tensa e eu desisto de explicar.” e se precisa ser ajustada. Este registro organiza uma observação pessoal; não mede saúde mental nem substitui apoio profissional que você já utilize."
+        ],
+        "evidenceIds": [
+          "reported-trigger-1",
+          "reported-reaction-1",
+          "reported-effect-1",
+          "natal-moon"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "thematic-integration",
+        "title": "Síntese e experimento",
+        "paragraphs": [
+          "A necessidade lunar precisa ser lida junto da relação calculada com outra função, sem transformar tensão simbólica em defeito pessoal. O relato “Quando me interrompem e não consigo terminar uma frase.” → “Falo mais alto e tento terminar rapidamente.” → “A conversa fica mais tensa e eu desisto de explicar.” oferece uma sequência verificável; uma pausa cria uma alternativa entre os dois primeiros passos. A prioridade prática é distinguir gatilho relatado, resposta própria e efeito observado.",
+          "Em uma próxima ocorrência semelhante a “Quando me interrompem e não consigo terminar uma frase.”, se houver espaço, experimente dizer “Quero terminar esta frase; depois escuto você.” Registre o que efetivamente mudou em comparação com “Falo mais alto e tento terminar rapidamente.”; se não houver espaço, interromper a conversa também é uma opção."
+        ],
+        "evidenceIds": [
+          "natal-moon",
+          "reported-trigger-1",
+          "reported-reaction-1",
+          "reported-effect-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-function-moon",
+        "sectionId": "function-moon",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-moon"
+        ],
+        "factors": {
+          "body": "moon",
+          "longitude": 237.8062568542146,
+          "styleKey": "need"
+        },
+        "interpretation": "Lua em Escorpião, a 237.806257° de longitude tropical, é usado aqui para observar segurança e pertencimento. A hipótese própria dessa função é ter confiança suficiente para expor algo que considera íntimo; o risco a examinar é tomar uma hipótese sobre a intenção alheia como certeza. Um ajuste possível é conferir o que foi observado e perguntar antes de concluir o que outra pessoa quis. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-calculated-relation",
+        "sectionId": "calculated-relation",
+        "rule": "actual-aspect-mechanism",
+        "evidenceIds": [
+          "natal-selected-aspect-1"
+        ],
+        "factors": {
+          "first": "moon",
+          "second": "saturn",
+          "aspect": "sextile",
+          "orbDegrees": 2.492754128330887
+        },
+        "interpretation": "Lua em sextil com Saturno (orbe 2.493°): a cooperação entre as funções depende de uma atividade deliberada; a oportunidade simbólica não substitui a iniciativa. A relação liga segurança e pertencimento a responsabilidade e continuidade; é uma hipótese de observação, não a causa comprovada do comportamento."
+      },
+      {
+        "id": "claim-thematic-integration",
+        "sectionId": "thematic-integration",
+        "rule": "specific-thematic-integration",
+        "evidenceIds": [
+          "natal-moon",
+          "reported-trigger-1",
+          "reported-reaction-1",
+          "reported-effect-1"
+        ],
+        "factors": {
+          "bodies": [
+            "moon"
+          ],
+          "angles": [],
+          "context": "Quando me interrompem e não consigo terminar uma frase."
+        },
+        "interpretation": "A necessidade lunar precisa ser lida junto da relação calculada com outra função, sem transformar tensão simbólica em defeito pessoal. O relato “Quando me interrompem e não consigo terminar uma frase.” → “Falo mais alto e tento terminar rapidamente.” → “A conversa fica mais tensa e eu desisto de explicar.” oferece uma sequência verificável; uma pausa cria uma alternativa entre os dois primeiros passos. A prioridade prática é distinguir gatilho relatado, resposta própria e efeito observado."
+      }
+    ],
+    "practicalAction": "Em uma próxima ocorrência semelhante a “Quando me interrompem e não consigo terminar uma frase.”, se houver espaço, experimente dizer “Quero terminar esta frase; depois escuto você.” Registre o que efetivamente mudou em comparação com “Falo mais alto e tento terminar rapidamente.”; se não houver espaço, interromper a conversa também é uma opção.",
+    "reflection": "Que necessidade você consegue nomear antes de repetir a reação, e qual efeito real indicaria que uma resposta diferente ajudou?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "O mapa não comprova preferências, capacidade profissional, hábitos ou reação emocional; o relato e o teste real têm prioridade.",
+      "Motor astrológico experimental. A bateria independente de precisão continua pendente; esta revisão não homologa precisão comercial."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "experimental-astrology",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-humanistic-modern/1.0.0:natal-styles",
+          "version": "atv-humanistic-modern/1.0.0",
+          "origin": "Cânone original local: funções humanistas, natalStyles e mecanismos de aspectos. Referências e limites de consulta em SOURCES_2026-10-08.md; não houve pesquisa no runtime."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "6277521ae33ac1e18610d6af4528c27866fa5d2b2148c50f082a67f412d4b24b",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "selected-natal-geometry",
+        "passed": true,
+        "detail": "Escopo, coordenadas, signos, ângulos e contatos conferidos sem inventar fatores."
+      },
+      {
+        "id": "function-specific-semantics",
+        "passed": true,
+        "detail": "Cada planeta usa a função e o mecanismo próprios, com contexto; trocar nomes ou preservar IDs não mantém a aprovação."
+      },
+      {
+        "id": "angle-specific-semantics",
+        "passed": true,
+        "detail": "Ângulo real altera a hipótese de entrada/direção, sem deduzir corpo ou profissão."
+      },
+      {
+        "id": "actual-aspect-semantic-relation",
+        "passed": true,
+        "detail": "A relação usa duas funções e o mecanismo do aspecto calculado, sem transformar aspecto em causa."
+      },
+      {
+        "id": "specific-thematic-integration",
+        "passed": true,
+        "detail": "A síntese tem contrato próprio e liga funções distintas aos relatos, à decisão e ao experimento."
+      },
+      {
+        "id": "complete-thematic-evidence",
+        "passed": true,
+        "detail": "Os relatos e fatores disponíveis permitem todas as partes do método temático."
+      },
+      {
+        "id": "contextual-contract-delivery",
+        "passed": true,
+        "detail": "Situações, acordo, observação, oferta ou três combinações usam somente o contexto declarado."
+      }
+    ],
+    "reasons": [],
+    "digest": "6277521ae33ac1e18610d6af4528c27866fa5d2b2148c50f082a67f412d4b24b",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "experimental-astrology",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

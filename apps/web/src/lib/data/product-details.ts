@@ -1,6 +1,8 @@
 import { tarotMethods } from '@atv/domain';
+import { launchDetails } from './launch-products';
 /** Public explanations must describe the retained product contract, not invent availability. */
 export const productDetails = {
+	...launchDetails,
 	...Object.fromEntries(
 		tarotMethods.map((method) => [
 			method.id,

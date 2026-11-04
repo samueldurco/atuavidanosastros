@@ -1,0 +1,433 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "ex-tarot",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 5.1260999999994965,
+      "composition": 10.952400000000125,
+      "review": 30.43500000000131,
+      "total": 46.51350000000093
+    },
+    "jsonBytes": {
+      "input": 411,
+      "calculation": 3004,
+      "reading": 8708,
+      "review": 2918
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "ex-tarot",
+    "answers": {
+      "episode": "Recebi uma mensagem depois de meses sem contato.",
+      "observedActions": "Perguntou como estou; não propôs conversar nem pediu desculpas.",
+      "question": "Quero responder a esta mensagem?",
+      "boundaries": "Preservar meu tempo de descanso e não aceitar pressão por resposta."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000002",
+    "productId": "ex-tarot",
+    "inputDigest": "0e083ced55c4cb3a9883e99252a307317f4b5e1e4e0427f1cf1f7313efb5bd1e",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-episode-1",
+        "kind": "reported",
+        "display": "Recebi uma mensagem depois de meses sem contato.",
+        "source": "input.answers.episode"
+      },
+      {
+        "id": "reported-observedActions-1",
+        "kind": "reported",
+        "display": "Perguntou como estou; não propôs conversar nem pediu desculpas.",
+        "source": "input.answers.observedActions"
+      },
+      {
+        "id": "reported-question-1",
+        "kind": "reported",
+        "display": "Quero responder a esta mensagem?",
+        "source": "input.answers.question"
+      },
+      {
+        "id": "reported-boundaries-1",
+        "kind": "reported",
+        "display": "Preservar meu tempo de descanso e não aceitar pressão por resposta.",
+        "source": "input.answers.boundaries"
+      },
+      {
+        "id": "card-1",
+        "kind": "drawn",
+        "display": "Episódio: Pajem de Copas (posição direta)",
+        "source": "atv-tarot-78/1.0.0;sha256-counter-rejection-fisher-yates/1;atv-launch-ex-tarot-method/1.0.0;ex-tarot"
+      },
+      {
+        "id": "card-2",
+        "kind": "drawn",
+        "display": "Hipótese a examinar: Três de Paus (posição direta)",
+        "source": "atv-tarot-78/1.0.0;sha256-counter-rejection-fisher-yates/1;atv-launch-ex-tarot-method/1.0.0;ex-tarot"
+      },
+      {
+        "id": "card-3",
+        "kind": "drawn",
+        "display": "Critério de reparação: Rainha de Paus (posição direta)",
+        "source": "atv-tarot-78/1.0.0;sha256-counter-rejection-fisher-yates/1;atv-launch-ex-tarot-method/1.0.0;ex-tarot"
+      }
+    ],
+    "data": {
+      "method": {
+        "id": "ex-tarot",
+        "version": "atv-launch-ex-tarot-method/1.0.0",
+        "positions": [
+          {
+            "id": "episode",
+            "name": "Episódio",
+            "function": "Examinar o episódio relatado sem criar acontecimentos."
+          },
+          {
+            "id": "hypothesis",
+            "name": "Hipótese a examinar",
+            "function": "Distinguir uma hipótese simbólica de sentimentos conhecidos de outra pessoa."
+          },
+          {
+            "id": "repair-criterion",
+            "name": "Critério de reparação",
+            "function": "Reconhecer atitude observável e um limite para o próximo contato."
+          }
+        ]
+      },
+      "deckVersion": "atv-tarot-78/1.0.0",
+      "drawAlgorithm": "sha256-counter-rejection-fisher-yates/1",
+      "executionId": "8c6d9da2-d296-4b63-a30c-000000000002",
+      "reversals": false,
+      "replacement": false,
+      "drawStatus": "UNPERSISTED",
+      "cards": [
+        {
+          "position": 1,
+          "positionId": "episode",
+          "positionName": "Episódio",
+          "cardId": "cups-11",
+          "name": "Pajem de Copas",
+          "orientation": "upright"
+        },
+        {
+          "position": 2,
+          "positionId": "hypothesis",
+          "positionName": "Hipótese a examinar",
+          "cardId": "wands-3",
+          "name": "Três de Paus",
+          "orientation": "upright"
+        },
+        {
+          "position": 3,
+          "positionId": "repair-criterion",
+          "positionName": "Critério de reparação",
+          "cardId": "wands-13",
+          "name": "Rainha de Paus",
+          "orientation": "upright"
+        }
+      ]
+    },
+    "limits": [
+      "Sorteio ainda não persistido; não constitui leitura ou entrega.",
+      "As cartas não comprovam sentimentos, intenções, acontecimentos ou arrependimento de outra pessoa.",
+      "Astrologia do episódio não foi calculada; esta base contém somente Tarot e os relatos."
+    ],
+    "provenance": {
+      "calculation": "deterministic-tarot",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "8c30c2cf5f29960a60165a22ae7a1ea17f6114bd4ab621ffdf2a3e62bcf00fe5",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000002",
+    "productId": "ex-tarot",
+    "inputDigest": "0e083ced55c4cb3a9883e99252a307317f4b5e1e4e0427f1cf1f7313efb5bd1e",
+    "title": "Tarot do Ex: Saudade e Arrependimento",
+    "summary": "Diante de “Recebi uma mensagem depois de meses sem contato.”, a prioridade desta leitura é esclarecer a intenção do contato antes de interpretá-lo como reparação. As cartas oferecem três hipóteses de reflexão; o sinal decisivo continua sendo uma atitude observável.",
+    "sections": [
+      {
+        "id": "card-position-1",
+        "title": "Episódio: Pajem de Copas",
+        "paragraphs": [
+          "Na posição Episódio, Pajem de Copas serve como espelho do relato: mensagem afetiva ou imaginativa que interrompe expectativa e convida a responder com curiosidade. No campo afetivo, mensagem, flerte, pedido de desculpas, gesto inesperado ou fase de descoberta emocional; não define idade. Isso convida a comparar o que aconteceu com a interpretação que você está dando ao contato, sem acrescentar acontecimentos.",
+          "O que você efetivamente relata como atitude foi “Perguntou como estou; não propôs conversar nem pediu desculpas.”. Esse é o dado que pode ser conferido; saudade e intenção continuam desconhecidas."
+        ],
+        "evidenceIds": [
+          "card-1",
+          "reported-observedActions-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "card-position-2",
+        "title": "Hipótese a examinar: Três de Paus",
+        "paragraphs": [
+          "Na posição Hipótese a examinar, Três de Paus coloca em teste avaliar expansão depois que algo já foi enviado ao mundo. A possível armadilha é expectativa grandiosa, terceirizar execução, ficar olhando resultado sem ajustar operação. É uma hipótese sobre a sua leitura do episódio; não descreve o que a outra pessoa sente.",
+          "A sua pergunta é “Quero responder a esta mensagem?”. Antes de responder a ela, a prioridade prática é esclarecer a intenção do contato antes de interpretá-lo como reparação."
+        ],
+        "evidenceIds": [
+          "card-2",
+          "reported-question-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "card-position-3",
+        "title": "Critério de reparação: Rainha de Paus",
+        "paragraphs": [
+          "Na posição Critério de reparação, Rainha de Paus propõe um recurso a experimentar: confiança, magnetismo, generosidade, capacidade de encorajar e manter um projeto vivo pela presença. A pergunta da carta é usar influência para ampliar capacidade do sistema, não para transformar todos em plateia. Concretamente, observe se a resposta esclarece o motivo do contato e respeita o ritmo que você comunicar; isso ainda não é prova de mudança duradoura.",
+          "O limite declarado é “Preservar meu tempo de descanso e não aceitar pressão por resposta.”. Use esse limite para decidir se a atitude observada é suficiente para uma próxima conversa."
+        ],
+        "evidenceIds": [
+          "card-3",
+          "reported-boundaries-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "joint-reading",
+        "title": "Saudade, hipótese e reparação",
+        "paragraphs": [
+          "A primeira carta oferece abertura emocional, criatividade, humor, capacidade de acolher surpresa e dizer algo vulnerável sem exigir controle; a segunda alerta para expectativa grandiosa, terceirizar execução, ficar olhando resultado sem ajustar operação. A combinação pede que a abertura do episódio passe pelo recurso da terceira, confiança, magnetismo, generosidade, capacidade de encorajar e manter um projeto vivo pela presença, em vez de transformar uma mensagem em conclusão sobre a relação. O critério concreto é verificar se a resposta esclarece o motivo do contato e respeita o ritmo que você comunicar, preservando “Preservar meu tempo de descanso e não aceitar pressão por resposta.”.",
+          "Saudade, culpa e desejo de retomar são possibilidades diferentes. Uma mensagem isolada não permite escolher entre elas. Reparação exige reconhecer um ponto concreto, combinar uma atitude e observar sua continuidade; a sua vontade de participar também conta."
+        ],
+        "evidenceIds": [
+          "card-1",
+          "card-2",
+          "card-3",
+          "reported-episode-1",
+          "reported-boundaries-1"
+        ],
+        "sourceIds": [
+          "atv-rws-interpretive-canon/1.0.0",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-card-1",
+        "sectionId": "card-position-1",
+        "rule": "episode-mirror",
+        "evidenceIds": [
+          "card-1"
+        ],
+        "factors": {
+          "cardId": "cups-11",
+          "positionId": "episode",
+          "contextClass": "ambiguous",
+          "sourceLine": 3200
+        },
+        "interpretation": "Na posição Episódio, Pajem de Copas serve como espelho do relato: mensagem afetiva ou imaginativa que interrompe expectativa e convida a responder com curiosidade. No campo afetivo, mensagem, flerte, pedido de desculpas, gesto inesperado ou fase de descoberta emocional; não define idade. Isso convida a comparar o que aconteceu com a interpretação que você está dando ao contato, sem acrescentar acontecimentos."
+      },
+      {
+        "id": "claim-card-2",
+        "sectionId": "card-position-2",
+        "rule": "self-hypothesis",
+        "evidenceIds": [
+          "card-2"
+        ],
+        "factors": {
+          "cardId": "wands-3",
+          "positionId": "hypothesis",
+          "contextClass": "ambiguous",
+          "sourceLine": 2579
+        },
+        "interpretation": "Na posição Hipótese a examinar, Três de Paus coloca em teste avaliar expansão depois que algo já foi enviado ao mundo. A possível armadilha é expectativa grandiosa, terceirizar execução, ficar olhando resultado sem ajustar operação. É uma hipótese sobre a sua leitura do episódio; não descreve o que a outra pessoa sente."
+      },
+      {
+        "id": "claim-card-3",
+        "sectionId": "card-position-3",
+        "rule": "observable-repair",
+        "evidenceIds": [
+          "card-3"
+        ],
+        "factors": {
+          "cardId": "wands-13",
+          "positionId": "repair-criterion",
+          "contextClass": "ambiguous",
+          "sourceLine": 2859
+        },
+        "interpretation": "Na posição Critério de reparação, Rainha de Paus propõe um recurso a experimentar: confiança, magnetismo, generosidade, capacidade de encorajar e manter um projeto vivo pela presença. A pergunta da carta é usar influência para ampliar capacidade do sistema, não para transformar todos em plateia. Concretamente, observe se a resposta esclarece o motivo do contato e respeita o ritmo que você comunicar; isso ainda não é prova de mudança duradoura."
+      },
+      {
+        "id": "claim-joint",
+        "sectionId": "joint-reading",
+        "rule": "resource-risk-criterion",
+        "evidenceIds": [
+          "card-1",
+          "card-2",
+          "card-3"
+        ],
+        "factors": {
+          "cards": [
+            "cups-11",
+            "wands-3",
+            "wands-13"
+          ],
+          "contextClass": "ambiguous"
+        },
+        "interpretation": "A primeira carta oferece abertura emocional, criatividade, humor, capacidade de acolher surpresa e dizer algo vulnerável sem exigir controle; a segunda alerta para expectativa grandiosa, terceirizar execução, ficar olhando resultado sem ajustar operação. A combinação pede que a abertura do episódio passe pelo recurso da terceira, confiança, magnetismo, generosidade, capacidade de encorajar e manter um projeto vivo pela presença, em vez de transformar uma mensagem em conclusão sobre a relação. O critério concreto é verificar se a resposta esclarece o motivo do contato e respeita o ritmo que você comunicar, preservando “Preservar meu tempo de descanso e não aceitar pressão por resposta.”."
+      }
+    ],
+    "practicalAction": "Se quiser responder, rascunhe uma pergunta curta sobre o motivo do contato; espere uma resposta clara antes de ampliar a conversa. Preserve o limite que você declarou: “Preservar meu tempo de descanso e não aceitar pressão por resposta.”.",
+    "reflection": "Que atitude concreta, além de uma mensagem, seria suficiente para você reconsiderar “Quero responder a esta mensagem?” sem abandonar o seu limite?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "A tiragem considera o episódio e as cartas diretas; astrologia do episódio não foi calculada."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "deterministic-tarot",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-rws-interpretive-canon/1.0.0",
+          "version": "atv-rws-interpretive-canon/1.0.0",
+          "origin": "Cânone local compilado do Livro 19, capítulos 3–7; SHA256 0390dc4eab1c1dd57dfe3313c05f1675de88e03fe4a210ad8c4331eb6c24544c. Somente os verbetes das cartas usadas."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "d0497336ce0ba575dc880943fe985e5148c6045e3aa949174d36137f7a5ac35a",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "thematic-tarot-method",
+        "passed": true,
+        "detail": "Três cartas únicas, diretas, nas posições temáticas corretas e com identidades preservadas."
+      },
+      {
+        "id": "positional-semantic-dependency",
+        "passed": true,
+        "detail": "Cada carta deve alterar a hipótese na função correta, com mecanismo próprio e confronto com o relato."
+      },
+      {
+        "id": "joint-resource-risk-criterion",
+        "passed": true,
+        "detail": "Síntese contrasta recurso da primeira, risco da segunda e critério observável da terceira; IDs sozinhos não bastam."
+      },
+      {
+        "id": "context-changes-decision",
+        "passed": true,
+        "detail": "Relatos diferentes precisam mudar a prioridade e a ação, preservando cartas e geometria."
+      },
+      {
+        "id": "consulted-canon",
+        "passed": true,
+        "detail": "Verbetes das cartas e fonte local consultada, sem alegação de pesquisa no runtime."
+      }
+    ],
+    "reasons": [],
+    "digest": "d0497336ce0ba575dc880943fe985e5148c6045e3aa949174d36137f7a5ac35a",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "deterministic-tarot",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

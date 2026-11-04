@@ -1,0 +1,207 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "methodology": "One sequential local batch, no warmup or repeated distribution; elapsed wall-clock durations include concurrent workstation load. JSON byte counts use UTF-8 compact JSON. These measurements do not predict hosted latency, concurrency or currency cost.",
+  "measurements": [
+    {
+      "productId": "wedding-date-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 1475.1481999999996,
+        "composition": 28.65649999999914,
+        "review": 267.66209999999955,
+        "total": 1771.4667999999983
+      },
+      "jsonBytes": {
+        "input": 752,
+        "calculation": 27120,
+        "reading": 9114,
+        "review": 3060
+      }
+    },
+    {
+      "productId": "ex-tarot",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 5.1260999999994965,
+        "composition": 10.952400000000125,
+        "review": 30.43500000000131,
+        "total": 46.51350000000093
+      },
+      "jsonBytes": {
+        "input": 411,
+        "calculation": 3004,
+        "reading": 8708,
+        "review": 2918
+      }
+    },
+    {
+      "productId": "love-restart-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 1671.5175,
+        "composition": 123.69260000000031,
+        "review": 227.98939999999857,
+        "total": 2023.1994999999988
+      },
+      "jsonBytes": {
+        "input": 585,
+        "calculation": 263542,
+        "reading": 23402,
+        "review": 3094
+      }
+    },
+    {
+      "productId": "sexuality-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 22.515699999999924,
+        "composition": 13.904599999999846,
+        "review": 20.26300000000083,
+        "total": 56.6833000000006
+      },
+      "jsonBytes": {
+        "input": 557,
+        "calculation": 10323,
+        "reading": 11369,
+        "review": 3240
+      }
+    },
+    {
+      "productId": "intimacy-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 24.661000000000058,
+        "composition": 11.540600000000268,
+        "review": 15.18579999999929,
+        "total": 51.387399999999616
+      },
+      "jsonBytes": {
+        "input": 541,
+        "calculation": 10271,
+        "reading": 10388,
+        "review": 3240
+      }
+    },
+    {
+      "productId": "emotional-reactions-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 17.672599999999875,
+        "composition": 11.168499999999767,
+        "review": 13.861399999999776,
+        "total": 42.70249999999942
+      },
+      "jsonBytes": {
+        "input": 534,
+        "calculation": 8558,
+        "reading": 8730,
+        "review": 3240
+      }
+    },
+    {
+      "productId": "financial-blocks-tarot",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 2.4135999999998603,
+        "composition": 5.379299999998693,
+        "review": 10.643300000001545,
+        "total": 18.4362000000001
+      },
+      "jsonBytes": {
+        "input": 374,
+        "calculation": 2961,
+        "reading": 9779,
+        "review": 2467
+      }
+    },
+    {
+      "productId": "hidden-talent-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 15.083199999999124,
+        "composition": 9.813700000000608,
+        "review": 16.294599999999264,
+        "total": 41.191499999998996
+      },
+      "jsonBytes": {
+        "input": 566,
+        "calculation": 14909,
+        "reading": 20395,
+        "review": 3240
+      }
+    },
+    {
+      "productId": "ascendant-style",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 20.65009999999893,
+        "composition": 9.705400000000736,
+        "review": 12.03479999999945,
+        "total": 42.390299999999115
+      },
+      "jsonBytes": {
+        "input": 541,
+        "calculation": 8526,
+        "reading": 9037,
+        "review": 3240
+      }
+    },
+    {
+      "productId": "conversation-timing",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 197.8729000000003,
+        "composition": 18.43029999999999,
+        "review": 56.115099999999074,
+        "total": 272.41829999999936
+      },
+      "jsonBytes": {
+        "input": 613,
+        "calculation": 79195,
+        "reading": 23830,
+        "review": 2589
+      }
+    },
+    {
+      "productId": "cohabitation-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 19.0640999999996,
+        "composition": 9.260800000000017,
+        "review": 16.1867000000002,
+        "total": 44.51159999999982
+      },
+      "jsonBytes": {
+        "input": 607,
+        "calculation": 12303,
+        "reading": 17452,
+        "review": 3240
+      }
+    }
+  ]
+}

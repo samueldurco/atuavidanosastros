@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-11-04T10:28:54.970Z",
+  "results": [
+    {
+      "width": 1440,
+      "httpStatus": 200,
+      "errors": [],
+      "order": [
+        {
+          "id": "produtos",
+          "top": 4000.890625
+        },
+        {
+          "id": "atv-mais-home",
+          "top": 5010.625
+        },
+        {
+          "id": "lancamentos",
+          "top": 5565.328125
+        },
+        {
+          "id": "universos",
+          "top": 6442.46875
+        }
+      ],
+      "correctOrder": true,
+      "first": "Mapa da Data de Casamento",
+      "second": "Tarot do Ex: Saudade e Arrependimento",
+      "third": "Mapa do Recomeço Amoroso",
+      "wrapsToFirst": true,
+      "wrapsToThird": true,
+      "thirdLink": "/produtos/mapa-do-recomeco-amoroso",
+      "buttonBoxes": [
+        {
+          "x": 1251,
+          "y": 779.671875,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "x": 1139.546875,
+          "y": 779.671875,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "httpStatus": 200,
+      "errors": [],
+      "order": [
+        {
+          "id": "produtos",
+          "top": 6365.09375
+        },
+        {
+          "id": "atv-mais-home",
+          "top": 8481.34375
+        },
+        {
+          "id": "lancamentos",
+          "top": 9399.40625
+        },
+        {
+          "id": "universos",
+          "top": 10378.921875
+        }
+      ],
+      "correctOrder": true,
+      "first": "Mapa da Data de Casamento",
+      "second": "Tarot do Ex: Saudade e Arrependimento",
+      "third": "Mapa do Recomeço Amoroso",
+      "wrapsToFirst": true,
+      "wrapsToThird": true,
+      "thirdLink": "/produtos/mapa-do-recomeco-amoroso",
+      "buttonBoxes": [
+        {
+          "x": 303,
+          "y": 921.515625,
+          "width": 44,
+          "height": 44
+        },
+        {
+          "x": 191.546875,
+          "y": 921.515625,
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "overflow": false
+    }
+  ]
+}

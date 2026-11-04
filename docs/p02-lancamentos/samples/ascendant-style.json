@@ -1,0 +1,708 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "ascendant-style",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 20.65009999999893,
+      "composition": 9.705400000000736,
+      "review": 12.03479999999945,
+      "total": 42.390299999999115
+    },
+    "jsonBytes": {
+      "input": 541,
+      "calculation": 8526,
+      "reading": 9037,
+      "review": 3240
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "ascendant-style",
+    "birth": {
+      "localDateTime": "1990-05-10T10:30:00",
+      "utcInstant": "1990-05-10T13:30:00Z",
+      "timezone": "America/Sao_Paulo",
+      "latitude": -23.55,
+      "longitude": -46.63,
+      "locationSource": "synthetic/local-example"
+    },
+    "answers": {
+      "occasion": "Uma apresentação informal de um trabalho.",
+      "wardrobe": [
+        "Camisa azul",
+        "Blusa branca",
+        "Calça preta",
+        "Saia verde",
+        "Tênis branco"
+      ],
+      "comfort": "Quero me movimentar e sentar sem peças apertadas."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000009",
+    "productId": "ascendant-style",
+    "inputDigest": "f089c608ba6d59c92106d0b68a0d9f8f5b024bc301b4073c60d7b84aceafb3fe",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-birth",
+        "kind": "reported",
+        "display": "{\"latitude\":-23.55,\"localDateTime\":\"1990-05-10T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"1990-05-10T13:30:00Z\"}",
+        "source": "input.birth"
+      },
+      {
+        "id": "reported-occasion-1",
+        "kind": "reported",
+        "display": "Uma apresentação informal de um trabalho.",
+        "source": "input.answers.occasion"
+      },
+      {
+        "id": "reported-wardrobe-1",
+        "kind": "reported",
+        "display": "Camisa azul",
+        "source": "input.answers.wardrobe[0]"
+      },
+      {
+        "id": "reported-wardrobe-2",
+        "kind": "reported",
+        "display": "Blusa branca",
+        "source": "input.answers.wardrobe[1]"
+      },
+      {
+        "id": "reported-wardrobe-3",
+        "kind": "reported",
+        "display": "Calça preta",
+        "source": "input.answers.wardrobe[2]"
+      },
+      {
+        "id": "reported-wardrobe-4",
+        "kind": "reported",
+        "display": "Saia verde",
+        "source": "input.answers.wardrobe[3]"
+      },
+      {
+        "id": "reported-wardrobe-5",
+        "kind": "reported",
+        "display": "Tênis branco",
+        "source": "input.answers.wardrobe[4]"
+      },
+      {
+        "id": "reported-comfort-1",
+        "kind": "reported",
+        "display": "Quero me movimentar e sentar sem peças apertadas.",
+        "source": "input.answers.comfort"
+      },
+      {
+        "id": "natal-ascendant",
+        "kind": "calculated",
+        "display": "ascendant: longitude tropical 102.295941°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-ascendant-style-natal-factors/1.0.0"
+      }
+    ],
+    "data": {
+      "method": "atv-launch-ascendant-style-natal-factors/1.0.0",
+      "natal": {
+        "input": {
+          "localDateTime": "1990-05-10T10:30:00",
+          "utcInstant": "1990-05-10T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example"
+        },
+        "positions": [
+          {
+            "body": "sun",
+            "longitude": 49.630765489505,
+            "latitude": -0.00012413843431320973,
+            "distanceAu": 1.0097848031952548,
+            "retrograde": false
+          },
+          {
+            "body": "moon",
+            "longitude": 237.8062568542146,
+            "latitude": -4.780080153647267,
+            "distanceAu": 0.002716142274168556,
+            "retrograde": false
+          },
+          {
+            "body": "mercury",
+            "longitude": 39.46967553343799,
+            "latitude": -1.3799830662189247,
+            "distanceAu": 0.5674396458007673,
+            "retrograde": true
+          },
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false
+          },
+          {
+            "body": "jupiter",
+            "longitude": 98.62327624297204,
+            "latitude": 0.13566385836016723,
+            "distanceAu": 5.8037664917108716,
+            "retrograde": false
+          },
+          {
+            "body": "saturn",
+            "longitude": 295.3135027258837,
+            "latitude": 0.1607030417484806,
+            "distanceAu": 9.559133099774483,
+            "retrograde": true
+          },
+          {
+            "body": "uranus",
+            "longitude": 279.2971192221684,
+            "latitude": -0.31293871077310864,
+            "distanceAu": 18.73563526420331,
+            "retrograde": true
+          },
+          {
+            "body": "neptune",
+            "longitude": 284.42011654569893,
+            "latitude": 0.871239761390012,
+            "distanceAu": 29.61626878865766,
+            "retrograde": true
+          },
+          {
+            "body": "pluto",
+            "longitude": 226.305100605131,
+            "latitude": 16.000063364231448,
+            "distanceAu": 28.687932876024348,
+            "retrograde": true
+          }
+        ],
+        "houses": {
+          "system": "placidus",
+          "ascendant": 102.2959408454617,
+          "midheaven": 25.843624131358354,
+          "cusps": [
+            102.2959408454617,
+            136.78009641808518,
+            172.97985011902506,
+            205.8436241313583,
+            233.52530577364917,
+            257.93755608311426,
+            282.2959408454617,
+            316.7800964180851,
+            352.97985011902506,
+            25.843624131358354,
+            53.525305773649166,
+            77.93755608311432
+          ],
+          "status": "ok"
+        },
+        "provenance": {
+          "provider": "caelus",
+          "providerVersion": "0.24.1",
+          "algorithmVersion": "atv-caelus-adapter-v3",
+          "zodiac": "tropical",
+          "houseSystem": "placidus",
+          "calculatedAt": "2026-11-04T11:10:44.578Z",
+          "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+          "dataManifest": {
+            "provider": "caelus",
+            "version": "0.24.1",
+            "tier": "embedded",
+            "files": [
+              {
+                "path": "src/data-embedded.js",
+                "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+              },
+              {
+                "path": "data/vsop87d_mercury.embedded.json",
+                "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+              },
+              {
+                "path": "data/vsop87d_venus.embedded.json",
+                "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+              },
+              {
+                "path": "data/vsop87d_earth.embedded.json",
+                "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+              },
+              {
+                "path": "data/vsop87d_mars.embedded.json",
+                "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+              },
+              {
+                "path": "data/vsop87d_jupiter.embedded.json",
+                "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+              },
+              {
+                "path": "data/vsop87d_saturn.embedded.json",
+                "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+              },
+              {
+                "path": "data/vsop87d_uranus.embedded.json",
+                "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+              },
+              {
+                "path": "data/vsop87d_neptune.embedded.json",
+                "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+              },
+              {
+                "path": "data/nutation_iau1980.json",
+                "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+              },
+              {
+                "path": "data/moon_meeus47.json",
+                "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+              },
+              {
+                "path": "data/pluto_meeus37.json",
+                "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+              },
+              {
+                "path": "data/chiron_cheb.json",
+                "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+              },
+              {
+                "path": "data/fixed_stars.json",
+                "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+              },
+              {
+                "path": "data/constellations.json",
+                "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+              }
+            ]
+          },
+          "contract": {
+            "version": "atv-deterministic-contract/1",
+            "minUtcInstant": "1900-01-01T00:00:00.000Z",
+            "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+            "calendar": "proleptic-gregorian",
+            "inputResolutionMilliseconds": 1,
+            "leapSecondInput": "rejected",
+            "placidusAbsoluteLatitudeExclusive": 66,
+            "accuracy": "experimental-sampled",
+            "guaranteedLongitudeErrorDegrees": null,
+            "retrogradeStationTiming": "not-certified",
+            "productionPromotion": false
+          },
+          "temporal": {
+            "utcInstant": "1990-05-10T13:30:00.000Z",
+            "julianDayUt1Approx": 2448022.0625,
+            "dut1Seconds": null,
+            "timezoneMode": "iana",
+            "timezoneRules": "runtime-intl/unpinned",
+            "offsetSeconds": -10800,
+            "inputScale": "UTC",
+            "engineScale": "UT1-approximated-by-UTC",
+            "deltaTSeconds": 57.176683778234114
+          },
+          "accuracyStatus": "experimental",
+          "warnings": [
+            "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+            "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+            "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+            "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+          ]
+        }
+      },
+      "scope": {
+        "version": "atv-launch-ascendant-style-natal-factors/1.0.0",
+        "bodies": [],
+        "angles": [
+          "ascendant"
+        ],
+        "houseCusps": [],
+        "contextKeys": [
+          "occasion",
+          "wardrobe",
+          "comfort"
+        ]
+      },
+      "factors": {
+        "positions": [],
+        "angles": [
+          {
+            "angle": "ascendant",
+            "longitude": 102.2959408454617,
+            "sign": "cancer",
+            "degreeWithinSign": 12.2959408454617
+          }
+        ],
+        "houseCusps": []
+      },
+      "aspects": {
+        "algorithmVersion": "atv-major-aspects/1",
+        "policy": {
+          "id": "atv-launch-natal-selected-major-aspects",
+          "version": "1.0.0",
+          "aspects": [
+            {
+              "kind": "conjunction",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "sextile",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "square",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "trine",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "opposition",
+              "orbDegrees": 3
+            }
+          ]
+        },
+        "pairsEvaluated": 45,
+        "selection": "at-least-one-declared-body",
+        "aspects": [],
+        "motion": "not-evaluated",
+        "inputPrecision": "not-certified"
+      },
+      "contextReferences": [
+        "reported-occasion-1",
+        "reported-wardrobe-1",
+        "reported-wardrobe-2",
+        "reported-wardrobe-3",
+        "reported-wardrobe-4",
+        "reported-wardrobe-5",
+        "reported-comfort-1"
+      ],
+      "interpretation": "not-produced"
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "O escopo temático seleciona coordenadas e geometria; não comprova preferências, habilidades, reações ou hábitos.",
+      "Casas indisponíveis não são substituídas; ângulos calculados são preservados separadamente.",
+      "Relacionar estes fatores aos relatos e produzir a entrega específica exige método editorial e revisão próprios."
+    ],
+    "provenance": {
+      "calculation": "experimental-astrology",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "43c391ad064a4d8b38ba9d0b3d54e931e26656bf475f59488a0b519506f903d3",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000009",
+    "productId": "ascendant-style",
+    "inputDigest": "f089c608ba6d59c92106d0b68a0d9f8f5b024bc301b4073c60d7b84aceafb3fe",
+    "title": "Meu Estilo pelo Ascendente",
+    "summary": "A leitura parte de “Uma apresentação informal de um trabalho.”. A prioridade é experimentar uma apresentação para “Uma apresentação informal de um trabalho.” com o conforto declarado; os relatos e o resultado do experimento podem contrariar a hipótese simbólica.",
+    "sections": [
+      {
+        "id": "angle-ascendant",
+        "title": "Ascendente: hipótese e uso real",
+        "paragraphs": [
+          "Ascendente em Câncer, a 102.295941° de longitude tropical: a hipótese de apresentação e entrada é perceber o clima da situação e procurar algum ponto de familiaridade. É uma referência simbólica a testar, sem deduzir corpo, profissão ou resultado social.",
+          "Para a hipótese de entrada na situação, compare a impressão desejada com o retorno efetivamente recebido. A ocasião é “Uma apresentação informal de um trabalho.” e o critério real é “Quero me movimentar e sentar sem peças apertadas.”; a hipótese do Ascendente só participa se ajudar você a escolher entre peças que já possui."
+        ],
+        "evidenceIds": [
+          "natal-ascendant",
+          "reported-occasion-1",
+          "reported-wardrobe-1",
+          "reported-wardrobe-2",
+          "reported-wardrobe-3",
+          "reported-wardrobe-4",
+          "reported-wardrobe-5",
+          "reported-comfort-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "outfit-1",
+        "title": "Combinação 1: testar com o que você tem",
+        "paragraphs": [
+          "Peças: “Camisa azul” + “Calça preta” + “Tênis branco”. Para “Uma apresentação informal de um trabalho.”, use esta combinação como teste de apresentação, preservando “Quero me movimentar e sentar sem peças apertadas.”. São peças do seu inventário; o Ascendente não prescreve compra, gênero ou tipo de corpo.",
+          "Com “Camisa azul”, “Calça preta”, “Tênis branco”, faça um movimento que a ocasião exige, como sentar e caminhar. Observe se atende ao conforto que você pediu, “Quero me movimentar e sentar sem peças apertadas.”, e se a hipótese de entrada do Ascendente combina com a impressão que deseja experimentar; descarte a combinação se ela exigir tolerar desconforto."
+        ],
+        "evidenceIds": [
+          "natal-ascendant",
+          "reported-occasion-1",
+          "reported-comfort-1",
+          "reported-wardrobe-1",
+          "reported-wardrobe-3",
+          "reported-wardrobe-5"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "outfit-2",
+        "title": "Combinação 2: testar com o que você tem",
+        "paragraphs": [
+          "Peças: “Camisa azul” + “Saia verde” + “Tênis branco”. Para “Uma apresentação informal de um trabalho.”, use esta combinação como teste de apresentação, preservando “Quero me movimentar e sentar sem peças apertadas.”. São peças do seu inventário; o Ascendente não prescreve compra, gênero ou tipo de corpo.",
+          "Com “Camisa azul”, “Saia verde”, “Tênis branco”, faça um movimento que a ocasião exige, como sentar e caminhar. Observe se atende ao conforto que você pediu, “Quero me movimentar e sentar sem peças apertadas.”, e se a hipótese de entrada do Ascendente combina com a impressão que deseja experimentar; descarte a combinação se ela exigir tolerar desconforto."
+        ],
+        "evidenceIds": [
+          "natal-ascendant",
+          "reported-occasion-1",
+          "reported-comfort-1",
+          "reported-wardrobe-1",
+          "reported-wardrobe-4",
+          "reported-wardrobe-5"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "outfit-3",
+        "title": "Combinação 3: testar com o que você tem",
+        "paragraphs": [
+          "Peças: “Blusa branca” + “Calça preta” + “Tênis branco”. Para “Uma apresentação informal de um trabalho.”, use esta combinação como teste de apresentação, preservando “Quero me movimentar e sentar sem peças apertadas.”. São peças do seu inventário; o Ascendente não prescreve compra, gênero ou tipo de corpo.",
+          "Com “Blusa branca”, “Calça preta”, “Tênis branco”, faça um movimento que a ocasião exige, como sentar e caminhar. Observe se atende ao conforto que você pediu, “Quero me movimentar e sentar sem peças apertadas.”, e se a hipótese de entrada do Ascendente combina com a impressão que deseja experimentar; descarte a combinação se ela exigir tolerar desconforto."
+        ],
+        "evidenceIds": [
+          "natal-ascendant",
+          "reported-occasion-1",
+          "reported-comfort-1",
+          "reported-wardrobe-2",
+          "reported-wardrobe-3",
+          "reported-wardrobe-5"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "thematic-integration",
+        "title": "Síntese e experimento",
+        "paragraphs": [
+          "A entrada simbólica do Ascendente não define o corpo nem uma identidade visual obrigatória. A escolha junta a ocasião “Uma apresentação informal de um trabalho.”, o critério “Quero me movimentar e sentar sem peças apertadas.” e as peças realmente disponíveis; o teste de uso pode contrariar a hipótese astrológica. A prioridade prática é experimentar uma apresentação para “Uma apresentação informal de um trabalho.” com o conforto declarado.",
+          "Experimente uma das combinações completas do seu inventário antes de “Uma apresentação informal de um trabalho.”. Caminhe e sente por alguns minutos; escolha pela sensação de “Quero me movimentar e sentar sem peças apertadas.”, ajustando ou descartando sem comprar peças para obedecer ao mapa."
+        ],
+        "evidenceIds": [
+          "natal-ascendant",
+          "reported-occasion-1",
+          "reported-wardrobe-1",
+          "reported-wardrobe-2",
+          "reported-wardrobe-3",
+          "reported-wardrobe-4",
+          "reported-wardrobe-5",
+          "reported-comfort-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-angle-ascendant",
+        "sectionId": "angle-ascendant",
+        "rule": "actual-angle-in-context",
+        "evidenceIds": [
+          "natal-ascendant"
+        ],
+        "factors": {
+          "angle": "ascendant",
+          "longitude": 102.2959408454617
+        },
+        "interpretation": "Ascendente em Câncer, a 102.295941° de longitude tropical: a hipótese de apresentação e entrada é perceber o clima da situação e procurar algum ponto de familiaridade. É uma referência simbólica a testar, sem deduzir corpo, profissão ou resultado social."
+      },
+      {
+        "id": "claim-thematic-integration",
+        "sectionId": "thematic-integration",
+        "rule": "specific-thematic-integration",
+        "evidenceIds": [
+          "natal-ascendant",
+          "reported-occasion-1",
+          "reported-wardrobe-1",
+          "reported-wardrobe-2",
+          "reported-wardrobe-3",
+          "reported-wardrobe-4",
+          "reported-wardrobe-5",
+          "reported-comfort-1"
+        ],
+        "factors": {
+          "bodies": [],
+          "angles": [
+            "ascendant"
+          ],
+          "context": "Uma apresentação informal de um trabalho."
+        },
+        "interpretation": "A entrada simbólica do Ascendente não define o corpo nem uma identidade visual obrigatória. A escolha junta a ocasião “Uma apresentação informal de um trabalho.”, o critério “Quero me movimentar e sentar sem peças apertadas.” e as peças realmente disponíveis; o teste de uso pode contrariar a hipótese astrológica. A prioridade prática é experimentar uma apresentação para “Uma apresentação informal de um trabalho.” com o conforto declarado."
+      }
+    ],
+    "practicalAction": "Experimente uma das combinações completas do seu inventário antes de “Uma apresentação informal de um trabalho.”. Caminhe e sente por alguns minutos; escolha pela sensação de “Quero me movimentar e sentar sem peças apertadas.”, ajustando ou descartando sem comprar peças para obedecer ao mapa.",
+    "reflection": "Qual combinação ajuda você a chegar à ocasião com o conforto que pediu e com uma apresentação que reconhece como sua?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "O mapa não comprova preferências, capacidade profissional, hábitos ou reação emocional; o relato e o teste real têm prioridade.",
+      "Motor astrológico experimental. A bateria independente de precisão continua pendente; esta revisão não homologa precisão comercial."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "experimental-astrology",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-humanistic-modern/1.0.0:natal-styles",
+          "version": "atv-humanistic-modern/1.0.0",
+          "origin": "Cânone original local: funções humanistas, natalStyles e mecanismos de aspectos. Referências e limites de consulta em SOURCES_2026-10-08.md; não houve pesquisa no runtime."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "39e42319a632a166a07b98e5aaa3e3f61af6f8d9852e654b5115274dc55fd4e2",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "selected-natal-geometry",
+        "passed": true,
+        "detail": "Escopo, coordenadas, signos, ângulos e contatos conferidos sem inventar fatores."
+      },
+      {
+        "id": "function-specific-semantics",
+        "passed": true,
+        "detail": "Cada planeta usa a função e o mecanismo próprios, com contexto; trocar nomes ou preservar IDs não mantém a aprovação."
+      },
+      {
+        "id": "angle-specific-semantics",
+        "passed": true,
+        "detail": "Ângulo real altera a hipótese de entrada/direção, sem deduzir corpo ou profissão."
+      },
+      {
+        "id": "actual-aspect-semantic-relation",
+        "passed": true,
+        "detail": "A relação usa duas funções e o mecanismo do aspecto calculado, sem transformar aspecto em causa."
+      },
+      {
+        "id": "specific-thematic-integration",
+        "passed": true,
+        "detail": "A síntese tem contrato próprio e liga funções distintas aos relatos, à decisão e ao experimento."
+      },
+      {
+        "id": "complete-thematic-evidence",
+        "passed": true,
+        "detail": "Os relatos e fatores disponíveis permitem todas as partes do método temático."
+      },
+      {
+        "id": "contextual-contract-delivery",
+        "passed": true,
+        "detail": "Situações, acordo, observação, oferta ou três combinações usam somente o contexto declarado."
+      }
+    ],
+    "reasons": [],
+    "digest": "39e42319a632a166a07b98e5aaa3e3f61af6f8d9852e654b5115274dc55fd4e2",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "experimental-astrology",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

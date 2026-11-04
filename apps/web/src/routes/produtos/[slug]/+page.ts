@@ -3,6 +3,7 @@ import { productDefinitionForSlug } from '@atv/domain';
 import { customerOffers } from '$lib/data/product-copy';
 import { productDetails } from '$lib/data/product-details';
 import { SITE } from '$lib/data/site';
+import { launchProduct } from '$lib/data/launch-products';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ params }) => {
@@ -12,6 +13,7 @@ export const load: PageLoad = ({ params }) => {
 	if (!product) error(404, 'Produto não encontrado.');
 	return {
 		product,
+		launch: launchProduct(product.id),
 		details: productDetails[product.id as keyof typeof productDetails],
 		seo: {
 			title: `${product.name} — ${SITE.name}`,

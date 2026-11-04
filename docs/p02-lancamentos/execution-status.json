@@ -1,0 +1,45 @@
+{
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "front": "P02",
+  "date": "2026-11-04",
+  "worktree": "C:/ATVNA/.worktrees/p02-lancamentos-20261104",
+  "branch": "codex/p02-lancamentos-20261104",
+  "base": "52a759df453ba21ae40f322484ca332a70907d93",
+  "status": "IN_PROGRESS_LOCAL",
+  "approvedInstruction": "C:/ATVNA/docs/20-produto/programa-comercial-atvna/P02-lancamentos/PROMPT.md",
+  "budgetNewExpensesBrl": 0,
+  "catalog": {
+    "products": 11,
+    "availability": "PREPARING",
+    "regularPrice": null,
+    "cost": null
+  },
+  "validated": [
+    "Eleven product specifications and five owner SEO sources with historical provenance",
+    "26 public page/viewport renders plus home desktop/mobile and keyboard navigation",
+    "44 private intake/receipt renders plus keyboard, consent and adult checks",
+    "57 domain tests passing; 12 factual calculation tests passing for eleven methods",
+    "71 API tests passing across preparation, calculation and reading; SDK/database mocked, identity/input/origin helpers real",
+    "18 persistence and migration checks using PGlite; hosted database not changed",
+    "Eleven E2 candidates and synthetic full-delivery packages; integrated E1/E2/wedding tests61 PASS; samples16 PASS",
+    "E3 real calculation/editorial/PostgreSQL owner reopening2 PASS; feedback SQL5 and feedback API31 PASS"
+  ],
+  "evidence": [
+    "C:/ATVNA/tmp/p02-design-20261104",
+    "C:/ATVNA/tmp/p02-domain-check.log"
+  ],
+  "inProgress": [
+    "Reader QA for all eleven products and feedback UI",
+    "Integrate published P01 main2c4e3c3, then final check/lint/build and CI",
+    "Hosted schema preflight read-only"
+  ],
+  "externalDependencies": [
+    "Approved regular prices, measured costs and financial policy",
+    "Authenticated Hotmart integration and per-product offer mapping",
+    "P03/P04/P06 validated public destinations",
+    "Separate real owner acceptance E5"
+  ],
+  "hostedRelease": null,
+  "paidPurchaseTests": [],
+  "next": "Complete integrated local validation and reviewed hosted publication with commercial gates closed."
+}

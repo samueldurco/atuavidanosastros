@@ -1,5 +1,6 @@
 import { productCatalog, retiredTarotProducts, type UniverseSlug } from './catalog.ts';
 import { tarotMethodFor } from './tarot-methods.ts';
+import { isLaunchProductId } from './launches.ts';
 
 export const WORKFLOW_VERSION = 'atv-workflow/1.0.0';
 export type WorkflowKind = 'natal' | 'cycles' | 'relationship' | 'tarot' | 'purpose' | 'dream';
@@ -7,7 +8,9 @@ const kinds: Record<UniverseSlug, WorkflowKind> = {
   'meu-ceu': 'natal', 'ciclos-tempo': 'cycles', 'amor-relacoes': 'relationship',
   'tarot-arcanos': 'tarot', 'proposito-prosperidade': 'purpose', 'sonhos-simbolos': 'dream'
 };
-export const workflows = productCatalog.filter((p) => p.universe !== 'global').map((p) => ({
+// P02 has its own single-person/intake schemas. Catalog inclusion must not route
+// these IDs into legacy relationship, calculation, or private-reading adapters.
+export const workflows = productCatalog.filter((p) => p.universe !== 'global' && !isLaunchProductId(p.id)).map((p) => ({
   ...p, kind: p.id === 'career-forecast-30d' ? 'cycles' as const : kinds[p.universe as UniverseSlug], version: WORKFLOW_VERSION,
   // All are release-gated; catalog preparation does not authorize processing or sale.
   release: 'blocked' as const

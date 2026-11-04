@@ -7,6 +7,7 @@
 	import { homeArticleArt, homeUniverseArt } from '$lib/home-art';
 	import FreeToolsCollection from '$lib/components/free-tools/FreeToolsCollection.svelte';
 	import HomeReadings from '$lib/components/home/HomeReadings.svelte';
+	import LaunchHighlights from '$lib/components/home/LaunchHighlights.svelte';
 	import ReadingSample from '$lib/components/home/ReadingSample.svelte';
 	import ShopHomeShowcase from '$lib/components/home/ShopHomeShowcase.svelte';
 	import '$lib/styles/home-approved.css';
@@ -143,11 +144,12 @@
 			</p>
 		</div>
 	</section>
+	<LaunchHighlights />
 	<section class="home-section universe-section" id="universos" aria-labelledby="universes-heading">
 		<div class="home-wrap">
 			<header class="home-section-head">
 				<div>
-					<p class="eyebrow">05 / Seis universos</p>
+					<p class="eyebrow">06 / Seis universos</p>
 					<h2 id="universes-heading">Encontre o seu <em>assunto.</em></h2>
 				</div>
 				<p>Do seu céu aos símbolos dos sonhos, encontre um lugar para a sua curiosidade.</p>
@@ -179,7 +181,7 @@
 		<div class="home-wrap">
 			<header class="home-section-head">
 				<div>
-					<p class="eyebrow">06 / Revista · em destaque</p>
+					<p class="eyebrow">07 / Revista · em destaque</p>
 					<h2 id="magazine-heading">Uma pausa <em>para ler.</em></h2>
 				</div>
 				<div>
@@ -223,7 +225,7 @@
 		<div class="home-wrap">
 			<header class="home-section-head">
 				<div>
-					<p class="eyebrow">07 / Loja dos Signos</p>
+					<p class="eyebrow">08 / Loja dos Signos</p>
 					<h2 id="shop-heading">O seu universo,<br /><em>perto de você.</em></h2>
 				</div>
 				<p>Artes dos signos em roupas, objetos e pequenos companheiros do cotidiano.</p>

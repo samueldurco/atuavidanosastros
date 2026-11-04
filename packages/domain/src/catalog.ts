@@ -1,4 +1,5 @@
 import { tarotMethods } from "./tarot-methods.ts";
+import { launchProductDefinitions, launchProductIds } from "./launches.ts";
 
 export const universes = [
   "meu-ceu",
@@ -107,6 +108,7 @@ const tarotOfferPresentation: Record<string, { slug: string; name: string }> = {
 
 /** Stable execution IDs include historical and free experiences; use productOffers for discovery. */
 export const productCatalog: readonly ProductDefinition[] = [
+  ...launchProductDefinitions,
   {
     id: "birth-chart",
     slug: "mapa-astral-completo",
@@ -347,6 +349,7 @@ export const offeredProductIds = [
   "dream-reading",
   "dream-dossier",
   "dream-atlas",
+  ...launchProductIds,
 ] as const;
 
 export type OfferedProductId = (typeof offeredProductIds)[number];

@@ -1,0 +1,1115 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "hidden-talent-map",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 15.083199999999124,
+      "composition": 9.813700000000608,
+      "review": 16.294599999999264,
+      "total": 41.191499999998996
+    },
+    "jsonBytes": {
+      "input": 566,
+      "calculation": 14909,
+      "reading": 20395,
+      "review": 3240
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "hidden-talent-map",
+    "birth": {
+      "localDateTime": "1990-05-10T10:30:00",
+      "utcInstant": "1990-05-10T13:30:00Z",
+      "timezone": "America/Sao_Paulo",
+      "latitude": -23.55,
+      "longitude": -46.63,
+      "locationSource": "synthetic/local-example"
+    },
+    "answers": {
+      "favors": [
+        "Uma pessoa pediu ajuda para organizar uma agenda de tarefas.",
+        "Outra pessoa pediu que eu organizasse uma planilha de próximos passos."
+      ],
+      "resources": "Tenho uma planilha simples e duas horas disponíveis nesta semana."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000008",
+    "productId": "hidden-talent-map",
+    "inputDigest": "fd8d9d99d26426f08a27f9cc5d40199825f998ee3681a65432fbf9d40041c3ac",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-birth",
+        "kind": "reported",
+        "display": "{\"latitude\":-23.55,\"localDateTime\":\"1990-05-10T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"1990-05-10T13:30:00Z\"}",
+        "source": "input.birth"
+      },
+      {
+        "id": "reported-favors-1",
+        "kind": "reported",
+        "display": "Uma pessoa pediu ajuda para organizar uma agenda de tarefas.",
+        "source": "input.answers.favors[0]"
+      },
+      {
+        "id": "reported-favors-2",
+        "kind": "reported",
+        "display": "Outra pessoa pediu que eu organizasse uma planilha de próximos passos.",
+        "source": "input.answers.favors[1]"
+      },
+      {
+        "id": "reported-resources-1",
+        "kind": "reported",
+        "display": "Tenho uma planilha simples e duas horas disponíveis nesta semana.",
+        "source": "input.answers.resources"
+      },
+      {
+        "id": "natal-sun",
+        "kind": "calculated",
+        "display": "sun: longitude tropical 49.630765°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-mercury",
+        "kind": "calculated",
+        "display": "mercury: longitude tropical 39.469676°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-venus",
+        "kind": "calculated",
+        "display": "venus: longitude tropical 7.207105°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-mars",
+        "kind": "calculated",
+        "display": "mars: longitude tropical 344.662356°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-jupiter",
+        "kind": "calculated",
+        "display": "jupiter: longitude tropical 98.623276°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-saturn",
+        "kind": "calculated",
+        "display": "saturn: longitude tropical 295.313503°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-midheaven",
+        "kind": "calculated",
+        "display": "midheaven: longitude tropical 25.843624°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-house-2",
+        "kind": "calculated",
+        "display": "Cúspide da casa 2: longitude tropical 136.780096°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-house-6",
+        "kind": "calculated",
+        "display": "Cúspide da casa 6: longitude tropical 257.937556°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-house-10",
+        "kind": "calculated",
+        "display": "Cúspide da casa 10: longitude tropical 25.843624°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-1",
+        "kind": "calculated",
+        "display": "moon sextile saturn; orbe 2.492754°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-2",
+        "kind": "calculated",
+        "display": "mercury sextile jupiter; orbe 0.846399°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-3",
+        "kind": "calculated",
+        "display": "mercury trine uranus; orbe 0.172556°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-4",
+        "kind": "calculated",
+        "display": "venus square jupiter; orbe 1.416171°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-5",
+        "kind": "calculated",
+        "display": "venus square uranus; orbe 2.090014°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-6",
+        "kind": "calculated",
+        "display": "mars sextile neptune; orbe 0.242239°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-7",
+        "kind": "calculated",
+        "display": "mars trine pluto; orbe 1.642745°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-8",
+        "kind": "calculated",
+        "display": "jupiter opposition uranus; orbe 0.673843°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-hidden-talent-natal-factors/1.0.0"
+      }
+    ],
+    "data": {
+      "method": "atv-launch-hidden-talent-natal-factors/1.0.0",
+      "natal": {
+        "input": {
+          "localDateTime": "1990-05-10T10:30:00",
+          "utcInstant": "1990-05-10T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example"
+        },
+        "positions": [
+          {
+            "body": "sun",
+            "longitude": 49.630765489505,
+            "latitude": -0.00012413843431320973,
+            "distanceAu": 1.0097848031952548,
+            "retrograde": false
+          },
+          {
+            "body": "moon",
+            "longitude": 237.8062568542146,
+            "latitude": -4.780080153647267,
+            "distanceAu": 0.002716142274168556,
+            "retrograde": false
+          },
+          {
+            "body": "mercury",
+            "longitude": 39.46967553343799,
+            "latitude": -1.3799830662189247,
+            "distanceAu": 0.5674396458007673,
+            "retrograde": true
+          },
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false
+          },
+          {
+            "body": "jupiter",
+            "longitude": 98.62327624297204,
+            "latitude": 0.13566385836016723,
+            "distanceAu": 5.8037664917108716,
+            "retrograde": false
+          },
+          {
+            "body": "saturn",
+            "longitude": 295.3135027258837,
+            "latitude": 0.1607030417484806,
+            "distanceAu": 9.559133099774483,
+            "retrograde": true
+          },
+          {
+            "body": "uranus",
+            "longitude": 279.2971192221684,
+            "latitude": -0.31293871077310864,
+            "distanceAu": 18.73563526420331,
+            "retrograde": true
+          },
+          {
+            "body": "neptune",
+            "longitude": 284.42011654569893,
+            "latitude": 0.871239761390012,
+            "distanceAu": 29.61626878865766,
+            "retrograde": true
+          },
+          {
+            "body": "pluto",
+            "longitude": 226.305100605131,
+            "latitude": 16.000063364231448,
+            "distanceAu": 28.687932876024348,
+            "retrograde": true
+          }
+        ],
+        "houses": {
+          "system": "placidus",
+          "ascendant": 102.2959408454617,
+          "midheaven": 25.843624131358354,
+          "cusps": [
+            102.2959408454617,
+            136.78009641808518,
+            172.97985011902506,
+            205.8436241313583,
+            233.52530577364917,
+            257.93755608311426,
+            282.2959408454617,
+            316.7800964180851,
+            352.97985011902506,
+            25.843624131358354,
+            53.525305773649166,
+            77.93755608311432
+          ],
+          "status": "ok"
+        },
+        "provenance": {
+          "provider": "caelus",
+          "providerVersion": "0.24.1",
+          "algorithmVersion": "atv-caelus-adapter-v3",
+          "zodiac": "tropical",
+          "houseSystem": "placidus",
+          "calculatedAt": "2026-11-04T11:10:44.520Z",
+          "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+          "dataManifest": {
+            "provider": "caelus",
+            "version": "0.24.1",
+            "tier": "embedded",
+            "files": [
+              {
+                "path": "src/data-embedded.js",
+                "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+              },
+              {
+                "path": "data/vsop87d_mercury.embedded.json",
+                "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+              },
+              {
+                "path": "data/vsop87d_venus.embedded.json",
+                "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+              },
+              {
+                "path": "data/vsop87d_earth.embedded.json",
+                "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+              },
+              {
+                "path": "data/vsop87d_mars.embedded.json",
+                "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+              },
+              {
+                "path": "data/vsop87d_jupiter.embedded.json",
+                "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+              },
+              {
+                "path": "data/vsop87d_saturn.embedded.json",
+                "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+              },
+              {
+                "path": "data/vsop87d_uranus.embedded.json",
+                "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+              },
+              {
+                "path": "data/vsop87d_neptune.embedded.json",
+                "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+              },
+              {
+                "path": "data/nutation_iau1980.json",
+                "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+              },
+              {
+                "path": "data/moon_meeus47.json",
+                "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+              },
+              {
+                "path": "data/pluto_meeus37.json",
+                "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+              },
+              {
+                "path": "data/chiron_cheb.json",
+                "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+              },
+              {
+                "path": "data/fixed_stars.json",
+                "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+              },
+              {
+                "path": "data/constellations.json",
+                "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+              }
+            ]
+          },
+          "contract": {
+            "version": "atv-deterministic-contract/1",
+            "minUtcInstant": "1900-01-01T00:00:00.000Z",
+            "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+            "calendar": "proleptic-gregorian",
+            "inputResolutionMilliseconds": 1,
+            "leapSecondInput": "rejected",
+            "placidusAbsoluteLatitudeExclusive": 66,
+            "accuracy": "experimental-sampled",
+            "guaranteedLongitudeErrorDegrees": null,
+            "retrogradeStationTiming": "not-certified",
+            "productionPromotion": false
+          },
+          "temporal": {
+            "utcInstant": "1990-05-10T13:30:00.000Z",
+            "julianDayUt1Approx": 2448022.0625,
+            "dut1Seconds": null,
+            "timezoneMode": "iana",
+            "timezoneRules": "runtime-intl/unpinned",
+            "offsetSeconds": -10800,
+            "inputScale": "UTC",
+            "engineScale": "UT1-approximated-by-UTC",
+            "deltaTSeconds": 57.176683778234114
+          },
+          "accuracyStatus": "experimental",
+          "warnings": [
+            "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+            "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+            "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+            "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+          ]
+        }
+      },
+      "scope": {
+        "version": "atv-launch-hidden-talent-natal-factors/1.0.0",
+        "bodies": [
+          "sun",
+          "mercury",
+          "venus",
+          "mars",
+          "jupiter",
+          "saturn"
+        ],
+        "angles": [
+          "midheaven"
+        ],
+        "houseCusps": [
+          2,
+          6,
+          10
+        ],
+        "contextKeys": [
+          "favors",
+          "resources"
+        ]
+      },
+      "factors": {
+        "positions": [
+          {
+            "body": "sun",
+            "longitude": 49.630765489505,
+            "latitude": -0.00012413843431320973,
+            "distanceAu": 1.0097848031952548,
+            "retrograde": false,
+            "sign": "taurus",
+            "degreeWithinSign": 19.630765489505002
+          },
+          {
+            "body": "mercury",
+            "longitude": 39.46967553343799,
+            "latitude": -1.3799830662189247,
+            "distanceAu": 0.5674396458007673,
+            "retrograde": true,
+            "sign": "taurus",
+            "degreeWithinSign": 9.469675533437993
+          },
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false,
+            "sign": "aries",
+            "degreeWithinSign": 7.2071048674221485
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false,
+            "sign": "pisces",
+            "degreeWithinSign": 14.662356041529392
+          },
+          {
+            "body": "jupiter",
+            "longitude": 98.62327624297204,
+            "latitude": 0.13566385836016723,
+            "distanceAu": 5.8037664917108716,
+            "retrograde": false,
+            "sign": "cancer",
+            "degreeWithinSign": 8.62327624297204
+          },
+          {
+            "body": "saturn",
+            "longitude": 295.3135027258837,
+            "latitude": 0.1607030417484806,
+            "distanceAu": 9.559133099774483,
+            "retrograde": true,
+            "sign": "capricorn",
+            "degreeWithinSign": 25.313502725883723
+          }
+        ],
+        "angles": [
+          {
+            "angle": "midheaven",
+            "longitude": 25.843624131358354,
+            "sign": "aries",
+            "degreeWithinSign": 25.843624131358354
+          }
+        ],
+        "houseCusps": [
+          {
+            "house": 2,
+            "longitude": 136.78009641808518,
+            "sign": "leo",
+            "degreeWithinSign": 16.78009641808518
+          },
+          {
+            "house": 6,
+            "longitude": 257.93755608311426,
+            "sign": "sagittarius",
+            "degreeWithinSign": 17.93755608311426
+          },
+          {
+            "house": 10,
+            "longitude": 25.843624131358354,
+            "sign": "aries",
+            "degreeWithinSign": 25.843624131358354
+          }
+        ]
+      },
+      "aspects": {
+        "algorithmVersion": "atv-major-aspects/1",
+        "policy": {
+          "id": "atv-launch-natal-selected-major-aspects",
+          "version": "1.0.0",
+          "aspects": [
+            {
+              "kind": "conjunction",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "sextile",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "square",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "trine",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "opposition",
+              "orbDegrees": 3
+            }
+          ]
+        },
+        "pairsEvaluated": 45,
+        "selection": "at-least-one-declared-body",
+        "aspects": [
+          {
+            "first": "moon",
+            "second": "saturn",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 57.50724587166911,
+            "orbDegrees": 2.492754128330887
+          },
+          {
+            "first": "mercury",
+            "second": "jupiter",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 59.15360070953405,
+            "orbDegrees": 0.8463992904659534
+          },
+          {
+            "first": "mercury",
+            "second": "uranus",
+            "kind": "trine",
+            "exactAngleDegrees": 120,
+            "separationDegrees": 120.17255631126957,
+            "orbDegrees": 0.17255631126957383
+          },
+          {
+            "first": "venus",
+            "second": "jupiter",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 91.4161713755499,
+            "orbDegrees": 1.4161713755498937
+          },
+          {
+            "first": "venus",
+            "second": "uranus",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 87.90998564525376,
+            "orbDegrees": 2.090014354746245
+          },
+          {
+            "first": "mars",
+            "second": "neptune",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 60.24223949583046,
+            "orbDegrees": 0.24223949583046078
+          },
+          {
+            "first": "mars",
+            "second": "pluto",
+            "kind": "trine",
+            "exactAngleDegrees": 120,
+            "separationDegrees": 118.35725543639839,
+            "orbDegrees": 1.6427445636016103
+          },
+          {
+            "first": "jupiter",
+            "second": "uranus",
+            "kind": "opposition",
+            "exactAngleDegrees": 180,
+            "separationDegrees": 179.32615702080363,
+            "orbDegrees": 0.6738429791963654
+          }
+        ],
+        "motion": "not-evaluated",
+        "inputPrecision": "not-certified"
+      },
+      "contextReferences": [
+        "reported-favors-1",
+        "reported-favors-2",
+        "reported-resources-1"
+      ],
+      "interpretation": "not-produced"
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "O escopo temático seleciona coordenadas e geometria; não comprova preferências, habilidades, reações ou hábitos.",
+      "Casas indisponíveis não são substituídas; ângulos calculados são preservados separadamente.",
+      "Relacionar estes fatores aos relatos e produzir a entrega específica exige método editorial e revisão próprios."
+    ],
+    "provenance": {
+      "calculation": "experimental-astrology",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "3311b5ca228b48ab6d471a4081bbb52a9736f23e435a03caa5ea8cbdaf0d364b",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000008",
+    "productId": "hidden-talent-map",
+    "inputDigest": "fd8d9d99d26426f08a27f9cc5d40199825f998ee3681a65432fbf9d40041c3ac",
+    "title": "Mapa do Talento Oculto",
+    "summary": "A leitura parte de “Uma pessoa pediu ajuda para organizar uma agenda de tarefas. / Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. A prioridade é testar o padrão relatado de organização em uma oferta pequena; os relatos e o resultado do experimento podem contrariar a hipótese simbólica.",
+    "sections": [
+      {
+        "id": "function-sun",
+        "title": "Sol: uma função em contexto",
+        "paragraphs": [
+          "Sol em Touro, a 49.630765° de longitude tropical, é usado aqui para observar autoria e participação. A hipótese própria dessa função é construir algo que possa reconhecer, usar e manter ao longo do tempo; o risco a examinar é manter um acordo só porque ele já se tornou familiar. Um ajuste possível é verificar se a continuidade ainda atende à necessidade que a justificou. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe o que você escolhe assumir como participação própria, em vez de fazer apenas para corresponder a uma expectativa. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-sun",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "function-mercury",
+        "title": "Mercúrio: uma função em contexto",
+        "paragraphs": [
+          "Mercúrio em Touro, a 39.469676° de longitude tropical, é usado aqui para observar análise e comunicação. A hipótese própria dessa função é comparar a ideia com a experiência e procurar uma aplicação concreta; o risco a examinar é manter um acordo só porque ele já se tornou familiar. Um ajuste possível é verificar se a continuidade ainda atende à necessidade que a justificou. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe como você formula a informação, qual pergunta esclarece uma dúvida e se o que disse foi compreendido. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-mercury",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "function-venus",
+        "title": "Vênus: uma função em contexto",
+        "paragraphs": [
+          "Vênus em Áries, a 7.207105° de longitude tropical, é usado aqui para observar valores e cooperação. A hipótese própria dessa função é demonstrar interesse de forma direta, preservando a iniciativa de cada pessoa; o risco a examinar é tratar uma demora como impedimento e agir antes de ouvir a resposta. Um ajuste possível é distinguir o que precisa começar agora do que exige uma combinação prévia. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe o que você valoriza, o que dá vontade de aproximar e onde aceita um acordo que já não corresponde à sua preferência. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-venus",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "function-mars",
+        "title": "Marte: uma função em contexto",
+        "paragraphs": [
+          "Marte em Peixes, a 344.662356° de longitude tropical, é usado aqui para observar iniciativa e defesa de limites. A hipótese própria dessa função é responder ao sentido da situação e adaptar o esforço conforme ela muda; o risco a examinar é concordar com algo sem distinguir sua vontade da expectativa percebida. Um ajuste possível é nomear o que deseja e confirmar o acordo em termos que as duas pessoas entendem. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe como começa uma ação, pede algo ou interrompe o que não quer; iniciativa e respeito a um limite precisam caber na mesma situação. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-mars",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "function-jupiter",
+        "title": "Júpiter: uma função em contexto",
+        "paragraphs": [
+          "Júpiter em Câncer, a 98.623276° de longitude tropical, é usado aqui para observar expansão e aprendizagem. A hipótese própria dessa função é dar sentido à experiência por vínculos, memória e participação no cuidado; o risco a examinar é assumir uma necessidade alheia sem perguntar que ajuda foi desejada. Um ajuste possível é combinar cuidado e disponibilidade sem substituir a decisão da outra pessoa. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe uma oportunidade real de aprender ou ampliar o que já faz, distinguindo curiosidade de prometer mais do que consegue experimentar. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-jupiter",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "function-saturn",
+        "title": "Saturno: uma função em contexto",
+        "paragraphs": [
+          "Saturno em Capricórnio, a 295.313503° de longitude tropical, é usado aqui para observar responsabilidade e continuidade. A hipótese própria dessa função é organizar esforço em etapas e acompanhar o resultado; o risco a examinar é medir seu valor apenas pelo que consegue resolver ou suportar. Um ajuste possível é separar uma responsabilidade assumida da obrigação de resolver tudo sozinho. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe qual responsabilidade consegue sustentar no tempo e qual compromisso precisa de um limite menor para continuar viável. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-saturn",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "angle-midheaven",
+        "title": "Meio do Céu: hipótese e uso real",
+        "paragraphs": [
+          "Meio do Céu em Áries, a 25.843624° de longitude tropical: a hipótese de direção visível do trabalho é participar por iniciativa própria e descobrir o que consegue começar. É uma referência simbólica a testar, sem deduzir corpo, profissão ou resultado social.",
+          "Para a hipótese de direção visível, compare a impressão desejada com o retorno efetivamente recebido. Os favores relatados foram “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Eles são os indícios de uso real; o mapa apenas propõe funções para examinar o modo de fazer."
+        ],
+        "evidenceIds": [
+          "natal-midheaven",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "calculated-relation",
+        "title": "Duas funções em relação",
+        "paragraphs": [
+          "Lua em sextil com Saturno (orbe 2.493°): a cooperação entre as funções depende de uma atividade deliberada; a oportunidade simbólica não substitui a iniciativa. A relação liga segurança e pertencimento a responsabilidade e continuidade; é uma hipótese de observação, não a causa comprovada do comportamento.",
+          "No seu contexto “Uma pessoa pediu ajuda para organizar uma agenda de tarefas. / Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”, observe onde uma necessidade reduz o espaço da outra e experimente uma mudança pequena. O ajuste é comparar o efeito real, não tentar eliminar um planeta, um signo ou uma parte de si."
+        ],
+        "evidenceIds": [
+          "natal-selected-aspect-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "small-offer",
+        "title": "Oferta experimental e retorno observável",
+        "paragraphs": [
+          "Hipótese de padrão comum: organização. Primeiro pedido: “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.”. Segundo pedido: “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”. Verifique com quem pediu se o que parece comum foi de fato útil; se a resposta divergir, revise o padrão antes de ampliar a oferta.",
+          "Proposta para teste: organizar uma etapa pequena e entregar uma lista de próximos passos. Recurso disponível: “Tenho uma planilha simples e duas horas disponíveis nesta semana.”. Limite a uma pessoa e uma entrega; registre tempo gasto, dificuldade e retorno concreto. Um teste pode mostrar interesse, necessidade de prática ou ausência de demanda; nenhum desses resultados é uma previsão de renda."
+        ],
+        "evidenceIds": [
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1",
+          "natal-mercury",
+          "natal-saturn"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "thematic-integration",
+        "title": "Síntese e experimento",
+        "paragraphs": [
+          "O padrão de organização vem da relação entre “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”, não de um planeta renomeado como profissão. Mercúrio pode ajudar a examinar como explicar o trabalho; Saturno, como sustentar um escopo. A oferta experimental é organizar uma etapa pequena e entregar uma lista de próximos passos, usando somente “Tenho uma planilha simples e duas horas disponíveis nesta semana.”. A prioridade prática é testar o padrão relatado de organização em uma oferta pequena.",
+          "Com o recurso que você declarou, “Tenho uma planilha simples e duas horas disponíveis nesta semana.”, convide uma pessoa a testar organizar uma etapa pequena e entregar uma lista de próximos passos. Combine escopo e prazo possíveis, sem fixar preço ou prometer renda; peça que descreva uma coisa útil e uma que precisa mudar."
+        ],
+        "evidenceIds": [
+          "natal-sun",
+          "natal-mercury",
+          "natal-venus",
+          "natal-mars",
+          "natal-jupiter",
+          "natal-saturn",
+          "natal-midheaven",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-function-sun",
+        "sectionId": "function-sun",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-sun"
+        ],
+        "factors": {
+          "body": "sun",
+          "longitude": 49.630765489505,
+          "styleKey": "aim"
+        },
+        "interpretation": "Sol em Touro, a 49.630765° de longitude tropical, é usado aqui para observar autoria e participação. A hipótese própria dessa função é construir algo que possa reconhecer, usar e manter ao longo do tempo; o risco a examinar é manter um acordo só porque ele já se tornou familiar. Um ajuste possível é verificar se a continuidade ainda atende à necessidade que a justificou. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-function-mercury",
+        "sectionId": "function-mercury",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-mercury"
+        ],
+        "factors": {
+          "body": "mercury",
+          "longitude": 39.46967553343799,
+          "styleKey": "thought"
+        },
+        "interpretation": "Mercúrio em Touro, a 39.469676° de longitude tropical, é usado aqui para observar análise e comunicação. A hipótese própria dessa função é comparar a ideia com a experiência e procurar uma aplicação concreta; o risco a examinar é manter um acordo só porque ele já se tornou familiar. Um ajuste possível é verificar se a continuidade ainda atende à necessidade que a justificou. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-function-venus",
+        "sectionId": "function-venus",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-venus"
+        ],
+        "factors": {
+          "body": "venus",
+          "longitude": 7.2071048674221485,
+          "styleKey": "affection"
+        },
+        "interpretation": "Vênus em Áries, a 7.207105° de longitude tropical, é usado aqui para observar valores e cooperação. A hipótese própria dessa função é demonstrar interesse de forma direta, preservando a iniciativa de cada pessoa; o risco a examinar é tratar uma demora como impedimento e agir antes de ouvir a resposta. Um ajuste possível é distinguir o que precisa começar agora do que exige uma combinação prévia. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-function-mars",
+        "sectionId": "function-mars",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-mars"
+        ],
+        "factors": {
+          "body": "mars",
+          "longitude": 344.6623560415294,
+          "styleKey": "action"
+        },
+        "interpretation": "Marte em Peixes, a 344.662356° de longitude tropical, é usado aqui para observar iniciativa e defesa de limites. A hipótese própria dessa função é responder ao sentido da situação e adaptar o esforço conforme ela muda; o risco a examinar é concordar com algo sem distinguir sua vontade da expectativa percebida. Um ajuste possível é nomear o que deseja e confirmar o acordo em termos que as duas pessoas entendem. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-function-jupiter",
+        "sectionId": "function-jupiter",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-jupiter"
+        ],
+        "factors": {
+          "body": "jupiter",
+          "longitude": 98.62327624297204,
+          "styleKey": "aim"
+        },
+        "interpretation": "Júpiter em Câncer, a 98.623276° de longitude tropical, é usado aqui para observar expansão e aprendizagem. A hipótese própria dessa função é dar sentido à experiência por vínculos, memória e participação no cuidado; o risco a examinar é assumir uma necessidade alheia sem perguntar que ajuda foi desejada. Um ajuste possível é combinar cuidado e disponibilidade sem substituir a decisão da outra pessoa. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-function-saturn",
+        "sectionId": "function-saturn",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-saturn"
+        ],
+        "factors": {
+          "body": "saturn",
+          "longitude": 295.3135027258837,
+          "styleKey": "action"
+        },
+        "interpretation": "Saturno em Capricórnio, a 295.313503° de longitude tropical, é usado aqui para observar responsabilidade e continuidade. A hipótese própria dessa função é organizar esforço em etapas e acompanhar o resultado; o risco a examinar é medir seu valor apenas pelo que consegue resolver ou suportar. Um ajuste possível é separar uma responsabilidade assumida da obrigação de resolver tudo sozinho. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-angle-midheaven",
+        "sectionId": "angle-midheaven",
+        "rule": "actual-angle-in-context",
+        "evidenceIds": [
+          "natal-midheaven"
+        ],
+        "factors": {
+          "angle": "midheaven",
+          "longitude": 25.843624131358354
+        },
+        "interpretation": "Meio do Céu em Áries, a 25.843624° de longitude tropical: a hipótese de direção visível do trabalho é participar por iniciativa própria e descobrir o que consegue começar. É uma referência simbólica a testar, sem deduzir corpo, profissão ou resultado social."
+      },
+      {
+        "id": "claim-calculated-relation",
+        "sectionId": "calculated-relation",
+        "rule": "actual-aspect-mechanism",
+        "evidenceIds": [
+          "natal-selected-aspect-1"
+        ],
+        "factors": {
+          "first": "moon",
+          "second": "saturn",
+          "aspect": "sextile",
+          "orbDegrees": 2.492754128330887
+        },
+        "interpretation": "Lua em sextil com Saturno (orbe 2.493°): a cooperação entre as funções depende de uma atividade deliberada; a oportunidade simbólica não substitui a iniciativa. A relação liga segurança e pertencimento a responsabilidade e continuidade; é uma hipótese de observação, não a causa comprovada do comportamento."
+      },
+      {
+        "id": "claim-thematic-integration",
+        "sectionId": "thematic-integration",
+        "rule": "specific-thematic-integration",
+        "evidenceIds": [
+          "natal-sun",
+          "natal-mercury",
+          "natal-venus",
+          "natal-mars",
+          "natal-jupiter",
+          "natal-saturn",
+          "natal-midheaven",
+          "reported-favors-1",
+          "reported-favors-2",
+          "reported-resources-1"
+        ],
+        "factors": {
+          "bodies": [
+            "sun",
+            "mercury",
+            "venus",
+            "mars",
+            "jupiter",
+            "saturn"
+          ],
+          "angles": [
+            "midheaven"
+          ],
+          "context": "Uma pessoa pediu ajuda para organizar uma agenda de tarefas. / Outra pessoa pediu que eu organizasse uma planilha de próximos passos."
+        },
+        "interpretation": "O padrão de organização vem da relação entre “Uma pessoa pediu ajuda para organizar uma agenda de tarefas.” e “Outra pessoa pediu que eu organizasse uma planilha de próximos passos.”, não de um planeta renomeado como profissão. Mercúrio pode ajudar a examinar como explicar o trabalho; Saturno, como sustentar um escopo. A oferta experimental é organizar uma etapa pequena e entregar uma lista de próximos passos, usando somente “Tenho uma planilha simples e duas horas disponíveis nesta semana.”. A prioridade prática é testar o padrão relatado de organização em uma oferta pequena."
+      }
+    ],
+    "practicalAction": "Com o recurso que você declarou, “Tenho uma planilha simples e duas horas disponíveis nesta semana.”, convide uma pessoa a testar organizar uma etapa pequena e entregar uma lista de próximos passos. Combine escopo e prazo possíveis, sem fixar preço ou prometer renda; peça que descreva uma coisa útil e uma que precisa mudar.",
+    "reflection": "O que as duas pessoas pediram que você fizesse, e qual resultado pequeno você consegue demonstrar sem comprar recursos novos?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "O mapa não comprova preferências, capacidade profissional, hábitos ou reação emocional; o relato e o teste real têm prioridade.",
+      "Motor astrológico experimental. A bateria independente de precisão continua pendente; esta revisão não homologa precisão comercial."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "experimental-astrology",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-humanistic-modern/1.0.0:natal-styles",
+          "version": "atv-humanistic-modern/1.0.0",
+          "origin": "Cânone original local: funções humanistas, natalStyles e mecanismos de aspectos. Referências e limites de consulta em SOURCES_2026-10-08.md; não houve pesquisa no runtime."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "f3381f978332905fab6ad73f1e7949ef6510eb14049b6db3b3194dee2071f09f",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "selected-natal-geometry",
+        "passed": true,
+        "detail": "Escopo, coordenadas, signos, ângulos e contatos conferidos sem inventar fatores."
+      },
+      {
+        "id": "function-specific-semantics",
+        "passed": true,
+        "detail": "Cada planeta usa a função e o mecanismo próprios, com contexto; trocar nomes ou preservar IDs não mantém a aprovação."
+      },
+      {
+        "id": "angle-specific-semantics",
+        "passed": true,
+        "detail": "Ângulo real altera a hipótese de entrada/direção, sem deduzir corpo ou profissão."
+      },
+      {
+        "id": "actual-aspect-semantic-relation",
+        "passed": true,
+        "detail": "A relação usa duas funções e o mecanismo do aspecto calculado, sem transformar aspecto em causa."
+      },
+      {
+        "id": "specific-thematic-integration",
+        "passed": true,
+        "detail": "A síntese tem contrato próprio e liga funções distintas aos relatos, à decisão e ao experimento."
+      },
+      {
+        "id": "complete-thematic-evidence",
+        "passed": true,
+        "detail": "Os relatos e fatores disponíveis permitem todas as partes do método temático."
+      },
+      {
+        "id": "contextual-contract-delivery",
+        "passed": true,
+        "detail": "Situações, acordo, observação, oferta ou três combinações usam somente o contexto declarado."
+      }
+    ],
+    "reasons": [],
+    "digest": "f3381f978332905fab6ad73f1e7949ef6510eb14049b6db3b3194dee2071f09f",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "experimental-astrology",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

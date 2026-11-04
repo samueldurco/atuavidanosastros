@@ -1,0 +1,772 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "intimacy-map",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 24.661000000000058,
+      "composition": 11.540600000000268,
+      "review": 15.18579999999929,
+      "total": 51.387399999999616
+    },
+    "jsonBytes": {
+      "input": 541,
+      "calculation": 10271,
+      "reading": 10388,
+      "review": 3240
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "intimacy-map",
+    "birth": {
+      "localDateTime": "1990-05-10T10:30:00",
+      "utcInstant": "1990-05-10T13:30:00Z",
+      "timezone": "America/Sao_Paulo",
+      "latitude": -23.55,
+      "longitude": -46.63,
+      "locationSource": "synthetic/local-example"
+    },
+    "answers": {
+      "adult": true,
+      "wish": "Conversar sobre proximidade física com mais clareza.",
+      "boundaries": "Quero poder pausar ou recusar sem insistência.",
+      "situation": "Tenho dificuldade de iniciar esse assunto num encontro."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000005",
+    "productId": "intimacy-map",
+    "inputDigest": "4e6b5dccf48a7d7f22db1b9c2fc5fd3c9bcf63247d0cbd879a367be365800248",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-birth",
+        "kind": "reported",
+        "display": "{\"latitude\":-23.55,\"localDateTime\":\"1990-05-10T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"1990-05-10T13:30:00Z\"}",
+        "source": "input.birth"
+      },
+      {
+        "id": "reported-adult-1",
+        "kind": "reported",
+        "display": "true",
+        "source": "input.answers.adult"
+      },
+      {
+        "id": "reported-wish-1",
+        "kind": "reported",
+        "display": "Conversar sobre proximidade física com mais clareza.",
+        "source": "input.answers.wish"
+      },
+      {
+        "id": "reported-boundaries-1",
+        "kind": "reported",
+        "display": "Quero poder pausar ou recusar sem insistência.",
+        "source": "input.answers.boundaries"
+      },
+      {
+        "id": "reported-situation-1",
+        "kind": "reported",
+        "display": "Tenho dificuldade de iniciar esse assunto num encontro.",
+        "source": "input.answers.situation"
+      },
+      {
+        "id": "natal-venus",
+        "kind": "calculated",
+        "display": "venus: longitude tropical 7.207105°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-intimacy-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-mars",
+        "kind": "calculated",
+        "display": "mars: longitude tropical 344.662356°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-intimacy-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-1",
+        "kind": "calculated",
+        "display": "venus square jupiter; orbe 1.416171°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-intimacy-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-2",
+        "kind": "calculated",
+        "display": "venus square uranus; orbe 2.090014°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-intimacy-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-3",
+        "kind": "calculated",
+        "display": "mars sextile neptune; orbe 0.242239°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-intimacy-natal-factors/1.0.0"
+      },
+      {
+        "id": "natal-selected-aspect-4",
+        "kind": "calculated",
+        "display": "mars trine pluto; orbe 1.642745°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-major-aspects/1;atv-launch-natal-selected-major-aspects/1.0.0;atv-launch-intimacy-natal-factors/1.0.0"
+      }
+    ],
+    "data": {
+      "method": "atv-launch-intimacy-natal-factors/1.0.0",
+      "natal": {
+        "input": {
+          "localDateTime": "1990-05-10T10:30:00",
+          "utcInstant": "1990-05-10T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example"
+        },
+        "positions": [
+          {
+            "body": "sun",
+            "longitude": 49.630765489505,
+            "latitude": -0.00012413843431320973,
+            "distanceAu": 1.0097848031952548,
+            "retrograde": false
+          },
+          {
+            "body": "moon",
+            "longitude": 237.8062568542146,
+            "latitude": -4.780080153647267,
+            "distanceAu": 0.002716142274168556,
+            "retrograde": false
+          },
+          {
+            "body": "mercury",
+            "longitude": 39.46967553343799,
+            "latitude": -1.3799830662189247,
+            "distanceAu": 0.5674396458007673,
+            "retrograde": true
+          },
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false
+          },
+          {
+            "body": "jupiter",
+            "longitude": 98.62327624297204,
+            "latitude": 0.13566385836016723,
+            "distanceAu": 5.8037664917108716,
+            "retrograde": false
+          },
+          {
+            "body": "saturn",
+            "longitude": 295.3135027258837,
+            "latitude": 0.1607030417484806,
+            "distanceAu": 9.559133099774483,
+            "retrograde": true
+          },
+          {
+            "body": "uranus",
+            "longitude": 279.2971192221684,
+            "latitude": -0.31293871077310864,
+            "distanceAu": 18.73563526420331,
+            "retrograde": true
+          },
+          {
+            "body": "neptune",
+            "longitude": 284.42011654569893,
+            "latitude": 0.871239761390012,
+            "distanceAu": 29.61626878865766,
+            "retrograde": true
+          },
+          {
+            "body": "pluto",
+            "longitude": 226.305100605131,
+            "latitude": 16.000063364231448,
+            "distanceAu": 28.687932876024348,
+            "retrograde": true
+          }
+        ],
+        "houses": {
+          "system": "placidus",
+          "ascendant": 102.2959408454617,
+          "midheaven": 25.843624131358354,
+          "cusps": [
+            102.2959408454617,
+            136.78009641808518,
+            172.97985011902506,
+            205.8436241313583,
+            233.52530577364917,
+            257.93755608311426,
+            282.2959408454617,
+            316.7800964180851,
+            352.97985011902506,
+            25.843624131358354,
+            53.525305773649166,
+            77.93755608311432
+          ],
+          "status": "ok"
+        },
+        "provenance": {
+          "provider": "caelus",
+          "providerVersion": "0.24.1",
+          "algorithmVersion": "atv-caelus-adapter-v3",
+          "zodiac": "tropical",
+          "houseSystem": "placidus",
+          "calculatedAt": "2026-11-04T11:10:44.380Z",
+          "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+          "dataManifest": {
+            "provider": "caelus",
+            "version": "0.24.1",
+            "tier": "embedded",
+            "files": [
+              {
+                "path": "src/data-embedded.js",
+                "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+              },
+              {
+                "path": "data/vsop87d_mercury.embedded.json",
+                "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+              },
+              {
+                "path": "data/vsop87d_venus.embedded.json",
+                "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+              },
+              {
+                "path": "data/vsop87d_earth.embedded.json",
+                "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+              },
+              {
+                "path": "data/vsop87d_mars.embedded.json",
+                "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+              },
+              {
+                "path": "data/vsop87d_jupiter.embedded.json",
+                "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+              },
+              {
+                "path": "data/vsop87d_saturn.embedded.json",
+                "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+              },
+              {
+                "path": "data/vsop87d_uranus.embedded.json",
+                "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+              },
+              {
+                "path": "data/vsop87d_neptune.embedded.json",
+                "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+              },
+              {
+                "path": "data/nutation_iau1980.json",
+                "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+              },
+              {
+                "path": "data/moon_meeus47.json",
+                "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+              },
+              {
+                "path": "data/pluto_meeus37.json",
+                "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+              },
+              {
+                "path": "data/chiron_cheb.json",
+                "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+              },
+              {
+                "path": "data/fixed_stars.json",
+                "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+              },
+              {
+                "path": "data/constellations.json",
+                "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+              }
+            ]
+          },
+          "contract": {
+            "version": "atv-deterministic-contract/1",
+            "minUtcInstant": "1900-01-01T00:00:00.000Z",
+            "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+            "calendar": "proleptic-gregorian",
+            "inputResolutionMilliseconds": 1,
+            "leapSecondInput": "rejected",
+            "placidusAbsoluteLatitudeExclusive": 66,
+            "accuracy": "experimental-sampled",
+            "guaranteedLongitudeErrorDegrees": null,
+            "retrogradeStationTiming": "not-certified",
+            "productionPromotion": false
+          },
+          "temporal": {
+            "utcInstant": "1990-05-10T13:30:00.000Z",
+            "julianDayUt1Approx": 2448022.0625,
+            "dut1Seconds": null,
+            "timezoneMode": "iana",
+            "timezoneRules": "runtime-intl/unpinned",
+            "offsetSeconds": -10800,
+            "inputScale": "UTC",
+            "engineScale": "UT1-approximated-by-UTC",
+            "deltaTSeconds": 57.176683778234114
+          },
+          "accuracyStatus": "experimental",
+          "warnings": [
+            "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+            "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+            "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+            "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+          ]
+        }
+      },
+      "scope": {
+        "version": "atv-launch-intimacy-natal-factors/1.0.0",
+        "bodies": [
+          "venus",
+          "mars"
+        ],
+        "angles": [],
+        "houseCusps": [],
+        "contextKeys": [
+          "wish",
+          "boundaries",
+          "situation"
+        ]
+      },
+      "factors": {
+        "positions": [
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false,
+            "sign": "aries",
+            "degreeWithinSign": 7.2071048674221485
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false,
+            "sign": "pisces",
+            "degreeWithinSign": 14.662356041529392
+          }
+        ],
+        "angles": [],
+        "houseCusps": []
+      },
+      "aspects": {
+        "algorithmVersion": "atv-major-aspects/1",
+        "policy": {
+          "id": "atv-launch-natal-selected-major-aspects",
+          "version": "1.0.0",
+          "aspects": [
+            {
+              "kind": "conjunction",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "sextile",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "square",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "trine",
+              "orbDegrees": 3
+            },
+            {
+              "kind": "opposition",
+              "orbDegrees": 3
+            }
+          ]
+        },
+        "pairsEvaluated": 45,
+        "selection": "at-least-one-declared-body",
+        "aspects": [
+          {
+            "first": "venus",
+            "second": "jupiter",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 91.4161713755499,
+            "orbDegrees": 1.4161713755498937
+          },
+          {
+            "first": "venus",
+            "second": "uranus",
+            "kind": "square",
+            "exactAngleDegrees": 90,
+            "separationDegrees": 87.90998564525376,
+            "orbDegrees": 2.090014354746245
+          },
+          {
+            "first": "mars",
+            "second": "neptune",
+            "kind": "sextile",
+            "exactAngleDegrees": 60,
+            "separationDegrees": 60.24223949583046,
+            "orbDegrees": 0.24223949583046078
+          },
+          {
+            "first": "mars",
+            "second": "pluto",
+            "kind": "trine",
+            "exactAngleDegrees": 120,
+            "separationDegrees": 118.35725543639839,
+            "orbDegrees": 1.6427445636016103
+          }
+        ],
+        "motion": "not-evaluated",
+        "inputPrecision": "not-certified"
+      },
+      "contextReferences": [
+        "reported-wish-1",
+        "reported-boundaries-1",
+        "reported-situation-1"
+      ],
+      "interpretation": "not-produced"
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "O escopo temático seleciona coordenadas e geometria; não comprova preferências, habilidades, reações ou hábitos.",
+      "Casas indisponíveis não são substituídas; ângulos calculados são preservados separadamente.",
+      "Relacionar estes fatores aos relatos e produzir a entrega específica exige método editorial e revisão próprios."
+    ],
+    "provenance": {
+      "calculation": "experimental-astrology",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "637a11c7d56b0ed3361b9eec5251584e30218fb8e928eecf5e28e5e8401bfe9b",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000005",
+    "productId": "intimacy-map",
+    "inputDigest": "4e6b5dccf48a7d7f22db1b9c2fc5fd3c9bcf63247d0cbd879a367be365800248",
+    "title": "Mapa da Intimidade a Dois",
+    "summary": "A leitura parte de “Tenho dificuldade de iniciar esse assunto num encontro.”. A prioridade é transformar o desejo declarado em convite negociável, preservando o limite; os relatos e o resultado do experimento podem contrariar a hipótese simbólica.",
+    "sections": [
+      {
+        "id": "function-venus",
+        "title": "Vênus: uma função em contexto",
+        "paragraphs": [
+          "Vênus em Áries, a 7.207105° de longitude tropical, é usado aqui para observar valores e cooperação. A hipótese própria dessa função é demonstrar interesse de forma direta, preservando a iniciativa de cada pessoa; o risco a examinar é tratar uma demora como impedimento e agir antes de ouvir a resposta. Um ajuste possível é distinguir o que precisa começar agora do que exige uma combinação prévia. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe o que você valoriza, o que dá vontade de aproximar e onde aceita um acordo que já não corresponde à sua preferência. Na situação “Tenho dificuldade de iniciar esse assunto num encontro.”, confronte essa função com o desejo “Conversar sobre proximidade física com mais clareza.” e o limite “Quero poder pausar ou recusar sem insistência.”; nenhum dos dois descreve a vontade da outra pessoa."
+        ],
+        "evidenceIds": [
+          "natal-venus",
+          "reported-wish-1",
+          "reported-boundaries-1",
+          "reported-situation-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "function-mars",
+        "title": "Marte: uma função em contexto",
+        "paragraphs": [
+          "Marte em Peixes, a 344.662356° de longitude tropical, é usado aqui para observar iniciativa e defesa de limites. A hipótese própria dessa função é responder ao sentido da situação e adaptar o esforço conforme ela muda; o risco a examinar é concordar com algo sem distinguir sua vontade da expectativa percebida. Um ajuste possível é nomear o que deseja e confirmar o acordo em termos que as duas pessoas entendem. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo.",
+          "Observe como começa uma ação, pede algo ou interrompe o que não quer; iniciativa e respeito a um limite precisam caber na mesma situação. Na situação “Tenho dificuldade de iniciar esse assunto num encontro.”, confronte essa função com o desejo “Conversar sobre proximidade física com mais clareza.” e o limite “Quero poder pausar ou recusar sem insistência.”; nenhum dos dois descreve a vontade da outra pessoa."
+        ],
+        "evidenceIds": [
+          "natal-mars",
+          "reported-wish-1",
+          "reported-boundaries-1",
+          "reported-situation-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "calculated-relation",
+        "title": "Duas funções em relação",
+        "paragraphs": [
+          "Vênus em quadratura com Júpiter (orbe 1.416°): as duas funções pedem ajustes; dar espaço a uma sem eliminar a outra permite observar onde a fricção diminui. A relação liga valores e cooperação a expansão e aprendizagem; é uma hipótese de observação, não a causa comprovada do comportamento.",
+          "No seu contexto “Tenho dificuldade de iniciar esse assunto num encontro.”, observe onde uma necessidade reduz o espaço da outra e experimente uma mudança pequena. O ajuste é comparar o efeito real, não tentar eliminar um planeta, um signo ou uma parte de si."
+        ],
+        "evidenceIds": [
+          "natal-selected-aspect-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "revisable-agreement",
+        "title": "Convite, recusa e revisão do acordo",
+        "paragraphs": [
+          "Convite possível: “Quero conversar sobre Conversar sobre proximidade física com mais clareza.. Meu limite é Quero poder pausar ou recusar sem insistência.. Você quer falar disso agora?” É um rascunho a adaptar, não uma fala que garante resposta. O ritmo depende da disponibilidade que for expressa pelos dois.",
+          "Se a resposta for não, não peça demonstrações de afeto como contrapartida. Se houver sim, combinem uma experiência pequena, uma forma de interromper e quando perguntar novamente se o acordo ainda faz sentido. Um acordo anterior não substitui consentimento atual."
+        ],
+        "evidenceIds": [
+          "reported-wish-1",
+          "reported-boundaries-1",
+          "reported-situation-1",
+          "natal-venus",
+          "natal-mars"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "thematic-integration",
+        "title": "Síntese e experimento",
+        "paragraphs": [
+          "Vênus ajuda a formular o valor do encontro; Marte ajuda a formular iniciativa e interrupção. Em “Tenho dificuldade de iniciar esse assunto num encontro.”, o acordo revisável é perguntar por “Conversar sobre proximidade física com mais clareza.”, preservar “Quero poder pausar ou recusar sem insistência.” e só continuar com respostas livres dos dois. A prioridade prática é transformar o desejo declarado em convite negociável, preservando o limite.",
+          "Rascunhe um convite curto para “Conversar sobre proximidade física com mais clareza.”, diga antes “Quero poder pausar ou recusar sem insistência.” e pergunte se há vontade de conversar. Se houver recusa ou hesitação, pause e negocie outro momento, sem insistir."
+        ],
+        "evidenceIds": [
+          "natal-venus",
+          "natal-mars",
+          "reported-adult-1",
+          "reported-wish-1",
+          "reported-boundaries-1",
+          "reported-situation-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:natal-styles",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-function-venus",
+        "sectionId": "function-venus",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-venus"
+        ],
+        "factors": {
+          "body": "venus",
+          "longitude": 7.2071048674221485,
+          "styleKey": "affection"
+        },
+        "interpretation": "Vênus em Áries, a 7.207105° de longitude tropical, é usado aqui para observar valores e cooperação. A hipótese própria dessa função é demonstrar interesse de forma direta, preservando a iniciativa de cada pessoa; o risco a examinar é tratar uma demora como impedimento e agir antes de ouvir a resposta. Um ajuste possível é distinguir o que precisa começar agora do que exige uma combinação prévia. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-function-mars",
+        "sectionId": "function-mars",
+        "rule": "natal-function-in-context",
+        "evidenceIds": [
+          "natal-mars"
+        ],
+        "factors": {
+          "body": "mars",
+          "longitude": 344.6623560415294,
+          "styleKey": "action"
+        },
+        "interpretation": "Marte em Peixes, a 344.662356° de longitude tropical, é usado aqui para observar iniciativa e defesa de limites. A hipótese própria dessa função é responder ao sentido da situação e adaptar o esforço conforme ela muda; o risco a examinar é concordar com algo sem distinguir sua vontade da expectativa percebida. Um ajuste possível é nomear o que deseja e confirmar o acordo em termos que as duas pessoas entendem. Isso precisa ser confrontado com o relato, sem concluir uma preferência ou capacidade pelo signo."
+      },
+      {
+        "id": "claim-calculated-relation",
+        "sectionId": "calculated-relation",
+        "rule": "actual-aspect-mechanism",
+        "evidenceIds": [
+          "natal-selected-aspect-1"
+        ],
+        "factors": {
+          "first": "venus",
+          "second": "jupiter",
+          "aspect": "square",
+          "orbDegrees": 1.4161713755498937
+        },
+        "interpretation": "Vênus em quadratura com Júpiter (orbe 1.416°): as duas funções pedem ajustes; dar espaço a uma sem eliminar a outra permite observar onde a fricção diminui. A relação liga valores e cooperação a expansão e aprendizagem; é uma hipótese de observação, não a causa comprovada do comportamento."
+      },
+      {
+        "id": "claim-thematic-integration",
+        "sectionId": "thematic-integration",
+        "rule": "specific-thematic-integration",
+        "evidenceIds": [
+          "natal-venus",
+          "natal-mars",
+          "reported-adult-1",
+          "reported-wish-1",
+          "reported-boundaries-1",
+          "reported-situation-1"
+        ],
+        "factors": {
+          "bodies": [
+            "venus",
+            "mars"
+          ],
+          "angles": [],
+          "context": "Tenho dificuldade de iniciar esse assunto num encontro."
+        },
+        "interpretation": "Vênus ajuda a formular o valor do encontro; Marte ajuda a formular iniciativa e interrupção. Em “Tenho dificuldade de iniciar esse assunto num encontro.”, o acordo revisável é perguntar por “Conversar sobre proximidade física com mais clareza.”, preservar “Quero poder pausar ou recusar sem insistência.” e só continuar com respostas livres dos dois. A prioridade prática é transformar o desejo declarado em convite negociável, preservando o limite."
+      }
+    ],
+    "practicalAction": "Rascunhe um convite curto para “Conversar sobre proximidade física com mais clareza.”, diga antes “Quero poder pausar ou recusar sem insistência.” e pergunte se há vontade de conversar. Se houver recusa ou hesitação, pause e negocie outro momento, sem insistir.",
+    "reflection": "Qual parte do seu desejo pode virar um pedido claro, e qual limite precisa ser dito antes de qualquer aproximação?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "O mapa não comprova preferências, capacidade profissional, hábitos ou reação emocional; o relato e o teste real têm prioridade.",
+      "Motor astrológico experimental. A bateria independente de precisão continua pendente; esta revisão não homologa precisão comercial."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "experimental-astrology",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-humanistic-modern/1.0.0:natal-styles",
+          "version": "atv-humanistic-modern/1.0.0",
+          "origin": "Cânone original local: funções humanistas, natalStyles e mecanismos de aspectos. Referências e limites de consulta em SOURCES_2026-10-08.md; não houve pesquisa no runtime."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "2b25ac907b16babf63771aa79b28ecbfc21182595dee4f5ab4366e6a6aedbe2b",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "selected-natal-geometry",
+        "passed": true,
+        "detail": "Escopo, coordenadas, signos, ângulos e contatos conferidos sem inventar fatores."
+      },
+      {
+        "id": "function-specific-semantics",
+        "passed": true,
+        "detail": "Cada planeta usa a função e o mecanismo próprios, com contexto; trocar nomes ou preservar IDs não mantém a aprovação."
+      },
+      {
+        "id": "angle-specific-semantics",
+        "passed": true,
+        "detail": "Ângulo real altera a hipótese de entrada/direção, sem deduzir corpo ou profissão."
+      },
+      {
+        "id": "actual-aspect-semantic-relation",
+        "passed": true,
+        "detail": "A relação usa duas funções e o mecanismo do aspecto calculado, sem transformar aspecto em causa."
+      },
+      {
+        "id": "specific-thematic-integration",
+        "passed": true,
+        "detail": "A síntese tem contrato próprio e liga funções distintas aos relatos, à decisão e ao experimento."
+      },
+      {
+        "id": "complete-thematic-evidence",
+        "passed": true,
+        "detail": "Os relatos e fatores disponíveis permitem todas as partes do método temático."
+      },
+      {
+        "id": "contextual-contract-delivery",
+        "passed": true,
+        "detail": "Situações, acordo, observação, oferta ou três combinações usam somente o contexto declarado."
+      }
+    ],
+    "reasons": [],
+    "digest": "2b25ac907b16babf63771aa79b28ecbfc21182595dee4f5ab4366e6a6aedbe2b",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "experimental-astrology",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

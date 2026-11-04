@@ -279,6 +279,7 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 		view,
 		trialAccess: url.searchParams.get('continuity') !== 'unavailable',
 		catalog: {
+			launch: undefined,
 			product: customerProducts.find((p) => p.id === productId)!,
 			details: productDetails[productId as keyof typeof productDetails],
 			seo: {

@@ -1,0 +1,730 @@
+{
+  "version": "p02-spec-2026-11-04.1",
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "status": "SPECIFICATION_ONLY",
+  "classification": "digital-avulso",
+  "delivery": [
+    "web"
+  ],
+  "purchaseMode": "individual",
+  "price": {
+    "regularMinor": null,
+    "currency": "BRL",
+    "status": "NEEDS_APPROVED_PRICE_AND_COST",
+    "memberDiscountSimulation": {
+      "essencial": 0.1,
+      "ampliado": 0.2,
+      "premium": 0.3
+    },
+    "stacking": false
+  },
+  "cost": {
+    "providerFeeMinor": null,
+    "generationMinor": null,
+    "deliveryMinor": null,
+    "supportAndRefundReserveMinor": null,
+    "contributionFloorMinor": null,
+    "budgetAuthorizedMinor": 0,
+    "note": "Custo marginal não medido não equivale a zero. Usar infraestrutura e homologação gratuitas; não ativar modelo pago nem teste de cobrança."
+  },
+  "samplePolicy": "Amostras editoriais inteiramente fictícias e não calculadas; não constituem tiragens, mapas, aprovação privada nem teste real. Se forem expostas, manter este aviso junto da amostra.",
+  "products": [
+    {
+      "order": 1,
+      "debut": true,
+      "id": "wedding-date-map",
+      "slug": "mapa-da-data-de-casamento",
+      "name": "Mapa da Data de Casamento",
+      "universe": "amor-relacoes",
+      "promise": "Compare duas ou três datas possíveis para a cerimônia e entenda os motivos astrológicos para preferir uma delas.",
+      "painOrDesire": "Há datas reais disponíveis, mas escolher apenas pelo calendário deixa uma dúvida sobre o clima simbólico do momento.",
+      "minimumInputs": [
+        "Duas ou três opções completas de data e horário locais da cerimônia",
+        "Cidade e país da cerimônia",
+        "O que a pessoa quer priorizar entre acolhimento, celebração e organização",
+        "Confirmação de que são opções reais"
+      ],
+      "optionalInputs": [
+        "Dados natais consentidos de quem compra para contexto, se o método implementado os admitir; não são requisito para comparar os eventos"
+      ],
+      "method": "Astrologia eletiva comparativa dos horários fornecidos: calcular cada mapa de evento no motor determinístico versionado, explicitar critérios utilizados e contrastar fatores favoráveis, tensões e limites. A escolha é justificada por fatores, sem nota de felicidade conjugal nem data universalmente perfeita.",
+      "methodSummary": "Astrologia eletiva: comparação dos mapas das datas e horários reais da cerimônia, com critérios explícitos, motivos de preferência e cuidados para cada opção.",
+      "sampleInput": "Ana tem o mesmo espaço disponível em 12 e 19 de dezembro de 2026, às 16h, em São Paulo. Quer uma cerimônia acolhedora e precisa escolher entre essas duas opções.",
+      "sampleDelivery": "A comparação mostra qual opção reúne mais fatores coerentes com a prioridade de Ana, qual funciona como alternativa e o que merece cuidado em cada uma. Esta é uma demonstração do recorte; nenhum mapa foi calculado para essas datas nesta amostra.",
+      "receive": [
+        "Quadro comparativo das duas ou três opções reais",
+        "Uma opção preferida e uma alternativa, com razões rastreáveis",
+        "Um cuidado prático para cada opção",
+        "Resumo da escolha e das condições que podem mudar a conclusão"
+      ],
+      "closestExistingProductId": "date-reading",
+      "difference": "O Horóscopo para uma Data Especial interpreta uma data no contexto de uma pessoa; este compara mapas da cerimônia para uma decisão entre horários disponíveis. Não avalia compatibilidade do casal.",
+      "limits": [
+        "Não garante duração, felicidade ou resultado do casamento",
+        "Sem horário ou local resolvido não comparar ascendente/casas como se fossem conhecidos",
+        "Nenhuma data fora das opções reais é prometida"
+      ],
+      "inputSchema": {
+        "options": [
+          {
+            "label": "A",
+            "date": "YYYY-MM-DD",
+            "localTime": "HH:mm",
+            "place": {
+              "name": "Cidade, país",
+              "latitude": 0,
+              "longitude": 0,
+              "timeZone": "IANA"
+            }
+          }
+        ],
+        "priority": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "facts": "manifesto de fatos por opção",
+        "comparison": "duas ou três linhas com motivos e cuidados",
+        "preferredOption": "rótulo existente",
+        "alternativeOption": "outro rótulo existente",
+        "choiceSummary": "texto",
+        "limitations": "texto"
+      },
+      "publicInputs": [
+        "Duas ou três datas e horários possíveis",
+        "Cidade e país da cerimônia",
+        "O que deseja priorizar na celebração"
+      ]
+    },
+    {
+      "order": 2,
+      "debut": true,
+      "id": "ex-tarot",
+      "slug": "tarot-do-ex-saudade-e-arrependimento",
+      "name": "Tarot do Ex: Saudade e Arrependimento",
+      "universe": "tarot-arcanos",
+      "promise": "Olhe para um episódio com seu ex e diferencie possibilidades de saudade de atitudes que indicariam reparação.",
+      "painOrDesire": "Uma mensagem ou gesto reacendeu a dúvida sobre o passado, mas o gesto sozinho não explica a intenção de outra pessoa.",
+      "minimumInputs": [
+        "Um episódio passado específico, em palavras de quem compra",
+        "O que foi observado diretamente, separado da interpretação",
+        "Qual dúvida quer examinar sobre esse episódio",
+        "Limite que deseja preservar ao lidar com novo contato"
+      ],
+      "optionalInputs": [
+        "Data, hora e local conhecidos do episódio para astrologia do momento; não exigir nem inventar dados do ex"
+      ],
+      "method": "Tiragem temática de três posições — episódio, hipótese a examinar e critério de reparação — com cartas sorteadas exclusivamente pelo serviço determinístico autorizado, registrando método, versão e resultado antes da interpretação. Astrologia do momento é complemento explícito somente se os dados e o motor forem suficientes; não chamar isso de horária sem contrato próprio.",
+      "methodSummary": "Tarot em três posições para examinar o episódio, suas interpretações possíveis e atitudes de reparação. Quando os dados permitem, a astrologia do momento acrescenta contexto.",
+      "sampleInput": "Depois de três meses sem contato, o ex de Lia escreveu que sentia falta das conversas. Não comentou o motivo do término nem propôs conversar sobre ele.",
+      "sampleDelivery": "A mensagem pode indicar saudade do vínculo, mas sozinha não demonstra reparação. Lia pode observar se há disposição para ouvir o que aconteceu e assumir uma atitude concreta. Uma resposta possível seria: ‘Também lembro das nossas conversas. O que você gostaria de conversar agora?’ Nenhuma carta foi sorteada nesta amostra editorial fictícia.",
+      "receive": [
+        "Três cartas e suas posições identificadas",
+        "Leitura do episódio com pelo menos duas interpretações possíveis",
+        "Sinais observáveis que distinguem nostalgia de responsabilidade",
+        "Um limite e uma resposta que a pessoa pode adaptar"
+      ],
+      "closestExistingProductId": "tarot-aphrodite-temple",
+      "difference": "O Templo de Afrodite organiza vários aspectos de uma relação em sete cartas. Aqui a unidade é um episódio passado e o resultado é um critério para ler atitudes e preservar um limite. Não prevê os próximos 30 dias.",
+      "limits": [
+        "Não afirma ler a mente do ex",
+        "Não transforma carta em prova de sentimento, traição ou intenção",
+        "Não promete retorno nem orienta insistir após recusa"
+      ],
+      "inputSchema": {
+        "episode": "Texto curto",
+        "observedAction": "Texto curto",
+        "question": "Texto curto",
+        "personalBoundary": "Texto curto",
+        "event": "data/hora/local opcionais"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "draw": "três cartas, posições e proveniência",
+        "episodeReading": "texto",
+        "possibilities": "duas hipóteses com sinais",
+        "repairCriteria": "atitudes observáveis",
+        "boundary": "texto",
+        "responseDraft": "texto",
+        "astrologySupplement": "null ou fatos e leitura explicitamente separados"
+      },
+      "publicInputs": [
+        "O que aconteceu recentemente com o ex",
+        "Sua dúvida sobre saudade ou arrependimento",
+        "O que você gostaria de compreender antes de agir"
+      ]
+    },
+    {
+      "order": 3,
+      "debut": true,
+      "id": "love-restart-map",
+      "slug": "mapa-do-recomeco-amoroso",
+      "name": "Mapa do Recomeço Amoroso",
+      "subtitle": "Previsão de 30 dias",
+      "universe": "amor-relacoes",
+      "promise": "Veja os próximos 30 dias no contexto da sua vida amorosa e prepare-se para silêncio, contato ou reaproximação.",
+      "painOrDesire": "A espera por uma definição faz a pessoa oscilar entre procurar, ficar em silêncio e aceitar uma conversa.",
+      "minimumInputs": [
+        "Data, hora e local de nascimento da pessoa compradora, ou fluxo explícito de hora desconhecida",
+        "Data inicial, fuso e local de referência do período de 30 dias",
+        "Situação atual e último contato observado",
+        "O que gostaria de esclarecer e qual limite pretende manter"
+      ],
+      "optionalInputs": [
+        "Nenhum dado do ex é necessário"
+      ],
+      "method": "Trânsitos pessoais do intervalo finito de 30 dias, calculados pelo motor determinístico e ligados a uma política editorial versionada; distinguir períodos simbólicos de disposição pessoal de acontecimentos dependentes de terceiros. Oferecer três cenários condicionais, sem probabilidades numéricas inventadas.",
+      "methodSummary": "Trânsitos pessoais para um período de 30 dias, aplicados à situação relatada e organizados em cenários condicionais de silêncio, contato e reaproximação.",
+      "sampleInput": "Rafa quer observar os 30 dias a partir de 5 de novembro. O último contato foi cordial, mas não trouxe uma proposta para retomar a relação.",
+      "sampleDelivery": "Se o silêncio continuar, Rafa preserva a rotina e o limite que definiu. Se houver contato, distingue conversa de proposta. Se surgir uma reaproximação, pede clareza sobre o que mudaria antes de decidir. A leitura real apresenta os trânsitos e momentos do período; esta amostra editorial não contém cálculo nem previsão executada.",
+      "receive": [
+        "Período exato de 30 dias e momentos relevantes com fundamento",
+        "Cenários de silêncio, contato e reaproximação",
+        "Sinais para acompanhar em cada cenário",
+        "Como se posicionar e um plano pessoal para encerrar o período"
+      ],
+      "closestExistingProductId": "personal-calendar",
+      "difference": "O Calendário de Previsões cobre os temas gerais de 30 dias; este entrega uma única decisão amorosa com três cenários e postura pessoal. O Tarot do Ex examina um episódio já vivido.",
+      "limits": [
+        "Não promete reconciliação nem prevê ações específicas do ex como fatos",
+        "Sem hora confiável excluir fatores dependentes de casas/ângulos e informar a limitação",
+        "Uma compra cobre um único intervalo, sem acompanhamento de assinatura"
+      ],
+      "inputSchema": {
+        "birthProfile": "perfil natal consentido",
+        "periodStart": "YYYY-MM-DD",
+        "timeZone": "IANA",
+        "currentSituation": "Texto curto",
+        "lastContact": "Texto curto",
+        "desiredClarity": "Texto curto",
+        "personalBoundary": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "period": "30 dias exatos",
+        "transitFacts": "manifesto",
+        "windows": "janelas fundamentadas",
+        "scenarios": {
+          "silence": "sinais + postura",
+          "contact": "sinais + postura",
+          "reconnection": "sinais + postura"
+        },
+        "personalPlan": "texto",
+        "limitations": "texto"
+      },
+      "publicInputs": [
+        "Seus dados de nascimento",
+        "A data de início dos 30 dias",
+        "Um breve relato da situação amorosa atual"
+      ]
+    },
+    {
+      "order": 4,
+      "debut": false,
+      "id": "sexuality-map",
+      "slug": "mapa-da-sexualidade",
+      "name": "Mapa da Sexualidade",
+      "universe": "amor-relacoes",
+      "promise": "Reconheça como você vive desejo e atração e encontre palavras para o que faz sentido para você.",
+      "painOrDesire": "A pessoa quer entender o próprio ritmo de desejo e como costuma expressar interesse sem se reduzir a um estereótipo do signo.",
+      "minimumInputs": [
+        "Confirmação de 18 anos ou mais",
+        "Perfil natal próprio consentido, com condição de hora conhecida/desconhecida",
+        "Duas situações em que percebeu interesse, conforto ou desconforto",
+        "O que gostaria de compreender sobre o próprio desejo"
+      ],
+      "optionalInputs": [
+        "Nenhum dado ou preferência presumida de parceiro"
+      ],
+      "method": "Leitura natal de Vênus e Marte calculados pelo motor versionado, articulada com as situações relatadas. Usar Lua, casas e aspectos somente se incluídos no método aprovado e sustentados pelos dados; não inferir orientação, identidade ou práticas a partir do mapa.",
+      "methodSummary": "Leitura de Vênus e Marte no mapa natal, relacionada a situações escolhidas pela própria pessoa adulta para compreender desejo, atração e expressão de interesse.",
+      "sampleInput": "Dani, pessoa adulta, sente mais conforto quando há tempo para conversar e percebe desconforto quando recebe pressão para decidir rapidamente.",
+      "sampleDelivery": "O ponto a explorar é o tempo de aproximação que Dani reconhece nas duas situações. Uma forma de expressar interesse seria propor um encontro sem pressa e dizer o que prefere. A relação com Vênus e Marte depende do mapa calculado; esta amostra editorial não atribui posições natais.",
+      "receive": [
+        "Leitura de Vênus e Marte aplicada às situações escolhidas",
+        "Um ritmo ou condição de conforto reconhecível",
+        "Uma forma de demonstrar interesse para experimentar",
+        "Uma pergunta de autopercepção e um limite para nomear"
+      ],
+      "closestExistingProductId": "birth-chart",
+      "difference": "O mapa completo percorre a vida natal; este concentra a entrega em desejo pessoal, contexto adulto e expressão de interesse. O Mapa da Intimidade a Dois termina em um convite para uma relação atual.",
+      "limits": [
+        "Não diagnostica libido ou saúde sexual",
+        "Não determina identidade ou orientação sexual",
+        "Toda aproximação depende de consentimento"
+      ],
+      "inputSchema": {
+        "adult": true,
+        "birthProfile": "perfil próprio consentido",
+        "situations": [
+          "situação1",
+          "situação2"
+        ],
+        "question": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "venusMarsFacts": "manifesto",
+        "contextReading": "texto",
+        "comfortCondition": "texto",
+        "interestExpression": "texto",
+        "reflectionQuestion": "texto",
+        "boundary": "texto"
+      },
+      "publicInputs": [
+        "Confirmação de que você tem 18 anos ou mais",
+        "Seus dados de nascimento",
+        "Duas situações que mostram seu conforto e seu desejo"
+      ]
+    },
+    {
+      "order": 5,
+      "debut": false,
+      "id": "intimacy-map",
+      "slug": "mapa-da-intimidade-a-dois",
+      "name": "Mapa da Intimidade a Dois",
+      "universe": "amor-relacoes",
+      "promise": "Identifique um desejo, seu ritmo e seus limites e receba um convite para adaptar à relação que vive hoje.",
+      "painOrDesire": "A pessoa sabe que deseja ajustar a intimidade, mas ainda não encontrou uma forma clara e confortável de conversar sobre isso.",
+      "minimumInputs": [
+        "Confirmação de 18 anos ou mais",
+        "Perfil natal próprio consentido",
+        "Descrição da relação atual em termos próprios",
+        "Um desejo a explorar, um limite e o ritmo que prefere"
+      ],
+      "optionalInputs": [
+        "Participação do parceiro não é exigida"
+      ],
+      "method": "Leitura individual natal de fatores afetivos definidos no método aprovado, dependente das preferências relatadas pela pessoa. O mapa não preenche a preferência ausente do parceiro; a síntese precisa separar desejo próprio, limite e convite negociável.",
+      "methodSummary": "Leitura individual do mapa e das preferências relatadas por quem compra, para transformar um desejo em um convite claro, com ritmo e limites respeitados.",
+      "sampleInput": "Bia, pessoa adulta, quer experimentar mais tempo de intimidade sem telas. Prefere combinar antes e quer manter a possibilidade de parar ou mudar de ideia.",
+      "sampleDelivery": "Um convite que Bia pode adaptar: ‘Queria reservar um tempo nosso sem telas. Você teria vontade? Podemos combinar algo simples e mudar se não for confortável.’ Se a outra pessoa não quiser, Bia pode perguntar por uma alternativa, sem tratar recusa como obstáculo a vencer. Amostra editorial, sem cálculo natal.",
+      "receive": [
+        "Um desejo explicado no contexto da pessoa",
+        "Um ritmo e um limite a respeitar",
+        "Um convite concreto e adaptável",
+        "Uma alternativa caso a outra pessoa não queira"
+      ],
+      "closestExistingProductId": "synastry",
+      "difference": "A sinastria compara dois mapas. Este produto é concluído com um mapa e as respostas de quem compra, resultando em um convite pessoal com possibilidade real de recusa.",
+      "limits": [
+        "Não pressupõe preferências nem consentimento do parceiro",
+        "Não exige responder a dois",
+        "Não promete compatibilidade ou desempenho sexual"
+      ],
+      "inputSchema": {
+        "adult": true,
+        "birthProfile": "perfil próprio",
+        "relationshipContext": "Texto curto",
+        "desire": "Texto curto",
+        "boundary": "Texto curto",
+        "pace": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "natalFacts": "manifesto",
+        "desire": "texto",
+        "pace": "texto",
+        "boundary": "texto",
+        "invitation": "texto",
+        "declineAlternative": "texto"
+      },
+      "publicInputs": [
+        "Confirmação de que você tem 18 anos ou mais",
+        "Seus dados de nascimento",
+        "Um desejo, seu ritmo e um limite na relação atual"
+      ]
+    },
+    {
+      "order": 6,
+      "debut": false,
+      "id": "emotional-reactions-map",
+      "slug": "mapa-das-reacoes-emocionais",
+      "name": "Mapa das Reações Emocionais",
+      "universe": "meu-ceu",
+      "promise": "Olhe para uma reação que se repete e prepare uma alternativa concreta para a próxima situação.",
+      "painOrDesire": "Depois de responder de forma automática, a pessoa percebe que a reação teve um efeito diferente do que pretendia.",
+      "minimumInputs": [
+        "Perfil natal próprio consentido",
+        "Um episódio recente que represente a reação recorrente",
+        "O que ocorreu antes, como reagiu e qual foi o efeito observado",
+        "O que gostaria de fazer de outra forma"
+      ],
+      "optionalInputs": [],
+      "method": "Leitura natal focada nos fatores emocionais declarados no método aprovado, articulada à sequência observável gatilho–reação–efeito do relato. O relato prevalece sobre estereótipos; não formular diagnósticos nem atribuir traumas não informados.",
+      "methodSummary": "Leitura de fatores emocionais do mapa natal junto à sequência descrita pela pessoa: o que aconteceu, como reagiu e qual foi o efeito, para preparar uma alternativa.",
+      "sampleInput": "Quando uma reunião muda de horário sem aviso, Caio responde com ironia. Depois percebe que o grupo discute seu tom em vez do problema de organização.",
+      "sampleDelivery": "O gatilho relatado é a mudança sem aviso; a ironia desloca a conversa para o tom. Caio pode testar: ‘Essa mudança atrapalhou minha agenda. Podemos combinar como avisar da próxima vez?’ O sinal para observar é se a conversa passa a produzir um combinado. Amostra editorial, sem cálculo natal ou diagnóstico.",
+      "receive": [
+        "Uma reação recorrente nomeada com precisão",
+        "Um gatilho e um efeito do episódio descrito",
+        "Uma alternativa praticável",
+        "Uma frase para usar e um sinal para verificar se ajudou"
+      ],
+      "closestExistingProductId": "birth-chart",
+      "difference": "O mapa completo descreve vários temas da personalidade. Esta entrega trabalha uma única sequência relatada e termina em uma atitude verificável.",
+      "limits": [
+        "Não é diagnóstico nem terapia",
+        "Não atribui transtorno, trauma ou causa clínica ao mapa",
+        "Não promete eliminar uma reação"
+      ],
+      "inputSchema": {
+        "birthProfile": "perfil próprio",
+        "episode": "Texto curto",
+        "trigger": "Texto curto",
+        "reaction": "Texto curto",
+        "observedEffect": "Texto curto",
+        "desiredChange": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "natalFacts": "manifesto",
+        "reactionPattern": "texto",
+        "trigger": "texto",
+        "effect": "texto",
+        "alternative": "texto",
+        "phrase": "texto",
+        "checkSignal": "texto"
+      },
+      "publicInputs": [
+        "Seus dados de nascimento",
+        "Uma situação que costuma provocar sua reação",
+        "O que você faz e o que percebe depois"
+      ]
+    },
+    {
+      "order": 7,
+      "debut": false,
+      "id": "financial-blocks-tarot",
+      "slug": "tarot-dos-bloqueios-financeiros",
+      "name": "Tarot dos Bloqueios Financeiros",
+      "universe": "tarot-arcanos",
+      "promise": "Examine um impasse com dinheiro e escolha um primeiro passo para cobrar, receber ou lidar com uma oportunidade.",
+      "painOrDesire": "A pessoa está adiando uma ação concreta e deseja compreender qual atitude pode estar contribuindo para o impasse.",
+      "minimumInputs": [
+        "Uma situação concreta de cobrança, recebimento ou oportunidade",
+        "O que já tentou e o que ocorreu",
+        "Uma decisão ou ação que está adiando",
+        "Uma restrição prática que precisa respeitar"
+      ],
+      "optionalInputs": [
+        "Não pedir saldo bancário, documentos financeiros nem valores privados desnecessários"
+      ],
+      "method": "Tiragem de três cartas — impasse, possível bloqueio e primeiro passo — sorteadas pelo serviço autorizado, com método, posições e proveniência persistidos. Vincular cada síntese à carta e ao contexto real relatado, sem converter símbolos em previsão de renda.",
+      "methodSummary": "Tarot em três cartas para um impasse concreto: situação, possível bloqueio e primeiro passo. A leitura termina em um sinal a observar e uma ação possível.",
+      "sampleInput": "Jo entregou um trabalho, combinou a data de pagamento e está adiando uma mensagem de cobrança por medo de parecer inconveniente.",
+      "sampleDelivery": "Uma hipótese a examinar é confundir cobrança de um acordo com falta de gentileza. O sinal é adiar o contato mesmo depois do prazo combinado. O primeiro passo pode ser enviar uma mensagem curta com o trabalho, o vencimento e a pergunta sobre a previsão de pagamento. Nenhuma carta foi sorteada nesta amostra editorial e não há promessa de recebimento.",
+      "receive": [
+        "Três cartas com posições identificadas",
+        "Um possível bloqueio para examinar",
+        "Um sinal observável que apoia ou enfraquece essa hipótese",
+        "Uma ação pequena e um critério de revisão"
+      ],
+      "closestExistingProductId": "tarot-situation-challenge-advice",
+      "difference": "A tiragem geral de três cartas atende uma questão aberta. Esta pede um impasse financeiro específico e devolve uma hipótese verificável e uma ação, sem substituir a análise astral ampla de dinheiro e carreira.",
+      "limits": [
+        "Não promete renda, sorte ou desbloqueio financeiro garantido",
+        "Não recomenda investimento, crédito ou aposta",
+        "Não explica pobreza como defeito pessoal ou energético"
+      ],
+      "inputSchema": {
+        "situation": "Texto curto",
+        "previousAttempt": "Texto curto",
+        "delayedAction": "Texto curto",
+        "constraint": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "draw": "três cartas + posições + proveniência",
+        "blockHypothesis": "texto",
+        "observableSignal": "texto",
+        "firstAction": "texto",
+        "reviewCriterion": "texto"
+      },
+      "publicInputs": [
+        "Uma situação concreta sobre cobrar, receber ou aproveitar uma oportunidade",
+        "O que você já tentou",
+        "A dúvida que deseja examinar"
+      ]
+    },
+    {
+      "order": 8,
+      "debut": false,
+      "id": "hidden-talent-map",
+      "slug": "mapa-do-talento-oculto",
+      "name": "Mapa do Talento Oculto",
+      "universe": "proposito-prosperidade",
+      "promise": "Reconheça uma habilidade nos favores que você já presta e desenhe uma primeira oferta para testar.",
+      "painOrDesire": "Aquilo que outras pessoas pedem com frequência parece fácil demais para quem faz e ainda não foi tratado como uma entrega clara.",
+      "minimumInputs": [
+        "Perfil natal próprio consentido",
+        "Dois favores reais com pedido, ação realizada e resultado observado",
+        "Para quem costuma ajudar",
+        "Tempo, recursos e limites disponíveis para um teste"
+      ],
+      "optionalInputs": [],
+      "method": "Leitura natal vocacional de fatores declarados no método aprovado mais análise dos dois favores relatados; procurar habilidade sustentada pelos dois episódios, sem derivar profissão exclusivamente do mapa. A primeira oferta é um experimento com escopo e retorno observável.",
+      "methodSummary": "Leitura vocacional do mapa natal articulada a dois favores reais que a pessoa já presta, para reconhecer uma habilidade e desenhar uma pequena oferta de teste.",
+      "sampleInput": "Nina organizou as inscrições de um evento de uma amiga e montou uma planilha simples para o grupo da família dividir despesas. Nos dois casos, as pessoas conseguiram acompanhar o que faltava.",
+      "sampleDelivery": "A habilidade observável é organizar informação para que outras pessoas saibam o próximo passo. Um teste seria oferecer a alguém conhecido uma planilha simples, com um objetivo, uma revisão e prazo combinados. Frase possível: ‘Posso organizar essas informações em um quadro para você acompanhar o que falta.’ A conexão natal depende do mapa; esta amostra não promete renda nem preço.",
+      "receive": [
+        "Uma habilidade reconhecível e as evidências dos dois favores",
+        "Uma pessoa ou público inicial para abordar",
+        "Uma entrega pequena com escopo e limite",
+        "Uma frase de apresentação e uma pergunta para coletar retorno"
+      ],
+      "closestExistingProductId": "career-compass",
+      "difference": "A Bússola de Carreira apoia uma direção profissional. Este recorta uma habilidade já demonstrada e transforma dois episódios em um experimento de oferta, sem prometer uma mudança completa de carreira.",
+      "limits": [
+        "Não promete renda ou demanda",
+        "Não fixa preço de serviço do comprador sem contexto",
+        "Se os favores não sustentarem a mesma habilidade, explicitar a divergência e pedir um exemplo adicional em vez de inventar convergência"
+      ],
+      "inputSchema": {
+        "birthProfile": "perfil próprio",
+        "favors": [
+          {
+            "request": "texto",
+            "action": "texto",
+            "observedResult": "texto"
+          },
+          {
+            "request": "texto",
+            "action": "texto",
+            "observedResult": "texto"
+          }
+        ],
+        "audience": "Texto curto",
+        "constraints": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "natalFacts": "manifesto",
+        "skill": "texto",
+        "evidenceFromFavors": "duas referências",
+        "initialAudience": "texto",
+        "testOffer": "escopo + limite",
+        "pitch": "texto",
+        "feedbackQuestion": "texto"
+      },
+      "publicInputs": [
+        "Seus dados de nascimento",
+        "Dois favores ou tarefas em que alguém costuma pedir sua ajuda",
+        "O que você fez e qual resultado observou"
+      ]
+    },
+    {
+      "order": 9,
+      "debut": false,
+      "id": "ascendant-style",
+      "slug": "meu-estilo-pelo-ascendente",
+      "name": "Meu Estilo pelo Ascendente",
+      "universe": "meu-ceu",
+      "promise": "Monte três composições para uma ocasião usando peças que já tem e a imagem que deseja expressar.",
+      "painOrDesire": "A pessoa quer vestir-se de uma forma mais intencional sem comprar um guarda-roupa novo nem receber uma regra rígida por signo.",
+      "minimumInputs": [
+        "Data, hora confiável e local de nascimento para calcular ascendente",
+        "Uma ocasião e restrições de clima, mobilidade ou código de roupa",
+        "Lista de peças, cores, calçados e acessórios disponíveis",
+        "Como gostaria de ser percebida e preferências que quer manter"
+      ],
+      "optionalInputs": [
+        "Descrição textual das peças é suficiente; foto não é obrigatória"
+      ],
+      "method": "Ascendente calculado pelo motor autorizado como ponto de partida simbólico, combinado com inventário real e preferências. Cada composição deve usar somente peças listadas, cumprir a ocasião e distinguir-se por combinação ou detalhe; não inferir corpo, gênero ou orçamento.",
+      "methodSummary": "O ascendente é um ponto de partida simbólico, combinado com a ocasião, as preferências e as peças que a pessoa já possui. O resultado são três composições aplicáveis.",
+      "sampleInput": "Alex vai a um almoço e tem camisa branca, camiseta azul, calça escura, calça clara, tênis, sapato marrom e um lenço. Quer transmitir presença sem perder conforto.",
+      "sampleDelivery": "Três combinações possíveis do inventário: camisa branca, calça escura e tênis; camiseta azul, calça clara e tênis; camisa branca, calça clara, sapato marrom e lenço. O detalhe pode ser a camisa com mangas dobradas ou o lenço. Esta amostra demonstra o uso das peças disponíveis; não calcula nem atribui um ascendente.",
+      "receive": [
+        "Ascendente e contexto do cálculo",
+        "Três composições completas com peças existentes",
+        "Um detalhe de intenção em cada composição",
+        "Uma troca possível para conforto ou clima"
+      ],
+      "closestExistingProductId": "ascendant",
+      "difference": "A calculadora gratuita informa o ascendente. A compra entrega três composições aplicadas a uma ocasião e ao inventário pessoal, mantendo o cálculo gratuito.",
+      "limits": [
+        "Sem hora confiável não afirmar um ascendente",
+        "Não obriga compra de peças nem fixa estilo por signo",
+        "Não usar peça ausente do inventário como se a pessoa a tivesse"
+      ],
+      "inputSchema": {
+        "birthProfile": "perfil próprio com hora confiável",
+        "occasion": "Texto curto",
+        "availablePieces": [
+          "peça"
+        ],
+        "constraints": "Texto curto",
+        "desiredImpression": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "ascendantFacts": "manifesto",
+        "outfits": [
+          {
+            "pieces": [
+              "IDs existentes"
+            ],
+            "intentionDetail": "texto",
+            "comfortSwap": "texto"
+          },
+          {
+            "pieces": [
+              "IDs existentes"
+            ],
+            "intentionDetail": "texto",
+            "comfortSwap": "texto"
+          },
+          {
+            "pieces": [
+              "IDs existentes"
+            ],
+            "intentionDetail": "texto",
+            "comfortSwap": "texto"
+          }
+        ]
+      },
+      "publicInputs": [
+        "Seus dados de nascimento, com horário confiável",
+        "Uma ocasião para a qual quer se vestir",
+        "Peças que já possui e suas preferências"
+      ]
+    },
+    {
+      "order": 10,
+      "debut": false,
+      "id": "conversation-timing",
+      "slug": "a-hora-da-conversa-horoscopo-amoroso",
+      "name": "A Hora da Conversa — Horóscopo Amoroso",
+      "universe": "amor-relacoes",
+      "promise": "Compare falar ou esperar para uma conversa amorosa nos próximos sete dias e prepare uma frase de abertura.",
+      "painOrDesire": "Há um assunto amoroso concreto e a pessoa quer pensar no momento e na forma de abordá-lo.",
+      "minimumInputs": [
+        "Perfil natal próprio consentido",
+        "Data inicial, local e fuso para o intervalo de sete dias",
+        "Assunto e objetivo da conversa",
+        "O que já ocorreu e restrições reais de disponibilidade ou contato"
+      ],
+      "optionalInputs": [
+        "Nenhum mapa da outra pessoa é necessário"
+      ],
+      "method": "Trânsitos pessoais calculados para sete dias, com fatores e horários reproduzíveis, confrontados com contexto e disponibilidade informados. Comparar falar e esperar como opções condicionais; nunca usar trânsito para ignorar recusa ou uma urgência prática.",
+      "methodSummary": "Trânsitos pessoais dos próximos sete dias, confrontados com o assunto e a disponibilidade informados, para comparar falar ou esperar e preparar uma abertura de conversa.",
+      "sampleInput": "Lu quer conversar sobre a frequência dos encontros. Há tempo para falar na quinta ou no sábado, mas a outra pessoa ainda não confirmou quando pode.",
+      "sampleDelivery": "Falar faz sentido quando os dois confirmarem tempo para ouvir; esperar pode ajudar se a conversa só couber em um intervalo apressado. Abertura possível: ‘Queria conversar sobre como estamos combinando nossos encontros. Quando você teria um tempo com calma?’ A leitura real compara as janelas astrológicas; esta amostra editorial não contém trânsitos calculados.",
+      "receive": [
+        "Intervalo exato de sete dias e janelas com fundamentos",
+        "Comparação entre falar e esperar",
+        "Condição observável que favorece cada opção",
+        "Uma frase de abertura e um limite para encerrar a conversa"
+      ],
+      "closestExistingProductId": "week-reading",
+      "difference": "O Horóscopo Semanal Pessoal trata a semana como um todo. Aqui a entrega se esgota em um assunto amoroso, duas opções e uma frase aplicável.",
+      "limits": [
+        "Não promete a resposta da outra pessoa",
+        "Não recomenda insistência diante de recusa",
+        "Não substitui contato necessário por uma suposta janela astrológica perfeita"
+      ],
+      "inputSchema": {
+        "birthProfile": "perfil próprio",
+        "periodStart": "YYYY-MM-DD",
+        "timeZone": "IANA",
+        "conversationTopic": "Texto curto",
+        "goal": "Texto curto",
+        "context": "Texto curto",
+        "availability": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "period": "sete dias exatos",
+        "transitFacts": "manifesto",
+        "windows": "fundamento + condição prática",
+        "speakNow": "motivo e condição",
+        "wait": "motivo e condição",
+        "openingPhrase": "texto",
+        "closingBoundary": "texto"
+      },
+      "publicInputs": [
+        "Seus dados de nascimento",
+        "O assunto amoroso que deseja conversar",
+        "Os sete dias e horários em que a conversa seria possível"
+      ]
+    },
+    {
+      "order": 11,
+      "debut": false,
+      "id": "cohabitation-map",
+      "slug": "mapa-da-convivencia-a-dois",
+      "name": "Mapa da Convivência a Dois",
+      "universe": "amor-relacoes",
+      "promise": "Nomeie uma afinidade, um atrito e três acordos para conversar antes de morar junto.",
+      "painOrDesire": "O desejo de dividir a casa ainda não virou uma conversa concreta sobre rotina, espaço, tarefas e dinheiro cotidiano.",
+      "minimumInputs": [
+        "Perfil natal próprio consentido",
+        "Situação da mudança ou intenção de morar junto",
+        "Hábitos próprios e hábitos já observados da outra pessoa",
+        "Uma afinidade e uma preocupação concreta sobre rotina"
+      ],
+      "optionalInputs": [
+        "Não exige cadastro, consentimento de cálculo ou respostas do parceiro, pois não calcula seu mapa"
+      ],
+      "method": "Leitura individual de fatores natais definidos para rotina e necessidade de espaço, combinada com hábitos observados relatados por quem compra. Separar observação e hipótese; os três acordos são propostas negociáveis, não declarações sobre o parceiro.",
+      "methodSummary": "Leitura individual do mapa de quem compra, combinada a hábitos já observados, para organizar uma afinidade, um possível atrito e três propostas de acordo antes da mudança.",
+      "sampleInput": "Ivo e seu par gostam de cozinhar juntos. Ivo trabalha cedo e observou que o par costuma receber amigos à noite. Estão pensando em dividir a casa.",
+      "sampleDelivery": "Afinidade: cozinhar juntos. Possível atrito: horário de descanso e visitas. Três propostas para negociar: combinar noites de visita, dividir a rotina da cozinha e rever os acordos após o primeiro mês. Abertura: ‘Quero que a casa funcione para nós dois. Como podemos cuidar do descanso e dos encontros?’ Amostra editorial individual, sem mapa do parceiro nem cálculo natal.",
+      "receive": [
+        "Uma afinidade sustentada pelos hábitos relatados",
+        "Um atrito provável e a observação que o motiva",
+        "Três propostas de acordo com responsabilidade, frequência e revisão",
+        "Uma frase para iniciar a conversa e uma pergunta ainda aberta"
+      ],
+      "closestExistingProductId": "synastry",
+      "difference": "A sinastria compara dois mapas para compreender a relação. Este retrato individual transforma hábitos observados em três acordos de convivência antes da mudança, sem depender do parceiro.",
+      "limits": [
+        "Não determina compatibilidade nem garante convivência",
+        "Não atribui hábitos ao parceiro pelo mapa de quem compra",
+        "Acordos só existem após aceitação de ambos"
+      ],
+      "inputSchema": {
+        "birthProfile": "perfil próprio",
+        "moveContext": "Texto curto",
+        "ownHabits": "Texto curto",
+        "observedPartnerHabits": "Texto curto",
+        "affinity": "Texto curto",
+        "concern": "Texto curto"
+      },
+      "deliverySchema": {
+        "methodVersion": "string",
+        "natalFacts": "manifesto",
+        "affinity": "texto + observação",
+        "friction": "hipótese + observação",
+        "agreements": [
+          {
+            "proposal": "texto",
+            "responsibility": "a negociar",
+            "frequency": "texto",
+            "review": "texto"
+          },
+          {
+            "proposal": "texto",
+            "responsibility": "a negociar",
+            "frequency": "texto",
+            "review": "texto"
+          },
+          {
+            "proposal": "texto",
+            "responsibility": "a negociar",
+            "frequency": "texto",
+            "review": "texto"
+          }
+        ],
+        "openingPhrase": "texto",
+        "openQuestion": "texto"
+      },
+      "publicInputs": [
+        "Seus dados de nascimento",
+        "Hábitos que você reconhece em si e observa no parceiro",
+        "Uma afinidade e uma preocupação sobre morar juntos"
+      ]
+    }
+  ]
+}
