@@ -1,15 +1,42 @@
-import { error, fail } from '@sveltejs/kit';
+import { error, fail, redirect } from '@sveltejs/kit';
 import { atvPlusPlanFor } from '@atv/domain';
 import { plusOwnerIdentity, plusState, plusWriteError } from '$lib/server/atv-plus';
 import { validTrialId } from '$lib/server/private-trials';
+import {
+	commercialPageState,
+	completeCommercialOnboarding,
+	commercialCheckoutEnabled,
+	startCommercialCheckout
+} from '$lib/server/atv-plus-commercial-page';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals, setHeaders }) => {
+export const load: PageServerLoad = async ({ locals, platform, setHeaders }) => {
 	setHeaders({ 'cache-control': 'private, no-store' });
-	return { ...(await plusState(locals)), requestKey: crypto.randomUUID(), serverNow: Date.now() };
+	const [evaluation, commercial] = await Promise.all([
+		plusState(locals),
+		commercialPageState(locals, commercialCheckoutEnabled(platform))
+	]);
+	return { ...evaluation, commercial, requestKey: crypto.randomUUID(), serverNow: Date.now() };
 };
 
 export const actions: Actions = {
+	checkout: async ({ locals, platform, request, url }) => {
+		if (request.headers.get('origin') !== url.origin) error(403, 'Origem inválida.');
+		const fields = await request.formData();
+		const result = await startCommercialCheckout(
+			locals,
+			String(fields.get('offerId') ?? ''),
+			commercialCheckoutEnabled(platform)
+		);
+		if (result.status !== 200) return fail(result.status, { commercialMessage: result.message });
+		redirect(303, result.checkoutUrl, { external: ['https://pay.hotmart.com'] });
+	},
+	onboard: async ({ locals, request, url }) => {
+		if (request.headers.get('origin') !== url.origin) error(403, 'Origem inválida.');
+		const result = await completeCommercialOnboarding(locals, await request.formData());
+		if (result.status !== 200) return fail(result.status, { commercialMessage: result.message });
+		return { commercialMessage: result.message };
+	},
 	start: async (event) => {
 		if (event.request.headers.get('origin') !== event.url.origin)
 			error(403, 'Origem da solicitação inválida.');

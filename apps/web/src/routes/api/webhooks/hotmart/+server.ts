@@ -5,8 +5,11 @@ import { createClient } from '@supabase/supabase-js';
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }) => {
-	if (privateEnv.FEATURE_HOTMART_LIVE !== 'true')
+export const POST: RequestHandler = async ({ request, platform }) => {
+	const setting = (name: string) =>
+		(platform?.env as unknown as Record<string, unknown> | undefined)?.[name] ??
+		(privateEnv as Record<string, unknown>)[name];
+	if (setting('FEATURE_HOTMART_LIVE') !== 'true')
 		return json({ accepted: false, code: 'integration_disabled' }, { status: 503 });
 	const hottok = request.headers.get('x-hotmart-hottok') ?? request.headers.get('hottok');
 	if (!(await verifyHotmartHottok(hottok, privateEnv.HOTMART_HOTTOK ?? '')))
@@ -57,5 +60,12 @@ export const POST: RequestHandler = async ({ request }) => {
 		return json({ accepted: false, code: 'storage_error' }, { status: 503 });
 	if (stored.event_type !== notification.event || stored.payload_hash !== payloadHash)
 		return json({ accepted: false, code: 'event_id_conflict' }, { status: 409 });
+	if (setting('FEATURE_ATV_PLUS_COMMERCIAL') === 'true') {
+		const { error: transitionError } = await supabase.rpc('process_atv_plus_hotmart_event', {
+			p_external_event_id: notification.id
+		});
+		if (transitionError)
+			return json({ accepted: false, code: 'processing_unavailable' }, { status: 503 });
+	}
 	return json({ accepted: true }, { status: 202 });
 };
