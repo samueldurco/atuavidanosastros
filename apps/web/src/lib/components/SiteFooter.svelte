@@ -11,6 +11,9 @@
 			<BrandLogo compact />
 		</div>
 		<nav class="footer-links" aria-label="Informações e atendimento">
+			<a href="/explorar">Explorar</a>
+			<a href="/temas">Por temas</a>
+			<a href="/signos">Por signos</a>
 			<a href="/leituras">Produtos digitais</a>
 			<a href="/loja">Produtos físicos</a>
 			<a href="/atv-mais">ATV+ · Assinatura</a>

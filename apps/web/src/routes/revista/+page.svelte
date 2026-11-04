@@ -141,10 +141,10 @@
 			<p>
 				{data.total
 					? 'Tente outra palavra ou volte a todos os assuntos.'
-					: 'Enquanto isso, conheça os seis universos e escolha por onde começar.'}
+					: 'Enquanto isso, explore os temas e signos e escolha por onde começar.'}
 			</p>
-			<a class="button secondary" href={data.total ? '/revista' : '/temas'}
-				>{data.total ? 'Ver todos os artigos' : 'Explorar os universos'}</a
+			<a class="button secondary" href={data.total ? '/revista' : '/explorar'}
+				>{data.total ? 'Ver todos os artigos' : 'Explorar temas e signos'}</a
 			>
 		</div>
 	{/if}
@@ -157,16 +157,16 @@
 			<p>
 				{currentTopic
 					? currentTopic.description
-					: 'As ferramentas são um primeiro contato com os seis universos. Escolha um tema e veja o que pode descobrir.'}
+					: 'As ferramentas são um primeiro contato com nossos temas. Escolha um assunto e veja o que pode descobrir.'}
 			</p>
 		</div>
 		<div class="next-actions">
 			{#if currentTopic}<a class="button" href={currentTopic.toolHref}
 					>{currentTopic.action} <span aria-hidden="true">↗</span></a
-				><a href={currentTopic.href}>Conhecer as leituras deste universo</a>{:else}<a
+				><a href={currentTopic.href}>Conhecer as leituras deste tema</a>{:else}<a
 					class="button"
 					href="/ferramentas">Explorar ferramentas grátis <span aria-hidden="true">↗</span></a
-				><a href="/temas">Conhecer os seis universos</a>{/if}
+				><a href="/explorar">Explorar temas e signos</a>{/if}
 		</div>
 	</aside>
 </section>

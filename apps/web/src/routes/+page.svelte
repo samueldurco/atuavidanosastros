@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { atvPlusPlans } from '@atv/domain';
 	import { SITE, universes } from '$lib/data/site';
-	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
+	import { mvpArt } from '$lib/data/mvp-visual';
 	import { customerProduct } from '$lib/data/product-copy';
 	import { editorialTopic } from '$lib/data/editorial-topics';
-	import { homeArticleArt, homeUniverseArt } from '$lib/home-art';
+	import { homeArticleArt } from '$lib/home-art';
 	import FreeToolsCollection from '$lib/components/free-tools/FreeToolsCollection.svelte';
 	import HomeExplore from '$lib/components/explore/HomeExplore.svelte';
 	import HomeReadings from '$lib/components/home/HomeReadings.svelte';
@@ -147,38 +147,7 @@
 	</section>
 	<LaunchHighlights />
 	<HomeExplore />
-	<section class="home-section universe-section" id="universos" aria-labelledby="universes-heading">
-		<div class="home-wrap">
-			<header class="home-section-head">
-				<div>
-					<p class="eyebrow">06 / Seis universos</p>
-					<h2 id="universes-heading">Encontre o seu <em>assunto.</em></h2>
-				</div>
-				<p>Do seu céu aos símbolos dos sonhos, encontre um lugar para a sua curiosidade.</p>
-			</header>
-			<div class="home-universe-grid">
-				{#each universes as universe, index (universe.slug)}
-					{@const theme = mvpThemes[universe.slug]}
-					<article
-						class="home-universe"
-						style={`--universe-ink:${theme.ink};--universe-tint:${theme.tint}`}
-					>
-						<a class="universe-main" href={universe.href}
-							><span class="universe-number">{String(index + 1).padStart(2, '0')}</span><img
-								src={homeUniverseArt[universe.slug]}
-								alt=""
-								width="720"
-								height="480"
-								loading="lazy"
-							/><span class="eyebrow">{universe.eyebrow}</span>
-							<h3>{universe.slug === 'amor' ? 'Amor e relações' : universe.title}</h3>
-							<span class="universe-arrow" aria-hidden="true">↗</span></a
-						>
-					</article>
-				{/each}
-			</div>
-		</div>
-	</section>
+
 	<section class="home-section magazine-section" id="revista" aria-labelledby="magazine-heading">
 		<div class="home-wrap">
 			<header class="home-section-head">

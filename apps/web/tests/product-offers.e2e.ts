@@ -33,7 +33,7 @@ test('Mapa Astral stays recognizable from homepage to its offer on mobile', asyn
 	await page.goto('/');
 	await page.getByRole('button', { name: 'Recusar opcionais', exact: true }).click();
 	await page
-		.locator('#universos')
+		.locator('#explorar')
 		.getByRole('link', { name: /Mapa astral/i })
 		.click();
 	await expect(page).toHaveURL(/\/temas\/mapa-astral$/);

@@ -22,7 +22,7 @@
 					<p class="explore-eyebrow">
 						{data.sign.glyph} · {data.sign.element} · {data.sign.approximateDates}
 					</p>
-					<h1>O universo de <em>{data.sign.name}.</em></h1>
+					<h1>Explore <em>{data.sign.name}.</em></h1>
 					<p class="explore-lead">
 						Consulte as previsões de {data.sign.name}, descubra outros pontos do seu mapa e encontre
 						uma nova leitura para o seu momento.

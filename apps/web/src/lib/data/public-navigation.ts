@@ -91,9 +91,19 @@ export const interestNavigation = [
 
 export const explorationNavigation = [
 	{
+		href: '/explorar',
+		label: 'Explorar',
+		description: 'Encontre conteúdos, ferramentas e experiências por temas ou signos.'
+	},
+	{
 		href: '/temas',
-		label: 'Seis universos',
-		description: 'Encontre ferramentas, leituras digitais e artigos por assunto.'
+		label: 'Por temas',
+		description: 'Mapa astral, previsões, amor, carreira, Tarot e sonhos.'
+	},
+	{
+		href: '/signos',
+		label: 'Por signos',
+		description: 'Conheça os doze signos e encontre conteúdos para cada um.'
 	},
 	{
 		href: '/ferramentas',
@@ -127,7 +137,7 @@ export const offerNavigation = [
 
 export const navigationGroups = [
 	{ id: 'produtos', label: 'Produtos e assinatura', links: offerNavigation },
-	{ id: 'explorar', label: 'Comece e explore', links: explorationNavigation }
+	{ id: 'explorar', label: 'Explorar', links: explorationNavigation }
 ] as const;
 
 export const primaryNavigation = [...explorationNavigation, ...offerNavigation];

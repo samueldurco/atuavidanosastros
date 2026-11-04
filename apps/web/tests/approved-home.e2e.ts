@@ -206,9 +206,7 @@ for (const width of [320, 390, 768, 1440]) {
 			path: testInfo.outputPath(`integrated-atv-plus-${width}.png`)
 		});
 		for (const universe of universes)
-			await expect(
-				page.locator(`#universos .universe-main[href="${universe.href}"]`)
-			).toBeVisible();
+			await expect(page.locator(`#explorar .explore-theme[href="${universe.href}"]`)).toBeVisible();
 		const magazine = page.locator('#revista .home-article');
 		await expect(magazine).toHaveCount(3);
 		for (const article of await magazine.all()) {

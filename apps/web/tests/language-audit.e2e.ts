@@ -55,7 +55,7 @@ test('home CTA introduces the requested map and cookie preferences remain access
 }) => {
 	await page.goto('/');
 	await expect(
-		page.locator('#universos').getByRole('link', { name: /Mapa astral/i })
+		page.locator('#explorar').getByRole('link', { name: /Mapa astral/i })
 	).toHaveAttribute('href', '/temas/mapa-astral');
 	await page.evaluate(() => ((window as Window & { taskMarker?: string }).taskMarker = 'active'));
 	await page.getByRole('button', { name: 'Recusar opcionais' }).click();

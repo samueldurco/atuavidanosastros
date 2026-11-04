@@ -347,78 +347,6 @@
 	color: #d7ded7;
 	margin: 0;
 }
-.approved-home .universe-section {
-	background: #e7e8dbb3;
-	border-bottom: 1px solid #18374635;
-}
-.approved-home .home-universe-grid {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 16px;
-}
-.approved-home .home-universe {
-	min-width: 0;
-	background: var(--universe-tint);
-	border: 1px solid color-mix(in srgb, var(--universe-ink) 35%, transparent);
-}
-.approved-home .universe-main {
-	position: relative;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: end;
-	aspect-ratio: 3 / 2;
-	min-height: 232px;
-	overflow: hidden;
-	padding: 24px;
-	color: #fff8e9;
-	text-decoration: none;
-	isolation: isolate;
-}
-.approved-home .universe-main:after {
-	content: '';
-	position: absolute;
-	inset: 0;
-	z-index: -1;
-	background: linear-gradient(90deg, #071d2880, #071d281a 62%, transparent 83%);
-}
-.approved-home .universe-main img {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	z-index: -1;
-	transition: transform 300ms ease;
-}
-.approved-home .universe-main:hover img {
-	transform: scale(1.035);
-}
-.approved-home .universe-number {
-	position: absolute;
-	top: 22px;
-	left: 24px;
-	font-size: 12px;
-}
-.approved-home .universe-main .eyebrow {
-	font-size: 10px;
-	margin: 0 0 6px;
-	position: relative;
-}
-.approved-home .universe-main h3 {
-	font: 500 28px/1.03 var(--atv-font-display);
-	max-width: 185px;
-	margin: 0;
-	padding-right: 12px;
-	position: relative;
-	text-wrap: balance;
-}
-.approved-home .universe-arrow {
-	position: absolute;
-	bottom: 24px;
-	right: 18px;
-	font-size: 22px;
-}
 .approved-home .home-article-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -505,9 +433,6 @@
 	}
 	.approved-home .plus-plan h3 {
 		font-size: 23px;
-	}
-	.approved-home .home-universe-grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 	.approved-home .home-article-grid {
 		gap: 20px;
@@ -626,15 +551,7 @@
 		grid-template-columns: 1fr;
 	}
 }
-@media (max-width: 600px) {
-	.approved-home .home-universe-grid {
-		grid-template-columns: 1fr;
-		gap: 14px;
-	}
-	.approved-home .universe-main {
-		min-height: 210px;
-	}
-}
+
 @media (max-width: 480px) {
 	.approved-home .home-wrap,
 	.approved-home #ferramentas > .wrap {

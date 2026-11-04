@@ -7,7 +7,9 @@
 <div class="mvp-public">
 	<section class="universes-overview-hero">
 		<div class="wrap universes-overview-copy">
-			<p class="eyebrow"><a href="/explorar">Explorar</a> / Por temas</p>
+			<nav class="eyebrow" aria-label="Caminho da página">
+				<a href="/explorar">Explorar</a> / <span aria-current="page">Temas</span>
+			</nav>
 			<h1>Um céu, diferentes caminhos.</h1>
 			<p class="lead">
 				Mapa astral, previsões, amor, carreira, Tarot e sonhos. Cada tema reúne ferramentas grátis,
