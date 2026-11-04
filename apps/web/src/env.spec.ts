@@ -50,7 +50,22 @@ const privateBindings = [
 	'FREE_TOOL_RECEIPT_KEY',
 	'FEATURE_HOTMART_LIVE',
 	'HOTMART_HOTTOK',
-	'FEATURE_MAGIC_LINK'
+	'FEATURE_MAGIC_LINK',
+	'AUTOMATIC_SPEND_CAP_BRL',
+	'FEATURE_ATV_PLUS_COMMERCIAL',
+	'FEATURE_WHATSAPP_WEBHOOK',
+	'FEATURE_WHATSAPP_CONSULTATION',
+	'FEATURE_WHATSAPP_PUBLIC_ENTRY',
+	'WHATSAPP_ACCESS_TOKEN',
+	'WHATSAPP_APP_SECRET',
+	'WHATSAPP_WABA_ID',
+	'WHATSAPP_PHONE_NUMBER_ID',
+	'WHATSAPP_GRAPH_VERSION',
+	'WHATSAPP_WEBHOOK_VERIFY_TOKEN',
+	'WHATSAPP_COMMERCIAL_NUMBER',
+	'WHATSAPP_CONSULTATION_SUBJECT_SECRET',
+	'WHATSAPP_CONSULTATION_VERIFIED_AT',
+	'WHATSAPP_CONSULTATION_FREE_REPLY_VERIFIED'
 ];
 
 it('keeps the generated dynamic environment available with an explicit public boundary', () => {
@@ -82,6 +97,28 @@ it('declares all runtime bindings consumed by the shop server as private', async
 		for (const match of source.matchAll(/\benv\.([A-Z][A-Z0-9_]+)\b/g)) {
 			expect(Object.hasOwn(privateEnv, match[1]), name + ': ' + match[1]).toBe(true);
 			expect(Object.hasOwn(publicEnv, match[1]), name + ': ' + match[1]).toBe(false);
+		}
+	}
+});
+
+it('declares the WhatsApp entry, webhook and commercial gates without exposing them publicly', async () => {
+	for (const path of [
+		'./lib/server/whatsapp-entry.ts',
+		'./routes/api/webhooks/whatsapp/+server.ts',
+		'./lib/server/atv-plus-commercial-page.ts'
+	]) {
+		const source = await readFile(new URL(path, import.meta.url), 'utf8');
+		for (const match of source.matchAll(
+			/\b(?:settings|runtime)\.([A-Z][A-Z0-9_]+)\b|\bsetting\(event,\s*'([A-Z][A-Z0-9_]+)'/g
+		)) {
+			const binding = match[1] ?? match[2];
+			const exposed = publicBindings.includes(binding);
+			expect(Object.hasOwn(exposed ? publicEnv : privateEnv, binding), path + ': ' + binding).toBe(
+				true
+			);
+			expect(Object.hasOwn(exposed ? privateEnv : publicEnv, binding), path + ': ' + binding).toBe(
+				false
+			);
 		}
 	}
 });
