@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { isLaunchProductId, productTrialHref } from '@atv/domain';
 import { customerOffers } from '../src/lib/data/product-copy';
 import { scanAccessibility as scan } from './fixtures/accessibility';
 
@@ -133,10 +134,23 @@ for (const width of [320, 1440]) {
 		await page.locator('.nav-trigger[aria-controls="nav-produtos"]').click();
 		await page.locator('#nav-produtos .nav-item[href="/leituras"]').click();
 		await expect(page).toHaveURL('/leituras');
-		await expect(page.locator('.public-product-card')).toHaveCount(customerOffers.length);
+		expect(customerOffers).toHaveLength(30);
+		await expect(page.locator('.public-product-card')).toHaveCount(30);
 		await expect(
 			page.locator('.public-product-card').getByText('Em preparação', { exact: true })
-		).toHaveCount(customerOffers.length);
+		).toHaveCount(19);
+		await expect(
+			page.locator('.public-product-card').getByText('Teste gratuito disponível', { exact: true })
+		).toHaveCount(11);
+		const launchOffers = customerOffers.filter((product) => isLaunchProductId(product.id));
+		expect(launchOffers).toHaveLength(11);
+		for (const product of launchOffers) {
+			const card = page.locator(`.public-product-card:has(h3 a[href="${product.href}"])`);
+			await expect(card.locator('.badge')).toHaveText('Teste gratuito disponível');
+			await expect(
+				card.getByRole('link', { name: `Testar ${product.name} grátis` })
+			).toHaveAttribute('href', productTrialHref(product.id));
+		}
 		const topic = page.getByRole('navigation', { name: 'Temas das leituras' });
 		await topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true }).click();
 		await expect(page).toHaveURL('/leituras?tema=amor#catalogo');
