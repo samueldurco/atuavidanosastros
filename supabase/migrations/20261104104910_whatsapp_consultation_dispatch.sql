@@ -39,20 +39,31 @@ begin
   end if;
   insert into public.whatsapp_consultation_sessions(subject_key) values(p_subject_key) on conflict do nothing;
   select * into s from public.whatsapp_consultation_sessions where subject_key=p_subject_key for update;
+  -- Reconcile a crashed sender even when the redelivery is the same event ID.
+  -- A duplicate never becomes claimable or causes another outbound request.
+  if s.active_event is not null and (s.active_since is null or s.active_since <= now()-interval '2 minutes') then
+    update public.whatsapp_consultation_dispatches set state='NEEDS_RECONCILIATION',completed_at=now()
+      where external_event_id=s.active_event and state='SENDING';
+    if found then
+      update public.webhook_inbox set processing_state='QUARANTINED',processed_at=now(),last_error_code='needs_reconciliation'
+        where provider='whatsapp' and external_event_id=s.active_event;
+    end if;
+    s.state := '{"step":"menu"}'::jsonb;
+    s.active_event := null;
+    s.active_since := null;
+    update public.whatsapp_consultation_sessions set state=s.state,active_event=null,active_since=null
+      where subject_key=p_subject_key;
+  end if;
+  -- Keep an in-flight redelivery retryable until it is completed or reconciled.
+  -- Returning duplicate here would acknowledge a crashed send before its lease expires.
+  if exists(select 1 from public.whatsapp_consultation_dispatches where external_event_id=p_event_id and state='SENDING') then
+    return jsonb_build_object('result','busy');
+  end if;
   if exists(select 1 from public.whatsapp_consultation_dispatches where external_event_id=p_event_id) then
     return jsonb_build_object('result','duplicate');
   end if;
-  if s.active_event is not null and s.active_since > now()-interval '2 minutes' then
-    return jsonb_build_object('result','busy');
-  end if;
   if s.active_event is not null then
-    update public.whatsapp_consultation_dispatches set state='NEEDS_RECONCILIATION',completed_at=now()
-      where external_event_id=s.active_event and state='SENDING';
-    update public.webhook_inbox set processing_state='QUARANTINED',processed_at=now(),last_error_code='needs_reconciliation'
-      where provider='whatsapp' and external_event_id=s.active_event;
-    s.state := '{"step":"menu"}'::jsonb;
-    update public.whatsapp_consultation_sessions set state=s.state,active_event=null,active_since=null
-      where subject_key=p_subject_key;
+    return jsonb_build_object('result','busy');
   end if;
   if s.expires_at < now() then s.state := '{"step":"menu"}'::jsonb; end if;
   if p_timestamp < s.last_timestamp or to_timestamp(p_timestamp) < now()-interval '24 hours'

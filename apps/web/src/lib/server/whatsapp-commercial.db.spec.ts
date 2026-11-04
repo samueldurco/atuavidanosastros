@@ -59,9 +59,10 @@ it('requires a durable verified message and rejects statuses', async () => {
 
 it('claims a durable event once and serializes different events for a subject', async () => {
 	expect(await claim()).toEqual({ result: 'claimed', state: { step: 'menu' } });
-	expect(await claim()).toEqual({ result: 'duplicate' });
+	expect(await claim()).toEqual({ result: 'busy' });
 	expect(await claim(second)).toEqual({ result: 'busy' });
 	await complete();
+	expect(await claim()).toEqual({ result: 'duplicate' });
 	expect(await claim(second)).toEqual({ result: 'claimed', state: { step: 'question' } });
 	const result = await db.query<{ attempts: number }>(
 		'select attempts from public.webhook_inbox where external_event_id=$1',
@@ -115,6 +116,51 @@ it('failed or uncertain sends never become automatically claimable', async () =>
 		[event]
 	);
 	expect(inbox.rows[0].processing_state).toBe('QUARANTINED');
+});
+
+it('redelivery of the same event after two minutes quarantines the stale send without claiming again', async () => {
+	expect((await claim()).result).toBe('claimed');
+	await db.query(
+		"update public.whatsapp_consultation_sessions set active_since=now()-interval '10 seconds' where subject_key=$1",
+		[subject]
+	);
+	expect(await claim()).toEqual({ result: 'busy' });
+	await db.query(
+		"update public.whatsapp_consultation_sessions set active_since=now()-interval '2 minutes' where subject_key=$1",
+		[subject]
+	);
+	expect(await claim()).toEqual({ result: 'duplicate' });
+	expect(await claim()).toEqual({ result: 'duplicate' });
+	const dispatch = await db.query<{ state: string; completed_at: unknown }>(
+		'select state,completed_at from public.whatsapp_consultation_dispatches where external_event_id=$1',
+		[event]
+	);
+	expect(dispatch.rows[0]).toEqual({
+		state: 'NEEDS_RECONCILIATION',
+		completed_at: expect.anything()
+	});
+	const inbox = await db.query<{
+		processing_state: string;
+		attempts: number;
+		last_error_code: string;
+	}>(
+		'select processing_state,attempts,last_error_code from public.webhook_inbox where external_event_id=$1',
+		[event]
+	);
+	expect(inbox.rows[0]).toEqual({
+		processing_state: 'QUARANTINED',
+		attempts: 1,
+		last_error_code: 'needs_reconciliation'
+	});
+	const session = await db.query<{ state: unknown; active_event: null; active_since: null }>(
+		'select state,active_event,active_since from public.whatsapp_consultation_sessions where subject_key=$1',
+		[subject]
+	);
+	expect(session.rows[0]).toEqual({
+		state: { step: 'menu' },
+		active_event: null,
+		active_since: null
+	});
 });
 
 it('state permits only finite enum/choice IDs and refuses raw conversation fields', async () => {

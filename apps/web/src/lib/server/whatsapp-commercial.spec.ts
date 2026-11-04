@@ -23,7 +23,7 @@ function fixture() {
 	const claims = new Set<string>();
 	const complete = vi.fn<ConsultationStore['complete']>(async () => undefined);
 	const store: ConsultationStore = {
-		claim: vi.fn(async (id) => {
+		claim: vi.fn<ConsultationStore['claim']>(async (id) => {
 			if (claims.has(id)) return { result: 'duplicate' };
 			claims.add(id);
 			return { result: 'claimed', state: { step: 'menu' } };

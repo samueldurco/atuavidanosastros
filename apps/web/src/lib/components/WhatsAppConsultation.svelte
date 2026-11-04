@@ -78,7 +78,8 @@
 		display: none;
 	}
 	.buying,
-	:global(.mvp-experience:has(aside.consent[aria-label='Preferências de cookies'])) .whatsapp-consultation,
+	:global(.mvp-experience:has(aside.consent[aria-label='Preferências de cookies']))
+		.whatsapp-consultation,
 	:global(.mvp-experience:has(.mobile-menu[aria-expanded='true'])) .whatsapp-consultation {
 		visibility: hidden;
 		pointer-events: none;

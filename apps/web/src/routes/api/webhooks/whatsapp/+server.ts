@@ -11,7 +11,8 @@ import {
 	WhatsAppWebhookError
 } from '$lib/server/whatsapp-webhook';
 import { extractWhatsAppInboundMessages } from '$lib/server/whatsapp-webhook';
-import { createConsultationCatalogue } from '$lib/server/whatsapp-consultation';
+import { loadConsultationCatalogue } from '$lib/server/whatsapp-catalogue';
+import { commercialCheckoutEnabled } from '$lib/server/atv-plus-commercial-page';
 import {
 	createCloudApiConsultationSender,
 	createConsultationStore,
@@ -110,12 +111,13 @@ export const POST: RequestHandler = async (event) => {
 				return reject('consultation_configuration_unavailable', 503);
 			const store = createConsultationStore(supabase);
 			const sender = createCloudApiConsultationSender({ accessToken, phoneNumberId, graphVersion });
-			const catalogue = createConsultationCatalogue({
+			const catalogue = await loadConsultationCatalogue({
+				client: supabase,
+				checkoutEnabled: commercialCheckoutEnabled(event.platform),
 				verifiedFreeToolIds: setting(event, 'WHATSAPP_CONSULTATION_VERIFIED_FREE_TOOLS')
 					.split(',')
 					.map((id) => id.trim())
 					.filter(Boolean)
-				// Paid offers remain absent until a current P01/P02 authoritative checkout snapshot exists.
 			});
 			for (const message of messages.sort((a, b) => a.timestamp - b.timestamp)) {
 				const result = await handleConsultationMessage({

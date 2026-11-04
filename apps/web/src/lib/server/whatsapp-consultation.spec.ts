@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { atvPlusCommercialPlans } from '@atv/domain';
 import {
 	createConsultationCatalogue,
 	replyToConsultation,
@@ -43,12 +44,19 @@ const offer = (productId: string, href: string): ConsultationOffer => ({
 	timingText: 'O prazo vigente aparece na ficha antes do pagamento.',
 	deliveryText: 'Biblioteca da conta no site.'
 });
+const atvPlusOffer: ConsultationOffer = {
+	...offer('atv-plus', '/atv-mais'),
+	priceText: 'ATV+ Essencial · 3 meses: R$ 60,00 pelo período (valor sintético para teste).',
+	timingText:
+		'Próxima Revolução Solar após contratação, cadastro e confirmação do WhatsApp; demais previsões nas datas futuras da programação do plano.',
+	deliveryText: 'PDF no WhatsApp confirmado no site, com consentimento de envio.'
+};
 const offers = [
 	offer('synastry', '/produtos/analise-astral-do-casal'),
 	offer('week-reading', '/produtos/horoscopo-semanal-pessoal'),
 	offer('purpose-career', '/produtos/mapa-astral-dinheiro-carreira'),
 	offer('tarot-situation-challenge-advice', '/produtos/tarot-3-cartas'),
-	offer('atv-plus', '/atv-mais'),
+	atvPlusOffer,
 	...launchProducts.map(({ id, href }) => offer(id, href))
 ];
 const catalogue = () =>
@@ -193,6 +201,39 @@ describe('WhatsApp consultation journeys', () => {
 		expect(recurring.productId).toBe('atv-plus');
 		expect(recurring.destination).toBe('https://atuavidanosastros.com.br/atv-mais');
 		expect(recurring.reply).toContain('programação do plano');
+	});
+	it('describes the commercial ATV+ plans and only the authorized price, timing and delivery', () => {
+		const recurring = reply('Quero receber previsões toda semana');
+		expect(recurring.productId).toBe('atv-plus');
+		for (const plan of atvPlusCommercialPlans) {
+			expect(recurring.reply).toContain(`${plan.name}: ${plan.description}`);
+			for (const benefit of plan.benefits.filter((value) => value.includes('de presente')))
+				expect(recurring.reply).toContain(benefit);
+		}
+		expect(recurring.reply).toContain('Vigências de 3, 6 ou 12 meses');
+		expect(recurring.reply).toContain('pagamento único e renovação por nova contratação');
+		expect(recurring.reply).toContain('inclusive no trimestral com aniversário após a vigência');
+		expect(recurring.reply).toContain(`Preço: ${atvPlusOffer.priceText}`);
+		expect(recurring.reply).toContain(`Prazo: ${atvPlusOffer.timingText}`);
+		expect(recurring.reply).toContain(`Entrega: ${atvPlusOffer.deliveryText}`);
+		expect(recurring.reply).toContain('Sem consultas individuais, perguntas ao leitor ou grupos');
+		expect(recurring.reply).not.toMatch(
+			/24\s*(horas|h)|a cada 30 dias|avaliação privada|e-mail|Biblioteca/
+		);
+		expect(recurring.reply.length).toBeLessThan(4096);
+	});
+	it('keeps ATV+ enrollment and birth data on the site and refuses an unavailable subscription', () => {
+		const text = 'Quero receber previsões regularmente, nasci em 04/11/1990 às 08h em São Paulo';
+		const recurring = reply(text);
+		expect(recurring.reply).toContain('No site: sua conta, plano e duração');
+		expect(recurring.reply).toContain('confirmação dos dados e do WhatsApp, com consentimento');
+		expect(recurring.reply).toContain('Não envie esses dados nesta conversa');
+		expect(recurring.reply).not.toContain('04/11/1990');
+		expect(JSON.stringify(recurring.state)).not.toMatch(/1990|08h|São Paulo/);
+		const unavailable = reply(text, recurring.state, createConsultationCatalogue());
+		expect(unavailable.destination).toBeUndefined();
+		expect(unavailable.productId).toBeUndefined();
+		expect(unavailable.reply).not.toContain(atvPlusOffer.priceText);
 	});
 	it('routes concrete ceremony options only after the launch has been registered and released', () => {
 		const result = reply('Tenho duas datas para a cerimônia');

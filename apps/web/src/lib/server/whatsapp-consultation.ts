@@ -1,3 +1,4 @@
+import { atvPlusCommercialPlans } from '@atv/domain';
 import { customerProduct } from '../data/product-copy';
 import { productDetails } from '../data/product-details';
 import { freeToolById, freeTools } from '../data/free-tools';
@@ -56,6 +57,21 @@ const universeTopic: Record<string, string> = {
 	'sonhos-simbolos': 'sonhos',
 	global: 'ciclos'
 };
+// Commercial ATV+ has a scheduled service; the legacy 30-day evaluation is not its offer.
+const atvPlusDetail = {
+	scope:
+		atvPlusCommercialPlans
+			.map((plan) =>
+				[
+					`${plan.name}: ${plan.description}`,
+					...plan.benefits.filter((benefit) => benefit.includes('de presente'))
+				].join(' ')
+			)
+			.join(' ') +
+		' Vigências de 3, 6 ou 12 meses, com pagamento único e renovação por nova contratação. Próxima Revolução Solar após contratação e cadastro, inclusive no trimestral com aniversário após a vigência. Previsões programadas conforme o plano, em PDF pelo WhatsApp. Sem consultas individuais, perguntas ao leitor ou grupos.',
+	input:
+		'No site: sua conta, plano e duração; data, hora e cidade de nascimento; cidade para a próxima Revolução Solar; confirmação dos dados e do WhatsApp, com consentimento de envio. Não envie esses dados nesta conversa.'
+};
 
 /** P02 may register new IDs from its canonical catalog without activating an offer here. */
 export function createConsultationCatalogue({
@@ -75,7 +91,10 @@ export function createConsultationCatalogue({
 	for (const offer of offers) {
 		if (!offer.available || !offer.checkoutAvailable) continue;
 		const product = customerProduct(offer.productId);
-		const detail = productDetails[offer.productId as keyof typeof productDetails];
+		const detail =
+			offer.productId === 'atv-plus'
+				? atvPlusDetail
+				: productDetails[offer.productId as keyof typeof productDetails];
 		const registered = registeredProducts.find((item) => item.id === offer.productId);
 		const definition =
 			product && detail
