@@ -1,6 +1,7 @@
 export * from "./catalog.ts";
 export * from "./atv-plus-plans.ts";
 export * from "./commerce.ts";
+export * from "./member-pricing.ts";
 export * from "./events.ts";
 export * from "./workflows.ts";
 export * from "./symbolic-calculations.ts";

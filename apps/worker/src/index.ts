@@ -25,9 +25,11 @@ export {
   prepareCareerCompassCandidate,
 } from "./career-compass-candidate.ts";
 export { processNextCareerCompassCandidate } from "./career-compass-persistence.ts";
+export { processAtvPlusDelivery, dispatchAtvPlusDue, selectAtvPlusNextSolarReturn } from './atv-plus-delivery.ts';
+import { processAtvPlusDelivery, type AtvPlusDeliveryRuntime } from './atv-plus-delivery.ts';
 
 export type WorkerJobName =
-  "hotmart.reconcile" | "delivery.render" | "email.dispatch" | "account.erase";
+  "hotmart.reconcile" | "delivery.render" | "email.dispatch" | "account.erase" | "atv_plus.generate";
 
 export interface WorkerJob<T = unknown> {
   id: string;
@@ -37,8 +39,15 @@ export interface WorkerJob<T = unknown> {
   correlationId: string;
 }
 
-export async function handleJob(job: WorkerJob): Promise<void> {
+export async function handleJob(job: WorkerJob, atvPlus?: AtvPlusDeliveryRuntime): Promise<void> {
   if (job.attempt < 0)
     throw new Error("A tentativa do job não pode ser negativa.");
+  if (job.name === 'atv_plus.generate' && atvPlus) {
+    const payload = job.payload as { deliveryId?: unknown } | null;
+    if (!payload || typeof payload.deliveryId !== 'string') throw new Error('delivery_input_invalid');
+    const outcome = await processAtvPlusDelivery(payload.deliveryId, atvPlus);
+    if (outcome === 'unavailable' || outcome === 'retry') throw new Error('delivery_processing_unavailable');
+    return;
+  }
   throw new Error(`Handler ainda não registrado para ${job.name}.`);
 }

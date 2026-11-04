@@ -23,6 +23,7 @@ const config = {
     AUTOMATIC_SPEND_CAP_BRL: "0",
     FEATURE_AI: "false",
     FEATURE_HOTMART_LIVE: "false",
+    FEATURE_ATV_PLUS_COMMERCIAL: "false",
     FEATURE_MAGIC_LINK: "false",
     FEATURE_PHYSICAL_CHECKOUT: "false",
   },
@@ -180,6 +181,8 @@ test("missing runtime bindings, invalid URL, disabled gates and plaintext secret
         "https://user:credential-do-not-print@synthetic.supabase.co",
     },
     { FEATURE_HOTMART_LIVE: "true" },
+    { FEATURE_ATV_PLUS_COMMERCIAL: "true" },
+    { FEATURE_ATV_PLUS_COMMERCIAL: undefined },
     { AUTOMATIC_SPEND_CAP_BRL: "1" },
     { SUPABASE_SERVICE_ROLE_KEY: "" },
   ])
@@ -336,6 +339,7 @@ test("reviewed physical commerce requires encrypted access and preserves zero-sp
     { AUTOMATIC_SPEND_CAP_BRL: "1" },
     { FEATURE_AI: "true" },
     { FEATURE_HOTMART_LIVE: "true" },
+    { FEATURE_ATV_PLUS_COMMERCIAL: "true" },
     { FEATURE_MAGIC_LINK: "true" },
   ]) {
     const result = preflightReport(

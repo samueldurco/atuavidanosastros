@@ -5,18 +5,25 @@ import { POST } from './+server';
 const mocks = vi.hoisted(() => ({
 	upsert: vi.fn(),
 	single: vi.fn(),
-	from: vi.fn()
+	from: vi.fn(),
+	rpc: vi.fn(),
+	commercialFlag: 'false'
 }));
 
 vi.mock('$env/dynamic/private', () => ({
 	env: {
 		FEATURE_HOTMART_LIVE: 'true',
 		HOTMART_HOTTOK: 'segredo',
-		SUPABASE_SERVICE_ROLE_KEY: 'role'
+		SUPABASE_SERVICE_ROLE_KEY: 'role',
+		get FEATURE_ATV_PLUS_COMMERCIAL() {
+			return mocks.commercialFlag;
+		}
 	}
 }));
 vi.mock('$env/dynamic/public', () => ({ env: { PUBLIC_SUPABASE_URL: 'https://local.example' } }));
-vi.mock('@supabase/supabase-js', () => ({ createClient: () => ({ from: mocks.from }) }));
+vi.mock('@supabase/supabase-js', () => ({
+	createClient: () => ({ from: mocks.from, rpc: mocks.rpc })
+}));
 
 const notification = { id: 'evt-1', event: 'PURCHASE_APPROVED', data: { test: true } };
 
@@ -32,6 +39,8 @@ function event(body: unknown) {
 
 beforeEach(() => {
 	vi.clearAllMocks();
+	mocks.commercialFlag = 'false';
+	mocks.rpc.mockResolvedValue({ data: { state: 'processed' }, error: null });
 	mocks.upsert.mockResolvedValue({ error: null });
 	const query = { eq: vi.fn().mockReturnThis(), single: mocks.single };
 	mocks.from.mockReturnValue({ upsert: mocks.upsert, select: vi.fn(() => query) });
@@ -51,6 +60,37 @@ it('keeps an identical replay in the inbox without replacing its state', async (
 		expect.objectContaining({ processing_state: 'RECEIVED' }),
 		{ onConflict: 'provider,external_event_id', ignoreDuplicates: true }
 	);
+	expect(mocks.rpc).not.toHaveBeenCalled();
+});
+
+it('transitions only the verified stored event when the commercial gate is enabled', async () => {
+	mocks.commercialFlag = 'true';
+	mocks.single.mockResolvedValue({
+		data: {
+			event_type: notification.event,
+			payload_hash: await sha256Hex(JSON.stringify(notification))
+		},
+		error: null
+	});
+	expect((await POST(event(notification))).status).toBe(202);
+	expect(mocks.rpc).toHaveBeenCalledWith('process_atv_plus_hotmart_event', {
+		p_external_event_id: notification.id
+	});
+});
+
+it('keeps a retryable error when the stored event cannot be processed', async () => {
+	mocks.commercialFlag = 'true';
+	mocks.single.mockResolvedValue({
+		data: {
+			event_type: notification.event,
+			payload_hash: await sha256Hex(JSON.stringify(notification))
+		},
+		error: null
+	});
+	mocks.rpc.mockResolvedValue({ data: null, error: { message: 'private diagnostic' } });
+	const response = await POST(event(notification));
+	expect(response.status).toBe(503);
+	expect(await response.json()).toEqual({ accepted: false, code: 'processing_unavailable' });
 });
 
 it('rejects an event ID reused with different content', async () => {

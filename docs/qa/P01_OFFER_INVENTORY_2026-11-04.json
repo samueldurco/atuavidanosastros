@@ -1,0 +1,339 @@
+{
+  "schema_version": 1,
+  "inspected_at_utc": "2026-11-04T09:44:15Z",
+  "run_id": "ATV-20260902-170644Z-01A0630F",
+  "scope": "P01 read-only commercial readiness; no provider mutation, deployment or message",
+  "source_baseline_sha": "52a759df453ba21ae40f322484ca332a70907d93",
+  "supabase": {
+    "project_id": "irgnhvouvzyoqfmltrna",
+    "status": "ACTIVE_HEALTHY",
+    "inspected_by": "dedicated MCP execute_sql SELECT only",
+    "active_price_versions_snapshot": {
+      "inspected_at_utc": "2026-11-04T09:47:31Z",
+      "query_scope": "price_versions joined to offers and products; status ACTIVE; product physical classification",
+      "active_total": 0,
+      "active_digital_total": 0,
+      "active_physical_total": 0,
+      "active_rows": [],
+      "all_status_counts": [
+        { "status": "DRAFT", "physical": true, "count": 6 }
+      ],
+      "conclusion": "No ACTIVE digital or physical offer price is registered in this Supabase snapshot. The six DRAFT physical prices do not authorize digital member pricing. Hotmart remote catalog remains unverified."
+    },
+    "atv_plus_products": [],
+    "atv_plus_offers": [],
+    "products_total": 6,
+    "active_products_total": 0,
+    "test_cycles_total": 0,
+    "purchases_total": 0,
+    "entitlements_total": 0,
+    "webhook_inbox_total": 0
+  },
+  "atv_plus_nine_pairs": [
+    {
+      "tier": "Essencial",
+      "term_months": 3,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Essencial",
+      "term_months": 6,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Essencial",
+      "term_months": 12,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Ampliado",
+      "term_months": 3,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Ampliado",
+      "term_months": 6,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Ampliado",
+      "term_months": 12,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Premium",
+      "term_months": 3,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Premium",
+      "term_months": 6,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    },
+    {
+      "tier": "Premium",
+      "term_months": 12,
+      "provider_product_id": null,
+      "provider_offer_code": null,
+      "currency": "BRL",
+      "approved_total_minor": null,
+      "billing_frequency": null,
+      "renewal_rule": null,
+      "registration_state": "BLOCKED_MISSING_APPROVED_COMMERCIAL_TERMS_AND_HOTMART_ACCESS"
+    }
+  ],
+  "hosted_existing_draft_offers": [
+    {
+      "id": "8c5859d7-aaa4-4f31-af63-e162c0b15cf1",
+      "product_id": "P06-AQU-EMB-A001-SWT01",
+      "code": "P06-AQU-EMB-A001-SWT01-BRL-V1",
+      "state": "DRAFT",
+      "checkout_provider": "hotmart",
+      "hotmart_product_id": null,
+      "hotmart_offer_code": null,
+      "starts_at": null,
+      "ends_at": null,
+      "price_versions": [
+        {
+          "id": "21e86ec9-09a1-4d62-9eaa-c5ace5521537",
+          "currency": "BRL",
+          "amount_minor": 39900,
+          "status": "DRAFT",
+          "valid_from": "2026-10-07 00:00:00+00",
+          "valid_until": null
+        }
+      ]
+    },
+    {
+      "id": "d835ac4f-47da-40ee-834a-a11fc91c5e63",
+      "product_id": "P06-AQU-GRV-A001-PST01",
+      "code": "P06-AQU-GRV-A001-PST01-BRL-V1",
+      "state": "DRAFT",
+      "checkout_provider": "hotmart",
+      "hotmart_product_id": null,
+      "hotmart_offer_code": null,
+      "starts_at": null,
+      "ends_at": null,
+      "price_versions": [
+        {
+          "id": "b8ad4a89-1b3a-4f3f-b903-6f2da55505dc",
+          "currency": "BRL",
+          "amount_minor": 24900,
+          "status": "DRAFT",
+          "valid_from": "2026-10-07 00:00:00+00",
+          "valid_until": null
+        }
+      ]
+    },
+    {
+      "id": "a5bde960-0e42-4a15-9f14-6db79615400c",
+      "product_id": "P06-ARI-EMB-A001-SWT01",
+      "code": "P06-ARI-EMB-A001-SWT01-BRL-V1",
+      "state": "DRAFT",
+      "checkout_provider": "hotmart",
+      "hotmart_product_id": null,
+      "hotmart_offer_code": null,
+      "starts_at": null,
+      "ends_at": null,
+      "price_versions": [
+        {
+          "id": "ff3e03cf-30b6-441f-bf50-03665c731382",
+          "currency": "BRL",
+          "amount_minor": 39900,
+          "status": "DRAFT",
+          "valid_from": "2026-10-07 00:00:00+00",
+          "valid_until": null
+        }
+      ]
+    },
+    {
+      "id": "f48b12ec-93d9-4993-9423-860ee4c731a1",
+      "product_id": "P06-ARI-GRV-A001-PST01",
+      "code": "P06-ARI-GRV-A001-PST01-BRL-V1",
+      "state": "DRAFT",
+      "checkout_provider": "hotmart",
+      "hotmart_product_id": null,
+      "hotmart_offer_code": null,
+      "starts_at": null,
+      "ends_at": null,
+      "price_versions": [
+        {
+          "id": "ee802f43-90c4-4a47-8fce-c24a391b2dd4",
+          "currency": "BRL",
+          "amount_minor": 24900,
+          "status": "DRAFT",
+          "valid_from": "2026-10-07 00:00:00+00",
+          "valid_until": null
+        }
+      ]
+    },
+    {
+      "id": "140c1658-4430-416d-9c53-d25db4e8e21f",
+      "product_id": "P06-CAP-EMB-A001-SWT01",
+      "code": "P06-CAP-EMB-A001-SWT01-BRL-V1",
+      "state": "DRAFT",
+      "checkout_provider": "hotmart",
+      "hotmart_product_id": null,
+      "hotmart_offer_code": null,
+      "starts_at": null,
+      "ends_at": null,
+      "price_versions": [
+        {
+          "id": "f6ceb6e3-4245-459e-923c-f89aaab8514c",
+          "currency": "BRL",
+          "amount_minor": 39900,
+          "status": "DRAFT",
+          "valid_from": "2026-10-07 00:00:00+00",
+          "valid_until": null
+        }
+      ]
+    },
+    {
+      "id": "602bd820-63fb-4c93-b77f-5c544b7443a3",
+      "product_id": "P06-CAP-GRV-A001-PST01",
+      "code": "P06-CAP-GRV-A001-PST01-BRL-V1",
+      "state": "DRAFT",
+      "checkout_provider": "hotmart",
+      "hotmart_product_id": null,
+      "hotmart_offer_code": null,
+      "starts_at": null,
+      "ends_at": null,
+      "price_versions": [
+        {
+          "id": "01432b00-526b-41c9-92e5-1fa09a33390e",
+          "currency": "BRL",
+          "amount_minor": 24900,
+          "status": "DRAFT",
+          "valid_from": "2026-10-07 00:00:00+00",
+          "valid_until": null
+        }
+      ]
+    }
+  ],
+  "hotmart": {
+    "remote_catalog_access_verified": false,
+    "remote_catalog_inventory": "UNKNOWN_WITHOUT_AUTHENTICATED_HOTMART_ACCESS",
+    "local_nonplaceholder_credentials_found": false,
+    "production_credential_names_found": [],
+    "live_feature_flag": "false",
+    "existing_webhook": "/api/webhooks/hotmart",
+    "existing_webhook_role": "authenticate HOTTOK and persist idempotent inbox; baseline has no commercial subscription consumer"
+  },
+  "whatsapp": {
+    "configured_test_resource": {
+      "app_id": "28324358550566328",
+      "waba_id": "1168374418857289",
+      "phone_number_id": "1363049066896849"
+    },
+    "actual_read": {
+      "operation": "GET sender metadata",
+      "credential_sources_tested": [
+        "WHATSAPP_ACCESS_TOKEN",
+        "META_USER_ACCESS_TOKEN"
+      ],
+      "status": 401,
+      "error_code": 190,
+      "error_subcode": 463,
+      "error_type": "OAuthException"
+    },
+    "production_binding_names_found": [],
+    "local_publish_default": "no",
+    "local_whatsapp_publish_enabled": "no",
+    "commercial_identity_verified": false,
+    "test_recipient_currently_verified": false,
+    "message_sent": false,
+    "ycloud": {
+      "provider_access_verified": false,
+      "credential_found": false,
+      "historical_ticket_id": "144653650",
+      "historical_status": "2026-10-12 backend reconciliation pending; not reverified in this audit"
+    }
+  },
+  "publication": {
+    "provider": "Cloudflare Pages",
+    "account_id": "7de48803dab244aa9e6d4d2d7df9b8e7",
+    "project_name": "atuavidanosastros",
+    "production_branch": "main",
+    "domains": [
+      "atuavidanosastros.pages.dev",
+      "atuavidanosastros.com.br",
+      "www.atuavidanosastros.com.br"
+    ],
+    "deployment_id": "ec7cf8ac-0225-4ddd-9e27-51efabd4613a",
+    "deployment_url": "https://ec7cf8ac.atuavidanosastros.pages.dev",
+    "deployment_created_at": "2026-11-03T13:56:22.738434Z",
+    "deployment_sha": "52a759df453ba21ae40f322484ca332a70907d93",
+    "deployment_status": "success",
+    "preflight": {
+      "pass": true,
+      "checks_passed": 19
+    },
+    "postflight": {
+      "pass": true,
+      "checks_passed": 15
+    },
+    "automatic_spend_cap_brl": "0",
+    "feature_ai": "false",
+    "feature_hotmart_live": "false",
+    "github_ci": {
+      "run_id": 41648851539,
+      "status": "completed",
+      "conclusion": "success",
+      "sha": "52a759df453ba21ae40f322484ca332a70907d93"
+    }
+  },
+  "limits": [
+    "No Hotmart remote product/price claim inferred from empty local mapping.",
+    "Draft physical prices are not approved ATV+ subscription prices.",
+    "No row containing personal data, credentials, recipient number or payment payload was exported.",
+    "Existing production health does not prove P01 commercial purchase, activation or scheduled delivery."
+  ]
+}
