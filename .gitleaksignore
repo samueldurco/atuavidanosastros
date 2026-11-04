@@ -13,3 +13,6 @@ e79bb7c73b3b0fd1cf0c7f2db42065c1851adc46:apps/web/src/lib/server/free-tools-calc
 00625d188c450886157e387cad8ab4c778c2e951:apps/web/src/routes/api/launch-preparations/+server.spec.ts:generic-api-key:13
 00625d188c450886157e387cad8ab4c778c2e951:apps/web/src/routes/api/launch-preparations/[id]/feedback/+server.spec.ts:generic-api-key:11
 00625d188c450886157e387cad8ab4c778c2e951:apps/web/src/routes/testar-lancamentos/_spec/+page.server.ts:generic-api-key:72
+# Historical false positive: the literal synthetic subject-signing fixture in the
+# WhatsApp entry unit test. No runtime/provider uses it; retain all other scanning.
+a30967c5feeb3f40932f1ad562484759cb265425:apps/web/src/lib/server/whatsapp-entry.spec.ts:generic-api-key:19

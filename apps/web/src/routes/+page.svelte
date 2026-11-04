@@ -6,6 +6,7 @@
 	import { editorialTopic } from '$lib/data/editorial-topics';
 	import { homeArticleArt, homeUniverseArt } from '$lib/home-art';
 	import FreeToolsCollection from '$lib/components/free-tools/FreeToolsCollection.svelte';
+	import HomeExplore from '$lib/components/explore/HomeExplore.svelte';
 	import HomeReadings from '$lib/components/home/HomeReadings.svelte';
 	import LaunchHighlights from '$lib/components/home/LaunchHighlights.svelte';
 	import ReadingSample from '$lib/components/home/ReadingSample.svelte';
@@ -145,6 +146,7 @@
 		</div>
 	</section>
 	<LaunchHighlights />
+	<HomeExplore />
 	<section class="home-section universe-section" id="universos" aria-labelledby="universes-heading">
 		<div class="home-wrap">
 			<header class="home-section-head">

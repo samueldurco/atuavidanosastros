@@ -17,6 +17,9 @@ export interface PageSeo {
 // Existing public inventory, not retroactive editorial approval.
 export const legacyPublicPaths = [
 	'/',
+	'/explorar',
+	'/signos',
+	...signs.map((sign) => `/signos/${sign}`),
 	'/temas',
 	...interestNavigation.map((topic) => topic.href),
 	'/ferramentas',
@@ -166,9 +169,20 @@ export function legacySeo(path: string): PageSeo | null {
 }
 
 export function discoverySeo(path: string): PageSeo | null {
+	const sign = signs.find((value) => path === `/signos/${value}`);
 	const topic = interestNavigation.find((item) => item.href === path);
 	const tool = freeTools.find((item) => item.href === path);
 	const directories: Record<string, { title: string; description: string }> = {
+		'/signos': {
+			title: 'Os 12 signos do zodíaco: datas, elementos e previsões',
+			description:
+				'Conheça os 12 signos, suas datas e elementos. Explore a página de cada signo e encontre horóscopos, guias e ferramentas para o seu mapa astral.'
+		},
+		'/explorar': {
+			title: 'Explorar por temas e signos',
+			description:
+				'Explore mapa astral, previsões, amor, carreira, Tarot e sonhos. Conheça os 12 signos e encontre conteúdos, leituras e ferramentas para o seu momento.'
+		},
 		'/temas': {
 			title: 'Explore os seis temas',
 			description:
@@ -204,7 +218,12 @@ export function discoverySeo(path: string): PageSeo | null {
 		? { title: topic.label, description: topic.description }
 		: tool
 			? { title: tool.label, description: tool.description }
-			: directories[path];
+			: sign
+				? {
+						title: `${signNames[sign]}: signo, datas e horóscopo`,
+						description: `Explore o signo de ${signNames[sign]}, consulte suas datas e elemento, encontre as previsões disponíveis e descubra ferramentas e guias para conhecer seu mapa astral.`
+					}
+				: directories[path];
 	if (!entry) return null;
 	return {
 		title: `${entry.title} — ${SITE.name}`,

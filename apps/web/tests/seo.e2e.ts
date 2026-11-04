@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { freeTools } from '../src/lib/data/free-tools';
+import { signs } from '../src/lib/data/site';
 import { publicEditorialAuthor } from '../src/lib/data/editorial-author';
 import { scanAccessibility } from './fixtures/accessibility';
 import {
@@ -56,8 +57,8 @@ test('editorial hubs reflect admitted content with one canonical', async ({ page
 			for (const document of news) expect(html).toContain(document.title);
 		} else if (path === '/signos') {
 			expect(html).toContain('Os 12 signos do zodíaco');
-			for (const sign of new Set(datedForecasts.map((doc) => doc.path.split('/')[2]))) {
-				expect(html).toContain(`href="/horoscopo/${sign}"`);
+			for (const sign of signs) {
+				expect(html).toContain(`href="/signos/${sign}"`);
 			}
 		} else if (path === '/horoscopo') {
 			expect(html).toContain('Horóscopo dos 12 signos');
@@ -85,7 +86,7 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 	request
 }) => {
 	for (const path of [
-		'/signos/aries',
+		'/signos/inexistente',
 		'/horoscopo/aries/daily/1900-01-01',
 		'/compatibilidade/aries-touro',
 		'/compatibilidade/touro-aries',
@@ -191,11 +192,14 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 		expect(response.status()).toBe(200);
 		expect(response.headers()['content-type']).toContain('application/xml');
 		const body = await response.text();
-		expect(body).not.toContain('/signos/aries');
+		if (path !== '/sitemap-pages.xml') expect(body).not.toContain('/signos/aries');
 		expect(body).not.toContain('/dashboard');
 		if (path === '/sitemap-pages.xml') {
 			const expectedPaths = [
 				'',
+				'/explorar',
+				'/signos',
+				...signs.map((sign) => `/signos/${sign}`),
 				'/temas',
 				'/temas/mapa-astral',
 				'/temas/previsoes',
@@ -216,9 +220,6 @@ test('sitemaps preserve real routes and do not include unpublished content', asy
 				'/canais-oficiais',
 				'/fale-conosco',
 				...(news.length > 0 ? ['/noticias'] : []),
-				...(datedForecasts.length || publishedEditorial.some((doc) => doc.kind === 'sign-profile')
-					? ['/signos']
-					: []),
 				...(datedForecasts.length ? ['/horoscopo'] : []),
 				...new Set(datedForecasts.map((document) => document.path.split('/').slice(0, 3).join('/')))
 			];
