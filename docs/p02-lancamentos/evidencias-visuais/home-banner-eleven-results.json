@@ -1,0 +1,1301 @@
+{
+  "timestamp": "2026-11-04T12:33:12.034Z",
+  "results": [
+    {
+      "width": 1440,
+      "frames": [
+        {
+          "id": "wedding-date-map",
+          "title": "Mapa da Data de Casamento",
+          "href": "/testar-lancamentos/wedding-date-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/micro-ramo.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1141.296875,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 153.703125,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-wedding-date-map.png"
+        },
+        {
+          "id": "ex-tarot",
+          "title": "Tarot do Ex: Saudade e Arrependimento",
+          "href": "/testar-lancamentos/ex-tarot",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1138.046875,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 156.953125,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-ex-tarot.png"
+        },
+        {
+          "id": "love-restart-map",
+          "title": "Mapa do Recomeço Amoroso",
+          "href": "/testar-lancamentos/love-restart-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/fases-lunares.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 712.59375,
+              "bottom": 737.390625,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1137.515625,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 157.484375,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-love-restart-map.png"
+        },
+        {
+          "id": "sexuality-map",
+          "title": "Mapa da Sexualidade",
+          "href": "/testar-lancamentos/sexuality-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/flor-gravada.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 623.546875,
+              "bottom": 648.34375,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1136.96875,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 158.03125,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-sexuality-map.png"
+        },
+        {
+          "id": "intimacy-map",
+          "title": "Mapa da Intimidade a Dois",
+          "href": "/testar-lancamentos/intimacy-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/flor-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/micro-ramo.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1137.25,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 157.75,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-intimacy-map.png"
+        },
+        {
+          "id": "emotional-reactions-map",
+          "title": "Mapa das Reações Emocionais",
+          "href": "/testar-lancamentos/emotional-reactions-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/lua-gravada.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1137.140625,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 157.859375,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-emotional-reactions-map.png"
+        },
+        {
+          "id": "financial-blocks-tarot",
+          "title": "Tarot dos Bloqueios Financeiros",
+          "href": "/testar-lancamentos/financial-blocks-tarot",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1139.03125,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 155.96875,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-financial-blocks-tarot.png"
+        },
+        {
+          "id": "hidden-talent-map",
+          "title": "Mapa do Talento Oculto",
+          "href": "/testar-lancamentos/hidden-talent-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 623.546875,
+              "bottom": 648.34375,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1137.15625,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 157.84375,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-hidden-talent-map.png"
+        },
+        {
+          "id": "ascendant-style",
+          "title": "Meu Estilo pelo Ascendente",
+          "href": "/testar-lancamentos/ascendant-style",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1137.1875,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 157.8125,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-ascendant-style.png"
+        },
+        {
+          "id": "conversation-timing",
+          "title": "A Hora da Conversa — Horóscopo Amoroso",
+          "href": "/testar-lancamentos/conversation-timing",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/fases-lunares.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/micro-ramo.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1130.65625,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 164.34375,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-conversation-timing.png"
+        },
+        {
+          "id": "cohabitation-map",
+          "title": "Mapa da Convivência a Dois",
+          "href": "/testar-lancamentos/cohabitation-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/flor-gravada.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 121,
+              "right": 720,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "copy": {
+              "left": 720,
+              "right": 1319,
+              "top": 387.609375,
+              "bottom": 839.671875,
+              "width": 599,
+              "height": 452.0625
+            },
+            "action": {
+              "left": 776,
+              "right": 952.796875,
+              "top": 670.203125,
+              "bottom": 695,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 1135.484375,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 159.515625,
+              "height": 44
+            },
+            "next": {
+              "left": 1251,
+              "right": 1295,
+              "top": 779.671875,
+              "bottom": 823.671875,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-1440-cohabitation-map.png"
+        }
+      ],
+      "keyboard": "Enter and Space, next/previous wrapping",
+      "errors": []
+    },
+    {
+      "width": 390,
+      "frames": [
+        {
+          "id": "wedding-date-map",
+          "title": "Mapa da Data de Casamento",
+          "href": "/testar-lancamentos/wedding-date-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/micro-ramo.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 193.296875,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 153.703125,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-wedding-date-map.png"
+        },
+        {
+          "id": "ex-tarot",
+          "title": "Tarot do Ex: Saudade e Arrependimento",
+          "href": "/testar-lancamentos/ex-tarot",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 190.046875,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 156.953125,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-ex-tarot.png"
+        },
+        {
+          "id": "love-restart-map",
+          "title": "Mapa do Recomeço Amoroso",
+          "href": "/testar-lancamentos/love-restart-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/fases-lunares.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 981.515625,
+              "width": 352,
+              "height": 399.953125
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 876.71875,
+              "bottom": 901.515625,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 189.515625,
+              "right": 347,
+              "top": 921.515625,
+              "bottom": 965.515625,
+              "width": 157.484375,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 921.515625,
+              "bottom": 965.515625,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-love-restart-map.png"
+        },
+        {
+          "id": "sexuality-map",
+          "title": "Mapa da Sexualidade",
+          "href": "/testar-lancamentos/sexuality-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/flor-gravada.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 904.578125,
+              "width": 352,
+              "height": 323.015625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 799.78125,
+              "bottom": 824.578125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 188.96875,
+              "right": 347,
+              "top": 844.578125,
+              "bottom": 888.578125,
+              "width": 158.03125,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 844.578125,
+              "bottom": 888.578125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-sexuality-map.png"
+        },
+        {
+          "id": "intimacy-map",
+          "title": "Mapa da Intimidade a Dois",
+          "href": "/testar-lancamentos/intimacy-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/flor-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/micro-ramo.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 189.25,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 157.75,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-intimacy-map.png"
+        },
+        {
+          "id": "emotional-reactions-map",
+          "title": "Mapa das Reações Emocionais",
+          "href": "/testar-lancamentos/emotional-reactions-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/lua-gravada.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 189.140625,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 157.859375,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-emotional-reactions-map.png"
+        },
+        {
+          "id": "financial-blocks-tarot",
+          "title": "Tarot dos Bloqueios Financeiros",
+          "href": "/testar-lancamentos/financial-blocks-tarot",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 191.03125,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 155.96875,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-financial-blocks-tarot.png"
+        },
+        {
+          "id": "hidden-talent-map",
+          "title": "Mapa do Talento Oculto",
+          "href": "/testar-lancamentos/hidden-talent-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 189.15625,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 157.84375,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-hidden-talent-map.png"
+        },
+        {
+          "id": "ascendant-style",
+          "title": "Meu Estilo pelo Ascendente",
+          "href": "/testar-lancamentos/ascendant-style",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 189.1875,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 157.8125,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-ascendant-style.png"
+        },
+        {
+          "id": "conversation-timing",
+          "title": "A Hora da Conversa — Horóscopo Amoroso",
+          "href": "/testar-lancamentos/conversation-timing",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/fases-lunares.webp",
+              "loaded": true
+            },
+            {
+              "src": "/brand/mvp/assets/revisao/micro-ramo.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 182.65625,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 164.34375,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-conversation-timing.png"
+        },
+        {
+          "id": "cohabitation-map",
+          "title": "Mapa da Convivência a Dois",
+          "href": "/testar-lancamentos/cohabitation-map",
+          "assets": [
+            {
+              "src": "/brand/mvp/assets/revisao/flor-gravada.webp",
+              "loaded": true
+            }
+          ],
+          "bounds": {
+            "art": {
+              "left": 19,
+              "right": 371,
+              "top": 314.90625,
+              "bottom": 581.5625,
+              "width": 352,
+              "height": 266.65625
+            },
+            "copy": {
+              "left": 19,
+              "right": 371,
+              "top": 581.5625,
+              "bottom": 939.125,
+              "width": 352,
+              "height": 357.5625
+            },
+            "action": {
+              "left": 43,
+              "right": 219.796875,
+              "top": 834.328125,
+              "bottom": 859.125,
+              "width": 176.796875,
+              "height": 24.796875
+            },
+            "controls": {
+              "left": 187.484375,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 159.515625,
+              "height": 44
+            },
+            "next": {
+              "left": 303,
+              "right": 347,
+              "top": 879.125,
+              "bottom": 923.125,
+              "width": 44,
+              "height": 44
+            },
+            "overflow": false
+          },
+          "screenshot": "C:/ATVNA/tmp/p02-design-20261104/home-banner-390-cohabitation-map.png"
+        }
+      ],
+      "keyboard": "Enter and Space, next/previous wrapping",
+      "errors": []
+    }
+  ]
+}

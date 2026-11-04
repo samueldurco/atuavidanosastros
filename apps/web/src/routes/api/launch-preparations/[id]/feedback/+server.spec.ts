@@ -14,7 +14,8 @@ vi.mock('$lib/server/launch-runtime', () => ({
 }));
 const ownerId = 'c05bf322-0bfd-4ef6-af90-3ec0da139e52';
 const preparationId = '8c6d9da2-d296-4b63-a30c-42ec8762f48f';
-const requestKey = 'c235af22-4e30-40da-83d1-887c379a8ce1';
+// Repeated UUID is synthetic; letters also exercise uppercase normalization.
+const requestKey = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
 const feedbackId = '67831b76-81b4-4129-bb48-f3f83c72bbec';
 const preparationRead = vi.fn(),
 	readingRead = vi.fn(),

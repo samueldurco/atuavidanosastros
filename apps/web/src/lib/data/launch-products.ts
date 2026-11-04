@@ -1,5 +1,5 @@
 import { launchProductDefinitions } from '@atv/domain';
-import metadata from '../../../../../docs/p02-lancamentos/launch-metadata.json';
+import metadata from '../../../../../docs/p02-lancamentos/launch-metadata.json' with { type: 'json' };
 
 /** Approved P02 descriptions; publication and access remain domain decisions. */
 export const launchProducts = metadata.products.map((spec) => {

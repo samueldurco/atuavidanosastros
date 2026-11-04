@@ -2,9 +2,9 @@
   "run_id": "ATV-20260902-170644Z-01A0630F",
   "direction": "MVP aprovado 2026-10-14",
   "source": "apps/web/src/lib/data/mvp-product-design.json",
-  "source_sha256": "f09a946f542798fba4efb152cb5edc22e36d8f54fb159767268cbd88d8ea7265",
+  "source_sha256": "a76f9d12b3b3c040aeb653766d3e54fc3d7b0bc2098fcc036c33807c9b6c6663",
   "derivation": "Individual approved product SVG compositions rasterized to bounded 480x352 indexed PNG. PNG API and renderer versions retained; data, calculations and reading content unchanged. White reading pages retain print legibility.",
-  "bundle_bytes": 788522,
+  "bundle_bytes": 1054253,
   "brand": {
     "source": "/brand/mvp/assets/marca-escura.svg",
     "source_sha256": "ff2bd01b75c71d3e072943d3586f191b83604fa22f11c308883d69d19f08443a",
@@ -415,12 +415,171 @@
       "product": "career-forecast-30d",
       "sources": [
         {
+          "path": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+          "sha256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5"
+        }
+      ],
+      "png_sha256": "39c8aa99e5023037d10055c3d1e7128dda5997daff4e7da83da883865dab2112",
+      "bytes": 11491,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "wedding-date-map",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/mandala-gravada.webp",
+          "sha256": "fa29e053df1df50786e81920b186a7f5753ea8744742ff56013b36538a1aef2e"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/micro-ramo.webp",
+          "sha256": "84af0b1d8edd3f715234392bdfb34cd5927af63b10818ded41c49f51609569e6"
+        }
+      ],
+      "png_sha256": "9c8fc6f036cfdeb930ed5cbf37661e16881d3c889eeee0403ccd5f9adb4dbc97",
+      "bytes": 10456,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "ex-tarot",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "d8e4a704c87530ef71628d5d43c5494c1924d8272751e7dbde71a15d24fd852d",
+      "bytes": 35021,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "love-restart-map",
+      "sources": [
+        {
           "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
           "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
         }
       ],
-      "png_sha256": "99f9e8827a281764faa39c78f9ca17804c5afbaf5e6d7d4f3477458638d4e629",
-      "bytes": 9690,
+      "png_sha256": "c33b524f9ba1a26f646307280dd42c1b540cab50f683b2b64283726a9714cf03",
+      "bytes": 13240,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "sexuality-map",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/flor-gravada.webp",
+          "sha256": "4aa291c21a0fd16898ae537cbfa371475d2b4c57fbfd4784ac7f0643b8b304e2"
+        }
+      ],
+      "png_sha256": "d74d4abce75feb7968723a719477df5e45a3b393479097d0a773963b84a20269",
+      "bytes": 14992,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "intimacy-map",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/flor-gravada.webp",
+          "sha256": "4aa291c21a0fd16898ae537cbfa371475d2b4c57fbfd4784ac7f0643b8b304e2"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/micro-ramo.webp",
+          "sha256": "84af0b1d8edd3f715234392bdfb34cd5927af63b10818ded41c49f51609569e6"
+        }
+      ],
+      "png_sha256": "cd573e77115eca9bf0acd7fe149625f831785d97c86d0eec3466a6f8eded1f4f",
+      "bytes": 11239,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "emotional-reactions-map",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/lua-gravada.webp",
+          "sha256": "8a911d2aa50ee48fe4f36fc2671e6d983e2b997ab6eadfcb26da3632c10f31ea"
+        }
+      ],
+      "png_sha256": "1f881138ab7159bccecb65f38a1c4b15be89010e1e2944c8faf51451d46ed1ec",
+      "bytes": 9839,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "financial-blocks-tarot",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/product-final/tarot-triplico-gravado-v1.webp",
+          "sha256": "6061ec3251bb6739b34cd0ef03c031ce53e329dfdf9c354cba909f52533547ae"
+        }
+      ],
+      "png_sha256": "70d89a08a018ee0ea92141f406e55aa9d4b07d9856016af03d582a0208d05752",
+      "bytes": 47964,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "hidden-talent-map",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/bussola-gravada.webp",
+          "sha256": "ff1b2034654cac74db7538ced58f6051014824eb3170e1189372b130e79032b5"
+        },
+        {
+          "path": "/brand/mvp/assets/product-final/sol-gravado-v1.webp",
+          "sha256": "5ca7fa8c680ed70c2f3fd6e42115f64274d05328dfb1071e2ed2f18b29dd0758"
+        }
+      ],
+      "png_sha256": "56389101b9ca1de745431f9aa4fdf1d2fe693e9ac2b4809156604ced7c464581",
+      "bytes": 20138,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "ascendant-style",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/micro-horizonte.webp",
+          "sha256": "46aec817b7db2257be75c5d0f986b16144e616228c8d4b525707fd3b3d6104e3"
+        }
+      ],
+      "png_sha256": "ea84565dce0efbc6afe2303c036d221d9b7c5387c216b8eb4a29a0dbbeb9a583",
+      "bytes": 13394,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "conversation-timing",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/fases-lunares.webp",
+          "sha256": "311c2554c340a230b9a01d9d0390c1b48b06d255db350592a39e67b65367bd7f"
+        },
+        {
+          "path": "/brand/mvp/assets/revisao/micro-ramo.webp",
+          "sha256": "84af0b1d8edd3f715234392bdfb34cd5927af63b10818ded41c49f51609569e6"
+        }
+      ],
+      "png_sha256": "c1aef3be982625b57559c8fcb19e487e1a3c845d44bcce414f1d2be6ddb73f50",
+      "bytes": 11694,
+      "width": 480,
+      "height": 352
+    },
+    {
+      "product": "cohabitation-map",
+      "sources": [
+        {
+          "path": "/brand/mvp/assets/revisao/flor-gravada.webp",
+          "sha256": "4aa291c21a0fd16898ae537cbfa371475d2b4c57fbfd4784ac7f0643b8b304e2"
+        }
+      ],
+      "png_sha256": "027641479c659f4d42994d7b63d469909a6e074a3833054df3345ad03ba49e64",
+      "bytes": 9291,
       "width": 480,
       "height": 352
     }

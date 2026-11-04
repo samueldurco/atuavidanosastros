@@ -131,3 +131,11 @@ O componente real `LaunchReadingFeedback.svelte` foi montado isoladamente no bro
 Essa avaliação registra a decisão do proprietário sobre uma edição privada. Não aprova automaticamente comércio, publicação ou E5.
 
 Os onze testes gratuitos estão implementados localmente com os controles de acesso existentes. O estado de preparação comercial permanece separado de sua disponibilidade para teste. A aprovação visual não substitui deploy, aceite pessoal E5, avaliação editorial, homologação factual ou gates de uma eventual oferta paga.
+
+## Banner dos onze lançamentos na home
+
+O banner existente `LaunchHighlights.svelte` foi identificado como **Lançamentos** e ampliado das três estreias para as onze composições já criadas. Reutiliza `MvpProductArt`, suas gravuras aprovadas, cores por universo, tipografia e controles manuais. Não foi criada outra seção nem uma nova arte raster. As referências comparadas foram os banners desktop e celular de `docs/20-produto/home-prototipo-20261028/evidencias/final-product-banner-{desktop,mobile}-1.png` e o MVP vigente indicado em `docs/DESIGN.md`.
+
+No build local `271ad03`, a conferência passou em **22/22 posições**: onze produtos em 1440 e 390 px. Cada posição confirmou título, resumo aprovado, ficha pública, CTA gratuito, destino `/testar-lancamentos/{id}`, contador e carregamento das gravuras. Enter e Space acionaram as setas, incluindo retorno da posição 11 para a primeira e o caminho inverso. Não houve sobreposição entre arte, texto, CTA e controles, overflow horizontal ou erro JavaScript. As onze composições foram inspecionadas visualmente, incluindo os títulos longos de Ex e A Hora da Conversa.
+
+Evidências: [resultado completo](evidencias-visuais/home-banner-eleven-results.json), [desktop](evidencias-visuais/home-banner11-1440.png), [celular](evidencias-visuais/home-banner11-390.png) e [título longo no celular](evidencias-visuais/home-banner11-conversa-390.png). O teste usa somente o servidor local com o build pronto; não publica nem concede acesso.

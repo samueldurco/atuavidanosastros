@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { isLaunchProductId, productTrialHref } from '@atv/domain';
 	import ProductCover from './ProductCover.svelte';
+	import MvpProductArt from '../MvpProductArt.svelte';
+	import '$lib/styles/mvp-product-art.css';
 	let {
 		product,
 		universe,
@@ -30,9 +32,13 @@
 </script>
 
 <article class="home-catalog-card public-product-card">
-	<a class="cover-link" href={product.href} tabindex="-1" aria-hidden="true"
-		><ProductCover productId={product.id} /></a
-	>
+	<a class="cover-link" href={product.href} tabindex="-1" aria-hidden="true">
+		{#if isLaunchProductId(product.id)}
+			<MvpProductArt productId={product.id} />
+		{:else}
+			<ProductCover productId={product.id} />
+		{/if}
+	</a>
 	<div class="catalog-card-body">
 		<p class="eyebrow">{universe}</p>
 		<h3><a href={product.href}>{product.name}</a></h3>

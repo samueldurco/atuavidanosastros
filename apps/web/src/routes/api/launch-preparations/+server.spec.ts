@@ -10,7 +10,8 @@ vi.mock('$lib/server/runtime-bindings', () => ({
 
 const ownerId = 'c05bf322-0bfd-4ef6-af90-3ec0da139e52';
 const preparationId = '8c6d9da2-d296-4b63-a30c-42ec8762f48f';
-const requestKey = 'cfabf0f5-d5ad-42de-9841-2e5e9f570d34';
+// Repeated UUID is a synthetic idempotency fixture, never a credential.
+const requestKey = '11111111-1111-4111-8111-111111111111';
 const input: LaunchInput = {
 	version: LAUNCH_INPUT_VERSION,
 	productId: 'ex-tarot',

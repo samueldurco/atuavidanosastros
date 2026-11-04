@@ -79,7 +79,8 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	const preparation: LaunchPreparation = {
 		id,
 		owner_id: '6cd36058-5a39-4b39-a97f-08285621cb51',
-		request_key: 'c3ede219-b398-42d0-a303-e86cb07f3ab2',
+		// Repeated UUID is a local rendering fixture, never a credential.
+		request_key: '22222222-2222-4222-8222-222222222222',
 		product_id: productId,
 		input,
 		input_digest: evidence.inputDigest,
