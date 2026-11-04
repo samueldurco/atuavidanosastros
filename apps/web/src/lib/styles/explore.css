@@ -366,7 +366,7 @@
 	}
 	.explore-sign strong,
 	.compact .explore-sign strong {
-		font-size: 27px;
+		font-size: clamp(20px, 5.9vw, 27px);
 	}
 	.explore-shortcuts {
 		gap: 20px;
