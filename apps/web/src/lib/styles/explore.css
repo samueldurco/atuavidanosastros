@@ -121,6 +121,7 @@
 .explore-theme-copy {
 	display: flex;
 	flex-direction: column;
+	min-width: 0;
 	gap: 10px;
 	padding-right: 8px;
 }
@@ -342,19 +343,20 @@
 		margin-top: 24px;
 	}
 	.explore-themes {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 		gap: 12px;
 	}
 	.explore-theme {
 		min-height: 134px;
-		padding: 18px 24px 20px 16px;
+		gap: 12px;
+		padding: 18px 14px 24px;
 	}
 	.explore-theme img {
-		width: 82px;
+		width: clamp(56px, 18vw, 82px);
 		height: 82px;
 	}
 	.explore-theme strong {
-		font-size: 28px;
+		font-size: clamp(23px, 6vw, 28px);
 	}
 	.explore-signs,
 	.explore-signs.compact {

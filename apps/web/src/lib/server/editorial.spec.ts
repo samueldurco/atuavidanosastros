@@ -2,7 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
 import EditorialArticle from '$lib/components/EditorialArticle.svelte';
 import { SITE } from '$lib/data/site';
-import { legacyPublicPaths, legacySeo, robotsPolicy, safeJsonLd } from '$lib/seo';
+import { discoverySeo, legacyPublicPaths, legacySeo, robotsPolicy, safeJsonLd } from '$lib/seo';
 import {
 	approvalPayload,
 	approvedDocuments,
@@ -369,7 +369,11 @@ describe('feeds and search surfaces', () => {
 		expect(body).toContain('https://atuavidanosastros.com.br/ferramentas</loc>');
 		expect(body).toContain('https://atuavidanosastros.com.br/revista</loc>');
 		expect(body).not.toContain('https://atuavidanosastros.com.br/caderno</loc>');
-		expect(body).not.toContain('/signos');
+		expect(body).toContain('https://atuavidanosastros.com.br/explorar</loc>');
+		expect(body).toContain('https://atuavidanosastros.com.br/signos</loc>');
+		expect(
+			body.match(/<loc>https:\/\/atuavidanosastros.com.br\/signos\/[a-z]+<\/loc>/g)
+		).toHaveLength(12);
 		expect(body).not.toContain('/noticias');
 	});
 	it('does not advertise legacy pages excluded by their public robots policy', () => {
@@ -386,7 +390,7 @@ describe('feeds and search surfaces', () => {
 		expect(hubSeo('/noticias', [fixture()]).indexable).toBe(true);
 		expect(pagesSitemap([fixture()])).toContain('/noticias');
 	});
-	it('uses the same availability rule for the sign directory and sitemap', () => {
+	it('indexes the sign discovery pages independently of signed editorial availability', () => {
 		const archive = fixture({
 			kind: 'horoscope',
 			path: '/horoscopo/capricornio/daily/2026-10-24',
@@ -405,7 +409,8 @@ describe('feeds and search surfaces', () => {
 			[[archive], true]
 		] as const) {
 			expect(hubSeo('/signos', docs).indexable).toBe(enabled);
-			expect(pagesSitemap(docs).includes(`<loc>${SITE.url}/signos</loc>`)).toBe(enabled);
+			expect(discoverySeo('/signos')?.indexable).toBe(true);
+			expect(pagesSitemap(docs).includes(`<loc>${SITE.url}/signos</loc>`)).toBe(true);
 		}
 		expect(articleSeo(archive).title).toContain('24/10/2026');
 		expect(JSON.parse(articleSeo(archive).jsonLd!).headline).toBe(archive.title);
