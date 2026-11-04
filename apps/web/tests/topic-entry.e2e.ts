@@ -8,7 +8,7 @@ test.describe('Caminhos de descoberta no HTML inicial', () => {
 		await page.goto('/horoscopo');
 		await page.getByRole('link', { name: 'datas dos 12 signos' }).click();
 		await expect(page).toHaveURL((url) => url.pathname === '/signos');
-		await expect(page.getByRole('table', { name: /signos em ordem zodiacal/i })).toBeVisible();
+		await expect(page.getByRole('navigation', { name: 'Explorar os doze signos' })).toBeVisible();
 	});
 
 	test('os guias de carreira apontam diretamente para a ferramenta e os guias relacionados', async ({

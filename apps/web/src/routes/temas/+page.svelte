@@ -1,13 +1,13 @@
 <script lang="ts">
-	import MvpUniverseCard from '$lib/components/MvpUniverseCard.svelte';
+	import ThemeCards from '$lib/components/explore/ThemeCards.svelte';
+	import '$lib/styles/explore.css';
 	import { mvpArt } from '$lib/data/mvp-visual';
-	let { data } = $props();
 </script>
 
 <div class="mvp-public">
 	<section class="universes-overview-hero">
 		<div class="wrap universes-overview-copy">
-			<p class="eyebrow">Os seis universos</p>
+			<p class="eyebrow"><a href="/explorar">Explorar</a> / Por temas</p>
 			<h1>Um céu, diferentes caminhos.</h1>
 			<p class="lead">
 				Mapa astral, previsões, amor, carreira, Tarot e sonhos. Cada tema reúne ferramentas grátis,
@@ -28,16 +28,7 @@
 			/>
 			<h2 id="topics-heading">Por onde você quer começar?</h2>
 		</header>
-		<div class="grid grid-3">
-			{#each data.topics as topic (topic.id)}
-				<MvpUniverseCard
-					identity={topic.id}
-					title={topic.label}
-					description={topic.description}
-					href={topic.href}
-				/>
-			{/each}
-		</div>
+		<ThemeCards />
 		<p class="catalog-link">
 			<a class="text-link" href="/leituras"
 				>Ver o catálogo de leituras digitais <span aria-hidden="true">↗</span></a

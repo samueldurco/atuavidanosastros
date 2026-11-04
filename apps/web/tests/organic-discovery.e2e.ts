@@ -1,9 +1,25 @@
 import { expect, test } from '@playwright/test';
 import { datedForecasts } from './fixtures/editorial-inventory';
+import { scanAccessibility } from './fixtures/accessibility';
 
 const origin = 'https://atuavidanosastros.com.br';
 
-for (const path of ['/canais-oficiais', '/fale-conosco']) {
+for (const width of [320, 1280]) {
+	test(`Explorar e minihomes são acessíveis e cabem em ${width}px`, async ({ page }, testInfo) => {
+		await page.setViewportSize({ width, height: 900 });
+		for (const path of ['/explorar', '/signos', '/signos/capricornio']) {
+			expect((await page.goto(path))?.status()).toBe(200);
+			await page.evaluate(() => document.fonts.ready);
+			await expect(page.locator('h1')).toHaveCount(1);
+			expect(
+				await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)
+			).toBeLessThanOrEqual(1);
+			await scanAccessibility(page, testInfo);
+		}
+	});
+}
+
+for (const path of ['/canais-oficiais', '/fale-conosco', '/explorar']) {
 	test(`${path} tem uma única URL canônica`, async ({ page }) => {
 		expect((await page.goto(path))?.status()).toBe(200);
 		const canonical = page.locator('head link[rel="canonical"]');
@@ -21,7 +37,7 @@ for (const path of ['/horoscopo', '/ferramentas/horoscopo']) {
 	});
 }
 
-test('a tabela de signos liga leituras reais e identifica as ferramentas para mensuração com consentimento', async ({
+test('os cards dos doze signos ligam leituras reais e identifica as ferramentas para mensuração com consentimento', async ({
 	page,
 	request
 }) => {
@@ -34,20 +50,31 @@ test('a tabela de signos liga leituras reais e identifica as ferramentas para me
 		'content',
 		'noindex, nofollow'
 	);
-	const rows = page.getByRole('table', { name: /signos em ordem zodiacal/i }).locator('tbody tr');
-	await expect(rows).toHaveCount(12);
-	await expect(rows.first().locator('th[scope="row"]')).toHaveText('Áries');
-	await expect(rows.first()).toContainText('21 mar – 19 abr');
-	await expect(rows.first()).toContainText('Fogo');
-	await expect(rows.last().locator('th[scope="row"]')).toHaveText('Peixes');
-	const readings = await rows
-		.locator('a')
-		.evaluateAll((links) => links.map((link) => link.getAttribute('href')!));
-	expect(readings.length).toBeGreaterThan(0);
+	const cards = page.getByRole('navigation', { name: 'Explorar os doze signos' }).getByRole('link');
+	await expect(cards).toHaveCount(12);
+	await expect(cards.first()).toContainText('Áries');
+	await expect(cards.first()).toContainText('21 mar – 19 abr');
+	await expect(cards.first()).toContainText('Fogo');
+	await expect(cards.last()).toContainText('Peixes');
+	const readings = await cards.evaluateAll((links) =>
+		links.map((link) => link.getAttribute('href')!)
+	);
+	expect(new Set(readings).size).toBe(12);
+	const artworks = await cards
+		.locator('img')
+		.evaluateAll((images) => images.map((image) => image.getAttribute('src')));
+	expect(new Set(artworks).size).toBe(12);
 	for (const path of new Set(readings)) {
 		expect(path).toMatch(/^\/(signos|horoscopo)\/[a-z-]+(?:\/|$)/);
-		expect((await request.get(path, { maxRedirects: 0 })).status(), path).toBe(200);
+		const response = await request.get(path, { maxRedirects: 0 });
+		expect(response.status(), path).toBe(200);
+		const html = await response.text();
+		const slug = path.split('/').at(-1);
+		expect(html).toContain(`/brand/explorar/${slug}.webp`);
+		expect(html).toContain(`href="/horoscopo/${slug}"`);
+		expect(html).toContain(`href="${origin}${path}"`);
 	}
+	expect((await request.get('/signos/inexistente')).status()).toBe(404);
 	for (const tool of ['mapa-astral', 'ascendente']) {
 		const cta = page.locator(`a[data-atv-tool="${tool}"]`);
 		await expect(cta).toHaveAttribute('href', '/ferramentas/' + tool);
@@ -57,7 +84,9 @@ test('a tabela de signos liga leituras reais e identifica as ferramentas para me
 	}
 	const sitemap = await request.get('/sitemap-pages.xml');
 	expect(sitemap.status()).toBe(200);
-	expect(await sitemap.text()).toContain('<loc>' + origin + '/signos</loc>');
+	const sitemapXml = await sitemap.text();
+	expect(sitemapXml).toContain('<loc>' + origin + '/signos</loc>');
+	expect(sitemapXml).toContain('<loc>' + origin + '/explorar</loc>');
 });
 
 test('a pesquisa livre da revista informa noindex e omite canonical', async ({ page }) => {
