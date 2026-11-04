@@ -1,4 +1,5 @@
 import { offeredProductIds, type OfferedProductId } from "./catalog.ts";
+export * from './atv-plus-commercial.ts';
 
 export const atvPlusForecastProductIds = [
   "personal-calendar",

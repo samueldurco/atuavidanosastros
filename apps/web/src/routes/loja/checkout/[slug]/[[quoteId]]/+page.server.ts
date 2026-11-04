@@ -5,6 +5,7 @@ import { shopPreviews } from '$lib/data/shop-products';
 import { openQuote } from '$lib/server/shop/national-draft';
 import { physicalOffer } from '$lib/server/shop/national-freight';
 import { readShopSale } from '$lib/server/shop/seller-identity';
+import { shopMemberPriceFor } from '$lib/server/member-pricing';
 import type { Actions, PageServerLoad } from './$types';
 
 const cookie = 'atv_shop_quote';
@@ -43,7 +44,7 @@ export const actions: Actions = {
 		redirect(303, path);
 	}
 };
-export const load: PageServerLoad = async ({ params, cookies, setHeaders }) => {
+export const load: PageServerLoad = async ({ params, cookies, setHeaders, locals }) => {
 	setHeaders({
 		'cache-control': 'private, no-store',
 		'referrer-policy': 'same-origin',
@@ -54,9 +55,11 @@ export const load: PageServerLoad = async ({ params, cookies, setHeaders }) => {
 	const token = cookies.get(cookie);
 	const resolved = token && params.quoteId ? await resolveQuote(token, params.slug) : null;
 	const q = resolved?.q;
+	const memberPricing = q ? await shopMemberPriceFor(locals, q.variantId) : null;
 	return {
 		slug: params.slug,
 		title: piece.title,
+		memberPricing,
 		checkout:
 			q && resolved && q.nonce === params.quoteId
 				? {

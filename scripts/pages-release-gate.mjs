@@ -27,6 +27,7 @@ const requiredSecrets = [
 const disabledFeatures = [
   "FEATURE_AI",
   "FEATURE_HOTMART_LIVE",
+  "FEATURE_ATV_PLUS_COMMERCIAL",
   "FEATURE_MAGIC_LINK",
 ];
 const shopSecrets = [
