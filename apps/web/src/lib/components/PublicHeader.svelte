@@ -6,6 +6,7 @@
 	import { visibleShopCollections } from '$lib/data/shop-collections';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
 	import BrandLogo from './BrandLogo.svelte';
+	import ExploreMenu from './explore/ExploreMenu.svelte';
 	import SignOutButton from './SignOutButton.svelte';
 	type MenuLink = { href: string; label: string; description?: string; art: string };
 	type Menu = { id: string; label: string; href: string; links: MenuLink[] };
@@ -52,15 +53,10 @@
 			]
 		},
 		{
-			id: 'universos',
-			label: 'Universos',
-			href: '/temas',
-			links: interestNavigation.map((topic) => ({
-				href: topic.href,
-				label: topic.label,
-				description: topic.note,
-				art: mvpThemes[topic.id].art
-			}))
+			id: 'explorar',
+			label: 'Explorar',
+			href: '/explorar',
+			links: []
 		},
 		{
 			id: 'revista',
@@ -155,29 +151,37 @@
 						}}>{menu.label}<span aria-hidden="true">⌄</span></button
 					>
 					{#if active === menu.id}
-						<div class="nav-panel" id={`nav-${menu.id}`}>
+						<div
+							class="nav-panel"
+							class:explore-panel={menu.id === 'explorar'}
+							id={`nav-${menu.id}`}
+						>
 							<div class="nav-panel-heading">
 								<span>{menu.label}</span><a href={menu.href} onclick={dismiss}
 									>Ver tudo <span aria-hidden="true">↗</span></a
 								>
 							</div>
-							<div class="nav-panel-grid">
-								{#each menu.links as link (link.href)}
-									<a
-										href={link.href}
-										class="nav-item"
-										onclick={dismiss}
-										aria-current={page.url.pathname + page.url.search === link.href
-											? 'page'
-											: undefined}
-										><img src={mvpArt(link.art)} alt="" width="48" height="48" /><span
-											><strong>{link.label}</strong>{#if link.description}<small
-													>{link.description}</small
-												>{/if}</span
-										></a
-									>
-								{/each}
-							</div>
+							{#if menu.id === 'explorar'}
+								<ExploreMenu onNavigate={dismiss} />
+							{:else}
+								<div class="nav-panel-grid">
+									{#each menu.links as link (link.href)}
+										<a
+											href={link.href}
+											class="nav-item"
+											onclick={dismiss}
+											aria-current={page.url.pathname + page.url.search === link.href
+												? 'page'
+												: undefined}
+											><img src={mvpArt(link.art)} alt="" width="48" height="48" /><span
+												><strong>{link.label}</strong>{#if link.description}<small
+														>{link.description}</small
+													>{/if}</span
+											></a
+										>
+									{/each}
+								</div>
+							{/if}
 						</div>
 					{/if}
 				</div>
@@ -256,6 +260,9 @@
 		background: #f7eedc;
 		color: #163849;
 		box-shadow: 0 18px 38px #06222b30;
+	}
+	.explore-panel {
+		width: min(960px, calc(100% - 64px));
 	}
 	.nav-panel-heading {
 		display: flex;
@@ -366,7 +373,8 @@
 			padding: 16px 2px;
 			border-bottom: 1px solid #f7e9ce28;
 		}
-		.nav-panel {
+		.nav-panel,
+		.explore-panel {
 			position: static;
 			width: 100%;
 			max-height: none;

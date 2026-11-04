@@ -127,7 +127,7 @@
 					>{/snippet}</Field
 			>
 		</div>
-		<div class="filters" role="group" aria-label="Filtrar por universo">
+		<div class="filters" role="group" aria-label="Filtrar por tema">
 			<button class="chip" aria-pressed={universe === 'all'} onclick={() => (universe = 'all')}
 				>Todas</button
 			>{#each categories as category (category)}<button
@@ -189,7 +189,7 @@
 			</p>
 			<Button href="/meu-ceu">Conhecer as leituras do mapa astral</Button><a
 				class="explore-link"
-				href="/#universos">Ver os temas de astrologia →</a
+				href="/temas">Ver os temas de astrologia →</a
 			>
 		</div>
 	{/if}

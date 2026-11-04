@@ -24,7 +24,7 @@
 		{#if eyebrow}<p class="eyebrow">{eyebrow}</p>{/if}
 		<h3><a {href}>{title}</a></h3>
 		<p>{description}</p>
-		<a class="text-link" {href}>Explorar este universo <span aria-hidden="true">↗</span></a>
+		<a class="text-link" {href}>Explorar este tema <span aria-hidden="true">↗</span></a>
 	</div>
 </article>
 

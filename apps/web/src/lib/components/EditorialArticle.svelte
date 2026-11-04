@@ -131,7 +131,7 @@
 						>{nextStep?.title ?? topic.action} <span aria-hidden="true">↗</span></a
 					>
 					{#if nextStep?.path !== topic.href}
-						<a class="universe-link" href={topic.href}>Conhecer as leituras deste universo</a>
+						<a class="universe-link" href={topic.href}>Conhecer as leituras deste tema</a>
 					{/if}
 				</aside>{/if}
 			<div class="article-service">

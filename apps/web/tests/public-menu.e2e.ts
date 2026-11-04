@@ -1,6 +1,7 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
 import { interestNavigation } from '../src/lib/data/public-navigation';
+import { exploreSigns } from '../src/lib/data/explore';
 import { freeTools } from '../src/lib/data/free-tools';
 import { expectedTopicPaths, publishedEditorial } from './fixtures/editorial-inventory';
 
@@ -29,7 +30,7 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await expect(nav.locator('.nav-trigger')).toHaveText([
 			'Ferramentas grátis⌄',
 			'Produtos digitais⌄',
-			'Universos⌄',
+			'Explorar⌄',
 			'Revista⌄',
 			'Loja do ATVNA⌄'
 		]);
@@ -46,17 +47,28 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await page.keyboard.press('Escape');
 		await expect(tools).toBeFocused();
 		await expect(tools).toHaveAttribute('aria-expanded', 'false');
-		const button = nav.locator('[aria-controls="nav-universos"]');
+		const button = nav.locator('[aria-controls="nav-explorar"]');
 		await button.focus();
 		await page.keyboard.press('Enter');
-		await expect(page.locator('#nav-universos .nav-item')).toHaveCount(6);
+		await expect(page.locator('#nav-explorar .menu-theme')).toHaveCount(6);
 		for (const item of interestNavigation) {
-			await expect(page.locator(`#nav-universos .nav-item[href="${item.href}"]`)).toContainText(
+			await expect(page.locator(`#nav-explorar .menu-theme[href="${item.href}"]`)).toContainText(
 				item.label
 			);
 			for (const href of [item.href, `/revista?tema=${item.id}`])
 				expect((await request.get(href)).status(), href).toBe(200);
 		}
+		await expect(page.locator('#nav-explorar .menu-sign')).toHaveCount(12);
+		for (const sign of exploreSigns) {
+			await expect(
+				page.locator(`#nav-explorar .menu-sign[href="/signos/${sign.slug}"]`)
+			).toHaveText(sign.glyph + sign.name);
+		}
+		await expect(page.locator('#nav-explorar .nav-panel-heading a')).toHaveAttribute(
+			'href',
+			'/explorar'
+		);
+		await expect(page.locator('#nav-explorar h3 a')).toHaveText(['Por temas ↗', 'Por signos ↗']);
 		await expect(
 			nav.locator('a[href*="dossie"], a[href*="jornada"], a[href*="atv-plus"], a[href*="atlas"]')
 		).toHaveCount(0);
@@ -104,7 +116,7 @@ test('artigos filtram o assunto e mantêm o catálogo comercial fora da navegaç
 			item.toolHref
 		);
 		await expect(
-			next.getByRole('link', { name: 'Conhecer as leituras deste universo' })
+			next.getByRole('link', { name: 'Conhecer as leituras deste tema' })
 		).toHaveAttribute('href', item.href);
 		await expect(page.locator('main a[href^="/produtos/"]')).toHaveCount(0);
 	}

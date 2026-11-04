@@ -80,25 +80,25 @@ for (const width of [320, 1440]) {
 		for (const name of [
 			'Ferramentas grátis',
 			'Leituras para você. Um tema de cada vez.',
-			'Encontre o seu assunto.',
+			'Um assunto. Um signo. Por onde começar?',
 			'Uma pausa para ler.',
 			'O seu universo, perto de você.'
 		]) {
 			await expect(main.getByRole('heading', { level: 2, name, exact: true })).toBeVisible();
 		}
-		const themes = page.locator('#universos');
-		const themeCards = themes.locator('.home-universe');
+		const themes = page.locator('#explorar');
+		const themeCards = themes.locator('.explore-theme');
 		await expect(themeCards).toHaveCount(6);
-		const themeHeadings = themeCards.getByRole('heading', { level: 3 });
+		const themeHeadings = themeCards.locator('strong');
 		await expect(themeHeadings).toHaveText([
 			'Mapa astral',
 			'Previsões',
-			'Amor e relações',
+			'Amor e relacionamentos',
 			'Dinheiro e carreira',
 			'Tarot',
 			'Sonhos'
 		]);
-		const themeLinks = themeCards.locator('.universe-main');
+		const themeLinks = themeCards;
 		await expect(themeLinks).toHaveCount(6);
 		expect(
 			await themeLinks.evaluateAll((links) => links.map((link) => link.getAttribute('href')))

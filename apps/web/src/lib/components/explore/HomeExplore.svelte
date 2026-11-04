@@ -8,7 +8,7 @@
 	<div class="explore-wrap">
 		<header class="explore-opening">
 			<div>
-				<p class="explore-eyebrow">Explorar · temas e signos</p>
+				<p class="explore-eyebrow">06 / Explorar · temas e signos</p>
 				<h2 id="home-explore-title">Um assunto. Um signo.<br /><em>Por onde começar?</em></h2>
 				<p class="explore-lead">
 					Encontre um tema que conversa com o seu momento ou conheça o céu pelo seu signo.
@@ -38,7 +38,7 @@
 		<div class="explore-section-head">
 			<div>
 				<p class="explore-eyebrow">02 / Seu signo</p>
-				<h3>Doze signos. Doze caminhos.</h3>
+				<h3>Por signos</h3>
 				<p>Conteúdos, previsões e descobertas para cada signo.</p>
 			</div>
 			<a href="/signos">Conhecer os signos <span aria-hidden="true">↗</span></a>

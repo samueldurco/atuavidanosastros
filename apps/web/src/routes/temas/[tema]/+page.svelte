@@ -27,8 +27,12 @@
 		<section class="universe-hero">
 			<div class="universe-hero-surface">
 				<div class="universe-hero-copy">
-					<a class="back-link" href="/temas">Todos os temas <span aria-hidden="true">↗</span></a>
-					<p class="eyebrow">Explore este universo</p>
+					<nav class="topic-breadcrumb" aria-label="Caminho da página">
+						<a href="/explorar">Explorar</a><span aria-hidden="true"> / </span><a href="/temas"
+							>Temas</a
+						><span aria-hidden="true"> / </span><span aria-current="page">{data.topic.label}</span>
+					</nav>
+					<p class="eyebrow">Explore este tema</p>
 					<h1>{data.topic.label}</h1>
 					<p class="lead">{data.topic.description}</p>
 					<div class="entry-actions">
@@ -164,6 +168,17 @@
 </div>
 
 <style>
+	.topic-breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 24px;
+		font-size: 13px;
+	}
+	.topic-breadcrumb a {
+		color: inherit;
+		text-underline-offset: 3px;
+	}
 	.back-link,
 	.tool-action {
 		display: inline-flex;

@@ -17,7 +17,7 @@
 <section class="section">
 	<div class="container topics">
 		<h2 class="h2">Continue pelo seu assunto</h2>
-		<nav aria-label="Universos do ATVNA">
+		<nav aria-label="Temas das ferramentas">
 			{#each data.topics as topic (topic.id)}
 				<a class="btn btn-secondary" href={topic.href}>{topic.label}</a>
 			{/each}

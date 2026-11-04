@@ -14,11 +14,14 @@ test('HOME distingue produtos digitais, continuidade e imagens de cada seção',
 	await expect(products.getByRole('link', { name: 'Ver produto digital' })).toHaveCount(3);
 	await expect(products.locator('#atv-mais-home')).toHaveCount(0);
 	await expect(page.locator('#atv-mais-home').getByRole('heading', { level: 3 })).toHaveCount(3);
-	await expect(page.locator('#universos').getByRole('heading', { level: 3 })).toHaveCount(6);
+	await expect(page.locator('#explorar .explore-theme')).toHaveCount(6);
+	await expect(page.locator('#explorar')).toHaveCount(1);
+	await expect(page.locator('#universos, .universe-section')).toHaveCount(0);
+	await expect(page.locator('#explorar .explore-sign')).toHaveCount(12);
 	const images = page.locator(
-		'#ferramentas .tool-open img, #produtos .reading-cover img, #universos img, #revista .article-image img, #loja .shop-scene img'
+		'#ferramentas .tool-open img, #produtos .reading-cover img, #explorar img, #revista .article-image img, #loja .shop-scene img'
 	);
-	await expect(images).toHaveCount(25);
+	await expect(images).toHaveCount(39);
 	const sources = await images.evaluateAll((items) =>
 		items.map((item) => (item as HTMLImageElement).src)
 	);
@@ -75,7 +78,7 @@ for (const width of [320, 1440]) {
 		const expand = sample.getByRole('button', { name: 'Ampliar mapa' });
 		await expect(expand).toBeEnabled();
 		await page.evaluate(() => document.fonts.ready);
-		for (const id of ['produtos', 'atv-mais-home', 'universos', 'revista']) {
+		for (const id of ['produtos', 'atv-mais-home', 'explorar', 'revista']) {
 			const section = page.locator(`#${id}`);
 			await section.scrollIntoViewIfNeeded();
 			await section.screenshot({ path: testInfo.outputPath(`${id}-${width}.png`) });

@@ -36,7 +36,7 @@
 				<p class="eyebrow">Catálogo de leituras avulsas</p>
 				<h2 id="catalog-heading">Encontre o seu tema.</h2>
 			</div>
-			<p>Explore os seis universos e confira a disponibilidade de cada leitura.</p>
+			<p>Explore os seis temas e confira a disponibilidade de cada leitura.</p>
 		</div>
 		<nav class="topics" aria-label="Temas das leituras">
 			<a href="/leituras#catalogo" aria-current={!data.selected ? 'page' : undefined}
