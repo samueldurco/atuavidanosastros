@@ -156,7 +156,7 @@ export async function handleConsultationMessage(input: {
 			input.message.text === null
 				? {
 						reply:
-							'Sou a assistente virtual da ATVNA. Para esta orientação gratuita, envie sua dúvida em texto, sem dados de nascimento. Digite menu para ver as opções.',
+							'Sou a assistente virtual da ATVNA. Este canal apresenta produtos digitais pagos. Envie sua dúvida em texto, sem dados de nascimento. Digite menu para ver as opções.',
 						state: { step: 'question' },
 						intent: 'unsupported_message'
 					}

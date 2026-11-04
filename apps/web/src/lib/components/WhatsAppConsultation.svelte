@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { SvelteSet } from 'svelte/reactivity';
 	let { available = false, pathname = '/' }: { available?: boolean; pathname?: string } = $props();
 	const discovery = $derived(
 		pathname === '/' ||
@@ -16,7 +17,7 @@
 				'#disponibilidade, .product-offer-actions, [data-whatsapp-obstacle]'
 			)
 		);
-		const visible = new Set<Element>();
+		const visible = new SvelteSet<Element>();
 		observer = new IntersectionObserver((entries) => {
 			for (const entry of entries) {
 				if (entry.isIntersecting) visible.add(entry.target);

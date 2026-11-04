@@ -48,18 +48,26 @@ function atvPlusOffer(offers: readonly PublicOffer[]): ConsultationOffer | null 
 	if (!offers.length) return null;
 	const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 	// One product contains every authorized variant in canonical order; no arbitrary cheapest/default offer.
-	const prices = atvPlusCommercialOffers.flatMap((definition) => {
+	const variants = atvPlusCommercialOffers.flatMap((definition) => {
 		const offer = offers.find((item) => item.id === definition.id);
 		if (!offer) return [];
 		const plan = atvPlusCommercialPlanFor(definition.planId)!;
-		return `${plan.name.replace(/^ATV\+ /, '')} · ${definition.termMonths} meses: ${money.format(offer.totalMinor / 100)}`;
+		return [
+			{
+				totalMinor: offer.totalMinor,
+				label: `${plan.name.replace(/^ATV\+ /, '')} · ${definition.termMonths} meses: ${money.format(offer.totalMinor / 100)}`
+			}
+		];
 	});
 	return {
 		productId: 'atv-plus',
 		href: '/atv-mais',
 		available: true,
 		checkoutAvailable: true,
-		priceText: `Pagamento único por período:\n${prices.join('\n')}`,
+		commercialType: 'paid',
+		currency: 'BRL',
+		paidPricesMinor: variants.map((variant) => variant.totalMinor),
+		priceText: `Pagamento único por período:\n${variants.map((variant) => variant.label).join('\n')}`,
 		timingText:
 			'A próxima Revolução Solar é preparada após a contratação e o cadastro; as previsões futuras seguem a programação do plano.',
 		deliveryText: 'Leituras digitais em PDF pelo WhatsApp, conforme o plano contratado.'
@@ -69,26 +77,24 @@ function atvPlusOffer(offers: readonly PublicOffer[]): ConsultationOffer | null 
 /** Public commercial projection only: no account lookup, checkout intent, provider call or private data. */
 export async function loadConsultationCatalogue({
 	client,
-	checkoutEnabled,
-	verifiedFreeToolIds = []
+	checkoutEnabled
 }: {
 	client: CatalogueRpcClient;
 	checkoutEnabled: boolean;
-	verifiedFreeToolIds?: readonly string[];
 }): Promise<ConsultationCatalogue> {
-	const freeCatalogue = () => createConsultationCatalogue({ verifiedFreeToolIds });
-	if (!checkoutEnabled) return freeCatalogue();
+	const emptyCatalogue = () => createConsultationCatalogue();
+	if (!checkoutEnabled) return emptyCatalogue();
 	try {
 		const result = await client
 			.rpc('atv_plus_public_offers')
 			.abortSignal(AbortSignal.timeout(10_000));
-		if (result.error) return freeCatalogue();
+		if (result.error) return emptyCatalogue();
 		const offers = publicOffers(result.data);
 		const offer = offers && atvPlusOffer(offers);
-		if (!offer) return freeCatalogue();
+		if (!offer) return emptyCatalogue();
 		// Individual readings remain closed until P02 supplies a verified commercial contract.
-		return createConsultationCatalogue({ verifiedFreeToolIds, offers: [offer] });
+		return createConsultationCatalogue({ offers: [offer] });
 	} catch {
-		return freeCatalogue();
+		return emptyCatalogue();
 	}
 }

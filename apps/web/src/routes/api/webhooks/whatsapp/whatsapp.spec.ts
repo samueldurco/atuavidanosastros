@@ -334,12 +334,11 @@ function enableConsultation() {
 		WHATSAPP_CONSULTATION_VERIFIED_AT: new Date().toISOString(),
 		WHATSAPP_CONSULTATION_SUBJECT_SECRET: 'synthetic-subject-secret-not-a-real-credential',
 		WHATSAPP_ACCESS_TOKEN: 'synthetic-access-token-not-a-real-credential',
-		WHATSAPP_GRAPH_VERSION: 'v24.0',
-		WHATSAPP_CONSULTATION_VERIFIED_FREE_TOOLS: 'ascendente'
+		WHATSAPP_GRAPH_VERSION: 'v24.0'
 	});
 }
 
-it('keeps inbound durable but fails closed when free response authorization is missing', async () => {
+it('keeps inbound durable but fails closed without proof of cost-free WhatsApp transport', async () => {
 	enableConsultation();
 	delete mocks.env.WHATSAPP_CONSULTATION_FREE_REPLY_VERIFIED;
 	const request = vi.fn();

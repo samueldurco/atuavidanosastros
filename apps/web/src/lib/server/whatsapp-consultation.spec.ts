@@ -40,12 +40,16 @@ const offer = (productId: string, href: string): ConsultationOffer => ({
 	href,
 	available: true,
 	checkoutAvailable: true,
+	commercialType: 'paid',
+	currency: 'BRL',
+	paidPricesMinor: [12_345],
 	priceText: 'Consulte o preço vigente na ficha; a conta confirma elegibilidade de membro.',
 	timingText: 'O prazo vigente aparece na ficha antes do pagamento.',
 	deliveryText: 'Biblioteca da conta no site.'
 });
 const atvPlusOffer: ConsultationOffer = {
 	...offer('atv-plus', '/atv-mais'),
+	paidPricesMinor: [6_000],
 	priceText: 'ATV+ Essencial · 3 meses: R$ 60,00 pelo período (valor sintético para teste).',
 	timingText:
 		'Próxima Revolução Solar após contratação, cadastro e confirmação do WhatsApp; demais previsões nas datas futuras da programação do plano.',
@@ -57,11 +61,11 @@ const offers = [
 	offer('purpose-career', '/produtos/mapa-astral-dinheiro-carreira'),
 	offer('tarot-situation-challenge-advice', '/produtos/tarot-3-cartas'),
 	atvPlusOffer,
+	offer('birth-chart', '/produtos/mapa-astral-completo'),
 	...launchProducts.map(({ id, href }) => offer(id, href))
 ];
 const catalogue = () =>
 	createConsultationCatalogue({
-		verifiedFreeToolIds: ['ascendente', 'combinacao-do-casal', 'dinheiro-no-mapa', 'meio-do-ceu'],
 		offers,
 		registeredProducts: launchProducts
 	});
@@ -75,7 +79,7 @@ describe('WhatsApp consultation catalog authority', () => {
 	it('fails closed without an explicitly verified destination', () => {
 		const empty = createConsultationCatalogue();
 		expect(empty.products).toEqual([]);
-		expect(empty.freeToolIds).toEqual([]);
+		expect(empty).not.toHaveProperty('freeToolIds');
 		expect(reply('Qual é meu ascendente?', undefined, empty).destination).toBeUndefined();
 		expect(
 			reply('Como combina meu mapa com meu parceiro?', undefined, empty).destination
@@ -105,11 +109,68 @@ describe('WhatsApp consultation catalog authority', () => {
 				.products[0].id
 		).toBe('wedding-date-map');
 	});
-	it('does not admit unknown or partial free tools nor another message origin', () => {
-		expect(
-			createConsultationCatalogue({ verifiedFreeToolIds: ['horoscopo', 'nonexistent'] }).freeToolIds
-		).toEqual([]);
+	it('rejects free, zero, invalid or unsupported-currency offer proofs regardless of price prose', () => {
+		for (const invalid of [
+			{ available: 'false' },
+			{ checkoutAvailable: 'false' },
+			{ commercialType: 'free' },
+			{ currency: 'USD' },
+			{ paidPricesMinor: [] },
+			{ paidPricesMinor: [0] },
+			{ paidPricesMinor: [12_345, 0] },
+			{ paidPricesMinor: [-1] },
+			{ paidPricesMinor: [1.5] },
+			{ paidPricesMinor: [Number.NaN] },
+			{ paidPricesMinor: [Number.POSITIVE_INFINITY] },
+			{ paidPricesMinor: [2_147_483_648] },
+			{ paidPricesMinor: undefined },
+			{ currency: undefined },
+			{ commercialType: undefined }
+		]) {
+			const candidate = { ...offers[0], ...invalid } as unknown as ConsultationOffer;
+			expect(createConsultationCatalogue({ offers: [candidate] }).products).toEqual([]);
+		}
+		const proof = createConsultationCatalogue({ offers: [offers[0]] }).products[0];
+		expect(proof.commercialType).toBe('paid');
+		expect(proof.currency).toBe('BRL');
+		expect(proof.paidPricesMinor).toEqual([12_345]);
+	});
+	it('does not turn a known tool into a paid offer or accept another message origin', () => {
+		const spoofed = offer('ascendant', '/produtos/ascendente');
+		expect(createConsultationCatalogue({ offers: [spoofed] }).products).toEqual([]);
 		expect(() => createConsultationCatalogue({ origin: 'https://evil.example' })).toThrow();
+	});
+	it('rechecks positive price evidence before browsing or reopening a selected offer', () => {
+		const current = catalogue();
+		const invalid = {
+			...current,
+			products: [{ ...current.products[0], paidPricesMinor: [0] }]
+		};
+		expect(
+			reply('Quero conhecer produtos sobre amor', undefined, invalid).destination
+		).toBeUndefined();
+		expect(
+			reply('Quero conhecer produtos sobre amor', undefined, invalid).state.choices
+		).toBeUndefined();
+		expect(
+			reply('1', { step: 'choice', choices: ['synastry'] }, invalid).destination
+		).toBeUndefined();
+	});
+	it('keeps newly registered free launches closed instead of inventing a paid price', () => {
+		const current = createConsultationCatalogue({
+			registeredProducts: launchProducts,
+			offers: launchProducts.map(({ id, href }) => ({
+				...offer(id, href),
+				paidPricesMinor: [0],
+				priceText: 'Grátis'
+			}))
+		});
+		expect(current.products).toEqual([]);
+		expect(
+			reply('Tenho duas datas para a cerimônia', undefined, current).destination
+		).toBeUndefined();
+		expect(reply('Fico sem jeito ao cobrar', undefined, current).destination).toBeUndefined();
+		expect(reply('Qual é meu talento?', undefined, current).destination).toBeUndefined();
 	});
 	it('bounds registered metadata and keeps choices and WhatsApp messages within transport limits', () => {
 		const many = Array.from({ length: 12 }, (_, i) => ({
@@ -152,29 +213,40 @@ describe('WhatsApp consultation journeys', () => {
 		expect(result.reply).toContain('1. Ver produtos digitais');
 		expect(result.reply).toContain('2. Fazer uma consulta');
 	});
-	it('identifies the virtual assistant and offers both free guidance entry paths', () => {
+	it('identifies the sales assistant and offers both paid-product entry paths', () => {
 		const first = reply('Oi');
 		expect(first.reply).toContain('assistente virtual');
-		expect(first.reply).toContain('orientação inicial é gratuita');
+		expect(first.reply).toContain('assistente virtual de vendas');
+		expect(first.reply).toContain('produtos digitais pagos');
+		expect(first.reply).not.toMatch(/grátis|gratuit|ferramenta/);
 		expect(first.reply).toContain('1. Ver produtos digitais');
 		expect(first.reply).toContain('2. Fazer uma consulta');
 		expect(reply('1', first.state).state.step).toBe('topic');
 		expect(reply('2', first.state).state.step).toBe('question');
 	});
-	it('uses an explicit first question directly and prefers the free ascendant calculator', () => {
+	it('matches an explicit ascendant question to a paid natal reading that covers it', () => {
 		const result = reply('Qual é meu ascendente?');
 		expect(result.intent).toBe('ascendant');
-		expect(result.destination).toBe('https://atuavidanosastros.com.br/ferramentas/ascendente');
-		expect(result.reply).toContain('grátis');
-		expect(result.productId).toBeUndefined();
+		expect(result.destination).toBe(
+			'https://atuavidanosastros.com.br/produtos/mapa-astral-completo'
+		);
+		expect(result.productId).toBe('birth-chart');
+		expect(result.reply).toContain('Sol, Lua, planetas, Ascendente, casas e aspectos');
+		expect(result.reply).toContain('produto digital pago');
+		expect(result.reply).not.toMatch(/grátis|gratuit|\/ferramentas\//);
+		const unavailable = reply('Qual é meu ascendente?', undefined, createConsultationCatalogue());
+		expect(unavailable.destination).toBeUndefined();
+		expect(unavailable.reply).toContain('não está disponível para compra');
 	});
-	it('browses love using only currently verified free tools and purchasable offers', () => {
+	it('browses love using only currently purchasable paid offers', () => {
 		const result = reply('Quero conhecer os produtos sobre amor.');
 		expect(result.intent).toBe('browse-topic');
-		expect(result.reply).toContain('Combinação Astral do Casal — grátis');
+		expect(result.reply).toContain('produtos digitais pagos');
 		expect(result.reply).toContain('Análise Astral do Casal');
 		expect(result.reply).not.toContain('Dossiê');
-		expect(reply('1', result.state).destination).toContain('/ferramentas/combinacao-do-casal');
+		expect(result.reply).not.toMatch(/Combinação Astral|grátis|gratuit|ferramenta/);
+		expect(result.state.choices).toEqual(['synastry', 'wedding-date-map']);
+		expect(reply('1', result.state).destination).toContain('/produtos/analise-astral-do-casal');
 	});
 	it('provides the synastry scope, input, real delivery and existing commerce path', () => {
 		const result = reply('Como meu mapa combina com o do meu parceiro?');
@@ -187,12 +259,12 @@ describe('WhatsApp consultation journeys', () => {
 		expect(result.reply).toContain('benefício de membro');
 		expect(result.reply).not.toMatch(/24 horas|PDF|e-mail|desconto de/);
 	});
-	it('explains the free comparison is only a partial alternative if the full offer is withdrawn', () => {
-		const current = createConsultationCatalogue({ verifiedFreeToolIds: ['combinacao-do-casal'] });
+	it('does not substitute a free tool when the paid relationship offer is withdrawn', () => {
+		const current = createConsultationCatalogue();
 		const result = reply('Quero comparar meu mapa com meu parceiro.', undefined, current);
-		expect(result.destination).toContain('/ferramentas/combinacao-do-casal');
-		expect(result.reply).toContain('alternativa parcial');
-		expect(result.reply).toContain('não substitui a leitura completa');
+		expect(result.destination).toBeUndefined();
+		expect(result.reply).toContain('não está disponível para compra');
+		expect(result.reply).not.toMatch(/grátis|gratuit|ferramenta|alternativa parcial/);
 		expect(result.productId).toBeUndefined();
 	});
 	it('separates a one-off week from future recurring forecasts', () => {
@@ -289,10 +361,26 @@ describe('WhatsApp consultation journeys', () => {
 		const withdrawn = reply('ver ficha', selected.state, createConsultationCatalogue());
 		expect(withdrawn.destination).toBeUndefined();
 		expect(withdrawn.reply).toContain('não está disponível');
-		const freeSelected = reply('Qual é meu ascendente?');
+		const natalSelected = reply('Qual é meu ascendente?');
 		expect(
-			reply('abrir', freeSelected.state, createConsultationCatalogue()).destination
+			reply('abrir', natalSelected.state, createConsultationCatalogue()).destination
 		).toBeUndefined();
+		expect(
+			reply('abrir', { step: 'choice', choices: ['free-ascendente'] }).destination
+		).toBeUndefined();
+	});
+	it('never links to free destinations for former tool questions', () => {
+		for (const text of [
+			'Qual é meu arcano pessoal?',
+			'Quero ver a carta do dia',
+			'Qual é a carta do amor?',
+			'Quero registrar meu sonho',
+			'Qual é meu Meio do Céu?'
+		]) {
+			const result = reply(text);
+			expect(result.destination).toBeUndefined();
+			expect(result.reply).not.toMatch(/grátis|gratuit|\/ferramentas\//);
+		}
 	});
 	it('admits uncertainty and offers correction or theme browsing instead of a random sale', () => {
 		const result = reply('Meu cachorro vai encontrar o brinquedo?');
@@ -304,7 +392,7 @@ describe('WhatsApp consultation journeys', () => {
 	it('keeps birth data and narrative out of categorical state and does not echo them', () => {
 		const sensitive = 'Nasci em 02/02/2002 às 15h. Qual é meu ascendente?';
 		const result = reply(sensitive);
-		expect(result.state).toEqual({ step: 'choice', choices: ['free-ascendente'] });
+		expect(result.state).toEqual({ step: 'choice', choices: ['birth-chart'] });
 		expect(JSON.stringify(result)).not.toContain('02/02/2002');
 		expect(reply('a'.repeat(2001)).state.step).toBe('question');
 	});

@@ -17,7 +17,7 @@ const message = {
 	timestamp: now / 1000,
 	text: 'Qual é meu ascendente?'
 };
-const catalogue = createConsultationCatalogue({ verifiedFreeToolIds: ['ascendente'] });
+const catalogue = createConsultationCatalogue();
 
 function fixture() {
 	const claims = new Set<string>();
@@ -61,6 +61,16 @@ it('replayed/concurrent event causes a single reply and only bounded state is pe
 	expect(durable).not.toContain(message.from);
 	expect(durable).not.toContain(message.text);
 	expect(durable).not.toContain('https://');
+});
+
+it('unsupported messages keep the paid digital scope without advertising a free service', async () => {
+	const { input, send } = fixture();
+	expect(await handleConsultationMessage({ ...input, message: { ...message, text: null } })).toBe(
+		'sent'
+	);
+	const reply = send.mock.calls[0]?.[1];
+	expect(reply).toContain('produtos digitais pagos');
+	expect(reply).not.toMatch(/gratuit|ferramentas\/|testar-produtos/);
 });
 
 it.each([-86_401, 61])('does not send outside service window (%is)', async (offset) => {

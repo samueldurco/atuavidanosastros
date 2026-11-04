@@ -16,8 +16,8 @@ function publicRow(index = 0, totalMinor = 12_345) {
 }
 
 function fixture(data: unknown) {
-	const abortSignal = vi.fn(async (_signal: AbortSignal) => ({ data, error: null as unknown }));
-	const rpc = vi.fn((_name: 'atv_plus_public_offers') => ({ abortSignal }));
+	const abortSignal = vi.fn(async () => ({ data, error: null as unknown }));
+	const rpc = vi.fn(() => ({ abortSignal }));
 	return { client: { rpc }, abortSignal, rpc };
 }
 
@@ -25,12 +25,11 @@ it('does not query commerce with the commercial checkout gate closed', async () 
 	const { client, rpc } = fixture([publicRow()]);
 	const result = await loadConsultationCatalogue({
 		client,
-		checkoutEnabled: false,
-		verifiedFreeToolIds: ['ascendente', 'synthetic-unknown-tool']
+		checkoutEnabled: false
 	});
 	expect(rpc).not.toHaveBeenCalled();
 	expect(result.products).toEqual([]);
-	expect(result.freeToolIds).toEqual(['ascendente']);
+	expect(result).not.toHaveProperty('freeToolIds');
 });
 
 it('reads only public offers with a timeout and links the canonical authenticated purchase page', async () => {
@@ -43,7 +42,10 @@ it('reads only public offers with a timeout and links the canonical authenticate
 		id: 'atv-plus',
 		href: '/atv-mais',
 		available: true,
-		checkoutAvailable: true
+		checkoutAvailable: true,
+		commercialType: 'paid',
+		currency: 'BRL',
+		paidPricesMinor: [12_345]
 	});
 	expect(catalogue.products[0].priceText.replaceAll('\u00a0', ' ')).toBe(
 		'Pagamento único por período:\nEssencial · 3 meses: R$ 123,45'
@@ -63,6 +65,7 @@ it('aggregates every authorized plan and term in canonical order without picking
 	const catalogue = await loadConsultationCatalogue({ client, checkoutEnabled: true });
 	const { products } = catalogue;
 	expect(products).toHaveLength(1);
+	expect(products[0].paidPricesMinor).toEqual(Array(9).fill(2_147_483_647));
 	const lines = products[0].priceText.split('\n');
 	expect(lines).toHaveLength(10);
 	expect(lines.slice(1).map((line) => line.split(':')[0])).toEqual([
@@ -86,6 +89,15 @@ it('aggregates every authorized plan and term in canonical order without picking
 });
 
 describe('fails closed without inventing an available reading', () => {
+	it.each(['ascendente', 'p02-free-launch'])(
+		'excludes free tools and P02 free launches (%s) from the commercial catalogue',
+		async (id) => {
+			const { client } = fixture([{ ...publicRow(), id, total_minor: 0 }]);
+			const catalogue = await loadConsultationCatalogue({ client, checkoutEnabled: true });
+			expect(catalogue.products).toEqual([]);
+			expect(catalogue).not.toHaveProperty('freeToolIds');
+		}
+	);
 	it.each(
 		[
 			undefined,
@@ -111,11 +123,10 @@ describe('fails closed without inventing an available reading', () => {
 		const { client } = fixture(data);
 		const result = await loadConsultationCatalogue({
 			client,
-			checkoutEnabled: true,
-			verifiedFreeToolIds: ['ascendente']
+			checkoutEnabled: true
 		});
 		expect(result.products).toEqual([]);
-		expect(result.freeToolIds).toEqual(['ascendente']);
+		expect(result).not.toHaveProperty('freeToolIds');
 	});
 	it('keeps individual paid readings closed even when ATV+ is available', async () => {
 		const { client } = fixture([publicRow()]);
@@ -126,18 +137,17 @@ describe('fails closed without inventing an available reading', () => {
 		).toBeUndefined();
 	});
 	it.each(['rpc-error', 'timeout'])(
-		'closes on %s without losing available free tools',
+		'closes on %s without suggesting a free fallback',
 		async (kind) => {
 			const { client, abortSignal } = fixture([publicRow()]);
 			if (kind === 'rpc-error') abortSignal.mockResolvedValue({ data: [publicRow()], error: {} });
 			else abortSignal.mockRejectedValue(new Error('synthetic timeout'));
 			const catalogue = await loadConsultationCatalogue({
 				client,
-				checkoutEnabled: true,
-				verifiedFreeToolIds: ['ascendente']
+				checkoutEnabled: true
 			});
 			expect(catalogue.products).toEqual([]);
-			expect(catalogue.freeToolIds).toEqual(['ascendente']);
+			expect(catalogue).not.toHaveProperty('freeToolIds');
 		}
 	);
 });

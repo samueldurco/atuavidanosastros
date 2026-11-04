@@ -31,11 +31,27 @@ for (const viewport of [
 test('clique revalida canal e abre somente WhatsApp; fichas preservam compra', async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 	await page.goto('/leituras');
-	await page.route('https://wa.me/**', (route) =>
-		route.fulfill({ status: 200, body: 'WhatsApp de teste local: nenhum envio' })
-	);
+	// Inspect the real local gate without following its external HTTP redirect.
+	await page.route(/^https:\/\/(?:wa\.me|api\.whatsapp\.com)\//, (route) => route.abort());
+	let destination = '';
+	await page.route('**/api/whatsapp/entry', async (route) => {
+		const response = await route.fetch({ maxRedirects: 0 });
+		expect(response.status()).toBe(302);
+		destination = response.headers().location;
+		await route.fulfill({
+			status: 200,
+			contentType: 'text/plain',
+			body: 'WhatsApp de teste local: nenhum envio'
+		});
+	});
 	await page.getByRole('link', { name: label, exact: true }).click();
-	await expect(page).toHaveURL(/^https:\/\/wa.me\/5511999999999\?text=/);
+	await expect(page.getByText('WhatsApp de teste local: nenhum envio')).toBeVisible();
+	const target = new URL(destination);
+	expect(target.origin).toBe('https://wa.me');
+	expect(target.pathname).toBe('/5511999999999');
+	expect(target.searchParams.get('text')).toBe(
+		'Olá! Quero conhecer a assistente virtual da ATVNA.'
+	);
 	await page.goto('/produtos/analise-astral-do-casal');
 	const cta = page.getByRole('link', { name: label, exact: true });
 	await page.locator('#disponibilidade').scrollIntoViewIfNeeded();

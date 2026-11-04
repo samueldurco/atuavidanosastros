@@ -185,7 +185,7 @@ it('state permits only finite enum/choice IDs and refuses raw conversation field
 		event,
 		subject,
 		'SENT',
-		{ step: 'choice', choices: ['free-ascendente'] }
+		{ step: 'choice', choices: ['birth-chart'] }
 	]);
 });
 

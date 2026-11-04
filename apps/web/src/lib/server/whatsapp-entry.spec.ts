@@ -34,6 +34,12 @@ describe('public WhatsApp entry', () => {
 		expect(url.pathname).toBe('/5511999999999');
 		expect(url.searchParams.get('text')).toBe('Olá! Quero conhecer a assistente virtual da ATVNA.');
 	});
+	it('still requires cost-free WhatsApp transport when the product catalogue is paid only', () => {
+		expect(
+			whatsappEntry({ ...settings, WHATSAPP_CONSULTATION_FREE_REPLY_VERIFIED: 'false' }, now)
+		).toBeNull();
+		expect(whatsappEntry(settings, now)).not.toBeNull();
+	});
 	it('rejects expired/future proof, paid budget, test sender and URL injection', () => {
 		for (const change of [
 			{ WHATSAPP_CONSULTATION_VERIFIED_AT: new Date(now - 8 * 86_400_000).toISOString() },

@@ -1,9 +1,28 @@
 // Local-only bindings; never authenticates or sends to a provider.
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
+import { createRequire } from "node:module";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, resolve } from "node:path";
+import { tmpdir } from "node:os";
 
 const cwd = fileURLToPath(new URL("../apps/web/", import.meta.url));
+const require = createRequire(
+  new URL("../apps/web/package.json", import.meta.url),
+);
+const wranglerPackage = require.resolve("wrangler/package.json");
+const wranglerBin = resolve(
+  dirname(wranglerPackage),
+  JSON.parse(readFileSync(wranglerPackage, "utf8")).bin.wrangler,
+);
 const bindings = {
+  PUBLIC_SITE_URL: "http://127.0.0.1:4196",
+  PUBLIC_ENVIRONMENT: "test",
+  FEATURE_AI: "false",
+  FEATURE_HOTMART_LIVE: "false",
+  FEATURE_ATV_PLUS_COMMERCIAL: "false",
+  FEATURE_MAGIC_LINK: "false",
+  FEATURE_PHYSICAL_CHECKOUT: "false",
   FEATURE_WHATSAPP_WEBHOOK: "true",
   FEATURE_WHATSAPP_CONSULTATION: "true",
   FEATURE_WHATSAPP_PUBLIC_ENTRY: "true",
@@ -24,16 +43,23 @@ const bindings = {
   PUBLIC_SUPABASE_ANON_KEY: "",
 };
 let child;
-function run(args) {
+let localConfigDirectory;
+function cleanup() {
+  if (
+    localConfigDirectory &&
+    dirname(localConfigDirectory) === resolve(tmpdir()) &&
+    basename(localConfigDirectory).startsWith("atvna-p06-e2e-")
+  )
+    rmSync(localConfigDirectory, { recursive: true, force: true });
+}
+function run(command, args, commandCwd, shell = false) {
   return new Promise((resolve, reject) => {
-    const pnpm = process.env.npm_execpath;
-    child = pnpm
-      ? spawn(process.execPath, [pnpm, ...args], { cwd, stdio: "inherit" })
-      : spawn(process.platform === "win32" ? "pnpm.cmd" : "pnpm", args, {
-          cwd,
-          stdio: "inherit",
-          shell: process.platform === "win32",
-        });
+    child = spawn(command, args, {
+      cwd: commandCwd,
+      stdio: "inherit",
+      windowsHide: true,
+      shell,
+    });
     child.once("error", reject);
     child.once("exit", (code) =>
       code === 0
@@ -44,23 +70,40 @@ function run(args) {
 }
 const stop = () => {
   child?.kill();
+  cleanup();
   process.exit(0);
 };
 process.once("SIGINT", stop);
 process.once("SIGTERM", stop);
-if (!process.argv.includes("--skip-build")) await run(["build"]);
-await run([
-  "exec",
-  "wrangler",
-  "pages",
-  "dev",
-  ".svelte-kit/cloudflare",
-  "--ip",
-  "127.0.0.1",
-  "--port",
-  "4196",
-  ...Object.entries(bindings).flatMap(([key, value]) => [
-    "--binding",
-    `${key}=${value}`,
-  ]),
-]);
+try {
+  if (!process.argv.includes("--skip-build")) {
+    const pnpm = process.env.npm_execpath;
+    if (pnpm && /[/\\]pnpm\.(?:cjs|mjs|js)$/.test(pnpm)) {
+      await run(process.execPath, [pnpm, "build"], cwd);
+    } else {
+      // Only this fixed build command needs the Windows command shim.
+      const windows = process.platform === "win32";
+      await run(windows ? "pnpm.cmd" : "pnpm", ["build"], cwd, windows);
+    }
+  }
+  // Pages requires the standard config filename in its cwd. A separate cwd keeps
+  // real .dev.vars, production vars and their provider bindings out of this run.
+  localConfigDirectory = mkdtempSync(join(tmpdir(), "atvna-p06-e2e-"));
+  writeFileSync(
+    join(localConfigDirectory, "wrangler.jsonc"),
+    JSON.stringify({
+      name: "atvna-p06-e2e-local",
+      compatibility_date: "2026-09-02",
+      compatibility_flags: ["nodejs_als"],
+      pages_build_output_dir: resolve(cwd, ".svelte-kit/cloudflare"),
+      vars: bindings,
+    }),
+  );
+  await run(
+    process.execPath,
+    [wranglerBin, "pages", "dev", "--ip", "127.0.0.1", "--port", "4196"],
+    localConfigDirectory,
+  );
+} finally {
+  cleanup();
+}

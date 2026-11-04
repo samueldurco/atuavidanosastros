@@ -113,11 +113,7 @@ export const POST: RequestHandler = async (event) => {
 			const sender = createCloudApiConsultationSender({ accessToken, phoneNumberId, graphVersion });
 			const catalogue = await loadConsultationCatalogue({
 				client: supabase,
-				checkoutEnabled: commercialCheckoutEnabled(event.platform),
-				verifiedFreeToolIds: setting(event, 'WHATSAPP_CONSULTATION_VERIFIED_FREE_TOOLS')
-					.split(',')
-					.map((id) => id.trim())
-					.filter(Boolean)
+				checkoutEnabled: commercialCheckoutEnabled(event.platform)
 			});
 			for (const message of messages.sort((a, b) => a.timestamp - b.timestamp)) {
 				const result = await handleConsultationMessage({

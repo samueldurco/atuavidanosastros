@@ -1,7 +1,6 @@
-import { atvPlusCommercialPlans } from '@atv/domain';
+import { atvPlusCommercialPlans, offeredProductIds } from '@atv/domain';
 import { customerProduct } from '../data/product-copy';
 import { productDetails } from '../data/product-details';
-import { freeToolById, freeTools } from '../data/free-tools';
 import { interestNavigation } from '../data/public-navigation';
 
 /** Only categorical state is retained. Never put a message, name or birth data here. */
@@ -16,6 +15,10 @@ export interface ConsultationOffer {
 	href: string;
 	available: boolean;
 	checkoutAvailable: boolean;
+	commercialType: 'paid';
+	currency: 'BRL';
+	/** All authorized offer totals, in minor currency units; no price is inferred from prose. */
+	paidPricesMinor: readonly number[];
 	priceText: string;
 	timingText: string;
 	deliveryText: string;
@@ -33,7 +36,6 @@ export interface ConsultationProduct {
 
 export interface ConsultationCatalogue {
 	origin: string;
-	freeToolIds: readonly string[];
 	products: readonly (ConsultationProduct & ConsultationOffer)[];
 }
 
@@ -73,14 +75,26 @@ const atvPlusDetail = {
 		'No site: sua conta, plano e duração; data, hora e cidade de nascimento; cidade para a próxima Revolução Solar; confirmação dos dados e do WhatsApp, com consentimento de envio. Não envie esses dados nesta conversa.'
 };
 
-/** P02 may register new IDs from its canonical catalog without activating an offer here. */
+function isPaidOffer(offer: ConsultationOffer) {
+	return (
+		offer.available === true &&
+		offer.checkoutAvailable === true &&
+		offer.commercialType === 'paid' &&
+		offer.currency === 'BRL' &&
+		Array.isArray(offer.paidPricesMinor) &&
+		offer.paidPricesMinor.length > 0 &&
+		offer.paidPricesMinor.every(
+			(total) => Number.isSafeInteger(total) && total > 0 && total <= 2_147_483_647
+		)
+	);
+}
+
+/** Canonical metadata alone never activates a product; a current paid offer is also required. */
 export function createConsultationCatalogue({
-	verifiedFreeToolIds = [],
 	offers = [],
 	registeredProducts = [],
 	origin = publicOrigin
 }: {
-	verifiedFreeToolIds?: readonly string[];
 	offers?: readonly ConsultationOffer[];
 	registeredProducts?: readonly ConsultationProduct[];
 	origin?: string;
@@ -89,8 +103,11 @@ export function createConsultationCatalogue({
 	if (origin !== publicOrigin) throw new Error('Consultation origin must be canonical');
 	const products: ConsultationCatalogue['products'][number][] = [];
 	for (const offer of offers) {
-		if (!offer.available || !offer.checkoutAvailable) continue;
+		if (!isPaidOffer(offer)) continue;
 		const product = customerProduct(offer.productId);
+		// Historical definitions outside the public commercial catalog cannot become sales offers.
+		if (product && product.id !== 'atv-plus' && !offeredProductIds.some((id) => id === product.id))
+			continue;
 		const detail =
 			offer.productId === 'atv-plus'
 				? atvPlusDetail
@@ -127,13 +144,7 @@ export function createConsultationCatalogue({
 		if (!products.some(({ id }) => id === definition.id))
 			products.push({ ...definition, ...offer });
 	}
-	return {
-		origin,
-		freeToolIds: [...new Set(verifiedFreeToolIds)].filter(
-			(id) => freeToolById(id)?.id === id && freeToolById(id)?.availability === 'available'
-		),
-		products
-	};
+	return { origin, products };
 }
 
 const normalize = (text: string) =>
@@ -156,7 +167,7 @@ function answer(
 
 function menu() {
 	return answer(
-		'Oi! Sou a assistente virtual da ATVNA. A orientação inicial é gratuita e a compra é opcional. Você quer conhecer nossos produtos digitais ou fazer uma consulta sobre um assunto específico?\n\n1. Ver produtos digitais\n2. Fazer uma consulta\n\nPode também me contar sua dúvida em poucas palavras. Não envie dados de nascimento por aqui. Para encerrar, escreva sair.',
+		'Oi! Sou a assistente virtual de vendas da ATVNA. Ajudo você a conhecer nossos produtos digitais pagos e escolher uma leitura para o assunto que deseja explorar. Você quer ver os produtos ou contar sua dúvida?\n\n1. Ver produtos digitais\n2. Fazer uma consulta\n\nPode também me contar sua dúvida em poucas palavras. Não envie dados de nascimento por aqui. Para encerrar, escreva sair.',
 		'menu',
 		'menu'
 	);
@@ -181,25 +192,10 @@ function askQuestion() {
 
 function unavailable(intent: string, explanation?: string) {
 	return answer(
-		`${explanation ?? 'Não encontrei uma leitura disponível que cubra esse pedido com segurança.'} Posso ajudar você a explorar outro assunto: escreva produtos para ver os temas, corrigir para explicar melhor ou sair para encerrar.`,
+		`${explanation ?? 'Não encontrei um produto digital pago disponível que cubra esse pedido com segurança.'} Posso ajudar você a explorar outro assunto: escreva produtos para ver os temas, corrigir para explicar melhor ou sair para encerrar.`,
 		'question',
 		intent
 	);
-}
-
-function toolReply(id: string, catalogue: ConsultationCatalogue, intent: string, partial?: string) {
-	const tool = freeToolById(id);
-	if (!tool || !catalogue.freeToolIds.includes(tool.id)) return unavailable(intent);
-	const destination = catalogue.origin + tool.href;
-	return {
-		...answer(
-			`${partial ? `${partial}\n\n` : ''}${tool.label} — grátis. ${tool.description}\nDados pedidos na ferramenta: ${tool.requirements}\nVocê vê o resultado na própria ferramenta.\n${destination}${footer}`,
-			'choice',
-			intent,
-			[`free-${tool.id}`]
-		),
-		destination
-	};
 }
 
 function productReply(
@@ -208,7 +204,7 @@ function productReply(
 	intent: string,
 	reason: string
 ) {
-	const product = catalogue.products.find((item) => item.id === id);
+	const product = catalogue.products.find((item) => item.id === id && isPaidOffer(item));
 	if (!product)
 		return unavailable(
 			intent,
@@ -230,26 +226,21 @@ function productReply(
 function browseTopic(topicId: string, catalogue: ConsultationCatalogue) {
 	const topic = topics.find(({ id }) => id === topicId);
 	if (!topic) return askTopic();
-	const tools = freeTools.filter(
-		(tool) => tool.topicId === topicId && catalogue.freeToolIds.includes(tool.id)
-	);
 	const products = catalogue.products
-		.filter((product) => product.topicId === topicId)
-		.slice(0, 10 - tools.length);
-	const choices = [...tools.map((tool) => `free-${tool.id}`), ...products.map(({ id }) => id)];
+		.filter((product) => product.topicId === topicId && isPaidOffer(product))
+		.slice(0, 10);
+	const choices = products.map(({ id }) => id);
 	if (!choices.length)
 		return unavailable(
 			'browse-empty',
-			`Não há uma ferramenta ou leitura disponível de ${topic.label.toLowerCase()} para indicar agora.`
+			`Não há um produto digital pago disponível de ${topic.label.toLowerCase()} para indicar agora.`
 		);
 	return answer(
-		`${topic.label}: estas são as opções disponíveis. Escolha o número para conhecer o alcance e os dados necessários.\n\n${[
-			...tools.map((tool) => `${tool.label} — grátis. ${tool.description}`),
-			...products.map(
+		`${topic.label}: estes são os produtos digitais pagos disponíveis. Escolha o número para conhecer o alcance e os dados necessários.\n\n${products
+			.map(
 				(product) =>
 					`${product.name}. ${product.scope.length > 180 ? `${product.scope.slice(0, 177)}…` : product.scope}`
 			)
-		]
 			.map((label, i) => `${i + 1}. ${label}`)
 			.join('\n')}${footer}`,
 		'choice',
@@ -311,11 +302,10 @@ export function replyToConsultation({
 		const numeric = /^\d{1,2}$/.test(value) ? Number(value) - 1 : -1;
 		const choice =
 			state.choices?.[numeric] ??
-			(/^(ver ficha|abrir ficha|ver ferramenta|abrir)$/.test(value) && state.choices?.length === 1
+			(/^(ver ficha|abrir ficha|abrir)$/.test(value) && state.choices?.length === 1
 				? state.choices[0]
 				: undefined);
 		if (choice) {
-			if (choice.startsWith('free-')) return toolReply(choice.slice(5), catalogue, 'selected-tool');
 			return productReply(
 				choice,
 				catalogue,
@@ -333,12 +323,12 @@ export function replyToConsultation({
 		if (topic) return browseTopic(topic, catalogue);
 	}
 	if (/ascendente/.test(value) && !/estilo|roupa|vestir/.test(value))
-		return toolReply('ascendente', catalogue, 'ascendant');
-	if (/meio do ceu/.test(value)) return toolReply('meio-do-ceu', catalogue, 'midheaven');
-	if (/arcano pessoal/.test(value))
-		return toolReply('arcano-pessoal', catalogue, 'personal-arcana');
-	if (/carta do dia/.test(value)) return toolReply('carta-do-dia', catalogue, 'daily-card');
-	if (/carta do amor/.test(value)) return toolReply('carta-do-amor', catalogue, 'love-card');
+		return productReply(
+			'birth-chart',
+			catalogue,
+			'ascendant',
+			'O Mapa Astral Completo inclui o Ascendente em uma leitura integrada do mapa natal. É um produto digital pago; a ficha mostra o alcance completo antes da compra.'
+		);
 	if (
 		/quando (vou|irei) (me )?casar|quando (vai|sera) (o )?meu casamento|em que (dia|data) (vou|irei) (me )?casar/.test(
 			value
@@ -376,23 +366,13 @@ export function replyToConsultation({
 			'single-week',
 			'Para olhar uma semana específica, esta é uma leitura avulsa; não ativa envios recorrentes.'
 		);
-	if (/sinastria|mapa.*(parceir|casal|namor)|nosso.*mapa|comparar.*mapa/.test(value)) {
-		if (/gratis|gratuit|inicial|primeira/.test(value))
-			return toolReply('combinacao-do-casal', catalogue, 'couple-free');
-		if (catalogue.products.some(({ id }) => id === 'synastry'))
-			return productReply(
-				'synastry',
-				catalogue,
-				'synastry',
-				'Para comparar os dois mapas e explorar afinidades e diferenças da relação, a Análise Astral do Casal corresponde ao seu pedido.'
-			);
-		return toolReply(
-			'combinacao-do-casal',
+	if (/sinastria|mapa.*(parceir|casal|namor)|nosso.*mapa|comparar.*mapa/.test(value))
+		return productReply(
+			'synastry',
 			catalogue,
-			'synastry-unavailable',
-			'A Análise Astral do Casal não está disponível para compra agora. Como alternativa parcial, a ferramenta gratuita faz uma primeira exploração de afinidades; ela não substitui a leitura completa.'
+			'synastry',
+			'Para comparar os dois mapas e explorar afinidades e diferenças da relação, a Análise Astral do Casal corresponde ao seu pedido.'
 		);
-	}
 	if (/cobrar|cobro|receber pelo|preco do meu|bloqueio.*dinheiro|bloqueio.*financ/.test(value))
 		return productReply(
 			'financial-blocks-tarot',
@@ -413,8 +393,6 @@ export function replyToConsultation({
 		) ||
 		(state?.step === 'prosper' && /^(1|mapa natal|meu mapa|carreira)$/.test(value))
 	) {
-		if (/gratis|gratuit|calcular|posicao/.test(value))
-			return toolReply('dinheiro-no-mapa', catalogue, 'money-free');
 		return productReply(
 			'purpose-career',
 			catalogue,
@@ -450,10 +428,6 @@ export function replyToConsultation({
 			'tarot-three',
 			'As três posições exploram Situação, Desafio e Conselho. O método não exige uma pergunta e esta conversa não personaliza automaticamente a leitura.'
 		);
-	if (/mapa astral|meu mapa/.test(value) && /gratis|gratuit|calcular|posico/.test(value))
-		return toolReply('mapa-astral', catalogue, 'birth-chart-free');
-	if (/registrar.*sonho|anotar.*sonho/.test(value))
-		return toolReply('registro-de-sonho', catalogue, 'dream-log');
 	const topic = identifyTopic(value);
 	if (topic && /^(amor|relacionamentos|tarot|sonhos|mapa astral|previsoes)$/.test(value))
 		return browseTopic(topic, catalogue);
