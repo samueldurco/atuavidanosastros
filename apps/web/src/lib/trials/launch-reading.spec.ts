@@ -201,6 +201,35 @@ describe('P02 E2 private editorial consistency', () => {
 			'bateria independente de precisão continua pendente'
 		);
 		expect(restartReading.practicalAction).toContain('ambiente ou convite de baixo compromisso');
+		expect(restartReading.summary).toContain(
+			'De 01/11/2026 às 00h00 até 01/12/2026 às 00h00 (UTC; o horário final não está incluído)'
+		);
+		expect(
+			restartReading.sections.find((part) => part.id === 'thirty-day-calendar')!.paragraphs[0]
+		).toMatch(/^01\/11\/2026 —/);
+		const claim = restartReading.claims.find((item) => item.id === 'claim-movement-1')!;
+		expect(claim.factors.instant).toMatch(/^2026-\d{2}-\d{2}T/);
+		expect(claim.interpretation).toMatch(/\d{2}\/\d{2}\/2026 às \d{2}h\d{2} \(UTC\)/);
+	});
+
+	it('rejects changed displayed dates while the original UTC factors are preserved', async () => {
+		const altered = structuredClone(restartReading);
+		altered.summary = altered.summary.replace('01/12/2026', '02/12/2026');
+		const claim = altered.claims.find((item) => item.id === 'claim-movement-1')!;
+		const original = claim.interpretation;
+		claim.interpretation = original.replace(/\d{2}\/\d{2}\/2026/, '31/12/2026');
+		const part = altered.sections.find((item) => item.id === claim.sectionId)!;
+		part.paragraphs[part.paragraphs.indexOf(original)] = claim.interpretation;
+		const calendar = altered.sections.find((item) => item.id === 'thirty-day-calendar')!;
+		calendar.paragraphs[0] = calendar.paragraphs[0]!.replace('01/11/2026', '02/11/2026');
+		const review = await evaluateLaunchReading(restart, restartFacts, altered);
+		expect(review.status).toBe('REJECTED');
+		for (const id of [
+			'exact-utc-observation-period',
+			'transit-semantic-dependency',
+			'complete-thirty-day-calendar'
+		])
+			expect(review.checks.find((item) => item.id === id)?.passed, id).toBe(false);
 	});
 
 	it('changes focus, selected functions and experiment for a different relationship situation', async () => {
@@ -280,6 +309,23 @@ describe('P02 E2 private editorial consistency', () => {
 		expect(review.status).toBe('APPROVED_FOR_PRIVATE_TEST');
 		expect(review.reasons).toEqual([]);
 		expect(review.provenance.commercialPrecisionApproved).toBe(false);
+		const paragraph = reading.sections.find((part) => part.id === 'option-1')!.paragraphs[0]!;
+		expect(paragraph).toContain('20/03/2027 às 10h30 (horário de Cidade fictícia)');
+		expect(paragraph).not.toContain('2027-03-20T');
+		expect(paragraph).not.toContain('America/Sao_Paulo');
+		expect(reading.claims.find((item) => item.id === 'claim-option-1')!.factors.utcInstant).toBe(
+			'2027-03-20T13:30:00Z'
+		);
+		const altered = structuredClone(reading),
+			part = altered.sections.find((item) => item.id === 'option-1')!,
+			claim = altered.claims.find((item) => item.id === 'claim-option-1')!;
+		part.paragraphs[0] = part.paragraphs[0]!.replace('20/03/2027', '21/03/2027');
+		claim.interpretation = part.paragraphs[0];
+		expect(
+			(await evaluateLaunchReading(wedding, facts, altered)).checks.find(
+				(item) => item.id === 'wedding-candidate-semantic-dependency'
+			)?.passed
+		).toBe(false);
 	});
 
 	it('rejects a fabricated wedding interpretation and an unsupported preference independently of its digest', async () => {

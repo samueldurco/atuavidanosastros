@@ -28,11 +28,11 @@ export const POST: RequestHandler = async (event) => {
 	)
 		error(400, 'Escolha sua avaliação e explique o que precisa mudar se rejeitar a leitura.');
 	const preparation = await launchPreparation(event.locals, event.params.id);
-	const reading = await savedLaunchReading(event.locals, preparation);
+	const reading = await savedLaunchReading(event, preparation);
 	if (!reading) error(409, 'Abra uma leitura salva e revisada antes de avaliá-la.');
 	const identity = (await trialIdentity(event.locals))!;
 	const payload = {
-		request_key: body.request_key,
+		request_key: body.request_key.toLowerCase(),
 		preparation_id: preparation.id,
 		owner_id: identity.ownerId,
 		reading_digest: reading.reading_digest,

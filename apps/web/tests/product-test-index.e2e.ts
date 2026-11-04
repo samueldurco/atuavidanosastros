@@ -1,18 +1,18 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { offeredProductIds } from '@atv/domain';
+import { offeredProductIds, productTrialHref } from '@atv/domain';
 
 test('test index preserves all private login return paths', async ({ page }) => {
 	const response = await page.goto('/testar-produtos');
 	expect(response?.status()).toBe(200);
 	expect(response?.headers()['x-robots-tag']).toBe('noindex, nofollow');
 	await expect(page.getByRole('heading', { name: 'Teste os produtos' })).toBeVisible();
-	const links = page.locator('.products a[href^="/testar-produtos/"]');
-	await expect(links).toHaveCount(19);
+	const links = page.locator('.products').getByRole('link', { name: /^Testar / });
+	await expect(links).toHaveCount(30);
 	const targets = await links.evaluateAll((nodes) =>
 		nodes.map((node) => node.getAttribute('href'))
 	);
-	expect(targets.sort()).toEqual(offeredProductIds.map((id) => `/testar-produtos/${id}`).sort());
+	expect(targets.sort()).toEqual(offeredProductIds.map(productTrialHref).sort());
 	await expect(
 		page.getByRole('heading', { name: 'Entre para acessar seus testes gratuitos' })
 	).toBeVisible();

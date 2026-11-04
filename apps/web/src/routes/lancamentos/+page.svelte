@@ -8,7 +8,7 @@
 	<title>Lançamentos digitais — {SITE.name}</title>
 	<meta
 		name="description"
-		content="Conheça as novas leituras digitais da ATVNA: casamento, recomeço amoroso, Tarot, intimidade, talento e conversas. Confira a proposta e a disponibilidade de cada produto."
+		content="Conheça as novas leituras digitais da ATVNA: casamento, recomeço amoroso, Tarot, intimidade, talento e conversas. Explore o conteúdo e abra o teste gratuito na sua conta."
 	/>
 	<link rel="canonical" href={`${SITE.url}/lancamentos`} />
 </svelte:head>
@@ -21,11 +21,12 @@
 			<span>Lançamentos</span>
 		</nav>
 		<div class="intro-copy">
-			<p class="eyebrow">Novas leituras digitais</p>
+			<p class="eyebrow">Novas leituras digitais · Testes gratuitos</p>
 			<h1 id="launch-title">Uma situação sua.<br />Uma leitura para ela.</h1>
 			<p class="lead">
 				Datas para o casamento, um recomeço ou uma conversa que pede cuidado. Conheça as novas
-				leituras, os dados necessários e o que você recebe em cada uma.
+				leituras, os dados necessários e o que você recebe em cada uma. Entre na sua conta para
+				conferir seu acesso aos testes gratuitos.
 			</p>
 			<a class="text-link" href="#estreia"
 				>Conhecer as três primeiras <span aria-hidden="true">↓</span></a
@@ -51,6 +52,8 @@
 			{#each data.debut as product (product.id)}
 				<MvpProductCard
 					product={{ ...product, href: `/produtos/${product.slug}`, cta: 'Conhecer a proposta' }}
+					trialAccess
+					trialHref={`/testar-lancamentos/${product.id}`}
 				/>
 			{/each}
 		</div>
@@ -61,12 +64,14 @@
 				<p class="eyebrow">Na sequência</p>
 				<h2 id="next-title">Outros temas da vida real.</h2>
 			</div>
-			<p>Leituras individuais: cada ficha explica a proposta e informa sua disponibilidade.</p>
+			<p>Leituras individuais para testar gratuitamente na sua conta e guardar o resultado.</p>
 		</div>
 		<div class="launch-grid">
 			{#each data.next as product (product.id)}
 				<MvpProductCard
 					product={{ ...product, href: `/produtos/${product.slug}`, cta: 'Conhecer a proposta' }}
+					trialAccess
+					trialHref={`/testar-lancamentos/${product.id}`}
 				/>
 			{/each}
 		</div>

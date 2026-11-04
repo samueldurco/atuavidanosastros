@@ -125,7 +125,6 @@
 						>{data.launch ? 'Lançamentos digitais' : 'Catálogo de leituras digitais'}
 						<span aria-hidden="true">↗</span></a
 					>
-					>
 					<p class="eyebrow">Leitura digital · produto avulso</p>
 					{#if design && design.caption !== data.launch?.subtitle}<p class="product-offer-caption">
 							{design.caption}
@@ -134,8 +133,11 @@
 					{#if data.launch?.subtitle}<p class="eyebrow">{data.launch.subtitle}</p>{/if}
 					<p class="lead">{data.product.summary}</p>
 					<div class="product-offer-actions">
-						<a class="button product-primary" href="#disponibilidade"
-							>Ver disponibilidade <span aria-hidden="true">↗</span></a
+						<a
+							class="button product-primary"
+							href={data.launch ? `/testar-lancamentos/${data.product.id}` : '#disponibilidade'}
+							>{data.launch ? 'Testar gratuitamente' : 'Ver disponibilidade'}
+							<span aria-hidden="true">↗</span></a
 						><a class="text-link" href="#conteudo">Conhecer o conteúdo</a>
 					</div>
 				</div>
@@ -158,7 +160,7 @@
 				</section>
 				<section>
 					<p class="eyebrow">A entrega</p>
-					<h2>Formatos digitais previstos</h2>
+					<h2>{data.launch ? 'Sua leitura digital' : 'Formatos digitais previstos'}</h2>
 					<ul class="product-formats">
 						{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
 					</ul>
@@ -201,12 +203,14 @@
 				id="disponibilidade"
 				aria-label="Disponibilidade e acesso"
 			>
-				{#if data.trialAccess && data.launch}
-					<h2>Preparação privada</h2>
-					<p>Salve os dados para a homologação. O conteúdo e a compra ainda estão em preparação.</p>
-					<Button href={'/testar-lancamentos/' + data.product.id}
-						>Preparar dados deste produto</Button
-					>
+				{#if data.launch}
+					<h2>Teste gratuito disponível</h2>
+					<p>
+						{data.trialAccess
+							? 'Seu acesso está ativo. Gere a leitura, guarde o resultado e registre sua avaliação.'
+							: 'Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente.'}
+					</p>
+					<Button href={'/testar-lancamentos/' + data.product.id}>Abrir teste gratuito</Button>
 				{:else if data.trialAccess}
 					<div class="trial-status">
 						<h2>Teste gratuito disponível</h2>

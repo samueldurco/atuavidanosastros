@@ -1,17 +1,16 @@
 import { launchPreparation } from '$lib/server/launch-preparations';
-import { canCalculateLaunchFacts } from '$lib/server/launch-calculation';
-import { launchProductDefinitions } from '@atv/domain';
+import { launchProductDefinitions, isLaunchProductId } from '@atv/domain';
 import { savedLaunchReading } from '$lib/server/launch-readings';
-import { canComposeLaunchReading } from '$lib/trials/launch-reading';
 import { trialIdentity } from '$lib/server/private-trials';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals, params, setHeaders }) => {
+export const load: PageServerLoad = async (event) => {
+	const { locals, params, setHeaders } = event;
 	setHeaders({ 'cache-control': 'private, no-store' });
 	const preparation = await launchPreparation(locals, params.id);
 	const savedReading =
 		preparation.status === 'FACTS_READY_AWAITING_REVIEW'
-			? await savedLaunchReading(locals, preparation)
+			? await savedLaunchReading(event, preparation)
 			: null;
 	let feedback: { id: string; decision: string; comment: string; created_at: string }[] = [];
 	let feedbackHistoryAvailable = true;
@@ -34,7 +33,7 @@ export const load: PageServerLoad = async ({ locals, params, setHeaders }) => {
 		feedback,
 		feedbackHistoryAvailable,
 		product: launchProductDefinitions.find((p) => p.id === preparation.product_id)!,
-		canCalculate: canCalculateLaunchFacts(preparation.product_id),
-		canCompose: canComposeLaunchReading(preparation.product_id)
+		canCalculate: isLaunchProductId(preparation.product_id),
+		canCompose: isLaunchProductId(preparation.product_id)
 	};
 };

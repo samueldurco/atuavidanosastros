@@ -12,6 +12,7 @@ import {
 } from '../server/launch-wedding-profile';
 import { bodyNames } from './reconstruction/canon';
 import type { LaunchReading, LaunchReadingSection } from './launch-reading';
+import { formatLaunchLocalDateTime } from './launch-reading-dates';
 
 const policy = 'atv-launch-private-editorial-policy/1';
 const methodSource = 'atv-wedding-original-restricted-method';
@@ -128,8 +129,9 @@ export async function composeWeddingLaunchReading(
 	for (const [index, option] of (input.answers.ceremonies as LaunchCeremonyOption[]).entries()) {
 		const candidate = stored.profiles.find((profile) => profile.label === option.label)!;
 		const id = `option-${index + 1}`;
-		const first = `${candidate.label}: início da cerimônia em ${candidate.localDateTime}, ${candidate.timezone}, ${candidate.city} (${candidate.utcInstant}). ${candidate.evidence.length ? candidate.evidence.map(evidenceText).join(' ') : 'Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades.'}`;
-		const second = `Para ${q(input.answers.priorities)}, ${candidate.label} pede confirmar disponibilidade e deslocamento para ${candidate.localDateTime}, em ${candidate.city}, com quem participa da cerimônia. ${candidate.cautions.moon.length || candidate.cautions.venus.length || candidate.cautions.angularMarsSaturn.length ? 'As ressalvas convidam a discutir ritmo, flexibilidade e responsabilidades antes de confirmar; não anunciam conflito.' : 'A ausência dessas ressalvas não dispensa combinar ritmo, flexibilidade e responsabilidades.'} Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos.`;
+		const ceremonyTime = formatLaunchLocalDateTime(candidate.localDateTime, candidate.city);
+		const first = `${candidate.label}: início da cerimônia em ${ceremonyTime}. ${candidate.evidence.length ? candidate.evidence.map(evidenceText).join(' ') : 'Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades.'}`;
+		const second = `Para ${q(input.answers.priorities)}, ${candidate.label} pede confirmar disponibilidade e deslocamento para ${ceremonyTime}, com quem participa da cerimônia. ${candidate.cautions.moon.length || candidate.cautions.venus.length || candidate.cautions.angularMarsSaturn.length ? 'As ressalvas convidam a discutir ritmo, flexibilidade e responsabilidades antes de confirmar; não anunciam conflito.' : 'A ausência dessas ressalvas não dispensa combinar ritmo, flexibilidade e responsabilidades.'} Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos.`;
 		const evidenceIds = [
 			`reported-ceremonies-${index + 1}`,
 			`option-${index + 1}-moon`,
@@ -238,7 +240,12 @@ export async function evaluateWeddingLaunchReading(
 						part.paragraphs[0]!.includes(evidenceText(evidence)) &&
 						evidence.evidenceIds.every((id) => part.evidenceIds.includes(id))
 				) &&
-				part.paragraphs[0]!.includes(candidate.localDateTime) &&
+				part.paragraphs[0]!.includes(
+					formatLaunchLocalDateTime(candidate.localDateTime, candidate.city)
+				) &&
+				part.paragraphs[1]!.includes(
+					formatLaunchLocalDateTime(candidate.localDateTime, candidate.city)
+				) &&
 				part.paragraphs[1]!.includes(String(input.answers.priorities))
 			);
 		});

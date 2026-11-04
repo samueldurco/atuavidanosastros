@@ -16,13 +16,18 @@ import {
 	launchTransitAspectPolicy,
 	type LaunchFactCalculation
 } from '../server/launch-calculation';
-import { CANON_VERSION, bodyNames, signs } from './reconstruction/canon';
+import { CANON_VERSION, bodyNames } from './reconstruction/canon';
 import {
 	TAROT_CANON_VERSION,
 	TAROT_CANON_SOURCE_SHA256,
 	tarotCanon
 } from './reconstruction/tarot-canon';
 import { temporalPairMeaning, temporalTargets } from './current/temporal-canon';
+import {
+	formatLaunchDate,
+	formatLaunchUtcInstant,
+	formatLaunchUtcPeriod
+} from './launch-reading-dates';
 import {
 	additionalLaunchProductIds,
 	additionalLaunchSurface,
@@ -175,14 +180,8 @@ const allowedBodies = [
 	'neptune',
 	'pluto'
 ];
-const geometry = (first: number, second: number) => {
-	const delta = Math.abs(first - second) % 360;
-	return Math.min(delta, 360 - delta);
-};
 const validLongitude = (value: unknown): value is number =>
 	typeof value === 'number' && Number.isFinite(value) && value >= 0 && value < 360;
-const positionMap = (positions: { body: string; longitude: number }[]) =>
-	new Map(positions.map((position) => [position.body, position.longitude]));
 
 async function validateBinding(
 	value: unknown,
@@ -608,10 +607,10 @@ export async function composeLaunchReading(
 			origin:
 				'Cânone local original de pares trânsito/natal em current/temporal-canon.ts; significados simbólicos, sem previsão de acontecimentos.'
 		});
-		summary = `Entre ${data.period.startDate} e ${data.period.endDateExclusive} (fim exclusivo, UTC), o foco é ${context.priority}. Os 30 dias oferecem observações do céu para confrontar com ${quoted(answer(input, 'situation'))}; não determinam quando uma relação começará ou voltará.`;
+		summary = `${formatLaunchUtcPeriod(data.period.startDate, data.period.endDateExclusive)}, o foco é ${context.priority}. Os 30 dias oferecem observações do céu para confrontar com ${quoted(answer(input, 'situation'))}; não determinam quando uma relação começará ou voltará.`;
 		for (const [index, contact] of selected.entries()) {
 			const id = `movement-${index + 1}`;
-			const text = `${contactLabel(contact)}, observado em ${contact.instant}, com orbe de ${contact.orbDegrees.toFixed(3)}°. ${contact.meaning}`;
+			const text = `${contactLabel(contact)}, observado em ${formatLaunchUtcInstant(contact.instant)}, com orbe de ${contact.orbDegrees.toFixed(3)}°. ${contact.meaning}`;
 			const contextual = `Em relação a ${quoted(answer(input, 'desiredChange'))}, a questão é ${temporalTargets[contact.natal]!.choice}. Observe uma decisão sua ligada a ${temporalTargets[contact.natal]!.subject}; não use o contato para atribuir intenção a outra pessoa.`;
 			sections.push(
 				section(
@@ -644,7 +643,7 @@ export async function composeLaunchReading(
 				row.contacts.filter((contact) => context.bodies.slice(0, 3).includes(contact.natal))
 			);
 			const themes = [...new Set(relevant.map((contact) => bodyNames[contact.natal]))];
-			return `${rows[0]!.instant.slice(0, 10)} — quatro amostras às 00h, 06h, 12h e 18h UTC; ${relevant.length} contatos observados com ${themes.length ? themes.join(', ') : 'nenhum dos três fatores prioritários dentro do orbe adotado'}. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.`;
+			return `${formatLaunchDate(rows[0]!.instant.slice(0, 10))} — quatro amostras às 00h, 06h, 12h e 18h UTC; ${relevant.length} contatos observados com ${themes.length ? themes.join(', ') : 'nenhum dos três fatores prioritários dentro do orbe adotado'}. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.`;
 		});
 		sections.push(
 			section(
@@ -1103,6 +1102,13 @@ export async function evaluateLaunchReading(
 					true,
 					'120 amostras reais de seis horas; todos os contatos conferidos geometricamente contra o natal.'
 				);
+				check(
+					'exact-utc-observation-period',
+					reading.summary.startsWith(
+						`${formatLaunchUtcPeriod(data.period.startDate, data.period.endDateExclusive)},`
+					),
+					'O intervalo exibido preserva o início e o fim exclusivo à meia-noite UTC.'
+				);
 				const dependent = selected.every((contact, index) => {
 					const claim = reading.claims.find(
 						(candidate) => candidate.id === `claim-movement-${index + 1}`
@@ -1122,7 +1128,7 @@ export async function evaluateLaunchReading(
 						claim.factors.contextClass === context.id &&
 						includesAll(claim.interpretation, [
 							contactLabel(contact),
-							contact.instant,
+							formatLaunchUtcInstant(contact.instant),
 							contact.orbDegrees.toFixed(3),
 							contact.meaning
 						]) &&
@@ -1147,8 +1153,9 @@ export async function evaluateLaunchReading(
 						calendar.evidenceIds.length === 120 &&
 						calendar.paragraphs.every(
 							(paragraph, index) =>
-								paragraph.includes(data.observations[index * 4]!.instant.slice(0, 10)) &&
-								paragraph.includes('contagem não mede oportunidade amorosa')
+								paragraph.includes(
+									formatLaunchDate(data.observations[index * 4]!.instant.slice(0, 10))
+								) && paragraph.includes('contagem não mede oportunidade amorosa')
 						),
 					'Cada dia do intervalo tem quatro observações sem prometer janelas exatas ou favorecer contagens maiores.'
 				);

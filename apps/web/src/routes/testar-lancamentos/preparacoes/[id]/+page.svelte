@@ -84,7 +84,7 @@
 		<h2>Dados e fatos registrados</h2>
 		<p>
 			O conteúdo abaixo é evidência de homologação. O método e o conteúdo final ainda precisam de
-			revisão própria antes da entrega ao comprador.
+			revisão própria antes da entrega da leitura.
 		</p>
 		<details>
 			<summary>Consultar evidência salva</summary>

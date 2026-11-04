@@ -3,7 +3,7 @@
 	import { mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
 	import MvpProductArt from '../MvpProductArt.svelte';
 	import '$lib/styles/mvp-product-art.css';
-	const products = launchProducts.filter((product) => product.phase === 'debut');
+	const products = launchProducts;
 	let active = $state(0);
 	const product = $derived(products[active]);
 	const theme = $derived(mvpThemes[mvpTheme(product.universe)]);
@@ -16,25 +16,25 @@
 	<div class="home-wrap">
 		<header class="launch-heading">
 			<div>
-				<p class="eyebrow">05 / Novas leituras</p>
+				<p class="eyebrow">05 / Lançamentos</p>
 				<h2 id="launch-heading">Uma situação.<br /><em>Um novo olhar.</em></h2>
 			</div>
-			<p>Conheça os próximos produtos e o que cada leitura vai entregar.</p>
+			<p>Conheça os onze lançamentos e abra o teste gratuito na sua conta.</p>
 		</header>
 		<div class="launch-feature" style={`--launch-ink:${theme.ink};--launch-tint:${theme.tint}`}>
 			<div class="launch-art" aria-hidden="true"><MvpProductArt productId={product.id} /></div>
 			<div class="launch-copy" aria-live="polite" aria-atomic="true">
-				<p class="eyebrow">Leitura digital avulsa · Em preparação</p>
+				<p class="eyebrow">Leitura digital · Teste gratuito</p>
 				<h3><a href={product.href}>{product.name}</a></h3>
 				{#if product.subtitle}<p class="launch-subtitle">{product.subtitle}</p>{/if}
 				<p>{product.summary}</p>
 				<a
 					class="launch-action"
-					href={product.href}
+					href={`/testar-lancamentos/${product.id}`}
 					data-atv-event="product_click"
 					data-atv-product={product.id}
 					data-atv-context="lancamentos-home"
-					data-atv-cta="offer">Conhecer a proposta <span aria-hidden="true">↗</span></a
+					data-atv-cta="free_trial">Testar gratuitamente <span aria-hidden="true">↗</span></a
 				>
 			</div>
 			<div class="launch-controls" role="group" aria-label="Escolher lançamento em destaque">

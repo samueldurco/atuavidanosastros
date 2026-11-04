@@ -7,9 +7,14 @@ vi.mock('@supabase/supabase-js', () => ({ createClient: mocks.createClient }));
 vi.mock('$lib/server/runtime-bindings', () => ({
 	trialServiceBindings: () => ({ url: 'https://synthetic.test', serviceRoleKey: 'synthetic-only' })
 }));
-vi.mock('$lib/server/launch-calculation', () => ({
-	calculateLaunchFacts: mocks.calculate,
-	canCalculateLaunchFacts: mocks.supported
+vi.mock('$lib/server/launch-runtime', () => ({
+	runLaunchRuntime: async (
+		event: { request: Request },
+		request: { input: unknown; executionId: string }
+	) => ({
+		operation: 'launch-calculation',
+		calculation: await mocks.calculate(request.input, request.executionId, event.request.signal)
+	})
 }));
 
 const ownerId = 'c05bf322-0bfd-4ef6-af90-3ec0da139e52';
@@ -206,13 +211,15 @@ describe('P02 calculation API authorization and durable fact boundary', () => {
 	});
 
 	it('does not persist if calculation fails or is aborted', async () => {
-		mocks.calculate.mockRejectedValueOnce(new Error('synthetic-cancellation'));
-		await expect(POST(event())).rejects.toMatchObject({ status: 422 });
+		mocks.calculate.mockRejectedValueOnce({ status: 503 });
+		await expect(POST(event())).rejects.toMatchObject({ status: 503 });
 		expect(update).not.toHaveBeenCalled();
 	});
 
 	it('does not invent a calculation for an unsupported product', async () => {
-		mocks.supported.mockReturnValueOnce(false);
+		read
+			.mockReset()
+			.mockResolvedValueOnce({ data: { ...stored, product_id: 'unsupported' }, error: null });
 		await expect(POST(event())).rejects.toMatchObject({ status: 409 });
 		expect(mocks.calculate).not.toHaveBeenCalled();
 		expect(update).not.toHaveBeenCalled();

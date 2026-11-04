@@ -1,0 +1,40 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:54:02.640Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "selectedProductIds": [
+    "conversation-timing"
+  ],
+  "methodology": "One sequential local batch, no warmup or repeated distribution; elapsed wall-clock durations include concurrent workstation load. JSON byte counts use UTF-8 compact JSON. These measurements do not predict hosted latency, concurrency or currency cost.",
+  "measurements": [
+    {
+      "productId": "conversation-timing",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 472.6108000000004,
+        "composition": 79.95319999999992,
+        "review": 34.939800000000105,
+        "total": 587.5038000000004
+      },
+      "jsonBytes": {
+        "input": 613,
+        "calculation": 79195,
+        "reading": 23858,
+        "review": 2589
+      }
+    }
+  ]
+}

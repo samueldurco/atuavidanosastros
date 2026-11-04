@@ -12,10 +12,24 @@ vi.mock('@supabase/supabase-js', () => ({ createClient: mocks.createClient }));
 vi.mock('$lib/server/runtime-bindings', () => ({
 	trialServiceBindings: () => ({ url: 'https://synthetic.test', serviceRoleKey: 'synthetic-only' })
 }));
-vi.mock('$lib/trials/launch-reading', () => ({
-	composeLaunchReading: mocks.compose,
-	evaluateLaunchReading: mocks.evaluate,
-	launchReadingDigest: mocks.digest
+vi.mock('$lib/server/launch-runtime-contract', () => ({ launchRuntimeDigest: mocks.digest }));
+vi.mock('$lib/server/launch-runtime', () => ({
+	runLaunchRuntime: async (
+		_event: unknown,
+		request: { operation: string; input: unknown; calculation: unknown; reading?: unknown }
+	) => {
+		const reading =
+			request.operation === 'launch-generate'
+				? await mocks.compose(request.input, request.calculation)
+				: request.reading;
+		return {
+			operation: request.operation,
+			reading,
+			review: await mocks.evaluate(request.input, request.calculation, reading),
+			calculationDigest: await mocks.digest(request.calculation),
+			readingDigest: await mocks.digest(reading)
+		};
+	}
 }));
 
 const ownerId = 'c05bf322-0bfd-4ef6-af90-3ec0da139e52';
@@ -215,8 +229,8 @@ describe('P02 reading API private review and persistence boundary', () => {
 	});
 
 	it('preserves facts when composition fails before review', async () => {
-		mocks.compose.mockRejectedValueOnce(new Error('synthetic-product-not-ready'));
-		await expect(POST(event())).rejects.toMatchObject({ status: 422 });
+		mocks.compose.mockRejectedValueOnce({ status: 503 });
+		await expect(POST(event())).rejects.toMatchObject({ status: 503 });
 		expect(mocks.evaluate).not.toHaveBeenCalled();
 		expect(upsert).not.toHaveBeenCalled();
 	});
@@ -270,6 +284,20 @@ describe('P02 reading API private review and persistence boundary', () => {
 		expect(mocks.compose).not.toHaveBeenCalled();
 		expect(upsert).not.toHaveBeenCalled();
 	});
+
+	it.each(['checks', 'reasons', 'provenance'])(
+		'rejects an altered saved review even when status, policy and reading digest match: %s',
+		async (field) => {
+			const altered = structuredClone(saved);
+			Object.assign(altered.review as object, {
+				[field]: field === 'reasons' ? ['forged'] : { forged: true }
+			});
+			readingRead.mockReset().mockResolvedValue({ data: altered, error: null });
+			await expect(POST(event())).rejects.toMatchObject({ status: 409 });
+			expect(mocks.compose).not.toHaveBeenCalled();
+			expect(upsert).not.toHaveBeenCalled();
+		}
+	);
 
 	it('rechecks a revoked grant after review and before service-role persistence', async () => {
 		client.rpc

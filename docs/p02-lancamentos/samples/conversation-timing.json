@@ -1,6 +1,6 @@
 {
   "state": "EXAMPLE_PRIVATE_REVIEW",
-  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "batchId": "p02-local-2026-11-04T11:54:02.640Z",
   "environment": {
     "node": "v24.20.0",
     "platform": "win32",
@@ -20,15 +20,15 @@
     "status": "APPROVED_FOR_PRIVATE_TEST",
     "reasons": [],
     "durationMs": {
-      "factual": 197.8729000000003,
-      "composition": 18.43029999999999,
-      "review": 56.115099999999074,
-      "total": 272.41829999999936
+      "factual": 472.6108000000004,
+      "composition": 79.95319999999992,
+      "review": 34.939800000000105,
+      "total": 587.5038000000004
     },
     "jsonBytes": {
       "input": 613,
       "calculation": 79195,
-      "reading": 23830,
+      "reading": 23858,
       "review": 2589
     }
   },
@@ -435,7 +435,7 @@
           "algorithmVersion": "atv-caelus-adapter-v3",
           "zodiac": "tropical",
           "houseSystem": "placidus",
-          "calculatedAt": "2026-11-04T11:10:44.623Z",
+          "calculatedAt": "2026-11-04T11:54:02.949Z",
           "referenceFrame": "geocentric-apparent-ecliptic-of-date",
           "dataManifest": {
             "provider": "caelus",
@@ -551,7 +551,7 @@
         "algorithmVersion": "atv-caelus-adapter-v3",
         "zodiac": "tropical",
         "houseSystem": "placidus",
-        "calculatedAt": "2026-11-04T11:10:44.637Z",
+        "calculatedAt": "2026-11-04T11:54:02.975Z",
         "referenceFrame": "geocentric-apparent-ecliptic-of-date",
         "dataManifest": {
           "provider": "caelus",
@@ -4238,7 +4238,7 @@
       "editorial": "not-reviewed"
     }
   },
-  "calculationDigest": "dfb02032f3517bb696b15df93e53e6155e3abddcff4cdb5f2b6015590c5eb781",
+  "calculationDigest": "be527a74254851a88720cdd3b7f977327a3e827ce34296039fe892f1ded611bb",
   "reading": {
     "version": "atv-launch-reading/1",
     "executionId": "8c6d9da2-d296-4b63-a30c-000000000010",
@@ -4249,9 +4249,9 @@
     "sections": [
       {
         "id": "conversation-day-1",
-        "title": "2026-11-01: falar ou esperar depende das condições",
+        "title": "01/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-01: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 2026-11-01T18:00:00.000Z (orbe 0.143°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "01/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 01/11/2026 às 18h00 (UTC) (orbe 0.143°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Escreva a pergunta principal em uma frase, separando o pedido da explicação longa. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4270,9 +4270,9 @@
       },
       {
         "id": "conversation-day-2",
-        "title": "2026-11-02: falar ou esperar depende das condições",
+        "title": "02/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-02: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 2026-11-02T00:00:00.000Z (orbe 0.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "02/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 02/11/2026 às 00h00 (UTC) (orbe 0.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Pergunte que informação a outra pessoa precisa antes de responder, sem presumir o que ela já sabe. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4291,9 +4291,9 @@
       },
       {
         "id": "conversation-day-3",
-        "title": "2026-11-03: falar ou esperar depende das condições",
+        "title": "03/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-03: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 2026-11-03T00:00:00.000Z (orbe 1.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "03/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 03/11/2026 às 00h00 (UTC) (orbe 1.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Diferencie o que você quer negociar do limite que precisa comunicar; recusa e contraproposta são respostas possíveis. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4312,9 +4312,9 @@
       },
       {
         "id": "conversation-day-4",
-        "title": "2026-11-04: falar ou esperar depende das condições",
+        "title": "04/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-04: quatro amostras em 00h, 06h, 12h e 18h UTC. Lua em trânsito em trígono com Mercúrio natal, observado em 2026-11-04T00:00:00.000Z (orbe 0.755°): Uma emoção pode encontrar palavras antes de virar ruído na conversa. Nomear o que afeta você ajuda a tornar a explicação mais humana, sem fazer do sentimento a única prova sobre a intenção de quem escuta. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "04/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Lua em trânsito em trígono com Mercúrio natal, observado em 04/11/2026 às 00h00 (UTC) (orbe 0.755°): Uma emoção pode encontrar palavras antes de virar ruído na conversa. Nomear o que afeta você ajuda a tornar a explicação mais humana, sem fazer do sentimento a única prova sobre a intenção de quem escuta. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Confira se as palavras usadas por vocês significam a mesma tarefa; peça um exemplo concreto. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4333,9 +4333,9 @@
       },
       {
         "id": "conversation-day-5",
-        "title": "2026-11-05: falar ou esperar depende das condições",
+        "title": "05/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-05: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-05T18:00:00.000Z (orbe 1.227°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "05/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 05/11/2026 às 18h00 (UTC) (orbe 1.227°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Descreva o que consegue assumir e pergunte o que a outra pessoa aceita, sem atribuir responsabilidade por silêncio. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4354,9 +4354,9 @@
       },
       {
         "id": "conversation-day-6",
-        "title": "2026-11-06: falar ou esperar depende das condições",
+        "title": "06/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-06: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-06T18:00:00.000Z (orbe 0.002°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "06/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 06/11/2026 às 18h00 (UTC) (orbe 0.002°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Resuma o que foi efetivamente combinado e o que continua sem resposta, se a conversa tiver ocorrido. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4375,9 +4375,9 @@
       },
       {
         "id": "conversation-day-7",
-        "title": "2026-11-07: falar ou esperar depende das condições",
+        "title": "07/11/2026: falar ou esperar depende das condições",
         "paragraphs": [
-          "2026-11-07: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-07T00:00:00.000Z (orbe 0.295°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "07/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 07/11/2026 às 00h00 (UTC) (orbe 0.295°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
           "Revise se ainda é necessário falar do mesmo assunto; se não houve conversa, confirme disponibilidade antes de repetir o pedido. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
         ],
         "evidenceIds": [
@@ -4456,7 +4456,7 @@
           "instant": "2026-11-01T18:00:00.000Z",
           "orbDegrees": 0.14261540456715238
         },
-        "interpretation": "2026-11-01: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 2026-11-01T18:00:00.000Z (orbe 0.143°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "01/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 01/11/2026 às 18h00 (UTC) (orbe 0.143°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-day-2",
@@ -4473,7 +4473,7 @@
           "instant": "2026-11-02T00:00:00.000Z",
           "orbDegrees": 0.10751423776147817
         },
-        "interpretation": "2026-11-02: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 2026-11-02T00:00:00.000Z (orbe 0.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "02/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 02/11/2026 às 00h00 (UTC) (orbe 0.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-day-3",
@@ -4490,7 +4490,7 @@
           "instant": "2026-11-03T00:00:00.000Z",
           "orbDegrees": 1.108400687827043
         },
-        "interpretation": "2026-11-03: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 2026-11-03T00:00:00.000Z (orbe 1.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "03/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 03/11/2026 às 00h00 (UTC) (orbe 1.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-day-4",
@@ -4507,7 +4507,7 @@
           "instant": "2026-11-04T00:00:00.000Z",
           "orbDegrees": 0.7553336441048657
         },
-        "interpretation": "2026-11-04: quatro amostras em 00h, 06h, 12h e 18h UTC. Lua em trânsito em trígono com Mercúrio natal, observado em 2026-11-04T00:00:00.000Z (orbe 0.755°): Uma emoção pode encontrar palavras antes de virar ruído na conversa. Nomear o que afeta você ajuda a tornar a explicação mais humana, sem fazer do sentimento a única prova sobre a intenção de quem escuta. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "04/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Lua em trânsito em trígono com Mercúrio natal, observado em 04/11/2026 às 00h00 (UTC) (orbe 0.755°): Uma emoção pode encontrar palavras antes de virar ruído na conversa. Nomear o que afeta você ajuda a tornar a explicação mais humana, sem fazer do sentimento a única prova sobre a intenção de quem escuta. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-day-5",
@@ -4524,7 +4524,7 @@
           "instant": "2026-11-05T18:00:00.000Z",
           "orbDegrees": 1.2270393036311305
         },
-        "interpretation": "2026-11-05: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-05T18:00:00.000Z (orbe 1.227°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "05/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 05/11/2026 às 18h00 (UTC) (orbe 1.227°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-day-6",
@@ -4541,7 +4541,7 @@
           "instant": "2026-11-06T18:00:00.000Z",
           "orbDegrees": 0.0017103980359820525
         },
-        "interpretation": "2026-11-06: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-06T18:00:00.000Z (orbe 0.002°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "06/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 06/11/2026 às 18h00 (UTC) (orbe 0.002°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-day-7",
@@ -4558,7 +4558,7 @@
           "instant": "2026-11-07T00:00:00.000Z",
           "orbDegrees": 0.2948825261895536
         },
-        "interpretation": "2026-11-07: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-07T00:00:00.000Z (orbe 0.295°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+        "interpretation": "07/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 07/11/2026 às 00h00 (UTC) (orbe 0.295°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
       },
       {
         "id": "claim-conversation-decision",
@@ -4607,7 +4607,7 @@
       "persistence": "server-must-load-persisted-facts-before-composition"
     }
   },
-  "readingDigest": "ffd334657ece9e1496e3fc4cb2968baeb0c5cd730309468b88f377814045d112",
+  "readingDigest": "c1f7e8c23abbe64591345a15b19d4b4c1030f0407f0282f184c03df1c2c4ea99",
   "review": {
     "version": "atv-launch-reading-review/1",
     "status": "APPROVED_FOR_PRIVATE_TEST",
@@ -4685,7 +4685,7 @@
       }
     ],
     "reasons": [],
-    "digest": "ffd334657ece9e1496e3fc4cb2968baeb0c5cd730309468b88f377814045d112",
+    "digest": "c1f7e8c23abbe64591345a15b19d4b4c1030f0407f0282f184c03df1c2c4ea99",
     "provenance": {
       "scope": "private-editorial-consistency",
       "calculation": "experimental-astrology",

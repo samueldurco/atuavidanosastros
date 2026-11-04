@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { isLaunchProductId, productTrialHref } from '@atv/domain';
 	import ProductCover from './ProductCover.svelte';
 	let {
 		product,
@@ -16,8 +17,9 @@
 		universe: string;
 		trialAccess?: boolean;
 	} = $props();
+	const availableTrial = $derived(trialAccess || isLaunchProductId(product.id));
 	const status = $derived(
-		trialAccess
+		availableTrial
 			? 'Teste gratuito disponível'
 			: product.state === 'ACTIVE'
 				? 'Disponível'
@@ -36,8 +38,8 @@
 		<h3><a href={product.href}>{product.name}</a></h3>
 		<p class="summary">{product.summary}</p>
 		<p class="badge">{status}</p>
-		<a class="text-link" href={trialAccess ? `/testar-produtos/${product.id}` : product.href}
-			>{trialAccess ? `Testar ${product.name} grátis` : product.cta || 'Conhecer a leitura'}
+		<a class="text-link" href={availableTrial ? productTrialHref(product.id) : product.href}
+			>{availableTrial ? `Testar ${product.name} grátis` : product.cta || 'Conhecer a leitura'}
 			<span aria-hidden="true">↗</span></a
 		>
 	</div>

@@ -5,7 +5,7 @@ import { symbolicProduct } from '$lib/symbolic-intake';
 import { natalProducts, type NatalProduct } from '$lib/natal-request';
 import { isUuid } from '$lib/library-result';
 import { readIntakeAccess } from '$lib/server/symbolic-intake';
-import { productCatalog } from '@atv/domain';
+import { productCatalog, productTrialHref } from '@atv/domain';
 
 export const load: PageServerLoad = async ({ parent, params, locals, setHeaders }) => {
 	setHeaders({
@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ parent, params, locals, setHeaders 
 		error(404, 'Produto não encontrado');
 	const { user, trialAccess } = await parent();
 	if (!user || !isUuid(user.id)) redirect(303, loginHref(`/biblioteca/nova/${params.productId}`));
-	if (trialAccess) redirect(303, `/testar-produtos/${params.productId}`);
+	if (trialAccess) redirect(303, productTrialHref(params.productId));
 	if (
 		!symbolicProduct(params.productId) &&
 		!natalProducts.includes(params.productId as NatalProduct) &&

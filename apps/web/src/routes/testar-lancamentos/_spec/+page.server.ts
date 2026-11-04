@@ -18,6 +18,7 @@ import {
 	type LaunchReading,
 	type LaunchReadingReview
 } from '$lib/trials/launch-reading';
+import { launchExampleInputs, launchExampleExecutionId } from '$lib/trials/launch-reading.fixtures';
 import type { PageServerLoad } from './$types';
 
 // Local rendering evidence only. This route never grants access or persists data.
@@ -28,6 +29,8 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	if (!isLaunchProductId(productId)) error(404);
 	const product = launchProductDefinitions.find((item) => item.id === productId)!;
 	const spec = launchSpecs[productId];
+	const view = url.searchParams.get('view');
+	const exampleIndex = launchExampleInputs.findIndex((item) => item.productId === productId);
 	const birth = {
 		localDateTime: '1990-05-10T10:30:00',
 		utcInstant: '1990-05-10T13:30:00Z',
@@ -55,15 +58,22 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 			}));
 		else answers[field.key] = 'Situação sintética para conferir a interface.';
 	}
-	const input = parseLaunchInput({
-		version: LAUNCH_INPUT_VERSION,
-		productId,
-		consent: { storage: true, policyVersion: 'atv-launch-consent/1' },
-		answers,
-		...(spec.requiresBirth ? { birth } : {})
-	});
+	const input = parseLaunchInput(
+		view === 'reader'
+			? launchExampleInputs[exampleIndex]
+			: {
+					version: LAUNCH_INPUT_VERSION,
+					productId,
+					consent: { storage: true, policyVersion: 'atv-launch-consent/1' },
+					answers,
+					...(spec.requiresBirth ? { birth } : {})
+				}
+	);
 	if (!input) error(500, 'Fixture inválida.');
-	const id = '8c6d9da2-d296-4b63-a30c-42ec8762f48f';
+	const id =
+		view === 'reader'
+			? launchExampleExecutionId(exampleIndex)
+			: '8c6d9da2-d296-4b63-a30c-42ec8762f48f';
 	const evidence = await prepareLaunchEvidence(input, id);
 	// The saved-view fixture is deliberately a receipt, never a calculated/approved reading.
 	const preparation: LaunchPreparation = {
@@ -79,7 +89,6 @@ export const load: PageServerLoad = async ({ url, setHeaders }) => {
 	};
 	let reader: LaunchReading | null = null;
 	let readingReview: LaunchReadingReview | null = null;
-	const view = url.searchParams.get('view');
 	if (view === 'reader' && canComposeLaunchReading(productId)) {
 		const calculation = await calculateLaunchFacts(input, id);
 		reader = await composeLaunchReading(input, calculation);

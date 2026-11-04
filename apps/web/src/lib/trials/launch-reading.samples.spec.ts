@@ -16,7 +16,13 @@ import { launchExampleInputs, launchExampleExecutionId } from './launch-reading.
 describe.skipIf(process.env.P02_WRITE_SAMPLES !== '1')(
 	'P02 reproducible synthetic delivery samples',
 	() => {
-		it('writes eleven real local compositions, their honest reviews and measured batch data', async () => {
+		it('writes selected real local compositions, their honest reviews and measured batch data', async () => {
+			const selectedIds = process.env.P02_SAMPLE_PRODUCT_IDS?.split(',').filter(Boolean);
+			const benchmarkName = process.env.P02_SAMPLE_BENCHMARK_NAME;
+			if (benchmarkName && !/^benchmark-[a-z0-9-]+\.json$/.test(benchmarkName))
+				throw new Error('invalid_sample_benchmark_name');
+			if (selectedIds?.some((id) => !launchExampleInputs.some((input) => input.productId === id)))
+				throw new Error('unknown_sample_product');
 			const directory = fileURLToPath(
 				new URL('../../../../../docs/p02-lancamentos/samples/', import.meta.url)
 			);
@@ -38,6 +44,7 @@ describe.skipIf(process.env.P02_WRITE_SAMPLES !== '1')(
 			const rows: unknown[] = [];
 			const bytes = (value: unknown) => new TextEncoder().encode(JSON.stringify(value)).byteLength;
 			for (const [index, input] of launchExampleInputs.entries()) {
+				if (selectedIds && !selectedIds.includes(input.productId)) continue;
 				const t0 = performance.now();
 				const calculation = await calculateLaunchFacts(input, launchExampleExecutionId(index));
 				const t1 = performance.now();
@@ -83,12 +90,16 @@ describe.skipIf(process.env.P02_WRITE_SAMPLES !== '1')(
 				expect(review.provenance.commercialPrecisionApproved).toBe(false);
 			}
 			await writeFile(
-				join(directory, 'benchmark.json'),
+				join(
+					directory,
+					benchmarkName ?? (selectedIds ? 'benchmark-date-presentation.json' : 'benchmark.json')
+				),
 				`${JSON.stringify(
 					{
 						state: 'EXAMPLE_PRIVATE_REVIEW',
 						batchId,
 						environment,
+						selectedProductIds: selectedIds ?? launchExampleInputs.map((input) => input.productId),
 						methodology:
 							'One sequential local batch, no warmup or repeated distribution; elapsed wall-clock durations include concurrent workstation load. JSON byte counts use UTF-8 compact JSON. These measurements do not predict hosted latency, concurrency or currency cost.',
 						measurements: rows
@@ -98,7 +109,7 @@ describe.skipIf(process.env.P02_WRITE_SAMPLES !== '1')(
 				)}\n`,
 				'utf8'
 			);
-			expect(rows).toHaveLength(11);
+			expect(rows).toHaveLength(selectedIds ? new Set(selectedIds).size : 11);
 		}, 120_000);
 	}
 );

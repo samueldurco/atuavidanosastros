@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { offeredProductIds } from '@atv/domain';
+	import { offeredProductIds, productTrialHref } from '@atv/domain';
 	import { invalidateAll } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { trialResponse } from '$lib/trials/response';
@@ -91,7 +91,7 @@
 				<ul>
 					{#each data.products.filter((p) => p.universe === kind && offeredProductIds.some((id) => id === p.id)) as product (product.id)}<li
 						>
-							<a href={`/testar-produtos/${product.id}`}>{product.name}</a>
+							<a href={productTrialHref(product.id)}>{product.name}</a>
 						</li>{/each}
 				</ul>
 			</section>{/each}

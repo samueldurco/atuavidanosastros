@@ -22,10 +22,19 @@ const option = (index: number): LaunchCeremonyOption => ({
 	longitude: -46.63,
 	locationSource: 'synthetic-test-fixture'
 });
+const chartInput = (candidate: LaunchCeremonyOption): NatalChart['input'] => ({
+	localDateTime: candidate.localDateTime,
+	utcInstant: candidate.utcInstant,
+	timezone: candidate.timezone,
+	latitude: candidate.latitude,
+	longitude: candidate.longitude,
+	locationSource: candidate.locationSource
+});
 let template: NatalChart;
 beforeAll(async () => {
-	const { label: _label, city: _city, ...input } = option(1);
-	template = await new CaelusEphemerisProvider({ requestCache: true }).calculate(input);
+	template = await new CaelusEphemerisProvider({ requestCache: true }).calculate(
+		chartInput(option(1))
+	);
 }, 30000);
 
 /** Invented geometry exercises the declared rule; these are not calculated event charts or precision evidence. */
@@ -35,7 +44,7 @@ function fixture(
 	angles = [150, 240]
 ): WeddingProfileEvent {
 	const candidate = option(index);
-	const { label: _label, city: _city, ...input } = candidate;
+	const input = chartInput(candidate);
 	const chart = structuredClone(template);
 	chart.input = input;
 	const positions = { moon: 10, venus: 27, jupiter: 49, mars: 180, saturn: 113, ...overrides };
@@ -224,17 +233,15 @@ describe('original restricted wedding profile, not commercial electional certifi
 		const expected = await buildLaunchWeddingProfile(input);
 		const shuffled = structuredClone(input);
 		shuffled.options = [...shuffled.options].reverse();
-		shuffled.events = [...shuffled.events]
-			.reverse()
-			.map((event) => ({
-				...event,
-				chart: { ...event.chart, positions: [...event.chart.positions].reverse() },
-				aspects: {
-					...event.aspects,
-					aspects: [...event.aspects.aspects].reverse(),
-					inputPositions: [...event.aspects.inputPositions].reverse()
-				}
-			}));
+		shuffled.events = [...shuffled.events].reverse().map((event) => ({
+			...event,
+			chart: { ...event.chart, positions: [...event.chart.positions].reverse() },
+			aspects: {
+				...event.aspects,
+				aspects: [...event.aspects.aspects].reverse(),
+				inputPositions: [...event.aspects.inputPositions].reverse()
+			}
+		}));
 		expect(await buildLaunchWeddingProfile(shuffled)).toEqual(expected);
 	});
 

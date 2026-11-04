@@ -2,13 +2,19 @@
 
 Data da análise: 04/11/2026. RUN_ID: `ATV-20260902-170644Z-01A0630F`. Escopo: os onze digitais avulsos P02. Esta análise documental não consultou provedores, não leu valores de secrets, não alterou preços e não criou autorização comercial. As consultas hospedadas citadas são evidências registradas pela frente P01, com o horário original; não foram repetidas nesta análise.
 
+## Decisão vigente — teste gratuito, 04/11/2026
+
+> nao coloque preço nem gere cobrança por enquanto somente publique e deixe no ar funcionando de modo liberado e gratuito igual os outros, modo de teste
+
+Este levantamento financeiro fica como preparação de **comércio futuro postergado**. Preço, oferta Hotmart, margem, checkout e preço de membro não são requisitos para publicar ou operar geração/reabertura gratuitas. O teste mantém identidade e grants privados existentes, RLS, persistência, revisão editorial e gates técnicos; não cria acesso anônimo nem requer assinatura financeira. E5 continua separado. [Escopo da aprovação](free-test-approval-scope.md).
+
 ## Resultado que os documentos sustentam
 
 Não foi localizado preço comercial aprovado nem composição completa de custo para qualquer um dos onze lançamentos. A especificação P02 conserva `regularMinor`, geração, entrega, tarifa do provedor, reserva de suporte/reembolso e piso de contribuição como `null`; `budgetAuthorizedMinor: 0` é limite de autorização, não custo unitário observado ([launch-metadata.json, linhas 10–28](launch-metadata.json)).
 
 A geração factual já tem caminhos locais verificáveis: cálculo com Caelus e efemérides incorporadas ou sorteio de Tarot determinístico. A edição E2 atual também compõe texto por corpus editorial local versionado, com `externalModelCalled: false` ([contrato de proveniência, linha 35; composição, linha 299](../../apps/web/src/lib/trials/launch-reading.ts:35)). Não há exigência de tokens, recibo de IA ou modelo externo para esta edição. Isso permite identificar trabalho computacional e ausência de chamada de IA paga nesses caminhos. Não permite atribuir custo marginal completo de R$0 à leitura hospedada, porque ainda faltam medição por execução, consumo de infraestrutura, entrega, operação, tributos e condições do PSP.
 
-P01 não resolveu o preço nem liberou a janela compartilhada. O checkpoint canônico de **04/11/2026 10:36:36Z** mantém nove ofertas ATV+ sem preços definidos, custos/pisos pendentes, integração Hotmart por homologar e reserva exclusiva de publicação ainda aberta. O candidato local/CI não é publicação concluída ([checkpoint P01, linhas 3, 12–16, 22–29](C:/ATVNA/docs/20-produto/programa-comercial-atvna/P01-atv-mais/EXECUCAO_CHECKPOINT.json)). Os nove preços ATV+ são da assinatura; mesmo que venham a ser aprovados, não fixam automaticamente os onze preços P02.
+O checkpoint P01 de **04/11/2026 10:36:36Z** era a evidência histórica de preços pendentes e janela então reservada. Foi sucedido por `P01.04.05`, que encerrou a janela, publicou P01 e integrou main `2c4e3c34ae10d1cf314e315cb598cc32b5ba323b`. Os nove preços ATV+ continuam sem definir preços dos onze P02. O root abriu `P02.03.01` e aplicou o schema próprio ([evidência atual](hosted-schema.md)). Preços/custos comerciais pendentes não impedem o teste gratuito explicitamente autorizado pelo proprietário.
 
 ## Fontes e o alcance de cada evidência
 
@@ -78,7 +84,7 @@ Para os digitais, `d = 1000/2000/3000` é somente a matriz interna Essencial/Amp
 
 Uma proposta de preço só se torna revisável depois de preencher os componentes reais e avaliar a contribuição no regular, promoções/cupons permitidos e todos os níveis que se pretende cobrir. Com custos/tarifas/piso desconhecidos, a fórmula não permite deduzir um mínimo numérico aprovado.
 
-## Hotmart: contrato aproveitável e o que falta para P02
+## Comércio futuro postergado: Hotmart
 
 P01 estabelece o checkout autenticado com intenção aleatória, snapshot de preço/moeda/produto/oferta/termos e confirmação por evento verificado. A página de retorno não prova compra. Uma intenção não concede duas transações; divergências de produto, oferta, valor ou moeda vão para quarentena. O limite local de 24 horas de reuse da intenção **não** comprova expiração remota da oferta e não autoriza rejeitar pagamento cobrado tardiamente ([contrato P01, linhas 23–25 e 45](C:/ATVNA/.worktrees/p01-atv-mais-20261104/docs/contracts/atv-plus-commercial.md:23)).
 
@@ -86,13 +92,19 @@ Esse desenho é referência de integração; os nove SKUs de assinatura P01 não
 
 A auditoria P01 mantém bloqueios de acesso/catalogação Hotmart e homologação financeira e não informa tarifa vigente ([readiness, linhas 62–63](C:/ATVNA/.worktrees/p01-atv-mais-20261104/docs/qa/P01_COMMERCIAL_READINESS_2026-11-04.md:62)). A prova local da regra de membro não comprova cobrança ou desconto real no provedor ([QA, linhas 107 e 115–118](C:/ATVNA/.worktrees/p01-atv-mais-20261104/docs/qa/P01_MEMBER_PRICING_2026-11-04.md:107)). Manter compra e desconto bloqueados nos onze até cumprir esses critérios por item.
 
-## Encaminhamento limitado e verificável
+## Encaminhamento financeiro futuro, sem bloquear teste gratuito
 
-1. Conservar os onze preços/custos desconhecidos em `null`, com produto e URL estáveis; manter a interface em preparação onde faltar gate.
+1. Conservar os onze preços/custos desconhecidos em `null`, com produto/URL estáveis. Publicar o modo de teste gratuito autorizado quando os gates técnicos passarem; ausência de dados financeiros não mantém o teste indisponível.
 2. Anexar medição local por produto e evidência de infraestrutura/entrega, sem gasto novo. Uma medição sem base financeira continua útil como consumo, sem virar BRL fictício.
 3. Reconciliar, quando houver acesso autorizado, ofertas/tarifas Hotmart existentes; preservar IDs e eventos. Não abrir cadastro duplicado nem teste pago nesta execução.
 4. Submeter uma composição completa e piso por item; somente então propor preços numéricos e cobertura de membro para decisão concreta do proprietário.
-5. Homologar preço final e direito de acesso com/sem membro, promoção/cupom, expiração, replay, reembolso e divergência financeira usando o fluxo compartilhado; testes sintéticos continuam identificados como locais.
-6. Revalidar o checkpoint P01 e o lock antes de publicação. A reserva aberta às 10:36:36Z não é permissão para P02 publicar por conta própria.
+5. Para futura cobrança, homologar preço final e direito financeiro com/sem membro, promoção/cupom, expiração, replay, reembolso e divergência; isso não condiciona o teste privado gratuito. Testes sintéticos continuam identificados como locais.
+6. Usar a janela e revisão de integração vigentes antes de publicação. A janela P01 foi encerrada em `P01.04.05`; o root reservou `P02.03.01` e aplicou o schema P02 individualmente. Isso não libera preço/checkout avulso nem autoriza publicação independente. Ver [hosted-schema.md](hosted-schema.md).
 
 Nenhum preço, custo unitário, margem, tarifa de PSP ou condição de membro foi aprovado por este levantamento.
+
+## Atualização de evidência após integração P01
+
+O contrato P01 citado acima já está mesclado nesta revisão; a referência operacional é [docs/contracts/atv-plus-commercial.md](../contracts/atv-plus-commercial.md) e [packages/domain/src/member-pricing.ts](../../packages/domain/src/member-pricing.ts). Os links para a worktree P01 preservam a origem do levantamento anterior, não uma dependência de código ainda por copiar. Release específico do item, custos completos, contribuição suficiente e suporte do checkout continuam necessários **para benefício financeiro numa futura venda**, sem condicionar o teste gratuito; a melhor condição é única, sem acúmulo.
+
+O lote [benchmark.json](samples/benchmark.json), `p02-local-2026-11-04T11:10:40.212Z`, agora mede tempo de parede e tamanho de JSON para os onze produtos, com entradas fictícias e execução local real; não mede CPU faturável ou custo monetário. `externalModelCalled: false`, `paidCalls: 0`. A medição não converte em zero os componentes financeiros desconhecidos e não exige custo teórico de IA. Valores e alcance estão na [matriz dos onze](product-readiness-matrix.md#amostras-integrais-e-medição-local); estado comercial atual em [commercial-readiness.md](commercial-readiness.md). As três tabelas P02 foram aplicadas e conferidas no catálogo, mas front P02, percurso autenticado real e E5 seguem sem liberação comprovada nesta revisão documental.

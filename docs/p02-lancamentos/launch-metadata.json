@@ -45,7 +45,7 @@
         "Confirmação de que são opções reais"
       ],
       "optionalInputs": [
-        "Dados natais consentidos de quem compra para contexto, se o método implementado os admitir; não são requisito para comparar os eventos"
+        "Dados natais consentidos da pessoa para contexto, se o método implementado os admitir; não são requisito para comparar os eventos"
       ],
       "method": "Astrologia eletiva comparativa dos horários fornecidos: calcular cada mapa de evento no motor determinístico versionado, explicitar critérios utilizados e contrastar fatores favoráveis, tensões e limites. A escolha é justificada por fatores, sem nota de felicidade conjugal nem data universalmente perfeita.",
       "methodSummary": "Astrologia eletiva: comparação dos mapas das datas e horários reais da cerimônia, com critérios explícitos, motivos de preferência e cuidados para cada opção.",
@@ -105,7 +105,7 @@
       "promise": "Olhe para um episódio com seu ex e diferencie possibilidades de saudade de atitudes que indicariam reparação.",
       "painOrDesire": "Uma mensagem ou gesto reacendeu a dúvida sobre o passado, mas o gesto sozinho não explica a intenção de outra pessoa.",
       "minimumInputs": [
-        "Um episódio passado específico, em palavras de quem compra",
+        "Um episódio passado específico, nas suas palavras",
         "O que foi observado diretamente, separado da interpretação",
         "Qual dúvida quer examinar sobre esse episódio",
         "Limite que deseja preservar ao lidar com novo contato"
@@ -164,7 +164,7 @@
       "promise": "Veja os próximos 30 dias no contexto da sua vida amorosa e prepare-se para silêncio, contato ou reaproximação.",
       "painOrDesire": "A espera por uma definição faz a pessoa oscilar entre procurar, ficar em silêncio e aceitar uma conversa.",
       "minimumInputs": [
-        "Data, hora e local de nascimento da pessoa compradora, ou fluxo explícito de hora desconhecida",
+        "Sua data, hora e local de nascimento, ou fluxo explícito de hora desconhecida",
         "Data inicial, fuso e local de referência do período de 30 dias",
         "Situação atual e último contato observado",
         "O que gostaria de esclarecer e qual limite pretende manter"
@@ -187,7 +187,7 @@
       "limits": [
         "Não promete reconciliação nem prevê ações específicas do ex como fatos",
         "Sem hora confiável excluir fatores dependentes de casas/ângulos e informar a limitação",
-        "Uma compra cobre um único intervalo, sem acompanhamento de assinatura"
+        "Cada leitura de teste cobre um único intervalo, sem acompanhamento de assinatura"
       ],
       "inputSchema": {
         "birthProfile": "perfil natal consentido",
@@ -295,7 +295,7 @@
         "Participação do parceiro não é exigida"
       ],
       "method": "Leitura individual natal de fatores afetivos definidos no método aprovado, dependente das preferências relatadas pela pessoa. O mapa não preenche a preferência ausente do parceiro; a síntese precisa separar desejo próprio, limite e convite negociável.",
-      "methodSummary": "Leitura individual do mapa e das preferências relatadas por quem compra, para transformar um desejo em um convite claro, com ritmo e limites respeitados.",
+      "methodSummary": "Leitura individual do seu mapa e das preferências que você relata, para transformar um desejo em um convite claro, com ritmo e limites respeitados.",
       "sampleInput": "Bia, pessoa adulta, quer experimentar mais tempo de intimidade sem telas. Prefere combinar antes e quer manter a possibilidade de parar ou mudar de ideia.",
       "sampleDelivery": "Um convite que Bia pode adaptar: ‘Queria reservar um tempo nosso sem telas. Você teria vontade? Podemos combinar algo simples e mudar se não for confortável.’ Se a outra pessoa não quiser, Bia pode perguntar por uma alternativa, sem tratar recusa como obstáculo a vencer. Amostra editorial, sem cálculo natal.",
       "receive": [
@@ -305,7 +305,7 @@
         "Uma alternativa caso a outra pessoa não queira"
       ],
       "closestExistingProductId": "synastry",
-      "difference": "A sinastria compara dois mapas. Este produto é concluído com um mapa e as respostas de quem compra, resultando em um convite pessoal com possibilidade real de recusa.",
+      "difference": "A sinastria compara dois mapas. Esta leitura usa o seu mapa e as suas respostas, resultando em um convite pessoal com possibilidade real de recusa.",
       "limits": [
         "Não pressupõe preferências nem consentimento do parceiro",
         "Não exige responder a dois",
@@ -476,7 +476,7 @@
       "difference": "A Bússola de Carreira apoia uma direção profissional. Este recorta uma habilidade já demonstrada e transforma dois episódios em um experimento de oferta, sem prometer uma mudança completa de carreira.",
       "limits": [
         "Não promete renda ou demanda",
-        "Não fixa preço de serviço do comprador sem contexto",
+        "Não fixa preço do seu serviço sem contexto",
         "Se os favores não sustentarem a mesma habilidade, explicitar a divergência e pedir um exemplo adicional em vez de inventar convergência"
       ],
       "inputSchema": {
@@ -541,7 +541,7 @@
         "Uma troca possível para conforto ou clima"
       ],
       "closestExistingProductId": "ascendant",
-      "difference": "A calculadora gratuita informa o ascendente. A compra entrega três composições aplicadas a uma ocasião e ao inventário pessoal, mantendo o cálculo gratuito.",
+      "difference": "A calculadora gratuita informa o ascendente. Este teste gratuito entrega três composições aplicadas a uma ocasião e às peças que você já tem.",
       "limits": [
         "Sem hora confiável não afirmar um ascendente",
         "Não obriga compra de peças nem fixa estilo por signo",
@@ -667,8 +667,8 @@
       "optionalInputs": [
         "Não exige cadastro, consentimento de cálculo ou respostas do parceiro, pois não calcula seu mapa"
       ],
-      "method": "Leitura individual de fatores natais definidos para rotina e necessidade de espaço, combinada com hábitos observados relatados por quem compra. Separar observação e hipótese; os três acordos são propostas negociáveis, não declarações sobre o parceiro.",
-      "methodSummary": "Leitura individual do mapa de quem compra, combinada a hábitos já observados, para organizar uma afinidade, um possível atrito e três propostas de acordo antes da mudança.",
+      "method": "Leitura individual de fatores natais definidos para rotina e necessidade de espaço, combinada com hábitos observados relatados por você. Separar observação e hipótese; os três acordos são propostas negociáveis, não declarações sobre o parceiro.",
+      "methodSummary": "Leitura individual do seu mapa, combinada a hábitos já observados, para organizar uma afinidade, um possível atrito e três propostas de acordo antes da mudança.",
       "sampleInput": "Ivo e seu par gostam de cozinhar juntos. Ivo trabalha cedo e observou que o par costuma receber amigos à noite. Estão pensando em dividir a casa.",
       "sampleDelivery": "Afinidade: cozinhar juntos. Possível atrito: horário de descanso e visitas. Três propostas para negociar: combinar noites de visita, dividir a rotina da cozinha e rever os acordos após o primeiro mês. Abertura: ‘Quero que a casa funcione para nós dois. Como podemos cuidar do descanso e dos encontros?’ Amostra editorial individual, sem mapa do parceiro nem cálculo natal.",
       "receive": [
@@ -681,7 +681,7 @@
       "difference": "A sinastria compara dois mapas para compreender a relação. Este retrato individual transforma hábitos observados em três acordos de convivência antes da mudança, sem depender do parceiro.",
       "limits": [
         "Não determina compatibilidade nem garante convivência",
-        "Não atribui hábitos ao parceiro pelo mapa de quem compra",
+        "Não atribui hábitos ao parceiro pelo seu mapa",
         "Acordos só existem após aceitação de ambos"
       ],
       "inputSchema": {

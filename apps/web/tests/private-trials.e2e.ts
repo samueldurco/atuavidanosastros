@@ -1,7 +1,7 @@
 import { chartImage, expectChartImage } from './chart-image';
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { offeredProductIds, atvPlusPlans } from '@atv/domain';
+import { offeredProductIds, productTrialHref, atvPlusPlans } from '@atv/domain';
 import { readFile } from 'node:fs/promises';
 import { PDFDocument } from 'pdf-lib';
 
@@ -214,7 +214,7 @@ test('pair preview displays both three-factor comparisons and the direction chap
 	await expect(page.locator('article[aria-label="Capítulo selecionado"]')).toContainText('Sol em');
 });
 
-test('the reading area keeps 19 offers, saved readings and its own feedback separate from ATV+', async ({
+test('the reading area keeps all 30 offers, saved readings and its own feedback separate from ATV+', async ({
 	page
 }) => {
 	await page.goto('/testar-produtos/_spec?view=club');
@@ -239,7 +239,7 @@ test('the reading area keeps 19 offers, saved readings and its own feedback sepa
 				.evaluateAll((links) => links.map((link) => link.getAttribute('href')!)))
 		);
 	}
-	expect(targets.sort()).toEqual(offeredProductIds.map((id) => `/testar-produtos/${id}`).sort());
+	expect(targets.sort()).toEqual(offeredProductIds.map(productTrialHref).sort());
 	await expect(page.getByRole('region', { name: 'Suas leituras de teste' })).toBeVisible();
 	await expect(
 		page.getByRole('link', { name: 'três planos do ATV+', exact: true })

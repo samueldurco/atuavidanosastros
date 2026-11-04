@@ -133,10 +133,10 @@ for (const width of [320, 1440]) {
 		await page.locator('.nav-trigger[aria-controls="nav-produtos"]').click();
 		await page.locator('#nav-produtos .nav-item[href="/leituras"]').click();
 		await expect(page).toHaveURL('/leituras');
-		await expect(page.locator('.public-product-card')).toHaveCount(19);
+		await expect(page.locator('.public-product-card')).toHaveCount(customerOffers.length);
 		await expect(
 			page.locator('.public-product-card').getByText('Em preparação', { exact: true })
-		).toHaveCount(19);
+		).toHaveCount(customerOffers.length);
 		const topic = page.getByRole('navigation', { name: 'Temas das leituras' });
 		await topic.getByRole('link', { name: 'Amor e relacionamentos', exact: true }).click();
 		await expect(page).toHaveURL('/leituras?tema=amor#catalogo');

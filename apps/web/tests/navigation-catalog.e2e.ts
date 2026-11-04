@@ -120,7 +120,7 @@ test('home, universos, produto e ATV+ mantêm o contexto de cada oferta', async 
 	await page.screenshot({ path: testInfo.outputPath('home-catalogos.png') });
 	await catalogs.getByRole('link', { name: 'Ver todas as leituras' }).click();
 	await expect(page).toHaveTitle(/Leituras digitais/);
-	await expect(page.locator('.public-product-card')).toHaveCount(19);
+	await expect(page.locator('.public-product-card')).toHaveCount(30);
 	await page.locator('.public-product-card h3 a').first().click();
 	await expect(page.locator('main')).toContainText('Leitura digital · produto avulso');
 	await page.getByRole('link', { name: 'Catálogo de leituras digitais', exact: true }).click();

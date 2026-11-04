@@ -1,6 +1,6 @@
 {
   "state": "EXAMPLE_PRIVATE_REVIEW",
-  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "batchId": "p02-local-2026-11-04T11:37:17.995Z",
   "environment": {
     "node": "v24.20.0",
     "platform": "win32",
@@ -20,15 +20,15 @@
     "status": "APPROVED_FOR_PRIVATE_TEST",
     "reasons": [],
     "durationMs": {
-      "factual": 1475.1481999999996,
-      "composition": 28.65649999999914,
-      "review": 267.66209999999955,
-      "total": 1771.4667999999983
+      "factual": 6756.9499,
+      "composition": 237.60319999999956,
+      "review": 7.828000000001339,
+      "total": 7002.3811000000005
     },
     "jsonBytes": {
       "input": 752,
       "calculation": 27120,
-      "reading": 9114,
+      "reading": 9024,
       "review": 3060
     }
   },
@@ -414,7 +414,7 @@
               "algorithmVersion": "atv-caelus-adapter-v3",
               "zodiac": "tropical",
               "houseSystem": "placidus",
-              "calculatedAt": "2026-11-04T11:10:41.406Z",
+              "calculatedAt": "2026-11-04T11:37:21.384Z",
               "referenceFrame": "geocentric-apparent-ecliptic-of-date",
               "dataManifest": {
                 "provider": "caelus",
@@ -768,7 +768,7 @@
               "algorithmVersion": "atv-caelus-adapter-v3",
               "zodiac": "tropical",
               "houseSystem": "placidus",
-              "calculatedAt": "2026-11-04T11:10:41.423Z",
+              "calculatedAt": "2026-11-04T11:37:21.394Z",
               "referenceFrame": "geocentric-apparent-ecliptic-of-date",
               "dataManifest": {
                 "provider": "caelus",
@@ -1167,7 +1167,7 @@
       "editorial": "not-reviewed"
     }
   },
-  "calculationDigest": "aba7f48b63d644e4d88df2a9967a791da91b2db005be0e99d07712fb543d15f5",
+  "calculationDigest": "6f570d1a139b8cb8c69609f5c7e542c972dd74215a516a0c860f6e8a4e16bc65",
   "reading": {
     "version": "atv-launch-reading/1",
     "executionId": "8c6d9da2-d296-4b63-a30c-000000000001",
@@ -1180,8 +1180,8 @@
         "id": "option-1",
         "title": "Início da cerimônia A: apoios e ressalvas",
         "paragraphs": [
-          "Início da cerimônia A: início da cerimônia em 2027-03-20T10:30:00, America/Sao_Paulo, Cidade fictícia (2027-03-20T13:30:00Z). Vênus em oposição com Marte, orbe 1.205°: ressalva à negociação e à aproximação simbolizadas por Vênus.",
-          "Para “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”, Início da cerimônia A pede confirmar disponibilidade e deslocamento para 2027-03-20T10:30:00, em Cidade fictícia, com quem participa da cerimônia. As ressalvas convidam a discutir ritmo, flexibilidade e responsabilidades antes de confirmar; não anunciam conflito. Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos."
+          "Início da cerimônia A: início da cerimônia em 20/03/2027 às 10h30 (horário de Cidade fictícia). Vênus em oposição com Marte, orbe 1.205°: ressalva à negociação e à aproximação simbolizadas por Vênus.",
+          "Para “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”, Início da cerimônia A pede confirmar disponibilidade e deslocamento para 20/03/2027 às 10h30 (horário de Cidade fictícia), com quem participa da cerimônia. As ressalvas convidam a discutir ritmo, flexibilidade e responsabilidades antes de confirmar; não anunciam conflito. Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos."
         ],
         "evidenceIds": [
           "reported-ceremonies-1",
@@ -1198,8 +1198,8 @@
         "id": "option-2",
         "title": "Início da cerimônia B: apoios e ressalvas",
         "paragraphs": [
-          "Início da cerimônia B: início da cerimônia em 2027-04-17T10:30:00, America/Sao_Paulo, Cidade fictícia (2027-04-17T13:30:00Z). Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades.",
-          "Para “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”, Início da cerimônia B pede confirmar disponibilidade e deslocamento para 2027-04-17T10:30:00, em Cidade fictícia, com quem participa da cerimônia. A ausência dessas ressalvas não dispensa combinar ritmo, flexibilidade e responsabilidades. Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos."
+          "Início da cerimônia B: início da cerimônia em 17/04/2027 às 10h30 (horário de Cidade fictícia). Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades.",
+          "Para “Mesmo marco: início da cerimônia, durante o dia e com tempo para receber familiares.”, Início da cerimônia B pede confirmar disponibilidade e deslocamento para 17/04/2027 às 10h30 (horário de Cidade fictícia), com quem participa da cerimônia. A ausência dessas ressalvas não dispensa combinar ritmo, flexibilidade e responsabilidades. Apoios são linguagem simbólica para preparar a cerimônia; nenhum fator descreve a disposição real dos noivos."
         ],
         "evidenceIds": [
           "reported-ceremonies-2",
@@ -1251,7 +1251,7 @@
             "ceremony-86c16c07db023e57adc99da03208a2c6d905c616e8126894f9ca1f29f7f527cd-venus-caution-venus-mars-opposition-evidence"
           ]
         },
-        "interpretation": "Início da cerimônia A: início da cerimônia em 2027-03-20T10:30:00, America/Sao_Paulo, Cidade fictícia (2027-03-20T13:30:00Z). Vênus em oposição com Marte, orbe 1.205°: ressalva à negociação e à aproximação simbolizadas por Vênus."
+        "interpretation": "Início da cerimônia A: início da cerimônia em 20/03/2027 às 10h30 (horário de Cidade fictícia). Vênus em oposição com Marte, orbe 1.205°: ressalva à negociação e à aproximação simbolizadas por Vênus."
       },
       {
         "id": "claim-option-2",
@@ -1267,7 +1267,7 @@
           "utcInstant": "2027-04-17T13:30:00Z",
           "evidence": []
         },
-        "interpretation": "Início da cerimônia B: início da cerimônia em 2027-04-17T10:30:00, America/Sao_Paulo, Cidade fictícia (2027-04-17T13:30:00Z). Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades."
+        "interpretation": "Início da cerimônia B: início da cerimônia em 17/04/2027 às 10h30 (horário de Cidade fictícia). Nenhum apoio ou ressalva do recorte foi encontrado dentro do orbe de 3°. Ausência neste recorte não comprova ausência de dificuldades."
       },
       {
         "id": "claim-comparison",
@@ -1334,7 +1334,7 @@
       "persistence": "server-must-load-persisted-facts-before-composition"
     }
   },
-  "readingDigest": "485e81e33f5d00f6c9cd7e861fcfb3ae96a129fcf0abf3348e60b52916734f5d",
+  "readingDigest": "acb7b73465783e77e8f778c0dd03b64396d9694a1ae7a7133a66755ee82e5179",
   "review": {
     "version": "atv-launch-reading-review/1",
     "status": "APPROVED_FOR_PRIVATE_TEST",
@@ -1422,7 +1422,7 @@
       }
     ],
     "reasons": [],
-    "digest": "485e81e33f5d00f6c9cd7e861fcfb3ae96a129fcf0abf3348e60b52916734f5d",
+    "digest": "acb7b73465783e77e8f778c0dd03b64396d9694a1ae7a7133a66755ee82e5179",
     "provenance": {
       "scope": "private-editorial-consistency",
       "calculation": "experimental-astrology",

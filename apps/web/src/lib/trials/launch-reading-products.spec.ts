@@ -24,6 +24,26 @@ describe('P02 distinct additional editorial methods', () => {
 			});
 		}
 	});
+	it('conversation displays Brazilian dates while rejecting a changed displayed day', async () => {
+		const original = artifacts.get('conversation-timing')!;
+		const first = original.reading.sections.find((section) => section.id === 'conversation-day-1')!;
+		expect(first.title).toBe('01/11/2026: falar ou esperar depende das condições');
+		expect(first.paragraphs[0]).toContain('01/11/2026: quatro amostras');
+		expect(
+			original.reading.sections.flatMap((section) => section.paragraphs).join(' ')
+		).not.toMatch(/\d{4}-\d{2}-\d{2}T/);
+		const mutated = structuredClone(original.reading);
+		const changed = mutated.sections.find((section) => section.id === 'conversation-day-1')!;
+		changed.title = changed.title.replace('01/11/2026', '02/11/2026');
+		changed.paragraphs = changed.paragraphs.map((paragraph) =>
+			paragraph.replaceAll('01/11/2026', '02/11/2026')
+		);
+		const review = await evaluateLaunchReading(original.input, original.facts, mutated);
+		expect(review.status).toBe('REJECTED');
+		expect(review.checks.find((check) => check.id === 'daily-conversation-meaning')?.passed).toBe(
+			false
+		);
+	});
 
 	for (const input of examples)
 		it(`${input.productId} has a complete private candidate, own method and actual semantic support`, async () => {

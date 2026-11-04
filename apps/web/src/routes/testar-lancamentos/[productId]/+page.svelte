@@ -102,19 +102,19 @@
 </script>
 
 <svelte:head
-	><title>{data.product.name} — preparação privada | ATVNA</title><meta
+	><title>{data.product.name} — teste gratuito | ATVNA</title><meta
 		name="robots"
 		content="noindex,nofollow"
 	/></svelte:head
 >
 <ContentShell kind="product">
-	<a href="/testar-lancamentos">← Preparação dos lançamentos</a>
+	<a href="/testar-lancamentos">← Testes gratuitos</a>
 	<PageIntro
-		eyebrow="Homologação privada · Dados da leitura"
+		eyebrow="Teste gratuito · Dados da leitura"
 		title={data.product.name}
 		identity={data.product.id}
 		productArtwork
-		description="Salve os dados para testar este produto. O salvamento ainda não produz uma leitura aprovada e não realiza cobrança."
+		description="Preencha os dados para começar. Depois de salvar, você poderá gerar a leitura e consultar o resultado na sua área."
 	/>
 	<form onsubmit={submit}>
 		{#if data.spec.requiresBirth}<TrialBirthFields
@@ -208,7 +208,7 @@
 		>
 		{#if message}<p role="alert">{message}</p>{/if}
 		<button class="submit" type="submit" disabled={busy}
-			>{busy ? 'Salvando…' : 'Salvar preparação privada'}</button
+			>{busy ? 'Salvando…' : 'Salvar e continuar'}</button
 		>
 	</form>
 </ContentShell>

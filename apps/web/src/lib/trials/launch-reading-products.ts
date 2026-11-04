@@ -14,8 +14,9 @@ import {
 	TAROT_CANON_SOURCE_SHA256,
 	tarotCanon
 } from './reconstruction/tarot-canon';
-import { temporalPairMeaning, temporalTargets } from './current/temporal-canon';
+import { temporalPairMeaning } from './current/temporal-canon';
 import type { LaunchReading, LaunchReadingClaim, LaunchReadingSection } from './launch-reading';
+import { formatLaunchDate, formatLaunchUtcInstant } from './launch-reading-dates';
 
 /** Original, deliberately finite thematic methods. Runtime does not retrieve sources or call a model. */
 export const additionalLaunchProductIds = [
@@ -909,16 +910,17 @@ function composeConversation(input: LaunchInput, calculation: LaunchFactCalculat
 	for (let day = 0; day < 7; day++) {
 		const rows = d.observations.slice(day * 4, day * 4 + 4),
 			date = rows[0]!.instant.slice(0, 10),
+			displayDate = formatLaunchDate(date),
 			c = dailyContact(d, day),
 			id = `conversation-day-${day + 1}`;
 		const relation = c
-			? `${bodyNames[c.transit]} em trânsito em ${aspectPt[c.kind]} com ${bodyNames[c.natal]} natal, observado em ${c.instant} (orbe ${c.orbDegrees.toFixed(3)}°): ${c.meaning}`
+			? `${bodyNames[c.transit]} em trânsito em ${aspectPt[c.kind]} com ${bodyNames[c.natal]} natal, observado em ${formatLaunchUtcInstant(c.instant)} (orbe ${c.orbDegrees.toFixed(3)}°): ${c.meaning}`
 			: 'Nenhum contato suportado pelo vocabulário do método foi selecionado neste dia; a ausência não significa um dia ruim ou sem possibilidade de diálogo.';
-		const text = `${date}: quatro amostras em 00h, 06h, 12h e 18h UTC. ${relation} A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.`;
+		const text = `${displayDate}: quatro amostras em 00h, 06h, 12h e 18h UTC. ${relation} A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.`;
 		sections.push(
 			sec(
 				id,
-				`${date}: falar ou esperar depende das condições`,
+				`${displayDate}: falar ou esperar depende das condições`,
 				[
 					text,
 					`${dailyTasks[day]} Para tratar de ${q(subject)} visando ${q(objective)}, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite ${q(constraints)}; estas amostras não calculam disponibilidade nem horário favorável.`
@@ -1123,10 +1125,11 @@ export function evaluateAdditionalLaunchReading(
 									claim.factors.natal === c.natal &&
 									claim.factors.aspect === c.kind &&
 									claim.factors.instant === c.instant &&
+									claim.factors.date === date &&
 									claim.factors.orbDegrees === c.orbDegrees &&
 									has(claim.interpretation, [
 										c.meaning,
-										c.instant,
+										formatLaunchUtcInstant(c.instant),
 										c.orbDegrees.toFixed(3),
 										'não é uma nota de qualidade'
 									])
@@ -1134,9 +1137,10 @@ export function evaluateAdditionalLaunchReading(
 						: !!part?.paragraphs[0]?.includes('Nenhum contato suportado');
 					return (
 						!!part &&
+						part.title === `${formatLaunchDate(date)}: falar ou esperar depende das condições` &&
 						part.evidenceIds.filter((id) => id.startsWith('transit-sample-')).length === 4 &&
 						has(part.paragraphs.join(' '), [
-							date,
+							formatLaunchDate(date),
 							a(input, 'subject'),
 							a(input, 'objective'),
 							a(input, 'constraints'),

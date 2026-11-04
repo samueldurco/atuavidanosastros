@@ -1,46 +1,80 @@
-# P02 — preparação comercial finita
+# P02 — teste gratuito autorizado e comércio postergado
 
-Data: 04/11/2026. RUN_ID: `ATV-20260902-170644Z-01A0630F`. Escopo: onze lançamentos digitais avulsos com entrega web. Resultado: estrutura comercial especificada, **sem novo preço aprovado nem custo marginal comprovado**. Não foram feitas chamadas pagas, cobranças, upgrades ou alterações em provedores por esta auditoria.
+Data: 04/11/2026. RUN_ID `ATV-20260902-170644Z-01A0630F`. Referência integrada examinada: `1d1d041`, com main P01 `2c4e3c34ae10d1cf314e315cb598cc32b5ba323b`. Escopo atual: publicar os onze produtos com geração e reabertura **gratuitas, em modo de teste**, usando o acesso privado existente. A classificação futura continua digital avulso com entrega web. Comércio foi postergado por instrução do proprietário; não se exige preço, margem, oferta Hotmart ou checkout para publicar esse teste. Esta revisão documental não executou publicação ou alteração de provedor.
 
-## Autoridade existente
+## Decisão do proprietário — 04/11/2026
 
-- `docs/20-produto/programa-comercial-atvna/README.md`, itens 17–19 e 29–30: custo inicial autorizado R$ 0, simulação de taxas/margem, preço regular e piso ainda dependentes de definição; P01 governa preço, carrinho e conta; P02 governa descoberta. IDs, URL, tipo, preço, elegibilidade e disponibilidade precisam ser estáveis. O servidor decide condição vigente e preço final.
-- `docs/adr/0002-environments-and-cost.md`: não criar custo fixo, upgrade, complemento, faturamento ou domínio automaticamente. Essa política não prova custo marginal zero nem o saldo atual de qualquer conta.
-- `docs/contracts/architecture-offers-20261015.md`, linhas 57–66: o valor histórico proposto de R$ 7,90 se refere exclusivamente à leitura de uma data especial, não registra preço e não se estende a outros produtos. Definições novas permanecem `PREPARING`; teste privado não equivale a oferta paga ou publicação.
-- `docs/contracts/couple-dossier-lab.md`: sem medição, tokens, latência, custo e recibo ficam nulos. Uma fixture estrutural não é resposta de modelo nem interpretação completa.
-- Integração P01 em `C:/ATVNA/.worktrees/p01-atv-mais-20261104/docs/contracts/atv-plus-commercial.md`: política `atv-plus-commercial/1`; percentuais digitais Essencial 10%, Ampliado 20%, Premium 30% são **simulações** até aprovação de custos, piso e sustentação. Usa a melhor condição única a partir do preço regular; exclui frete e assinatura ATV+, não soma cupom/promoção/benefício. Revalida no servidor no checkout e na confirmação. O contrato P01 é evidência local de integração, não publicação ou ativação comercial.
+> nao coloque preço nem gere cobrança por enquanto somente publique e deixe no ar funcionando de modo liberado e gratuito igual os outros, modo de teste
 
-Não foi encontrada nessas fontes autorização de preço para os onze IDs novos. `PriceVersion` no domínio define o formato e vigência, mas uma interface não constitui registro `ACTIVE`. Nenhum valor de teste, fixture, desconto simulado ou preço de outra oferta deve virar preço destes lançamentos.
+A autorização cobre publicação, geração e reabertura gratuitas, pelos mesmos grants dos outros testes privados. Preserva autenticação, RLS, vínculo de proprietário, fatos persistidos, revisão editorial e demais gates técnicos. Não cria acesso anônimo, assinatura obrigatória, preço zero cadastrado ou oferta financeira. O [escopo da aprovação](free-test-approval-scope.md) separa publicação de teste, E5 e comércio futuro.
 
-## Matriz de decisão
+A [matriz dos onze produtos](product-readiness-matrix.md) reúne títulos, URLs, entrada/leitor, versões, medições, amostras e responsáveis. O [schema hospedado](hosted-schema.md) foi aplicado individualmente pelo root na janela `P02.03.01`, com versões remotas `20261104112718`, `20261104112739` e `20261104112801`. O postflight de catálogo confirmou três tabelas com RLS/políticas/grants e zero preparações, leituras e feedbacks. **Front P02 ainda não publicado; E5 real pendente.** Aplicação de schema não equivale a teste autenticado de entrega ou liberação comercial. O [preflight anterior](hosted-preflight.md) conserva o estado histórico e a divergência de versões, sem contradizer a aplicação posterior.
 
-| IDs | Preço regular | Geração e custo | Provedor e entrega | Condição de membro |
-| --- | --- | --- | --- | --- |
-| `wedding-date-map`, `ex-tarot`, `love-restart-map` (estreia) | Pendente de proposta numérica fundada em custos e aprovação. | Cálculo factual local e composição E2 por corpus local versionado, sem modelo externo; custo de CPU/infra/operação ainda não medido por produto. Método/entrega conservam seus gates próprios. | Cadastro real de oferta, vínculo de preço e entrega homologada precisam de comprovação própria. | Simular somente; não prometer benefício disponível. |
-| `sexuality-map`, `intimacy-map`, `emotional-reactions-map` | Mesmo bloqueio. | Mesmo bloqueio; entradas adultas/privadas não constituem evidência de leitura. | Mesmo bloqueio. | Mesmo bloqueio. |
-| `financial-blocks-tarot`, `hidden-talent-map`, `ascendant-style` | Mesmo bloqueio. | Mesmo bloqueio; calculadora gratuita não tem preço a reutilizar. | Mesmo bloqueio. | Mesmo bloqueio. |
-| `conversation-timing`, `cohabitation-map` | Mesmo bloqueio. | Mesmo bloqueio; não reutilizar custo de semana ou sinastria sem medição. | Mesmo bloqueio. | Mesmo bloqueio. |
+## Evidência existente e alcance
 
-`launch-metadata.json` registra os onze com `regularMinor=null`, custos e piso `null`, moeda BRL, compra individual e orçamento autorizado de novas despesas igual a zero. `null` significa desconhecido/pendente, nunca preço gratuito ou custo zero. O estado remoto das ofertas não foi inspecionado por este levantamento; cadastro não comprovado não é prova de inexistência no provedor.
+| Evidência | O que comprova | Limite |
+| --- | --- | --- |
+| [Definições do domínio](../../packages/domain/src/launches.ts) e [dados das fichas](../../apps/web/src/lib/data/launch-products.ts) | Onze IDs/títulos/slugs estáveis; definições `PREPARING`, digitais avulsos, entrega web; fichas `/produtos/{slug}`. | Definição de produto não registra oferta, preço ACTIVE ou disponibilidade de compra. |
+| [benchmark.json](samples/benchmark.json), lote `p02-local-2026-11-04T11:10:40.212Z` | Uma execução sequencial local por produto, cálculo/composição/revisão reais sobre entradas sintéticas; tempo de parede e tamanho dos JSONs; onze revisões `APPROVED_FOR_PRIVATE_TEST`. | Não mede distribuição estatística, latência hospedada, concorrência, CPU faturável ou custo em BRL. |
+| [Onze snapshots integrais](product-readiness-matrix.md#amostras-integrais-e-medição-local) | Entrada fictícia, cálculo/digest, leitura integral/digest, revisão integral, proveniência e versões; resultados efetivos do pipeline local. | Arquivos de exemplo não são entrega persistida de proprietário, aceite E5 ou compra real. |
+| [launch-metadata.json](launch-metadata.json), `sampleDelivery` | Exemplo curto para explicar a proposta na ficha. | Não substitui snapshot integral nem interpretação calculada. |
+| [Contrato P01 mesclado](../contracts/atv-plus-commercial.md) | Regra compartilhada de direito financeiro, melhor condição única, custos/margem e checkout; P01 tem publicação própria registrada em `P01.04.05`. | Publicação P01 não libera preço, oferta, cobrança ou desconto dos onze avulsos P02. |
 
-## Proposta concreta de cálculo
+A edição medida calcula fatos localmente e compõe a entrega com corpus editorial local versionado: `externalModelCalled: false`; lote `paidCalls: 0`. **Nenhuma chamada paga realizada** não significa custo marginal de infraestrutura/operação igual a zero. Tokens, tarifa de modelo e recibo de IA não se aplicam a essa edição; só seriam componentes de outra edição que realmente chamasse modelo.
 
-Simular em centavos inteiros, por produto e por versão de entrega. Para um preço regular aprovado `P`, gerar cenários de venda regular e digitais de membro: `0,90P`, `0,80P`, `0,70P`, com a regra de arredondamento do serviço comercial P01. Não inventar outra regra no front-end. Confrontar cada um com promoções ou cupom elegíveis e usar a melhor condição única validada pelo servidor.
+## Comércio futuro: preço de membro e lacuna P02
 
-Para cada cenário, calcular:
+Esta seção documenta trabalho **postergado**. Seus requisitos se aplicam à futura cobrança; não bloqueiam publicação, geração ou reabertura gratuitas autorizadas acima. A ausência de assinatura ATV+ não substitui nem invalida o grant privado de teste existente.
 
-`contribuição = valor cobrado − taxa efetiva da plataforma − geração − entrega − reserva aprovada de suporte/reembolso`
+A política é `atv-plus-commercial/1`. O direito financeiro está em `atv_plus_memberships`, separado do acesso gratuito de teste e da avaliação do proprietário. Assinaturas `ACTIVE` ou `CANCELLED` só conferem benefício no período pago `[starts_at, ends_at)`. O servidor resolve direito e valor com `memberPricingSnapshot` e `memberPriceForSnapshot`; nível ou preço enviados pelo cliente não têm autoridade ([contrato, linhas 9–13](../contracts/atv-plus-commercial.md); [serviço](../../apps/web/src/lib/server/member-pricing.ts)).
 
-O cenário só passa se todos os componentes tiverem origem e vigência, se o resultado alcançar o piso de contribuição aprovado e se não depender de gasto fixo proibido. A taxa efetiva deve vir do contrato/conta oficial aplicável à oferta; não foi preenchida uma taxa atual genérica. A edição atual usa geração factual local e composição determinística por corpus local (`apps/web/src/lib/trials/launch-reading.ts`, proveniência `externalModelCalled: false`): medir CPU, latência, infraestrutura e operação, sem exigir tokens ou recibo de IA inexistente. Modelo/versão, tokens de entrada e saída, moeda/câmbio e recibo só se aplicam quando houver chamada real de modelo em outra edição. Entrega web pode usar infraestrutura existente, mas isso não prova custo marginal ou capacidade infinita. Suporte, reembolso e piso são decisões de negócio a registrar, não zeros automáticos. O levantamento detalhado está em [pricing-evidence.md](pricing-evidence.md).
+Para um item `digital-single`, assinatura válida é uma das condições. A liberação exige, para **o mesmo item**, `MemberPriceRelease` com `itemId`, `approvalId` não vazio, seis custos válidos, contribuição suficiente e `checkoutSupportsMemberPrice: true`. Campos: `productionCents`, `operationsCents`, `paymentFixedCents`, `paymentRateBps`, `taxRateBps`, `minimumContributionCents` ([tipos, validação e gates](../../packages/domain/src/member-pricing.ts)).
 
-A recomendação executável enquanto os componentes faltam é manter fichas e preparação gratuitas na infraestrutura autorizada, sem ativar geração paga, preço público, cobrança ou benefício financeiro. Não propor um número arbitrário para preencher a tabela. A escolha de preço se torna concreta quando a mesma planilha/matriz contiver todos os cenários acima e uma decisão aprovada por produto.
+| Situação | Resultado da regra compartilhada |
+| --- | --- |
+| Item excluído, como assinatura ATV+ ou frete | `excluded-kind` |
+| Sem assinatura elegível no período pago | `no-active-membership` |
+| Sem release específico aprovado ou com custo ausente/inválido | `cost-review-required` |
+| Custos completos, contribuição inferior ao piso aprovado | `below-approved-margin` |
+| Margem suficiente, checkout sem suporte comprovado ao preço de membro | `checkout-integration-required` |
+| Direito, release, custos, margem e checkout válidos | `eligible`; somente então o preço de membro entra como candidato |
 
-## Fechamento verificável antes de cobrar
+O servidor escolhe o menor valor elegível entre regular, promoção, cupom e membro, **uma única vez, sem acumular descontos**. Em empate, a prioridade é regular, promoção, cupom, membro. Simulações digitais de 10%/20%/30% não autorizam anunciar benefício ativo. Direito e preço são revalidados ao iniciar checkout e confirmar pedido; snapshot antigo não estende assinatura expirada.
 
-1. Homologar o método e a entrega dos três primeiros, depois dos oito restantes; medir pelo menos o fluxo representativo e registrar fatos, qualidade, custo, latência e falhas. A amostra editorial fictícia não serve como medição.
-2. Registrar componentes financeiros, fontes, vigência e piso; testar a contribuição nos três níveis de membro e na melhor condição única. Se o piso falhar, revisar preço ou elegibilidade sem prometer cobertura universal.
-3. Registrar versão de preço aprovada, vínculo da oferta e disponibilidade real. Servidor valida identidade, janela de benefício, condição elegível e valor final; cliente não informa nível ou preço autoritativos.
-4. Homologar compra/entrega/revogação/idempotência pelos gates existentes e manter as flags de cobrança/publicação fechadas até as provas. O contrato P01 exige oferta real, preço positivo revisado e flags explícitas; não ativar por ter criado uma ficha.
-5. Na interface, informar preparação de forma objetiva. Formulário salvo recebe recibo de preparação; não exibir “mapa pronto”, cartas sorteadas ou leitura entregue sem fatos e homologação.
+**Lacuna concreta P02:** `launch-metadata.json` mantém `regularMinor`, custos e piso em `null`; não há neste pacote oferta/preço/release comercial aprovado por lançamento. ID de produto não é ID de oferta Hotmart. O endpoint atual `/api/member-price` aceita `variantId` e `profileId`; sem variante retorna snapshot de assinatura, com variante usa `reviewedShopMemberPrice` da loja física. Ele não é adaptador de checkout dos avulsos P02 ([handler](../../apps/web/src/routes/api/member-price/+server.ts)). Enviar um ID P02 à API não habilita compra ou desconto.
 
-Não resta pesquisa genérica de preço neste levantamento: os bloqueadores são dados financeiros e gates específicos acima. A execução local pode avançar catálogo, formulário, persistência e testes sem convertê-los em autorização de venda.
+Faltam por item referência de oferta real, preço regular aprovado/versionado, custos e piso com fonte/vigência, release específico e integração do valor decidido pelo servidor ao checkout/entitlement digital real. Os nove IDs de assinatura P01 pertencem ao ATV+ e não preenchem esses campos. Inventário remoto Hotmart não foi consultado nesta revisão: ausência de vínculo comprovado no pacote não prova inexistência de produto no provedor.
+
+## Custos e fórmula implementada
+
+O [levantamento de fontes](pricing-evidence.md) diferencia geração local, hospedagem, persistência, entrega, suporte/reembolso, PSP e tributos. O benchmark acrescenta tempo de parede e tamanho de payload observáveis; não fornece tarifa ou alocação monetária. Não transformar milissegundos em BRL sem base financeira correspondente.
+
+A regra compartilhada usa centavos inteiros e pontos-base, arredondando meio centavo para cima uma vez por taxa. Para preço regular aprovado `P`, desconto `d` e `R(x,b) = floor((x*b + 5000)/10000)`:
+
+```text
+Q = R(P, 10000 - d)
+Custo(Q) = produção + operação + PSP_fixo + R(Q, PSP_bps) + R(Q, tributos_bps)
+Contribuição(Q) = Q - Custo(Q)
+Aceite: Contribuição(Q) >= piso_aprovado
+```
+
+`d = 1000/2000/3000` representa as simulações digitais Essencial/Ampliado/Premium. Campo ausente/inválido conserva contribuição `null` e margem não aprovada; `null` nunca significa gratuito ou custo zero. Geração pode integrar produção; infraestrutura, entrega e suporte podem integrar operação conforme alocação documentada, sem dupla contagem. PSP exige contrato/tabela aplicável à conta/oferta; não foi presumida tarifa genérica, tributo zero ou reserva zero. Os seis campos não dispensam revisar a correspondência com eventual tarifa mais complexa.
+
+O valor histórico de R$ 7,90 em `docs/contracts/architecture-offers-20261015.md:57–66` é proposta de outra leitura e não constitui preço dos onze. O programa conserva orçamento autorizado de novas despesas R$ 0; `docs/adr/0002-environments-and-cost.md` impede custos fixos/upgrades automáticos. Isso não prova capacidade infinita ou custo unitário conhecido.
+
+## Comércio postergado: pendências e responsáveis
+
+As quatro primeiras linhas são de preparação financeira futura, sem requisito de fechamento antes do teste gratuito. E5 e publicação têm seus próprios escopos nas linhas seguintes.
+
+| Pendência | Responsável | Aceite verificável |
+| --- | --- | --- |
+| Consumo e custo unitário da edição efetiva | P02 runtime/operação + finanças P01 | Base de infraestrutura/consumo/alocação datada e custos de produção/operação por produto/versão. Aproveitar benchmark sem tratá-lo como cobrança de CPU. |
+| PSP, tributos, suporte/reembolso | Operação financeira P01; validação do proprietário | Fonte aplicável/vigência e mapeamento sem dupla contagem aos campos compartilhados. |
+| Preço regular, piso e cobertura de membro | Proprietário, sobre proposta P01/P02 | Composição completa; cenários regular/membro/promoção/cupom; decisão registrada por item/versão. Nenhum valor novo é aprovado aqui. |
+| Oferta e checkout avulso | Integração comercial P01 + P02 runtime | IDs reais reconciliados; preço/moeda/termos corretos; melhor condição única aplicada/revalidada no servidor; direito individual entregue após evento financeiro verificado. |
+| E5 privado e limites da entrega | Proprietário avalia; P02 registra | Percurso real autorizado por produto: entrada, fatos, leitura revisada persistida, reabertura e avaliação vinculada à versão/digest. Snapshot sintético e aprovação automática privada não são aceite do proprietário. |
+| Publicação gratuita P02 e percurso hospedado | Root da integração/liberação | Autorizada em 04/11; schema já aplicado e catálogo conferido. Publicar a revisão correta, registrar gates/postflight e funcionamento autenticado sem preço ou cobrança. DDL aplicado não publica páginas nem fecha E5. |
+
+Para uma futura venda, P01 exige oferta real, preço positivo revisado e flags explícitas; página de retorno não prova compra. Seu contrato de snapshot/conciliação é referência financeira postergada. Testes de checkout com visitante/membro, promoção concorrente, expiração, replay, reembolso e divergência financeira ficam para essa etapa futura. Não criar oferta, preço ou teste pago nesta liberação gratuita.
+
+Nenhum preço, custo em BRL, margem, tarifa de PSP, E5 ou condição financeira dos onze produtos foi aprovado por esta revisão.

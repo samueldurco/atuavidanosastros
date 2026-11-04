@@ -2,9 +2,15 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { POST } from './+server';
 
 const runtime = vi.hoisted(() => ({ evaluate: vi.fn(), digest: vi.fn() }));
-vi.mock('$lib/trials/launch-reading', () => ({
-	evaluateLaunchReading: runtime.evaluate,
-	launchReadingDigest: runtime.digest
+vi.mock('$lib/server/launch-runtime-contract', () => ({ launchRuntimeDigest: runtime.digest }));
+vi.mock('$lib/server/launch-runtime', () => ({
+	runLaunchRuntime: async (
+		_event: unknown,
+		request: { input: unknown; calculation: unknown; reading: unknown }
+	) => ({
+		operation: 'launch-verify',
+		review: await runtime.evaluate(request.input, request.calculation, request.reading)
+	})
 }));
 const ownerId = 'c05bf322-0bfd-4ef6-af90-3ec0da139e52';
 const preparationId = '8c6d9da2-d296-4b63-a30c-42ec8762f48f';
@@ -202,6 +208,16 @@ describe('P02 human feedback API access, edition binding and append-only retries
 	it('returns a matching retry without another insert', async () => {
 		feedbackRead.mockReset().mockResolvedValue({ data: row, error: null });
 		expect((await POST(event())).status).toBe(200);
+		expect(insert).not.toHaveBeenCalled();
+	});
+	it('normalizes an uppercase UUID before saving and confirming its retry', async () => {
+		const uppercase = requestKey.toUpperCase();
+		expect((await POST(event(body({ request_key: uppercase })))).status).toBe(200);
+		expect(insert).toHaveBeenCalledWith(expect.objectContaining({ request_key: requestKey }));
+		expect(feedbackQuery.eq).toHaveBeenCalledWith('request_key', requestKey);
+		insert.mockClear();
+		feedbackRead.mockReset().mockResolvedValue({ data: row, error: null });
+		expect((await POST(event(body({ request_key: uppercase })))).status).toBe(200);
 		expect(insert).not.toHaveBeenCalled();
 	});
 	it.each(['request_key', 'preparation_id', 'owner_id', 'reading_digest', 'decision', 'comment'])(

@@ -1,6 +1,6 @@
 {
   "state": "EXAMPLE_PRIVATE_REVIEW",
-  "batchId": "p02-local-2026-11-04T11:10:40.212Z",
+  "batchId": "p02-local-2026-11-04T11:37:17.995Z",
   "environment": {
     "node": "v24.20.0",
     "platform": "win32",
@@ -20,16 +20,16 @@
     "status": "APPROVED_FOR_PRIVATE_TEST",
     "reasons": [],
     "durationMs": {
-      "factual": 1671.5175,
-      "composition": 123.69260000000031,
-      "review": 227.98939999999857,
-      "total": 2023.1994999999988
+      "factual": 115.88600000000042,
+      "composition": 13.453199999999924,
+      "review": 20.946900000000824,
+      "total": 150.28610000000117
     },
     "jsonBytes": {
       "input": 585,
       "calculation": 263542,
-      "reading": 23402,
-      "review": 3094
+      "reading": 23458,
+      "review": 3233
     }
   },
   "input": {
@@ -987,7 +987,7 @@
           "algorithmVersion": "atv-caelus-adapter-v3",
           "zodiac": "tropical",
           "houseSystem": "placidus",
-          "calculatedAt": "2026-11-04T11:10:42.266Z",
+          "calculatedAt": "2026-11-04T11:37:26.203Z",
           "referenceFrame": "geocentric-apparent-ecliptic-of-date",
           "dataManifest": {
             "provider": "caelus",
@@ -1103,7 +1103,7 @@
         "algorithmVersion": "atv-caelus-adapter-v3",
         "zodiac": "tropical",
         "houseSystem": "placidus",
-        "calculatedAt": "2026-11-04T11:10:42.369Z",
+        "calculatedAt": "2026-11-04T11:37:26.206Z",
         "referenceFrame": "geocentric-apparent-ecliptic-of-date",
         "dataManifest": {
           "provider": "caelus",
@@ -14764,20 +14764,20 @@
       "editorial": "not-reviewed"
     }
   },
-  "calculationDigest": "754e13105df0f32a663fb450e35e766f6a0821221e61d3d6ea64ed7ae1aa68ac",
+  "calculationDigest": "fd778f810b5cd87e9fbed189b2839b37c871da432f8bc33b18a5a5e51c8cb07f",
   "reading": {
     "version": "atv-launch-reading/1",
     "executionId": "8c6d9da2-d296-4b63-a30c-000000000003",
     "productId": "love-restart-map",
     "inputDigest": "f5a04d8b72281e02e0f5b4b31db4322c642606e3a852906fd0e3e445289ff688",
     "title": "Mapa do Recomeço Amoroso",
-    "summary": "Entre 2026-11-01 e 2026-12-01 (fim exclusivo, UTC), o foco é testar uma abertura nova sem antecipar compromisso ou compatibilidade. Os 30 dias oferecem observações do céu para confrontar com “Quero conhecer novas pessoas depois de uma separação; não quero voltar para o meu ex.”; não determinam quando uma relação começará ou voltará.",
+    "summary": "De 01/11/2026 às 00h00 até 01/12/2026 às 00h00 (UTC; o horário final não está incluído), o foco é testar uma abertura nova sem antecipar compromisso ou compatibilidade. Os 30 dias oferecem observações do céu para confrontar com “Quero conhecer novas pessoas depois de uma separação; não quero voltar para o meu ex.”; não determinam quando uma relação começará ou voltará.",
     "sections": [
       {
         "id": "movement-1",
         "title": "Vênus natal: um tema a acompanhar",
         "paragraphs": [
-          "Lua em trânsito em sextil com Vênus natal, observado em 2026-11-16T00:00:00.000Z, com orbe de 0.005°. O conforto emocional pode se aproximar de gestos de afeto que você valoriza. A delicadeza de uma troca ganha sentido quando o prazer de estar junto inclui espaço para a sua necessidade, além de atender à do outro. O sextil descreve uma abertura que depende de participação: a conexão pode existir sem se transformar sozinha em escolha.",
+          "Lua em trânsito em sextil com Vênus natal, observado em 16/11/2026 às 00h00 (UTC), com orbe de 0.005°. O conforto emocional pode se aproximar de gestos de afeto que você valoriza. A delicadeza de uma troca ganha sentido quando o prazer de estar junto inclui espaço para a sua necessidade, além de atender à do outro. O sextil descreve uma abertura que depende de participação: a conexão pode existir sem se transformar sozinha em escolha.",
           "Em relação a “Experimentar um encontro sem apressar compromisso.”, a questão é dar espaço ao desejo sem perder de vista a reciprocidade. Observe uma decisão sua ligada a aquilo que faz uma relação, um gasto ou uma escolha valer a pena para você; não use o contato para atribuir intenção a outra pessoa."
         ],
         "evidenceIds": [
@@ -14794,7 +14794,7 @@
         "id": "movement-2",
         "title": "Marte natal: um tema a acompanhar",
         "paragraphs": [
-          "Sol em trânsito em trígono com Marte natal, observado em 2026-11-07T00:00:00.000Z, com orbe de 0.075°. A direção escolhida e a iniciativa podem se apoiar: agir torna visível o que você quer construir. A disposição ganha propósito quando encontra uma tarefa em que sua participação faz diferença, sem depender de transformar cada passo em demonstração de força. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade.",
+          "Sol em trânsito em trígono com Marte natal, observado em 07/11/2026 às 00h00 (UTC), com orbe de 0.075°. A direção escolhida e a iniciativa podem se apoiar: agir torna visível o que você quer construir. A disposição ganha propósito quando encontra uma tarefa em que sua participação faz diferença, sem depender de transformar cada passo em demonstração de força. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade.",
           "Em relação a “Experimentar um encontro sem apressar compromisso.”, a questão é sustentar uma iniciativa sem transformar toda resistência em confronto. Observe uma decisão sua ligada a a passagem entre querer algo e agir para consegui-lo; não use o contato para atribuir intenção a outra pessoa."
         ],
         "evidenceIds": [
@@ -14811,7 +14811,7 @@
         "id": "movement-3",
         "title": "Mercúrio natal: um tema a acompanhar",
         "paragraphs": [
-          "Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-06T18:00:00.000Z, com orbe de 0.002°. Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação.",
+          "Mercúrio em trânsito em oposição com Mercúrio natal, observado em 06/11/2026 às 18h00 (UTC), com orbe de 0.002°. Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação.",
           "Em relação a “Experimentar um encontro sem apressar compromisso.”, a questão é distinguir o que sabe do que ainda está supondo. Observe uma decisão sua ligada a o modo como você entende uma situação e encontra palavras para explicá-la; não use o contato para atribuir intenção a outra pessoa."
         ],
         "evidenceIds": [
@@ -14828,36 +14828,36 @@
         "id": "thirty-day-calendar",
         "title": "Calendário de observação: 30 dias",
         "paragraphs": [
-          "2026-11-01 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-02 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-03 — quatro amostras às 00h, 06h, 12h e 18h UTC; 12 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-04 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-05 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Vênus, Marte, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-06 — quatro amostras às 00h, 06h, 12h e 18h UTC; 13 contatos observados com Marte, Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-07 — quatro amostras às 00h, 06h, 12h e 18h UTC; 12 contatos observados com Marte, Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-08 — quatro amostras às 00h, 06h, 12h e 18h UTC; 12 contatos observados com Marte, Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-09 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-10 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-11 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-12 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-13 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-14 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-15 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-16 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-17 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-18 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-19 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Marte, Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-20 — quatro amostras às 00h, 06h, 12h e 18h UTC; 9 contatos observados com Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-21 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-22 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-23 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Mercúrio, Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-24 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-25 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-26 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-27 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Mercúrio, Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-28 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-29 — quatro amostras às 00h, 06h, 12h e 18h UTC; 11 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
-          "2026-11-30 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa."
+          "01/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "02/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "03/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 12 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "04/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Mercúrio, Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "05/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Vênus, Marte, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "06/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 13 contatos observados com Marte, Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "07/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 12 contatos observados com Marte, Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "08/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 12 contatos observados com Marte, Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "09/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "10/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "11/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "12/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "13/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "14/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "15/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "16/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "17/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 4 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "18/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 6 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "19/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Marte, Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "20/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 9 contatos observados com Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "21/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "22/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Mercúrio, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "23/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Mercúrio, Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "24/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 7 contatos observados com Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "25/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "26/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Marte, Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "27/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 10 contatos observados com Mercúrio, Vênus, Marte. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "28/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "29/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 11 contatos observados com Vênus, Mercúrio. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa.",
+          "30/11/2026 — quatro amostras às 00h, 06h, 12h e 18h UTC; 8 contatos observados com Vênus. Use o dia para registrar o que você escolheu e percebeu; a contagem não mede oportunidade amorosa."
         ],
         "evidenceIds": [
           "transit-sample-1",
@@ -15072,7 +15072,7 @@
           "instant": "2026-11-16T00:00:00.000Z",
           "contextClass": "new-meetings"
         },
-        "interpretation": "Lua em trânsito em sextil com Vênus natal, observado em 2026-11-16T00:00:00.000Z, com orbe de 0.005°. O conforto emocional pode se aproximar de gestos de afeto que você valoriza. A delicadeza de uma troca ganha sentido quando o prazer de estar junto inclui espaço para a sua necessidade, além de atender à do outro. O sextil descreve uma abertura que depende de participação: a conexão pode existir sem se transformar sozinha em escolha."
+        "interpretation": "Lua em trânsito em sextil com Vênus natal, observado em 16/11/2026 às 00h00 (UTC), com orbe de 0.005°. O conforto emocional pode se aproximar de gestos de afeto que você valoriza. A delicadeza de uma troca ganha sentido quando o prazer de estar junto inclui espaço para a sua necessidade, além de atender à do outro. O sextil descreve uma abertura que depende de participação: a conexão pode existir sem se transformar sozinha em escolha."
       },
       {
         "id": "claim-movement-2",
@@ -15090,7 +15090,7 @@
           "instant": "2026-11-07T00:00:00.000Z",
           "contextClass": "new-meetings"
         },
-        "interpretation": "Sol em trânsito em trígono com Marte natal, observado em 2026-11-07T00:00:00.000Z, com orbe de 0.075°. A direção escolhida e a iniciativa podem se apoiar: agir torna visível o que você quer construir. A disposição ganha propósito quando encontra uma tarefa em que sua participação faz diferença, sem depender de transformar cada passo em demonstração de força. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade."
+        "interpretation": "Sol em trânsito em trígono com Marte natal, observado em 07/11/2026 às 00h00 (UTC), com orbe de 0.075°. A direção escolhida e a iniciativa podem se apoiar: agir torna visível o que você quer construir. A disposição ganha propósito quando encontra uma tarefa em que sua participação faz diferença, sem depender de transformar cada passo em demonstração de força. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade."
       },
       {
         "id": "claim-movement-3",
@@ -15108,7 +15108,7 @@
           "instant": "2026-11-06T18:00:00.000Z",
           "contextClass": "new-meetings"
         },
-        "interpretation": "Mercúrio em trânsito em oposição com Mercúrio natal, observado em 2026-11-06T18:00:00.000Z, com orbe de 0.002°. Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação."
+        "interpretation": "Mercúrio em trânsito em oposição com Mercúrio natal, observado em 06/11/2026 às 18h00 (UTC), com orbe de 0.002°. Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação."
       },
       {
         "id": "claim-scenario-silence",
@@ -15202,7 +15202,7 @@
       "persistence": "server-must-load-persisted-facts-before-composition"
     }
   },
-  "readingDigest": "54f2d2f9d9c23ce7b177edae471f836113aef7b3b2d0389a1ef36b8c8bf5ca55",
+  "readingDigest": "aa654c1021e886d5708df031979e793911a6e6a29e226576147030d3f64bfee5",
   "review": {
     "version": "atv-launch-reading-review/1",
     "status": "APPROVED_FOR_PRIVATE_TEST",
@@ -15269,6 +15269,11 @@
         "detail": "120 amostras reais de seis horas; todos os contatos conferidos geometricamente contra o natal."
       },
       {
+        "id": "exact-utc-observation-period",
+        "passed": true,
+        "detail": "O intervalo exibido preserva o início e o fim exclusivo à meia-noite UTC."
+      },
+      {
         "id": "transit-semantic-dependency",
         "passed": true,
         "detail": "Trânsito, alvo natal, aspecto e momento precisam sustentar a hipótese correta; retirar um fator retira a conclusão."
@@ -15295,7 +15300,7 @@
       }
     ],
     "reasons": [],
-    "digest": "54f2d2f9d9c23ce7b177edae471f836113aef7b3b2d0389a1ef36b8c8bf5ca55",
+    "digest": "aa654c1021e886d5708df031979e793911a6e6a29e226576147030d3f64bfee5",
     "provenance": {
       "scope": "private-editorial-consistency",
       "calculation": "experimental-astrology",

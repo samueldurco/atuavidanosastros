@@ -1,6 +1,7 @@
 import { error, json } from '@sveltejs/kit';
 import { launchPreparation } from '$lib/server/launch-preparations';
-import { calculateLaunchFacts, canCalculateLaunchFacts } from '$lib/server/launch-calculation';
+import { isLaunchProductId } from '@atv/domain';
+import { runLaunchRuntime } from '$lib/server/launch-runtime';
 import { trialIdentity, trialJson, trialWriter } from '$lib/server/private-trials';
 import type { RequestHandler } from './$types';
 
@@ -9,17 +10,16 @@ export const POST: RequestHandler = async (event) => {
 	const saved = await launchPreparation(event.locals, event.params.id);
 	if (saved.status === 'FACTS_READY_AWAITING_REVIEW')
 		return json({ id: saved.id }, { headers: { 'cache-control': 'private, no-store' } });
-	if (!canCalculateLaunchFacts(saved.product_id))
+	if (!isLaunchProductId(saved.product_id))
 		error(409, 'O método deste produto ainda está em preparação.');
-	let evidence;
-	try {
-		evidence = await calculateLaunchFacts(saved.input, saved.id, event.request.signal);
-	} catch {
-		error(
-			422,
-			'Não foi possível concluir o cálculo. Os dados continuam salvos para uma nova tentativa.'
-		);
-	}
+	const calculated = await runLaunchRuntime(event, {
+		operation: 'launch-calculation',
+		input: saved.input,
+		executionId: saved.id
+	});
+	if (calculated.operation !== 'launch-calculation')
+		error(503, 'Não foi possível confirmar o cálculo.');
+	const evidence = calculated.calculation;
 	// Revalidate access after calculation; the write uses no caller-supplied owner or facts.
 	const identity = (await trialIdentity(event.locals))!;
 	const result = await trialWriter(event)

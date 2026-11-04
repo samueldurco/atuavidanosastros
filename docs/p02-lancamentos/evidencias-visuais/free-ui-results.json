@@ -1,0 +1,1103 @@
+{
+  "timestamp": "2026-11-04T11:55:14.620Z",
+  "complete": true,
+  "results": [
+    {
+      "id": "wedding-date-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "primary": "/testar-lancamentos/wedding-date-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito   Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ex-tarot",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "primary": "/testar-lancamentos/ex-tarot",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Tirar minha Carta do Dia grátis Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ex-tarot",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "love-restart-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "primary": "/testar-lancamentos/love-restart-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Explorar o horóscopo gratuito Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "love-restart-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "sexuality-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "primary": "/testar-lancamentos/sexuality-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "sexuality-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "intimacy-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "primary": "/testar-lancamentos/intimacy-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "intimacy-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "primary": "/testar-lancamentos/emotional-reactions-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "primary": "/testar-lancamentos/financial-blocks-tarot",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Tirar minha Carta do Dia grátis Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "primary": "/testar-lancamentos/hidden-talent-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ascendant-style",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "primary": "/testar-lancamentos/ascendant-style",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ascendant-style",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "conversation-timing",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "primary": "/testar-lancamentos/conversation-timing",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Explorar o horóscopo gratuito Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "conversation-timing",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 1440,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "primary": "/testar-lancamentos/cohabitation-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "view": "discovery",
+      "width": 1440,
+      "status": 200,
+      "overflow": false,
+      "cards": 11,
+      "trialLinks": [
+        {
+          "href": "/testar-lancamentos/wedding-date-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Data de Casamento gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/ex-tarot",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Tarot do Ex: Saudade e Arrependimento gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/love-restart-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa do Recomeço Amoroso gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/sexuality-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Sexualidade gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/intimacy-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Intimidade a Dois gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/emotional-reactions-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa das Reações Emocionais gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/financial-blocks-tarot",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Tarot dos Bloqueios Financeiros gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/hidden-talent-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa do Talento Oculto gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/ascendant-style",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Meu Estilo pelo Ascendente gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/conversation-timing",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar A Hora da Conversa — Horóscopo Amoroso gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/cohabitation-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Convivência a Dois gratuitamente"
+        }
+      ],
+      "badges": [
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível"
+      ]
+    },
+    {
+      "view": "home",
+      "width": 1440,
+      "trialLinks": [
+        {
+          "href": "/testar-lancamentos/wedding-date-map",
+          "text": "Testar gratuitamente ↗"
+        },
+        {
+          "href": "/testar-lancamentos/ex-tarot",
+          "text": "Testar gratuitamente ↗"
+        },
+        {
+          "href": "/testar-lancamentos/love-restart-map",
+          "text": "Testar gratuitamente ↗"
+        }
+      ],
+      "hydrationWaitMs": 1500,
+      "keyboard": "Enter",
+      "wraps": true
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "primary": "/testar-lancamentos/wedding-date-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito   Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ex-tarot",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "primary": "/testar-lancamentos/ex-tarot",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Tirar minha Carta do Dia grátis Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ex-tarot",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "love-restart-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "primary": "/testar-lancamentos/love-restart-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Explorar o horóscopo gratuito Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "love-restart-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "sexuality-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "primary": "/testar-lancamentos/sexuality-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "sexuality-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "intimacy-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "primary": "/testar-lancamentos/intimacy-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "intimacy-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "primary": "/testar-lancamentos/emotional-reactions-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "primary": "/testar-lancamentos/financial-blocks-tarot",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Tirar minha Carta do Dia grátis Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "primary": "/testar-lancamentos/hidden-talent-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ascendant-style",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "primary": "/testar-lancamentos/ascendant-style",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "ascendant-style",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "conversation-timing",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "primary": "/testar-lancamentos/conversation-timing",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Explorar o horóscopo gratuito Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "conversation-timing",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 390,
+      "view": "public",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "primary": "/testar-lancamentos/cohabitation-map",
+      "freeCtas": [
+        "Testar gratuitamente ↗",
+        "Abrir teste gratuito"
+      ],
+      "availability": "Teste gratuito disponível Entre na sua conta para conferir seu acesso e gerar esta leitura gratuitamente. Abrir teste gratuito  Comece gratuitamente Conheça um resultado relacionado a esta leitura antes de criar sua conta. Ver o preview gratuito do mapa Ver minhas leituras · Como fazemos as leituras",
+      "formSubmit": null,
+      "unlabeled": [],
+      "consentRequired": null,
+      "purchaseCtas": []
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "primary": null,
+      "freeCtas": [],
+      "availability": null,
+      "formSubmit": "Salvar e continuar",
+      "unlabeled": [],
+      "consentRequired": true,
+      "purchaseCtas": []
+    },
+    {
+      "view": "discovery",
+      "width": 390,
+      "status": 200,
+      "overflow": false,
+      "cards": 11,
+      "trialLinks": [
+        {
+          "href": "/testar-lancamentos/wedding-date-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Data de Casamento gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/ex-tarot",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Tarot do Ex: Saudade e Arrependimento gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/love-restart-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa do Recomeço Amoroso gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/sexuality-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Sexualidade gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/intimacy-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Intimidade a Dois gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/emotional-reactions-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa das Reações Emocionais gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/financial-blocks-tarot",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Tarot dos Bloqueios Financeiros gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/hidden-talent-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa do Talento Oculto gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/ascendant-style",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Meu Estilo pelo Ascendente gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/conversation-timing",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar A Hora da Conversa — Horóscopo Amoroso gratuitamente"
+        },
+        {
+          "href": "/testar-lancamentos/cohabitation-map",
+          "text": "Testar gratuitamente ↗",
+          "label": "Testar Mapa da Convivência a Dois gratuitamente"
+        }
+      ],
+      "badges": [
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível",
+        "Teste gratuito disponível"
+      ]
+    },
+    {
+      "view": "home",
+      "width": 390,
+      "trialLinks": [
+        {
+          "href": "/testar-lancamentos/wedding-date-map",
+          "text": "Testar gratuitamente ↗"
+        },
+        {
+          "href": "/testar-lancamentos/ex-tarot",
+          "text": "Testar gratuitamente ↗"
+        },
+        {
+          "href": "/testar-lancamentos/love-restart-map",
+          "text": "Testar gratuitamente ↗"
+        }
+      ],
+      "hydrationWaitMs": 1500,
+      "keyboard": "Enter",
+      "wraps": true
+    }
+  ],
+  "unauthenticated": [
+    {
+      "id": "wedding-date-map",
+      "status": 303,
+      "location": "/entrar?next=%2Ftestar-lancamentos%2Fwedding-date-map"
+    },
+    {
+      "id": "cohabitation-map",
+      "status": 303,
+      "location": "/entrar?next=%2Ftestar-lancamentos%2Fcohabitation-map"
+    }
+  ],
+  "club": {
+    "status": 200,
+    "links": [
+      "/testar-produtos/week-reading",
+      "/testar-produtos/personal-calendar",
+      "/testar-produtos/dream-atlas",
+      "/testar-lancamentos/emotional-reactions-map",
+      "/testar-lancamentos/ascendant-style",
+      "/testar-produtos/birth-chart",
+      "/testar-produtos/three-pillars",
+      "/testar-produtos/life-atlas",
+      "/testar-produtos/date-reading",
+      "/testar-produtos/solar-return",
+      "/testar-lancamentos/wedding-date-map",
+      "/testar-lancamentos/love-restart-map",
+      "/testar-lancamentos/sexuality-map",
+      "/testar-lancamentos/intimacy-map",
+      "/testar-lancamentos/conversation-timing",
+      "/testar-lancamentos/cohabitation-map",
+      "/testar-produtos/synastry",
+      "/testar-produtos/couple-dossier",
+      "/testar-lancamentos/ex-tarot",
+      "/testar-lancamentos/financial-blocks-tarot",
+      "/testar-produtos/tarot-situation-challenge-advice",
+      "/testar-produtos/tarot-peladan-cross",
+      "/testar-produtos/tarot-celtic-cross",
+      "/testar-produtos/tarot-aphrodite-temple",
+      "/testar-produtos/tarot-astrological-mandala",
+      "/testar-lancamentos/hidden-talent-map",
+      "/testar-produtos/purpose-career",
+      "/testar-produtos/career-forecast-30d",
+      "/testar-produtos/dream-reading",
+      "/testar-produtos/dream-dossier",
+      "/testar-produtos/atv-plus",
+      "/testar-produtos/leituras/00000000-0000-4000-8000-000000000031",
+      "/testar-produtos/career-compass?from=00000000-0000-4000-8000-000000000031"
+    ],
+    "old": 22,
+    "launch": 11,
+    "productLinks": [
+      "/testar-produtos/week-reading",
+      "/testar-produtos/personal-calendar",
+      "/testar-produtos/dream-atlas",
+      "/testar-lancamentos/emotional-reactions-map",
+      "/testar-lancamentos/ascendant-style",
+      "/testar-produtos/birth-chart",
+      "/testar-produtos/three-pillars",
+      "/testar-produtos/life-atlas",
+      "/testar-produtos/date-reading",
+      "/testar-produtos/solar-return",
+      "/testar-lancamentos/wedding-date-map",
+      "/testar-lancamentos/love-restart-map",
+      "/testar-lancamentos/sexuality-map",
+      "/testar-lancamentos/intimacy-map",
+      "/testar-lancamentos/conversation-timing",
+      "/testar-lancamentos/cohabitation-map",
+      "/testar-produtos/synastry",
+      "/testar-produtos/couple-dossier",
+      "/testar-lancamentos/ex-tarot",
+      "/testar-lancamentos/financial-blocks-tarot",
+      "/testar-produtos/tarot-situation-challenge-advice",
+      "/testar-produtos/tarot-peladan-cross",
+      "/testar-produtos/tarot-celtic-cross",
+      "/testar-produtos/tarot-aphrodite-temple",
+      "/testar-produtos/tarot-astrological-mandala",
+      "/testar-lancamentos/hidden-talent-map",
+      "/testar-produtos/purpose-career",
+      "/testar-produtos/career-forecast-30d",
+      "/testar-produtos/dream-reading",
+      "/testar-produtos/dream-dossier"
+    ],
+    "productCount": 30,
+    "productOld": 19,
+    "productLaunch": 11
+  }
+}

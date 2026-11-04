@@ -328,8 +328,8 @@ export function productDefinitionFor(
   );
 }
 
-/** The approved public offer, independent of publication and private evaluation rights. */
-export const offeredProductIds = [
+/** Offers implemented by the original WorkflowInput/private-reading engine. */
+export const workflowOfferProductIds = [
   "birth-chart",
   "three-pillars",
   "life-atlas",
@@ -349,8 +349,20 @@ export const offeredProductIds = [
   "dream-reading",
   "dream-dossier",
   "dream-atlas",
+] as const;
+
+/** Public catalogue membership does not grant billing, subscription or reading rights. */
+export const offeredProductIds = [
+  ...workflowOfferProductIds,
   ...launchProductIds,
 ] as const;
+
+/** Navigation only: each destination independently verifies identity and private access. */
+export function productTrialHref(productId: string): string {
+  return launchProductIds.some((id) => id === productId)
+    ? `/testar-lancamentos/${productId}`
+    : `/testar-produtos/${productId}`;
+}
 
 export type OfferedProductId = (typeof offeredProductIds)[number];
 
