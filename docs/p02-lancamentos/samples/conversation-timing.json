@@ -1,0 +1,4697 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:54:02.640Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "scope": "Synthetic input and real local calculation/composition/review. File snapshot only; no persisted owner delivery, access grant, human E5 acceptance or commercial release.",
+  "measurement": {
+    "productId": "conversation-timing",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "reasons": [],
+    "durationMs": {
+      "factual": 472.6108000000004,
+      "composition": 79.95319999999992,
+      "review": 34.939800000000105,
+      "total": 587.5038000000004
+    },
+    "jsonBytes": {
+      "input": 613,
+      "calculation": 79195,
+      "reading": 23858,
+      "review": 2589
+    }
+  },
+  "input": {
+    "version": "atv-launch-input/1",
+    "consent": {
+      "storage": true,
+      "policyVersion": "atv-launch-consent/1"
+    },
+    "productId": "conversation-timing",
+    "birth": {
+      "localDateTime": "1990-05-10T10:30:00",
+      "utcInstant": "1990-05-10T13:30:00Z",
+      "timezone": "America/Sao_Paulo",
+      "latitude": -23.55,
+      "longitude": -46.63,
+      "locationSource": "synthetic/local-example"
+    },
+    "answers": {
+      "startDate": "2026-11-01",
+      "subject": "A divisão de uma tarefa que está sobrecarregando minha semana.",
+      "objective": "Combinar uma responsabilidade que cada pessoa aceite assumir.",
+      "constraints": "Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite."
+    }
+  },
+  "calculation": {
+    "version": "atv-launch-calculation/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000010",
+    "productId": "conversation-timing",
+    "inputDigest": "40f2af62deb3ebd2c010c7c517b3a8c9c00e7b5ef4c3a49aa930ee56a1bff637",
+    "state": "FACTS_READY_AWAITING_REVIEW",
+    "facts": [
+      {
+        "id": "reported-birth",
+        "kind": "reported",
+        "display": "{\"latitude\":-23.55,\"localDateTime\":\"1990-05-10T10:30:00\",\"locationSource\":\"synthetic/local-example\",\"longitude\":-46.63,\"timezone\":\"America/Sao_Paulo\",\"utcInstant\":\"1990-05-10T13:30:00Z\"}",
+        "source": "input.birth"
+      },
+      {
+        "id": "reported-startDate-1",
+        "kind": "reported",
+        "display": "2026-11-01",
+        "source": "input.answers.startDate"
+      },
+      {
+        "id": "reported-subject-1",
+        "kind": "reported",
+        "display": "A divisão de uma tarefa que está sobrecarregando minha semana.",
+        "source": "input.answers.subject"
+      },
+      {
+        "id": "reported-objective-1",
+        "kind": "reported",
+        "display": "Combinar uma responsabilidade que cada pessoa aceite assumir.",
+        "source": "input.answers.objective"
+      },
+      {
+        "id": "reported-constraints-1",
+        "kind": "reported",
+        "display": "Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.",
+        "source": "input.answers.constraints"
+      },
+      {
+        "id": "natal-sun",
+        "kind": "calculated",
+        "display": "sun: longitude tropical 49.630765°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-moon",
+        "kind": "calculated",
+        "display": "moon: longitude tropical 237.806257°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-mercury",
+        "kind": "calculated",
+        "display": "mercury: longitude tropical 39.469676°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-venus",
+        "kind": "calculated",
+        "display": "venus: longitude tropical 7.207105°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-mars",
+        "kind": "calculated",
+        "display": "mars: longitude tropical 344.662356°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-jupiter",
+        "kind": "calculated",
+        "display": "jupiter: longitude tropical 98.623276°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-saturn",
+        "kind": "calculated",
+        "display": "saturn: longitude tropical 295.313503°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-uranus",
+        "kind": "calculated",
+        "display": "uranus: longitude tropical 279.297119°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-neptune",
+        "kind": "calculated",
+        "display": "neptune: longitude tropical 284.420117°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-pluto",
+        "kind": "calculated",
+        "display": "pluto: longitude tropical 226.305101°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "natal-ascendant",
+        "kind": "calculated",
+        "display": "Ascendente: longitude tropical 102.295941°",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1"
+      },
+      {
+        "id": "transit-sample-1",
+        "kind": "calculated",
+        "display": "2026-11-01T00:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-1"
+      },
+      {
+        "id": "transit-sample-2",
+        "kind": "calculated",
+        "display": "2026-11-01T06:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-2"
+      },
+      {
+        "id": "transit-sample-3",
+        "kind": "calculated",
+        "display": "2026-11-01T12:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-3"
+      },
+      {
+        "id": "transit-sample-4",
+        "kind": "calculated",
+        "display": "2026-11-01T18:00:00.000Z: 12 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-4"
+      },
+      {
+        "id": "transit-sample-5",
+        "kind": "calculated",
+        "display": "2026-11-02T00:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-5"
+      },
+      {
+        "id": "transit-sample-6",
+        "kind": "calculated",
+        "display": "2026-11-02T06:00:00.000Z: 11 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-6"
+      },
+      {
+        "id": "transit-sample-7",
+        "kind": "calculated",
+        "display": "2026-11-02T12:00:00.000Z: 12 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-7"
+      },
+      {
+        "id": "transit-sample-8",
+        "kind": "calculated",
+        "display": "2026-11-02T18:00:00.000Z: 11 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-8"
+      },
+      {
+        "id": "transit-sample-9",
+        "kind": "calculated",
+        "display": "2026-11-03T00:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-9"
+      },
+      {
+        "id": "transit-sample-10",
+        "kind": "calculated",
+        "display": "2026-11-03T06:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-10"
+      },
+      {
+        "id": "transit-sample-11",
+        "kind": "calculated",
+        "display": "2026-11-03T12:00:00.000Z: 9 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-11"
+      },
+      {
+        "id": "transit-sample-12",
+        "kind": "calculated",
+        "display": "2026-11-03T18:00:00.000Z: 8 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-12"
+      },
+      {
+        "id": "transit-sample-13",
+        "kind": "calculated",
+        "display": "2026-11-04T00:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-13"
+      },
+      {
+        "id": "transit-sample-14",
+        "kind": "calculated",
+        "display": "2026-11-04T06:00:00.000Z: 6 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-14"
+      },
+      {
+        "id": "transit-sample-15",
+        "kind": "calculated",
+        "display": "2026-11-04T12:00:00.000Z: 8 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-15"
+      },
+      {
+        "id": "transit-sample-16",
+        "kind": "calculated",
+        "display": "2026-11-04T18:00:00.000Z: 6 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-16"
+      },
+      {
+        "id": "transit-sample-17",
+        "kind": "calculated",
+        "display": "2026-11-05T00:00:00.000Z: 6 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-17"
+      },
+      {
+        "id": "transit-sample-18",
+        "kind": "calculated",
+        "display": "2026-11-05T06:00:00.000Z: 9 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-18"
+      },
+      {
+        "id": "transit-sample-19",
+        "kind": "calculated",
+        "display": "2026-11-05T12:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-19"
+      },
+      {
+        "id": "transit-sample-20",
+        "kind": "calculated",
+        "display": "2026-11-05T18:00:00.000Z: 9 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-20"
+      },
+      {
+        "id": "transit-sample-21",
+        "kind": "calculated",
+        "display": "2026-11-06T00:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-21"
+      },
+      {
+        "id": "transit-sample-22",
+        "kind": "calculated",
+        "display": "2026-11-06T06:00:00.000Z: 13 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-22"
+      },
+      {
+        "id": "transit-sample-23",
+        "kind": "calculated",
+        "display": "2026-11-06T12:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-23"
+      },
+      {
+        "id": "transit-sample-24",
+        "kind": "calculated",
+        "display": "2026-11-06T18:00:00.000Z: 12 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-24"
+      },
+      {
+        "id": "transit-sample-25",
+        "kind": "calculated",
+        "display": "2026-11-07T00:00:00.000Z: 11 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-25"
+      },
+      {
+        "id": "transit-sample-26",
+        "kind": "calculated",
+        "display": "2026-11-07T06:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-26"
+      },
+      {
+        "id": "transit-sample-27",
+        "kind": "calculated",
+        "display": "2026-11-07T12:00:00.000Z: 11 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-27"
+      },
+      {
+        "id": "transit-sample-28",
+        "kind": "calculated",
+        "display": "2026-11-07T18:00:00.000Z: 10 contatos geométricos observados; política atv-launch-seven-day-observed-major-aspects/1.0.0",
+        "source": "caelus@0.24.1;atv-caelus-adapter-v3;atv-launch-calculation/1;atv-launch-seven-day-six-hour-samples/1.0.0;atv-cross-major-aspects/1;data.observations.transit-sample-28"
+      }
+    ],
+    "data": {
+      "method": "atv-launch-conversation-seven-day-transit-observations/1.0.0",
+      "natal": {
+        "input": {
+          "localDateTime": "1990-05-10T10:30:00",
+          "utcInstant": "1990-05-10T13:30:00Z",
+          "timezone": "America/Sao_Paulo",
+          "latitude": -23.55,
+          "longitude": -46.63,
+          "locationSource": "synthetic/local-example"
+        },
+        "positions": [
+          {
+            "body": "sun",
+            "longitude": 49.630765489505,
+            "latitude": -0.00012413843431320973,
+            "distanceAu": 1.0097848031952548,
+            "retrograde": false
+          },
+          {
+            "body": "moon",
+            "longitude": 237.8062568542146,
+            "latitude": -4.780080153647267,
+            "distanceAu": 0.002716142274168556,
+            "retrograde": false
+          },
+          {
+            "body": "mercury",
+            "longitude": 39.46967553343799,
+            "latitude": -1.3799830662189247,
+            "distanceAu": 0.5674396458007673,
+            "retrograde": true
+          },
+          {
+            "body": "venus",
+            "longitude": 7.2071048674221485,
+            "latitude": -1.6258448244581947,
+            "distanceAu": 1.0012574043185287,
+            "retrograde": false
+          },
+          {
+            "body": "mars",
+            "longitude": 344.6623560415294,
+            "latitude": -1.67720872393271,
+            "distanceAu": 1.4860608825082937,
+            "retrograde": false
+          },
+          {
+            "body": "jupiter",
+            "longitude": 98.62327624297204,
+            "latitude": 0.13566385836016723,
+            "distanceAu": 5.8037664917108716,
+            "retrograde": false
+          },
+          {
+            "body": "saturn",
+            "longitude": 295.3135027258837,
+            "latitude": 0.1607030417484806,
+            "distanceAu": 9.559133099774483,
+            "retrograde": true
+          },
+          {
+            "body": "uranus",
+            "longitude": 279.2971192221684,
+            "latitude": -0.31293871077310864,
+            "distanceAu": 18.73563526420331,
+            "retrograde": true
+          },
+          {
+            "body": "neptune",
+            "longitude": 284.42011654569893,
+            "latitude": 0.871239761390012,
+            "distanceAu": 29.61626878865766,
+            "retrograde": true
+          },
+          {
+            "body": "pluto",
+            "longitude": 226.305100605131,
+            "latitude": 16.000063364231448,
+            "distanceAu": 28.687932876024348,
+            "retrograde": true
+          }
+        ],
+        "houses": {
+          "system": "placidus",
+          "ascendant": 102.2959408454617,
+          "midheaven": 25.843624131358354,
+          "cusps": [
+            102.2959408454617,
+            136.78009641808518,
+            172.97985011902506,
+            205.8436241313583,
+            233.52530577364917,
+            257.93755608311426,
+            282.2959408454617,
+            316.7800964180851,
+            352.97985011902506,
+            25.843624131358354,
+            53.525305773649166,
+            77.93755608311432
+          ],
+          "status": "ok"
+        },
+        "provenance": {
+          "provider": "caelus",
+          "providerVersion": "0.24.1",
+          "algorithmVersion": "atv-caelus-adapter-v3",
+          "zodiac": "tropical",
+          "houseSystem": "placidus",
+          "calculatedAt": "2026-11-04T11:54:02.949Z",
+          "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+          "dataManifest": {
+            "provider": "caelus",
+            "version": "0.24.1",
+            "tier": "embedded",
+            "files": [
+              {
+                "path": "src/data-embedded.js",
+                "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+              },
+              {
+                "path": "data/vsop87d_mercury.embedded.json",
+                "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+              },
+              {
+                "path": "data/vsop87d_venus.embedded.json",
+                "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+              },
+              {
+                "path": "data/vsop87d_earth.embedded.json",
+                "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+              },
+              {
+                "path": "data/vsop87d_mars.embedded.json",
+                "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+              },
+              {
+                "path": "data/vsop87d_jupiter.embedded.json",
+                "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+              },
+              {
+                "path": "data/vsop87d_saturn.embedded.json",
+                "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+              },
+              {
+                "path": "data/vsop87d_uranus.embedded.json",
+                "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+              },
+              {
+                "path": "data/vsop87d_neptune.embedded.json",
+                "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+              },
+              {
+                "path": "data/nutation_iau1980.json",
+                "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+              },
+              {
+                "path": "data/moon_meeus47.json",
+                "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+              },
+              {
+                "path": "data/pluto_meeus37.json",
+                "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+              },
+              {
+                "path": "data/chiron_cheb.json",
+                "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+              },
+              {
+                "path": "data/fixed_stars.json",
+                "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+              },
+              {
+                "path": "data/constellations.json",
+                "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+              }
+            ]
+          },
+          "contract": {
+            "version": "atv-deterministic-contract/1",
+            "minUtcInstant": "1900-01-01T00:00:00.000Z",
+            "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+            "calendar": "proleptic-gregorian",
+            "inputResolutionMilliseconds": 1,
+            "leapSecondInput": "rejected",
+            "placidusAbsoluteLatitudeExclusive": 66,
+            "accuracy": "experimental-sampled",
+            "guaranteedLongitudeErrorDegrees": null,
+            "retrogradeStationTiming": "not-certified",
+            "productionPromotion": false
+          },
+          "temporal": {
+            "utcInstant": "1990-05-10T13:30:00.000Z",
+            "julianDayUt1Approx": 2448022.0625,
+            "dut1Seconds": null,
+            "timezoneMode": "iana",
+            "timezoneRules": "runtime-intl/unpinned",
+            "offsetSeconds": -10800,
+            "inputScale": "UTC",
+            "engineScale": "UT1-approximated-by-UTC",
+            "deltaTSeconds": 57.176683778234114
+          },
+          "accuracyStatus": "experimental",
+          "warnings": [
+            "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+            "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+            "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+            "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado."
+          ]
+        }
+      },
+      "period": {
+        "startDate": "2026-11-01",
+        "endDateExclusive": "2026-11-08",
+        "timezone": "UTC",
+        "stepHours": 6,
+        "sampleCount": 28
+      },
+      "samplesVersion": "atv-launch-seven-day-six-hour-samples/1.0.0",
+      "sampleProvenance": {
+        "provider": "caelus",
+        "providerVersion": "0.24.1",
+        "algorithmVersion": "atv-caelus-adapter-v3",
+        "zodiac": "tropical",
+        "houseSystem": "placidus",
+        "calculatedAt": "2026-11-04T11:54:02.975Z",
+        "referenceFrame": "geocentric-apparent-ecliptic-of-date",
+        "dataManifest": {
+          "provider": "caelus",
+          "version": "0.24.1",
+          "tier": "embedded",
+          "files": [
+            {
+              "path": "src/data-embedded.js",
+              "sha256": "2cabbee3e21e51a1722fc8662b3105f0fc5ad26484cdaf5bf0a8c2c60b211c1a"
+            },
+            {
+              "path": "data/vsop87d_mercury.embedded.json",
+              "sha256": "eca8ccd3e334e51aa0c2b8b43aadf09bd17f6ebf383f954159fe2f04d95d260a"
+            },
+            {
+              "path": "data/vsop87d_venus.embedded.json",
+              "sha256": "e8bc860939ea28cb047065aaad03a4d4fae89f01fffd78f461e4fdebd1447299"
+            },
+            {
+              "path": "data/vsop87d_earth.embedded.json",
+              "sha256": "296c57d39e67ab5b35de89b69e5ac2f2281109d1de47c5191a7745d51e8d56f6"
+            },
+            {
+              "path": "data/vsop87d_mars.embedded.json",
+              "sha256": "47aef3f7b563a4ae152247953980a6ea7ef305c98fbbeb955015da24d16bf0fd"
+            },
+            {
+              "path": "data/vsop87d_jupiter.embedded.json",
+              "sha256": "3d4abdf5c4f6a411223b22a3416e4481472e78595006391a5489761c69c4a4cf"
+            },
+            {
+              "path": "data/vsop87d_saturn.embedded.json",
+              "sha256": "cc68f7ccdbb13e81965486a3b0447b55881d962b47380d80e665fa9dca842c23"
+            },
+            {
+              "path": "data/vsop87d_uranus.embedded.json",
+              "sha256": "cf955d7f10ae66f10509ff99a71e5da060fb8cefcddbe66bbfffa9e4491b4302"
+            },
+            {
+              "path": "data/vsop87d_neptune.embedded.json",
+              "sha256": "8f53de40d7c7fa87a9c1bd810bccfb9560048e1d81669c9c140351a055c438ef"
+            },
+            {
+              "path": "data/nutation_iau1980.json",
+              "sha256": "21fad237a99633bdf970b7f6d61532ce36cfa3eacb07d6c1b26044447f71e3c4"
+            },
+            {
+              "path": "data/moon_meeus47.json",
+              "sha256": "8fea64b0108b3dded97a3ce0c1cb9ca07d45ae29b548bd28a64d02319f5d1994"
+            },
+            {
+              "path": "data/pluto_meeus37.json",
+              "sha256": "6e8bde6dd08d5c1e4455988d7c1d720dcc4042a0c6a51be00ff66ce780583a47"
+            },
+            {
+              "path": "data/chiron_cheb.json",
+              "sha256": "c20eade9ddcb5afdd09705fe66e9d11c56cc5508936399a2bb70172a77aa0665"
+            },
+            {
+              "path": "data/fixed_stars.json",
+              "sha256": "7be3fff2e0e3d99bd53ed634b3fa4e6209d41c192b0de8d701a17d965087ec3b"
+            },
+            {
+              "path": "data/constellations.json",
+              "sha256": "8c05da85cbd8d7d5c8b9d5e6de1c3d5e6bfc2dbe6c8e4e221bf52c3ffebd0dc4"
+            }
+          ]
+        },
+        "contract": {
+          "version": "atv-deterministic-contract/1",
+          "minUtcInstant": "1900-01-01T00:00:00.000Z",
+          "maxUtcInstant": "2099-12-31T23:59:59.999Z",
+          "calendar": "proleptic-gregorian",
+          "inputResolutionMilliseconds": 1,
+          "leapSecondInput": "rejected",
+          "placidusAbsoluteLatitudeExclusive": 66,
+          "accuracy": "experimental-sampled",
+          "guaranteedLongitudeErrorDegrees": null,
+          "retrogradeStationTiming": "not-certified",
+          "productionPromotion": false
+        },
+        "temporal": {
+          "utcInstant": "2026-11-01T00:00:00.000Z",
+          "julianDayUt1Approx": 2461345.5,
+          "dut1Seconds": null,
+          "timezoneMode": "fixed-offset",
+          "timezoneRules": "explicit-offset/v1",
+          "offsetSeconds": 0,
+          "inputScale": "UTC",
+          "engineScale": "UT1-approximated-by-UTC",
+          "deltaTSeconds": 69.1374512468137
+        },
+        "accuracyStatus": "experimental",
+        "warnings": [
+          "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+          "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+          "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+          "Offset histórico fornecido pelo usuário; DST não é inferido."
+        ]
+      },
+      "policy": {
+        "id": "atv-launch-seven-day-observed-major-aspects",
+        "version": "1.0.0",
+        "aspects": [
+          {
+            "kind": "conjunction",
+            "orbDegrees": 2
+          },
+          {
+            "kind": "sextile",
+            "orbDegrees": 2
+          },
+          {
+            "kind": "square",
+            "orbDegrees": 2
+          },
+          {
+            "kind": "trine",
+            "orbDegrees": 2
+          },
+          {
+            "kind": "opposition",
+            "orbDegrees": 2
+          }
+        ]
+      },
+      "observations": [
+        {
+          "id": "transit-sample-1",
+          "instant": "2026-11-01T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 218.57689308011288
+            },
+            {
+              "body": "moon",
+              "longitude": 117.47080213883336
+            },
+            {
+              "body": "mercury",
+              "longitude": 226.66140866555415
+            },
+            {
+              "body": "venus",
+              "longitude": 206.24707355188568
+            },
+            {
+              "body": "mars",
+              "longitude": 138.6217038534251
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.32326246494958
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.286506775221936
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.6756329746155
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0844442407612176
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.12864621224463
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.1072175466749,
+              "orbDegrees": 0.8927824533251112
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.95361683714084,
+              "orbDegrees": 0.04638316285915778
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.72022614205554,
+              "orbDegrees": 0.7202261420555374
+            },
+            {
+              "transit": "moon",
+              "natal": "moon",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.33545471538125,
+              "orbDegrees": 0.33545471538124616
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 118.00094737597524,
+              "orbDegrees": 1.9990526240247561
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 0.3563080604231459,
+              "orbDegrees": 0.3563080604231459
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.06642917399805,
+              "orbDegrees": 0.9335708260019544
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 88.9909383639201,
+              "orbDegrees": 1.009061636079906
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.3367694677501,
+              "orbDegrees": 0.6632305322498979
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.98938755305352,
+              "orbDegrees": 0.010612446946481668
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-2",
+          "instant": "2026-11-01T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 218.82691171694367
+            },
+            {
+              "body": "moon",
+              "longitude": 120.99517684891349
+            },
+            {
+              "body": "mercury",
+              "longitude": 226.3813795300893
+            },
+            {
+              "body": "venus",
+              "longitude": 206.1239071586624
+            },
+            {
+              "body": "mars",
+              "longitude": 138.74752065832098
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.35358113952702
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.270808617382391
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.66653806031024
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.079221608242435
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.13055194266315
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.35723618350568,
+              "orbDegrees": 0.6427638164943232
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.20363547397163,
+              "orbDegrees": 0.20363547397163018
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.47020750522475,
+              "orbDegrees": 0.4702075052247494
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 118.28097651144009,
+              "orbDegrees": 1.7190234885599125
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.03873701560963,
+              "orbDegrees": 1.9612629843903733
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 0.07627892495830224,
+              "orbDegrees": 0.07627892495830224
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.18959556722132,
+              "orbDegrees": 0.8104044327786823
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.11675516881598,
+              "orbDegrees": 0.8832448311840153
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.35246762558965,
+              "orbDegrees": 0.6475323744103463
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.97368939521397,
+              "orbDegrees": 0.02631060478603331
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-3",
+          "instant": "2026-11-01T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 219.07696742191285
+            },
+            {
+              "body": "moon",
+              "longitude": 124.5032295466442
+            },
+            {
+              "body": "mercury",
+              "longitude": 226.0947027796408
+            },
+            {
+              "body": "venus",
+              "longitude": 206.0025756151077
+            },
+            {
+              "body": "mars",
+              "longitude": 138.87313313699931
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.3837534730161
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.255178091635518
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.65741455190997
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.074020656418993
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1324861300103
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.60729188847486,
+              "orbDegrees": 0.3927081115251383
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.45369117894082,
+              "orbDegrees": 0.4536911789408151
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.220151800255564,
+              "orbDegrees": 0.22015180025556447
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 118.56765326188858,
+              "orbDegrees": 1.4323467381114199
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.32541376605812,
+              "orbDegrees": 1.6745862339418807
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 0.21039782549019037,
+              "orbDegrees": 0.21039782549019037
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.31092711077602,
+              "orbDegrees": 0.6890728892239792
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.24236764749432,
+              "orbDegrees": 0.7576323525056807
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.36809815133653,
+              "orbDegrees": 0.6319018486634747
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.9580588694671,
+              "orbDegrees": 0.041941130532904936
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-4",
+          "instant": "2026-11-01T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 219.32706012887084
+            },
+            {
+              "body": "moon",
+              "longitude": 127.99493101984704
+            },
+            {
+              "body": "mercury",
+              "longitude": 225.80179231639343
+            },
+            {
+              "body": "venus",
+              "longitude": 205.88312084742412
+            },
+            {
+              "body": "mars",
+              "longitude": 138.99854010273387
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.41377888963757
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.239615713051766
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.64826264900043
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0688414956809784
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.13444873506705
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.85738459543285,
+              "orbDegrees": 0.14261540456715238
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.7037838858988,
+              "orbDegrees": 0.703783885898801
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.97005909329758,
+              "orbDegrees": 0.029940906702421444
+            },
+            {
+              "transit": "moon",
+              "natal": "mercury",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 88.52525548640905,
+              "orbDegrees": 1.4747445135909487
+            },
+            {
+              "transit": "moon",
+              "natal": "venus",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.7878261524249,
+              "orbDegrees": 0.7878261524248984
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 118.86056372513596,
+              "orbDegrees": 1.139436274864039
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.6183242293055,
+              "orbDegrees": 1.3816757706944998
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 0.5033082887375713,
+              "orbDegrees": 0.5033082887375713
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.4303818784596,
+              "orbDegrees": 0.569618121540401
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.36777461322887,
+              "orbDegrees": 0.6322253867711254
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.38366052992028,
+              "orbDegrees": 0.6163394700797227
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.94249649088334,
+              "orbDegrees": 0.057503509116656915
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-5",
+          "instant": "2026-11-02T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 219.57718977119947
+            },
+            {
+              "body": "moon",
+              "longitude": 131.47034133802518
+            },
+            {
+              "body": "mercury",
+              "longitude": 225.50308937195507
+            },
+            {
+              "body": "venus",
+              "longitude": 205.7655834787297
+            },
+            {
+              "body": "mars",
+              "longitude": 139.1237403789584
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.4436568314944
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.224122015689527
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.6390825723101
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.063684255521983
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1364397369206
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.89248576223852,
+              "orbDegrees": 0.10751423776147817
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.95391352822743,
+              "orbDegrees": 0.9539135282274316
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.71992945096895,
+              "orbDegrees": 0.280070549031052
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.15926666957432,
+              "orbDegrees": 0.8407333304256781
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.91702717374386,
+              "orbDegrees": 1.0829728262561389
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 0.8020112331759321,
+              "orbDegrees": 0.8020112331759321
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.54791924715403,
+              "orbDegrees": 0.4520807528459727
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.4929748894534,
+              "orbDegrees": 0.507025110546607
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.39915422728251,
+              "orbDegrees": 0.6008457727174914
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.92700279352113,
+              "orbDegrees": 0.07299720647887398
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-6",
+          "instant": "2026-11-02T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 219.82735627753524
+            },
+            {
+              "body": "moon",
+              "longitude": 134.9295976440159
+            },
+            {
+              "body": "mercury",
+              "longitude": 225.19906177306086
+            },
+            {
+              "body": "venus",
+              "longitude": 205.65000282235738
+            },
+            {
+              "body": "mars",
+              "longitude": 139.24873279682953
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.47338675765232
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.208697551715996
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.62987456294792
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.058549083810482
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.13845913210065
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.64231925590275,
+              "orbDegrees": 0.3576807440972516
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.2040800345632,
+              "orbDegrees": 1.204080034563205
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.469762944633175,
+              "orbDegrees": 0.5302370553668254
+            },
+            {
+              "transit": "moon",
+              "natal": "pluto",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.3755029611151,
+              "orbDegrees": 1.375502961115103
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.46329426846853,
+              "orbDegrees": 0.5367057315314696
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.22105477263807,
+              "orbDegrees": 0.7789452273619304
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.1060388320701406,
+              "orbDegrees": 1.1060388320701406
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.66349990352634,
+              "orbDegrees": 0.33650009647365664
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.61796730732453,
+              "orbDegrees": 0.382032692675466
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.41457869125604,
+              "orbDegrees": 0.5854213087439604
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.91157832954758,
+              "orbDegrees": 0.08842167045241922
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-7",
+          "instant": "2026-11-02T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 220.07755957480114
+            },
+            {
+              "body": "moon",
+              "longitude": 138.37290203991043
+            },
+            {
+              "body": "mercury",
+              "longitude": 224.8902029760484
+            },
+            {
+              "body": "venus",
+              "longitude": 205.53641687553574
+            },
+            {
+              "body": "mars",
+              "longitude": 139.37351619852413
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.50296814392894
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.193342890080846
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.62063888133184
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0534361455707173
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.14050693350464
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.39211595863685,
+              "orbDegrees": 0.6078840413631497
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.4542833318291,
+              "orbDegrees": 1.454283331829103
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.21955964736728,
+              "orbDegrees": 0.7804403526327235
+            },
+            {
+              "transit": "moon",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 88.74213655040543,
+              "orbDegrees": 1.2578634495945664
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.77215306548098,
+              "orbDegrees": 0.22784693451902172
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.52991356965052,
+              "orbDegrees": 0.4700864303494825
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.4148976290825885,
+              "orbDegrees": 1.4148976290825885
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.77708585034799,
+              "orbDegrees": 0.22291414965201284
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.74275070901913,
+              "orbDegrees": 0.2572492909808659
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.9862380226586973,
+              "orbDegrees": 1.9862380226586973
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.4299333528912,
+              "orbDegrees": 0.5700666471088027
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.89622366791241,
+              "orbDegrees": 0.10377633208759107
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-8",
+          "instant": "2026-11-02T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 220.3277995836389
+            },
+            {
+              "body": "moon",
+              "longitude": 141.80050960385563
+            },
+            {
+              "body": "mercury",
+              "longitude": 224.5770308927528
+            },
+            {
+              "body": "venus",
+              "longitude": 205.42486231714307
+            },
+            {
+              "body": "mars",
+              "longitude": 139.49808943402843
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.53240048151335
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.178058615215258
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.61137580600986
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0483456217590934
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1425831690187
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.1418759497991,
+              "orbDegrees": 0.8581240502008995
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.70452334066685,
+              "orbDegrees": 1.704523340666853
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.96931963852953,
+              "orbDegrees": 1.0306803614704734
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.0853251487766,
+              "orbDegrees": 0.08532514877660446
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.843085652946144,
+              "orbDegrees": 0.15691434705385632
+            },
+            {
+              "transit": "mercury",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7280697123782147,
+              "orbDegrees": 1.7280697123782147
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.88864040874066,
+              "orbDegrees": 0.11135959125934392
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.86732394452343,
+              "orbDegrees": 0.13267605547656558
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.9709537477931098,
+              "orbDegrees": 1.9709537477931098
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.44521762775678,
+              "orbDegrees": 0.5547823722432241
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.88093939304684,
+              "orbDegrees": 0.11906060695315546
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-9",
+          "instant": "2026-11-03T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 220.57807622126504
+            },
+            {
+              "body": "moon",
+              "longitude": 145.21271695249018
+            },
+            {
+              "body": "mercury",
+              "longitude": 224.26008648824433
+            },
+            {
+              "body": "venus",
+              "longitude": 205.31537450589138
+            },
+            {
+              "body": "mars",
+              "longitude": 139.62245136355008
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.5616832763594
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.162845325116365
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.60208563207296
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.043277707615715
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1446878800591
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.89159931217296,
+              "orbDegrees": 1.108400687827043
+            },
+            {
+              "transit": "sun",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.954799978293,
+              "orbDegrees": 1.9547999782929963
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.71904300090338,
+              "orbDegrees": 1.2809569990966168
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.40226955328507,
+              "orbDegrees": 0.4022695532850662
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.160030057454605,
+              "orbDegrees": 0.1600300574546054
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.99812821999234,
+              "orbDegrees": 0.0018717800076615276
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.99168587404509,
+              "orbDegrees": 0.008314125954910878
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.9557404576942163,
+              "orbDegrees": 1.9557404576942163
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.46043091785567,
+              "orbDegrees": 0.5395690821443253
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.86572610294797,
+              "orbDegrees": 0.13427389705202586
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-10",
+          "instant": "2026-11-03T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 220.82838939681824
+            },
+            {
+              "body": "moon",
+              "longitude": 148.60985131498987
+            },
+            {
+              "body": "mercury",
+              "longitude": 223.93993217257696
+            },
+            {
+              "body": "venus",
+              "longitude": 205.20798748257636
+            },
+            {
+              "body": "mars",
+              "longitude": 139.74660085422107
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.59081604739617
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.147703629857238
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.59276866968045
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0382326111654456
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.14682111991596
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.64128613661975,
+              "orbDegrees": 1.3587138633802454
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.46872982535018,
+              "orbDegrees": 1.5312701746498192
+            },
+            {
+              "transit": "moon",
+              "natal": "moon",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.19640553922474,
+              "orbDegrees": 0.8035944607752583
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.72242386895243,
+              "orbDegrees": 0.7224238689524327
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.48018437312197,
+              "orbDegrees": 0.48018437312197193
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.10551524330737,
+              "orbDegrees": 0.10551524330736584
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.11583536471608,
+              "orbDegrees": 0.11583536471607658
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.9405987624350898,
+              "orbDegrees": 1.9405987624350898
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.4755726131148,
+              "orbDegrees": 0.5244273868851934
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.85058440768881,
+              "orbDegrees": 0.14941559231118617
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-11",
+          "instant": "2026-11-03T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 221.07873901422928
+            },
+            {
+              "body": "moon",
+              "longitude": 151.99226045819194
+            },
+            {
+              "body": "mercury",
+              "longitude": 223.61714997123687
+            },
+            {
+              "body": "venus",
+              "longitude": 205.10273397123052
+            },
+            {
+              "body": "mars",
+              "longitude": 139.87053678225269
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.61979832578572
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.132634149457822
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.58342524234592
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.033210551389534
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1489829521113
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.3909365192087,
+              "orbDegrees": 1.609063480791292
+            },
+            {
+              "transit": "sun",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.218380207939134,
+              "orbDegrees": 1.7816197920608658
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.04520607029252,
+              "orbDegrees": 1.0452060702925223
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.80296657446206,
+              "orbDegrees": 0.8029665744620615
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.2107687546532,
+              "orbDegrees": 0.210768754653202
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.23977129274769,
+              "orbDegrees": 0.23977129274769027
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.925529282035673,
+              "orbDegrees": 1.925529282035673
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.49064209351423,
+              "orbDegrees": 0.509357906485775
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.83551492728941,
+              "orbDegrees": 0.16448507271059043
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-12",
+          "instant": "2026-11-03T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 221.32912496767344
+            },
+            {
+              "body": "moon",
+              "longitude": 155.3603033583583
+            },
+            {
+              "body": "mercury",
+              "longitude": 223.2923395107392
+            },
+            {
+              "body": "venus",
+              "longitude": 204.9996453851303
+            },
+            {
+              "body": "mars",
+              "longitude": 139.99425802948804
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.64862965298792
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.117637512261048
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.57405568537888
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.02821175663605
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1511734486794
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.14055056576456,
+              "orbDegrees": 1.8594494342354437
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.3700165307902,
+              "orbDegrees": 1.3700165307901955
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.127777034959735,
+              "orbDegrees": 1.1277770349597347
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.31385734075343,
+              "orbDegrees": 0.3138573407534295
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.36349253998304,
+              "orbDegrees": 0.3634925399830422
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.9105326448388995,
+              "orbDegrees": 1.9105326448388995
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.50563873071098,
+              "orbDegrees": 0.4943612692890156
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.82051829009265,
+              "orbDegrees": 0.1794817099073498
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-13",
+          "instant": "2026-11-04T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 221.57954714456645
+            },
+            {
+              "body": "moon",
+              "longitude": 158.71434188933313
+            },
+            {
+              "body": "mercury",
+              "longitude": 222.96611580662164
+            },
+            {
+              "body": "venus",
+              "longitude": 204.89875183241682
+            },
+            {
+              "body": "mars",
+              "longitude": 140.11776348499765
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.6773095801266
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.102714352874763
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.56466034400326
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0232364627735246
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1533926885214
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "moon",
+              "natal": "mercury",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.24466635589513,
+              "orbDegrees": 0.7553336441048657
+            },
+            {
+              "transit": "moon",
+              "natal": "jupiter",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.09106564636109,
+              "orbDegrees": 0.09106564636108772
+            },
+            {
+              "transit": "moon",
+              "natal": "uranus",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.58277733283529,
+              "orbDegrees": 0.5827773328352919
+            },
+            {
+              "transit": "mercury",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.69624023490775,
+              "orbDegrees": 1.696240234907748
+            },
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.45400073907729,
+              "orbDegrees": 1.454000739077287
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.4147508934669,
+              "orbDegrees": 0.41475089346690197
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.48699799549266,
+              "orbDegrees": 0.48699799549265776
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.8956094854526144,
+              "orbDegrees": 1.8956094854526144
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.52056189009727,
+              "orbDegrees": 0.4794381099027305
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.80559513070637,
+              "orbDegrees": 0.19440486929363487
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-14",
+          "instant": "2026-11-04T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 221.83000542118205
+            },
+            {
+              "body": "moon",
+              "longitude": 162.05473336536983
+            },
+            {
+              "body": "mercury",
+              "longitude": 222.63910689572316
+            },
+            {
+              "body": "venus",
+              "longitude": 204.800082125646
+            },
+            {
+              "body": "mars",
+              "longitude": 140.24105204292746
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.70583766592245
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.087865310502487
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.5552395719345
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0182849116706283
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.15564075572667
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "mercury",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.78100964997577,
+              "orbDegrees": 1.781009649975772
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.51342060023774,
+              "orbDegrees": 0.5134206002377368
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.61028655342247,
+              "orbDegrees": 0.6102865534224691
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.8807604430803382,
+              "orbDegrees": 1.8807604430803382
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.53541093246955,
+              "orbDegrees": 0.46458906753045426
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.79074608833406,
+              "orbDegrees": 0.20925391166593954
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-15",
+          "instant": "2026-11-04T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 222.0804996658912
+            },
+            {
+              "body": "moon",
+              "longitude": 165.38182415437882
+            },
+            {
+              "body": "mercury",
+              "longitude": 222.31195130500603
+            },
+            {
+              "body": "venus",
+              "longitude": 204.7036637895617
+            },
+            {
+              "body": "mars",
+              "longitude": 140.3641226029394
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.73421347605384
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.073091026998014
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.54579372960686
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0133573494106036
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1579177380305
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "moon",
+              "natal": "mars",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.28053188715057,
+              "orbDegrees": 0.7194681128494267
+            },
+            {
+              "transit": "moon",
+              "natal": "neptune",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.03829239132011,
+              "orbDegrees": 0.9617076086798875
+            },
+            {
+              "transit": "moon",
+              "natal": "pluto",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.923276450752184,
+              "orbDegrees": 0.9232764507521836
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.60983893632203,
+              "orbDegrees": 0.6098389363220349
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.73335711343441,
+              "orbDegrees": 0.7333571134344083
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.8659861595758658,
+              "orbDegrees": 1.8659861595758658
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.55018521597403,
+              "orbDegrees": 0.44981478402597475
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.77597180482962,
+              "orbDegrees": 0.22402819517037642
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-16",
+          "instant": "2026-11-04T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 222.33102973498114
+            },
+            {
+              "body": "moon",
+              "longitude": 168.69594415923572
+            },
+            {
+              "body": "mercury",
+              "longitude": 221.9852954086269
+            },
+            {
+              "body": "venus",
+              "longitude": 204.60952307443918
+            },
+            {
+              "body": "mars",
+              "longitude": 140.48697406757105
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.76243658154982
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.058392145311052
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.53632318276112
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.0084540248850553
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.16022372525606
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "moon",
+              "natal": "sun",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.06517866973073,
+              "orbDegrees": 0.9348213302692727
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.70397965144454,
+              "orbDegrees": 0.7039796514445413
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.85620857806606,
+              "orbDegrees": 0.8562085780660595
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.8512872778889031,
+              "orbDegrees": 1.8512872778889031
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.564884097661,
+              "orbDegrees": 0.43511590233900677
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.76127292314266,
+              "orbDegrees": 0.2387270768573444
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-17",
+          "instant": "2026-11-05T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 222.58159547608264
+            },
+            {
+              "body": "moon",
+              "longitude": 171.99740234992964
+            },
+            {
+              "body": "mercury",
+              "longitude": 221.6597906728846
+            },
+            {
+              "body": "venus",
+              "longitude": 204.5176849666683
+            },
+            {
+              "body": "mars",
+              "longitude": 140.60960534403182
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.7905065576937
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.043769307644562
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.52682830078112
+            },
+            {
+              "body": "neptune",
+              "longitude": 2.003575188170238
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1625588078961
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.83852106961629,
+              "orbDegrees": 1.8385210696162915
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.79581775921542,
+              "orbDegrees": 0.7958177592154243
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.97883985452683,
+              "orbDegrees": 0.9788398545268251
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.836664440222413,
+              "orbDegrees": 1.836664440222413
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.57950693532747,
+              "orbDegrees": 0.42049306467252734
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.74665008547612,
+              "orbDegrees": 0.25334991452388067
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-18",
+          "instant": "2026-11-05T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 222.83219672465336
+            },
+            {
+              "body": "moon",
+              "longitude": 175.28648312750593
+            },
+            {
+              "body": "mercury",
+              "longitude": 221.3360908306294
+            },
+            {
+              "body": "venus",
+              "longitude": 204.42817320413886
+            },
+            {
+              "body": "mars",
+              "longitude": 140.73201534064813
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.81842298293162
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.02922315408969
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.51730945545299
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.998721089179386
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.16492307570337
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.83015931687603,
+              "orbDegrees": 1.8301593168760348
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.587919821045574,
+              "orbDegrees": 1.587919821045574
+            },
+            {
+              "transit": "moon",
+              "natal": "saturn",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.02701959837779,
+              "orbDegrees": 0.027019598377791
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.1335847028086,
+              "orbDegrees": 1.866415297191395
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.88532952174486,
+              "orbDegrees": 0.8853295217448647
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.10124985114314,
+              "orbDegrees": 1.1012498511431374
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.8221182866675418,
+              "orbDegrees": 1.8221182866675418
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.59405308888235,
+              "orbDegrees": 0.4059469111176526
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.73210393192124,
+              "orbDegrees": 0.26789606807875543
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-19",
+          "instant": "2026-11-05T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 223.08283330521547
+            },
+            {
+              "body": "moon",
+              "longitude": 178.56344364317158
+            },
+            {
+              "body": "mercury",
+              "longitude": 221.0148490089596
+            },
+            {
+              "body": "venus",
+              "longitude": 204.3410102906119
+            },
+            {
+              "body": "mars",
+              "longitude": 140.8542029681584
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.84618543759873
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.014754321000588
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.50776701950154
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9938919762750178
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1673166163863
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.57952273631392,
+              "orbDegrees": 1.579522736313919
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.33728324048346,
+              "orbDegrees": 1.3372832404834583
+            },
+            {
+              "transit": "moon",
+              "natal": "moon",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.24281321104303,
+              "orbDegrees": 0.7571867889569717
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.4548265244784,
+              "orbDegrees": 1.545173475521608
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.28227021320882,
+              "orbDegrees": 1.7177297867911818
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.97249243527182,
+              "orbDegrees": 0.9724924352718176
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.22343747865341,
+              "orbDegrees": 1.223437478653409
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.8076494535784393,
+              "orbDegrees": 1.8076494535784393
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.60852192197146,
+              "orbDegrees": 0.3914780780285412
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.71763509883215,
+              "orbDegrees": 0.2823649011678526
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-20",
+          "instant": "2026-11-05T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 223.33350503266345
+            },
+            {
+              "body": "moon",
+              "longitude": 181.82851197451484
+            },
+            {
+              "body": "mercury",
+              "longitude": 220.69671483706912
+            },
+            {
+              "body": "venus",
+              "longitude": 204.25621751118229
+            },
+            {
+              "body": "mars",
+              "longitude": 140.97616713864784
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.873793503102
+            },
+            {
+              "body": "saturn",
+              "longitude": 9.000363439408645
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.49820136519702
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9890880949084615
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1697395143519
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.32885100886594,
+              "orbDegrees": 1.3288510088659393
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 61.08661151303548,
+              "orbDegrees": 1.0866115130354785
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.77296069636887,
+              "orbDegrees": 1.2270393036311305
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.600404385099296,
+              "orbDegrees": 1.3995956149007043
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.05728521470144,
+              "orbDegrees": 1.0572852147014373
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.34540164914284,
+              "orbDegrees": 1.3454016491428433
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7932585719864962,
+              "orbDegrees": 1.7932585719864962
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.6229128035634,
+              "orbDegrees": 0.37708719643660515
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.70324421724024,
+              "orbDegrees": 0.2967557827597602
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-21",
+          "instant": "2026-11-06T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 223.5842117089425
+            },
+            {
+              "body": "moon",
+              "longitude": 185.0818860623041
+            },
+            {
+              "body": "mercury",
+              "longitude": 220.3823315727312
+            },
+            {
+              "body": "venus",
+              "longitude": 204.17381494972238
+            },
+            {
+              "body": "mars",
+              "longitude": 141.0979067633534
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.90124676051607
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.986051133935497
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.48861286326425
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9843096864701424
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.17219184949226
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.0781443325869,
+              "orbDegrees": 1.078144332586902
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.83590483675644,
+              "orbDegrees": 0.8359048367564412
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.0873439607068,
+              "orbDegrees": 0.9126560392932106
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.75905532975916,
+              "orbDegrees": 1.759055329759164
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 58.914787649437216,
+              "orbDegrees": 1.0852123505627844
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.13968777616134,
+              "orbDegrees": 1.1396877761613382
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.4671412738484,
+              "orbDegrees": 1.467141273848398
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7789462665133486,
+              "orbDegrees": 1.7789462665133486
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.63722510903654,
+              "orbDegrees": 0.3627748909634647
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.6889319117671,
+              "orbDegrees": 0.31106808823290066
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-22",
+          "instant": "2026-11-06T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 223.8349531267629
+            },
+            {
+              "body": "moon",
+              "longitude": 188.32373352357683
+            },
+            {
+              "body": "mercury",
+              "longitude": 220.07233325944114
+            },
+            {
+              "body": "venus",
+              "longitude": 204.09382150556394
+            },
+            {
+              "body": "mars",
+              "longitude": 141.21942075341246
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.92854478998902
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.971818021178976
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.47900188141568
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.979556987003581
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1746736960728
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.82740291476648,
+              "orbDegrees": 0.8274029147664805
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.58516341893602,
+              "orbDegrees": 0.5851634189360198
+            },
+            {
+              "transit": "moon",
+              "natal": "venus",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.8833713438453,
+              "orbDegrees": 1.1166286561546883
+            },
+            {
+              "transit": "moon",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.7004572806048,
+              "orbDegrees": 0.2995427193952054
+            },
+            {
+              "transit": "moon",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.97338569859158,
+              "orbDegrees": 0.973385698591585
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.39734227399686,
+              "orbDegrees": 0.6026577260031445
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.4490570164691,
+              "orbDegrees": 1.449057016469098
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.22478596272728,
+              "orbDegrees": 0.7752140372727183
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.21968122031979,
+              "orbDegrees": 1.219681220319785
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.58865526390747,
+              "orbDegrees": 1.5886552639074694
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7647131537568272,
+              "orbDegrees": 1.7647131537568272
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.65145822179306,
+              "orbDegrees": 0.3485417782069362
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.67469879901057,
+              "orbDegrees": 0.32530120098942916
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-23",
+          "instant": "2026-11-06T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 224.08572906590845
+            },
+            {
+              "body": "moon",
+              "longitude": 191.55419211603746
+            },
+            {
+              "body": "mercury",
+              "longitude": 219.7673419707077
+            },
+            {
+              "body": "venus",
+              "longitude": 204.0162549132847
+            },
+            {
+              "body": "mars",
+              "longitude": 141.34070801738824
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.95568716945857
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.957664708734498
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.46936878350296
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9748302261802135
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1771851216348
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.57662697562094,
+              "orbDegrees": 0.5766269756209397
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.33438747979048,
+              "orbDegrees": 0.3343874797904789
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.7023335627303,
+              "orbDegrees": 0.2976664372696973
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 121.14406572773565,
+              "orbDegrees": 1.1440657277356507
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.52977725146073,
+              "orbDegrees": 0.47022274853927115
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.29724781259901,
+              "orbDegrees": 1.2972478125990108
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.70994252788324,
+              "orbDegrees": 1.7099425278832427
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7505598413123495,
+              "orbDegrees": 1.7505598413123495
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.66561153423754,
+              "orbDegrees": 0.3343884657624585
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.6605454865661,
+              "orbDegrees": 0.33945451343390687
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-24",
+          "instant": "2026-11-06T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 224.33653929700043
+            },
+            {
+              "body": "moon",
+              "longitude": 194.77337101028505
+            },
+            {
+              "body": "mercury",
+              "longitude": 219.467965135402
+            },
+            {
+              "body": "venus",
+              "longitude": 203.94113175998868
+            },
+            {
+              "body": "mars",
+              "longitude": 141.4617674629033
+            },
+            {
+              "body": "jupiter",
+              "longitude": 144.98267347384106
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.943591793741563
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.45971392812677
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9701296261241388
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.17972618601846
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.32581674452896,
+              "orbDegrees": 0.32581674452896436
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.083577248698504,
+              "orbDegrees": 0.08357724869850358
+            },
+            {
+              "transit": "sun",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.9685613081305746,
+              "orbDegrees": 1.9685613081305746
+            },
+            {
+              "transit": "moon",
+              "natal": "neptune",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.64674553541388,
+              "orbDegrees": 0.3532544645861151
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.99828960196402,
+              "orbDegrees": 0.0017103980359820525
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.84468889242997,
+              "orbDegrees": 0.8446888924299714
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.82915408676641,
+              "orbDegrees": 0.17084591323359177
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.37237096589504,
+              "orbDegrees": 1.372370965895044
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.83100197339832,
+              "orbDegrees": 1.8310019733983154
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7364869263194143,
+              "orbDegrees": 1.7364869263194143
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.67968444923048,
+              "orbDegrees": 0.32031555076952145
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.64647257157316,
+              "orbDegrees": 0.3535274284268439
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-25",
+          "instant": "2026-11-07T00:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 224.58738357790216
+            },
+            {
+              "body": "moon",
+              "longitude": 197.9813526392681
+            },
+            {
+              "body": "mercury",
+              "longitude": 219.17479300724844
+            },
+            {
+              "body": "venus",
+              "longitude": 203.8684675054276
+            },
+            {
+              "body": "mars",
+              "longitude": 141.5825979923456
+            },
+            {
+              "body": "jupiter",
+              "longitude": 145.00950327411306
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.929599862153475
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.45003766785923
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9654554005814364
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.18229694042645
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.07497246362723,
+              "orbDegrees": 0.07497246362723331
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.83273296779677,
+              "orbDegrees": 0.16726703220322747
+            },
+            {
+              "transit": "sun",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7177170272288436,
+              "orbDegrees": 1.7177170272288436
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.70511747381045,
+              "orbDegrees": 0.2948825261895536
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.5515167642764,
+              "orbDegrees": 0.5515167642763998
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.12232621491998,
+              "orbDegrees": 0.12232621491997975
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.44503522045613,
+              "orbDegrees": 1.445035220456134
+            },
+            {
+              "transit": "mars",
+              "natal": "sun",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.9518325028406,
+              "orbDegrees": 1.9518325028406025
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7224949947313268,
+              "orbDegrees": 1.7224949947313268
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.69367638081856,
+              "orbDegrees": 0.30632361918144113
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.63248063998503,
+              "orbDegrees": 0.3675193600149669
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-26",
+          "instant": "2026-11-07T06:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 224.8382616575651
+            },
+            {
+              "body": "moon",
+              "longitude": 201.17819527523986
+            },
+            {
+              "body": "mercury",
+              "longitude": 218.88839626445525
+            },
+            {
+              "body": "venus",
+              "longitude": 203.7982765017841
+            },
+            {
+              "body": "mars",
+              "longitude": 141.7031985054551
+            },
+            {
+              "body": "jupiter",
+              "longitude": 145.03617613677457
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.915689487434035
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.44034034821034
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.9608077539534174
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.18489742662643
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.82409438396428,
+              "orbDegrees": 0.1759056160357204
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.58185488813382,
+              "orbDegrees": 0.4181451118661812
+            },
+            {
+              "transit": "sun",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.4668389475658898,
+              "orbDegrees": 1.4668389475658898
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.41872073101726,
+              "orbDegrees": 0.5812792689827404
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 120.26512002148321,
+              "orbDegrees": 0.265120021483213
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.40872295771317,
+              "orbDegrees": 0.4087229577131666
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.51522622409962,
+              "orbDegrees": 1.5152262240996208
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.7085846200118864,
+              "orbDegrees": 1.7085846200118864
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.707586755538,
+              "orbDegrees": 0.2924132444619971
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.61857026526559,
+              "orbDegrees": 0.3814297347344109
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-27",
+          "instant": "2026-11-07T12:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 225.0891732725094
+            },
+            {
+              "body": "moon",
+              "longitude": 204.36393609832794
+            },
+            {
+              "body": "mercury",
+              "longitude": 218.60932379743386
+            },
+            {
+              "body": "venus",
+              "longitude": 203.73057201435188
+            },
+            {
+              "body": "mars",
+              "longitude": 141.82356789578625
+            },
+            {
+              "body": "jupiter",
+              "longitude": 145.0626916227024
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.901861229950313
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.43062230689839
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.956186880606324
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1875276762232
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.57318276901998,
+              "orbDegrees": 0.42681723098002067
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.33094327318952,
+              "orbDegrees": 0.6690567268104815
+            },
+            {
+              "transit": "sun",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.2159273326215896,
+              "orbDegrees": 1.2159273326215896
+            },
+            {
+              "transit": "moon",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 90.94956662755578,
+              "orbDegrees": 0.9495666275557824
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 179.13964826399587,
+              "orbDegrees": 0.8603517360041337
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.98604755446182,
+              "orbDegrees": 0.013952445538180314
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.68779542473456,
+              "orbDegrees": 0.6877954247345599
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.58293071153184,
+              "orbDegrees": 1.5829307115318443
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.6947563625281648,
+              "orbDegrees": 1.6947563625281648
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.72141501302173,
+              "orbDegrees": 0.2785849869782737
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.60474200778191,
+              "orbDegrees": 0.39525799221809166
+            }
+          ]
+        },
+        {
+          "id": "transit-sample-28",
+          "instant": "2026-11-07T18:00:00.000Z",
+          "positions": [
+            {
+              "body": "sun",
+              "longitude": 225.34011815083448
+            },
+            {
+              "body": "moon",
+              "longitude": 207.53859489662273
+            },
+            {
+              "body": "mercury",
+              "longitude": 218.33810067388566
+            },
+            {
+              "body": "venus",
+              "longitude": 203.66536624097353
+            },
+            {
+              "body": "mars",
+              "longitude": 141.94370505157133
+            },
+            {
+              "body": "jupiter",
+              "longitude": 145.08904928696742
+            },
+            {
+              "body": "saturn",
+              "longitude": 8.888115636170669
+            },
+            {
+              "body": "uranus",
+              "longitude": 64.42088387304979
+            },
+            {
+              "body": "neptune",
+              "longitude": 1.951592964186298
+            },
+            {
+              "body": "pluto",
+              "longitude": 303.1901877101029
+            }
+          ],
+          "contacts": [
+            {
+              "transit": "sun",
+              "natal": "mars",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.32223789069491,
+              "orbDegrees": 0.6777621093050925
+            },
+            {
+              "transit": "sun",
+              "natal": "neptune",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 59.07999839486445,
+              "orbDegrees": 0.9200016051355533
+            },
+            {
+              "transit": "sun",
+              "natal": "pluto",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 0.9649824542965177,
+              "orbDegrees": 0.9649824542965177
+            },
+            {
+              "transit": "mercury",
+              "natal": "mercury",
+              "kind": "opposition",
+              "exactAngleDegrees": 180,
+              "separationDegrees": 178.86842514044767,
+              "orbDegrees": 1.1315748595523303
+            },
+            {
+              "transit": "mercury",
+              "natal": "jupiter",
+              "kind": "trine",
+              "exactAngleDegrees": 120,
+              "separationDegrees": 119.71482443091362,
+              "orbDegrees": 0.28517556908637687
+            },
+            {
+              "transit": "mercury",
+              "natal": "uranus",
+              "kind": "sextile",
+              "exactAngleDegrees": 60,
+              "separationDegrees": 60.95901854828276,
+              "orbDegrees": 0.9590185482827565
+            },
+            {
+              "transit": "venus",
+              "natal": "saturn",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 91.6481364849102,
+              "orbDegrees": 1.6481364849101965
+            },
+            {
+              "transit": "saturn",
+              "natal": "venus",
+              "kind": "conjunction",
+              "exactAngleDegrees": 0,
+              "separationDegrees": 1.6810107687485205,
+              "orbDegrees": 1.6810107687485205
+            },
+            {
+              "transit": "saturn",
+              "natal": "jupiter",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.73516060680137,
+              "orbDegrees": 0.2648393931986277
+            },
+            {
+              "transit": "saturn",
+              "natal": "uranus",
+              "kind": "square",
+              "exactAngleDegrees": 90,
+              "separationDegrees": 89.59099641400223,
+              "orbDegrees": 0.4090035859977661
+            }
+          ]
+        }
+      ],
+      "motion": "not-evaluated",
+      "exactEventSearch": "not-performed",
+      "scenarios": "not-produced",
+      "selectionStatus": "AWAITING_EDITORIAL_COMPARISON",
+      "preferredWindow": null
+    },
+    "limits": [
+      "Gauntlet integral pendente; amostras independentes não homologam todo o intervalo 1900–2099.",
+      "UTC aproxima UT1; ΔT usa o modelo da candidata, sem correção IERS de DUT1.",
+      "Retrogradação é um sinal da candidata; instante de estação e aplicação/separação de aspectos não são certificados.",
+      "Regras IANA do runtime não estão fixadas; o offset resolvido é registrado.",
+      "Offset histórico fornecido pelo usuário; DST não é inferido.",
+      "Sete dias civis UTC com amostras a cada seis horas; contatos entre amostras podem não aparecer.",
+      "Não calcula instantes exatos, aplicação/separação, probabilidades ou acontecimentos pessoais.",
+      "Nenhum horário foi recomendado; comparar falar e esperar exige método editorial e os limites reais declarados."
+    ],
+    "provenance": {
+      "calculation": "experimental-astrology",
+      "persistence": "required-before-reading",
+      "editorial": "not-reviewed"
+    }
+  },
+  "calculationDigest": "be527a74254851a88720cdd3b7f977327a3e827ce34296039fe892f1ded611bb",
+  "reading": {
+    "version": "atv-launch-reading/1",
+    "executionId": "8c6d9da2-d296-4b63-a30c-000000000010",
+    "productId": "conversation-timing",
+    "inputDigest": "40f2af62deb3ebd2c010c7c517b3a8c9c00e7b5ef4c3a49aa930ee56a1bff637",
+    "title": "A Hora da Conversa — Horóscopo Amoroso",
+    "summary": "Sete dias para organizar uma conversa sobre “A divisão de uma tarefa que está sobrecarregando minha semana.”, visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”. A decisão entre falar e esperar depende de disponibilidade, clareza e “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”, sem promessa de horário mágico.",
+    "sections": [
+      {
+        "id": "conversation-day-1",
+        "title": "01/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "01/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 01/11/2026 às 18h00 (UTC) (orbe 0.143°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Escreva a pergunta principal em uma frase, separando o pedido da explicação longa. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-1",
+          "transit-sample-2",
+          "transit-sample-3",
+          "transit-sample-4",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-day-2",
+        "title": "02/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "02/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 02/11/2026 às 00h00 (UTC) (orbe 0.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Pergunte que informação a outra pessoa precisa antes de responder, sem presumir o que ela já sabe. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-5",
+          "transit-sample-6",
+          "transit-sample-7",
+          "transit-sample-8",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-day-3",
+        "title": "03/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "03/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 03/11/2026 às 00h00 (UTC) (orbe 1.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Diferencie o que você quer negociar do limite que precisa comunicar; recusa e contraproposta são respostas possíveis. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-9",
+          "transit-sample-10",
+          "transit-sample-11",
+          "transit-sample-12",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-day-4",
+        "title": "04/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "04/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Lua em trânsito em trígono com Mercúrio natal, observado em 04/11/2026 às 00h00 (UTC) (orbe 0.755°): Uma emoção pode encontrar palavras antes de virar ruído na conversa. Nomear o que afeta você ajuda a tornar a explicação mais humana, sem fazer do sentimento a única prova sobre a intenção de quem escuta. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Confira se as palavras usadas por vocês significam a mesma tarefa; peça um exemplo concreto. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-13",
+          "transit-sample-14",
+          "transit-sample-15",
+          "transit-sample-16",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-day-5",
+        "title": "05/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "05/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 05/11/2026 às 18h00 (UTC) (orbe 1.227°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Descreva o que consegue assumir e pergunte o que a outra pessoa aceita, sem atribuir responsabilidade por silêncio. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-17",
+          "transit-sample-18",
+          "transit-sample-19",
+          "transit-sample-20",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-day-6",
+        "title": "06/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "06/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 06/11/2026 às 18h00 (UTC) (orbe 0.002°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Resuma o que foi efetivamente combinado e o que continua sem resposta, se a conversa tiver ocorrido. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-21",
+          "transit-sample-22",
+          "transit-sample-23",
+          "transit-sample-24",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-day-7",
+        "title": "07/11/2026: falar ou esperar depende das condições",
+        "paragraphs": [
+          "07/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 07/11/2026 às 00h00 (UTC) (orbe 0.295°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia.",
+          "Revise se ainda é necessário falar do mesmo assunto; se não houve conversa, confirme disponibilidade antes de repetir o pedido. Para tratar de “A divisão de uma tarefa que está sobrecarregando minha semana.” visando “Combinar uma responsabilidade que cada pessoa aceite assumir.”, falar é uma possibilidade somente se houver disponibilidade expressa, escuta e um pedido claro. Esperar é uma possibilidade se faltar uma dessas condições. Respeite “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; estas amostras não calculam disponibilidade nem horário favorável."
+        ],
+        "evidenceIds": [
+          "transit-sample-25",
+          "transit-sample-26",
+          "transit-sample-27",
+          "transit-sample-28",
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      },
+      {
+        "id": "conversation-decision",
+        "title": "Uma decisão condicional para a conversa",
+        "paragraphs": [
+          "O assunto é “A divisão de uma tarefa que está sobrecarregando minha semana.” e o objetivo declarado é “Combinar uma responsabilidade que cada pessoa aceite assumir.”. Mercúrio orienta a hipótese de clareza da mensagem; Lua, a de segurança para ouvir; Saturno, a de um limite que possa ser sustentado. A comparação dos sete dias oferece perguntas diferentes, sem eleger uma data por contagem de aspectos. A condição prática é “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; nenhuma posição substitui disponibilidade confirmada.",
+          "Antes de propor um momento, escreva uma frase com o assunto e um pedido observável; pergunte se a outra pessoa pode conversar. Se não puder, combine como consultar outra disponibilidade. Se o pedido ainda estiver confuso ou houver pressão, espere e revise a frase. Isso organiza a decisão de falar ou esperar, sem prever a reação da outra pessoa."
+        ],
+        "evidenceIds": [
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1",
+          "transit-sample-1",
+          "transit-sample-2",
+          "transit-sample-3",
+          "transit-sample-4",
+          "transit-sample-5",
+          "transit-sample-6",
+          "transit-sample-7",
+          "transit-sample-8",
+          "transit-sample-9",
+          "transit-sample-10",
+          "transit-sample-11",
+          "transit-sample-12",
+          "transit-sample-13",
+          "transit-sample-14",
+          "transit-sample-15",
+          "transit-sample-16",
+          "transit-sample-17",
+          "transit-sample-18",
+          "transit-sample-19",
+          "transit-sample-20",
+          "transit-sample-21",
+          "transit-sample-22",
+          "transit-sample-23",
+          "transit-sample-24",
+          "transit-sample-25",
+          "transit-sample-26",
+          "transit-sample-27",
+          "transit-sample-28"
+        ],
+        "sourceIds": [
+          "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "atv-launch-private-editorial-policy/1"
+        ]
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-conversation-day-1",
+        "sectionId": "conversation-day-1",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-4"
+        ],
+        "factors": {
+          "date": "2026-11-01",
+          "transit": "sun",
+          "natal": "mercury",
+          "aspect": "opposition",
+          "instant": "2026-11-01T18:00:00.000Z",
+          "orbDegrees": 0.14261540456715238
+        },
+        "interpretation": "01/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 01/11/2026 às 18h00 (UTC) (orbe 0.143°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-day-2",
+        "sectionId": "conversation-day-2",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-5"
+        ],
+        "factors": {
+          "date": "2026-11-02",
+          "transit": "sun",
+          "natal": "mercury",
+          "aspect": "opposition",
+          "instant": "2026-11-02T00:00:00.000Z",
+          "orbDegrees": 0.10751423776147817
+        },
+        "interpretation": "02/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 02/11/2026 às 00h00 (UTC) (orbe 0.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-day-3",
+        "sectionId": "conversation-day-3",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-9"
+        ],
+        "factors": {
+          "date": "2026-11-03",
+          "transit": "sun",
+          "natal": "mercury",
+          "aspect": "opposition",
+          "instant": "2026-11-03T00:00:00.000Z",
+          "orbDegrees": 1.108400687827043
+        },
+        "interpretation": "03/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Sol em trânsito em oposição com Mercúrio natal, observado em 03/11/2026 às 00h00 (UTC) (orbe 1.108°): Querer que uma ideia represente bem você pode tornar mais difícil revisá-la. Uma discordância sobre um detalhe corre o risco de parecer desvalorização pessoal, estreitando justamente a conversa que permitiria melhorar a explicação. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-day-4",
+        "sectionId": "conversation-day-4",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-13"
+        ],
+        "factors": {
+          "date": "2026-11-04",
+          "transit": "moon",
+          "natal": "mercury",
+          "aspect": "trine",
+          "instant": "2026-11-04T00:00:00.000Z",
+          "orbDegrees": 0.7553336441048657
+        },
+        "interpretation": "04/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Lua em trânsito em trígono com Mercúrio natal, observado em 04/11/2026 às 00h00 (UTC) (orbe 0.755°): Uma emoção pode encontrar palavras antes de virar ruído na conversa. Nomear o que afeta você ajuda a tornar a explicação mais humana, sem fazer do sentimento a única prova sobre a intenção de quem escuta. No trígono, a familiaridade entre esses movimentos pode facilitar a passagem, mas também fazer você repetir uma resposta conhecida sem perceber que há outra possibilidade. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-day-5",
+        "sectionId": "conversation-day-5",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-20"
+        ],
+        "factors": {
+          "date": "2026-11-05",
+          "transit": "mercury",
+          "natal": "mercury",
+          "aspect": "opposition",
+          "instant": "2026-11-05T18:00:00.000Z",
+          "orbDegrees": 1.2270393036311305
+        },
+        "interpretation": "05/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 05/11/2026 às 18h00 (UTC) (orbe 1.227°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-day-6",
+        "sectionId": "conversation-day-6",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-24"
+        ],
+        "factors": {
+          "date": "2026-11-06",
+          "transit": "mercury",
+          "natal": "mercury",
+          "aspect": "opposition",
+          "instant": "2026-11-06T18:00:00.000Z",
+          "orbDegrees": 0.0017103980359820525
+        },
+        "interpretation": "06/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 06/11/2026 às 18h00 (UTC) (orbe 0.002°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-day-7",
+        "sectionId": "conversation-day-7",
+        "rule": "daily-conditional-observed-contact",
+        "evidenceIds": [
+          "transit-sample-25"
+        ],
+        "factors": {
+          "date": "2026-11-07",
+          "transit": "mercury",
+          "natal": "mercury",
+          "aspect": "opposition",
+          "instant": "2026-11-07T00:00:00.000Z",
+          "orbDegrees": 0.2948825261895536
+        },
+        "interpretation": "07/11/2026: quatro amostras em 00h, 06h, 12h e 18h UTC. Mercúrio em trânsito em oposição com Mercúrio natal, observado em 07/11/2026 às 00h00 (UTC) (orbe 0.295°): Uma informação nova pode encontrar uma explicação já organizada demais para acolhê-la. O atrito não está apenas na quantidade de detalhes, mas no esforço de fazer tudo caber numa conclusão que talvez precise ser revista. A oposição descreve dois polos que pedem lugar: dar toda a razão a um deles tende a devolver o outro como insatisfação. A escolha do contato é um recorte de função comunicativa e proximidade geométrica; não é uma nota de qualidade do dia."
+      },
+      {
+        "id": "claim-conversation-decision",
+        "sectionId": "conversation-decision",
+        "rule": "contextual-talk-wait-conditions",
+        "evidenceIds": [
+          "reported-subject-1",
+          "reported-objective-1",
+          "reported-constraints-1"
+        ],
+        "factors": {
+          "subject": "A divisão de uma tarefa que está sobrecarregando minha semana.",
+          "objective": "Combinar uma responsabilidade que cada pessoa aceite assumir.",
+          "constraints": "Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite."
+        },
+        "interpretation": "O assunto é “A divisão de uma tarefa que está sobrecarregando minha semana.” e o objetivo declarado é “Combinar uma responsabilidade que cada pessoa aceite assumir.”. Mercúrio orienta a hipótese de clareza da mensagem; Lua, a de segurança para ouvir; Saturno, a de um limite que possa ser sustentado. A comparação dos sete dias oferece perguntas diferentes, sem eleger uma data por contagem de aspectos. A condição prática é “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; nenhuma posição substitui disponibilidade confirmada."
+      }
+    ],
+    "practicalAction": "Escreva uma frase sobre “A divisão de uma tarefa que está sobrecarregando minha semana.” com um pedido que ajude “Combinar uma responsabilidade que cada pessoa aceite assumir.”. Consulte a disponibilidade da outra pessoa e preserve “Só iniciar depois de confirmar disponibilidade e sem conversar tarde da noite.”; se faltar confirmação, espere e combine como retomar a consulta.",
+    "reflection": "Qual resposta observável você espera obter, e qual condição concreta faria você esperar antes de iniciar a conversa?",
+    "limits": [
+      "Leitura simbólica para teste privado. Não comprova sentimentos, intenção, reciprocidade ou acontecimentos futuros.",
+      "A revisão automática confere consistência editorial; o aceite pessoal E5 e a liberação comercial são etapas separadas.",
+      "Comparação diária de sete dias, sem eleger o melhor horário, atribuir probabilidade ou garantir resposta; disponibilidade não é calculada pela astrologia.",
+      "Motor astrológico experimental. A bateria independente de precisão continua pendente; esta revisão não homologa precisão comercial.",
+      "Os horários são amostras UTC, não janelas favoráveis nem momentos exatos. Não foram avaliadas aplicação, separação ou recepções."
+    ],
+    "provenance": {
+      "policyVersion": "atv-launch-private-editorial-policy/1",
+      "calculationVersion": "atv-launch-calculation/1",
+      "calculation": "experimental-astrology",
+      "sources": [
+        {
+          "id": "atv-launch-private-editorial-policy/1",
+          "version": "atv-launch-private-editorial-policy/1",
+          "origin": "Método editorial original ATVNA P02; avaliação de consistência privada, sem homologação comercial."
+        },
+        {
+          "id": "atv-humanistic-modern/1.0.0:temporal-pair-meanings",
+          "version": "atv-humanistic-modern/1.0.0",
+          "origin": "Pares natal/trânsito suportados pelo cânone temporal local original, consultados por função e aspecto; pesquisa não ocorre no runtime."
+        }
+      ],
+      "composition": "local-versioned-editorial-corpus",
+      "externalModelCalled": false,
+      "persistence": "server-must-load-persisted-facts-before-composition"
+    }
+  },
+  "readingDigest": "c1f7e8c23abbe64591345a15b19d4b4c1030f0407f0282f184c03df1c2c4ea99",
+  "review": {
+    "version": "atv-launch-reading-review/1",
+    "status": "APPROVED_FOR_PRIVATE_TEST",
+    "policyVersion": "atv-launch-private-editorial-policy/1",
+    "checks": [
+      {
+        "id": "server-factual-binding",
+        "passed": true,
+        "detail": "Entrada consentida e relatos vinculados aos fatos do servidor."
+      },
+      {
+        "id": "document-contract",
+        "passed": true,
+        "detail": "Documento e identidade da edição devem corresponder ao produto e à execução."
+      },
+      {
+        "id": "authorized-content-integrity",
+        "passed": true,
+        "detail": "Vínculo com a edição autorizada; este teste de integridade não substitui os critérios semânticos abaixo."
+      },
+      {
+        "id": "finite-source-allowlist",
+        "passed": true,
+        "detail": "Somente o método local e os verbetes realmente usados podem ser fontes desta edição. Declarar uma fonte inventada não a torna válida."
+      },
+      {
+        "id": "evidence-and-sources",
+        "passed": true,
+        "detail": "Cada relação interpretada precisa de fatos existentes, fonte declarada e texto efetivamente visível."
+      },
+      {
+        "id": "distinct-sections",
+        "passed": true,
+        "detail": "Capítulos devem acrescentar conteúdo próprio e não repetir um bloco para preencher o contrato."
+      },
+      {
+        "id": "finite-editorial-surface",
+        "passed": true,
+        "detail": "A edição tem superfície editorial finita; novos capítulos ou parágrafos livres exigem nova política e revisão."
+      },
+      {
+        "id": "conditional-and-safe-language",
+        "passed": true,
+        "detail": "Sem leitura de mente, certeza de evento, promessa de resultado ou execução de instruções dos relatos."
+      },
+      {
+        "id": "private-scope-and-precision",
+        "passed": true,
+        "detail": "Proveniência explícita: consistência privada não equivale a precisão comercial, deploy ou aceite E5."
+      },
+      {
+        "id": "contextual-usefulness",
+        "passed": true,
+        "detail": "A ação deve preservar o limite efetivamente relatado."
+      },
+      {
+        "id": "reflection",
+        "passed": true,
+        "detail": "Pergunta concreta de reflexão, sem decidir pela pessoa."
+      },
+      {
+        "id": "seven-day-geometry",
+        "passed": true,
+        "detail": "28 observações reais verificadas geometricamente contra o natal."
+      },
+      {
+        "id": "daily-conversation-meaning",
+        "passed": true,
+        "detail": "Todos os dias comparam falar e esperar por condições reais; cada hipótese depende do par/aspecto observado, sem janela inventada."
+      },
+      {
+        "id": "conversation-context-decision",
+        "passed": true,
+        "detail": "Assunto, objetivo e restrição alteram o pedido e a condição concreta de adiar."
+      }
+    ],
+    "reasons": [],
+    "digest": "c1f7e8c23abbe64591345a15b19d4b4c1030f0407f0282f184c03df1c2c4ea99",
+    "provenance": {
+      "scope": "private-editorial-consistency",
+      "calculation": "experimental-astrology",
+      "commercialPrecisionApproved": false,
+      "commercialReleaseApproved": false,
+      "storageAndAccessVerifiedBy": "separate-server-and-database-gates"
+    }
+  }
+}

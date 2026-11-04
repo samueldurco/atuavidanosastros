@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { RequestEvent } from '@sveltejs/kit';
 import { createHash } from 'node:crypto';
-import { productCatalog } from '@atv/domain';
+import { launchProductIds, workflows } from '@atv/domain';
 import {
 	exportFixture,
 	pdfFixture,
@@ -242,13 +242,19 @@ describe('owner-scoped web deliverable', () => {
 		expect(artifact.html).not.toContain('RAW_CALCULATION_SECRET');
 		expect(artifact.filename).not.toContain('alert');
 	});
-	it('covers every workflow product with web eligibility, not the unrelated club', () => {
-		for (const product of productCatalog.filter((entry) => entry.id !== 'atv-plus')) {
+	it('covers every historical workflow product with web eligibility', () => {
+		const eligible = workflows.filter((product) => product.delivery.includes('web'));
+		expect(eligible).toHaveLength(27);
+		for (const product of eligible) {
 			const artifact = renderProductWebExport({ ...exportFixture(), productId: product.id });
 			expect(artifact?.filename).toContain(
 				product.id === 'career-compass' ? 'atv-bussola-de-carreira-' : `atv-${product.id}-`
 			);
 		}
-		expect(renderProductWebExport({ ...exportFixture(), productId: 'atv-plus' })).toBeNull();
+	});
+	it('refuses the club and all eleven launches that use a separate reader contract', () => {
+		expect(launchProductIds).toHaveLength(11);
+		for (const productId of ['atv-plus', ...launchProductIds])
+			expect(renderProductWebExport({ ...exportFixture(), productId })).toBeNull();
 	});
 });

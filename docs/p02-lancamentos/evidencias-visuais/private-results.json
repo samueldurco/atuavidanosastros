@@ -1,0 +1,625 @@
+{
+  "timestamp": "2026-11-04T10:35:34.921Z",
+  "results": [
+    {
+      "id": "wedding-date-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "consentRequired": true
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "ex-tarot",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "consentRequired": true
+    },
+    {
+      "id": "ex-tarot",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "love-restart-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "consentRequired": true
+    },
+    {
+      "id": "love-restart-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "sexuality-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "consentRequired": true,
+      "adultRequired": true
+    },
+    {
+      "id": "sexuality-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "intimacy-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "consentRequired": true,
+      "adultRequired": true
+    },
+    {
+      "id": "intimacy-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "consentRequired": true
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "consentRequired": true
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "consentRequired": true
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "ascendant-style",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "consentRequired": true
+    },
+    {
+      "id": "ascendant-style",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "conversation-timing",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "consentRequired": true
+    },
+    {
+      "id": "conversation-timing",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 1440,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "consentRequired": true
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 1440,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "consentRequired": true
+    },
+    {
+      "id": "wedding-date-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Data de Casamento",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "ex-tarot",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "consentRequired": true
+    },
+    {
+      "id": "ex-tarot",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot do Ex: Saudade e Arrependimento",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "love-restart-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "consentRequired": true
+    },
+    {
+      "id": "love-restart-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Recomeço Amoroso",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "sexuality-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "consentRequired": true,
+      "adultRequired": true
+    },
+    {
+      "id": "sexuality-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Sexualidade",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "intimacy-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "consentRequired": true,
+      "adultRequired": true
+    },
+    {
+      "id": "intimacy-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Intimidade a Dois",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "consentRequired": true
+    },
+    {
+      "id": "emotional-reactions-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa das Reações Emocionais",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "consentRequired": true
+    },
+    {
+      "id": "financial-blocks-tarot",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Tarot dos Bloqueios Financeiros",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "consentRequired": true
+    },
+    {
+      "id": "hidden-talent-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa do Talento Oculto",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "ascendant-style",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "consentRequired": true
+    },
+    {
+      "id": "ascendant-style",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Meu Estilo pelo Ascendente",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "conversation-timing",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "consentRequired": true
+    },
+    {
+      "id": "conversation-timing",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "A Hora da Conversa — Horóscopo Amoroso",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 390,
+      "view": "intake",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "consentRequired": true
+    },
+    {
+      "id": "cohabitation-map",
+      "width": 390,
+      "view": "saved",
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "unlabeled": [],
+      "duplicateIds": [],
+      "brokenImages": [],
+      "title": "Mapa da Convivência a Dois",
+      "receipt": [
+        "Dados salvos. Aguardando cálculo."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "timestamp": "2026-11-04T11:55:36.127Z",
+  "complete": true,
+  "results": [
+    {
+      "id": "conversation-timing",
+      "width": 1440,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 11,
+      "sectionCount": 11,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "A Hora da Conversa — Horóscopo Amoroso",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 33,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 61.03125
+      }
+    },
+    {
+      "id": "conversation-timing",
+      "width": 390,
+      "status": 200,
+      "errors": [],
+      "overflow": false,
+      "brokenImages": [],
+      "duplicateIds": [],
+      "anchorsValid": true,
+      "anchorCount": 11,
+      "sectionCount": 11,
+      "fixtures": [
+        "Prova local sintética. Não concede acesso nem salva dados.",
+        "Candidata editorial: APPROVED_FOR_PRIVATE_TEST."
+      ],
+      "h1": "A Hora da Conversa — Horóscopo Amoroso",
+      "paragraphSize": "20.8px",
+      "snapshot": {
+        "expectedItems": 33,
+        "missing": [],
+        "sampleTextMatches": true
+      },
+      "keyboard": {
+        "focused": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "3px",
+        "hash": "#proximo-passo",
+        "actionVisible": true,
+        "bodyTop": 32.421875
+      }
+    }
+  ]
+}

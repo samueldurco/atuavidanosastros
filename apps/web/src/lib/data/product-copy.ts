@@ -1,7 +1,9 @@
 import { offeredProductIds, productCatalog, tarotMethods } from '@atv/domain';
+import { launchCopy } from './launch-products';
 
 /** Customer language. IDs, publication state and delivery rights stay in the domain catalog. */
 export const productCopy = {
+	...launchCopy,
 	...Object.fromEntries(
 		tarotMethods.map((method) => [
 			method.id,

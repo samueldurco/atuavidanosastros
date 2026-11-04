@@ -1,0 +1,80 @@
+{
+  "runId": "ATV-20260902-170644Z-01A0630F",
+  "front": "P02",
+  "date": "2026-11-04",
+  "worktree": "C:/ATVNA/.worktrees/p02-lancamentos-20261104",
+  "branch": "codex/p02-lancamentos-20261104",
+  "base": "52a759df453ba21ae40f322484ca332a70907d93",
+  "status": "INTEGRATED_VALIDATION_FREE_TEST_RELEASE",
+  "approvedInstruction": "C:/ATVNA/docs/20-produto/programa-comercial-atvna/P02-lancamentos/PROMPT.md",
+  "budgetNewExpensesBrl": 0,
+  "catalog": {
+    "products": 11,
+    "commercialAvailability": "PREPARING",
+    "authorizedRelease": "FREE_PRIVATE_TEST_EXISTING_GRANTS",
+    "regularPrice": null,
+    "cost": null
+  },
+  "ownerScope": {
+    "date": "2026-11-04",
+    "instruction": "nao coloque preço nem gere cobrança por enquanto somente publique e deixe no ar funcionando de modo liberado e gratuito igual os outros, modo de teste",
+    "evidence": "docs/p02-lancamentos/free-test-approval-scope.md",
+    "paymentsEnabled": false,
+    "newTrialGrants": false
+  },
+  "validated": [
+    "Eleven product specifications and five owner SEO sources with historical provenance",
+    "26 public page/viewport renders plus home desktop/mobile and keyboard navigation",
+    "44 private intake/receipt renders plus keyboard, consent and adult checks",
+    "57 domain tests passing; 12 factual calculation tests passing for eleven methods",
+    "71 API tests passing across preparation, calculation and reading; SDK/database mocked, identity/input/origin helpers real",
+    "18 persistence and migration checks using PGlite; hosted schema applied separately as documented in hosted-schema.md",
+    "Eleven E2 candidates and synthetic full-delivery packages; integrated E1/E2/wedding tests61 PASS; samples16 PASS",
+    "E3 real calculation/editorial/PostgreSQL owner reopening2 PASS; feedback SQL5 and feedback API32 PASS",
+    "Published P01 main2c4e3c3 integrated in1d1d041; integrated check0errors0warnings; audit no known vulnerabilities",
+    "Date presentation and semantic review21tests PASS; two regenerated samples privately approved",
+    "Integrated serial database suite201/201PASS; Pages preflight19/19PASS; dependency audit clean",
+    "Thirty public offer destinations verified; domain2/2 and web99/99PASS; old nineteen workflow engines remain bounded",
+    "Final visual QA: all eleven readers desktop/mobile,44intake/product renders and48free UI assertions; feedback keyboard/idempotency paths verified",
+    "Conversation date presentation semantic/sample tests16/16PASS; regenerated synthetic edition privately approved",
+    "Authenticated Edge dispatcher137/137PASS; final integrated check0errors0warnings; full persisted review binding independently reviewed",
+    "Full production build PASS; dated assets verified before/after build; eight unused declarations removed with focal ESLint PASS and44composition/profile tests PASS",
+    "Home launch banner22/22 positions PASS across eleven existing MVP compositions on desktop/mobile; keyboard navigation and free CTA verified",
+    "First CI diagnosed: three historical synthetic UUID fingerprints, Node22 JSON import attribute and fourteen registry/PDF assertions corrected; focal quality130/130 and API53/53 PASS",
+    "PDF composition manifest regenerated from approved MVP assets:39 covers; no new artwork or runtime changes"
+  ],
+  "evidence": [
+    "C:/ATVNA/tmp/p02-design-20261104",
+    "C:/ATVNA/tmp/p02-domain-check.log"
+  ],
+  "inProgress": [
+    "Final browser regression and required CI, including complete lint/unit gates",
+    "Free web release and hosted postflight; Edge version28already active; home launch banner now rotates all eleven approved product compositions"
+  ],
+  "futureCommerceDependencies": [
+    "Approved regular prices, measured costs and financial policy; postponed by owner",
+    "Authenticated Hotmart integration and per-product offer mapping; postponed by owner"
+  ],
+  "separatePending": [
+    "P03/P04/P06 validated public destinations",
+    "Separate real owner acceptance E5"
+  ],
+  "hostedSchema": {
+    "project": "irgnhvouvzyoqfmltrna",
+    "versions": ["20261104112718", "20261104112739", "20261104112801"],
+    "postflight": "RLS and owner ACL confirmed; zero records; no grants or identities changed",
+    "evidence": "docs/p02-lancamentos/hosted-schema.md"
+  },
+  "hostedRelease": null,
+  "hostedRuntime": {
+    "function": "atv-trial-runtime",
+    "version": 28,
+    "status": "ACTIVE",
+    "verifyJwt": true,
+    "bundleBytes": 2081629,
+    "bundleSha256": "f49955668e873254f2fc9b305e8463e5552d705da15bb0046590a604cb218c4f",
+    "evidence": "docs/p02-lancamentos/hosted-runtime.md"
+  },
+  "paidPurchaseTests": [],
+  "next": "Complete integrated validation and publish the eleven free private tests with existing grants; commercial gates remain closed."
+}

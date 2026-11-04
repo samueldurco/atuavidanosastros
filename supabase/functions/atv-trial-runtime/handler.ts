@@ -1,4 +1,6 @@
 import { executeTrialRuntime } from '../../../apps/web/src/lib/server/trial-computation';
+import { executeLaunchRuntime } from '../../../apps/web/src/lib/server/launch-computation';
+import { isLaunchRuntimeOperation } from '../../../apps/web/src/lib/server/launch-runtime-contract';
 
 const headers = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' };
 const json = (value: unknown, status = 200) => new Response(JSON.stringify(value), { status, headers });
@@ -33,7 +35,7 @@ export function trialRuntimeHandler(runtimeKey: string | undefined, nextRuntimeK
    for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
    let value;
    try { value = JSON.parse(new TextDecoder().decode(body)); } catch { return json({ error: 'Solicitação inválida.' }, 400); }
-   return json({ protocol: 'atv-trial-runtime/1', result: await executeTrialRuntime(value) });
+   return json({ protocol: 'atv-trial-runtime/1', result: await (isLaunchRuntimeOperation(value) ? executeLaunchRuntime(value) : executeTrialRuntime(value)) });
   } catch (e) {
    const message = e instanceof Error && /^(Confira|Salve|Autorize|Produto sem|Origem dos Três Pilares:)/.test(e.message) ? e.message : 'Não foi possível preparar a leitura.';
    return json({ error: message }, 422);

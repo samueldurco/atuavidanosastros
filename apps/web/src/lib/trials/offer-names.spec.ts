@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { productOffers, type CalculationSnapshot, type WorkflowInput } from '@atv/domain';
+import {
+	isLaunchProductId,
+	launchProductIds,
+	productOffers,
+	type CalculationSnapshot,
+	type WorkflowInput
+} from '@atv/domain';
 import { calculateTrial } from '../server/trial-calculation';
 import {
 	approveTrialReading,
@@ -34,10 +40,20 @@ const sample = async () =>
 
 describe('immutable offer names for new private deliveries', () => {
 	it('matches the 19 approved offers and records its own immutable revision', () => {
+		const historicalOffers = productOffers.filter((product) => !isLaunchProductId(product.id));
+		expect(historicalOffers).toHaveLength(19);
 		expect(Object.isFrozen(offerNames20261015)).toBe(true);
 		expect(Object.entries(offerNames20261015).sort()).toEqual(
-			productOffers.map((product) => [product.id, product.name]).sort()
+			historicalOffers.map((product) => [product.id, product.name]).sort()
 		);
+	});
+	it('keeps all eleven launch offers discoverable without changing the historical naming revision', () => {
+		expect(launchProductIds).toHaveLength(11);
+		expect(productOffers).toHaveLength(19 + launchProductIds.length);
+		for (const productId of launchProductIds) {
+			expect(productOffers.some((product) => product.id === productId)).toBe(true);
+			expect(offerNames20261015).not.toHaveProperty(productId);
+		}
 	});
 	it('names new deliveries without changing method, facts, interpretation or the original payload', async () => {
 		const calculation = await sample();

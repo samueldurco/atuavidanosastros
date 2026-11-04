@@ -1,4 +1,4 @@
-import { offeredProductIds, type WorkflowInput, type CalculationSnapshot } from '@atv/domain';
+import { workflowOfferProductIds, type WorkflowInput, type CalculationSnapshot } from '@atv/domain';
 import type { TrialReading } from '../reading';
 import { composeCurrentNatal } from './natal';
 import { composeCurrentTemporal } from './temporal';
@@ -8,7 +8,7 @@ export const CURRENT_READING_VERSION = 'atv-current-reading/1.0.0';
 export const CURRENT_REVIEW_POLICY = 'atv-current-interpretation-review/1.0.0';
 
 export function isCurrentReadingProduct(id: string): boolean {
-	return offeredProductIds.some((product) => product === id);
+	return workflowOfferProductIds.some((product) => product === id);
 }
 
 export function composeCurrentReading(

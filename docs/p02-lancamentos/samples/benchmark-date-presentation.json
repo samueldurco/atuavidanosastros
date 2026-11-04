@@ -1,0 +1,58 @@
+{
+  "state": "EXAMPLE_PRIVATE_REVIEW",
+  "batchId": "p02-local-2026-11-04T11:37:17.995Z",
+  "environment": {
+    "node": "v24.20.0",
+    "platform": "win32",
+    "architecture": "x64",
+    "runner": "vitest",
+    "versions": {
+      "calculation": "atv-launch-calculation/1",
+      "reading": "atv-launch-reading/1",
+      "policy": "atv-launch-private-editorial-policy/1"
+    },
+    "paidCalls": 0,
+    "productionPrediction": false
+  },
+  "selectedProductIds": [
+    "wedding-date-map",
+    "love-restart-map"
+  ],
+  "methodology": "One sequential local batch, no warmup or repeated distribution; elapsed wall-clock durations include concurrent workstation load. JSON byte counts use UTF-8 compact JSON. These measurements do not predict hosted latency, concurrency or currency cost.",
+  "measurements": [
+    {
+      "productId": "wedding-date-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 6756.9499,
+        "composition": 237.60319999999956,
+        "review": 7.828000000001339,
+        "total": 7002.3811000000005
+      },
+      "jsonBytes": {
+        "input": 752,
+        "calculation": 27120,
+        "reading": 9024,
+        "review": 3060
+      }
+    },
+    {
+      "productId": "love-restart-map",
+      "status": "APPROVED_FOR_PRIVATE_TEST",
+      "reasons": [],
+      "durationMs": {
+        "factual": 115.88600000000042,
+        "composition": 13.453199999999924,
+        "review": 20.946900000000824,
+        "total": 150.28610000000117
+      },
+      "jsonBytes": {
+        "input": 585,
+        "calculation": 263542,
+        "reading": 23458,
+        "review": 3233
+      }
+    }
+  ]
+}

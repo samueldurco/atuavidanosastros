@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { mkdir } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { offeredProductIds } from '../../../packages/domain/src/catalog';
+import { workflowOfferProductIds } from '../../../packages/domain/src/catalog';
 import { offerNames20261015 } from '../src/lib/trials/offer-names';
 
 // This route calculates and approves a fresh synthetic delivery. Saved editions have separate tests.
@@ -15,7 +15,7 @@ test.beforeAll(async () => {
 });
 
 for (const width of [390, 1440]) {
-	for (const productId of offeredProductIds) {
+	for (const productId of workflowOfferProductIds) {
 		test(`Edição atual: ${productId}, capítulos, acesso e apresentação em ${width}px`, async ({
 			page
 		}, testInfo) => {

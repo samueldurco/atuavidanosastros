@@ -1,4 +1,4 @@
-import { productCatalog } from '@atv/domain';
+import { launchProductIds, productCatalog, productTrialHref } from '@atv/domain';
 import { savedFreeToolIds } from './free-tool-result';
 
 /** Only known internal destinations may survive authentication. Never carry personal form data. */
@@ -11,6 +11,7 @@ export function authReturnPath(value: string | null | undefined): string {
 			'/conta/nascimento',
 			'/bussola-de-carreira',
 			'/testar-produtos',
+			'/testar-lancamentos',
 			'/testar-produtos/atv-plus'
 		].includes(value)
 	)
@@ -22,6 +23,14 @@ export function authReturnPath(value: string | null | undefined): string {
 		return value;
 	const trial = value.match(/^\/testar-produtos\/([a-z0-9-]+)$/)?.[1];
 	if (trial && productCatalog.some((item) => item.id === trial && item.universe !== 'global'))
+		return productTrialHref(trial);
+	const launch = value.match(/^\/testar-lancamentos\/([a-z0-9-]+)$/)?.[1];
+	if (launch && launchProductIds.some((id) => id === launch)) return value;
+	if (
+		/^\/testar-lancamentos\/preparacoes\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+			value
+		)
+	)
 		return value;
 	const product = value.match(/^\/biblioteca\/nova\/([a-z0-9-]+)$/)?.[1];
 	if (product && productCatalog.some((item) => item.id === product && item.personalized))

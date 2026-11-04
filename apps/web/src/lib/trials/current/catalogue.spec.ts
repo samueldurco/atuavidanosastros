@@ -2,7 +2,11 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { PDFDocument } from 'pdf-lib';
 import { describe, expect, it } from 'vitest';
-import { offeredProductIds, type WorkflowInput, type DreamAtlasFactSource } from '@atv/domain';
+import {
+	workflowOfferProductIds,
+	type WorkflowInput,
+	type DreamAtlasFactSource
+} from '@atv/domain';
 import { calculateTrial } from '../../server/trial-calculation';
 import { approveTrialReading, composeTrialReading, type SavedTrial } from '../reading';
 import { pdfReferenceFacts, trialPdf } from '../pdf';
@@ -108,10 +112,10 @@ function fixture(productId: string): WorkflowInput {
 }
 
 describe('catalogue current interpretation integration', () => {
-	it.each(offeredProductIds)(
+	it.each(workflowOfferProductIds)(
 		'%s delivers the current edition and rejects altered conclusions',
 		async (productId) => {
-			const id = uuid(offeredProductIds.indexOf(productId) + 701),
+			const id = uuid(workflowOfferProductIds.indexOf(productId) + 701),
 				input = fixture(productId);
 			const calculation = await calculateTrial(
 				input,

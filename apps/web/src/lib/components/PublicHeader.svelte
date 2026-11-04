@@ -27,6 +27,12 @@
 			href: '/leituras',
 			links: [
 				{
+					href: '/lancamentos',
+					label: 'Lançamentos',
+					description: 'Novas leituras para situações concretas',
+					art: 'flor-gravada'
+				},
+				{
 					href: '/leituras',
 					label: 'Leituras avulsas',
 					description: 'Escolha o tema que faz sentido agora',
@@ -69,14 +75,22 @@
 		},
 		{
 			id: 'loja',
-			label: 'Loja dos Signos',
+			label: 'Loja do ATVNA',
 			href: '/loja',
-			links: visibleShopCollections.slice(0, 6).map((collection) => ({
-				href: collection.href,
-				label: collection.name,
-				description: `${collection.products.length} produtos na coleção`,
-				art: 'flor-gravada'
-			}))
+			links: [
+				{
+					href: '/loja',
+					label: 'Loja dos Signos',
+					description: 'Coleções e produtos por signo',
+					art: 'flor-gravada'
+				},
+				...visibleShopCollections.slice(0, 6).map((collection) => ({
+					href: collection.href,
+					label: collection.name,
+					description: `${collection.products.length} produtos na coleção`,
+					art: 'flor-gravada'
+				}))
+			]
 		}
 	];
 	let mobileOpen = $state(false);

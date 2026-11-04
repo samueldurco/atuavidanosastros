@@ -18,10 +18,11 @@ import {
   productDefinitionForSlug,
   productSlugAliases,
 } from "./src/catalog.ts";
+import { launchProductIds } from "./src/launches.ts";
 
-test("the public offer has 19 unique products across six universes, preserving historical IDs", () => {
-  assert.equal(productOffers.length, 19);
-  assert.equal(new Set(offeredProductIds).size, 19);
+test("the public catalog adds 11 launch proposals across the existing six universes, preserving historical IDs", () => {
+  assert.equal(productOffers.length, 19 + launchProductIds.length);
+  assert.equal(new Set(offeredProductIds).size, productOffers.length);
   assert.equal(
     new Set(productOffers.map((product) => product.universe)).size,
     6,

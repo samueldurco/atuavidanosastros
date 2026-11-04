@@ -7,3 +7,9 @@ e79bb7c73b3b0fd1cf0c7f2db42065c1851adc46:apps/web/src/lib/server/free-tools-calc
 # Historical false positive: synthetic cookie-signing fixture confined to the ledger unit test.
 # Replaced by an explicit repeated fixture; no provider/runtime uses the old literal.
 353a84b43880e48d6872a12b840818dcf71c1e28:apps/web/src/lib/server/free-tool-ledger.spec.ts:generic-api-key:9
+# Historical false positives: synthetic UUID idempotency fixtures in two unit tests
+# and the localhost-only rendering fixture. These are not credentials or access grants.
+# Current values are explicit repeated UUID fixtures; scan all other occurrences normally.
+00625d188c450886157e387cad8ab4c778c2e951:apps/web/src/routes/api/launch-preparations/+server.spec.ts:generic-api-key:13
+00625d188c450886157e387cad8ab4c778c2e951:apps/web/src/routes/api/launch-preparations/[id]/feedback/+server.spec.ts:generic-api-key:11
+00625d188c450886157e387cad8ab4c778c2e951:apps/web/src/routes/testar-lancamentos/_spec/+page.server.ts:generic-api-key:72

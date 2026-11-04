@@ -1,0 +1,63 @@
+{
+  "timestamp": "2026-11-04T10:38:58.701Z",
+  "results": [
+    {
+      "width": 1440,
+      "cities": [
+        {
+          "value": "São Paulo, São Paulo, Brasil",
+          "active": "ceremony-0-option-0",
+          "closed": true
+        },
+        {
+          "value": "São Paulo, São Paulo, Brasil",
+          "active": "ceremony-1-option-0",
+          "closed": true
+        }
+      ],
+      "thirdAdded": true,
+      "thirdRemoved": true,
+      "focus": {
+        "width": "2px",
+        "style": "solid"
+      },
+      "consentInitiallyInvalid": true,
+      "consentCheckedByKeyboard": true,
+      "adultInitiallyInvalid": true,
+      "adultCheckedByKeyboard": true,
+      "evidenceOpened": true,
+      "evidenceVisible": true,
+      "overflow": false,
+      "interceptedPersistenceRequests": 0
+    },
+    {
+      "width": 390,
+      "cities": [
+        {
+          "value": "São Paulo, São Paulo, Brasil",
+          "active": "ceremony-0-option-0",
+          "closed": true
+        },
+        {
+          "value": "São Paulo, São Paulo, Brasil",
+          "active": "ceremony-1-option-0",
+          "closed": true
+        }
+      ],
+      "thirdAdded": true,
+      "thirdRemoved": true,
+      "focus": {
+        "width": "2px",
+        "style": "solid"
+      },
+      "consentInitiallyInvalid": true,
+      "consentCheckedByKeyboard": true,
+      "adultInitiallyInvalid": true,
+      "adultCheckedByKeyboard": true,
+      "evidenceOpened": true,
+      "evidenceVisible": true,
+      "overflow": false,
+      "interceptedPersistenceRequests": 0
+    }
+  ]
+}

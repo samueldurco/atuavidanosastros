@@ -1,5 +1,11 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
-import { productCatalog, productOffers, productSlugAliases } from '@atv/domain';
+import {
+	isLaunchProductId,
+	productCatalog,
+	productOffers,
+	productSlugAliases,
+	productTrialHref
+} from '@atv/domain';
 import { scanAccessibility } from './fixtures/accessibility';
 
 const surfaces = [
@@ -171,9 +177,16 @@ for (const width of [320, 1440]) {
 				page.locator('.product-offer-copy'),
 				product.id
 			);
-			await expect(
-				page.getByRole('link', { name: 'Ver disponibilidade', exact: false })
-			).toBeVisible();
+			const launch = isLaunchProductId(product.id);
+			const primary = page.getByRole('link', {
+				name: launch ? 'Testar gratuitamente' : 'Ver disponibilidade',
+				exact: false
+			});
+			await expect(primary).toBeVisible();
+			await expect(primary).toHaveAttribute(
+				'href',
+				launch ? productTrialHref(product.id) : '#disponibilidade'
+			);
 			await expectNoOverflow(page, product.id);
 			await page.screenshot({
 				path: testInfo.outputPath(`${product.id}-${width}.png`),
@@ -204,7 +217,15 @@ for (const width of [320, 1440]) {
 				'href',
 				`/produtos/${product.slug}`
 			);
-			await expectApprovedCatalogCover(card.locator('.product-cover'), product.id);
+			if (isLaunchProductId(product.id)) {
+				await expectProductIllustration(card.locator('.product-art'), product.id);
+				await expect(card.locator('.badge')).toHaveText('Teste gratuito disponível');
+				await expect(
+					card.getByRole('link', { name: `Testar ${product.name} grátis` })
+				).toHaveAttribute('href', productTrialHref(product.id));
+			} else {
+				await expectApprovedCatalogCover(card.locator('.product-cover'), product.id);
+			}
 			await expectSeparatePanels(
 				card.locator('.cover-link'),
 				card.locator('.catalog-card-body'),

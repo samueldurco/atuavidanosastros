@@ -1,11 +1,13 @@
 import { error, redirect } from '@sveltejs/kit';
 import { loginHref } from '$lib/auth-return';
-import { workflows } from '@atv/domain';
+import { launchProductIds, productTrialHref, workflows } from '@atv/domain';
 import { trialIdentity } from '$lib/server/private-trials';
 import { plusOwnerIdentity, requirePlusSelection } from '$lib/server/atv-plus';
 import type { WorkflowInput } from '@atv/domain';
 import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals, params, parent, url }) => {
+	if (launchProductIds.some((id) => id === params.productId))
+		redirect(303, productTrialHref(params.productId));
 	if (!(await parent()).user) redirect(303, loginHref(`${url.pathname}${url.search}`));
 	const identity = (await trialIdentity(locals))!;
 	const product = workflows.find((p) => p.id === params.productId);
