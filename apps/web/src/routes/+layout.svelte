@@ -4,6 +4,7 @@
 	import '$lib/styles/mvp.css';
 	import { visualContext } from '$lib/data/visual-v4';
 	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
+	import WhatsAppConsultation from '$lib/components/WhatsAppConsultation.svelte';
 	import { page } from '$app/state';
 	import PublicShell from '$lib/components/shells/PublicShell.svelte';
 	import AuthenticatedShell from '$lib/components/shells/AuthenticatedShell.svelte';
@@ -47,4 +48,8 @@
 			>{@render children()}</PublicShell
 		>{/if}
 	<ConsentBanner />
+	<WhatsAppConsultation
+		available={page.data.whatsappConsultationAvailable}
+		pathname={page.url.pathname}
+	/>
 </div>

@@ -49,6 +49,7 @@ function renderLogin(data: unknown, message?: string) {
 				user: null,
 				seo: null,
 				trialAccess: false,
+				whatsappConsultationAvailable: false,
 				authConfigured: true,
 				logoutStatus: null,
 				...(data as { next: string; loginError: string | null })

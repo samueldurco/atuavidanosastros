@@ -1,10 +1,23 @@
 import type { LayoutServerLoad } from './$types';
 import { legacySeo } from '$lib/seo';
 import { withRpcDeadline } from '$lib/server/rpc-deadline';
+import { env } from '$env/dynamic/private';
+import { env as publicEnv } from '$env/dynamic/public';
+import { whatsappEntry } from '$lib/server/whatsapp-entry';
 
-export const load: LayoutServerLoad = async ({ locals, url }) => {
+export const load: LayoutServerLoad = async ({ locals, url, platform }) => {
 	const seo = legacySeo(url.pathname);
-	if (!locals.supabase) return { authConfigured: false, user: null, trialAccess: false, seo };
+	const whatsappConsultationAvailable = Boolean(
+		whatsappEntry({ ...publicEnv, ...env, ...platform?.env })
+	);
+	if (!locals.supabase)
+		return {
+			authConfigured: false,
+			user: null,
+			trialAccess: false,
+			seo,
+			whatsappConsultationAvailable
+		};
 	const { data, error } = await locals.supabase.auth.getClaims();
 	const claims = !error ? data?.claims : undefined;
 	let trialAccess = false;
@@ -20,6 +33,7 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
 	}
 	return {
 		seo,
+		whatsappConsultationAvailable,
 		authConfigured: true,
 		trialAccess,
 		user: claims?.sub
