@@ -1,5 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import { signs } from '$lib/data/site';
+import { horoscopeIndexPath } from '$lib/public-horoscope';
 import { createEditorialRead } from '$lib/server/editorial-registry';
 import { publicHoroscopeIndex } from '$lib/server/public-horoscope-index';
 import type { RequestHandler } from './$types';
@@ -30,7 +31,7 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 			currentWeek,
 			hasHistory: index.entries.some((item) => item.sign === sign && item.period === index.period),
 			supportingGuides: index.supportingGuides,
-			archive: `/horoscopo/${sign}?period=${index.period}`
+			archive: horoscopeIndexPath(sign, index.period)
 		},
 		{ headers: { 'Cache-Control': 'public, max-age=60' } }
 	);

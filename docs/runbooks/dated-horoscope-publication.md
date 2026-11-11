@@ -56,6 +56,8 @@ Se `main` avançar durante a assinatura/CI, o publicador deixa o PR sem merge e 
 
 ## Agenda e prova hospedada
 
+O workflow `dated-horoscope-coverage` confere diariamente às 01:37 UTC a edição vigente dos 12 signos nos três períodos pela API pública e pelo sitemap editorial. O check falha com a lista de signos e períodos afetados. Pode ser executado manualmente depois da recuperação com `node scripts/check-dated-horoscope-coverage.mjs`. Esse workflow só lê o site e executa separado da assinatura e admissão.
+
 Os limites de cobertura são UTC e aparecem na leitura. O cron executa às 20:15 e 22:15 UTC (17:15 e 19:15 em Brasília), preparando o dia seguinte antes da troca do dia UTC. Também prepara a semana quando o dia seguinte é segunda-feira e o mês quando é dia 1. Bootstrap cobre os três períodos correntes mesmo quando a entrada em operação ocorre no meio da semana/mês.
 
 Na configuração atual, cada execução agendada produz um artefato para publicação pelo operador; não garante que novas leituras estejam no site sem essa operação. O job `publish` só pode rodar após habilitação explícita da variável e resolução real da permissão de PR. Essa habilitação não faz parte deste procedimento.

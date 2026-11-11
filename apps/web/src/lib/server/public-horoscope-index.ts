@@ -1,7 +1,8 @@
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { SITE, signs, signNames, type SignSlug } from '$lib/data/site';
 import { customerProduct } from '$lib/data/product-copy';
 import {
+	horoscopeIndexPath,
 	horoscopePeriods,
 	parseHoroscopeArchivePath,
 	type HoroscopeEntry,
@@ -79,7 +80,7 @@ export function publicHoroscopeIndex(
 		);
 		return guide ? [{ path: guide.path, title: guide.title, description: guide.description }] : [];
 	});
-	const path = sign ? `/horoscopo/${sign}` : '/horoscopo';
+	const path = horoscopeIndexPath(sign);
 	const seo: PageSeo = {
 		path,
 		title: `${sign ? `Horóscopo de ${signNames[sign]}` : 'Horóscopo dos 12 signos'} — ${SITE.name}`,
@@ -93,6 +94,7 @@ export function publicHoroscopeIndex(
 		sign,
 		period,
 		year,
+		archiveYear: url.searchParams.has('year') ? year : undefined,
 		today,
 		serverNow: now.toISOString(),
 		entries,
@@ -114,5 +116,11 @@ export async function loadPublicHoroscopeIndex(url: URL, rawSign?: string) {
 	const documents = await createEditorialRead().summaries(
 		(document) => document.kind === 'horoscope' || guidePaths.includes(document.path)
 	);
-	return publicHoroscopeIndex(documents, url, sign);
+	const index = publicHoroscopeIndex(documents, url, sign);
+	if (index.period === 'daily' && url.searchParams.getAll('period').length === 1) {
+		const filters = new URLSearchParams(url.searchParams);
+		filters.delete('period');
+		redirect(308, filters.size ? `${index.seo.path}?${filters}` : index.seo.path);
+	}
+	return index;
 }

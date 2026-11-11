@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { changeAnalyticsConsent } from '$lib/analytics/consent';
 	import { legalContact, legalDocuments, legalUpdatedAt } from '$lib/data/legal';
+	import PublicEmailMarkup from './PublicEmailMarkup.svelte';
 	let { kind }: { kind: keyof typeof legalDocuments } = $props();
 	const document = $derived(legalDocuments[kind]);
 </script>
@@ -42,7 +43,9 @@
 	{/if}
 	<section>
 		<h2>Fale com a ATVNA</h2>
-		<p><a href={`mailto:${legalContact}`}>{legalContact}</a></p>
+		<p>
+			<PublicEmailMarkup><a href={`mailto:${legalContact}`}>{legalContact}</a></PublicEmailMarkup>
+		</p>
 	</section>
 </article>
 

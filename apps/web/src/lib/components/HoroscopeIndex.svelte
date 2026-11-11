@@ -1,11 +1,16 @@
 <script lang="ts">
 	import { signNames } from '$lib/data/site';
-	import { horoscopePeriods, periodNames, horoscopeRange } from '$lib/public-horoscope';
+	import {
+		horoscopeIndexPath,
+		horoscopePeriods,
+		periodNames,
+		horoscopeRange
+	} from '$lib/public-horoscope';
 	import type { PublicHoroscopeIndex } from '$lib/server/public-horoscope-index';
 	import HoroscopeFollow from './HoroscopeFollow.svelte';
 	import HoroscopeAlternatives from './HoroscopeAlternatives.svelte';
 	let { data }: { data: PublicHoroscopeIndex } = $props();
-	const path = $derived(data.sign ? `/horoscopo/${data.sign}` : '/horoscopo');
+	const path = $derived(horoscopeIndexPath(data.sign));
 </script>
 
 <section class="section">
@@ -25,7 +30,7 @@
 		</p>
 		<nav class="periods" aria-label="Período da leitura">
 			{#each horoscopePeriods as period (period)}<a
-					href={`${path}?period=${period}&year=${data.year}`}
+					href={horoscopeIndexPath(data.sign, period, data.archiveYear)}
 					aria-current={data.period === period ? 'page' : undefined}>{periodNames[period]}</a
 				>{/each}
 		</nav>
@@ -48,7 +53,7 @@
 				{#each data.signReadings as reading (reading.sign)}
 					<a
 						class="sign-card card"
-						href={`/horoscopo/${reading.sign}?period=${data.period}&year=${data.year}`}
+						href={horoscopeIndexPath(reading.sign, data.period, data.archiveYear)}
 					>
 						<h2>{signNames[reading.sign]}</h2>
 						<span>
@@ -99,7 +104,9 @@
 		<section class="history" aria-labelledby="history-heading">
 			<h2 id="history-heading">Histórico de leituras</h2>
 			<form method="GET" action={path} class="year-form">
-				<input type="hidden" name="period" value={data.period} />
+				{#if data.period !== 'daily'}
+					<input type="hidden" name="period" value={data.period} />
+				{/if}
 				<label for="horoscope-year">Ano de início da leitura</label>
 				<input
 					id="horoscope-year"

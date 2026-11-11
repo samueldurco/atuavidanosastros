@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ShopSellerIdentity } from '$lib/server/shop/seller-identity';
+	import PublicEmailMarkup from './PublicEmailMarkup.svelte';
 	let { seller }: { seller: ShopSellerIdentity } = $props();
 </script>
 
@@ -12,7 +13,9 @@
 	{/if}
 	<address>
 		<p>{seller.address}</p>
-		<p><a href={`mailto:${seller.email}`}>{seller.email}</a></p>
+		<p>
+			<PublicEmailMarkup><a href={`mailto:${seller.email}`}>{seller.email}</a></PublicEmailMarkup>
+		</p>
 	</address>
 	<p>
 		Atendimento por e-mail ou <a href="/fale-conosco?assunto=loja">formulário</a>, em até 2 dias

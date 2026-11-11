@@ -7,6 +7,19 @@ export const periodNames: Record<PublicPeriod, string> = {
 	weekly: 'Semana',
 	monthly: 'Mês'
 };
+
+export function horoscopeIndexPath(
+	sign: SignSlug | null,
+	period: PublicPeriod = 'daily',
+	year?: number
+) {
+	const path = sign ? `/horoscopo/${sign}` : '/horoscopo';
+	const filters = new URLSearchParams();
+	if (period !== 'daily') filters.set('period', period);
+	if (year !== undefined) filters.set('year', String(year));
+	return filters.size ? `${path}?${filters}` : path;
+}
+
 export type HoroscopeEntry = {
 	id: string;
 	revision: number;

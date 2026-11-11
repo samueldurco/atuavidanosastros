@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import PublicEmailMarkup from '$lib/components/PublicEmailMarkup.svelte';
 	import { contactSubjects, contactHref, publicContactEmail } from '$lib/data/public-channels';
 	let selected = $state('');
 	const subject = $derived(
@@ -32,17 +33,20 @@
 				>{#each contactSubjects as item (item.id)}<option value={item.id}>{item.label}</option
 					>{/each}</select
 			>
-			<a class="button" href={contactHref(subject.subject)}
-				>Escrever e-mail <span aria-hidden="true">↗</span></a
-			>
+			<PublicEmailMarkup>
+				<a class="button" href={contactHref(subject.subject)}
+					>Escrever e-mail <span aria-hidden="true">↗</span></a
+				>
+			</PublicEmailMarkup>
 			<p class="contact-help">
 				O botão abre seu aplicativo de e-mail com o assunto preenchido. A mensagem é enviada por
 				você.
 			</p>
 			<div class="email-address">
-				<span>Ou escreva diretamente para</span><a href={`mailto:${publicContactEmail}`}
-					>{publicContactEmail}</a
-				>
+				<span>Ou escreva diretamente para</span>
+				<PublicEmailMarkup>
+					<a href={`mailto:${publicContactEmail}`}>{publicContactEmail}</a>
+				</PublicEmailMarkup>
 			</div>
 		</div>
 	</div>

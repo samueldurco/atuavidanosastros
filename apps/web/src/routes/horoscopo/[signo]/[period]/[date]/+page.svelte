@@ -4,10 +4,7 @@
 </script>
 
 <p class="archive-back">
-	<a
-		href={`/horoscopo/${data.document.path.split('/')[2]}?period=${data.document.path.split('/')[3]}`}
-		>Voltar ao signo e ao histórico</a
-	>
+	<a href={data.indexPath}>Voltar ao signo e ao histórico</a>
 </p>
 <EditorialArticle document={data.document} related={data.related} />
 

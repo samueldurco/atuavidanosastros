@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 import { freeTools } from '../src/lib/data/free-tools';
 import { signs } from '../src/lib/data/site';
 import { publicEditorialAuthor } from '../src/lib/data/editorial-author';
+import { publicContactEmail } from '../src/lib/data/public-channels';
 import { scanAccessibility } from './fixtures/accessibility';
 import {
 	bundledEditorial,
@@ -28,6 +29,55 @@ const expectedFreeToolPaths = [
 	'/ferramentas/carta-do-amor',
 	'/ferramentas/registro-de-sonho'
 ];
+
+test('daily horoscope links converge on the canonical page and keep explicit filters', async ({
+	request
+}) => {
+	const hub = await request.get('/horoscopo');
+	const html = await hub.text();
+	for (const sign of signs) expect(html).toContain(`href="/horoscopo/${sign}"`);
+	expect(html).not.toMatch(/href="\/horoscopo[^"]*\?period=daily/);
+	expect(html).toContain('href="/horoscopo?period=weekly"');
+
+	for (const path of ['/horoscopo', '/horoscopo/gemeos', '/horoscopo/leao', '/horoscopo/libra']) {
+		const response = await request.get(`${path}?period=daily`, { maxRedirects: 0 });
+		expect(response.status(), path).toBe(308);
+		expect(response.headers()['location']).toBe(path);
+	}
+	const historical = await request.get('/horoscopo/leao?period=daily&year=2025&utm_source=qa', {
+		maxRedirects: 0
+	});
+	expect(historical.status()).toBe(308);
+	expect(historical.headers()['location']).toBe('/horoscopo/leao?year=2025&utm_source=qa');
+	const weekly = await request.get('/horoscopo/leao?period=weekly&year=2025', { maxRedirects: 0 });
+	expect(weekly.status()).toBe(200);
+	const weeklyHtml = await weekly.text();
+	expect(weeklyHtml).toContain('href="/horoscopo/leao?year=2025"');
+	expect(weeklyHtml).toContain('href="https://atuavidanosastros.com.br/horoscopo/leao"');
+});
+
+test('public email markup preserves direct links through Cloudflare', async ({ request }) => {
+	for (const path of [
+		'/fale-conosco',
+		'/canais-oficiais',
+		'/privacidade',
+		'/termos',
+		'/loja/termos',
+		'/loja/devolucoes'
+	]) {
+		const response = await request.get(path);
+		expect(response.status(), path).toBe(200);
+		const html = await response.text();
+		const scopes = [...html.matchAll(/<!--email_off-->(.*?)<!--\/email_off-->/gs)];
+		const unprotectedHtml = html.replace(/<!--email_off-->.*?<!--\/email_off-->/gs, '');
+		expect(
+			scopes.some((scope) => scope[1].includes(publicContactEmail)),
+			path
+		).toBe(true);
+		expect(unprotectedHtml, path).not.toContain('href="mailto:');
+		expect(html, path).not.toContain('/cdn-cgi/l/email-protection');
+	}
+});
 
 test('the purpose landing keeps its existing URL and one canonical without a redirect', async ({
 	request
