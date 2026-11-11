@@ -13,7 +13,7 @@ import { algorithmManifest, calculationAdapter } from "./prepare-dated-horoscope
 import { corpusDigest, ALGORITHM_VERSION, composeDocumentAndClaims } from "./lib/public-horoscope-compose.mjs";
 import { CORPUS_VERSION } from "./lib/public-horoscope-corpus.mjs";
 import {
-  assertSuccessfulRun, assertMergeCandidate, assertPublicationFiles, REQUIRED_JOBS, INDEX_PATH,
+  assertSuccessfulRun, assertMergeCandidate, assertPublicationFiles, waitForMergeCandidate, REQUIRED_JOBS, INDEX_PATH,
   containsPublishedArticle, currentApiMatches, waitForPublication, withPublicationLock, PUBLICATION_LOCK,
 } from "./publish-dated-horoscope.mjs";
 
@@ -95,6 +95,26 @@ test("publisher permits only an index update and new immutable assets on a clean
     [files[0], { ...files[1], status: "modified" }], [...files, files[1]],
     [files[0], { filename: "apps/web/static/_editorial/dated/../../injection.json", status: "added" }],
   ]) assert.throws(() => assertPublicationFiles(invalid));
+});
+test("publisher waits for additional PR checks without accepting a changed or blocked PR", async () => {
+  const head = "a".repeat(40), base = "b".repeat(40);
+  const pr = { state: "open", draft: false, head: { sha: head }, base: { ref: "main", sha: base }, mergeable: true, mergeable_state: "clean" };
+  const pending = { ...pr, mergeable_state: "unstable" };
+  const sequence = [{ ...pr, mergeable: null, mergeable_state: "unknown" }, pending, pr];
+  const waits = [];
+  const options = { wait: async (ms) => { waits.push(ms); }, attempts: 3 };
+  await waitForMergeCandidate(async () => sequence.shift(), files, head, base, options);
+  assert.deepEqual(waits, [15000, 15000]);
+
+  for (const change of [
+    { base: { ref: "main", sha: head } }, { head: { sha: base } },
+    { mergeable_state: "blocked" }, { mergeable: false, mergeable_state: "dirty" },
+  ]) {
+    const read = async () => ({ ...pending, ...change });
+    await assert.rejects(waitForMergeCandidate(read, files, head, base, options), /changed|blocked/);
+  }
+  assert.deepEqual(waits, [15000, 15000]);
+  await assert.rejects(waitForMergeCandidate(async () => pending, files, head, base, options), /deadline/);
 });
 test("hosted proof requires the exact Article and all twelve current API responses", async () => {
   const seen = new Set();
