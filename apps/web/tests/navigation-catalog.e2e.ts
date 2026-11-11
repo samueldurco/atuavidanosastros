@@ -14,9 +14,14 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	await button.click();
 	const menu = page.getByRole('navigation', { name: 'Navegação principal', exact: true });
 	const offers = page.locator('#nav-produtos');
+	await expect(offers.locator('.nav-item strong')).toHaveText([
+		'Assinatura ATV+',
+		'Lançamentos',
+		'Leituras avulsas'
+	]);
 	await expect(offers.locator('.nav-item[href="/leituras"]')).toContainText('Leituras avulsas');
-	await expect(offers.locator('a[href="/atv-mais"]')).toContainText('Assinatura ATV+');
-	await expect(offers.locator('a[href^="/leituras?tema="]')).toHaveCount(6);
+	await expect(offers.locator('.nav-item[href="/atv-mais"]')).toContainText('Assinatura ATV+');
+	await expect(offers.locator('.nav-item[href="/lancamentos"]')).toContainText('Lançamentos');
 	await page.screenshot({ path: testInfo.outputPath('menu-desktop.png') });
 	await page.keyboard.press('Escape');
 	await expect(offers).toHaveCount(0);
@@ -58,6 +63,20 @@ test('menu móvel permite chegar a todos os caminhos sem transbordar a tela', as
 				message: `O menu deve caber na tela de ${width}px`
 			})
 			.toBeLessThanOrEqual(0);
+		await menu.locator('[aria-controls="nav-produtos"]').click();
+		const offers = page.locator('#nav-produtos .nav-item');
+		await expect(offers.locator('strong')).toHaveText([
+			'Assinatura ATV+',
+			'Lançamentos',
+			'Leituras avulsas'
+		]);
+		for (const offer of await offers.all()) {
+			await offer.click({ trial: true });
+		}
+		if (width === 390) {
+			await offers.first().scrollIntoViewIfNeeded();
+			await page.screenshot({ path: testInfo.outputPath('menu-mobile-leituras.png') });
+		}
 		await menu.locator('[aria-controls="nav-loja"]').click();
 		const store = page.locator('#nav-loja .nav-item[href="/loja"]');
 		await store.scrollIntoViewIfNeeded();

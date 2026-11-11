@@ -28,6 +28,12 @@
 			href: '/leituras',
 			links: [
 				{
+					href: '/atv-mais',
+					label: 'Assinatura ATV+',
+					description: 'Leituras para acompanhar seus ciclos',
+					art: 'fases-lunares'
+				},
+				{
 					href: '/lancamentos',
 					label: 'Lançamentos',
 					description: 'Novas leituras para situações concretas',
@@ -38,18 +44,7 @@
 					label: 'Leituras avulsas',
 					description: 'Escolha o tema que faz sentido agora',
 					art: 'mandala-gravada'
-				},
-				{
-					href: '/atv-mais',
-					label: 'Assinatura ATV+',
-					description: 'Leituras para acompanhar seus ciclos',
-					art: 'fases-lunares'
-				},
-				...interestNavigation.map((topic) => ({
-					href: `/leituras?tema=${topic.id}`,
-					label: topic.label,
-					art: mvpThemes[topic.id].art
-				}))
+				}
 			]
 		},
 		{
