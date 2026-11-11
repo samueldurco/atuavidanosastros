@@ -27,12 +27,32 @@ export function assertSuccessfulRun(run, jobs, sha) {
       throw Error(`Required CI job missing or not successful: ${name}`);
   }
 }
-export function assertMergeCandidate(pr, files, head, base) {
+function assertPullRequestIdentity(pr, head, base) {
   if (pr.state !== "open" || pr.draft || pr.head.sha !== head ||
-      pr.base.ref !== "main" || pr.base.sha !== base ||
-      pr.mergeable !== true || pr.mergeable_state !== "clean")
+      pr.base.ref !== "main" || pr.base.sha !== base)
+    throw Error("PR changed while awaiting publication");
+}
+export function assertMergeCandidate(pr, files, head, base) {
+  assertPullRequestIdentity(pr, head, base);
+  if (pr.mergeable !== true || pr.mergeable_state !== "clean")
     throw Error("PR changed, is blocked, or is not mergeable");
   assertPublicationFiles(files);
+}
+export async function waitForMergeCandidate(readPullRequest, files, head, base, {
+  wait = sleep, attempts = 18,
+} = {}) {
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    const pr = await readPullRequest();
+    assertPullRequestIdentity(pr, head, base);
+    // GitHub can still be calculating mergeability or running PR checks
+    // after the explicitly dispatched run for this head has passed.
+    if (pr.mergeable === false || !["unknown", "unstable"].includes(pr.mergeable_state)) {
+      assertMergeCandidate(pr, files, head, base);
+      return;
+    }
+    if (attempt + 1 < attempts) await wait(15000);
+  }
+  throw Error("PR checks did not settle before the publication deadline");
 }
 export function containsPublishedArticle(html, document) {
   const nodes = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
@@ -195,9 +215,8 @@ export async function publishBatch({ root, batch, repository, token, sourceSha, 
     }
     if (!completed) throw Error("CI deadline exceeded; PR remains unmerged");
     if (await mainHead() !== sourceSha) throw Error("Main advanced during CI; PR remains unmerged for a fresh run");
-    const latest = await api(`pulls/${pr.number}`);
     const files = await api(`pulls/${pr.number}/files?per_page=100`);
-    assertMergeCandidate(latest, files, head, sourceSha);
+    await waitForMergeCandidate(() => api(`pulls/${pr.number}`), files, head, sourceSha);
     // API obeys repository rules/reviews. No admin override, approval or global setting change.
     const merged = await api(`pulls/${pr.number}/merge`, "PUT", { sha: head, merge_method: "merge" });
     if (merged.merged !== true) throw Error("Repository did not admit the merge");
