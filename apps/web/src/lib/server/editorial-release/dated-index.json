@@ -4408,6 +4408,1108 @@
 				"acceptedAt": "2026-11-03T12:42:58.061Z",
 				"gateEvidenceDigest": "74e6cc6624aa7a9296d23544fa2c31f8e3c36fb5a03663aaad0d8a767bd53b3e"
 			}
+		},
+		{
+			"scope": {
+				"schemaVersion": "atv-dated-horoscope-preparation-v1",
+				"status": "PREPARED_NOT_REVIEWED_NOT_SIGNED_NOT_ADMITTED",
+				"policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+				"methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"period": "daily",
+				"startDate": "2026-11-11",
+				"endDateExclusive": "2026-11-12",
+				"frozenAt": "2026-11-11T11:36:32.243Z",
+				"authoringAgent": "atvna-deterministic-horoscope-composer",
+				"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+				"documentDigests": {
+					"horoscopo-aries-daily-2026-11-11": "3cce923c0206b8cd3a567597516bbdeb34f31caa91bdcf97bdd8e7f3a9606be5",
+					"horoscopo-touro-daily-2026-11-11": "4de0049d23acb1c2ac012ebfbe9a96ef6cb1f456d2333240486f217f99755790",
+					"horoscopo-gemeos-daily-2026-11-11": "27d07e0ef0f47697c284649952793269e866cf2cf85249d6e1384fbac98543a3",
+					"horoscopo-cancer-daily-2026-11-11": "d97935aea56447bd257ff4326c355fd5cf3814ab66d91310971c31148adc8f46",
+					"horoscopo-leao-daily-2026-11-11": "0fe7ac82b76b405c0b63148e4009b14ff4be3e92c6b8d68e8e797f71de4cb346",
+					"horoscopo-virgem-daily-2026-11-11": "16d5b95fd17ad210dfe688b8a2e74ec3d4dd028dfff4c5ae488daad0d9cad766",
+					"horoscopo-libra-daily-2026-11-11": "ed8e66a20d06d18928e16978023ec61311b5660a411594002c382bb8a36ae56f",
+					"horoscopo-escorpiao-daily-2026-11-11": "f97d6616648065b11fda8714749fb3e7fa379af9483aa6b9ad8bb93aee2257d8",
+					"horoscopo-sagitario-daily-2026-11-11": "8031ad3e42a4ed43b7ba80242920212066170fdf96f8843d990b7b0e1f05c72c",
+					"horoscopo-capricornio-daily-2026-11-11": "3d1bc111f1a5d4c19c1a5ccfd2f3d0fe522c839b63af9068c590ce1c609f0f2c",
+					"horoscopo-aquario-daily-2026-11-11": "a719ccd135e06ff6a86e6a895bd4825068db3b4de57316635708862f4a40d534",
+					"horoscopo-peixes-daily-2026-11-11": "943946c0fdd6e0342eb0b5329c85dc422bcf9af5da3455dd2fda2019ebb2b7aa"
+				},
+				"claimsDigests": {
+					"horoscopo-aries-daily-2026-11-11": "9628d13565dcb4885ef2899243ed77943d70b8dcee86adce0c8b22ac9c33fcd6",
+					"horoscopo-touro-daily-2026-11-11": "eae9a50507209bac9e2d904b66eac967805f3bffb815ef7e5725f672c2273704",
+					"horoscopo-gemeos-daily-2026-11-11": "ae59968c64be649423a3eae1de6367d3e487f4f5d40c2cc35a2fa24e0d57bcc4",
+					"horoscopo-cancer-daily-2026-11-11": "8fb26633e39544f27d2402deb44127f58671de0e227f345fa6f28c77101bb14c",
+					"horoscopo-leao-daily-2026-11-11": "26866d680ca4f57619eb5c806974e175a34c65e977fb14585cc11861c2ba84c9",
+					"horoscopo-virgem-daily-2026-11-11": "ac727d5ef9930482cbff08facdaefeb16ed067786361157625dd9abcaf782887",
+					"horoscopo-libra-daily-2026-11-11": "1ce6cf8733a4273f0ecc694582197e24904108cba001dba06a7b4a76186ac751",
+					"horoscopo-escorpiao-daily-2026-11-11": "b9c7e951a04f62db0ed2335d77ee48cea288586907a2081606684b868fb45b0f",
+					"horoscopo-sagitario-daily-2026-11-11": "081866185ac8d768731d1657559d0547f168f57ed3491dddd6914423df748688",
+					"horoscopo-capricornio-daily-2026-11-11": "420cf5d315c18de5727f516ef065625c0edf6f33cced1b633de0b8fef491f071",
+					"horoscopo-aquario-daily-2026-11-11": "d7fd138cf7cce6948d8a00f2454ac715dbf847179c3addaec52e1e58bee0e795",
+					"horoscopo-peixes-daily-2026-11-11": "1cdd7cb02456e1a1766c8a3e529a84d92d2d1897c4fb4b57b7909b9c0cc656d1"
+				},
+				"composition": {
+					"corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+					"corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+					"algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+					"reviewMode": "reviewed-corpus-and-runtime-verification",
+					"algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+				},
+				"algorithmManifest": {
+					"scripts/lib/public-horoscope-compose.mjs": "4bda72201716a04b9de587676f2f8c505536659b0b73ae451ed2cd374f9075d2",
+					"scripts/prepare-dated-horoscope.mjs": "b96275e379de7be9dae058db4e0e5aed4065369ba90379804c2ae1626417b088"
+				},
+				"evidence": [
+					{
+						"path": "facts.json",
+						"sha256": "15d9b2a833e2c2384e486babfa40622baae8d7cb8800559e77caeae49e1cdbd0"
+					},
+					{
+						"path": "method.md",
+						"sha256": "5f54d7ce13c1d3e261e4a6f33e46eccffa23ddf29ba2f998e7413e707abbb463"
+					},
+					{
+						"path": "authored-copy.json",
+						"sha256": "98f6883a00e0a58e81caa9f5e3322db5eef2c5f26243f059dffe296e037e02e6"
+					}
+				],
+				"remainingGates": [
+					"independent-corpus-and-algorithm-review",
+					"real-external-signature",
+					"admission",
+					"visual-a11y-ci",
+					"hosted-verification"
+				]
+			},
+			"grant": {
+				"protocol": "atv-dated-horoscope-grant-v1",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+				"methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+				"reviewMode": "reviewed-corpus-and-runtime-verification",
+				"composition": {
+					"corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+					"corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+					"algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+					"reviewMode": "reviewed-corpus-and-runtime-verification",
+					"algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+				},
+				"ownerDecisionDigest": "7986c686bbcdcb3f69261f6e3d8c29f4941f4f218a0b7d8fad76f9a2acc148f5",
+				"corpusReviewDigest": "8c1296f820abecbd7de3e0b45e3a62cf93368a9ca017a0be4ca3c1d53a960001",
+				"allowedPeriods": ["daily", "weekly", "monthly"],
+				"validFrom": "2026-10-20T10:55:15.000Z",
+				"validUntil": "2027-01-04T16:00:39.930Z",
+				"coverageFrom": "2026-10-01",
+				"signature": "wz/sJAU4rJrgLNQG6afSZHI+lQEiCOBNOM78zybDsCHyiogTI4rNmPhFtzTTiv6jRlpNNaJHK85lh7w1hsreBw=="
+			},
+			"index": {
+				"protocol": "atv-dated-horoscope-index-v1",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"scopeDigest": "a378aa8feac159a97168e80995dee6c73fe1d0885b88d5d6a417a2b183efbdb3",
+				"grantDigest": "d3934ca70214db5057a08c411fbecf41dff815b52edf8e0637d19083b6fb7c28",
+				"signedAt": "2026-11-11T11:36:33.144Z",
+				"documents": [
+					{
+						"id": "horoscopo-aries-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/aries/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Áries: Negociar sem desaparecer do encontro e abrir espaço para criar e gostar",
+						"description": "Uma leitura simbólica para Áries sobre as parcerias e os acordos a dois e suas relações com a criação, o prazer e a expressão pessoal.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-touro-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/touro/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Touro: Dar uma forma possível à rotina e cuidar da base que acolhe você",
+						"description": "Uma leitura simbólica para Touro sobre o trabalho cotidiano e os cuidados de rotina e suas relações com a intimidade e a vida de casa.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-gemeos-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/gemeos/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Gêmeos: Abrir espaço para criar e gostar e encontrar palavras que aproximam",
+						"description": "Uma leitura simbólica para Gêmeos sobre a criação, o prazer e a expressão pessoal e suas relações com as conversas e os aprendizados cotidianos.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-cancer-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/cancer/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Câncer: Cuidar da base que acolhe você e dar valor ao que sustenta você",
+						"description": "Uma leitura simbólica para Câncer sobre a intimidade e a vida de casa e suas relações com suas prioridades e recursos.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-leao-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/leao/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Leão: Encontrar palavras que aproximam e escolher sua própria posição",
+						"description": "Uma leitura simbólica para Leão sobre as conversas e os aprendizados cotidianos e suas relações com sua maneira de se apresentar e começar.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-virgem-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/virgem/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Virgem: Dar valor ao que sustenta você e respeitar o tempo de recolher",
+						"description": "Uma leitura simbólica para Virgem sobre suas prioridades e recursos e suas relações com o recolhimento e os assuntos que pedem encerramento.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-libra-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/libra/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Libra: Escolher sua própria posição e participar sem perder sua voz",
+						"description": "Uma leitura simbólica para Libra sobre sua maneira de se apresentar e começar e suas relações com os grupos, as amizades e os projetos em comum.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-escorpiao-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/escorpiao/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Escorpião: Respeitar o tempo de recolher e assumir uma direção que faça sentido",
+						"description": "Uma leitura simbólica para Escorpião sobre o recolhimento e os assuntos que pedem encerramento e suas relações com a direção profissional e as responsabilidades públicas.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-sagitario-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/sagitario/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Sagitário: Participar sem perder sua voz e ampliar a visão sem perder o chão",
+						"description": "Uma leitura simbólica para Sagitário sobre os grupos, as amizades e os projetos em comum e suas relações com os estudos, as convicções e os projetos de expansão.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-capricornio-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/capricornio/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Capricórnio: Assumir uma direção que faça sentido e dividir sem perder a clareza",
+						"description": "Uma leitura simbólica para Capricórnio sobre a direção profissional e as responsabilidades públicas e suas relações com a partilha e os compromissos que envolvem confiança.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-aquario-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/aquario/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Aquário: Ampliar a visão sem perder o chão e negociar sem desaparecer do encontro",
+						"description": "Uma leitura simbólica para Aquário sobre os estudos, as convicções e os projetos de expansão e suas relações com as parcerias e os acordos a dois.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-peixes-daily-2026-11-11",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/peixes/daily/2026-11-11",
+						"kind": "horoscope",
+						"title": "Peixes: Dividir sem perder a clareza e dar uma forma possível à rotina",
+						"description": "Uma leitura simbólica para Peixes sobre a partilha e os compromissos que envolvem confiança e suas relações com o trabalho cotidiano e os cuidados de rotina.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "de89c0b1b23d86772e9f7695509d2bc94997446f68c7a4a7b187aa27c586e3ae",
+							"coverageStart": "2026-11-11T00:00:00.000Z",
+							"coverageEnd": "2026-11-12T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					}
+				],
+				"documentDigests": {
+					"horoscopo-aries-daily-2026-11-11": "3cce923c0206b8cd3a567597516bbdeb34f31caa91bdcf97bdd8e7f3a9606be5",
+					"horoscopo-touro-daily-2026-11-11": "4de0049d23acb1c2ac012ebfbe9a96ef6cb1f456d2333240486f217f99755790",
+					"horoscopo-gemeos-daily-2026-11-11": "27d07e0ef0f47697c284649952793269e866cf2cf85249d6e1384fbac98543a3",
+					"horoscopo-cancer-daily-2026-11-11": "d97935aea56447bd257ff4326c355fd5cf3814ab66d91310971c31148adc8f46",
+					"horoscopo-leao-daily-2026-11-11": "0fe7ac82b76b405c0b63148e4009b14ff4be3e92c6b8d68e8e797f71de4cb346",
+					"horoscopo-virgem-daily-2026-11-11": "16d5b95fd17ad210dfe688b8a2e74ec3d4dd028dfff4c5ae488daad0d9cad766",
+					"horoscopo-libra-daily-2026-11-11": "ed8e66a20d06d18928e16978023ec61311b5660a411594002c382bb8a36ae56f",
+					"horoscopo-escorpiao-daily-2026-11-11": "f97d6616648065b11fda8714749fb3e7fa379af9483aa6b9ad8bb93aee2257d8",
+					"horoscopo-sagitario-daily-2026-11-11": "8031ad3e42a4ed43b7ba80242920212066170fdf96f8843d990b7b0e1f05c72c",
+					"horoscopo-capricornio-daily-2026-11-11": "3d1bc111f1a5d4c19c1a5ccfd2f3d0fe522c839b63af9068c590ce1c609f0f2c",
+					"horoscopo-aquario-daily-2026-11-11": "a719ccd135e06ff6a86e6a895bd4825068db3b4de57316635708862f4a40d534",
+					"horoscopo-peixes-daily-2026-11-11": "943946c0fdd6e0342eb0b5329c85dc422bcf9af5da3455dd2fda2019ebb2b7aa"
+				},
+				"signature": "LGELcFlGrtC6iQFWR8fdybYcQCvb8tUsw978z646c5k92CPaheNuK4zGr+VZ/RV+2xeP/NpRK7Ef0o6CQoE4Bw=="
+			},
+			"asset": {
+				"path": "/_editorial/dated/34e2ee32e024c2fc549a33214ddca66f91863a24003894139a842110c933d315.json",
+				"sha256": "34e2ee32e024c2fc549a33214ddca66f91863a24003894139a842110c933d315"
+			},
+			"admission": {
+				"acceptedAt": "2026-11-11T11:38:32.154Z",
+				"gateEvidenceDigest": "47ebf7ae1d47dcb9c134abaa6d94fd6422d09e96d229358ad24ed5d4fc22f8c9"
+			}
+		},
+		{
+			"scope": {
+				"schemaVersion": "atv-dated-horoscope-preparation-v1",
+				"status": "PREPARED_NOT_REVIEWED_NOT_SIGNED_NOT_ADMITTED",
+				"policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+				"methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"period": "weekly",
+				"startDate": "2026-11-09",
+				"endDateExclusive": "2026-11-16",
+				"frozenAt": "2026-11-11T11:36:32.243Z",
+				"authoringAgent": "atvna-deterministic-horoscope-composer",
+				"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+				"documentDigests": {
+					"horoscopo-aries-weekly-2026-11-09": "01569cbfd6c46bfaf3b8b81a09df7f4c0635b18cf770c26a67c80a8de82d4280",
+					"horoscopo-touro-weekly-2026-11-09": "348cf5c69b6002c4cbf362e2e9f7a5405738c94e2d8e455dc3b42913b187c8ad",
+					"horoscopo-gemeos-weekly-2026-11-09": "d7c6e8a5d7e21231f7e4a869eafc3af2ae8bc123895093cedd4d046b28f20b7d",
+					"horoscopo-cancer-weekly-2026-11-09": "852df1c39f574ce112040668c9fb3d27b238efe56a545108d83afb072aec6639",
+					"horoscopo-leao-weekly-2026-11-09": "699f367dfccd0825778a450ff851d581a40e33efe10344a92034d387e039d61f",
+					"horoscopo-virgem-weekly-2026-11-09": "21f3051d4c79d99d6e83b3603a72c027d3bf10b1cea9206aa2e11254f776e625",
+					"horoscopo-libra-weekly-2026-11-09": "f3f0f213358ee7b232aef26258b2f61c68c4ee50a8c3887f0893d48beb2f5204",
+					"horoscopo-escorpiao-weekly-2026-11-09": "3f84a197552b2376c463125f9d36f30f0cca1e5fcf85481ecb3d1b7e4ea83e5a",
+					"horoscopo-sagitario-weekly-2026-11-09": "0ea71cadac3c331486e4902abb28004ee6c24966a02de5647f11828bedd074f9",
+					"horoscopo-capricornio-weekly-2026-11-09": "d3fd8f7546a5e5cc55e22bb6f23bf98d1d5f764ecaad8164e1e9887a4b29ee3c",
+					"horoscopo-aquario-weekly-2026-11-09": "a115ceb1232aedabc04bd9926c7b049992032450e763eac73998f20d5998e3ef",
+					"horoscopo-peixes-weekly-2026-11-09": "f075ff27a06f56988592ca6060134001a2f4d2fcb8c1c05949461282ee124be3"
+				},
+				"claimsDigests": {
+					"horoscopo-aries-weekly-2026-11-09": "b9fa642f7cbdf3827d9fead5650bb2b840783791299ddbe4ef1a8f30f0e4cc7d",
+					"horoscopo-touro-weekly-2026-11-09": "ad144c3fe16e48080b12e1b441c2056b1d149fc84668c11a241451e66c989dfb",
+					"horoscopo-gemeos-weekly-2026-11-09": "dc655c4e9bea520f766dffd0c6a2009d843704369a7e231cdd3cc97b2f6226f2",
+					"horoscopo-cancer-weekly-2026-11-09": "8d05a92e17894dfc777e19f8a6a6ec703fdf28480426c17771ffceb92a519e69",
+					"horoscopo-leao-weekly-2026-11-09": "b609651a60a39db532638727c720d52adccb4dc61e19cdbdfad6d7854f37ae8f",
+					"horoscopo-virgem-weekly-2026-11-09": "36c1eacfa7f29a314f01355462254e9f534bdd1f2b66930138f1fd114b363977",
+					"horoscopo-libra-weekly-2026-11-09": "bfa7c8641ad0fb406a028ade80a457df319523d049de5df5087f736d688814f8",
+					"horoscopo-escorpiao-weekly-2026-11-09": "bfe199c4a5c9d59525571a523a6fbad9322019343c244037b1ef3dee6ac9ac30",
+					"horoscopo-sagitario-weekly-2026-11-09": "c709127824a7f4e9b6ff44fd810deadd4b8989078d81c55f1845a8362280df08",
+					"horoscopo-capricornio-weekly-2026-11-09": "93dfacc68e505cf75f8df959f3f39fbe55fee50f1e2694be5b6810e75582cec3",
+					"horoscopo-aquario-weekly-2026-11-09": "2f6a0ccad7eb3d4e297bf6d3cd654202b5f30254c42e10d303edd4da49491836",
+					"horoscopo-peixes-weekly-2026-11-09": "66337b67354b48ac62dc2b0a04f65adc742d13bf0a1ca2d7d744699a590add9f"
+				},
+				"composition": {
+					"corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+					"corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+					"algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+					"reviewMode": "reviewed-corpus-and-runtime-verification",
+					"algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+				},
+				"algorithmManifest": {
+					"scripts/lib/public-horoscope-compose.mjs": "4bda72201716a04b9de587676f2f8c505536659b0b73ae451ed2cd374f9075d2",
+					"scripts/prepare-dated-horoscope.mjs": "b96275e379de7be9dae058db4e0e5aed4065369ba90379804c2ae1626417b088"
+				},
+				"evidence": [
+					{
+						"path": "facts.json",
+						"sha256": "c7be3187bd5751ca730afb2bf963a7796b33c847dfa46e1447002f46b350488e"
+					},
+					{
+						"path": "method.md",
+						"sha256": "5f54d7ce13c1d3e261e4a6f33e46eccffa23ddf29ba2f998e7413e707abbb463"
+					},
+					{
+						"path": "authored-copy.json",
+						"sha256": "70ade0ca88fc7c7352f9eaf8d12927ab4189b57221731f7ec9117aa300b35d7e"
+					}
+				],
+				"remainingGates": [
+					"independent-corpus-and-algorithm-review",
+					"real-external-signature",
+					"admission",
+					"visual-a11y-ci",
+					"hosted-verification"
+				]
+			},
+			"grant": {
+				"protocol": "atv-dated-horoscope-grant-v1",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"policyVersion": "atvna-horoscope-policy-2026-10-20-v1",
+				"methodVersion": "atv-solar-symbolic-sectors/1.0.0",
+				"reviewMode": "reviewed-corpus-and-runtime-verification",
+				"composition": {
+					"corpusVersion": "atv-public-horoscope-relational-corpus/1.0.0",
+					"corpusDigest": "ec287627f895e4ddec4345cf58ddc7325f75e10b28eebf06c3a9ab9c91b28e13",
+					"algorithmVersion": "atv-public-horoscope-composition/1.0.0",
+					"reviewMode": "reviewed-corpus-and-runtime-verification",
+					"algorithmDigest": "0b7f61a5605f7d947c8b79f506ab5ac946d4a2cecc9dcea07d15b2ed62a001ef"
+				},
+				"ownerDecisionDigest": "7986c686bbcdcb3f69261f6e3d8c29f4941f4f218a0b7d8fad76f9a2acc148f5",
+				"corpusReviewDigest": "8c1296f820abecbd7de3e0b45e3a62cf93368a9ca017a0be4ca3c1d53a960001",
+				"allowedPeriods": ["daily", "weekly", "monthly"],
+				"validFrom": "2026-10-20T10:55:15.000Z",
+				"validUntil": "2027-01-04T16:00:39.930Z",
+				"coverageFrom": "2026-10-01",
+				"signature": "wz/sJAU4rJrgLNQG6afSZHI+lQEiCOBNOM78zybDsCHyiogTI4rNmPhFtzTTiv6jRlpNNaJHK85lh7w1hsreBw=="
+			},
+			"index": {
+				"protocol": "atv-dated-horoscope-index-v1",
+				"keyId": "github-actions-editorial-20261006-01",
+				"reviewerId": "atvna-editorial-service",
+				"scopeDigest": "0ae3507325a2465d07a9556d8cfb1ae2aaf1f8035ba77adf977d7c4ceae590e5",
+				"grantDigest": "d3934ca70214db5057a08c411fbecf41dff815b52edf8e0637d19083b6fb7c28",
+				"signedAt": "2026-11-11T11:36:33.144Z",
+				"documents": [
+					{
+						"id": "horoscopo-aries-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/aries/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Áries: Negociar sem desaparecer do encontro e abrir espaço para criar e gostar",
+						"description": "Uma leitura simbólica para Áries sobre as parcerias e os acordos a dois e suas relações com a criação, o prazer e a expressão pessoal.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-touro-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/touro/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Touro: Dar uma forma possível à rotina e cuidar da base que acolhe você",
+						"description": "Uma leitura simbólica para Touro sobre o trabalho cotidiano e os cuidados de rotina e suas relações com a intimidade e a vida de casa.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-gemeos-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/gemeos/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Gêmeos: Abrir espaço para criar e gostar e encontrar palavras que aproximam",
+						"description": "Uma leitura simbólica para Gêmeos sobre a criação, o prazer e a expressão pessoal e suas relações com as conversas e os aprendizados cotidianos.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-cancer-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/cancer/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Câncer: Cuidar da base que acolhe você e dar valor ao que sustenta você",
+						"description": "Uma leitura simbólica para Câncer sobre a intimidade e a vida de casa e suas relações com suas prioridades e recursos.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-leao-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/leao/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Leão: Encontrar palavras que aproximam e escolher sua própria posição",
+						"description": "Uma leitura simbólica para Leão sobre as conversas e os aprendizados cotidianos e suas relações com sua maneira de se apresentar e começar.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-virgem-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/virgem/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Virgem: Dar valor ao que sustenta você e respeitar o tempo de recolher",
+						"description": "Uma leitura simbólica para Virgem sobre suas prioridades e recursos e suas relações com o recolhimento e os assuntos que pedem encerramento.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-libra-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/libra/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Libra: Escolher sua própria posição e participar sem perder sua voz",
+						"description": "Uma leitura simbólica para Libra sobre sua maneira de se apresentar e começar e suas relações com os grupos, as amizades e os projetos em comum.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-escorpiao-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/escorpiao/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Escorpião: Respeitar o tempo de recolher e assumir uma direção que faça sentido",
+						"description": "Uma leitura simbólica para Escorpião sobre o recolhimento e os assuntos que pedem encerramento e suas relações com a direção profissional e as responsabilidades públicas.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-sagitario-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/sagitario/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Sagitário: Participar sem perder sua voz e ampliar a visão sem perder o chão",
+						"description": "Uma leitura simbólica para Sagitário sobre os grupos, as amizades e os projetos em comum e suas relações com os estudos, as convicções e os projetos de expansão.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-capricornio-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/capricornio/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Capricórnio: Assumir uma direção que faça sentido e dividir sem perder a clareza",
+						"description": "Uma leitura simbólica para Capricórnio sobre a direção profissional e as responsabilidades públicas e suas relações com a partilha e os compromissos que envolvem confiança.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-aquario-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/aquario/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Aquário: Ampliar a visão sem perder o chão e negociar sem desaparecer do encontro",
+						"description": "Uma leitura simbólica para Aquário sobre os estudos, as convicções e os projetos de expansão e suas relações com as parcerias e os acordos a dois.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					},
+					{
+						"id": "horoscopo-peixes-weekly-2026-11-09",
+						"revision": 1,
+						"state": "PUBLISHED",
+						"path": "/horoscopo/peixes/weekly/2026-11-09",
+						"kind": "horoscope",
+						"title": "Peixes: Dividir sem perder a clareza e dar uma forma possível à rotina",
+						"description": "Uma leitura simbólica para Peixes sobre a partilha e os compromissos que envolvem confiança e suas relações com o trabalho cotidiano e os cuidados de rotina.",
+						"author": {
+							"id": "atvna-horoscopo-automatizado",
+							"name": "ATVNA",
+							"type": "Organization",
+							"bio": "Publicação ATVNA por composição determinística de corpus elaborado e revisto por IA. Sem revisão humana."
+						},
+						"automationDisclosure": {
+							"generatedWithAI": true,
+							"humanReview": false,
+							"reviewMode": "reviewed-corpus-and-runtime-verification"
+						},
+						"publishedAt": "2026-11-11T11:36:32.243Z",
+						"modifiedAt": "2026-11-11T11:36:32.243Z",
+						"calculation": {
+							"engine": "caelus",
+							"version": "atv-public-horoscope-samples/1.0.0",
+							"factsDigest": "8f66bf3591146ed3c89358267957b7d12c5eeecf9387b607c9c2dab8bc854569",
+							"coverageStart": "2026-11-09T00:00:00.000Z",
+							"coverageEnd": "2026-11-16T00:00:00.000Z"
+						},
+						"sources": [
+							{
+								"title": "Caelus — código do motor de efemérides utilizado",
+								"url": "https://github.com/heavyblotto/caelus"
+							}
+						]
+					}
+				],
+				"documentDigests": {
+					"horoscopo-aries-weekly-2026-11-09": "01569cbfd6c46bfaf3b8b81a09df7f4c0635b18cf770c26a67c80a8de82d4280",
+					"horoscopo-touro-weekly-2026-11-09": "348cf5c69b6002c4cbf362e2e9f7a5405738c94e2d8e455dc3b42913b187c8ad",
+					"horoscopo-gemeos-weekly-2026-11-09": "d7c6e8a5d7e21231f7e4a869eafc3af2ae8bc123895093cedd4d046b28f20b7d",
+					"horoscopo-cancer-weekly-2026-11-09": "852df1c39f574ce112040668c9fb3d27b238efe56a545108d83afb072aec6639",
+					"horoscopo-leao-weekly-2026-11-09": "699f367dfccd0825778a450ff851d581a40e33efe10344a92034d387e039d61f",
+					"horoscopo-virgem-weekly-2026-11-09": "21f3051d4c79d99d6e83b3603a72c027d3bf10b1cea9206aa2e11254f776e625",
+					"horoscopo-libra-weekly-2026-11-09": "f3f0f213358ee7b232aef26258b2f61c68c4ee50a8c3887f0893d48beb2f5204",
+					"horoscopo-escorpiao-weekly-2026-11-09": "3f84a197552b2376c463125f9d36f30f0cca1e5fcf85481ecb3d1b7e4ea83e5a",
+					"horoscopo-sagitario-weekly-2026-11-09": "0ea71cadac3c331486e4902abb28004ee6c24966a02de5647f11828bedd074f9",
+					"horoscopo-capricornio-weekly-2026-11-09": "d3fd8f7546a5e5cc55e22bb6f23bf98d1d5f764ecaad8164e1e9887a4b29ee3c",
+					"horoscopo-aquario-weekly-2026-11-09": "a115ceb1232aedabc04bd9926c7b049992032450e763eac73998f20d5998e3ef",
+					"horoscopo-peixes-weekly-2026-11-09": "f075ff27a06f56988592ca6060134001a2f4d2fcb8c1c05949461282ee124be3"
+				},
+				"signature": "GejELL/lDJpDyxbX26sD2cKvfKDaVy96ROAmLp8W6EjFFwjfgP1nh58/xVYkA5HUJ+hSLkHsDkzr9gsVdKmuDQ=="
+			},
+			"asset": {
+				"path": "/_editorial/dated/dcf2c6b2d86cc5c6963b0290e182eb25598d469c5948d20a25c2c7a125580c54.json",
+				"sha256": "dcf2c6b2d86cc5c6963b0290e182eb25598d469c5948d20a25c2c7a125580c54"
+			},
+			"admission": {
+				"acceptedAt": "2026-11-11T11:38:32.154Z",
+				"gateEvidenceDigest": "47ebf7ae1d47dcb9c134abaa6d94fd6422d09e96d229358ad24ed5d4fc22f8c9"
+			}
 		}
 	]
 }
