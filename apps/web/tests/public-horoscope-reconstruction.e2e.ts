@@ -171,7 +171,7 @@ test('a gap in the daily schedule offers both dated alternatives supplied for th
 				currentWeek,
 				hasHistory: true,
 				supportingGuides: [],
-				archive: '/horoscopo/aries?period=daily'
+				archive: '/horoscopo/aries'
 			}
 		})
 	);
@@ -227,7 +227,7 @@ for (const width of [320, 390, 1440]) {
 			.getByRole('navigation', { name: 'Período da leitura' })
 			.getByRole('link', { name: 'Semana', exact: true })
 			.click();
-		await expect(page).toHaveURL(/\/horoscopo\?period=weekly&year=\d{4}$/);
+		await expect(page).toHaveURL(/\/horoscopo\?period=weekly$/);
 		await expect(
 			page.getByRole('navigation', { name: 'Período da leitura' }).getByRole('link', {
 				name: 'Semana',
@@ -238,7 +238,7 @@ for (const width of [320, 390, 1440]) {
 			.locator('.sign-card')
 			.filter({ has: page.getByRole('heading', { name: 'Áries', exact: true }) })
 			.click();
-		await expect(page).toHaveURL(/\/horoscopo\/aries\?period=weekly&year=\d{4}$/);
+		await expect(page).toHaveURL(/\/horoscopo\/aries\?period=weekly$/);
 		if (ariesWeekly) {
 			await expect(
 				page.getByRole('heading', { level: 2, name: ariesWeekly.title, exact: true })

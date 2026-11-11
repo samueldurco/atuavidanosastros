@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PublicEmailMarkup from '$lib/components/PublicEmailMarkup.svelte';
 	import SocialPresence from '$lib/components/SocialPresence.svelte';
 	import { publicChannels, publicContactEmail } from '$lib/data/public-channels';
 </script>
@@ -38,7 +39,7 @@
 				<h2>Precisa falar com a gente?</h2>
 				<p>Para dúvidas sobre sua conta, leituras, conteúdo ou parcerias, escreva por e-mail.</p>
 				<a href="/fale-conosco" class="button">Fale conosco</a>
-				<p class="email">{publicContactEmail}</p>
+				<p class="email"><PublicEmailMarkup>{publicContactEmail}</PublicEmailMarkup></p>
 			</aside>
 		</div>
 	</div>
