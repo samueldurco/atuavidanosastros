@@ -1144,6 +1144,7 @@
 <style>
 	.learning-guide {
 		margin-top: 2rem;
+		padding: clamp(1.25rem, 3vw, 2rem);
 	}
 	.learning-guide h2 {
 		margin-top: 1.5rem;
