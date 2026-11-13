@@ -29,7 +29,11 @@
 		embedded = false,
 		active = true
 	}: {
-		data: { tool: FreeTool; consentGuidePath?: string | null };
+		data: {
+			tool: FreeTool;
+			consentGuidePath?: string | null;
+			learningGuide?: { path: string; title: string; description: string } | null;
+		};
 		embedded?: boolean;
 		active?: boolean;
 	} = $props();
@@ -1122,11 +1126,31 @@
 						>Limpar dados e resultado desta página</button
 					>
 				</div>{/if}
+			{#if !embedded && data.learningGuide}
+				<section class="card learning-guide" aria-labelledby="learning-guide-title">
+					<p class="eyebrow">Dados para o cálculo</p>
+					<p>{tool.requirements}</p>
+					<h2 id="learning-guide-title">{data.learningGuide.title}</h2>
+					<p>{data.learningGuide.description}</p>
+					<a class="text-link" href={data.learningGuide.path}
+						>Ler o guia sobre {tool.id === 'ascendente' ? 'ascendente' : 'mapa astral'} →</a
+					>
+				</section>
+			{/if}
 		</ContentShell>
 	{/if}
 </div>
 
 <style>
+	.learning-guide {
+		margin-top: 2rem;
+	}
+	.learning-guide h2 {
+		margin-top: 1.5rem;
+	}
+	.learning-guide p {
+		max-width: 70ch;
+	}
 	.quota-note,
 	.identity-choice {
 		padding: 1rem 1.25rem;

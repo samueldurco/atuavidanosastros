@@ -93,9 +93,9 @@ export function legacySeo(path: string): PageSeo | null {
 		: null;
 	const special: Record<string, { title: string; description: string }> = {
 		'/': {
-			title: `${SITE.name} — uma descoberta de cada vez`,
+			title: `Mapa astral grátis, horóscopo e autoconhecimento — ${SITE.name}`,
 			description:
-				'Ferramentas grátis, produtos digitais e histórias para ampliar seu olhar. Explore astrologia, Tarot, sonhos e a Loja dos Signos.'
+				'Calcule seu mapa astral e ascendente grátis, consulte o horóscopo por signo e leia guias de astrologia, Tarot, relacionamentos, carreira e sonhos.'
 		},
 		'/meio-do-ceu': {
 			title: 'Meio do Céu no mapa astral',
@@ -215,12 +215,12 @@ export function discoverySeo(path: string): PageSeo | null {
 		}
 	};
 	const entry = topic
-		? { title: topic.label, description: topic.description }
+		? { title: `${topic.label}: ferramentas grátis e guias`, description: topic.description }
 		: tool
 			? { title: tool.label, description: tool.description }
 			: sign
 				? {
-						title: `${signNames[sign]}: signo, datas e horóscopo`,
+						title: `Signo de ${signNames[sign]}: datas, elemento e horóscopo`,
 						description: `Explore o signo de ${signNames[sign]}, consulte suas datas e elemento, encontre as previsões disponíveis e descubra ferramentas e guias para conhecer seu mapa astral.`
 					}
 				: directories[path];
