@@ -48,13 +48,8 @@ jobs:
       - name: Prepare finite period batch
         env:
           BATCH_MODE: ${{ inputs.mode || 'next' }}
-        run: |
-          reference="$(date -u +%F)"
-          if [ "$BATCH_MODE" = bootstrap-yesterday ]; then
-            reference="$(date -u --date="$reference - 1 day" +%F)"
-            BATCH_MODE=bootstrap
-          fi
-          node scripts/prepare-dated-horoscope.mjs --schedule "$BATCH_MODE" "$reference" output/dated-horoscope-prepared
+          SCHEDULE_CRON: ${{ github.event.schedule }}
+        run: node scripts/dated-horoscope-workflow.mjs prepare output/dated-horoscope-prepared
       - name: Reproduce, verify and sign with existing external custody
         env:
           ATVNA_EDITORIAL_SIGNING_KEY: ${{ secrets.ATVNA_EDITORIAL_SIGNING_KEY }}
@@ -64,6 +59,11 @@ jobs:
           name: signed-dated-horoscope
           path: output/dated-horoscope-signed.json
           retention-days: 7
+      - name: Report exact coverage and pending publication
+        env:
+          BATCH_DELIVERY: ${{ inputs.delivery || 'signed-artifact' }}
+          AUTOPUBLISH: ${{ vars.ATVNA_DATED_HOROSCOPE_AUTOPUBLISH || 'false' }}
+        run: node scripts/dated-horoscope-workflow.mjs summary output/dated-horoscope-prepared/index.json
 
   publish:
     needs: sign

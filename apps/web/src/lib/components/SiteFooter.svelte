@@ -14,6 +14,8 @@
 			<a href="/explorar">Explorar</a>
 			<a href="/temas">Por temas</a>
 			<a href="/signos">Por signos</a>
+			<a href="/horoscopo">Horóscopo</a>
+			<a href="/ferramentas">Ferramentas grátis</a>
 			<a href="/leituras">Produtos digitais</a>
 			<a href="/loja">Produtos físicos</a>
 			<a href="/atv-mais">ATV+ · Assinatura</a>

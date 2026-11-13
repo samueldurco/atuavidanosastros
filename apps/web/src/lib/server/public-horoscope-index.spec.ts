@@ -61,6 +61,25 @@ describe('public horoscope archives', () => {
 		expect(body).toContain(`<loc>${SITE.url}/horoscopo/aries</loc>`);
 		expect(body).not.toContain(`<loc>${SITE.url}/horoscopo/touro</loc>`);
 	});
+	it('dates each permanent horoscope index from its own newest admitted edition', () => {
+		const other = fixture(
+			'/horoscopo/touro/daily/2026-10-09',
+			'2026-10-10',
+			'2026-10-09T01:00:00.000Z'
+		);
+		const body = pagesSitemap([other, daily, weekly]);
+		expect(body).toContain(
+			`<loc>${SITE.url}/horoscopo</loc><lastmod>${other.modifiedAt}</lastmod>`
+		);
+		expect(body).toContain(
+			`<loc>${SITE.url}/horoscopo/aries</loc><lastmod>${daily.modifiedAt}</lastmod>`
+		);
+		expect(body).toContain(
+			`<loc>${SITE.url}/horoscopo/touro</loc><lastmod>${other.modifiedAt}</lastmod>`
+		);
+		expect(body).toContain(`<loc>${SITE.url}/ferramentas/horoscopo</loc></url>`);
+		expect(pagesSitemap([fixture('/horoscopo/aries', '2026-10-09')])).not.toContain('<lastmod>');
+	});
 	it('accepts only canonical, real dates and the twelve known signs', () => {
 		expect(parseHoroscopeArchivePath(daily.path)).toEqual({
 			sign: 'aries',
