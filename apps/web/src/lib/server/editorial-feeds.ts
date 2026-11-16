@@ -46,6 +46,19 @@ export function sitemapIndex(documents: readonly EditorialSummary[], now: Date):
 	return `<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="${sitemapNamespace}">${paths.map((path) => `<sitemap><loc>${xml(SITE.url + path)}</loc></sitemap>`).join('')}</sitemapindex>`;
 }
 export function pagesSitemap(documents: readonly EditorialSummary[]): string {
+	// The permanent horoscope indexes change when an admitted edition is added or
+	// revised. Report that editorial date, never the crawl/build/request time.
+	const horoscopeModified = new Map<string, string>();
+	for (const document of documents) {
+		const sign = signWithHoroscope(document);
+		if (!sign || !Number.isFinite(Date.parse(document.modifiedAt))) continue;
+		for (const path of ['/horoscopo', `/horoscopo/${sign}`]) {
+			const previous = horoscopeModified.get(path);
+			if (!previous || Date.parse(document.modifiedAt) > Date.parse(previous)) {
+				horoscopeModified.set(path, document.modifiedAt);
+			}
+		}
+	}
 	const horoscopeSigns = [
 		...new Set(
 			documents.flatMap((document) => {
@@ -62,7 +75,10 @@ export function pagesSitemap(documents: readonly EditorialSummary[]): string {
 	const publicPaths = legacyPublicPaths.filter((path) => legacySeo(path)?.indexable);
 	return urlset(
 		[...new Set([...publicPaths, ...hubs, ...horoscopeSigns])]
-			.map((path) => `<url><loc>${xml(SITE.url + (path === '/' ? '' : path))}</loc></url>`)
+			.map((path) => {
+				const modified = horoscopeModified.get(path);
+				return `<url><loc>${xml(SITE.url + (path === '/' ? '' : path))}</loc>${modified ? `<lastmod>${xml(modified)}</lastmod>` : ''}</url>`;
+			})
 			.join('')
 	);
 }

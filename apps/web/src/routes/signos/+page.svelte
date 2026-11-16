@@ -11,12 +11,12 @@
 			>Signos
 		</nav>
 		<header class="explore-directory-intro">
-			<p class="explore-eyebrow">Doze signos · doze caminhos</p>
+			<p class="explore-eyebrow">Datas, elementos e horóscopos</p>
 			<h1>Os 12 signos<br /><em>do zodíaco.</em></h1>
 			<p class="explore-lead">
 				Na astrologia tropical, o signo solar é o trecho do zodíaco onde o Sol estava quando você
-				nasceu. Escolha um signo para conhecer seus símbolos e explorar conteúdos, previsões e
-				ferramentas.
+				nasceu. Consulte abaixo as datas aproximadas e o elemento de cada signo. Abra a página do
+				seu signo para encontrar o horóscopo e as ferramentas para conhecer seu mapa.
 			</p>
 			<p class="explore-date-note">
 				As datas são aproximadas. O Sol muda de signo em um horário diferente a cada ano. Se você
@@ -40,8 +40,8 @@
 					data-atv-tool="ascendente"
 					data-atv-universe="meu-ceu"
 					data-atv-context="universe">calcule o ascendente</a
-				>. Para reunir essas posições em uma leitura,
-				<a href="/temas/mapa-astral">explore o tema mapa astral</a>.
+				>. Entenda <a href="/ascendente">o que é o ascendente</a> e
+				<a href="/mapa-astral">como ler os principais elementos do mapa astral</a>.
 			</p>
 		</section>
 	</div>

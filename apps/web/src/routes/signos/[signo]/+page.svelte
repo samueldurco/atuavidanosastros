@@ -19,13 +19,17 @@
 			</nav>
 			<header class="explore-opening">
 				<div>
-					<p class="explore-eyebrow">
-						{data.sign.glyph} · {data.sign.element} · {data.sign.approximateDates}
-					</p>
-					<h1>Explore <em>{data.sign.name}.</em></h1>
+					<p class="explore-eyebrow">{data.sign.glyph} · Signos do zodíaco</p>
+					<h1>Signo de <em>{data.sign.name}.</em></h1>
 					<p class="explore-lead">
-						Consulte as previsões de {data.sign.name}, descubra outros pontos do seu mapa e encontre
-						uma nova leitura para o seu momento.
+						Na astrologia tropical, as datas aproximadas de {data.sign.name} são
+						<strong>{data.sign.approximateDates}</strong>. Seu elemento é
+						<strong>{data.sign.element}</strong>.
+					</p>
+					<p class="explore-date-note">
+						O Sol muda de signo em um horário diferente a cada ano. Se você nasceu perto da
+						transição, <a href="/ferramentas/mapa-astral">consulte seu mapa astral</a> com data, hora
+						e local de nascimento para confirmar o signo solar.
 					</p>
 					<a class="explore-button" href={`/horoscopo/${data.sign.slug}`}
 						>Ver horóscopo de {data.sign.name} <span aria-hidden="true">↗</span></a
@@ -45,8 +49,8 @@
 			<div class="explore-section-head">
 				<div>
 					<p class="explore-eyebrow">Para começar</p>
-					<h2 id="sign-experiences">Seu signo é só o começo.</h2>
-					<p>Explore o céu do momento e o seu mapa de nascimento.</p>
+					<h2 id="sign-experiences">Horóscopo e calculadoras.</h2>
+					<p>Consulte as previsões de {data.sign.name} ou calcule seu mapa de nascimento.</p>
 				</div>
 			</div>
 			<nav class="explore-sign-navigation" aria-label={`Experiências de ${data.sign.name}`}>
@@ -66,17 +70,13 @@
 					></a
 				>
 			</nav>
-			<p class="explore-date-note">
-				As datas de {data.sign.name} são aproximadas na astrologia tropical. Se você nasceu perto da transição
-				entre signos, consulte seu mapa com data, hora e local de nascimento.
-			</p>
 		</section>
 		{#if data.articles.length}
 			<section aria-labelledby="sign-reading">
 				<div class="explore-section-head">
 					<div>
 						<p class="explore-eyebrow">Para entender melhor</p>
-						<h2 id="sign-reading">Vá além do signo solar.</h2>
+						<h2 id="sign-reading">Entenda o signo solar, o ascendente e o mapa astral.</h2>
 					</div>
 					<a href="/revista">Ir para a revista ↗</a>
 				</div>
