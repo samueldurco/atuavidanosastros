@@ -23,7 +23,7 @@
 </script>
 
 <svelte:head>
-	<title>{SITE.name} — uma descoberta de cada vez</title>
+	<title>{data.seo?.title}</title>
 	<link rel="canonical" href={SITE.url} />
 	<link
 		rel="preload"
@@ -33,10 +33,7 @@
 		media="(min-width: 681px)"
 		fetchpriority="high"
 	/>
-	<meta
-		name="description"
-		content="Ferramentas grátis, produtos digitais e histórias para ampliar seu olhar. Explore astrologia, Tarot, sonhos e a Loja dos Signos."
-	/>
+	<meta name="description" content={data.seo?.description} />
 	<link
 		rel="preload"
 		href="/brand/home-approved/newsreader-italic-latin-variable.woff2"
