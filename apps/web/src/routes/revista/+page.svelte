@@ -1,482 +1,457 @@
 <script lang="ts">
-	import { SvelteURLSearchParams } from 'svelte/reactivity';
-	import { interestNavigation } from '$lib/data/public-navigation';
+	import MagazineBulletin from '$lib/components/MagazineBulletin.svelte';
+	import { magazineSections } from '$lib/data/magazine-navigation';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
-	let { data } = $props();
-	const currentTopic = $derived(interestNavigation.find((item) => item.id === data.selected));
-	const featured = $derived(
-		!data.query && !data.kind && data.order === 'recentes' ? data.articles[0] : null
-	);
-	const remaining = $derived(featured ? data.articles.slice(1) : data.articles);
-	const topicFor = (id: string) => interestNavigation.find((item) => item.id === id);
-	const themeFor = (id: string) => mvpThemes[id as keyof typeof mvpThemes] ?? mvpThemes['meu-ceu'];
-	function topicHref(id?: string): string {
-		const params = new SvelteURLSearchParams();
-		if (id) params.set('tema', id);
-		if (data.query) params.set('q', data.query);
-		if (data.kind) params.set('tipo', data.kind);
-		if (data.order !== 'recentes') params.set('ordem', data.order);
-		return `/revista${params.size ? `?${params.toString()}` : ''}`;
-	}
-	const date = (value: string) =>
-		new Intl.DateTimeFormat('pt-BR', { dateStyle: 'medium', timeZone: 'America/Sao_Paulo' }).format(
-			new Date(value)
-		);
+	import { interestNavigation } from '$lib/data/public-navigation';
+	import { signNames } from '$lib/data/site';
+
+	let { data, form } = $props();
+	const [lead, ...secondary] = $derived(data.featured);
+	const themeFor = (topicId?: keyof typeof mvpThemes) => mvpThemes[topicId ?? 'meu-ceu'];
+	const topicLabel = (topicId: string | undefined) =>
+		interestNavigation.find((topic) => topic.id === topicId)?.label;
+	const date = new Intl.DateTimeFormat('pt-BR', {
+		dateStyle: 'medium',
+		timeZone: 'UTC'
+	});
 </script>
 
-<section class="magazine container">
-	<header class="magazine-masthead">
-		<p class="eyebrow">Ideias para entender. Espaço para descobrir.</p>
-		<h1>Revista <span>ATVNA</span></h1>
-		<p class="magazine-intro">
-			Leia sobre astrologia, relacionamentos, carreira, Tarot e sonhos. Encontre uma dúvida sua e
-			comece por ela.
-		</p>
-		<p><a href="/noticias">Ver notícias, colunas e guias publicados</a></p>
-	</header>
-	<nav class="topics" aria-label="Assuntos da Revista">
-		<a href={topicHref()} aria-current={!data.selected ? 'page' : undefined}>Todos os assuntos</a>
-		{#each interestNavigation as item (item.id)}<a
-				href={topicHref(item.id)}
-				aria-current={data.selected === item.id ? 'page' : undefined}>{item.label}</a
-			>{/each}
-	</nav>
-	<form
-		class="magazine-search"
-		action="/revista"
-		method="GET"
-		role="search"
-		aria-label="Buscar na Revista"
-	>
-		{#if data.selected}<input type="hidden" name="tema" value={data.selected} />{/if}
-		<div class="search-field">
-			<label for="revista-busca">O que você quer entender?</label><input
-				id="revista-busca"
-				type="search"
-				name="q"
-				value={data.query}
-				placeholder="Busque um assunto"
-				maxlength="160"
-			/>
-		</div>
+<div class="magazine container">
+	<header class="masthead">
 		<div>
-			<label for="revista-tipo">Tipo de leitura</label><select id="revista-tipo" name="tipo"
-				><option value="" selected={!data.kind}>Todos os tipos</option
-				>{#each data.kinds as kind (kind.id)}<option
-						value={kind.id}
-						selected={data.kind === kind.id}>{kind.label}</option
-					>{/each}</select
-			>
+			<h1>Revista ATVNA</h1>
+			<p>Trânsitos astrológicos, guias e horóscopos.</p>
 		</div>
-		<div>
-			<label for="revista-ordem">Ordenar por</label><select id="revista-ordem" name="ordem"
-				><option value="recentes" selected={data.order === 'recentes'}>Mais recentes</option><option
-					value="titulo"
-					selected={data.order === 'titulo'}>Título: A a Z</option
-				></select
-			>
-		</div>
-		<button class="button" type="submit">Buscar</button>
-	</form>
-	<div class="results-heading">
-		<h2>{currentTopic ? currentTopic.label : 'Para ler agora'}</h2>
-		<p aria-live="polite">
-			{data.articles.length}
-			{data.articles.length === 1 ? 'artigo' : 'artigos'}{data.query ? ` para “${data.query}”` : ''}
-		</p>
-	</div>
-	{#if featured}
-		<article
-			class="featured"
-			style={`--topic-tint: ${themeFor(featured.topicId).tint}; --topic-ink: ${themeFor(featured.topicId).ink};`}
+		<form
+			class="search"
+			action="/revista#acervo"
+			method="GET"
+			role="search"
+			aria-label="Buscar na Revista"
 		>
-			<div class="featured-art">
-				<img src={mvpArt(themeFor(featured.topicId).art)} alt="" width="500" height="500" />
+			<label for="revista-busca">Buscar na Revista</label>
+			<div class="search-fields">
+				<input
+					id="revista-busca"
+					type="search"
+					name="q"
+					value={data.query}
+					placeholder="Ex.: Mercúrio retrógrado"
+					maxlength="160"
+				/>
+				<button type="submit">Buscar</button>
 			</div>
-			<div class="featured-copy">
-				<p class="eyebrow">
-					{featured.kindLabel} · {topicFor(featured.topicId)?.label ?? 'Revista'}
-				</p>
-				<h3><a href={featured.path}>{featured.title}</a></h3>
-				<p>{featured.description}</p>
-				<a class="article-link" href={featured.path}>Ler artigo <span aria-hidden="true">↗</span></a
-				><time datetime={featured.publishedAt}>{date(featured.publishedAt)}</time>
-			</div>
-		</article>
-	{/if}
-	{#if remaining.length}
-		<div class="article-grid">
-			{#each remaining as article (article.id)}
-				<article class="article-card" style={`--topic-tint: ${themeFor(article.topicId).tint};`}>
-					<div class="article-art">
-						<img
-							src={mvpArt(themeFor(article.topicId).art)}
-							alt=""
-							width="180"
-							height="180"
-							loading="lazy"
-						/>
-						<p class="eyebrow">{topicFor(article.topicId)?.label ?? 'Revista'}</p>
-					</div>
-					<div class="article-copy">
-						<p class="eyebrow">{article.kindLabel}</p>
-						<h3><a href={article.path}>{article.title}</a></h3>
-						<p>{article.description}</p>
-						<div class="article-meta">
-							<a href={article.path}>Ler artigo <span aria-hidden="true">↗</span></a><time
-								datetime={article.publishedAt}>{date(article.publishedAt)}</time
-							>
+		</form>
+	</header>
+
+	<nav class="sections" aria-label="Seções da Revista">
+		{#each magazineSections as section (section.id)}
+			<a href={`/revista#${section.id}`}>{section.label}</a>
+		{/each}
+		<a href="#acervo">Acervo</a>
+	</nav>
+
+	{#if data.showCover}
+		{#if lead}
+			<section id="em-destaque" aria-labelledby="featured-title">
+				<h2 id="featured-title">Em destaque</h2>
+				<div class="features">
+					<article class="featured">
+						<div class="feature-art" style:--feature-tint={themeFor(lead.topicId).tint}>
+							<img src={mvpArt(themeFor(lead.topicId).art)} alt="" width="220" height="220" />
 						</div>
-					</div>
-				</article>
-			{/each}
-		</div>
-	{:else if !featured}
-		<div class="empty-results">
-			<h3>
-				{data.total
-					? 'Nenhum artigo para esta busca.'
-					: 'As próximas leituras estão em preparação.'}
-			</h3>
-			<p>
-				{data.total
-					? 'Tente outra palavra ou volte a todos os assuntos.'
-					: 'Enquanto isso, explore os temas e signos e escolha por onde começar.'}
-			</p>
-			<a class="button secondary" href={data.total ? '/revista' : '/explorar'}
-				>{data.total ? 'Ver todos os artigos' : 'Explorar temas e signos'}</a
-			>
-		</div>
+						<div class="feature-copy">
+							<p class="category">{topicLabel(lead.topicId) ?? lead.kindLabel}</p>
+							<h3><a href={lead.path}>{lead.title}</a></h3>
+							<p>{lead.description}</p>
+						</div>
+					</article>
+					{#if secondary.length}
+						<div class="secondary">
+							{#each secondary as item (item.id)}
+								<article>
+									<p class="category">{topicLabel(item.topicId) ?? item.kindLabel}</p>
+									<h3><a href={item.path}>{item.title}</a></h3>
+								</article>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			</section>
+		{/if}
+
+		{#if data.topics.length}
+			<section id="guias-e-artigos" aria-labelledby="guides-title">
+				<h2 id="guides-title">Guias e artigos</h2>
+				<div class="topics">
+					{#each data.topics as topic (topic.id)}
+						<div class="topic">
+							<img
+								src={mvpArt(themeFor(topic.id).art)}
+								alt=""
+								width="58"
+								height="58"
+								loading="lazy"
+							/>
+							<div>
+								<h3><a href={topic.href}>{topic.label} <span aria-hidden="true">↗</span></a></h3>
+								<a class="topic-read" href={topic.read.path}>{topic.read.title}</a>
+							</div>
+						</div>
+					{/each}
+				</div>
+			</section>
+		{/if}
+
+		<MagazineBulletin receipt={form?.bulletin} />
+
+		<section id="horoscopo-da-semana" aria-labelledby="weekly-title">
+			<div class="section-heading">
+				<h2 id="weekly-title">Horóscopo da semana</h2>
+				<a href="/horoscopo">Ver horóscopo diário</a>
+			</div>
+			<p>Escolha seu signo para ler a previsão da semana.</p>
+			<ul class="signs">
+				{#each data.weeklySigns as sign (sign.label)}
+					<li><a href={sign.href}>{sign.label}</a></li>
+				{/each}
+			</ul>
+		</section>
 	{/if}
-	<aside class="magazine-next" aria-labelledby="magazine-next-title">
-		<div>
-			<p class="eyebrow">Da leitura à sua experiência</p>
-			<h2 id="magazine-next-title">
-				{currentTopic ? 'Explore esse assunto no seu ritmo.' : 'Quer começar por você?'}
+
+	<section id="acervo" aria-labelledby="archive-title">
+		<div class="section-heading">
+			<h2 id="archive-title">
+				{data.query ? 'Resultados da busca' : (data.selectedLabel ?? 'Acervo')}
 			</h2>
+			{#if !data.showCover}<a href="/revista">Voltar à capa</a>{/if}
+		</div>
+		{#if data.query}
+			<p>{data.total} {data.total === 1 ? 'resultado' : 'resultados'} para “{data.query}”</p>
+		{/if}
+		{#if data.articles.length}
+			<div class="archive">
+				{#each data.articles as article (article.id)}
+					<article class="article-card">
+						<p class="category">{article.kindLabel}</p>
+						{#if article.editions && article.editions.length > 1}
+							<details>
+								<summary>{article.title}</summary>
+								<ul class="signs">
+									{#each article.editions as edition (edition.sign)}
+										<li><a href={edition.path}>{signNames[edition.sign]}</a></li>
+									{/each}
+								</ul>
+							</details>
+						{:else if article.editions?.[0]}
+							<h3>
+								<a href={article.editions[0].path}
+									>{article.title} para {signNames[article.editions[0].sign]}</a
+								>
+							</h3>
+						{:else}
+							<h3><a href={article.path}>{article.title}</a></h3>
+						{/if}
+						<time datetime={article.publishedAt}>{date.format(new Date(article.publishedAt))}</time>
+					</article>
+				{/each}
+			</div>
+			{#if data.pagination.items.length > 1}
+				<nav class="pagination" aria-label="Paginação do acervo">
+					{#if data.pagination.previous}
+						<a href={data.pagination.previous} rel="prev">Anterior</a>
+					{/if}
+					{#each data.pagination.items as item, index (item.number)}
+						{#if index > 0 && data.pagination.items[index - 1].number + 1 < item.number}
+							<span aria-hidden="true">…</span>
+						{/if}
+						<a
+							href={item.href}
+							aria-label={`Página ${item.number}`}
+							aria-current={item.number === data.pagination.page ? 'page' : undefined}
+							>{item.number}</a
+						>
+					{/each}
+					{#if data.pagination.next}
+						<a href={data.pagination.next} rel="next">Próxima</a>
+					{/if}
+				</nav>
+			{/if}
+		{:else}
 			<p>
-				{currentTopic
-					? currentTopic.description
-					: 'As ferramentas são um primeiro contato com nossos temas. Escolha um assunto e veja o que pode descobrir.'}
+				Nenhuma leitura encontrada. Tente outra palavra ou <a href="/revista#acervo"
+					>volte ao acervo</a
+				>.
 			</p>
-		</div>
-		<div class="next-actions">
-			{#if currentTopic}<a class="button" href={currentTopic.toolHref}
-					>{currentTopic.action} <span aria-hidden="true">↗</span></a
-				><a href={currentTopic.href}>Conhecer as leituras deste tema</a>{:else}<a
-					class="button"
-					href="/ferramentas">Explorar ferramentas grátis <span aria-hidden="true">↗</span></a
-				><a href="/explorar">Explorar temas e signos</a>{/if}
-		</div>
-	</aside>
-</section>
+		{/if}
+	</section>
+</div>
 
 <style>
 	.magazine {
-		padding-block: clamp(2.5rem, 6vw, 5rem);
+		padding-block: clamp(1.5rem, 4vw, 3.5rem) 4rem;
 	}
-	.magazine-masthead {
-		text-align: center;
-		padding-bottom: clamp(2rem, 4vw, 3.5rem);
-	}
-	.magazine-masthead h1 {
-		font: 500 clamp(3.5rem, 10vw, 8.5rem)/0.95 var(--atv-font-display);
-		letter-spacing: -0.055em;
-		margin: 1rem 0 1.5rem;
-	}
-	.magazine-masthead h1 span {
-		white-space: nowrap;
-	}
-	.magazine-intro {
-		max-width: 43rem;
-		margin: auto;
-		font: 400 clamp(1.15rem, 2vw, 1.45rem)/1.55 var(--atv-font-editorial);
-	}
-	.topics {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0.5rem;
-		padding-block: 1.5rem;
-		border-block: 1px solid var(--atv-border);
-	}
-	.topics a {
-		display: flex;
-		align-items: center;
-		min-height: 44px;
-		padding: 0.5rem 0.9rem;
-		border: 1px solid var(--atv-border);
-		border-radius: 999px;
-		font: 500 0.85rem/1.3 var(--atv-font-ui);
-		text-decoration: none;
-	}
-	.topics a[aria-current='page'] {
-		background: #173b4a;
-		color: #fff9e9;
-		border-color: #173b4a;
-	}
-	.magazine-search {
+	.masthead {
 		display: grid;
-		grid-template-columns: minmax(180px, 1.6fr) 1fr 1fr auto;
-		gap: 1rem;
+		grid-template-columns: minmax(0, 1fr) minmax(18rem, 26rem);
 		align-items: end;
-		padding-block: 1.75rem;
+		gap: 1rem 2rem;
+		padding-bottom: 1.35rem;
 	}
-	.magazine-search label {
+	.masthead h1 {
+		margin: 0;
+		font-size: clamp(2.7rem, 6vw, 4.6rem);
+		line-height: 1.05;
+	}
+	.masthead p,
+	section > p {
+		margin: 0.45rem 0 0;
+	}
+	.search label,
+	.category {
 		display: block;
-		margin-bottom: 0.5rem;
-		font-size: 0.8rem;
-		font-weight: 600;
+		margin: 0 0 0.35rem;
+		font-size: 0.82rem;
+		font-weight: 700;
 	}
-	.magazine-search input,
-	.magazine-search select {
+	.search-fields {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: 0.4rem;
+	}
+	.search input,
+	.search button {
+		min-height: 2.75rem;
+		border: 1px solid var(--atv-text-primary);
+		border-radius: 0.25rem;
+		font: inherit;
+		padding: 0.55rem 0.75rem;
+	}
+	.search input {
 		width: 100%;
-		height: 48px;
-		padding: 0.65rem;
-		border: 1px solid var(--atv-border);
 		background: var(--atv-paper-0);
-		color: var(--atv-text-primary);
-		font: 400 0.95rem var(--atv-font-ui);
+		color: inherit;
 	}
-	.magazine-search button {
-		min-height: 48px;
+	.search button {
+		background: var(--atv-text-primary);
+		color: var(--atv-paper-0);
+		font-weight: 650;
+		cursor: pointer;
 	}
-	.results-heading {
+	.sections {
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1rem;
-		margin-block: 1rem 1.5rem;
+		gap: 0.25rem 1.5rem;
+		flex-wrap: wrap;
+		border-block: 1px solid var(--atv-border);
+		padding-block: 0.2rem;
 	}
-	.results-heading h2 {
-		font: 500 clamp(1.65rem, 3vw, 2.5rem)/1.1 var(--atv-font-display);
-		margin: 0;
+	.sections a {
+		padding-block: 0.55rem;
+		font-size: 0.92rem;
+		font-weight: 700;
 	}
-	.results-heading p {
-		font-size: 0.85rem;
+	section {
+		margin-top: clamp(2rem, 4vw, 3rem);
+		scroll-margin-top: 7rem;
+	}
+	.magazine :global(.bulletin) {
+		margin-top: clamp(2rem, 4vw, 3rem);
+	}
+	section > h2,
+	.section-heading h2 {
 		margin: 0;
-		text-align: right;
+		font-size: clamp(1.75rem, 3vw, 2.45rem);
+		line-height: 1.08;
+	}
+	section > h2 {
+		margin-bottom: 0.95rem;
+	}
+	.features {
+		display: grid;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+		gap: 1rem 1.5rem;
 	}
 	.featured {
 		display: grid;
-		grid-template-columns: 0.9fr 1.1fr;
-		background: var(--atv-paper-0);
-		margin-bottom: 2rem;
+		grid-template-columns: minmax(7rem, 0.72fr) minmax(0, 1.28fr);
+		border: 1px solid var(--atv-border);
+		align-items: stretch;
 	}
-	.featured-art {
+	.feature-art {
+		background: var(--feature-tint);
 		display: grid;
 		place-items: center;
-		padding: 2rem;
-		background: var(--topic-tint);
+		padding: 0.6rem;
 	}
-	.featured-art img {
-		width: 100%;
-		max-width: 320px;
+	.feature-art img {
+		width: min(100%, 10rem);
 		height: auto;
-		mix-blend-mode: multiply;
+		object-fit: contain;
 	}
-	.featured-copy {
-		padding: clamp(1.5rem, 4vw, 3.5rem);
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		justify-content: center;
+	.feature-copy {
+		padding: clamp(0.75rem, 2.5vw, 1.5rem);
+		align-self: center;
 	}
-	.featured-copy h3 {
-		font: 500 clamp(2rem, 3.5vw, 3.3rem)/1.08 var(--atv-font-display);
-		margin: 0 0 1rem;
+	.feature-copy h3,
+	.secondary h3 {
+		margin: 0;
+		line-height: 1.15;
 	}
-	.featured-copy h3 a,
-	.article-copy h3 a {
-		text-decoration: none;
+	.feature-copy h3 {
+		font-size: clamp(1.35rem, 2.35vw, 1.95rem);
 	}
-	.featured-copy h3 a:hover,
-	.article-copy h3 a:hover {
-		text-decoration: underline;
-		text-underline-offset: 0.15em;
+	.feature-copy > p:last-child {
+		margin: 0.5rem 0 0;
+		font-size: 0.9rem;
 	}
-	.featured-copy > p:not(.eyebrow) {
-		line-height: 1.65;
-		margin: 0 0 1rem;
+	.secondary article {
+		padding: 0.8rem 0;
+		border-bottom: 1px solid var(--atv-border);
 	}
-	.article-link {
-		min-height: 44px;
-		display: inline-flex;
-		align-items: center;
-		gap: 1rem;
-		font-weight: 600;
+	.secondary article:first-child {
+		padding-top: 0.35rem;
 	}
-	time {
-		font: 400 0.75rem/1.4 var(--atv-font-ui);
+	.secondary h3 {
+		font-size: clamp(1.14rem, 2vw, 1.5rem);
 	}
-	.featured-copy time {
-		margin-top: 0.5rem;
-	}
-	.article-grid {
+	.topics {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.5rem;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 0 1.3rem;
+		border-top: 1px solid var(--atv-border);
+	}
+	.topic {
+		display: grid;
+		grid-template-columns: 3.5rem minmax(0, 1fr);
+		align-items: center;
+		gap: 0.8rem;
+		padding-block: 0.9rem;
+		border-bottom: 1px solid var(--atv-border);
+	}
+	.topic img {
+		width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+	.topic h3 {
+		font: 700 0.98rem/1.25 var(--atv-font-ui);
+		margin: 0 0 0.2rem;
+	}
+	.topic-read {
+		font-size: 0.84rem;
+	}
+	.section-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.35rem 1rem;
+	}
+	.section-heading > a,
+	.topic-read {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	.signs {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(5.8rem, 1fr));
+		gap: 0.35rem;
+		list-style: none;
+		margin: 0.65rem 0 0;
+		padding: 0;
+	}
+	.signs a {
+		display: block;
+		padding: 0.45rem 0.2rem;
+		border: 1px solid var(--atv-border);
+		background: var(--atv-paper-1);
+		text-align: center;
+		font-size: 0.9rem;
+		font-weight: 650;
+	}
+	.archive {
+		margin-top: 0.7rem;
+		border-top: 1px solid var(--atv-border);
 	}
 	.article-card {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: 7rem minmax(0, 1fr) auto;
+		gap: 0.3rem 0.8rem;
+		align-items: baseline;
+		padding: 0.75rem 0;
 		border-bottom: 1px solid var(--atv-border);
-		min-width: 0;
 	}
-	.article-art {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		min-height: 140px;
-		padding: 1rem 1.25rem;
-		gap: 1rem;
-		background: var(--topic-tint);
-	}
-	.article-art img {
-		height: 100px;
-		width: 100px;
-		object-fit: contain;
-		mix-blend-mode: multiply;
-	}
-	.article-art p {
+	.article-card h3,
+	summary {
 		margin: 0;
-		font-size: 0.68rem;
-		text-align: right;
+		font-size: 1.03rem;
+		font-weight: 650;
+		font-family: var(--atv-font-ui);
 	}
-	.article-copy {
-		padding: 1.4rem 0 1.1rem;
-		display: flex;
-		flex-direction: column;
-		flex: 1;
+	summary {
+		cursor: pointer;
 	}
-	.article-copy .eyebrow {
-		margin: 0 0 0.5rem;
-	}
-	.article-copy h3 {
-		font: 500 1.55rem/1.2 var(--atv-font-display);
+	.article-card .category,
+	time {
 		margin: 0;
+		font-size: 0.8rem;
 	}
-	.article-copy > p:not(.eyebrow) {
-		line-height: 1.65;
-		font-size: 0.95rem;
-	}
-	.article-meta {
+	.pagination {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		justify-content: space-between;
-		gap: 0.6rem;
-		margin-top: auto;
+		gap: 0.35rem;
+		margin-top: 1.2rem;
 	}
-	.article-meta a {
-		min-height: 44px;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.85rem;
-		font-weight: 600;
-	}
-	.magazine-next {
-		display: grid;
-		grid-template-columns: 1.3fr 1fr;
-		gap: 3rem;
-		align-items: center;
-		border-block: 1px solid var(--atv-border);
-		padding-block: 2.5rem;
-		margin-top: 3rem;
-	}
-	.magazine-next h2 {
-		font: 500 clamp(1.9rem, 3vw, 2.6rem)/1.1 var(--atv-font-display);
-		margin: 0;
-	}
-	.magazine-next p {
-		max-width: 35rem;
-		line-height: 1.6;
-	}
-	.next-actions {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 1rem;
-	}
-	.next-actions > a {
-		min-height: 44px;
-		display: inline-flex;
-		align-items: center;
-	}
-	.empty-results {
-		padding: 3rem 1.5rem;
+	.pagination a {
+		min-width: 2.5rem;
+		padding: 0.5rem 0.65rem;
+		border: 1px solid var(--atv-border);
 		text-align: center;
-		background: var(--atv-paper-0);
+		font-size: 0.88rem;
 	}
-	.empty-results h3 {
-		font: 500 2rem/1.15 var(--atv-font-display);
-		margin-top: 0;
+	.pagination [aria-current='page'] {
+		background: var(--atv-text-primary);
+		color: var(--atv-paper-0);
 	}
-	@media (max-width: 900px) {
-		.magazine-search {
-			grid-template-columns: 1fr 1fr;
-		}
-		.article-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-		.featured-copy {
-			padding: 1.5rem;
-		}
-		.magazine-next {
-			gap: 1.5rem;
-		}
+	a:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
-	@media (max-width: 600px) {
-		.magazine-masthead {
-			text-align: left;
-		}
-		.magazine-masthead h1 {
-			max-width: 6ch;
-		}
+	@media (max-width: 840px) {
 		.topics {
-			flex-wrap: nowrap;
-			justify-content: flex-start;
-			overflow-x: auto;
-			padding-inline: 0.2rem;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
-		.topics a {
-			flex-shrink: 0;
+	}
+	@media (max-width: 680px) {
+		.masthead,
+		.features {
+			grid-template-columns: minmax(0, 1fr);
 		}
-		.magazine-search {
-			grid-template-columns: 1fr 1fr;
-			gap: 0.75rem;
+		.article-card {
+			grid-template-columns: minmax(0, 1fr) auto;
 		}
-		.search-field,
-		.magazine-search button {
+		.article-card .category {
 			grid-column: 1 / -1;
 		}
-		.featured,
-		.article-grid,
-		.magazine-next {
-			grid-template-columns: 1fr;
+		.secondary {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.7rem;
 		}
-		.featured-art {
-			padding: 1.25rem;
+		.secondary article {
+			padding: 0.35rem 0 0.75rem;
 		}
-		.featured-art img {
-			max-width: 190px;
+	}
+	@media (max-width: 440px) {
+		.topics {
+			grid-template-columns: minmax(0, 1fr);
 		}
-		.featured-copy h3 {
-			font-size: 2rem;
+		.featured {
+			grid-template-columns: 5.75rem minmax(0, 1fr);
 		}
-		.article-art {
-			min-height: 110px;
-		}
-		.article-art img {
-			height: 85px;
-			width: 85px;
-		}
-		.results-heading {
-			align-items: flex-start;
-		}
-		.results-heading h2 {
-			max-width: 65%;
+		.article-card time {
+			grid-column: 1 / -1;
 		}
 	}
 </style>

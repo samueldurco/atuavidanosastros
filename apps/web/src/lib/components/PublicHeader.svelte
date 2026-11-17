@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { interestNavigation } from '$lib/data/public-navigation';
+	import { magazineSections } from '$lib/data/magazine-navigation';
 	import { freeTools } from '$lib/data/free-tools';
 	import { visibleShopCollections } from '$lib/data/shop-collections';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
@@ -57,11 +58,10 @@
 			id: 'revista',
 			label: 'Revista',
 			href: '/revista',
-			links: interestNavigation.map((topic) => ({
-				href: `/revista?tema=${topic.id}`,
-				label: topic.label,
-				description: 'Artigos e guias',
-				art: mvpThemes[topic.id].art
+			links: magazineSections.map((section) => ({
+				href: `/revista#${section.id}`,
+				label: section.label,
+				art: section.art
 			}))
 		},
 		{

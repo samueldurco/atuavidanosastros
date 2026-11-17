@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { interestNavigation } from '../src/lib/data/public-navigation';
 import { exploreSigns } from '../src/lib/data/explore';
 import { freeTools } from '../src/lib/data/free-tools';
-import { expectedTopicPaths, publishedEditorial } from './fixtures/editorial-inventory';
+import { magazineSections } from '../src/lib/data/magazine-navigation';
 
 test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
@@ -90,53 +90,18 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 			await mobile.click();
 		}
 		await nav.locator('[aria-controls="nav-revista"]').click();
-		await expect(page.locator('#nav-revista .nav-item')).toHaveCount(6);
-		await page.locator('#nav-revista a[href="/revista"]').click();
-		await expect(page).toHaveURL(/\/revista$/);
+		await expect(page.locator('#nav-revista .nav-item')).toHaveCount(4);
+		for (const section of magazineSections) {
+			await expect(
+				page.locator('#nav-revista').getByRole('link', { name: section.label })
+			).toHaveAttribute('href', '/revista#' + section.id);
+		}
+		await page.locator('#nav-revista a[href="/revista#em-destaque"]').click();
+		await expect(page).toHaveURL(/\/revista#em-destaque$/);
 		await expect(page.locator('.nav-panel')).toHaveCount(0);
 		if (width <= 960) await expect(nav).not.toBeVisible();
 	});
 }
-
-test('artigos filtram o assunto e mantêm o catálogo comercial fora da navegação editorial', async ({
-	page
-}) => {
-	for (const item of interestNavigation) {
-		await page.goto(`/revista?tema=${item.id}`);
-		await expect(page.getByRole('heading', { level: 1 })).toHaveText('Revista ATVNA');
-		await expect(
-			page.getByRole('heading', { level: 2, name: item.label, exact: true })
-		).toBeVisible();
-		await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(
-			expectedTopicPaths[item.id].length
-		);
-		const next = page.getByRole('complementary', { name: 'Explore esse assunto no seu ritmo.' });
-		await expect(next.getByRole('link', { name: item.action })).toHaveAttribute(
-			'href',
-			item.toolHref
-		);
-		await expect(
-			next.getByRole('link', { name: 'Conhecer as leituras deste tema' })
-		).toHaveAttribute('href', item.href);
-		await expect(page.locator('main a[href^="/produtos/"]')).toHaveCount(0);
-	}
-	await page.goto('/revista?tema=desconhecido');
-	await expect(
-		page.getByRole('heading', { level: 2, name: 'Para ler agora', exact: true })
-	).toBeVisible();
-	await expect(page.locator('main article.featured, main article.article-card')).toHaveCount(
-		publishedEditorial.length
-	);
-	await expect(
-		page
-			.getByRole('navigation', { name: 'Assuntos da Revista' })
-			.getByRole('link', { name: 'Todos os assuntos', exact: true })
-	).toHaveAttribute('aria-current', 'page');
-	await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
-		'href',
-		'https://atuavidanosastros.com.br/revista'
-	);
-});
 
 test('URLs antigas redirecionam permanentemente sem perder filtros', async ({ request }) => {
 	const response = await request.get('/caderno?tema=amor&utm_source=legacy', { maxRedirects: 0 });

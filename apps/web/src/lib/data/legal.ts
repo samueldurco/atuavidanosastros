@@ -65,6 +65,7 @@ export const legalDocuments = {
 				title: 'Dados e finalidades',
 				paragraphs: [
 					'Conta: identificador, e-mail e dados de sessão são usados para autenticação, controle de acesso e recuperação. Quando houver login Google, o provedor fornece os dados necessários à identificação autorizada.',
+					'Boletim ATVNA. Quando você opta por receber o boletim, guardamos seu e-mail, a data e a versão do consentimento para administrar a inscrição e enviar as novidades da Revista. Você pode cancelar a inscrição pelo contato de privacidade indicado nesta página.',
 					'Ferramentas pessoais: data, hora e local de nascimento, perguntas, contextos e relatos são processados conforme o recurso escolhido. O armazenamento natal tem consentimento próprio; não implica autorização para marketing, IA ou publicação. Dados de outras pessoas só devem ser fornecidos quando você puder fazê-lo legitimamente.',
 					'Suporte e segurança: usamos as informações que você envia para responder solicitações e investigar problemas. A infraestrutura pode processar endereço IP, dados técnicos de requisições e registros de segurança. Esses dados não autorizam usos incompatíveis com a finalidade informada.'
 				]
