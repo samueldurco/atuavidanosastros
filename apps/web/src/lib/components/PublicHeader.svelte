@@ -5,7 +5,7 @@
 	import { magazineSections } from '$lib/data/magazine-navigation';
 	import { freeTools } from '$lib/data/free-tools';
 	import { shopDepartments } from '$lib/data/shop-departments';
-	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
+	import { mvpArt } from '$lib/data/mvp-visual';
 	import BrandLogo from './BrandLogo.svelte';
 	import ExploreMenu from './explore/ExploreMenu.svelte';
 	import SignOutButton from './SignOutButton.svelte';
