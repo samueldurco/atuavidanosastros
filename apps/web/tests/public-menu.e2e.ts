@@ -103,9 +103,25 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await nav.locator('[aria-controls="nav-revista"]').click();
 		await expect(page.locator('#nav-revista .nav-item')).toHaveCount(4);
 		for (const section of magazineSections) {
-			await expect(
-				page.locator('#nav-revista').getByRole('link', { name: section.label })
-			).toHaveAttribute('href', '/revista#' + section.id);
+			const link = page.locator('#nav-revista').getByRole('link', { name: section.label });
+			await expect(link).toHaveAttribute('href', '/revista#' + section.id);
+			await expect(link.locator('svg[aria-hidden="true"] use')).toHaveAttribute(
+				'href',
+				new RegExp(
+					String.raw`/_app/immutable/assets/revista-navigation\.[^/]+\.svg#revista-${section.id}$`
+				)
+			);
+		}
+		const magazineIcons = page.locator('#nav-revista .nav-item svg use');
+		await expect
+			.poll(() =>
+				magazineIcons.evaluateAll((icons) =>
+					icons.every((icon) => (icon as SVGUseElement).getBBox().width > 0)
+				)
+			)
+			.toBe(true);
+		if (width === 390 || width === 1440) {
+			await page.screenshot({ path: testInfo.outputPath(`revista-${width}.png`) });
 		}
 		await page.locator('#nav-revista a[href="/revista#em-destaque"]').click();
 		await expect(page).toHaveURL(/\/revista#em-destaque$/);

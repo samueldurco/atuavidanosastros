@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
+	import magazineIcons from '$lib/assets/revista-navigation.svg?url&no-inline';
 	import { interestNavigation } from '$lib/data/public-navigation';
 	import { magazineSections } from '$lib/data/magazine-navigation';
 	import { freeTools } from '$lib/data/free-tools';
 	import { shopDepartments } from '$lib/data/shop-departments';
-	import { mvpArt } from '$lib/data/mvp-visual';
 	import BrandLogo from './BrandLogo.svelte';
 	import ExploreMenu from './explore/ExploreMenu.svelte';
 	import SignOutButton from './SignOutButton.svelte';
-	type MenuLink = { href: string; label: string; description?: string } & (
-		{ art: string; icon?: never } | { icon: string; art?: never }
-	);
+	type MenuLink = { href: string; label: string; description?: string; iconHref: string };
 	type Menu = { id: string; label: string; href: string; links: MenuLink[] };
+	const navigationIcons = '/brand/navigation/icons.svg';
 	const menus: Menu[] = [
 		{
 			id: 'ferramentas',
@@ -22,7 +21,7 @@
 				href: `/?ferramenta=${tool.id}#ferramentas`,
 				label: tool.label,
 				description: interestNavigation.find((topic) => topic.id === tool.topicId)?.label,
-				icon: tool.id
+				iconHref: `${navigationIcons}#${tool.id}`
 			}))
 		},
 		{
@@ -34,19 +33,19 @@
 					href: '/atv-mais',
 					label: 'Assinatura ATV+',
 					description: 'Leituras para acompanhar seus ciclos',
-					icon: 'atv-mais'
+					iconHref: `${navigationIcons}#atv-mais`
 				},
 				{
 					href: '/lancamentos',
 					label: 'Lançamentos',
 					description: 'Novas leituras para situações concretas',
-					icon: 'lancamentos'
+					iconHref: `${navigationIcons}#lancamentos`
 				},
 				{
 					href: '/leituras',
 					label: 'Leituras avulsas',
 					description: 'Escolha o tema que faz sentido agora',
-					icon: 'leituras-avulsas'
+					iconHref: `${navigationIcons}#leituras-avulsas`
 				}
 			]
 		},
@@ -63,7 +62,7 @@
 			links: magazineSections.map((section) => ({
 				href: `/revista#${section.id}`,
 				label: section.label,
-				art: section.art
+				iconHref: `${magazineIcons}#revista-${section.id}`
 			}))
 		},
 		{
@@ -75,13 +74,13 @@
 					href,
 					label,
 					description,
-					icon: id
+					iconHref: `${navigationIcons}#${id}`
 				})),
 				{
 					href: '/loja?ver=colecoes#colecoes',
 					label: 'Coleções',
 					description: 'Os 12 signos e coleções temáticas',
-					icon: 'colecoes'
+					iconHref: `${navigationIcons}#colecoes`
 				}
 			]
 		}
@@ -171,20 +170,15 @@
 												? 'page'
 												: undefined}
 										>
-											{#if link.art}
-												<img src={mvpArt(link.art)} alt="" width="48" height="48" />
-											{:else}
-												<svg
-													viewBox="0 0 48 48"
-													fill="none"
-													stroke="currentColor"
-													stroke-width="1.65"
-													stroke-linecap="round"
-													stroke-linejoin="round"
-													aria-hidden="true"
-													><use href={`/brand/navigation/icons.svg#${link.icon}`} /></svg
-												>
-											{/if}
+											<svg
+												viewBox="0 0 48 48"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="1.65"
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												aria-hidden="true"><use href={link.iconHref} /></svg
+											>
 											<span>
 												<strong>{link.label}</strong>
 												{#if link.description}<small>{link.description}</small>{/if}
@@ -313,14 +307,10 @@
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
-	.nav-item :is(img, svg) {
+	.nav-item svg {
 		width: 43px;
 		height: 43px;
 		flex: 0 0 43px;
-	}
-	.nav-item img {
-		object-fit: contain;
-		mix-blend-mode: multiply;
 	}
 	.nav-item strong {
 		display: block;
@@ -406,7 +396,7 @@
 			min-height: 70px;
 			gap: 6px;
 		}
-		.nav-item :is(img, svg) {
+		.nav-item svg {
 			width: 33px;
 			height: 33px;
 			flex-basis: 33px;
