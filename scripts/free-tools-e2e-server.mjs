@@ -16,6 +16,7 @@ const procedures = {
 export async function startLedgerRpc(port = 0) {
   const db = await setupProductDatabase({ privateOnly: true });
   await db.exec(await file('supabase/migrations/20261028171546_free_tool_quota_ledger.sql'));
+  await db.exec(await file('supabase/migrations/20261117110656_magazine_bulletin_signups.sql'));
   const server = createServer(async (request, response) => {
     const send = (status, value) => {
       response.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store' });
@@ -23,7 +24,8 @@ export async function startLedgerRpc(port = 0) {
     };
     if (request.url === '/health' && request.method === 'GET') return send(200, { testOnly: true });
     const name = request.url?.match(/^\/rest\/v1\/rpc\/([a-z_]+)$/)?.[1];
-    if (request.method !== 'POST' || !Object.hasOwn(procedures, name ?? '')) return send(404, { message: 'not_found' });
+    const bulletin = request.url === '/rest/v1/magazine_bulletin_signups?on_conflict=email';
+    if (request.method !== 'POST' || (!bulletin && !Object.hasOwn(procedures, name ?? ''))) return send(404, { message: 'not_found' });
     if (request.headers.apikey !== serviceKey || request.headers.authorization !== `Bearer ${serviceKey}`) return send(401, { message: 'invalid_test_key' });
     try {
       let raw = '';
@@ -32,6 +34,16 @@ export async function startLedgerRpc(port = 0) {
         if (Buffer.byteLength(raw) > 262144) return send(413, { message: 'body_too_large' });
       }
       const input = JSON.parse(raw);
+      if (bulletin) {
+        await db.transaction(async transaction => {
+          await transaction.exec('set local role service_role');
+          await transaction.query(
+            'insert into public.magazine_bulletin_signups (email, consent_version) values ($1, $2) on conflict (email) do nothing',
+            [input.email, input.consent_version]
+          );
+        });
+        return send(201, null);
+      }
       const keys = procedures[name];
       if (!input || typeof input !== 'object' || Array.isArray(input) || Object.keys(input).some(key => !keys.includes(key))) return send(400, { message: 'invalid_input' });
       const values = keys.map(key => input[key] ?? null);

@@ -2,6 +2,7 @@
 	import type { EditorialDocument } from '$lib/server/editorial';
 	import { editorialTopic, reviewedGuideLink } from '$lib/data/editorial-topics';
 	import { interestNavigation } from '$lib/data/public-navigation';
+	import MagazineBulletin from './MagazineBulletin.svelte';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
 	import { publicEditorialAuthor } from '$lib/data/editorial-author';
 	let {
@@ -141,6 +142,9 @@
 			</div>
 		</div>
 	</div>
+	{#if document.kind !== 'horoscope'}
+		<MagazineBulletin />
+	{/if}
 	{#if relatedArticles.length}<nav class="related-articles" aria-label="Artigos relacionados">
 			<div class="related-heading">
 				<h2>Continue a leitura</h2>
