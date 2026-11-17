@@ -9,7 +9,7 @@
 	import BrandLogo from './BrandLogo.svelte';
 	import ExploreMenu from './explore/ExploreMenu.svelte';
 	import SignOutButton from './SignOutButton.svelte';
-	type MenuLink = { href: string; label: string; description?: string; icon: string };
+	type MenuLink = { href: string; label: string; description?: string; iconHref: string };
 	type Menu = { id: string; label: string; href: string; links: MenuLink[] };
 	const navigationIcons = '/brand/navigation/icons.svg';
 	const menus: Menu[] = [
