@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="revista-em-destaque" viewBox="0 0 48 48">
+    <path d="M16 27 13 40l7-4 4 6 4-13m2-2 5 12-7-3"/>
+    <path d="m24 6 4 3 5 1 1 5 3 4-3 4-1 5-5 1-4 3-4-3-5-1-1-5-3-4 3-4 1-5 5-1Z"/>
+    <path d="m24 13 1.9 3.8 4.1.6-3 3 .7 4.1-3.7-2-3.7 2 .7-4.1-3-3 4.1-.6Z" stroke="#9a633a"/>
+  </symbol>
+  <symbol id="revista-guias-e-artigos" viewBox="0 0 48 48">
+    <path d="M13 14c0-3-2-5-5-5h27a3 3 0 0 1 3 3v22M8 9a3 3 0 0 0 0 6h5v19a5 5 0 0 0 5 5h20a5 5 0 0 0 5-5H23a5 5 0 0 1-5 5"/>
+    <path d="M19 17h13m-13 5h10m-10 5h13" stroke="#9a633a"/>
+  </symbol>
+  <symbol id="revista-boletim" viewBox="0 0 48 48">
+    <rect x="6" y="12" width="36" height="25" rx="2"/>
+    <path d="m7 14 14 11a5 5 0 0 0 6 0l14-11"/>
+    <path d="m8 34 9-7m23 7-9-7" stroke="#9a633a"/>
+  </symbol>
+  <symbol id="revista-horoscopo-da-semana" viewBox="0 0 48 48">
+    <path d="M26 6a11 11 0 1 0 8 15A11 11 0 0 1 26 6Z"/>
+    <path d="M35 8v6m-3-3h6M7 35v5m6-5v5m6-5v5m6-5v5m6-5v5m6-5v5m6-5v5" stroke="#9a633a"/>
+  </symbol>
+</svg>
