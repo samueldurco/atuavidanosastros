@@ -159,25 +159,26 @@ test('draft/unknown editorial content, reverse pairs and invented authors return
 		}
 	}
 });
-test('sign horoscope indexes show only admitted current readings and history', async ({ page }) => {
+test('sign horoscope indexes show only admitted current readings and history', async ({
+	page,
+	request
+}) => {
 	await page.goto('/horoscopo/aries');
 	await expect(page.locator('h1')).toHaveText('Horóscopo de Áries');
-	const current = datedForecasts.find(
-		(document) =>
-			document.path.startsWith('/horoscopo/aries/daily/') &&
-			document.path.split('/').at(-1)! <= today &&
-			today < document.calculation!.coverageEnd.slice(0, 10)
-	);
+	const response = await request.get('/api/free-tools/horoscopo?sign=aries');
+	const { current } = await response.json();
 	if (current) {
 		await expect(
 			page.getByRole('heading', { level: 2, name: current.title, exact: true })
 		).toBeVisible();
-		await expect(
-			page.getByRole('link', { name: 'Ler o horóscopo completo', exact: true })
-		).toHaveAttribute('href', current.path);
+		await expect(page.locator('.current section p').first()).toHaveText(
+			current.sections[0].paragraphs[0]
+		);
 	} else {
 		await expect(
-			page.getByRole('heading', { name: 'A leitura deste período ainda não foi publicada' })
+			page.getByRole('heading', {
+				name: /A leitura deste período (ainda não foi publicada|está temporariamente indisponível)/
+			})
 		).toBeVisible();
 	}
 	const history = dailyHistory.filter((document) => document.path.startsWith('/horoscopo/aries/'));

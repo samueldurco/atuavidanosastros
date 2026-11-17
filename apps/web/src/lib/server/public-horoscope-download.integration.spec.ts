@@ -1,7 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-const mocks = vi.hoisted(() => ({ document: vi.fn(), pdf: vi.fn(), ledger: vi.fn() }));
+const mocks = vi.hoisted(() => ({
+	document: vi.fn(),
+	live: vi.fn(),
+	pdf: vi.fn(),
+	ledger: vi.fn()
+}));
 vi.mock('./editorial-registry', () => ({
-	createEditorialRead: () => ({ document: mocks.document })
+	createEditorialRead: () => ({ document: mocks.document }),
+	readLiveHoroscopes: () => ({ document: mocks.live })
 }));
 vi.mock('./free-tool-ledger', () => ({ freeToolLedger: mocks.ledger }));
 vi.mock('./free-tool-pdf', () => ({
@@ -36,6 +42,7 @@ function event(user: unknown = { email_confirmed_at: '2026-10-28T12:00:00.000Z' 
 beforeEach(() => {
 	vi.clearAllMocks();
 	mocks.document.mockResolvedValue(document);
+	mocks.live.mockResolvedValue(undefined);
 	mocks.pdf.mockResolvedValue(new TextEncoder().encode('%PDF-1.7'));
 });
 
@@ -73,6 +80,13 @@ describe('PDF de publicação admitida por signo, período e revisão', () => {
 		expect(await response.json()).toEqual({ available: true });
 		expect(mocks.document).toHaveBeenCalledWith(document.path, expect.any(Function));
 		expect(mocks.ledger).not.toHaveBeenCalled();
+	});
+	it('exporta a revisão exata de uma edição publicada nas páginas fixas', async () => {
+		mocks.document.mockResolvedValue(undefined);
+		mocks.live.mockResolvedValue(document);
+		expect((await download(event() as never)).status).toBe(200);
+		expect(mocks.live).toHaveBeenCalledWith(document.path, 'aries', 'daily', '2026-10-28');
+		expect(mocks.pdf).toHaveBeenCalledWith(document);
 	});
 	it.each([
 		undefined,

@@ -2,7 +2,7 @@ name: dated-horoscope-coverage
 
 on:
   schedule:
-    - cron: "37 1 * * *"
+    - cron: "37 3 * * *"
   workflow_dispatch:
 
 permissions:

@@ -5,7 +5,7 @@
 	import { parseFreeToolState } from '$lib/free-tool-state';
 	import { trackHomeEvent } from '$lib/analytics/home-events';
 	import NewsConsent from '$lib/components/NewsConsent.svelte';
-	import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
+	import { horoscopeIndexPath, parseHoroscopeArchivePath } from '$lib/public-horoscope';
 	let { productId }: { productId: string } = $props();
 	const funnels: Record<string, string> = {
 		ascendente: 'three-pillars',
@@ -25,10 +25,14 @@
 	const horoscopeQuery = $derived(
 		`?leitura=${encodeURIComponent(horoscopePath)}&revisao=${encodeURIComponent(horoscopeRevision)}`
 	);
+	const horoscopeEntry = $derived(parseHoroscopeArchivePath(horoscopePath));
+	const horoscopeReturn = $derived(
+		horoscopeEntry && page.url.searchParams.get('volta') === 'signo'
+			? horoscopeIndexPath(horoscopeEntry.sign, horoscopeEntry.period)
+			: horoscopePath
+	);
 	const horoscopeCompatible = $derived(
-		tool === 'horoscopo' &&
-			Boolean(parseHoroscopeArchivePath(horoscopePath)) &&
-			/^[1-9][0-9]{0,8}$/.test(horoscopeRevision)
+		tool === 'horoscopo' && Boolean(horoscopeEntry) && /^[1-9][0-9]{0,8}$/.test(horoscopeRevision)
 	);
 	const resultQuery = $derived(
 		tool === 'horoscopo'
@@ -297,7 +301,7 @@
 		<a
 			class="return-link"
 			href={horoscopeCompatible && available
-				? horoscopePath
+				? horoscopeReturn
 				: `/?ferramenta=${tool}${resultId ? `&resultado=${encodeURIComponent(resultId)}` : ''}#ferramentas`}
 			>Voltar à minha leitura gratuita <span aria-hidden="true">↗</span></a
 		>

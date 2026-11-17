@@ -22,7 +22,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const now = new Date("2026-10-20T18:00:00.000Z");
 const frozenAt = "2026-10-20T17:00:00.000Z";
 const copy = (v) => structuredClone(v);
-test("a delayed evening schedule still prepares the current UTC day after midnight", () => {
+test("a delayed evening schedule still prepares the intended day when GitHub starts it after midnight UTC", () => {
   const scheduled = (timestamp) => resolvePreparation({
     eventName: "schedule", cron: SCHEDULE_CRON, now: new Date(timestamp),
   });
@@ -34,9 +34,9 @@ test("a delayed evening schedule still prepares the current UTC day after midnig
 });
 test("manual recovery keeps its explicit date semantics independent of the cron", () => {
   const resolve = (mode) => resolvePreparation({ eventName: "workflow_dispatch", mode, now: new Date("2026-11-13T01:03:54Z") });
-  assert.deepEqual(resolve("bootstrap"), { mode: "bootstrap", referenceDate: "2026-11-13" });
-  assert.deepEqual(resolve("next"), { mode: "next", referenceDate: "2026-11-13" });
-  assert.deepEqual(resolve("bootstrap-yesterday"), { mode: "bootstrap", referenceDate: "2026-11-12" });
+  assert.deepEqual(resolve("bootstrap"), { mode: "bootstrap", referenceDate: "2026-11-12" });
+  assert.deepEqual(resolve("next"), { mode: "next", referenceDate: "2026-11-12" });
+  assert.deepEqual(resolve("bootstrap-yesterday"), { mode: "bootstrap", referenceDate: "2026-11-11" });
   assert.throws(() => resolve("unknown"), /manual mode/);
   assert.throws(() => resolvePreparation({ eventName: "pull_request" }), /Only schedule/);
   assert.throws(() => resolvePreparation({ eventName: "schedule", cron: SCHEDULE_CRON, now: new Date("invalid") }), /valid execution time/);
@@ -44,10 +44,9 @@ test("manual recovery keeps its explicit date semantics independent of the cron"
 test("signing completion reports publication as pending for every delivery mode", () => {
   const index = { packages: [{ period: "daily", startDate: "2026-11-13", endDateExclusive: "2026-11-14" }] };
   const summary = (settings) => signingSummary(index, settings);
-  assert.match(summary({ eventName: "schedule", autopublish: "false" }), /owner CLI pendente/);
-  assert.match(summary({ eventName: "workflow_dispatch", autopublish: "true", delivery: "signed-artifact" }), /owner CLI pendente/);
-  assert.match(summary({ eventName: "schedule", autopublish: "true" }), /job publish ainda precisa concluir/);
-  assert.match(summary({ eventName: "workflow_dispatch", autopublish: "true", delivery: "github-token" }), /job publish ainda precisa concluir/);
+  assert.match(summary({ eventName: "workflow_dispatch", delivery: "signed-artifact" }), /apenas o artefato assinado/);
+  assert.match(summary({ eventName: "schedule", delivery: "live" }), /job publish ainda precisa admitir/);
+  assert.match(summary({ eventName: "workflow_dispatch", delivery: "live" }), /job publish ainda precisa admitir/);
   assert.match(summary({}), /daily: 2026-11-13 a 2026-11-14/);
 });
 test("publication mutex is shared and releases only its own unchanged lock", async () => {

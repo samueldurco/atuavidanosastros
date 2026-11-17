@@ -1,13 +1,17 @@
 import { parseHoroscopeArchivePath } from '$lib/public-horoscope';
-import { createEditorialRead } from './editorial-registry';
+import { createEditorialRead, readLiveHoroscopes } from './editorial-registry';
 import type { EditorialAssetFetch } from './dated-horoscope-archive';
 
 /** Public document coordinates, never an anonymous or personal reading identifier. */
 export async function publishedHoroscopeForDownload(url: URL, fetchAsset: EditorialAssetFetch) {
 	const path = url.searchParams.get('leitura') ?? '';
 	const revision = url.searchParams.get('revisao') ?? '';
-	if (!parseHoroscopeArchivePath(path) || !/^[1-9][0-9]{0,8}$/.test(revision)) return null;
-	const document = await createEditorialRead().document(path, fetchAsset);
+	const edition = parseHoroscopeArchivePath(path);
+	if (!edition || !/^[1-9][0-9]{0,8}$/.test(revision)) return null;
+	const now = new Date();
+	const document =
+		(await createEditorialRead(now).document(path, fetchAsset)) ??
+		(await readLiveHoroscopes(now).document(path, edition.sign, edition.period, edition.startDate));
 	// The registry rechecks admission/revocation. A changed revision must never be
 	// silently substituted for the text the visitor actually consulted.
 	if (

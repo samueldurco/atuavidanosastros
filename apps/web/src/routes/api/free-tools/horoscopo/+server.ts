@@ -1,38 +1,31 @@
 import { error, json } from '@sveltejs/kit';
 import { signs } from '$lib/data/site';
 import { horoscopeIndexPath } from '$lib/public-horoscope';
-import { createEditorialRead } from '$lib/server/editorial-registry';
-import { publicHoroscopeIndex } from '$lib/server/public-horoscope-index';
+import { readPublicHoroscope } from '$lib/server/public-horoscope-index';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	const sign = signs.find((item) => item === url.searchParams.get('sign'));
 	if (!sign) error(400, 'Escolha um signo.');
-	const now = new Date();
-	const read = createEditorialRead(now);
-	const documents = await read.summaries();
-	const index = publicHoroscopeIndex(documents, url, sign, now);
-	const entry = index.current;
-	const document = entry && (await read.document(entry.path, fetch));
-	const availableLink = async (edition: typeof entry) => {
-		if (!edition || !(await read.document(edition.path, fetch))) return null;
-		const { path, startDate, endDateExclusive } = edition;
-		return { path, startDate, endDateExclusive };
-	};
-	const [lastDaily, currentWeek] = document
-		? [null, null]
-		: await Promise.all([availableLink(index.lastDaily), availableLink(index.currentWeek)]);
+	const index = await readPublicHoroscope(url, sign, fetch);
+	const path = horoscopeIndexPath(sign, index.period);
 	return json(
 		{
 			sign,
 			period: index.period,
-			current: document && entry ? { ...entry, sections: document.sections } : null,
-			lastDaily,
-			currentWeek,
-			hasHistory: index.entries.some((item) => item.sign === sign && item.period === index.period),
+			current:
+				index.reading && index.current
+					? { ...index.current, ...index.reading, readingPath: path }
+					: null,
+			lastDaily: index.lastDaily,
+			currentWeek:
+				!index.reading && index.currentWeek
+					? { ...index.currentWeek, path: horoscopeIndexPath(sign, 'weekly') }
+					: null,
+			hasHistory: index.history.length > 0,
 			supportingGuides: index.supportingGuides,
-			archive: horoscopeIndexPath(sign, index.period)
+			archive: path
 		},
-		{ headers: { 'Cache-Control': 'public, max-age=60' } }
+		{ headers: { 'Cache-Control': 'public, max-age=0, must-revalidate' } }
 	);
 };

@@ -45,11 +45,11 @@ export const freeTools: readonly FreeTool[] = [
 		label: 'Horóscopo de Hoje',
 		href: '/ferramentas/horoscopo',
 		topicId: 'ciclos',
-		description: 'Escolha seu signo e consulte a previsão de hoje quando estiver disponível.',
+		description: 'Escolha seu signo e leia o horóscopo do dia, da semana ou do mês.',
 		action: 'Consultar meu signo',
-		availability: 'partial',
-		availabilityLabel: 'Disponibilidade parcial',
-		requirements: 'Seu signo. A previsão depende da publicação do dia.',
+		availability: 'available',
+		availabilityLabel: 'Grátis',
+		requirements: 'Seu signo.',
 		offerIds: ['week-reading', 'personal-calendar', 'date-reading', 'solar-return']
 	},
 	{
