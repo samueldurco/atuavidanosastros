@@ -167,7 +167,7 @@
 											href={link.href}
 											class="nav-item"
 											onclick={dismiss}
-										aria-current={page.url.pathname + page.url.search === link.href
+											aria-current={page.url.pathname + page.url.search === link.href
 												? 'page'
 												: undefined}
 										>
