@@ -16,6 +16,7 @@ import release from './editorial-release/registry.json';
 import storedHoroscopeFacts from './editorial-release/horoscope-facts.json';
 import type { PublicHoroscopeSnapshot } from './public-horoscope-facts';
 import storedDatedIndex from './editorial-release/dated-index.json';
+import { createLiveHoroscopeRead } from './live-horoscope';
 import {
 	createDatedArchiveRead,
 	type DatedArchiveRelease,
@@ -153,4 +154,8 @@ export async function publishedEditorialDocument(
 	now = new Date()
 ): Promise<EditorialDocument | undefined> {
 	return createEditorialRead(now).document(path, fetchAsset);
+}
+
+export function readLiveHoroscopes(now: Date, fetcher = fetch) {
+	return createLiveHoroscopeRead(now, stored.authorities, fetcher);
 }

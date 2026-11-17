@@ -9,7 +9,7 @@ export const SCHEDULE_CRON = "15 20,22 * * *";
 export function resolvePreparation({ eventName, mode, cron, now = new Date() }) {
   if (!(now instanceof Date) || !Number.isFinite(now.getTime()))
     throw Error("A valid execution time is required");
-  const reference = new Date(now);
+  let reference = new Date(now);
   if (eventName === "schedule") {
     if (cron !== SCHEDULE_CRON)
       throw Error("Review the reference-date resolver when changing the cron");
@@ -21,6 +21,8 @@ export function resolvePreparation({ eventName, mode, cron, now = new Date() }) 
   } else if (eventName === "workflow_dispatch") {
     if (!["bootstrap", "next", "bootstrap-yesterday"].includes(mode))
       throw Error("An explicit supported manual mode is required");
+    const localDate = new Intl.DateTimeFormat("sv-SE", { timeZone: "America/Sao_Paulo" }).format(now);
+    reference = new Date(localDate + "T00:00:00Z");
     if (mode === "bootstrap-yesterday") {
       mode = "bootstrap";
       reference.setUTCDate(reference.getUTCDate() - 1);
@@ -31,17 +33,16 @@ export function resolvePreparation({ eventName, mode, cron, now = new Date() }) 
   return { mode, referenceDate: reference.toISOString().slice(0, 10) };
 }
 
-export function signingSummary(index, { eventName, delivery, autopublish }) {
-  const willPublish = autopublish === "true" &&
-    (eventName === "schedule" || delivery === "github-token");
+export function signingSummary(index, { eventName, delivery }) {
+  const willPublish = eventName === "schedule" || delivery === "live";
   return [
     "## Lote assinado; publicação ainda não comprovada",
     "",
-    ...index.packages.map((item) => `- ${item.period}: ${item.startDate} a ${item.endDateExclusive} (fim exclusivo, UTC)`),
+    ...index.packages.map((item) => `- ${item.period}: ${item.startDate} a ${item.endDateExclusive} (fim exclusivo)`),
     "",
     willPublish
-      ? "O job publish ainda precisa concluir admissão, CI, merge e verificação hospedada."
-      : "**Publicação pelo owner CLI pendente.** Este run entrega somente o artefato assinado; não atualiza o site. Use o procedimento de docs/runbooks/dated-horoscope-publication.md, no SHA exato deste run e dentro da validade de admissão de 24 horas.",
+      ? "O job publish ainda precisa admitir e publicar as leituras assinadas para as páginas fixas."
+      : "Este run entrega apenas o artefato assinado. Para atualizar as leituras, use a opção live do workflow.",
     "",
   ].join("\n");
 }
@@ -66,7 +67,6 @@ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.me
     const summary = signingSummary(JSON.parse(fs.readFileSync(outputPath, "utf8")), {
       eventName: process.env.GITHUB_EVENT_NAME,
       delivery: process.env.BATCH_DELIVERY,
-      autopublish: process.env.AUTOPUBLISH,
     });
     if (!process.env.GITHUB_STEP_SUMMARY) throw Error("GitHub step summary path is required");
     fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, summary);

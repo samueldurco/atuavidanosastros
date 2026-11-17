@@ -3,6 +3,7 @@
 	import { signs, signNames, type SignSlug } from '$lib/data/site';
 	import {
 		HOROSCOPE_FOLLOW_KEY,
+		horoscopeIndexPath,
 		horoscopePeriods,
 		periodNames,
 		parseHoroscopeFollow,
@@ -14,11 +15,13 @@
 	let {
 		entries,
 		serverNow,
+		today,
 		initialSign = 'aries',
 		initialPeriod = 'daily'
 	}: {
 		entries: HoroscopeEntry[];
 		serverNow: string;
+		today: string;
 		initialSign?: SignSlug;
 		initialPeriod?: PublicPeriod;
 	} = $props();
@@ -102,7 +105,13 @@
 					>
 				</p>
 				<ul>
-					{#each unread as entry (entry.id)}<li><a href={entry.path}>{entry.title}</a></li>{/each}
+					{#each unread as entry (entry.id)}<li>
+							<a
+								href={entry.startDate <= today && today < entry.endDateExclusive
+									? horoscopeIndexPath(entry.sign, entry.period)
+									: entry.path}>{entry.title}</a
+							>
+						</li>{/each}
 				</ul>
 			</div>
 			<button class="button secondary" type="button" onclick={acknowledge}

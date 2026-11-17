@@ -175,6 +175,45 @@ export function trackHomeEvent(
 	return true;
 }
 
+const horoscopeSubmissionStorage = 'atv-horoscope-submission-v1';
+
+export function recordHoroscopeSubmission(context: 'home' | 'alias') {
+	if (!trackHomeEvent('tool_submit', { tool_id: 'horoscopo', context, state: 'initial' })) return;
+	try {
+		sessionStorage.setItem(
+			horoscopeSubmissionStorage,
+			JSON.stringify({ context, operationId: crypto.randomUUID(), timestamp: Date.now() })
+		);
+	} catch {
+		/* Navigation works independently of analytics storage. */
+	}
+}
+
+export function recordHoroscopeOutcome(hasReading: boolean, unavailable: boolean) {
+	try {
+		const pending = sessionStorage.getItem(horoscopeSubmissionStorage);
+		if (!pending) return;
+		sessionStorage.removeItem(horoscopeSubmissionStorage);
+		const { context, operationId, timestamp } = JSON.parse(pending);
+		if (Date.now() - timestamp > 120_000 || (context !== 'home' && context !== 'alias')) return;
+		if (hasReading) {
+			trackHomeEvent(
+				'tool_result',
+				{ tool_id: 'horoscopo', context, state: 'new' },
+				{ operationId }
+			);
+		} else if (unavailable) {
+			trackHomeEvent('tool_error', {
+				tool_id: 'horoscopo',
+				context,
+				error_code: 'service_unavailable'
+			});
+		}
+	} catch {
+		/* Analytics does not affect the reading. */
+	}
+}
+
 /** One listener for current and future SPA content; returns cleanup for PublicShell unmount. */
 export function bindHomeEventClicks(root: Document = document): () => void {
 	const listener = (event: MouseEvent) => {

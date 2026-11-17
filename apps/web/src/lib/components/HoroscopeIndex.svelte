@@ -1,4 +1,5 @@
 <script lang="ts">
+	import MvpProductArt from './MvpProductArt.svelte';
 	import { signNames } from '$lib/data/site';
 	import {
 		horoscopeIndexPath,
@@ -38,8 +39,12 @@
 			<p>Não sabe qual é o seu signo? Consulte as <a href="/signos">datas dos 12 signos</a>.</p>
 			{#if !data.currentSigns.length}
 				<section class="current card" aria-labelledby="availability-heading">
-					<p class="eyebrow">{periodNames[data.period]} atual · períodos em UTC</p>
-					<h2 id="availability-heading">A leitura deste período ainda não foi publicada</h2>
+					<p class="eyebrow">{periodNames[data.period]} atual · horário de Brasília</p>
+					<h2 id="availability-heading">
+						{data.temporarilyUnavailable
+							? 'A leitura deste período está temporariamente indisponível'
+							: 'A leitura deste período ainda não foi publicada'}
+					</h2>
 					<p>
 						Você pode consultar a disponibilidade de cada signo ou guardar sua preferência neste
 						navegador.
@@ -70,20 +75,70 @@
 				{/each}
 			</div>
 		{:else}
-			<section class="current card" aria-labelledby="current-heading">
-				<p class="eyebrow">{periodNames[data.period]} atual · períodos em UTC</p>
-				<h2 id="current-heading">
-					{data.current ? data.current.title : 'A leitura deste período ainda não foi publicada'}
-				</h2>
-				{#if data.current}
-					<p>{horoscopeRange(data.current)}</p>
+			<article class="current card" aria-labelledby="current-heading">
+				<p class="eyebrow">{periodNames[data.period]} · horário de Brasília</p>
+				{#if data.current && data.reading}
+					<p class="edition-date">{horoscopeRange(data.current)}</p>
+					<h2 id="current-heading">{data.current.title}</h2>
 					<p>{data.current.description}</p>
-					<a class="button" href={data.current.path}>Ler o horóscopo completo</a>
+					{#each data.reading.sections as section, i (i)}
+						<section>
+							<h3>{section.heading}</h3>
+							{#each section.paragraphs as paragraph, j (j)}<p>{paragraph}</p>{/each}
+						</section>
+					{/each}
 				{:else}
-					<p>Não há uma leitura atual de {signNames[data.sign]} para este período.</p>
-					<HoroscopeAlternatives lastDaily={data.lastDaily} currentWeek={data.currentWeek} />
+					<h2 id="current-heading">
+						{data.temporarilyUnavailable
+							? 'A leitura deste período está temporariamente indisponível'
+							: 'A leitura deste período ainda não foi publicada'}
+					</h2>
+					{#if data.previousReading}
+						<p>Edição anterior · {horoscopeRange(data.previousReading.range)}</p>
+						<h3>{data.previousReading.title}</h3>
+						<p>{data.previousReading.description}</p>
+						{#each data.previousReading.sections as section, i (i)}
+							<section>
+								<h4>{section.heading}</h4>
+								{#each section.paragraphs as paragraph, j (j)}<p>{paragraph}</p>{/each}
+							</section>
+						{/each}
+					{/if}
+					<HoroscopeAlternatives
+						lastDaily={data.previousReading ? null : data.lastDaily}
+						currentWeek={data.currentWeek
+							? { ...data.currentWeek, path: horoscopeIndexPath(data.sign, 'weekly') }
+							: null}
+					/>
 				{/if}
-			</section>
+			</article>
+			{#if data.current && data.reading && data.weekReadingHref}
+				<aside class="continuation card" data-free-offer="week-reading">
+					<div class="continuation-art"><MvpProductArt productId="week-reading" /></div>
+					<div>
+						<h2>Uma previsão com o seu mapa</h2>
+						<p>
+							O Horóscopo Semanal Pessoal interpreta os trânsitos da semana a partir dos seus dados
+							de nascimento.
+						</p>
+						<a
+							class="button secondary"
+							href={data.weekReadingHref +
+								'?ferramenta=horoscopo&origem=ferramenta&leitura=' +
+								encodeURIComponent(data.current.path) +
+								'&revisao=' +
+								data.current.revision +
+								'&volta=signo'}
+							data-atv-event="tool_product_click"
+							data-atv-tool="horoscopo"
+							data-atv-product="week-reading"
+							data-atv-universe="ciclos"
+							data-atv-context="result"
+							data-atv-cta="offer">Conhecer conteúdo e disponibilidade →</a
+						>
+					</div>
+				</aside>
+			{/if}
 		{/if}
 		{#if data.supportingGuides.length}
 			<section class="supporting-guides" aria-labelledby="guides-heading">
@@ -122,7 +177,6 @@
 			</form>
 			<p class="history-note">
 				{periodNames[data.period]} · {data.year}. Dia e mês civis; semanas começam na segunda-feira.
-				Datas em UTC.
 			</p>
 			{#if data.history.length}
 				<ol class="history-list">
@@ -139,6 +193,7 @@
 		{#key `${data.sign}:${data.period}`}<HoroscopeFollow
 				entries={data.entries}
 				serverNow={data.serverNow}
+				today={data.today}
 				initialSign={data.sign ?? 'aries'}
 				initialPeriod={data.period}
 			/>{/key}
@@ -199,6 +254,32 @@
 	.current {
 		padding: clamp(1.25rem, 3vw, 2rem);
 		max-width: 50rem;
+	}
+	.current section h3 {
+		margin-top: 1.7rem;
+	}
+	.edition-date {
+		margin-block: 0.5rem;
+	}
+	.continuation {
+		max-width: 50rem;
+		display: grid;
+		grid-template-columns: minmax(8rem, 1fr) 2fr;
+		gap: 1.4rem;
+		align-items: center;
+		margin-top: 1.5rem;
+		padding: 1.5rem;
+	}
+	.continuation-art {
+		min-width: 0;
+	}
+	@media (max-width: 38rem) {
+		.continuation {
+			grid-template-columns: 1fr;
+		}
+		.continuation-art {
+			max-width: 17rem;
+		}
 	}
 	.history {
 		margin-top: 3rem;

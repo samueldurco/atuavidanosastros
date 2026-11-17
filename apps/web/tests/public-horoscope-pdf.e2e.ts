@@ -11,31 +11,6 @@ for (const width of [1440, 390]) {
 		page
 	}, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
-		await page.route('**/api/free-tools/horoscopo?*', (route) =>
-			route.fulfill({
-				json: {
-					sign: 'aries',
-					period: 'daily',
-					hasHistory: true,
-					supportingGuides: [],
-					archive: '/horoscopo/aries',
-					current: {
-						id: 'synthetic-browser-fixture',
-						revision: 1,
-						path: reference,
-						title: 'Publicação sintética de teste',
-						startDate: '2026-10-28',
-						endDateExclusive: '2026-10-29',
-						sections: [
-							{
-								heading: 'Leitura publicada',
-								paragraphs: ['Texto sintético consultado na ferramenta.']
-							}
-						]
-					}
-				}
-			})
-		);
 		await page.route('**/api/free-tools/horoscopo/reading?*', async (route) => {
 			const requested = new URL(route.request().url());
 			expect(requested.searchParams.get('leitura')).toBe(reference);
@@ -56,24 +31,14 @@ for (const width of [1440, 390]) {
 				body: Buffer.from('%PDF-1.7\nsynthetic browser download fixture')
 			});
 		});
-		await page.goto('/ferramentas/horoscopo');
+		await page.goto(landing + '&volta=signo');
 		await page.getByRole('button', { name: 'Recusar opcionais' }).click();
-		await page.getByRole('button', { name: 'Consultar meu signo' }).click();
-		const offer = page.locator('[data-free-offer="week-reading"]');
-		await expect(offer.getByRole('link')).toHaveAttribute('href', landing);
-		const tool = page.locator('.horoscope-tool');
-		await expect(
-			tool.getByRole('link', { name: 'consultar as edições já publicadas' })
-		).toHaveAttribute('href', '/horoscopo');
-		// The archive and the reviewed offer are the only links; PDF access stays behind the offer.
-		await expect(tool.getByRole('link')).toHaveCount(2);
-		await offer.getByRole('link').click();
 		const block = page.locator('.free-download');
 		await expect(block.getByRole('button', { name: 'Baixar meu PDF gratuito' })).toBeVisible();
 		await expect(block.getByRole('checkbox')).not.toBeChecked();
 		await expect(
 			block.getByRole('link', { name: 'Voltar à minha leitura gratuita' })
-		).toHaveAttribute('href', reference);
+		).toHaveAttribute('href', '/horoscopo/aries');
 		await expect(page.getByRole('heading', { level: 1 })).toContainText(
 			'Horóscopo Semanal Pessoal'
 		);

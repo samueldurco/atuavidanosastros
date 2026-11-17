@@ -2,22 +2,22 @@ name: dated-horoscope
 
 on:
   schedule:
-    # Prepare the next UTC day well before midnight, then retry two hours later.
+    # Prepare the next edition well before the day changes in Brasília, then retry two hours later.
     - cron: "15 20,22 * * *"
   workflow_dispatch:
     inputs:
       mode:
-        description: Bootstrap today or yesterday (archive recovery), or prepare the next UTC period
+        description: Bootstrap today or yesterday (archive recovery), or prepare the next period in Brasília
         required: true
         default: bootstrap
         type: choice
         options: [bootstrap, next, bootstrap-yesterday]
       delivery:
-        description: Signed artifact for owner CLI, or the separately enabled GitHub token publisher
+        description: Update the live readings, or produce a signed artifact only
         required: true
-        default: signed-artifact
+        default: live
         type: choice
-        options: [signed-artifact, github-token]
+        options: [live, signed-artifact]
 
 permissions:
   contents: read
@@ -61,21 +61,17 @@ jobs:
           retention-days: 7
       - name: Report exact coverage and pending publication
         env:
-          BATCH_DELIVERY: ${{ inputs.delivery || 'signed-artifact' }}
-          AUTOPUBLISH: ${{ vars.ATVNA_DATED_HOROSCOPE_AUTOPUBLISH || 'false' }}
+          BATCH_DELIVERY: ${{ inputs.delivery || 'live' }}
         run: node scripts/dated-horoscope-workflow.mjs summary output/dated-horoscope-prepared/index.json
 
   publish:
     needs: sign
-    # Repository policy currently disallows token-created PRs. Remain artifact-only
-    # until an explicitly reviewed operational authorization enables this variable.
-    if: vars.ATVNA_DATED_HOROSCOPE_AUTOPUBLISH == 'true' && (github.event_name == 'schedule' || inputs.delivery == 'github-token')
+    if: github.event_name == 'schedule' || inputs.delivery == 'live'
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 15
     permissions:
       contents: write
-      pull-requests: write
-      actions: write
+      actions: read
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
@@ -92,7 +88,21 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --name signed-dated-horoscope --dir output
-      - name: Admit, request exact CI, merge and verify hosted documents
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: node --experimental-strip-types scripts/publish-dated-horoscope.mjs output/dated-horoscope-signed.json
+      - name: Admit and publish the signed readings
+        run: |
+          content="$RUNNER_TEMP/horoscope-content"
+          if git ls-remote --exit-code --heads origin refs/heads/horoscope-content; then
+            git fetch --no-tags origin refs/heads/horoscope-content
+            git worktree add --detach "$content" FETCH_HEAD
+          else
+            status=$?
+            test "$status" -eq 2
+            git worktree add --detach "$content" HEAD
+            git -C "$content" switch --orphan horoscope-content
+          fi
+          node --experimental-strip-types scripts/publish-live-horoscope.mjs output/dated-horoscope-signed.json "$content"
+          git -C "$content" add --all
+          if ! git -C "$content" diff --cached --quiet; then
+            git -C "$content" -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "[skip ci] Publica a edição assinada do horóscopo"
+            git -C "$content" push origin HEAD:refs/heads/horoscope-content
+          fi

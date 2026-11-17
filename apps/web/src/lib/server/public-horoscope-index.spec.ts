@@ -1,7 +1,12 @@
 import { describe, expect, it } from 'vitest';
+import { readFileSync } from 'node:fs';
 import { publicHoroscopeIndex, loadPublicHoroscopeIndex } from './public-horoscope-index';
 import type { EditorialDocument } from './editorial';
+import type { DatedArchiveRelease } from './dated-horoscope-archive';
 import { pagesSitemap } from './editorial-feeds';
+import { readLiveHoroscopes } from './editorial-registry';
+import datedIndex from './editorial-release/dated-index.json';
+import { horoscopeDay } from './live-horoscope';
 import { SITE, signs } from '$lib/data/site';
 import {
 	horoscopeRange,
@@ -41,6 +46,45 @@ const daily = fixture('/horoscopo/aries/daily/2026-10-08', '2026-10-09');
 const weekly = fixture('/horoscopo/aries/weekly/2026-10-05', '2026-10-12');
 
 describe('public horoscope archives', () => {
+	it('reads a signed live edition before Brasília midnight and rejects altered text', async () => {
+		const start = '2026-11-16';
+		const path = '/horoscopo/aries/daily/' + start;
+		const beforeMidnight = new Date('2026-11-17T02:59:59Z');
+		expect(horoscopeDay(beforeMidnight)).toBe(start);
+		expect(horoscopeDay(new Date('2026-11-17T03:00:00Z'))).toBe('2026-11-17');
+		const entry = (datedIndex as unknown as DatedArchiveRelease).entries.find(
+			({ scope }) => scope.period === 'daily' && scope.startDate === start
+		)!;
+		const asset = JSON.parse(
+			readFileSync(new URL('../../../static' + entry.asset.path, import.meta.url), 'utf8')
+		) as { packages: { document: EditorialDocument }[] };
+		const document = asset.packages.find((item) => item.document.path === path)!.document;
+		const { index, scope, grant, admission } = entry;
+		let sourceDocument = document;
+		const read = readLiveHoroscopes(beforeMidnight, async (request) =>
+			Response.json(
+				String(request).endsWith('/index.json')
+					? { index, scope, grant, admission }
+					: sourceDocument
+			)
+		);
+		const editions = await read.summaries('daily', start);
+		expect(editions).toHaveLength(12);
+		const page = publicHoroscopeIndex(
+			[],
+			new URL('https://example.org' + path),
+			'aries',
+			beforeMidnight,
+			editions
+		);
+		expect(page.current?.path).toBe(path);
+		expect(page.history).toEqual([]);
+		expect(await read.document(path, 'aries', 'daily', start)).toEqual(document);
+		sourceDocument = { ...document, title: document.title + ' adulterado' };
+		expect(await read.document(path, 'aries', 'daily', start)).toBeUndefined();
+		expect(read.unavailable).toBe(true);
+	});
+
 	it('identifies the general hub and each sign in search without promising a current reading', () => {
 		const url = new URL('https://example.org/horoscopo');
 		const descriptions = signs.map(
@@ -168,7 +212,7 @@ describe('public horoscope archives', () => {
 			[weekly, last],
 			new URL('https://example.org/horoscopo/aries'),
 			'aries',
-			new Date('2026-10-12T00:00:00.000Z')
+			new Date('2026-10-12T03:00:00.000Z')
 		);
 		expect(nextMonday.currentWeek).toBeNull();
 		expect(nextMonday.lastDaily?.path).toBe(last.path);
@@ -186,7 +230,11 @@ describe('public horoscope archives', () => {
 	);
 	it('rejects an unknown sign before loading any registry', async () => {
 		await expect(
-			loadPublicHoroscopeIndex(new URL('https://example.org/horoscopo/unknown'), 'unknown')
+			loadPublicHoroscopeIndex(
+				new URL('https://example.org/horoscopo/unknown'),
+				async () => new Response(null, { status: 404 }),
+				'unknown'
+			)
 		).rejects.toMatchObject({ status: 404 });
 	});
 	it('formats the last covered day rather than the exclusive end', () => {

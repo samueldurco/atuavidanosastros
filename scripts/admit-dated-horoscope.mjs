@@ -23,7 +23,7 @@ function samePublishedEdition(previous, current) {
     canonicalJson(comparableClaims(previous.dated.claims)) === canonicalJson(comparableClaims(current.dated.claims)) &&
     canonicalJson(comparableDocument(previous.document)) === canonicalJson(comparableDocument(current.document));
 }
-export async function admitBatch({ root, batch, now = new Date(), runnerEvidence }) {
+export async function admitBatch({ root, batch, now = new Date(), runnerEvidence, writeArchive = true }) {
   if (batch.schemaVersion !== "atv-dated-horoscope-signed-batch-v1" ||
       !Array.isArray(batch.packages) || batch.packages.length < 12 ||
       batch.packages.length > 36 || batch.packages.length % 12 !== 0 ||
@@ -73,13 +73,14 @@ export async function admitBatch({ root, batch, now = new Date(), runnerEvidence
       },
     });
   }
-  const additions = [], assets = [], effectiveDocuments = [];
+  const additions = [], assets = [], effectiveDocuments = [], editions = [];
   for (const [scopeHash, entries] of groups) {
     const indexEntry = batch.archiveIndexes.find((entry) => entry.index.scopeDigest === scopeHash);
     const prior = archive.entries.filter((entry) => entry.scope.period === indexEntry.scope.period &&
       entry.scope.startDate === indexEntry.scope.startDate);
     // Repeated schedules preserve the exact previously published edition.
     if (prior.length > 1) throw Error("Ambiguous archive interval");
+    if (!writeArchive && prior.length) continue;
     if (prior.length) {
       const priorEntry = prior[0];
       if (!/^[a-f0-9]{64}$/.test(priorEntry.asset?.sha256) ||
@@ -95,7 +96,13 @@ export async function admitBatch({ root, batch, now = new Date(), runnerEvidence
       continue;
     }
     const packages = entries.map((entry) => admitted.get(entry.document.id));
-    effectiveDocuments.push(...packages.map((entry) => entry.document));
+    const documents = packages.map(({ document }) => document);
+    const admission = { acceptedAt: now.toISOString(), gateEvidenceDigest };
+    if (!writeArchive) {
+      editions.push({ entry: { ...indexEntry, admission }, documents });
+      continue;
+    }
+    effectiveDocuments.push(...documents);
     const hashes = new Set(packages.flatMap((entry) => entry.evidenceManifest.files.map((file) => file.sha256)));
     const bytes = Buffer.from(JSON.stringify({
       schemaVersion: "atv-dated-horoscope-archive-v1", packages,
@@ -104,10 +111,9 @@ export async function admitBatch({ root, batch, now = new Date(), runnerEvidence
     const sha256 = await byteDigest(bytes);
     const asset = { path: `/_editorial/dated/${sha256}.json`, sha256 };
     assets.push({ asset, bytes });
-    additions.push({ ...indexEntry, asset, admission: {
-      acceptedAt: now.toISOString(), gateEvidenceDigest,
-    } });
+    additions.push({ ...indexEntry, asset, admission });
   }
+  if (!writeArchive) return { editions };
   if (!additions.length) return { changed: false, documents: 0, effectiveDocuments };
   // The index is derived metadata; immutable archive bytes and signatures stay untouched.
   const formattedIndex = await prettier.format(JSON.stringify({
