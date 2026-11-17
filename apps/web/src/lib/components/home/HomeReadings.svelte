@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { customerOffers } from '$lib/data/product-copy';
 	import { universes } from '$lib/data/site';
-	import { homeProductArt } from '$lib/home-art';
 	import { selectHomeHighlights, type HomeHighlight } from '$lib/home-highlights';
 	import ProductCover from './ProductCover.svelte';
+	import ReadingPreview from './ReadingPreview.svelte';
 	import { productCovers } from './product-covers';
 	let { highlights = [] }: { highlights?: readonly HomeHighlight[] } = $props();
+	const previewIds = ['birth-chart', 'tarot-situation-challenge-advice', 'dream-reading'];
 	const status = (state: string) =>
 		state === 'ACTIVE'
 			? 'Disponível'
@@ -28,9 +29,7 @@
 	const featured = $derived(
 		[
 			...latest.map((item) => customerOffers.find((product) => product.id === item.id)!),
-			...['birth-chart', 'tarot-situation-challenge-advice', 'dream-reading'].map((id) =>
-				customerOffers.find((product) => product.id === id)!
-			)
+			...previewIds.map((id) => customerOffers.find((product) => product.id === id)!)
 		]
 			.filter(
 				(product, index, all) =>
@@ -43,14 +42,15 @@
 <div class="reading-selection">
 	{#each featured as product (product.id)}
 		<article class="reading-feature">
-			<a class="reading-cover" href={product.href} tabindex="-1" aria-hidden="true">
-				{#if homeProductArt[product.id]}
-					<img src={homeProductArt[product.id]} alt="" width="720" height="480" loading="lazy" />
+			<div class="reading-cover">
+				{#if previewIds.includes(product.id)}
+					<ReadingPreview productId={product.id} />
 				{:else}
 					<ProductCover productId={product.id} />
+					<span class="reading-format">Leitura digital avulsa</span>
 				{/if}
-				<span class="reading-format">Leitura digital avulsa</span>
-			</a>
+				<a class="cover-link" href={product.href} tabindex="-1" aria-hidden="true"></a>
+			</div>
 			<div class="reading-copy">
 				<div class="reading-meta">
 					<p class="eyebrow">
@@ -95,22 +95,15 @@
 		border: 1px solid #1837462b;
 	}
 	.reading-cover {
-		display: block;
+		display: grid;
 		position: relative;
-		aspect-ratio: 3 / 2;
-		overflow: hidden;
+		min-height: clamp(15.25rem, 20vw, 19.5rem);
 		background: #e4e2d5;
 		border-bottom: 1px solid #18374620;
 	}
-	.reading-cover > img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 300ms ease;
-	}
-	.reading-feature:hover .reading-cover > img {
-		transform: scale(1.025);
+	.cover-link {
+		position: absolute;
+		inset: 0;
 	}
 	.reading-cover :global(.product-cover) {
 		height: 100%;
@@ -230,7 +223,6 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.reading-cover > img,
 		.reading-action {
 			transition: none;
 		}

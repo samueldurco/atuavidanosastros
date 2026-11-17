@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import ShopShowcase from '$lib/components/ShopShowcase.svelte';
 	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
+	import { getShopDepartment } from '$lib/data/shop-departments';
 	import type { PageProps } from './$types';
 	let { data }: PageProps = $props();
+	const department = $derived(getShopDepartment(page.url.searchParams.get('categoria')));
+	const showSignCollections = $derived(page.url.searchParams.get('ver') === 'colecoes');
 </script>
 
 <svelte:head>
@@ -23,6 +27,8 @@
 	<ShopShowcase
 		showLink={false}
 		headingLevel="h1"
+		{department}
+		{showSignCollections}
 		ariesOnly={data.ariesOnly}
 		commerceEnabled={data.shopCommerceEnabled}
 	/>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { exploreSigns, exploreThemes } from '$lib/data/explore';
+	import { exploreThemes } from '$lib/data/explore';
+	import SignLinks from './SignLinks.svelte';
 	let { onNavigate }: { onNavigate: () => void } = $props();
 </script>
 
@@ -29,19 +30,7 @@
 			<a href="/signos" onclick={onNavigate}>Por signos <span aria-hidden="true">↗</span></a>
 		</h3>
 		<p>Conteúdos e experiências para cada signo.</p>
-		<div class="menu-signs">
-			{#each exploreSigns as sign (sign.slug)}
-				<a
-					class="menu-sign"
-					style={`--sign-ink:${sign.colors.ink};--sign-wash:${sign.colors.wash}`}
-					href={`/signos/${sign.slug}`}
-					onclick={onNavigate}
-					aria-current={page.url.pathname === `/signos/${sign.slug}` ? 'page' : undefined}
-				>
-					<span class="sign-glyph" aria-hidden="true">{sign.glyph}</span><span>{sign.name}</span>
-				</a>
-			{/each}
-		</div>
+		<SignLinks inMenu {onNavigate} />
 	</section>
 </div>
 
@@ -103,27 +92,6 @@
 		width: 40px;
 		height: 40px;
 	}
-	.menu-signs {
-		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 8px;
-	}
-	.menu-sign {
-		display: flex;
-		align-items: center;
-		gap: 7px;
-		min-height: 48px;
-		padding: 8px;
-		border: 1px solid color-mix(in srgb, var(--sign-ink) 30%, transparent);
-		background: var(--sign-wash);
-		font: 500 12px/1.3 var(--atv-font-ui);
-	}
-	.sign-glyph {
-		color: color-mix(in srgb, var(--sign-ink) 80%, #163849);
-		font:
-			23px/1 Georgia,
-			serif;
-	}
 	@container approved-header (max-width: 960px) {
 		.explore-menu-groups {
 			grid-template-columns: 1fr;
@@ -141,9 +109,6 @@
 		}
 		.menu-theme {
 			min-height: 54px;
-		}
-		.menu-signs {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 </style>

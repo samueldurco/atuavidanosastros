@@ -12,16 +12,30 @@ test('HOME distingue produtos digitais, continuidade e imagens de cada seção',
 	await expect(products.getByText('03 / Leituras digitais avulsas')).toBeVisible();
 	await expect(products.locator('article')).toHaveCount(3);
 	await expect(products.getByRole('link', { name: 'Ver produto digital' })).toHaveCount(3);
+	await expect(products.getByText('Amostra da leitura', { exact: true })).toHaveCount(3);
+	await expect(products.locator('[data-reading-sample="birth-chart"] img')).toHaveCount(1);
+	await expect(
+		products.locator('[data-reading-sample="tarot-situation-challenge-advice"] img')
+	).toHaveCount(3);
+	await expect(products.locator('[data-reading-sample="dream-reading"] blockquote')).toContainText(
+		'Sonhei com uma ponte'
+	);
 	await expect(products.locator('#atv-mais-home')).toHaveCount(0);
 	await expect(page.locator('#atv-mais-home').getByRole('heading', { level: 3 })).toHaveCount(3);
 	await expect(page.locator('#explorar .explore-theme')).toHaveCount(6);
 	await expect(page.locator('#explorar')).toHaveCount(1);
 	await expect(page.locator('#universos, .universe-section')).toHaveCount(0);
-	await expect(page.locator('#explorar .explore-sign')).toHaveCount(12);
+	const signs = page.locator('#explorar .sign-links');
+	await expect(signs.locator('a[href^="/signos/"]')).toHaveCount(12);
+	await expect(signs.locator('img')).toHaveCount(0);
+	await expect(signs.getByRole('link', { name: 'Áries', exact: true })).toHaveAttribute(
+		'href',
+		'/signos/aries'
+	);
 	const images = page.locator(
 		'#ferramentas .tool-open img, #produtos .reading-cover img, #explorar img, #revista .article-image img, #loja .shop-scene img'
 	);
-	await expect(images).toHaveCount(39);
+	await expect(images).toHaveCount(28);
 	const sources = await images.evaluateAll((items) =>
 		items.map((item) => (item as HTMLImageElement).src)
 	);

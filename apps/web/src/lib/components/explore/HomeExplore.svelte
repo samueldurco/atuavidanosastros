@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ThemeCards from './ThemeCards.svelte';
-	import SignCards from './SignCards.svelte';
+	import SignLinks from './SignLinks.svelte';
 	import '$lib/styles/explore.css';
 </script>
 
@@ -43,6 +43,6 @@
 			</div>
 			<a href="/signos">Conhecer os signos <span aria-hidden="true">↗</span></a>
 		</div>
-		<SignCards compact />
+		<SignLinks />
 	</div>
 </section>

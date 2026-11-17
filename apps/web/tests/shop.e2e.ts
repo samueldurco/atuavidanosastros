@@ -108,8 +108,8 @@ test('Todas as 15 coleções estão acessíveis sem duplicar páginas das peças
 	await page.goto('/loja');
 	const nav = page.getByRole('navigation', { name: 'Coleções da Loja dos Signos', exact: true });
 	await nav.locator('summary').click();
-	await expect(nav.getByRole('link')).toHaveCount(16);
-	await expect(nav.getByRole('link', { name: /Acessórios/ })).toBeVisible();
+	await expect(nav.getByRole('link')).toHaveCount(15);
+	await expect(nav.getByRole('link', { name: /acessórios/i })).toBeVisible();
 	await expect(nav.getByRole('link', { name: /Premium/ })).toBeVisible();
 	await nav.getByRole('link', { name: /Namorados e Sinastria/ }).click();
 	await expect(page).toHaveURL(/\/loja\/colecao\/casal$/);

@@ -3,17 +3,22 @@
 	import { shopPreviews } from '$lib/data/shop-products';
 	import type { ShopCollection } from '$lib/data/shop-collections';
 	import { isShopCommerceEligible } from '$lib/data/shop-commerce';
+	import { shopDepartments, type ShopDepartment } from '$lib/data/shop-departments';
 	import ShopCollectionsNav from './ShopCollectionsNav.svelte';
 	let {
 		showLink = true,
 		headingLevel = 'h2',
 		collection,
+		department,
+		showSignCollections = false,
 		ariesOnly = false,
 		commerceEnabled = false
 	}: {
 		showLink?: boolean;
 		headingLevel?: 'h1' | 'h2';
 		collection?: ShopCollection;
+		department?: ShopDepartment;
+		showSignCollections?: boolean;
 		commerceEnabled?: boolean;
 		ariesOnly?: boolean;
 	} = $props();
@@ -25,11 +30,15 @@
 	});
 	$effect(() => {
 		void collection?.slug;
+		void department?.id;
 		sign = 'Todos';
 		category = 'Todas';
 	});
 	const source = $derived.by(() => {
-		const products = collection?.products ?? shopPreviews;
+		const all = collection?.products ?? shopPreviews;
+		const products = department
+			? all.filter((piece) => department.categories.includes(piece.category))
+			: all;
 		return commerceEnabled
 			? [...products].sort(
 					(a, b) =>
@@ -54,9 +63,11 @@
 <section class="shop-showcase" aria-labelledby="shop-showcase-title">
 	<div class="shop-heading">
 		<div>
-			<p class="eyebrow">Produtos físicos · aquarelas zodiacais</p>
+			<p class="eyebrow">
+				{department ? 'Loja dos Signos' : 'Produtos físicos'} · aquarelas zodiacais
+			</p>
 			<svelte:element this={headingLevel} id="shop-showcase-title"
-				>{collection?.name ?? 'Loja dos Signos'}</svelte:element
+				>{collection?.name ?? department?.label ?? 'Loja dos Signos'}</svelte:element
 			>
 		</div>
 		<p>
@@ -69,6 +80,8 @@
 			{:else if collection}
 				Os símbolos de {collection.name} em diferentes aquarelas. Descubra as peças e os detalhes de cada
 				estampa.
+			{:else if department}
+				{department.description}.
 			{:else}
 				Seu signo no que você veste e leva consigo. Conheça a coleção e veja os detalhes de cada
 				estampa.
@@ -76,7 +89,17 @@
 		</p>
 	</div>
 	{#if !showLink}
-		<ShopCollectionsNav current={collection?.slug ?? ''} />
+		<nav class="shop-departments" aria-label="Categorias da Loja dos Signos">
+			<a href="/loja" aria-current={!collection && !department ? 'page' : undefined}
+				>Todas as peças</a
+			>
+			{#each shopDepartments as item (item.id)}
+				<a href={item.href} aria-current={department?.id === item.id ? 'page' : undefined}
+					>{item.label}</a
+				>
+			{/each}
+		</nav>
+		<ShopCollectionsNav current={collection?.slug} {showSignCollections} />
 		<div class="shop-toolbar">
 			{#if signs.length > 2}
 				<label class="mobile-sign-filter" class:compact-filter={signs.length > 14}>
@@ -170,6 +193,9 @@
 				</div>
 			</article>
 		{/each}
+		{#if pieces.length === 0}
+			<p>Nenhuma peça corresponde aos filtros.</p>
+		{/if}
 	</div>
 	<div class="shop-end">
 		<p>
@@ -206,6 +232,25 @@
 		max-width: 34rem;
 		font: 400 1.2rem/1.6 var(--atv-font-editorial);
 		margin: 0;
+	}
+	.shop-departments {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+	.shop-departments a {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding-inline: 0.85rem;
+		border: 1px solid var(--atv-border);
+		font-size: 0.9rem;
+		text-decoration: none;
+	}
+	.shop-departments a:is(:hover, [aria-current='page']) {
+		border-color: currentColor;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 	.shop-toolbar {
 		display: flex;
