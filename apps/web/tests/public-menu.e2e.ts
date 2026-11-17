@@ -32,7 +32,7 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 			'Produtos digitais⌄',
 			'Explorar⌄',
 			'Revista⌄',
-			'Loja do ATVNA⌄'
+			'Loja dos Signos⌄'
 		]);
 		await expect(nav.locator('.account-link')).toHaveAttribute('href', '/entrar');
 		const tools = nav.locator('[aria-controls="nav-ferramentas"]');
@@ -40,6 +40,10 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await tools.focus();
 		await page.keyboard.press('Enter');
 		await expect(page.locator('#nav-ferramentas .nav-item')).toHaveCount(10);
+		const toolSymbols = await page
+			.locator('#nav-ferramentas .nav-item svg use')
+			.evaluateAll((symbols) => symbols.map((symbol) => symbol.getAttribute('href')));
+		expect(new Set(toolSymbols).size).toBe(10);
 		for (const tool of freeTools)
 			await expect(
 				page.locator(`#nav-ferramentas a[href="/?ferramenta=${tool.id}#ferramentas"]`)
@@ -47,6 +51,13 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 		await page.keyboard.press('Escape');
 		await expect(tools).toBeFocused();
 		await expect(tools).toHaveAttribute('aria-expanded', 'false');
+		await nav.locator('[aria-controls="nav-produtos"]').click();
+		const digitalSymbols = await page
+			.locator('#nav-produtos .nav-item svg use')
+			.evaluateAll((symbols) => symbols.map((symbol) => symbol.getAttribute('href')));
+		expect(digitalSymbols).toHaveLength(3);
+		expect(new Set([...toolSymbols, ...digitalSymbols]).size).toBe(13);
+		await page.keyboard.press('Escape');
 		const button = nav.locator('[aria-controls="nav-explorar"]');
 		await button.focus();
 		await page.keyboard.press('Enter');
@@ -58,10 +69,10 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 			for (const href of [item.href, `/revista?tema=${item.id}`])
 				expect((await request.get(href)).status(), href).toBe(200);
 		}
-		await expect(page.locator('#nav-explorar .menu-sign')).toHaveCount(12);
+		await expect(page.locator('#nav-explorar .sign-links a')).toHaveCount(12);
 		for (const sign of exploreSigns) {
 			await expect(
-				page.locator(`#nav-explorar .menu-sign[href="/signos/${sign.slug}"]`)
+				page.locator(`#nav-explorar .sign-links a[href="/signos/${sign.slug}"]`)
 			).toHaveText(sign.glyph + sign.name);
 		}
 		await expect(page.locator('#nav-explorar .nav-panel-heading a')).toHaveAttribute(

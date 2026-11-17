@@ -1,10 +1,3 @@
-/** Illustrations commissioned for a single role on the HOME. */
-export const homeProductArt: Record<string, string> = {
-	'birth-chart': '/brand/home-v2/product-natal-chart.webp',
-	'tarot-situation-challenge-advice': '/brand/home-v2/product-three-card-tarot.webp',
-	'dream-reading': '/brand/home-v2/product-dream-reading.webp'
-};
-
 export const homeUniverseArt: Record<string, string> = {
 	'meu-ceu': '/brand/home-v2/universe-mapa-astral.webp',
 	ciclos: '/brand/home-v2/universe-previsoes.webp',

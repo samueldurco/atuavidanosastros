@@ -4,12 +4,14 @@
 	import { interestNavigation } from '$lib/data/public-navigation';
 	import { magazineSections } from '$lib/data/magazine-navigation';
 	import { freeTools } from '$lib/data/free-tools';
-	import { visibleShopCollections } from '$lib/data/shop-collections';
-	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
+	import { shopDepartments } from '$lib/data/shop-departments';
+	import { mvpArt } from '$lib/data/mvp-visual';
 	import BrandLogo from './BrandLogo.svelte';
 	import ExploreMenu from './explore/ExploreMenu.svelte';
 	import SignOutButton from './SignOutButton.svelte';
-	type MenuLink = { href: string; label: string; description?: string; art: string };
+	type MenuLink = { href: string; label: string; description?: string } & (
+		{ art: string; icon?: never } | { icon: string; art?: never }
+	);
 	type Menu = { id: string; label: string; href: string; links: MenuLink[] };
 	const menus: Menu[] = [
 		{
@@ -20,7 +22,7 @@
 				href: `/?ferramenta=${tool.id}#ferramentas`,
 				label: tool.label,
 				description: interestNavigation.find((topic) => topic.id === tool.topicId)?.label,
-				art: mvpThemes[tool.topicId].art
+				icon: tool.id
 			}))
 		},
 		{
@@ -32,19 +34,19 @@
 					href: '/atv-mais',
 					label: 'Assinatura ATV+',
 					description: 'Leituras para acompanhar seus ciclos',
-					art: 'fases-lunares'
+					icon: 'atv-mais'
 				},
 				{
 					href: '/lancamentos',
 					label: 'Lançamentos',
 					description: 'Novas leituras para situações concretas',
-					art: 'flor-gravada'
+					icon: 'lancamentos'
 				},
 				{
 					href: '/leituras',
 					label: 'Leituras avulsas',
 					description: 'Escolha o tema que faz sentido agora',
-					art: 'mandala-gravada'
+					icon: 'leituras-avulsas'
 				}
 			]
 		},
@@ -66,21 +68,21 @@
 		},
 		{
 			id: 'loja',
-			label: 'Loja do ATVNA',
+			label: 'Loja dos Signos',
 			href: '/loja',
 			links: [
+				...shopDepartments.map(({ id, href, label, description }) => ({
+					href,
+					label,
+					description,
+					icon: id
+				})),
 				{
-					href: '/loja',
-					label: 'Loja dos Signos',
-					description: 'Coleções e produtos por signo',
-					art: 'flor-gravada'
-				},
-				...visibleShopCollections.slice(0, 6).map((collection) => ({
-					href: collection.href,
-					label: collection.name,
-					description: `${collection.products.length} produtos na coleção`,
-					art: 'flor-gravada'
-				}))
+					href: '/loja?ver=colecoes#colecoes',
+					label: 'Coleções',
+					description: 'Os 12 signos e coleções temáticas',
+					icon: 'colecoes'
+				}
 			]
 		}
 	];
@@ -168,12 +170,26 @@
 											aria-current={page.url.pathname + page.url.search === link.href
 												? 'page'
 												: undefined}
-											><img src={mvpArt(link.art)} alt="" width="48" height="48" /><span
-												><strong>{link.label}</strong>{#if link.description}<small
-														>{link.description}</small
-													>{/if}</span
-											></a
 										>
+											{#if link.art}
+												<img src={mvpArt(link.art)} alt="" width="48" height="48" />
+											{:else}
+												<svg
+													viewBox="0 0 48 48"
+													fill="none"
+													stroke="currentColor"
+													stroke-width="1.65"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+													aria-hidden="true"
+													><use href={`/brand/navigation/icons.svg#${link.icon}`} /></svg
+												>
+											{/if}
+											<span>
+												<strong>{link.label}</strong>
+												{#if link.description}<small>{link.description}</small>{/if}
+											</span>
+										</a>
 									{/each}
 								</div>
 							{/if}
@@ -297,11 +313,13 @@
 		text-decoration: underline;
 		text-underline-offset: 3px;
 	}
-	.nav-item img {
+	.nav-item :is(img, svg) {
 		width: 43px;
 		height: 43px;
-		object-fit: contain;
 		flex: 0 0 43px;
+	}
+	.nav-item img {
+		object-fit: contain;
 		mix-blend-mode: multiply;
 	}
 	.nav-item strong {
@@ -388,7 +406,7 @@
 			min-height: 70px;
 			gap: 6px;
 		}
-		.nav-item img {
+		.nav-item :is(img, svg) {
 			width: 33px;
 			height: 33px;
 			flex-basis: 33px;

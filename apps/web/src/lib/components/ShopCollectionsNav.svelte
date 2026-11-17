@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { visibleShopCollections } from '$lib/data/shop-collections';
-	let { current = '' }: { current?: string } = $props();
+	let {
+		current,
+		showSignCollections = false
+	}: { current?: string; showSignCollections?: boolean } = $props();
 	const accessories = visibleShopCollections.find((collection) => collection.slug === 'acessorios');
 	const themedCollections = visibleShopCollections.filter(
 		(collection) => collection.slug !== 'acessorios' && !collection.href.includes('/signo/')
@@ -8,11 +11,10 @@
 	const signs = visibleShopCollections.filter((collection) => collection.href.includes('/signo/'));
 </script>
 
-<nav class="collections-nav" aria-label="Coleções da Loja dos Signos">
-	<a href="/loja" aria-current={current === '' ? 'page' : undefined}>Todas as peças</a>
+<nav id="colecoes" class="collections-nav" aria-label="Coleções da Loja dos Signos">
 	{#if accessories}
 		<a href={accessories.href} aria-current={current === accessories.slug ? 'page' : undefined}
-			>Acessórios <span>({accessories.products.length})</span></a
+			>Coleção de acessórios <span>({accessories.products.length})</span></a
 		>
 	{/if}
 	{#each themedCollections as collection (collection.id)}
@@ -20,7 +22,7 @@
 			>{collection.name} <span>({collection.products.length})</span></a
 		>
 	{/each}
-	<details>
+	<details open={showSignCollections}>
 		<summary>Coleções por signo</summary>
 		<div class="sign-collections">
 			{#each signs as collection (collection.id)}
