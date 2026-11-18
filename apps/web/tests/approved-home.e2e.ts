@@ -3,6 +3,7 @@ import { freeTools } from '../src/lib/data/free-tools';
 import { publicChannels } from '../src/lib/data/public-channels';
 import { universes } from '../src/lib/data/site';
 import { shopPreviews } from '../src/lib/data/shop-products';
+import { scanAccessibility } from './fixtures/accessibility';
 import editorialRelease from '../src/lib/server/editorial-release/registry.json' with { type: 'json' };
 
 test.beforeEach(async ({ page }, testInfo) => {
@@ -48,6 +49,72 @@ test.beforeEach(async ({ page }, testInfo) => {
 });
 
 for (const width of [320, 390, 768, 1440]) {
+	test(`prévia compacta: entregas, troca por teclado e imagens em ${width}px`, async ({
+		page
+	}, testInfo) => {
+		await page.setViewportSize({ width, height: 1000 });
+		await page.goto('/');
+		await expect(page.locator('.nav-trigger').first()).toBeEnabled({ timeout: 30_000 });
+		const sample = page.locator('#amostra');
+		await sample.scrollIntoViewIfNeeded();
+		await page.evaluate(() => document.fonts.ready);
+		const chartButton = sample.getByRole('button', { name: 'Mapa Astral', exact: true });
+		const tarotButton = sample.getByRole('button', { name: 'Tarot', exact: true });
+		await expect(chartButton).toHaveAttribute('aria-pressed', 'true');
+		await expect(sample.locator('.deliverables dt')).toHaveText([
+			'01Sua mandala astrológica',
+			'02Sua interpretação personalizada',
+			'03Sol, Lua e Ascendente',
+			'04Seus aspectos planetários'
+		]);
+		await expect(sample.getByRole('link', { name: 'Ver exemplo completo' })).toHaveAttribute(
+			'href',
+			'/produtos/mapa-astral-completo#amostra'
+		);
+		for (const button of [chartButton, tarotButton]) {
+			const box = await button.boundingBox();
+			expect(box?.height).toBeGreaterThanOrEqual(44);
+			expect(box?.width).toBeGreaterThanOrEqual(44);
+		}
+		for (const mode of ['mapa', 'tarot']) {
+			if (mode === 'tarot') {
+				await tarotButton.focus();
+				await page.keyboard.press('Enter');
+				await expect(tarotButton).toHaveAttribute('aria-pressed', 'true');
+				await expect(chartButton).toHaveAttribute('aria-pressed', 'false');
+				await expect(sample.locator('.sample-cards img')).toHaveCount(3);
+				await expect(sample.locator('.deliverables dt')).toHaveText([
+					'01Suas cartas',
+					'02A interpretação de cada carta',
+					'03A leitura do conjunto'
+				]);
+				await expect(sample.getByRole('link', { name: 'Ver exemplo completo' })).toHaveAttribute(
+					'href',
+					'/produtos/tarot-3-cartas#amostra'
+				);
+			}
+			for (const image of await sample.locator('img').all())
+				await expect
+					.poll(() =>
+						image.evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth > 0)
+					)
+					.toBe(true);
+			const bounds = await sample.evaluate((node) => ({
+				height: node.getBoundingClientRect().height,
+				overflow: node.scrollWidth > node.clientWidth,
+				pageOverflow: document.documentElement.scrollWidth > innerWidth
+			}));
+			expect(bounds.height).toBeLessThan(1000);
+			expect(bounds.overflow).toBe(false);
+			expect(bounds.pageOverflow).toBe(false);
+			await sample.screenshot({ path: testInfo.outputPath(`entregas-${mode}-${width}.png`) });
+		}
+		await scanAccessibility(page, testInfo);
+		await chartButton.focus();
+		await page.keyboard.press('Space');
+		await expect(chartButton).toHaveAttribute('aria-pressed', 'true');
+		await expect(sample.locator('.chart-image')).toBeVisible();
+	});
 	test(`ferramentas: painel abaixo da linha, foco e estado em ${width}px`, async ({
 		page
 	}, testInfo) => {
