@@ -1,363 +1,456 @@
 <script lang="ts">
-	import AstrologicalChart from '$lib/components/AstrologicalChart.svelte';
+	import { chartImageSource, chartWheelSvg } from '$lib/astrological-chart-presentation';
 	import sample from '$lib/data/home-reading-sample.json';
+	import { readingSample, sampleTarotPositions } from '$lib/data/reading-samples';
+	import { tarotArtwork } from '$lib/trials/tarot-artwork';
 
-	const chapter = sample.excerpts[0];
-	const synthesis = sample.excerpts[1];
+	let selection = $state<'chart' | 'tarot'>('chart');
+	const chart = chartImageSource(chartWheelSvg(sample.chart.svg));
 	const pillars = [
 		...sample.chart.positions.filter(({ body }) => ['sun', 'moon'].includes(body)),
 		...sample.chart.angles.filter(({ body }) => body === 'ascendant')
+	];
+	const tarot = readingSample('tarot-situation-challenge-advice');
+	const positions = tarot ? sampleTarotPositions(tarot) : [];
+	const chartDeliverables = [
+		{ title: 'Sua mandala astrológica', text: 'O desenho do céu no momento do seu nascimento.' },
+		{
+			title: 'Sua interpretação personalizada',
+			text: 'Uma leitura que relaciona os diferentes pontos do seu mapa.'
+		},
+		{
+			title: 'Sol, Lua e Ascendente',
+			text: 'Seus signos, planetas e casas, organizados para consulta.'
+		},
+		{
+			title: 'Seus aspectos planetários',
+			text: 'As relações entre os planetas e seus significados na leitura.'
+		}
+	];
+	const tarotDeliverables = [
+		{ title: 'Suas cartas', text: 'As três cartas e a posição de cada uma na tiragem.' },
+		{
+			title: 'A interpretação de cada carta',
+			text: 'O significado de cada carta em relação à sua pergunta.'
+		},
+		{
+			title: 'A leitura do conjunto',
+			text: 'Uma síntese que conecta situação, desafio e conselho.'
+		}
 	];
 </script>
 
 <section class="reading-sample" id="amostra" aria-labelledby="reading-sample-heading">
 	<div class="sample-wrap">
 		<header class="sample-intro">
-			<p class="sample-eyebrow">02 / Por dentro de uma leitura</p>
-			<h2 id="reading-sample-heading">Do desenho do céu<br />à sua <em>leitura.</em></h2>
-			<p class="sample-description">
-				O mapa reúne posições. A leitura aproxima essas referências e abre perguntas. Veja como isso
-				aparece em um trecho do Mapa Astral, nossa leitura completa avulsa.
-			</p>
+			<div>
+				<p class="sample-eyebrow">02 / Por dentro da leitura</p>
+				<h2 id="reading-sample-heading">Veja o que você <em>recebe.</em></h2>
+			</div>
+			<div class="sample-switch" role="group" aria-label="Escolha a leitura de exemplo">
+				<button
+					type="button"
+					aria-pressed={selection === 'chart'}
+					aria-controls="sample-delivery"
+					onclick={() => (selection = 'chart')}>Mapa Astral</button
+				>
+				<button
+					type="button"
+					aria-pressed={selection === 'tarot'}
+					aria-controls="sample-delivery"
+					onclick={() => (selection = 'tarot')}>Tarot</button
+				>
+			</div>
 		</header>
 
-		<div class="sample-book">
-			<aside class="map-page" aria-labelledby="sample-profile-heading">
-				<div class="page-label"><span>Mapa Astral</span><span>Amostra demonstrativa</span></div>
-				<h3 id="sample-profile-heading">Um perfil fictício,<br />um mapa calculado.</h3>
-				<p class="profile-data">
-					{sample.profile.date} · {sample.profile.time}<br />{sample.profile.location}
-				</p>
-				<p class="fiction-note">{sample.profile.note}</p>
-				<div class="sample-map">
-					<AstrologicalChart
-						svg={sample.chart.svg}
-						title="Mapa do perfil fictício"
-						positions={sample.chart.positions}
-						cusps={sample.chart.cusps}
-						ascendant={sample.chart.angles.find(({ body }) => body === 'ascendant')?.longitude}
-						midheaven={sample.chart.angles.find(({ body }) => body === 'midheaven')?.longitude}
-					/>
-				</div>
-				<dl class="sample-pillars">
-					{#each pillars as pillar (pillar.body)}
+		<div id="sample-delivery" class="sample-delivery" class:tarot={selection === 'tarot'}>
+			<div class="sample-preview">
+				{#if selection === 'chart'}
+					<div class="chart-sheet">
+						<p class="sheet-label">Mapa Astral <span>Exemplo fictício</span></p>
+						<img
+							class="chart-image"
+							src={chart}
+							alt="Mandala calculada para o perfil fictício de 12 de maio de 1998, às 9h, em São Paulo"
+							width="260"
+							height="260"
+							loading="lazy"
+						/>
+						<dl class="sample-pillars">
+							{#each pillars as pillar (pillar.body)}
+								<div>
+									<dt>{pillar.name}</dt>
+									<dd>{pillar.sign}</dd>
+								</div>
+							{/each}
+						</dl>
+					</div>
+				{:else if tarot}
+					<div class="tarot-sheet">
+						<p class="sheet-label">Tarot · 3 cartas <span>Exemplo fictício</span></p>
+						<ol class="sample-cards" aria-label="Cartas escolhidas para o exemplo">
+							{#each tarot.cards ?? [] as card, i (card.id)}
+								<li>
+									<span class="position">{positions[i].name}</span>
+									<img
+										src={tarotArtwork(card.id)}
+										alt={card.name}
+										width="600"
+										height="1040"
+										loading="lazy"
+									/>
+									<span class="card-name">{card.name}</span>
+								</li>
+							{/each}
+						</ol>
+					</div>
+				{/if}
+			</div>
+
+			<div class="delivery-copy">
+				<h3>{selection === 'chart' ? 'No seu Mapa Astral' : 'No seu Tarot de 3 cartas'}</h3>
+				<dl class="deliverables">
+					{#each selection === 'chart' ? chartDeliverables : tarotDeliverables as item, i (item.title)}
 						<div>
-							<dt>{pillar.name}</dt>
-							<dd>{pillar.sign}<span>{pillar.degree}</span></dd>
+							<dt><span aria-hidden="true">0{i + 1}</span>{item.title}</dt>
+							<dd>{item.text}</dd>
 						</div>
 					{/each}
 				</dl>
-				<p class="method-note">{sample.limits.method}. {sample.limits.calculation}</p>
-			</aside>
-
-			<div class="text-page">
-				<p class="chapter-label">Trecho da leitura · Sol e Lua</p>
-				<h3>{chapter.title}</h3>
-				<div class="chapter-copy">
-					{#each chapter.text.split('\n\n') as paragraph (paragraph)}
-						<p>{paragraph}</p>
-					{/each}
-				</div>
-				<details class="sample-synthesis">
-					<summary>Ler a síntese deste mapa <span aria-hidden="true">+</span></summary>
-					<div class="synthesis-copy">
-						<h4>{synthesis.title}</h4>
-						{#each synthesis.text.split('\n\n') as paragraph (paragraph)}
-							<p>{paragraph}</p>
-						{/each}
-					</div>
-				</details>
-				<div class="reflection">
-					<p class="chapter-label">Uma pergunta para levar</p>
-					<p>{sample.question}</p>
-				</div>
-				<p class="excerpt-note">
-					Dois trechos da composição atual, gerados com os dados fictícios ao lado. Esta é uma
-					demonstração parcial; a leitura pessoal depende dos dados informados.
-				</p>
+				<a
+					class="sample-link"
+					href={selection === 'chart'
+						? '/produtos/mapa-astral-completo#amostra'
+						: '/produtos/tarot-3-cartas#amostra'}
+					data-atv-event="home_path_select"
+					data-atv-context="reading-sample"
+					data-atv-cta={selection === 'chart' ? 'birth-chart' : 'tarot'}
+				>
+					Ver exemplo completo <span aria-hidden="true">↗</span>
+				</a>
 			</div>
 		</div>
-
-		<footer class="sample-footer">
-			<p>{sample.limits.interpretation}</p>
-			<a
-				href="/produtos/mapa-astral-completo"
-				data-atv-event="home_path_select"
-				data-atv-context="reading-sample"
-				data-atv-cta="birth-chart">Conhecer a leitura completa <span aria-hidden="true">↗</span></a
-			>
-		</footer>
+		<p class="sample-note">
+			{selection === 'chart'
+				? 'Prévia com dados fictícios. Cálculo experimental: zodíaco tropical e casas Placidus.'
+				: 'Exemplo com pergunta fictícia e cartas escolhidas para demonstração. Arte: Pamela Colman Smith · Rider–Waite–Smith.'}
+			Leitura simbólica para reflexão.
+		</p>
 	</div>
 </section>
 
 <style>
 	.reading-sample {
-		color: #183746;
-		padding: 88px 0;
-		font-family: var(--atv-font-ui, Onest, sans-serif);
+		padding: 64px 0;
 		background: #e9e7da;
+		color: #183746;
+		scroll-margin-top: 96px;
 	}
 	.sample-wrap {
 		width: min(1160px, calc(100% - 80px));
-		margin-inline: auto;
+		margin: 0 auto;
 	}
 	.sample-intro {
-		max-width: 660px;
-		margin-bottom: 36px;
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: 24px;
+		margin-bottom: 28px;
 	}
 	.sample-eyebrow,
-	.chapter-label {
-		margin: 0 0 16px;
-		font-size: 0.75rem;
-		font-weight: 600;
-		line-height: 1.5;
-		letter-spacing: 0.12em;
+	.sheet-label,
+	.delivery-copy h3 {
+		margin: 0;
+		font:
+			500 0.75rem/1.5 'Onest',
+			sans-serif;
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
 	}
-	.sample-intro h2 {
-		margin: 0 0 20px;
-		font: 400 clamp(2.5rem, 4.5vw, 3.5rem) / 1.08
-			var(--atv-font-display, Newsreader, Georgia, serif);
+	h2 {
+		margin: 12px 0 0;
+		font:
+			400 clamp(2rem, 3.5vw, 3rem) / 1.08 'Newsreader',
+			Georgia,
+			serif;
 		letter-spacing: -0.025em;
 	}
-	.sample-intro h2 em {
+	h2 em {
 		font-weight: 400;
 	}
-	.sample-description {
-		max-width: 58ch;
-		margin: 0;
-		font-size: 1rem;
-		line-height: 1.75;
+	.sample-switch {
+		display: flex;
+		flex-shrink: 0;
+		gap: 4px;
+		padding: 4px;
+		border: 1px solid #b8baa9;
 	}
-	.sample-book {
+	.sample-switch button {
+		min-height: 44px;
+		padding: 8px 20px;
+		border: 0;
+		background: transparent;
+		color: #183746;
+		font:
+			500 0.875rem/1.4 'Onest',
+			sans-serif;
+		cursor: pointer;
+	}
+	.sample-switch button[aria-pressed='true'] {
+		background: #183746;
+		color: #fff8e9;
+	}
+	.sample-switch button:hover:not([aria-pressed='true']) {
+		background: #d5d9c6;
+	}
+	button:focus-visible,
+	a:focus-visible {
+		outline: 2px solid #174c69;
+		outline-offset: 4px;
+	}
+	.sample-delivery {
+		--sample-ink: #174c69;
 		display: grid;
-		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.35fr);
 		border: 1px solid #c7bfac;
 		background: #fff8e9;
-		box-shadow:
-			0 4px 0 #dad3c2,
-			0 5px 0 #c7bfac,
-			0 18px 32px #1837460d;
 	}
-	.map-page {
+	.sample-delivery.tarot {
+		--sample-ink: #92501f;
+	}
+	.sample-preview {
+		display: grid;
+		align-items: center;
 		min-width: 0;
-		padding: 32px;
+		padding: 24px;
 		border-right: 1px solid #c7bfac;
-		background: linear-gradient(90deg, transparent 96%, #18374606), #f6efdf;
+		background: #f0ebdc;
 	}
-	.page-label {
+	.tarot .sample-preview {
+		background: #eddfc8;
+	}
+	.chart-sheet,
+	.tarot-sheet {
+		width: 100%;
+		max-width: 360px;
+		margin: 0 auto;
+	}
+	.sheet-label {
 		display: flex;
-		flex-wrap: wrap;
 		justify-content: space-between;
-		gap: 8px 16px;
-		margin-bottom: 32px;
-		font-size: 0.6875rem;
-		line-height: 1.5;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
+		gap: 12px;
+		color: var(--sample-ink);
+		font-size: 0.625rem;
+		letter-spacing: 0.04em;
 	}
-	.page-label span:first-child {
-		font-weight: 600;
-		color: #174c69;
-	}
-	.map-page h3 {
-		margin: 0 0 16px;
-		font: 400 2rem / 1.12 var(--atv-font-display, Newsreader, Georgia, serif);
-	}
-	.profile-data {
-		font-size: 0.875rem;
-		line-height: 1.6;
-		margin: 0 0 12px;
-	}
-	.fiction-note,
-	.method-note,
-	.excerpt-note {
+	.sheet-label span {
 		color: #596365;
-		font-size: 0.8125rem;
-		line-height: 1.65;
 	}
-	.fiction-note {
-		max-width: 46ch;
-		margin: 0 0 24px;
-	}
-	.sample-map {
-		margin-inline: -12px;
+	.chart-image {
+		display: block;
+		width: 240px;
+		max-width: 100%;
+		height: auto;
+		margin: 12px auto;
 	}
 	.sample-pillars {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 12px;
-		margin: 24px 0 16px;
-		padding-top: 20px;
+		gap: 8px;
+		margin: 0;
+		padding-top: 12px;
 		border-top: 1px solid #c7bfac;
 	}
-	.sample-pillars dt {
-		font-size: 0.75rem;
-		line-height: 1.5;
-		margin-bottom: 6px;
+	.sample-pillars dt,
+	.position,
+	.card-name {
+		font:
+			400 0.6875rem/1.4 'Onest',
+			sans-serif;
 	}
 	.sample-pillars dd {
-		margin: 0;
-		font: 500 1.125rem / 1.3 var(--atv-font-display, Newsreader, Georgia, serif);
+		margin: 4px 0 0;
+		font:
+			400 1.125rem/1.2 'Newsreader',
+			Georgia,
+			serif;
 	}
-	.sample-pillars dd span {
+	.delivery-copy {
+		align-self: center;
+		padding: 28px 32px 20px;
+	}
+	.delivery-copy h3 {
+		color: var(--sample-ink);
+	}
+	.deliverables {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 28px 24px;
+		margin: 24px 0 16px;
+	}
+	.deliverables dt {
+		font:
+			400 1.375rem/1.1 'Newsreader',
+			Georgia,
+			serif;
+	}
+	.deliverables dt span {
 		display: block;
-		margin-top: 4px;
-		font: 400 0.75rem / 1.5 var(--atv-font-ui, Onest, sans-serif);
+		margin-bottom: 8px;
+		color: var(--sample-ink);
+		font:
+			500 0.6875rem/1.4 'Onest',
+			sans-serif;
+	}
+	.deliverables dd {
+		margin: 8px 0 0;
 		color: #596365;
+		font:
+			400 0.8125rem/1.55 'Onest',
+			sans-serif;
 	}
-	.method-note {
-		margin: 0;
-	}
-	.text-page {
-		min-width: 0;
-		padding: 40px;
-	}
-	.text-page h3 {
-		margin: 0 0 24px;
-		font: 400 clamp(1.75rem, 2.5vw, 2.25rem) / 1.14
-			var(--atv-font-display, Newsreader, Georgia, serif);
-		letter-spacing: -0.015em;
-	}
-	.chapter-copy,
-	.synthesis-copy {
-		font: 400 1.0625rem / 1.75 var(--atv-font-ui, Onest, sans-serif);
-	}
-	.chapter-copy p,
-	.synthesis-copy p {
-		margin: 0 0 20px;
-	}
-	.sample-synthesis {
-		margin-top: 28px;
-		border-block: 1px solid #c7bfac;
-	}
-	.sample-synthesis summary {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 16px;
-		min-height: 52px;
-		padding-block: 12px;
-		cursor: pointer;
-		font-size: 0.875rem;
-		font-weight: 600;
-		list-style: none;
-	}
-	.sample-synthesis summary::-webkit-details-marker {
-		display: none;
-	}
-	.sample-synthesis summary span {
-		font-size: 1.5rem;
-		font-weight: 400;
-	}
-	.sample-synthesis[open] summary span {
-		transform: rotate(45deg);
-	}
-	.synthesis-copy {
-		padding-block: 16px 8px;
-	}
-	.synthesis-copy h4 {
-		margin: 0 0 20px;
-		font: 400 1.625rem / 1.2 var(--atv-font-display, Newsreader, Georgia, serif);
-	}
-	.reflection {
-		margin: 28px 0 24px;
-		padding-left: 20px;
-		border-left: 2px solid #a36632;
-	}
-	.reflection .chapter-label {
-		margin-bottom: 10px;
-	}
-	.reflection > p:last-child {
-		margin: 0;
-		font: 400 1.375rem / 1.4 var(--atv-font-display, Newsreader, Georgia, serif);
-	}
-	.excerpt-note {
-		margin: 0;
-	}
-	.sample-footer {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 20px 32px;
-		margin-top: 28px;
-	}
-	.sample-footer p {
-		max-width: 64ch;
-		margin: 0;
-		color: #596365;
-		font-size: 0.8125rem;
-		line-height: 1.65;
-	}
-	.sample-footer a {
+	.sample-link {
 		display: inline-flex;
 		align-items: center;
-		justify-content: center;
 		gap: 24px;
-		flex-shrink: 0;
-		min-height: 48px;
-		padding: 12px 20px;
-		border: 1px solid #183746;
-		color: #fff8e9;
-		background: #183746;
-		font-size: 0.875rem;
-		font-weight: 500;
-		text-decoration: none;
+		min-height: 44px;
+		color: var(--sample-ink);
+		font:
+			500 0.875rem/1.4 'Onest',
+			sans-serif;
+		text-decoration: underline;
+		text-underline-offset: 4px;
 	}
-	.sample-footer a:hover {
-		background: #174c69;
+	.sample-link:hover {
+		text-decoration-thickness: 2px;
 	}
-	.sample-footer a:focus-visible,
-	.sample-synthesis summary:focus-visible {
-		outline: 3px solid #174c69;
-		outline-offset: 4px;
+	.sample-note {
+		max-width: 78ch;
+		margin: 16px 0 0;
+		color: #596365;
+		font:
+			400 0.6875rem/1.6 'Onest',
+			sans-serif;
 	}
-	@media (max-width: 900px) {
+	.sample-cards {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 10px;
+		margin: 24px 0 20px;
+		padding: 0;
+		list-style: none;
+		text-align: center;
+	}
+	.sample-cards img {
+		display: block;
+		width: 100%;
+		height: auto;
+		margin: 8px 0;
+		border: 1px solid #a78860;
+	}
+	@media (max-width: 850px) {
 		.sample-wrap {
-			width: min(1160px, calc(100% - 48px));
+			width: calc(100% - 48px);
 		}
-		.map-page,
-		.text-page {
-			padding: 24px;
-		}
-		.sample-footer {
-			align-items: flex-start;
+		.sample-intro {
+			align-items: start;
 			flex-direction: column;
 		}
+		.sample-delivery {
+			grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+		}
+		.sample-preview {
+			padding: 20px;
+		}
+		.delivery-copy {
+			padding: 24px;
+		}
+		.deliverables {
+			grid-template-columns: 1fr;
+			gap: 20px;
+		}
+		.deliverables dt span {
+			display: inline;
+			margin-right: 8px;
+		}
 	}
-	@media (max-width: 700px) {
+	@media (max-width: 560px) {
 		.reading-sample {
-			padding-block: 56px;
+			padding: 40px 0;
 		}
 		.sample-wrap {
 			width: calc(100% - 32px);
 		}
-		.sample-book {
+		.sample-intro {
+			gap: 20px;
+			margin-bottom: 20px;
+		}
+		.sample-switch {
+			align-self: stretch;
+		}
+		.sample-switch button {
+			flex: 1;
+		}
+		.sample-delivery {
 			grid-template-columns: minmax(0, 1fr);
 		}
-		.map-page {
+		.sample-preview {
+			padding: 16px;
 			border-right: 0;
 			border-bottom: 1px solid #c7bfac;
-			background: #f6efdf;
 		}
-		.page-label {
-			margin-bottom: 24px;
+		.chart-sheet {
+			display: grid;
+			grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+			align-items: center;
+			gap: 12px 16px;
 		}
-		.sample-map {
-			max-width: 420px;
-			margin-inline: auto;
+		.sheet-label {
+			grid-column: 1 / -1;
 		}
-		.text-page {
-			padding-block: 32px;
-		}
-	}
-	@media (max-width: 360px) {
-		.map-page,
-		.text-page {
-			padding-inline: 16px;
+		.chart-image {
+			width: 152px;
+			margin: 0 auto;
 		}
 		.sample-pillars {
-			gap: 8px;
+			grid-template-columns: 1fr;
+			gap: 12px;
+			padding: 0 0 0 12px;
+			border-top: 0;
+			border-left: 1px solid #c7bfac;
+		}
+		.sample-pillars dd {
+			margin-top: 2px;
+		}
+		.delivery-copy {
+			padding: 24px 20px 16px;
+		}
+		.deliverables {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 20px 16px;
+			margin-top: 20px;
+		}
+		.deliverables dt {
+			font-size: 1.1875rem;
+		}
+		.deliverables dt span {
+			display: block;
+			margin-bottom: 6px;
+		}
+		.deliverables dd {
+			font-size: 0.75rem;
+		}
+		.sample-cards {
+			max-width: 270px;
+			margin: 16px auto;
+		}
+		.tarot .deliverables {
+			grid-template-columns: 1fr;
+			gap: 16px;
+		}
+		.tarot .deliverables dt span {
+			display: inline;
+			margin-right: 8px;
 		}
 	}
 </style>
