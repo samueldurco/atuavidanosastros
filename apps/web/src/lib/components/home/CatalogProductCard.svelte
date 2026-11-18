@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { isLaunchProductId, productTrialHref } from '@atv/domain';
-	import ReadingSamplePreview from '../ReadingSamplePreview.svelte';
+	import DigitalProductArtwork from '../DigitalProductArtwork.svelte';
 	import '$lib/styles/mvp-product-art.css';
 	let {
 		product,
@@ -13,7 +13,6 @@
 			state: string;
 			summary: string;
 			href: string;
-			cta?: string;
 		};
 		universe: string;
 		trialAccess?: boolean;
@@ -31,7 +30,9 @@
 </script>
 
 <article class="home-catalog-card public-product-card">
-	<div class="cover-link"><ReadingSamplePreview productId={product.id} /></div>
+	<a class="cover-link" href={product.href} aria-label={`Conhecer ${product.name}`} tabindex="-1"
+		><DigitalProductArtwork productId={product.id} /></a
+	>
 	<div class="catalog-card-body">
 		<p class="eyebrow">{universe}</p>
 		<h3><a href={product.href}>{product.name}</a></h3>
@@ -40,8 +41,11 @@
 			>Ver uma amostra <span aria-hidden="true">↗</span></a
 		>
 		<p class="badge">{status}</p>
-		<a class="text-link" href={availableTrial ? productTrialHref(product.id) : product.href}
-			>{availableTrial ? `Testar ${product.name} grátis` : product.cta || 'Conhecer a leitura'}
+		<a
+			class="text-link"
+			href={availableTrial ? productTrialHref(product.id) : product.href}
+			aria-label={availableTrial ? `Testar ${product.name} grátis` : `Conhecer ${product.name}`}
+			>{availableTrial ? 'Testar gratuitamente' : 'Conhecer a leitura'}
 			<span aria-hidden="true">↗</span></a
 		>
 	</div>
@@ -70,7 +74,7 @@
 		margin-bottom: 12px;
 	}
 	.catalog-card-body {
-		padding: 25px;
+		padding: 20px;
 		display: flex;
 		flex: 1;
 		flex-direction: column;
@@ -87,10 +91,10 @@
 	}
 	.home-catalog-card h3 {
 		font:
-			500 31px/1.1 'Newsreader',
+			500 27px/1.1 'Newsreader',
 			Georgia,
 			serif;
-		margin: 0 0 16px;
+		margin: 0 0 12px;
 		color: #173e4a;
 	}
 	.home-catalog-card h3 a {
@@ -136,7 +140,7 @@
 			padding: 23px;
 		}
 		.home-catalog-card h3 {
-			font-size: 30px;
+			font-size: 28px;
 		}
 	}
 </style>
