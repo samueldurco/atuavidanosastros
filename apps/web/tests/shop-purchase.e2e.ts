@@ -302,6 +302,27 @@ test('A abertura do MVP mantém as outras peças em vitrine e apresenta as condi
 	);
 });
 
+test('Catálogo móvel mostra preços revisados, ordenação e filtro de compra online', async ({
+	page
+}, testInfo) => {
+	await page.setViewportSize({ width: 390, height: 900 });
+	await page.goto('/loja');
+	await page.getByRole('button', { name: /^Filtros/ }).click();
+	const dialog = page.getByRole('dialog', { name: 'Filtrar peças' });
+	await dialog.getByRole('checkbox', { name: 'Só com compra online' }).check();
+	await dialog.getByRole('button', { name: /^Ver \d+ peças$/ }).click();
+	await page.getByRole('combobox', { name: 'Ordenar por' }).selectOption('price-asc');
+	const first = page.locator('.shop-card').first();
+	await expect(first.locator('.piece-price')).toContainText('A partir de');
+	await expect(first.locator('.piece-price')).toContainText('R$');
+	await expect(page.locator('.shop-card .preview-label', { hasText: 'Em preparação' })).toHaveCount(
+		0
+	);
+	await first.scrollIntoViewIfNeeded();
+	await page.screenshot({ path: testInfo.outputPath('catalogo-mobile-compra.png') });
+	await scanAccessibility(page, testInfo);
+});
+
 test('Falha do carrinho permite tentar de novo sem perder seleção', async ({ page }) => {
 	await page.route('**/api/shop/cart', (route) =>
 		route.fulfill({ status: 503, json: { ok: false, code: 'provider_unavailable' } })

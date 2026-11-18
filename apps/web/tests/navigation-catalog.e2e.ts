@@ -22,7 +22,13 @@ test('Loja abre categorias filtradas pelo menu e reúne as coleções por signo'
 			.filter((piece) => department.categories.includes(piece.category))
 			.map((piece) => `/loja/peca/${piece.slug}`);
 		expect(expected.length).toBeGreaterThan(0);
+		await expect(cards).toHaveCount(Math.min(24, expected.length));
+		for (let loaded = 24; loaded < expected.length; loaded += 24) {
+			await page.getByRole('button', { name: /Carregar mais peças/ }).click();
+			await expect(cards).toHaveCount(Math.min(loaded + 24, expected.length));
+		}
 		await expect(cards).toHaveCount(expected.length);
+		await expect(page.getByRole('button', { name: /Carregar mais peças/ })).toHaveCount(0);
 		expect(
 			new Set(await cards.evaluateAll((links) => links.map((link) => link.getAttribute('href'))))
 		).toEqual(new Set(expected));
@@ -79,7 +85,8 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	await expect(page).toHaveURL(/\/loja$/);
 	await expect(page.locator('.nav-panel')).toHaveCount(0);
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
-	await expect(page.locator('main')).toContainText('Produtos físicos');
+	await expect(page.getByRole('search', { name: 'Buscar na Loja dos Signos' })).toBeVisible();
+	await expect(page.locator('main')).toContainText('ATVNA · arte zodiacal');
 	await expect(page.locator('main')).toContainText('A coleção ainda não está à venda');
 	await expect(
 		page.locator('main').getByRole('button', { name: /comprar|carrinho|pagar/i })

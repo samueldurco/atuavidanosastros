@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ShopShowcase from '$lib/components/ShopShowcase.svelte';
+	import ShopCatalog from '$lib/components/ShopCatalog.svelte';
 	import type { PageProps } from './$types';
 	let { data }: PageProps = $props();
 </script>
@@ -18,9 +18,7 @@
 
 <div class="container collection-page">
 	<a class="back-link" href="/loja">← Loja dos Signos</a>
-	<ShopShowcase
-		showLink={false}
-		headingLevel="h1"
+	<ShopCatalog
 		collection={data.collection}
 		ariesOnly={data.ariesOnly}
 		commerceEnabled={data.shopCommerceEnabled}
@@ -29,7 +27,8 @@
 
 <style>
 	.collection-page {
-		padding-block: clamp(2rem, 5vw, 4rem);
+		padding-block: 1rem 4rem;
+		max-width: 1320px;
 	}
 	.back-link {
 		display: inline-flex;
