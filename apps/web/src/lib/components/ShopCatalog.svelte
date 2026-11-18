@@ -52,6 +52,7 @@
 		category = '';
 		available = false;
 		order = 'featured';
+		limit = catalogPageSize;
 	}
 	$effect(() => {
 		void collection?.slug;

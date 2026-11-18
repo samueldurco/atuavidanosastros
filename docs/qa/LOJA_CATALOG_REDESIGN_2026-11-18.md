@@ -34,4 +34,8 @@ Revisão visual local das capturas em 1440 e 390 px; ensaio de ausência de tran
 
 Testes de busca, paginação, recuperação sem resultados, combinações e transição de viewport; testes unitários com o catálogo real; regressão do fluxo de compra com fixtures sintéticas. Nenhum pedido, pagamento ou chamada à fábrica é criado por esses testes.
 
+A rodada final de navegação e loja passou com 19 testes. A navegação confere todos os links do catálogo após o carregamento incremental e verifica que a troca de departamento reinicia a exibição em 24 peças.
+
+Limitação já existente antes da publicação: o postflight de produção passou em 13 de 15 verificações; as consultas de produto de `caneca-aries` e `caneca-cancer` retornaram HTTP 503 com `provider_unavailable`. O mesmo resultado foi confirmado no domínio oficial e no deployment anterior `dd0e8a74-9d49-4043-9688-a22a351e9fce`. A reformulação não altera a integração de disponibilidade ou as flags comerciais.
+
 A publicação exige CI na revisão exata, preflight, build e postflight. IDs, revisão publicada e verificações HTTP finais ficam na evidência de release e no log canônico externo. Reversão: restaurar o deployment de produção anterior registrado imediatamente antes da publicação ou reverter este conjunto de alterações, preservando alterações concorrentes.
