@@ -7,6 +7,7 @@ import {
 	productTrialHref
 } from '@atv/domain';
 import { scanAccessibility } from './fixtures/accessibility';
+import { readingSample } from '../src/lib/data/reading-samples';
 
 const surfaces = [
 	'/',
@@ -59,57 +60,40 @@ async function expectDeliveredBrandImages(page: Page, context: string) {
 		.toBe(true);
 }
 
-async function expectProductIllustration(art: Locator, context: string) {
-	await expect(art, `${context}: illustrated composition`).toHaveCount(1);
-	await expect(art).toBeVisible();
-	await expect(art.locator('svg.pa-canvas')).toHaveCount(1);
-	const engravings = art.locator('svg image[href*="/brand/mvp/"]');
-	expect(
-		await engravings.count(),
-		`${context}: an icon alone is not product artwork`
-	).toBeGreaterThan(0);
-	const decoded = await engravings.evaluateAll(async (nodes) =>
-		Promise.all(
-			nodes.map(
-				(node) =>
-					new Promise<boolean>((resolve) => {
-						const image = new Image();
-						image.onload = () => resolve(image.naturalWidth > 0 && image.naturalHeight > 0);
-						image.onerror = () => resolve(false);
-						image.src = node.getAttribute('href') ?? '';
-					})
-			)
-		)
+async function expectReadingSample(preview: Locator, productId: string) {
+	const sample = readingSample(productId);
+	expect(sample, `${productId}: a product-specific sample must exist`).not.toBeNull();
+	if (!sample) throw new Error(`Missing reading sample: ${productId}`);
+	await expect(preview, `${productId}: delivered reading sample`).toHaveCount(1);
+	await expect(preview).toHaveAttribute('data-reading-sample', productId);
+	await preview.scrollIntoViewIfNeeded();
+	await expect(preview).toBeVisible();
+	await expect(preview.locator('.sample-title')).toHaveText(sample.title);
+	await expect(preview.locator('.context')).toHaveText(sample.context);
+	await expect(preview.locator('.excerpt').first()).toHaveText(
+		sample.layout === 'chart'
+			? sample.sections[0].text.split('. ')[0] + '.'
+			: sample.sections[0].text
 	);
-	expect(decoded.every(Boolean), `${context}: every engraved asset must load`).toBe(true);
-	const box = await art.boundingBox();
-	expect(box?.width, `${context}: artwork width`).toBeGreaterThan(100);
-	expect(box?.height, `${context}: artwork height`).toBeGreaterThan(100);
-}
-
-async function expectApprovedCatalogCover(art: Locator, productId: string) {
-	await expect(art, `${productId}: illustrated cover`).toHaveCount(1);
-	await expect(art).toHaveAttribute('data-cover', productId);
-	await art.scrollIntoViewIfNeeded();
-	await expect(art).toBeVisible();
-	const engravings = art.locator('img[src*="/brand/mvp/"]');
-	await expect(engravings, `${productId}: primary and supporting approved engravings`).toHaveCount(
-		2
+	await expect(preview.locator('.sample-note')).toHaveText('Exemplo ilustrativo · dados fictícios');
+	await expect(preview.locator('img')).toHaveCount(
+		sample.layout === 'chart' ? 1 : (sample.cards?.length ?? 0)
 	);
+	const images = preview.locator('img');
 	await expect
 		.poll(
 			() =>
-				engravings.evaluateAll((nodes) =>
+				images.evaluateAll((nodes) =>
 					(nodes as HTMLImageElement[]).every(
 						(image) => image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
 					)
 				),
-			{ message: `${productId}: every engraved asset must load` }
+			{ message: `${productId}: every sample image must load` }
 		)
 		.toBe(true);
-	const box = await art.boundingBox();
-	expect(box?.width, `${productId}: cover width`).toBeGreaterThan(100);
-	expect(box?.height, `${productId}: cover height`).toBeGreaterThan(100);
+	const box = await preview.boundingBox();
+	expect(box?.width, `${productId}: sample width`).toBeGreaterThan(100);
+	expect(box?.height, `${productId}: sample height`).toBeGreaterThan(100);
 }
 
 async function expectSeparatePanels(first: Locator, second: Locator, context: string) {
@@ -121,7 +105,7 @@ async function expectSeparatePanels(first: Locator, second: Locator, context: st
 	const vertical = Math.min(a.y + a.height, b.y + b.height) - Math.max(a.y, b.y);
 	expect(
 		horizontal <= 1 || vertical <= 1,
-		`${context}: art must not cover product text or actions`
+		`${context}: sample must not cover product text or actions`
 	).toBe(true);
 }
 
@@ -146,12 +130,12 @@ for (const width of [320, 360, 390, 430, 768, 820, 1024, 1280, 1440]) {
 }
 
 for (const width of [320, 1440]) {
-	test(`MVP: every real catalog product has its own delivered composition without overlap at ${width}px`, async ({
+	test(`MVP: every real catalog product has its own delivered sample without overlap at ${width}px`, async ({
 		page
 	}, testInfo) => {
 		test.setTimeout(180_000);
 		await page.setViewportSize({ width, height: 1000 });
-		const compositions = new Set<string>();
+		const excerpts = new Set<string>();
 		for (const product of productOffers) {
 			const response = await page.goto(`/produtos/${product.slug}`);
 			expect(response?.status(), product.id).toBe(200);
@@ -162,16 +146,10 @@ for (const width of [320, 1440]) {
 				'data-universe',
 				/^(meu-ceu|ciclos|amor|proposito|tarot|sonhos)$/
 			);
-			const art = page.locator('.product-offer-art .product-art');
-			await expectProductIllustration(art, product.id);
-			compositions.add(
-				await art.locator('svg.pa-canvas').evaluate((element) => {
-					const drawing = element.cloneNode(true) as SVGSVGElement;
-					// Product names alone must not make a generic drawing count as unique.
-					drawing.querySelectorAll('text').forEach((label) => label.remove());
-					return drawing.innerHTML;
-				})
-			);
+			const preview = page.locator('.product-offer-art [data-reading-sample]');
+			await expectReadingSample(preview, product.id);
+			// Changing only the title must not make a reused sample count as unique.
+			excerpts.add(await preview.locator('.excerpt').first().innerText());
 			await expectSeparatePanels(
 				page.locator('.product-offer-art'),
 				page.locator('.product-offer-copy'),
@@ -193,12 +171,12 @@ for (const width of [320, 1440]) {
 				fullPage: true
 			});
 		}
-		expect(compositions.size, 'Products must not silently share a generic composition').toBe(
+		expect(excerpts.size, 'Products must not silently share a generic sample').toBe(
 			productOffers.length
 		);
 	});
 
-	test(`MVP: catalog cards keep illustrations separate from readable product information at ${width}px`, async ({
+	test(`MVP: catalog cards keep samples separate from readable product information at ${width}px`, async ({
 		page
 	}, testInfo) => {
 		test.setTimeout(120_000);
@@ -217,14 +195,18 @@ for (const width of [320, 1440]) {
 				'href',
 				`/produtos/${product.slug}`
 			);
+			await expectReadingSample(card.locator('[data-reading-sample]'), product.id);
+			await expect(card.getByRole('link', { name: 'Ver uma amostra' })).toHaveAttribute(
+				'href',
+				`/produtos/${product.slug}#amostra`
+			);
 			if (isLaunchProductId(product.id)) {
-				await expectProductIllustration(card.locator('.product-art'), product.id);
 				await expect(card.locator('.badge')).toHaveText('Teste gratuito disponível');
 				await expect(
 					card.getByRole('link', { name: `Testar ${product.name} grátis` })
 				).toHaveAttribute('href', productTrialHref(product.id));
 			} else {
-				await expectApprovedCatalogCover(card.locator('.product-cover'), product.id);
+				await expect(card.locator('.badge')).toHaveText('Em preparação');
 			}
 			await expectSeparatePanels(
 				card.locator('.cover-link'),
@@ -248,7 +230,10 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await page.setViewportSize({ width: 1440, height: 1000 });
 	await page.goto('/produtos/mapa-astral-dinheiro-carreira');
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
-	await expect(page.locator('.product-offer-art .product-art')).toHaveCount(1);
+	await expectReadingSample(
+		page.locator('.product-offer-art [data-reading-sample]'),
+		'purpose-career'
+	);
 	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
 	await expect(page.locator('.account-link')).toBeInViewport();
 	await expect(page.locator('.nav-trigger[aria-controls="nav-produtos"]')).toBeInViewport();

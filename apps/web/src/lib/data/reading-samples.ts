@@ -1,5 +1,5 @@
 import { tarotMethodFor } from '@atv/domain';
-import natalSample from './home-reading-sample.json';
+import natalSample from './home-reading-sample.json' with { type: 'json' };
 import { launchProducts } from './launch-products';
 
 export type SampleSection = { title: string; text: string };
