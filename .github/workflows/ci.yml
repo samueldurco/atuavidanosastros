@@ -44,7 +44,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - name: Audit dependency advisories
-        run: pnpm audit --audit-level=low
+        run: node --test scripts/audit-dependencies.test.mjs && node scripts/audit-dependencies.mjs
       - run: pnpm check
       - run: pnpm lint
       - run: pnpm test:unit
