@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
 	import ReadingSamplePreview from '$lib/components/ReadingSamplePreview.svelte';
+	import DigitalProductArtwork from '$lib/components/DigitalProductArtwork.svelte';
 	import FreeReadingDownload from '$lib/components/FreeReadingDownload.svelte';
 	import { page } from '$app/state';
 	import { mvpProductDesign, mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
@@ -142,7 +143,7 @@
 					</div>
 				</div>
 				<div class="product-offer-art">
-					<ReadingSamplePreview productId={data.product.id} />
+					<DigitalProductArtwork productId={data.product.id} large />
 				</div>
 			</div>
 		</section>
