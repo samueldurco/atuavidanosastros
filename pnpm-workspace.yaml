@@ -27,3 +27,4 @@ packageExtensions:
 
 patchedDependencies:
   "@sveltejs/vite-plugin-svelte@7.3.0": patches/@sveltejs__vite-plugin-svelte@7.3.0.patch
+  picomatch@4.0.7: patches/picomatch@4.0.7.patch

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
-	import MvpProductArt from '$lib/components/MvpProductArt.svelte';
+	import ReadingSamplePreview from '$lib/components/ReadingSamplePreview.svelte';
 	import FreeReadingDownload from '$lib/components/FreeReadingDownload.svelte';
 	import { page } from '$app/state';
 	import { mvpProductDesign, mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
@@ -138,13 +138,22 @@
 							href={data.launch ? `/testar-lancamentos/${data.product.id}` : '#disponibilidade'}
 							>{data.launch ? 'Testar gratuitamente' : 'Ver disponibilidade'}
 							<span aria-hidden="true">↗</span></a
-						><a class="text-link" href="#conteudo">Conhecer o conteúdo</a>
+						><a class="text-link" href="#amostra">Ver uma amostra</a>
 					</div>
 				</div>
 				<div class="product-offer-art">
-					<MvpProductArt productId={data.product.id} mode="hero" />
+					<ReadingSamplePreview productId={data.product.id} />
 				</div>
 			</div>
+		</section>
+		<section class="wrap section product-sample" id="amostra" aria-labelledby="sample-heading">
+			<p class="eyebrow">Por dentro da leitura</p>
+			<h2 id="sample-heading">Uma amostra de {data.product.name}</h2>
+			<p class="sample-intro">
+				Conheça um exemplo do conteúdo antes de escolher sua leitura. Os dados desta demonstração
+				são fictícios.
+			</p>
+			<ReadingSamplePreview productId={data.product.id} expanded />
 		</section>
 		<div class="wrap section product-offer-details" id="conteudo">
 			<div class="product-explanation">
@@ -187,14 +196,6 @@
 						<ul>
 							{#each data.launch.boundaries as item (item)}<li>{item}</li>{/each}
 						</ul>
-					</section>
-					<section>
-						<h2>Exemplo ilustrativo</h2>
-						<p>{data.launch.sampleInput}</p>
-						<p>{data.launch.sampleDelivery}</p>
-						<p class="eyebrow">
-							Dados fictícios · demonstração do recorte · não é uma leitura calculada
-						</p>
 					</section>
 				{/if}
 			</div>
@@ -293,8 +294,16 @@
 		padding-block: 0.65rem;
 	}
 	#disponibilidade,
-	#conteudo {
+	#conteudo,
+	#amostra {
 		scroll-margin-top: 2rem;
+	}
+	.product-sample h2 {
+		max-width: 24ch;
+	}
+	.sample-intro {
+		max-width: 65ch;
+		margin-bottom: 2rem;
 	}
 	@media (max-width: 800px) {
 		.product-offer-details {
