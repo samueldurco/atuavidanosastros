@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { isLaunchProductId, productTrialHref } from '@atv/domain';
-	import ProductCover from './ProductCover.svelte';
-	import MvpProductArt from '../MvpProductArt.svelte';
+	import ReadingSamplePreview from '../ReadingSamplePreview.svelte';
 	import '$lib/styles/mvp-product-art.css';
 	let {
 		product,
@@ -32,17 +31,14 @@
 </script>
 
 <article class="home-catalog-card public-product-card">
-	<a class="cover-link" href={product.href} tabindex="-1" aria-hidden="true">
-		{#if isLaunchProductId(product.id)}
-			<MvpProductArt productId={product.id} />
-		{:else}
-			<ProductCover productId={product.id} />
-		{/if}
-	</a>
+	<div class="cover-link"><ReadingSamplePreview productId={product.id} /></div>
 	<div class="catalog-card-body">
 		<p class="eyebrow">{universe}</p>
 		<h3><a href={product.href}>{product.name}</a></h3>
 		<p class="summary">{product.summary}</p>
+		<a class="sample-link" href={`${product.href}#amostra`}
+			>Ver uma amostra <span aria-hidden="true">↗</span></a
+		>
 		<p class="badge">{status}</p>
 		<a class="text-link" href={availableTrial ? productTrialHref(product.id) : product.href}
 			>{availableTrial ? `Testar ${product.name} grátis` : product.cta || 'Conhecer a leitura'}
@@ -64,6 +60,14 @@
 		display: block;
 		text-decoration: none;
 		border-bottom: 1px solid #b8beb1;
+	}
+	.sample-link {
+		font:
+			500 12px/1.6 'Onest',
+			Arial,
+			sans-serif;
+		padding-block: 12px;
+		margin-bottom: 12px;
 	}
 	.catalog-card-body {
 		padding: 25px;

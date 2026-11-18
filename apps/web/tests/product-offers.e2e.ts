@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
-import { customerProducts } from '../src/lib/data/product-copy';
+import { customerOffers } from '../src/lib/data/product-copy';
 
-for (const product of customerProducts) {
+for (const product of customerOffers) {
 	test(`public offer explains ${product.id} without opening a gated sale`, async ({
 		page
 	}, testInfo) => {

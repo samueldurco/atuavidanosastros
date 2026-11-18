@@ -6,6 +6,7 @@
 	import { selectHomeHighlights, type HomeHighlight } from '$lib/home-highlights';
 	import HomeCarousel from './HomeCarousel.svelte';
 	import ProductCover from './ProductCover.svelte';
+	import ReadingSamplePreview from '../ReadingSamplePreview.svelte';
 	import { productCovers } from './product-covers';
 	import './showcase.css';
 	let {
@@ -80,7 +81,7 @@
 					>
 				</div>{/snippet}
 			{#snippet slide(index)}{@const product = featured[index]}
-				<ProductCover productId={product.id} />
+				<ReadingSamplePreview productId={product.id} />
 				<div class="showcase-copy">
 					<p class="eyebrow">{universeName(product.universe)} · {status(product.state)}</p>
 					<h4>{product.name}</h4>
