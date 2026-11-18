@@ -84,7 +84,7 @@ test('As 24 peças candidatas permanecem sem oferta pública quando as compras e
 test('Vitrine permite filtrar peças existentes e abrir detalhes sem checkout', async ({ page }) => {
 	await page.goto('/loja');
 	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Loja dos Signos');
-	await expect(page.locator('.shop-card')).toHaveCount(319);
+	await expect(page.locator('.shop-card')).toHaveCount(24);
 	await assertShowcaseOnly(page);
 	await page
 		.getByRole('combobox', { name: 'Tipo de peça', exact: true })
@@ -113,11 +113,10 @@ test('Todas as 15 coleções estão acessíveis sem duplicar páginas das peças
 	await expect(nav.getByRole('link', { name: /Premium/ })).toBeVisible();
 	await nav.getByRole('link', { name: /Namorados e Sinastria/ }).click();
 	await expect(page).toHaveURL(/\/loja\/colecao\/casal$/);
-	await expect(page.locator('.shop-card')).toHaveCount(159);
+	await expect(page.locator('.shop-card')).toHaveCount(24);
 	await assertShowcaseOnly(page);
-	await page
-		.getByRole('combobox', { name: 'Combinação de signos', exact: true })
-		.selectOption('Áries + Câncer');
+	await page.getByRole('combobox', { name: 'Seu signo', exact: true }).selectOption('Áries');
+	await page.getByRole('combobox', { name: 'Signo do par', exact: true }).selectOption('Câncer');
 	await expect(page.locator('.shop-card')).toHaveCount(3);
 	await page
 		.getByRole('combobox', { name: 'Tipo de peça', exact: true })
@@ -128,9 +127,7 @@ test('Todas as 15 coleções estão acessíveis sem duplicar páginas das peças
 		.getByRole('link', { name: /Premium/ })
 		.click();
 	await expect(page.locator('.shop-card')).toHaveCount(24);
-	await expect(page.getByRole('combobox', { name: 'Tipo de peça', exact: true })).toHaveValue(
-		'Todas'
-	);
+	await expect(page.getByRole('combobox', { name: 'Tipo de peça', exact: true })).toHaveValue('');
 	const pieceHref = await page.locator('.shop-card .product-image').first().getAttribute('href');
 	await page
 		.getByRole('navigation', { name: 'Coleções da Loja dos Signos', exact: true })
@@ -198,14 +195,60 @@ for (const width of [1440, 390]) {
 	test(`Vitrine e detalhes acessíveis em ${width}px`, async ({ page }, testInfo) => {
 		await page.setViewportSize({ width, height: 900 });
 		await page.goto('/loja');
+		if (width < 761) await page.getByRole('button', { name: /^Filtros/ }).click();
 		const category = page.getByRole('combobox', { name: 'Tipo de peça', exact: true });
 		await expect(category).toBeEnabled({ timeout: 30_000 });
 		await category.focus();
 		await expect(category).toBeFocused();
 		await page.keyboard.press('r');
 		await page.keyboard.press('Enter');
+		await page.keyboard.press('Tab');
 		await scanAccessibility(page, testInfo);
+		if (width < 761) {
+			await page.keyboard.press('Escape');
+			await expect(page.getByRole('button', { name: /^Filtros/ })).toBeFocused();
+			await scanAccessibility(page, testInfo);
+		}
 		await page.goto('/loja/peca/cropped-aries');
 		await scanAccessibility(page, testInfo);
 	});
 }
+
+test('Busca sem acentos, carregamento incremental e recuperação da busca vazia', async ({
+	page
+}) => {
+	await page.goto('/loja');
+	await expect(page.locator('.shop-card')).toHaveCount(24);
+	await page.getByRole('button', { name: 'Carregar mais peças' }).click();
+	await expect(page.locator('.shop-card')).toHaveCount(48);
+	const search = page.getByRole('searchbox', { name: 'Buscar peça ou signo' });
+	await search.fill('caneca cancer');
+	await expect(page.locator('.shop-card')).toHaveCount(1);
+	await expect(page.locator('.shop-card')).toContainText('Câncer');
+	await search.fill('nada-encontrado-xyz');
+	await expect(page.getByRole('heading', { name: 'Nenhuma peça por aqui.' })).toBeVisible();
+	await page
+		.locator('.catalog-empty')
+		.getByRole('button', { name: 'Limpar filtros e busca' })
+		.click();
+	await expect(search).toHaveValue('');
+	await expect(page.locator('.shop-card')).toHaveCount(24);
+});
+
+test('Filtros móveis combinam signos e aplicam sem perder o resultado', async ({ page }) => {
+	await page.setViewportSize({ width: 390, height: 844 });
+	await page.goto('/loja/colecao/casal');
+	await page.getByRole('button', { name: /^Filtros/ }).click();
+	const dialog = page.getByRole('dialog', { name: 'Filtrar peças' });
+	await dialog.getByRole('combobox', { name: 'Seu signo', exact: true }).selectOption('Câncer');
+	await dialog.getByRole('combobox', { name: 'Signo do par' }).selectOption('Áries');
+	await dialog.getByRole('combobox', { name: 'Tipo de peça' }).selectOption('Regata de casal');
+	await dialog.getByRole('button', { name: 'Ver 1 peça', exact: true }).click();
+	await expect(dialog).not.toBeVisible();
+	await expect(page.locator('.shop-card')).toHaveCount(1);
+	await expect(page.locator('.shop-card')).toContainText('Áries + Câncer');
+	await page.getByRole('button', { name: /^Filtros/ }).click();
+	await page.setViewportSize({ width: 820, height: 900 });
+	await expect(dialog).not.toBeVisible();
+	await expect(page.locator('.shop-card')).toHaveCount(1);
+});
