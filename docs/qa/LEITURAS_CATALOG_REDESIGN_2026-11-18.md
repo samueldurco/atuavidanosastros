@@ -32,6 +32,8 @@ Arquivo publicado: `apps/web/static/brand/mvp/assets/catalogo/livro-celeste-v1.w
 
 Revisão visual local em 320, 390 e 1440 px, incluindo catálogo e apresentação do produto. Os testes verificam a correspondência entre as 30 gravuras e suas amostras, limites das capas, filtros combinados, ordenação, recarga, estado vazio e ausência de transbordamento. As 30 amostras também são verificadas em 390 e 1440 px.
 
+A regressão visual do MVP acompanha a nova apresentação em 320 e 1440 px: compara cada gravura com a arte aprovada, confere as capas sem recorte e mantém a verificação do texto completo e exclusivo das 30 amostras em `#amostra`. O cenário de falha de imagens e zoom de 200% preserva a conferência dos títulos, controles, navegação e acessibilidade.
+
 A publicação exige CI na revisão exata, preflight e conferência do deployment de produção. Resultados finais, capturas, revisão publicada e verificações HTTP ficam na evidência de release e no log canônico externo.
 
 Limitação anterior a esta alteração: o postflight de produção registra 13 de 15 verificações, com HTTP 503 `provider_unavailable` nas consultas das canecas de Áries e Câncer. Esta reformulação de produtos digitais não modifica essa integração.

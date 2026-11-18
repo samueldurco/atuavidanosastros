@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 import {
 	isLaunchProductId,
 	productCatalog,
@@ -8,6 +9,11 @@ import {
 } from '@atv/domain';
 import { scanAccessibility } from './fixtures/accessibility';
 import { readingSample } from '../src/lib/data/reading-samples';
+import { customerProduct } from '../src/lib/data/product-copy';
+
+const approvedProductArt: Record<string, { art: string; caption: string }> = JSON.parse(
+	readFileSync(new URL('../src/lib/data/mvp-product-design.json', import.meta.url), 'utf8')
+);
 
 const surfaces = [
 	'/',
@@ -60,6 +66,47 @@ async function expectDeliveredBrandImages(page: Page, context: string) {
 		.toBe(true);
 }
 
+async function expectProductArtwork(artwork: Locator, productId: string) {
+	const product = customerProduct(productId);
+	const design = approvedProductArt[productId];
+	expect(product, `${productId}: public product copy`).toBeDefined();
+	expect(design, `${productId}: approved artwork`).toBeDefined();
+	await expect(artwork).toHaveCount(1);
+	await expect(artwork).toHaveAttribute('data-product-artwork', productId);
+	await artwork.scrollIntoViewIfNeeded();
+	await expect(artwork).toBeVisible();
+	await expect(artwork.locator('.folio-title')).toHaveText(product!.name);
+	await expect(artwork.locator('.folio-caption')).toHaveText(design.caption);
+	await expect(artwork.locator('svg.pa-canvas')).toHaveCount(1);
+	expect(
+		await artwork.locator('.mvp-product-art').evaluate((element, approved) => {
+			const template = document.createElement('template');
+			template.innerHTML = approved;
+			return (
+				element.querySelector('.product-art')?.outerHTML ===
+				template.content.firstElementChild?.outerHTML
+			);
+		}, design.art),
+		`${productId}: delivered engraving matches its approved product artwork`
+	).toBe(true);
+	const [outer, folio] = await Promise.all([
+		artwork.boundingBox(),
+		artwork.locator('.folio').boundingBox()
+	]);
+	expect(outer).not.toBeNull();
+	expect(folio).not.toBeNull();
+	if (!outer || !folio) return;
+	expect(folio.width, `${productId}: readable cover width`).toBeGreaterThan(100);
+	expect(folio.x, `${productId}: cover left edge`).toBeGreaterThanOrEqual(outer.x - 1);
+	expect(folio.y, `${productId}: cover top edge`).toBeGreaterThanOrEqual(outer.y - 1);
+	expect(folio.x + folio.width, `${productId}: cover right edge`).toBeLessThanOrEqual(
+		outer.x + outer.width + 1
+	);
+	expect(folio.y + folio.height, `${productId}: cover bottom edge`).toBeLessThanOrEqual(
+		outer.y + outer.height + 1
+	);
+}
+
 async function expectReadingSample(preview: Locator, productId: string) {
 	const sample = readingSample(productId);
 	expect(sample, `${productId}: a product-specific sample must exist`).not.toBeNull();
@@ -70,12 +117,9 @@ async function expectReadingSample(preview: Locator, productId: string) {
 	await expect(preview).toBeVisible();
 	await expect(preview.locator('.sample-title')).toHaveText(sample.title);
 	await expect(preview.locator('.context')).toHaveText(sample.context);
-	await expect(preview.locator('.excerpt').first()).toHaveText(
-		sample.layout === 'chart'
-			? sample.sections[0].text.split('. ')[0] + '.'
-			: sample.sections[0].text
-	);
-	await expect(preview.locator('.sample-note')).toHaveText('Exemplo ilustrativo · dados fictícios');
+	await expect(preview.locator('.excerpt').first()).toHaveText(sample.sections[0].text);
+	await expect(preview.locator('.excerpt')).toHaveCount(sample.sections.length);
+	await expect(preview.locator('.sample-note')).toHaveText(sample.note);
 	await expect(preview.locator('img')).toHaveCount(
 		sample.layout === 'chart' ? 1 : (sample.cards?.length ?? 0)
 	);
@@ -146,10 +190,10 @@ for (const width of [320, 1440]) {
 				'data-universe',
 				/^(meu-ceu|ciclos|amor|proposito|tarot|sonhos)$/
 			);
-			const preview = page.locator('.product-offer-art [data-reading-sample]');
-			await expectReadingSample(preview, product.id);
-			// Changing only the title must not make a reused sample count as unique.
-			excerpts.add(await preview.locator('.excerpt').first().innerText());
+			await expectProductArtwork(
+				page.locator('.product-offer-art [data-product-artwork]'),
+				product.id
+			);
 			await expectSeparatePanels(
 				page.locator('.product-offer-art'),
 				page.locator('.product-offer-copy'),
@@ -165,6 +209,10 @@ for (const width of [320, 1440]) {
 				'href',
 				launch ? productTrialHref(product.id) : '#disponibilidade'
 			);
+			const preview = page.locator('#amostra [data-reading-sample]');
+			await expectReadingSample(preview, product.id);
+			// Changing only the cover or title must not make a reused sample count as unique.
+			excerpts.add(await preview.locator('.excerpt').first().innerText());
 			await expectNoOverflow(page, product.id);
 			await page.screenshot({
 				path: testInfo.outputPath(`${product.id}-${width}.png`),
@@ -176,7 +224,7 @@ for (const width of [320, 1440]) {
 		);
 	});
 
-	test(`MVP: catalog cards keep samples separate from readable product information at ${width}px`, async ({
+	test(`MVP: catalog cards keep illustrated covers separate from readable product information at ${width}px`, async ({
 		page
 	}, testInfo) => {
 		test.setTimeout(120_000);
@@ -195,7 +243,7 @@ for (const width of [320, 1440]) {
 				'href',
 				`/produtos/${product.slug}`
 			);
-			await expectReadingSample(card.locator('[data-reading-sample]'), product.id);
+			await expectProductArtwork(card.locator('[data-product-artwork]'), product.id);
 			await expect(card.getByRole('link', { name: 'Ver uma amostra' })).toHaveAttribute(
 				'href',
 				`/produtos/${product.slug}#amostra`
@@ -230,10 +278,12 @@ test('MVP: artwork failure preserves titles, long text and controls at 200% zoom
 	await page.setViewportSize({ width: 1440, height: 1000 });
 	await page.goto('/produtos/mapa-astral-dinheiro-carreira');
 	expect(blockedAssets, 'The failure exercise must block real MVP assets').toBeGreaterThan(0);
-	await expectReadingSample(
-		page.locator('.product-offer-art [data-reading-sample]'),
+	await expectProductArtwork(
+		page.locator('.product-offer-art [data-product-artwork]'),
 		'purpose-career'
 	);
+	await expectReadingSample(page.locator('#amostra [data-reading-sample]'), 'purpose-career');
+	await page.evaluate(() => scrollTo(0, 0));
 	await expect(page.locator('header.site-header').getByRole('link')).toHaveCount(2);
 	await expect(page.locator('.account-link')).toBeInViewport();
 	await expect(page.locator('.nav-trigger[aria-controls="nav-produtos"]')).toBeInViewport();

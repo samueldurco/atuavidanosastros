@@ -77,6 +77,7 @@
 		display: flex;
 		flex-direction: column;
 		width: min(100%, 225px);
+		min-width: 0;
 		height: 280px;
 		background: #fff8e9 url('/brand/mvp/assets/papel-fino.webp') center/cover;
 		padding: 13px 17px 11px;
@@ -142,6 +143,7 @@
 			Georgia,
 			serif;
 		text-wrap: balance;
+		overflow-wrap: anywhere;
 	}
 	.folio-caption {
 		margin-top: 7px;
@@ -202,13 +204,15 @@
 	@media (max-width: 600px) {
 		.large {
 			min-height: 450px;
+			padding: 30px 20px;
 		}
 		.large .folio {
-			width: min(85%, 290px);
+			width: min(100%, 290px);
 			height: 365px;
+			padding: 18px;
 		}
 		.large .folio-title {
-			font-size: 28px;
+			font-size: clamp(24px, 7.2vw, 28px);
 		}
 	}
 </style>
