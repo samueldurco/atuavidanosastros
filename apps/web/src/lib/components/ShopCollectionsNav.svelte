@@ -2,8 +2,9 @@
 	import { visibleShopCollections } from '$lib/data/shop-collections';
 	let {
 		current,
-		showSignCollections = false
-	}: { current?: string; showSignCollections?: boolean } = $props();
+		showSignCollections = false,
+		compact = false
+	}: { current?: string; showSignCollections?: boolean; compact?: boolean } = $props();
 	const accessories = visibleShopCollections.find((collection) => collection.slug === 'acessorios');
 	const themedCollections = visibleShopCollections.filter(
 		(collection) => collection.slug !== 'acessorios' && !collection.href.includes('/signo/')
@@ -11,7 +12,7 @@
 	const signs = visibleShopCollections.filter((collection) => collection.href.includes('/signo/'));
 </script>
 
-<nav id="colecoes" class="collections-nav" aria-label="Coleções da Loja dos Signos">
+<nav id="colecoes" class="collections-nav" class:compact aria-label="Coleções da Loja dos Signos">
 	{#if accessories}
 		<a href={accessories.href} aria-current={current === accessories.slug ? 'page' : undefined}
 			>Coleção de acessórios <span>({accessories.products.length})</span></a
@@ -76,5 +77,26 @@
 		gap: 0 1.2rem;
 		max-width: 48rem;
 		padding: 0.75rem 0;
+	}
+	.compact {
+		gap: 0 1.25rem;
+		margin-block: 0.65rem 1rem;
+	}
+	.compact a,
+	.compact summary {
+		font-size: 0.78rem;
+	}
+	@media (max-width: 760px) {
+		.compact {
+			gap: 0 1rem;
+			margin-block: 0.4rem 0.7rem;
+		}
+		.compact a,
+		.compact summary {
+			font-size: 0.72rem;
+		}
+		.compact a span {
+			display: none;
+		}
 	}
 </style>

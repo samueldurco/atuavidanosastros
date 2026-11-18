@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import ShopShowcase from '$lib/components/ShopShowcase.svelte';
+	import ShopCatalog from '$lib/components/ShopCatalog.svelte';
 	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
 	import { getShopDepartment } from '$lib/data/shop-departments';
 	import type { PageProps } from './$types';
@@ -19,19 +19,17 @@
 </svelte:head>
 
 <div class="container shop-page">
-	<p class="catalog-alternative">
-		Procura mapas astrais, previsões, Tarot ou interpretação de sonhos? <a href="/leituras"
-			>Ver o catálogo de leituras digitais</a
-		>.
-	</p>
-	<ShopShowcase
-		showLink={false}
-		headingLevel="h1"
+	<ShopCatalog
 		{department}
 		{showSignCollections}
 		ariesOnly={data.ariesOnly}
 		commerceEnabled={data.shopCommerceEnabled}
 	/>
+	<p class="catalog-alternative">
+		Procura mapas astrais, previsões, Tarot ou interpretação de sonhos? <a href="/leituras"
+			>Ver o catálogo de leituras digitais</a
+		>.
+	</p>
 	<ShopPolicyLinks />
 	<aside class="shop-reading" aria-labelledby="shop-reading-title">
 		<div>
@@ -48,7 +46,8 @@
 
 <style>
 	.shop-page {
-		padding-top: clamp(1rem, 3vw, 3rem);
+		padding-top: 0.25rem;
+		max-width: 1320px;
 		padding-bottom: clamp(3rem, 6vw, 6rem);
 	}
 	.catalog-alternative {
