@@ -1,11 +1,12 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/Button.svelte';
-	import ReadingSamplePreview from '$lib/components/ReadingSamplePreview.svelte';
+	import ProductDeliveryPreview from '$lib/components/ProductDeliveryPreview.svelte';
+	import ProductDeliveryFormats from '$lib/components/ProductDeliveryFormats.svelte';
+	import { productDeliveryPresentation } from '$lib/data/product-delivery-presentation';
 	import DigitalProductArtwork from '$lib/components/DigitalProductArtwork.svelte';
 	import FreeReadingDownload from '$lib/components/FreeReadingDownload.svelte';
 	import { page } from '$app/state';
 	import { mvpProductDesign, mvpTheme, mvpThemes } from '$lib/data/mvp-visual';
-	import { formatLabels } from '$lib/data/product-details';
 	let { data } = $props();
 	const freeEntryByProduct: Record<string, { href: string; label: string }> = {
 		ascendant: {
@@ -110,6 +111,9 @@
 	const design = $derived(mvpProductDesign(data.product.id));
 	const theme = $derived(design?.theme ?? mvpTheme(data.product.universe));
 	const colors = $derived(design ?? mvpThemes[theme]);
+	const presentation = $derived(
+		productDeliveryPresentation[data.product.id as keyof typeof productDeliveryPresentation]
+	);
 </script>
 
 <div class="mvp-public">
@@ -147,14 +151,37 @@
 				</div>
 			</div>
 		</section>
+		<nav class="wrap product-section-nav" aria-label="Conheça esta leitura">
+			<a href="#amostra">Amostra da leitura <span aria-hidden="true">↓</span></a><a href="#formatos"
+				>O que você recebe <span aria-hidden="true">↓</span></a
+			><a href="#disponibilidade">Como começar <span aria-hidden="true">↓</span></a>
+		</nav>
 		<section class="wrap section product-sample" id="amostra" aria-labelledby="sample-heading">
 			<p class="eyebrow">Por dentro da leitura</p>
-			<h2 id="sample-heading">Uma amostra de {data.product.name}</h2>
+			<h2 id="sample-heading">{presentation?.headline ?? `Uma amostra de ${data.product.name}`}</h2>
 			<p class="sample-intro">
-				Conheça um exemplo do conteúdo antes de escolher sua leitura. Os dados desta demonstração
-				são fictícios.
+				{presentation?.intro ??
+					'Conheça o conteúdo e a organização desta leitura em uma prévia ilustrada.'}
 			</p>
-			<ReadingSamplePreview productId={data.product.id} expanded />
+			<ProductDeliveryPreview productId={data.product.id} />
+		</section>
+		<section class="wrap section product-delivery" id="formatos" aria-labelledby="delivery-heading">
+			<div class="delivery-heading">
+				<p class="eyebrow">O que você recebe</p>
+				<h2 id="delivery-heading">
+					{data.launch ? 'Sua leitura, por dentro da tela' : 'Conheça os formatos previstos'}
+				</h2>
+				<p>
+					{data.launch
+						? 'Veja uma representação da leitura digital, com um trecho da demonstração deste produto.'
+						: 'Uma prévia visual de como o conteúdo pode chegar até você. Este produto ainda está em preparação.'}
+				</p>
+			</div>
+			<ProductDeliveryFormats
+				productId={data.product.id}
+				formats={data.product.delivery}
+				planned={data.product.state !== 'ACTIVE'}
+			/>
 		</section>
 		<div class="wrap section product-offer-details" id="conteudo">
 			<div class="product-explanation">
@@ -167,13 +194,6 @@
 					<p class="eyebrow">Para começar</p>
 					<h2>O que você precisa informar</h2>
 					<p>{data.details.input}</p>
-				</section>
-				<section>
-					<p class="eyebrow">A entrega</p>
-					<h2>{data.launch ? 'Sua leitura digital' : 'Formatos digitais previstos'}</h2>
-					<ul class="product-formats">
-						{#each data.product.delivery as format (format)}<li>{formatLabels[format]}</li>{/each}
-					</ul>
 				</section>
 				{#if data.launch}
 					<section>
@@ -252,6 +272,56 @@
 </div>
 
 <style>
+	.product-section-nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px 32px;
+		padding-top: 18px;
+		padding-bottom: 18px;
+		border-bottom: 1px solid #c7bfac;
+	}
+	.product-section-nav a {
+		display: inline-flex;
+		align-items: center;
+		gap: 16px;
+		min-height: 44px;
+		font-size: 12px;
+		text-decoration: none;
+	}
+	.product-section-nav a:hover {
+		text-decoration: underline;
+		text-underline-offset: 5px;
+	}
+	.product-delivery {
+		border-top: 1px solid #c7bfac;
+	}
+	.delivery-heading {
+		margin-bottom: 35px;
+		max-width: 65ch;
+	}
+	.delivery-heading h2 {
+		max-width: 24ch;
+	}
+	.delivery-heading > p:last-child {
+		font-size: 15px;
+		line-height: 1.8;
+	}
+	#formatos,
+	#disponibilidade {
+		scroll-margin-top: 2rem;
+	}
+	@media (max-width: 600px) {
+		.product-section-nav {
+			gap: 0 20px;
+		}
+		.product-section-nav a {
+			font-size: 11px;
+			gap: 8px;
+		}
+		.delivery-heading {
+			margin-bottom: 26px;
+		}
+	}
 	.product-offer-details {
 		display: grid;
 		grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
