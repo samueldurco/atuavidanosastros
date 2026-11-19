@@ -6,6 +6,7 @@
 	import { SITE } from '$lib/data/site';
 	import { mvpArt, mvpThemes } from '$lib/data/mvp-visual';
 	import CatalogProductCard from '$lib/components/home/CatalogProductCard.svelte';
+	import DigitalStoreNav from '$lib/components/DigitalStoreNav.svelte';
 	let { data } = $props();
 	let filtersOpen = $state(false);
 	const filterUrl = $derived(page.shallow?.url ?? page.url);
@@ -78,6 +79,7 @@
 		<nav class="breadcrumb" aria-label="Caminho da página">
 			<a href="/">Início</a><span aria-hidden="true">/</span><span>Produtos digitais</span>
 		</nav>
+		<DigitalStoreNav active="readings" />
 		<section class="store-hero" aria-labelledby="store-title">
 			<div class="hero-copy">
 				<p class="eyebrow">A tua vida, em novas páginas</p>
@@ -732,8 +734,11 @@
 		grid-template-columns: 155px 1fr auto;
 		align-items: center;
 		gap: 28px;
-		border: 1px solid #9caa9e;
-		background: #dce9e7;
+		border: 1px solid #9e8c65;
+		background:
+			linear-gradient(#102c3de8, #183746ed),
+			url('/brand/mvp/assets/papel-fino.webp') center / 520px;
+		color: #fff8e9;
 		padding: 28px 36px;
 		margin-top: 48px;
 	}
@@ -741,7 +746,17 @@
 		width: 100%;
 		height: 100px;
 		object-fit: contain;
-		mix-blend-mode: multiply;
+		background: #f6efdf url('/brand/mvp/assets/papel-fino.webp') center / 240px;
+		padding: 8px;
+		border: 1px solid #c9b682;
+	}
+	.subscription-banner .eyebrow {
+		color: #f0d08e;
+	}
+	.subscription-banner .store-button {
+		background: #f6efdf;
+		color: #183746;
+		border-color: #f0d08e;
 	}
 	.subscription-banner h2 {
 		font-size: 30px;

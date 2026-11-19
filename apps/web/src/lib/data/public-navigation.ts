@@ -121,7 +121,7 @@ export const offerNavigation = [
 	{
 		href: '/leituras',
 		label: 'Produtos digitais',
-		description: 'Compare as leituras avulsas e confira conteúdo, formatos e disponibilidade.'
+		description: 'Explore lançamentos, leituras avulsas e assinatura ATV+ na mesma loja.'
 	},
 	{
 		href: '/loja',
@@ -131,7 +131,7 @@ export const offerNavigation = [
 	{
 		href: '/atv-mais',
 		label: 'ATV+ · Assinatura',
-		description: 'Compare os três planos de leituras digitais a cada 30 dias.'
+		description: 'Compare os três planos de leituras pessoais em PDF e os períodos de assinatura.'
 	}
 ] as const;
 
