@@ -9,6 +9,7 @@
 	} from '@atv/domain';
 	import ContentShell from '$lib/components/shells/ContentShell.svelte';
 	import AtvPlusCommercial from '$lib/components/AtvPlusCommercial.svelte';
+	import DigitalStoreNav from '$lib/components/DigitalStoreNav.svelte';
 	let { data, form } = $props();
 	let busy = $state(false);
 	const current = $derived(
@@ -68,139 +69,222 @@
 	/>
 </svelte:head>
 
-<ContentShell kind="commercial">
-	<AtvPlusCommercial
-		membershipState={data.commercial}
-		now={data.serverNow}
-		message={form && 'commercialMessage' in form ? form.commercialMessage : ''}
-	/>
+<div class="subscription-store">
+	<ContentShell kind="commercial">
+		<DigitalStoreNav active="atv-plus" dark />
+		<AtvPlusCommercial
+			membershipState={data.commercial}
+			now={data.serverNow}
+			message={form && 'commercialMessage' in form ? form.commercialMessage : ''}
+		/>
 
-	{#if data.ownerAccess}
-		<details class="legacy-evaluation">
-			<summary>Avaliação dos ciclos anteriores · conta proprietária</summary>
-			<p>
-				As opções de avaliação anteriores continuam disponíveis para preservar os testes e as
-				leituras já entregues.
-			</p>
-			<div class="plans" aria-label="Planos de avaliação anteriores">
-				{#each atvPlusPlans as plan, index (plan.id)}
-					<article class:premium={plan.id === 'premium'}>
-						<p class="eyebrow">0{index + 1} · ciclo de 30 dias</p>
-						<h2>{plan.name}</h2>
-						<p>{plan.description}</p>
-						<ul>
-							{#each plan.benefits as benefit (benefit)}<li>{benefit}</li>{/each}
-						</ul>
-						{#if data.ownerAccess}
-							<form method="POST" action="?/start" use:enhance={enhanceForm}>
-								<input type="hidden" name="planId" value={plan.id} />
-								<input type="hidden" name="requestKey" value={data.requestKey} />
-								<button class="button" disabled={busy}
-									>{current?.plan_id === plan.id
-										? 'Reiniciar este teste'
-										: 'Testar este plano'}</button
-								>
-							</form>
-						{:else}<p class="availability">Assinaturas em preparação</p>{/if}
-					</article>
-				{/each}
-			</div>
-			<p class="policy">
-				Uma previsão por ciclo: escolha entre Calendário de Previsões e Previsões de Dinheiro e
-				Carreira. No Premium, as duas leituras básicas e a leitura ampliada são alternativas. As
-				utilizações pertencem ao ciclo de 30 dias e não se acumulam.
-			</p>
-			<section class="evaluation" aria-labelledby="evaluation-title">
-				<p class="eyebrow">Avaliação da conta proprietária · sem cobrança</p>
-				<h2 id="evaluation-title">Experimente cada plano</h2>
+		{#if data.ownerAccess}
+			<details class="legacy-evaluation">
+				<summary>Avaliação dos ciclos anteriores · conta proprietária</summary>
 				<p>
-					Começar ou reiniciar um plano encerra a simulação anterior e abre um ciclo de 30 dias. As
-					leituras já entregues ficam na biblioteca.
+					As opções de avaliação anteriores continuam disponíveis para preservar os testes e as
+					leituras já entregues.
 				</p>
-				<p>
-					Seu <a href="/testar-produtos">acesso completo aos produtos para avaliação</a> continua livre,
-					independentemente do plano escolhido.
+				<div class="plans" aria-label="Planos de avaliação anteriores">
+					{#each atvPlusPlans as plan, index (plan.id)}
+						<article class:premium={plan.id === 'premium'}>
+							<p class="eyebrow">0{index + 1} · ciclo de 30 dias</p>
+							<h2>{plan.name}</h2>
+							<p>{plan.description}</p>
+							<ul>
+								{#each plan.benefits as benefit (benefit)}<li>{benefit}</li>{/each}
+							</ul>
+							{#if data.ownerAccess}
+								<form method="POST" action="?/start" use:enhance={enhanceForm}>
+									<input type="hidden" name="planId" value={plan.id} />
+									<input type="hidden" name="requestKey" value={data.requestKey} />
+									<button class="button" disabled={busy}
+										>{current?.plan_id === plan.id
+											? 'Reiniciar este teste'
+											: 'Testar este plano'}</button
+									>
+								</form>
+							{:else}<p class="availability">Assinaturas em preparação</p>{/if}
+						</article>
+					{/each}
+				</div>
+				<p class="policy">
+					Uma previsão por ciclo: escolha entre Calendário de Previsões e Previsões de Dinheiro e
+					Carreira. No Premium, as duas leituras básicas e a leitura ampliada são alternativas. As
+					utilizações pertencem ao ciclo de 30 dias e não se acumulam.
 				</p>
-				{#if form?.message}<p class="feedback" role="status">{form.message}</p>{/if}
-				{#if current && selectedPlan}
-					<div class="cycle-heading">
-						<div>
-							<h3>{selectedPlan.name}</h3>
-							<p>{date(current.started_at)} a {date(current.ends_at)}</p>
-						</div>
-						<form method="POST" action="?/cancel" use:enhance={enhanceForm}>
-							<input type="hidden" name="cycleId" value={current.id} />
-							<button disabled={busy}>Encerrar simulação</button>
-						</form>
-					</div>
-					<h4>Escolha sua próxima leitura</h4>
-					{#if availableIds.length}
-						<div class="choices">
-							{#each availableIds as id (id)}<a
-									class="choice"
-									href={`${productTrialHref(id)}?atvPlusCycle=${current.id}`}
-									>{nameFor(id)} <span aria-hidden="true">↗</span></a
-								>{/each}
-						</div>
-					{:else}<p>
-							Você usou as opções deste ciclo. Reabra suas leituras abaixo ou escolha outro plano
-							para testar.
-						</p>{/if}
-					<p class="small">
-						A utilização é registrada somente depois que a leitura é concluída e salva. Uma
-						tentativa que não gera leitura não consome o plano.
+				<section class="evaluation" aria-labelledby="evaluation-title">
+					<p class="eyebrow">Avaliação da conta proprietária · sem cobrança</p>
+					<h2 id="evaluation-title">Experimente cada plano</h2>
+					<p>
+						Começar ou reiniciar um plano encerra a simulação anterior e abre um ciclo de 30 dias.
+						As leituras já entregues ficam na biblioteca.
 					</p>
-					{#if currentUses.length}<h4>Leituras deste ciclo</h4>
-						<ul class="readings">
-							{#each currentUses as use (use)}<li>
-									{#if use.reading_id}<a href={`/testar-produtos/leituras/${use.reading_id}`}
-											>{nameFor(use.product_id)}</a
-										>{:else}{nameFor(use.product_id)} · leitura removida{/if}
-								</li>{/each}
-						</ul>{/if}
-				{:else}<p>Escolha um plano acima para começar.</p>{/if}
-				{#if data.cycles.some((cycle) => cycle.id !== current?.id)}
-					<details>
-						<summary>Ciclos anteriores</summary
-						>{#each data.cycles.filter((cycle) => cycle.id !== current?.id) as cycle (cycle.id)}<div
-								class="past-cycle"
-							>
-								<h3>{atvPlusPlanFor(cycle.plan_id)?.name}</h3>
-								<p>{date(cycle.started_at)} · {cycle.cancelled_at ? 'encerrado' : 'concluído'}</p>
-								<ul>
-									{#each data.uses.filter((use) => use.cycle_id === cycle.id) as use (use)}<li>
-											{#if use.reading_id}<a href={`/testar-produtos/leituras/${use.reading_id}`}
-													>{nameFor(use.product_id)}</a
-												>{:else}{nameFor(use.product_id)} · leitura removida{/if}
-										</li>{/each}
-								</ul>
-							</div>{/each}
-					</details>
-				{/if}
-			</section>
-		</details>
-	{/if}
+					<p>
+						Seu <a href="/testar-produtos">acesso completo aos produtos para avaliação</a> continua livre,
+						independentemente do plano escolhido.
+					</p>
+					{#if form?.message}<p class="feedback" role="status">{form.message}</p>{/if}
+					{#if current && selectedPlan}
+						<div class="cycle-heading">
+							<div>
+								<h3>{selectedPlan.name}</h3>
+								<p>{date(current.started_at)} a {date(current.ends_at)}</p>
+							</div>
+							<form method="POST" action="?/cancel" use:enhance={enhanceForm}>
+								<input type="hidden" name="cycleId" value={current.id} />
+								<button disabled={busy}>Encerrar simulação</button>
+							</form>
+						</div>
+						<h4>Escolha sua próxima leitura</h4>
+						{#if availableIds.length}
+							<div class="choices">
+								{#each availableIds as id (id)}<a
+										class="choice"
+										href={`${productTrialHref(id)}?atvPlusCycle=${current.id}`}
+										>{nameFor(id)} <span aria-hidden="true">↗</span></a
+									>{/each}
+							</div>
+						{:else}<p>
+								Você usou as opções deste ciclo. Reabra suas leituras abaixo ou escolha outro plano
+								para testar.
+							</p>{/if}
+						<p class="small">
+							A utilização é registrada somente depois que a leitura é concluída e salva. Uma
+							tentativa que não gera leitura não consome o plano.
+						</p>
+						{#if currentUses.length}<h4>Leituras deste ciclo</h4>
+							<ul class="readings">
+								{#each currentUses as use (use)}<li>
+										{#if use.reading_id}<a href={`/testar-produtos/leituras/${use.reading_id}`}
+												>{nameFor(use.product_id)}</a
+											>{:else}{nameFor(use.product_id)} · leitura removida{/if}
+									</li>{/each}
+							</ul>{/if}
+					{:else}<p>Escolha um plano acima para começar.</p>{/if}
+					{#if data.cycles.some((cycle) => cycle.id !== current?.id)}
+						<details>
+							<summary>Ciclos anteriores</summary
+							>{#each data.cycles.filter((cycle) => cycle.id !== current?.id) as cycle (cycle.id)}<div
+									class="past-cycle"
+								>
+									<h3>{atvPlusPlanFor(cycle.plan_id)?.name}</h3>
+									<p>{date(cycle.started_at)} · {cycle.cancelled_at ? 'encerrado' : 'concluído'}</p>
+									<ul>
+										{#each data.uses.filter((use) => use.cycle_id === cycle.id) as use (use)}<li>
+												{#if use.reading_id}<a href={`/testar-produtos/leituras/${use.reading_id}`}
+														>{nameFor(use.product_id)}</a
+													>{:else}{nameFor(use.product_id)} · leitura removida{/if}
+											</li>{/each}
+									</ul>
+								</div>{/each}
+						</details>
+					{/if}
+				</section>
+			</details>
+		{/if}
 
-	<section class="separate" aria-labelledby="separate-title">
-		<div>
-			<p class="eyebrow">Quando quiser aprofundar</p>
-			<h2 id="separate-title">Leituras para momentos específicos</h2>
+		<section class="separate" aria-labelledby="separate-title">
+			<div>
+				<p class="eyebrow">Quando quiser aprofundar</p>
+				<h2 id="separate-title">Leituras para momentos específicos</h2>
+				<p>
+					Você também pode escolher mapas, leituras de relacionamentos, Tarot e sonhos com entregas
+					próprias, sem assinar o ATV+.
+				</p>
+				<a href="/leituras">Ver o catálogo de leituras digitais avulsas ↗</a>
+			</div>
+			<a class="launch-link" href="/lancamentos">
+				<img
+					src="/brand/mvp/assets/revisao/fases-lunares.webp"
+					alt=""
+					width="180"
+					height="100"
+					loading="lazy"
+				/>
+				<span class="eyebrow">Na mesma loja</span>
+				<span class="launch-title">Conheça os lançamentos <span aria-hidden="true">↗</span></span>
+				<span>Novas leituras para situações concretas.</span>
+			</a>
+		</section>
+		<div class="closing">
+			<p>Suas leituras entregues continuam na biblioteca ao encerrar um plano.</p>
 			<p>
-				Você também pode escolher mapas, leituras de relacionamentos, Tarot e sonhos com entregas
-				próprias, sem assinar o ATV+.
+				As <a href="/ferramentas">ferramentas gratuitas</a> e seu histórico não dependem de assinatura.
 			</p>
-			<a href="/leituras">Ver o catálogo de leituras digitais avulsas ↗</a>
 		</div>
-	</section>
-	<div class="closing">
-		<p>Suas leituras entregues continuam na biblioteca ao encerrar um plano.</p>
-		<p>
-			As <a href="/ferramentas">ferramentas gratuitas</a> e seu histórico não dependem de assinatura.
-		</p>
-	</div>
-</ContentShell>
+	</ContentShell>
+</div>
 
 <style>
+	.subscription-store {
+		position: relative;
+		isolation: isolate;
+		background: #102c3d;
+		color: #fff8e9;
+	}
+	.subscription-store::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: url('/brand/mvp/assets/papel-fino.webp') center/460px auto;
+		opacity: 0.12;
+		mix-blend-mode: screen;
+		pointer-events: none;
+	}
+	.subscription-store a {
+		color: #fff8e9;
+		text-underline-offset: 5px;
+	}
+	.subscription-store .eyebrow {
+		color: #efcf94;
+	}
+	.legacy-evaluation {
+		color: #183746;
+		background: #fff8e9 url('/brand/mvp/assets/papel-fino.webp') center/cover;
+		padding: 1.5rem;
+		margin-block: 2rem;
+	}
+	.legacy-evaluation a {
+		color: #183746;
+	}
+	.legacy-evaluation .eyebrow {
+		color: #80551f;
+	}
+	.launch-link {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 0.7rem;
+		padding: 1.5rem 2rem;
+		border: 1px solid #d9b87960;
+		text-decoration: none;
+		background: #29485460;
+	}
+	.launch-link img {
+		width: 180px;
+		height: 100px;
+		object-fit: contain;
+		align-self: center;
+	}
+	.launch-link > span:last-child {
+		font-size: 0.78rem;
+	}
+	.launch-title {
+		font: 400 1.8rem/1.15 var(--font-display, Newsreader, Georgia, serif);
+	}
+	.launch-title > span {
+		color: #efcf94;
+	}
+	.launch-link:focus-visible {
+		outline: 3px solid #efcf94;
+		outline-offset: 4px;
+	}
+	.closing {
+		font-size: 0.78rem;
+		color: #d7ded8;
+	}
 	.plans {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -219,7 +303,7 @@
 		border-top-color: #173f4e;
 	}
 	h2 {
-		font: 400 clamp(1.7rem, 3vw, 2.1rem)/1.2 var(--atv-font-editorial);
+		font: 400 clamp(1.7rem, 3vw, 2.1rem)/1.2 var(--font-display, Newsreader, Georgia, serif);
 		margin: 0.5rem 0 1rem;
 	}
 	.plans ul {
@@ -267,7 +351,7 @@
 		padding: 1rem 0;
 	}
 	h3 {
-		font: 400 1.5rem/1.3 var(--atv-font-editorial);
+		font: 400 1.5rem/1.3 var(--font-display, Newsreader, Georgia, serif);
 		margin: 0 0 0.5rem;
 	}
 	.cycle-heading p {

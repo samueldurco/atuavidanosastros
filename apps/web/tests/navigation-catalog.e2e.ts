@@ -213,5 +213,5 @@ test('home, universos, produto e ATV+ mantêm o contexto de cada oferta', async 
 		'Leituras pessoais, ao longo do tempo'
 	);
 	await expect(page.locator('main')).toContainText('Contratação em preparação');
-	await expect(page.locator('main a[href="/leituras"]')).toContainText('digitais avulsas');
+	await expect(page.locator('.separate a[href="/leituras"]')).toContainText('digitais avulsas');
 });

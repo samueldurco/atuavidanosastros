@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { atvPlusPlans } from '@atv/domain';
+	import { atvPlusCommercialPlans } from '@atv/domain';
 	import { SITE, universes } from '$lib/data/site';
 	import { mvpArt } from '$lib/data/mvp-visual';
-	import { customerProduct } from '$lib/data/product-copy';
 	import { editorialTopic } from '$lib/data/editorial-topics';
 	import { homeArticleArt } from '$lib/home-art';
 	import FreeToolsCollection from '$lib/components/free-tools/FreeToolsCollection.svelte';
@@ -14,12 +13,6 @@
 	import '$lib/styles/home-approved.css';
 	let { data } = $props();
 	let toolActive = $state(false);
-	const plus = customerProduct('atv-plus');
-	const plusFormulas = [
-		'1 previsão pessoal',
-		'1 previsão + 1 leitura',
-		'1 previsão + 2 leituras ou 1 método maior'
-	];
 </script>
 
 <svelte:head>
@@ -104,8 +97,8 @@
 				<p class="eyebrow">04 / Continue com ATV+</p>
 				<h2 id="home-plus-heading">Um novo olhar,<br /><em>a cada ciclo.</em></h2>
 				<p>
-					Previsões e leituras em ciclos de 30 dias. Conheça as três formas de acompanhar o seu
-					momento.
+					Leituras pessoais em PDF, com envio pelo WhatsApp. Conheça os três planos e escolha entre
+					3, 6 ou 12 meses de acompanhamento.
 				</p>
 				<a
 					class="plus-action"
@@ -123,21 +116,19 @@
 					<span class="plus-signature-label" aria-hidden="true">Assinatura</span>
 				</div>
 				<div class="plus-plan-list">
-					{#each atvPlusPlans as plan, index (plan.id)}
+					{#each atvPlusCommercialPlans as plan, index (plan.id)}
 						<div class="plus-plan">
 							<span class="plus-plan-number" aria-hidden="true">0{index + 1}</span>
 							<h3>{plan.name}</h3>
-							<p>{plusFormulas[index]}</p>
+							<p>{plan.description}</p>
 						</div>
 					{/each}
 				</div>
 			</div>
 			<p class="plus-note">
-				{plus?.state === 'ACTIVE'
+				{data.subscriptionCheckoutEnabled
 					? 'Consulte as condições de cada plano.'
-					: plus?.state === 'PAUSED'
-						? 'Planos indisponíveis no momento.'
-						: 'Planos em preparação. Contratação ainda indisponível.'} Ferramentas grátis continuam acessíveis
+					: 'Planos em preparação. Contratação ainda indisponível.'} Ferramentas grátis continuam acessíveis
 				sem assinatura.
 			</p>
 		</div>
