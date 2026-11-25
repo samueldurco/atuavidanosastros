@@ -16,6 +16,9 @@
 	}: { membershipState: CommercialPageState; now: number; message?: string } = $props();
 	let term = $state(3);
 	let samplePlan = $state('essencial');
+	const sharedBenefits = atvPlusCommercialPlans[0].benefits.filter((benefit) =>
+		atvPlusCommercialPlans.every((plan) => plan.benefits.includes(benefit))
+	);
 	const sampleEditions: Record<string, { title: string; cadence: string; sections: string[] }> = {
 		essencial: {
 			title: 'Seu horóscopo pessoal',
@@ -103,19 +106,19 @@
 			<h1>ATV<span>+</span></h1>
 			<p class="hero-lead">Um novo olhar,<br /><em>a cada período.</em></p>
 			<p>
-				Receba a próxima Revolução Solar na entrada e acompanhe as datas adiante com leituras
-				programadas do seu plano, em PDF pelo WhatsApp.
+				Leituras pessoais em PDF, pelo WhatsApp, para acompanhar o seu momento ao longo da
+				assinatura.
 			</p>
 			<a class="primary-link" href="#planos">Conhecer os planos <span aria-hidden="true">↘</span></a
 			>
 			<a class="quiet-link" href="#por-dentro"
 				>Ver por dentro da leitura <span aria-hidden="true">↗</span></a
 			>
-			<p class="hero-format">Leituras pessoais em PDF · envio programado pelo WhatsApp</p>
+			<p class="hero-format">3 planos · períodos de 3, 6 ou 12 meses</p>
 		</div>
 		<figure class="signature-art">
 			<div class="signature-house">A Tua Vida nos Astros · assinatura</div>
-			<AtvPlusDeliveryArtwork />
+			<div class="signature-preview"><AtvPlusDeliveryArtwork /></div>
 			<figcaption>
 				Seu ano à frente. Suas próximas leituras.<span
 					>Apresentação ilustrativa dos PDFs e da leitura no celular.</span
@@ -123,35 +126,6 @@
 			</figcaption>
 		</figure>
 	</header>
-
-	<section class="first-delivery" aria-labelledby="first-delivery-title">
-		<figure class="solar-art">
-			<AtvPlusDeliveryArtwork mode="solar" />
-			<figcaption>01 / Uma leitura para começar · apresentação ilustrativa</figcaption>
-		</figure>
-		<div class="first-copy">
-			<p class="eyebrow">Seu ano à frente · em todos os planos</p>
-			<h2 id="first-delivery-title">A próxima Revolução Solar é a primeira entrega.</h2>
-			<p class="first-intro">
-				Uma leitura do período que vai de um aniversário ao outro, preparada com os seus dados.
-			</p>
-			<p>
-				Após a contratação e a confirmação dos seus dados e do WhatsApp, você recebe de imediato o
-				PDF da sua próxima Revolução Solar. Isso vale também para o plano trimestral, mesmo que o
-				aniversário aconteça depois do fim da assinatura.
-			</p>
-			<p>
-				Informe a data, a hora e a cidade de nascimento, além da cidade onde pretende estar na
-				próxima Revolução Solar. Depois, as previsões chegam nas datas futuras do calendário
-				contratado. A cada novo ciclo anual elegível, há uma nova Revolução Solar.
-			</p>
-			<div class="delivery-format">
-				<span>FORMATO<strong>PDF pessoal</strong></span><span
-					>COMO CHEGA<strong>Pelo WhatsApp</strong></span
-				><span>DEPOIS<strong>Leituras programadas</strong></span>
-			</div>
-		</div>
-	</section>
 
 	<section id="planos" aria-labelledby="plans-title">
 		<div class="section-heading">
@@ -168,6 +142,15 @@
 				>
 			</label>
 		</div>
+		<div class="shared-benefit">
+			<span class="benefit-mark" aria-hidden="true">✦</span>
+			<div>
+				<p class="eyebrow">Em todos os planos</p>
+				{#each sharedBenefits as benefit (benefit)}<p>{benefit}</p>{/each}
+				<a href="#primeira-entrega">Conhecer a primeira entrega <span aria-hidden="true">↓</span></a
+				>
+			</div>
+		</div>
 		<div class="commercial-plans">
 			{#each atvPlusCommercialPlans as plan, index (plan.id)}
 				{@const offer = atvPlusCommercialOffers.find(
@@ -177,12 +160,18 @@
 					(row) => row.id === offer?.id && row.commercial_enabled
 				)}
 				<article class:premium={plan.id === 'premium'} data-offer-id={offer?.id}>
-					<div class="plan-art"><AtvPlusDeliveryArtwork planId={plan.id} mode="plan" /></div>
-					<p class="eyebrow">0{index + 1} · Assinatura de {term} meses</p>
-					<h3>{plan.name}</h3>
-					<p>{plan.description}</p>
+					<div class="plan-heading">
+						<div class="plan-art"><AtvPlusDeliveryArtwork planId={plan.id} mode="plan" /></div>
+						<div>
+							<p class="eyebrow">0{index + 1} · {term} meses</p>
+							<h3>{plan.name}</h3>
+						</div>
+					</div>
 					<ul>
-						{#each plan.benefits as benefit (benefit)}<li>{benefit}</li>{/each}
+						{#each plan.benefits.filter((benefit) => !sharedBenefits.includes(benefit)) as benefit (benefit)}<li
+							>
+								{benefit}
+							</li>{/each}
 					</ul>
 					<div class="offer-action">
 						{#if available?.commercial_enabled && available.total_minor}
@@ -209,6 +198,38 @@
 			vez por pessoa e tipo de mapa, inclusive nas renovações e mudanças de plano. As condições e o
 			valor total aparecem antes da contratação.
 		</p>
+	</section>
+
+	<section id="primeira-entrega" class="first-delivery" aria-labelledby="first-delivery-title">
+		<figure class="solar-art">
+			<div class="solar-preview"><AtvPlusDeliveryArtwork mode="solar" /></div>
+			<figcaption>01 / Uma leitura para começar · apresentação ilustrativa</figcaption>
+		</figure>
+		<div class="first-copy">
+			<p class="eyebrow">Seu ano à frente · em todos os planos</p>
+			<h2 id="first-delivery-title">A próxima Revolução Solar é a primeira entrega.</h2>
+			<p class="first-intro">
+				Uma leitura do período que vai de um aniversário ao outro, preparada com os seus dados.
+			</p>
+			<details class="delivery-details">
+				<summary>Como começa e quais dados informar <span aria-hidden="true">+</span></summary>
+				<p>
+					Após a contratação e a confirmação dos seus dados e do WhatsApp, você recebe de imediato o
+					PDF da sua próxima Revolução Solar. Isso vale também para o plano trimestral, mesmo que o
+					aniversário aconteça depois do fim da assinatura.
+				</p>
+				<p>
+					Informe a data, a hora e a cidade de nascimento, além da cidade onde pretende estar na
+					próxima Revolução Solar. Depois, as previsões chegam nas datas futuras do calendário
+					contratado. A cada novo ciclo anual elegível, há uma nova Revolução Solar.
+				</p>
+			</details>
+			<div class="delivery-format">
+				<span>FORMATO<strong>PDF pessoal</strong></span><span
+					>COMO CHEGA<strong>Pelo WhatsApp</strong></span
+				><span>DEPOIS<strong>Leituras programadas</strong></span>
+			</div>
+		</div>
 	</section>
 
 	<section id="por-dentro" class="edition" aria-labelledby="edition-title">
@@ -253,112 +274,121 @@
 	</section>
 
 	<section class="member-area" aria-labelledby="member-title">
-		<p class="eyebrow">Sua assinatura</p>
-		<h2 id="member-title">Dados e próximas entregas</h2>
-		{#if message}<p role="status" class="feedback">{message}</p>{/if}
-		{#if membershipState.unavailable}
-			<p role="status">
-				Não foi possível consultar sua assinatura agora. Recarregue a página em alguns instantes.
-			</p>
-		{:else if !membershipState.authenticated}
-			<p>
-				Entre na sua conta para acompanhar sua assinatura, completar os dados e conferir o
-				calendário.
-			</p>
-			<a href="/entrar?next=%2Fatv-mais">Entrar na minha conta ↗</a>
-		{:else if !memberships.length}
-			<p>
-				Sua conta ainda não tem uma assinatura vigente do ATV+. Quando a contratação estiver
-				disponível, o plano escolhido aparecerá aqui.
-			</p>
-		{:else}
-			{#each memberships as membership (membership.id)}
-				<div class="membership">
-					<h3>{atvPlusCommercialPlanFor(membership.plan_id)?.name}</h3>
-					<p>Vigência de {date(membership.starts_at)} a {date(membership.ends_at)}.</p>
-					{#if membership.status === 'CANCELLED'}<p>
-							Renovação encerrada. Seus benefícios seguem até o fim do período pago.
+		<details open={memberships.length > 0 || Boolean(message) || membershipState.unavailable}>
+			<summary>
+				<h2 id="member-title">
+					<span class="eyebrow">Sua assinatura</span>Dados e próximas entregas
+				</h2>
+				<span class="member-toggle" aria-hidden="true">+</span>
+			</summary>
+			<div class="member-content">
+				{#if message}<p role="status" class="feedback">{message}</p>{/if}
+				{#if membershipState.unavailable}
+					<p role="status">
+						Não foi possível consultar sua assinatura agora. Recarregue a página em alguns
+						instantes.
+					</p>
+				{:else if !membershipState.authenticated}
+					<p>
+						Entre na sua conta para acompanhar sua assinatura, completar os dados e conferir o
+						calendário.
+					</p>
+					<a href="/entrar?next=%2Fatv-mais">Entrar na minha conta ↗</a>
+				{:else if !memberships.length}
+					<p>
+						Sua conta ainda não tem uma assinatura vigente do ATV+. Quando a contratação estiver
+						disponível, o plano escolhido aparecerá aqui.
+					</p>
+				{:else}
+					{#each memberships as membership (membership.id)}
+						<div class="membership">
+							<h3>{atvPlusCommercialPlanFor(membership.plan_id)?.name}</h3>
+							<p>Vigência de {date(membership.starts_at)} a {date(membership.ends_at)}.</p>
+							{#if membership.status === 'CANCELLED'}<p>
+									Renovação encerrada. Seus benefícios seguem até o fim do período pago.
+								</p>{/if}
+							{#if !membership.onboarded_at}
+								{#if membershipState.profileId}
+									<form
+										method="POST"
+										action="?/onboard"
+										use:enhance={() => {
+											saving = true;
+											return async ({ update }) => {
+												try {
+													await update();
+												} finally {
+													saving = false;
+												}
+											};
+										}}
+									>
+										<input type="hidden" name="membershipId" value={membership.id} /><input
+											type="hidden"
+											name="profileId"
+											value={membershipState.profileId}
+										/>
+										<p>
+											Usaremos o <a href="/conta/nascimento">perfil natal salvo na sua conta</a>.
+											Confira os dados antes de continuar.
+										</p>
+										<label for={`phone-${membership.id}`}>WhatsApp com código do país</label><input
+											id={`phone-${membership.id}`}
+											type="tel"
+											name="whatsapp"
+											autocomplete="tel"
+											placeholder="+55 11 99999 9999"
+											required
+											maxlength="24"
+										/>
+										<CitySearch
+											id={`solar-city-${membership.id}`}
+											label="Cidade da próxima Revolução Solar"
+											bind:value={location}
+										/>
+										<input type="hidden" name="solarLocation" value={locationPayload} />
+										<label class="consent"
+											><input type="checkbox" name="whatsappConsent" value="yes" required />Autorizo
+											o envio das leituras contratadas e avisos de entrega pelo WhatsApp informado.</label
+										>
+										<button class="primary-link" disabled={saving || !location}
+											>{saving ? 'Salvando…' : 'Salvar dados para as entregas'}</button
+										>
+									</form>
+								{:else}<p>
+										Complete e autorize o <a href="/conta/nascimento">seu perfil natal</a> para preparar
+										as leituras.
+									</p>{/if}
+							{/if}
+						</div>
+					{/each}
+					{#if membershipState.contact}<p>
+							WhatsApp {membershipState.contact.whatsapp_masked} · {membershipState.contact.verified
+								? 'Confirmado'
+								: 'Aguardando confirmação do número'}
 						</p>{/if}
-					{#if !membership.onboarded_at}
-						{#if membershipState.profileId}
-							<form
-								method="POST"
-								action="?/onboard"
-								use:enhance={() => {
-									saving = true;
-									return async ({ update }) => {
-										try {
-											await update();
-										} finally {
-											saving = false;
-										}
-									};
-								}}
-							>
-								<input type="hidden" name="membershipId" value={membership.id} /><input
-									type="hidden"
-									name="profileId"
-									value={membershipState.profileId}
-								/>
-								<p>
-									Usaremos o <a href="/conta/nascimento">perfil natal salvo na sua conta</a>.
-									Confira os dados antes de continuar.
-								</p>
-								<label for={`phone-${membership.id}`}>WhatsApp com código do país</label><input
-									id={`phone-${membership.id}`}
-									type="tel"
-									name="whatsapp"
-									autocomplete="tel"
-									placeholder="+55 11 99999 9999"
-									required
-									maxlength="24"
-								/>
-								<CitySearch
-									id={`solar-city-${membership.id}`}
-									label="Cidade da próxima Revolução Solar"
-									bind:value={location}
-								/>
-								<input type="hidden" name="solarLocation" value={locationPayload} />
-								<label class="consent"
-									><input type="checkbox" name="whatsappConsent" value="yes" required />Autorizo o
-									envio das leituras contratadas e avisos de entrega pelo WhatsApp informado.</label
-								>
-								<button class="primary-link" disabled={saving || !location}
-									>{saving ? 'Salvando…' : 'Salvar dados para as entregas'}</button
-								>
-							</form>
-						{:else}<p>
-								Complete e autorize o <a href="/conta/nascimento">seu perfil natal</a> para preparar as
-								leituras.
-							</p>{/if}
-					{/if}
-				</div>
-			{/each}
-			{#if membershipState.contact}<p>
-					WhatsApp {membershipState.contact.whatsapp_masked} · {membershipState.contact.verified
-						? 'Confirmado'
-						: 'Aguardando confirmação do número'}
-				</p>{/if}
-			{#if membershipState.deliveries.length}<div class="calendar-wrap">
-					<table>
-						<caption>Calendário da assinatura</caption><thead
-							><tr
-								><th scope="col">Leitura</th><th scope="col">Entrega prevista</th><th scope="col"
-									>Situação</th
-								></tr
-							></thead
-						><tbody>
-							{#each membershipState.deliveries as delivery (delivery.id)}<tr
-									><td>{deliveryName(delivery.kind)}</td><td>{date(delivery.due_at)}</td><td
-										>{deliveryStatus(delivery.state)}</td
-									></tr
-								>{/each}
-						</tbody>
-					</table>
-				</div>{:else}<p>
-					As datas das próximas entregas aparecerão após a confirmação do cadastro.
-				</p>{/if}
-		{/if}
+					{#if membershipState.deliveries.length}<div class="calendar-wrap">
+							<table>
+								<caption>Calendário da assinatura</caption><thead
+									><tr
+										><th scope="col">Leitura</th><th scope="col">Entrega prevista</th><th
+											scope="col">Situação</th
+										></tr
+									></thead
+								><tbody>
+									{#each membershipState.deliveries as delivery (delivery.id)}<tr
+											><td>{deliveryName(delivery.kind)}</td><td>{date(delivery.due_at)}</td><td
+												>{deliveryStatus(delivery.state)}</td
+											></tr
+										>{/each}
+								</tbody>
+							</table>
+						</div>{:else}<p>
+							As datas das próximas entregas aparecerão após a confirmação do cadastro.
+						</p>{/if}
+				{/if}
+			</div>
+		</details>
 	</section>
 </div>
 
@@ -369,9 +399,9 @@
 	.commercial-hero {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: clamp(2rem, 5vw, 5rem);
+		gap: clamp(1.5rem, 4vw, 4rem);
 		align-items: center;
-		padding: 1rem 0 4rem;
+		padding: 0.5rem 0 2.5rem;
 	}
 	.hero-copy > p {
 		max-width: 35rem;
@@ -380,9 +410,9 @@
 		color: #e8bd6b;
 	}
 	.commercial-hero h1 {
-		font: 400 clamp(5rem, 9vw, 8rem)/0.85 var(--font-display, Newsreader, Georgia, serif);
+		font: 400 clamp(4.25rem, 8vw, 7rem)/0.85 var(--font-display, Newsreader, Georgia, serif);
 		letter-spacing: -0.065em;
-		margin: 1.5rem 0;
+		margin: 1rem 0;
 		color: #efcf94;
 	}
 	h1 span {
@@ -391,16 +421,16 @@
 		letter-spacing: -0.02em;
 	}
 	.hero-lead {
-		font: 400 clamp(2.5rem, 4vw, 3.8rem)/1.02 var(--font-display, Newsreader, Georgia, serif);
+		font: 400 clamp(2.25rem, 3.6vw, 3.4rem)/1.02 var(--font-display, Newsreader, Georgia, serif);
 		letter-spacing: -0.035em;
-		margin: 1.5rem 0;
+		margin: 1rem 0;
 	}
 	.hero-copy > p:not(.eyebrow):not(.hero-lead) {
 		color: #e0e4dc;
 	}
 	.hero-copy .hero-format {
 		font-size: 0.72rem;
-		margin-top: 1.5rem;
+		margin-top: 1rem;
 	}
 	.primary-link {
 		display: inline-flex;
@@ -434,6 +464,7 @@
 	}
 	a:focus-visible,
 	button:focus-visible,
+	summary:focus-visible,
 	input:focus-visible,
 	select:focus-visible {
 		outline: 3px solid #cf9a44;
@@ -455,6 +486,9 @@
 		font-size: 0.6rem;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
+	}
+	.signature-preview {
+		min-width: 0;
 	}
 	.signature-art figcaption {
 		text-align: center;
@@ -481,11 +515,11 @@
 	}
 	.first-delivery {
 		display: grid;
-		grid-template-columns: 0.8fr 1.2fr;
+		grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
 		align-items: center;
-		gap: clamp(1.5rem, 4vw, 4rem);
-		padding: clamp(1.5rem, 4vw, 3rem);
-		margin-bottom: 4.5rem;
+		gap: clamp(1.25rem, 3vw, 2.5rem);
+		padding: clamp(1.25rem, 3vw, 2.5rem);
+		margin: 2.5rem 0;
 		background: #fff8e9 url('/brand/mvp/assets/papel-fino.webp') center/cover;
 		color: #183746;
 		border: 1px solid #d9b87980;
@@ -495,7 +529,7 @@
 	}
 	.first-copy p {
 		font-size: 0.85rem;
-		line-height: 1.8;
+		line-height: 1.7;
 	}
 	.first-copy .first-intro {
 		font: 400 1.35rem/1.45 var(--font-display, Newsreader, Georgia, serif);
@@ -530,7 +564,32 @@
 		margin-top: 8px;
 		letter-spacing: 0;
 	}
+	.delivery-details {
+		border-top: 1px solid #18374630;
+		margin-top: 1rem;
+	}
+	.delivery-details summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		min-height: 48px;
+		padding-block: 0.5rem;
+		list-style: none;
+		font-size: 0.8rem;
+		cursor: pointer;
+	}
+	.delivery-details summary::-webkit-details-marker {
+		display: none;
+	}
+	.delivery-details summary span {
+		font-size: 1.3rem;
+	}
+	.delivery-details[open] summary span {
+		transform: rotate(45deg);
+	}
 	#planos,
+	#primeira-entrega,
 	.edition {
 		scroll-margin-top: 6rem;
 	}
@@ -539,7 +598,7 @@
 		justify-content: space-between;
 		align-items: end;
 		gap: 2rem;
-		margin-bottom: 1.8rem;
+		margin-bottom: 1.25rem;
 	}
 	.section-heading h2 {
 		max-width: 36rem;
@@ -560,6 +619,36 @@
 		min-height: 48px;
 		padding: 0.7rem;
 	}
+	.shared-benefit {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem 1.25rem;
+		margin-bottom: 1rem;
+		border: 1px solid #d9b87960;
+		background: #d9b8790d;
+	}
+	.benefit-mark {
+		color: #efcf94;
+		font-size: 2rem;
+	}
+	.shared-benefit p {
+		margin: 0 0 0.35rem;
+		font-size: 0.78rem;
+		line-height: 1.6;
+	}
+	.shared-benefit .eyebrow {
+		font-size: 0.6rem;
+	}
+	.shared-benefit a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		min-height: 32px;
+		color: #efcf94;
+		font-size: 0.75rem;
+		text-underline-offset: 4px;
+	}
 	.commercial-plans {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -571,7 +660,7 @@
 		display: flex;
 		flex-direction: column;
 		min-width: 0;
-		padding: clamp(1.25rem, 2.5vw, 2rem);
+		padding: clamp(1rem, 2vw, 1.4rem);
 		border: 1px solid #bfa77770;
 		background: linear-gradient(150deg, #2a4855, #153340);
 	}
@@ -592,14 +681,28 @@
 		border-color: #d5b479;
 		box-shadow: inset 0 3px 0 #d5b479;
 	}
-	.plan-art {
-		margin: -0.25rem -1rem 0.75rem;
-		border-bottom: 1px solid #e7c78b35;
+	.plan-heading {
+		display: grid;
+		grid-template-columns: 100px minmax(0, 1fr);
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 0.6rem;
 	}
-	.commercial-plans article > p:not(.eyebrow) {
-		color: #e0e4dc;
-		font-size: 0.86rem;
-		line-height: 1.6;
+	.plan-art {
+		width: 100px;
+		height: 118px;
+	}
+	.plan-art :global(.delivery-art) {
+		width: 200px;
+		height: 235px;
+		max-width: none;
+		transform: scale(0.5);
+		transform-origin: top left;
+	}
+	.commercial-plans h3 {
+		font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+		margin: 0.5rem 0 0;
+		text-wrap: balance;
 	}
 	.commercial-plans .eyebrow {
 		font-size: 0.6rem;
@@ -608,21 +711,21 @@
 	.commercial-plans ul {
 		padding-left: 1.1rem;
 		flex: 1;
-		font-size: 0.78rem;
-		line-height: 1.7;
+		font-size: 0.8rem;
+		line-height: 1.65;
 		color: #e0e4dc;
 		margin: 0.6rem 0;
 	}
 	li + li {
-		margin-top: 0.7rem;
+		margin-top: 0.5rem;
 	}
 	.commercial-plans li::marker {
 		color: #efcf94;
 	}
 	.offer-action {
 		border-top: 1px solid #d9b87950;
-		padding-top: 1rem;
-		margin-top: 1rem;
+		padding-top: 0.85rem;
+		margin-top: 0.85rem;
 	}
 	.availability {
 		color: #efcf94;
@@ -650,8 +753,8 @@
 		grid-template-columns: 0.85fr 1.15fr;
 		gap: clamp(2rem, 5vw, 4rem);
 		align-items: center;
-		margin: 4.5rem 0;
-		padding: 4rem 0;
+		margin: 2.5rem 0;
+		padding: 2.5rem 0;
 		border-block: 1px solid #d9b87950;
 	}
 	.edition-copy > p:not(.eyebrow) {
@@ -718,11 +821,42 @@
 		line-height: 1.6;
 	}
 	.member-area {
-		padding: clamp(1.4rem, 4vw, 3rem);
+		padding: clamp(1rem, 2.5vw, 1.5rem);
 		background: #e7e9dc url('/brand/mvp/assets/papel-fino.webp') center/cover;
 		color: #183746;
 		border: 1px solid #c7bfac;
-		margin: 3rem 0;
+		margin: 2rem 0;
+	}
+	.member-area summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		min-height: 48px;
+		cursor: pointer;
+		list-style: none;
+	}
+	.member-area summary::-webkit-details-marker {
+		display: none;
+	}
+	.member-area summary h2 {
+		margin: 0;
+		font-size: clamp(1.5rem, 3vw, 2rem);
+	}
+	.member-area summary .eyebrow {
+		display: block;
+		font: 600 0.6rem/1.5 var(--font-body, Onest, Arial, sans-serif);
+		letter-spacing: 0.12em;
+		margin-bottom: 0.4rem;
+	}
+	.member-toggle {
+		font-size: 1.5rem;
+	}
+	.member-area details[open] .member-toggle {
+		transform: rotate(45deg);
+	}
+	.member-content {
+		padding-top: 1rem;
 	}
 	.member-area .eyebrow {
 		color: #80551f;
@@ -811,6 +945,13 @@
 		.commercial-plans h3 {
 			font-size: 1.65rem;
 		}
+		.plan-heading {
+			grid-template-columns: 1fr;
+			gap: 0.5rem;
+		}
+		.plan-art {
+			margin-inline: auto;
+		}
 		.commercial-plans ul {
 			font-size: 0.74rem;
 		}
@@ -822,39 +963,85 @@
 	@media (max-width: 760px) {
 		.commercial-hero {
 			grid-template-columns: 1fr;
-			gap: 2rem;
-			padding-bottom: 2.5rem;
+			gap: 1.25rem;
+			padding-bottom: 2rem;
 		}
 		.commercial-hero h1 {
-			font-size: 6rem;
+			font-size: 4.25rem;
+			margin-block: 0.85rem;
 		}
 		.hero-lead {
-			font-size: clamp(2.5rem, 8vw, 3.5rem);
+			font-size: clamp(2.2rem, 7vw, 3rem);
+			margin-block: 0.85rem;
+		}
+		.hero-copy > p:not(.hero-lead):not(.eyebrow) {
+			font-size: 0.85rem;
+			line-height: 1.65;
 		}
 		.hero-copy .hero-format {
 			font-size: 0.65rem;
+			margin-bottom: 0;
+		}
+		.hero-copy .primary-link {
+			min-height: 44px;
+			padding: 0.7rem 1rem;
+		}
+		.hero-copy .quiet-link {
+			min-height: 32px;
+			align-items: center;
+			margin-top: 0.4rem;
 		}
 		.signature-art {
 			width: 100%;
-			max-width: 540px;
+			max-width: 400px;
 			justify-self: center;
 			box-sizing: border-box;
-			padding: 20px 12px;
+			padding: 15px 12px;
+		}
+		.signature-preview {
+			height: 270px;
+		}
+		.signature-preview :global(.delivery-art) {
+			width: 147.058824%;
+			height: 390px;
+			max-width: none;
+			transform: scale(0.68);
+			transform-origin: top left;
+		}
+		.signature-art figcaption {
+			font-size: 1.15rem;
+		}
+		.signature-art figcaption span {
+			font-size: 0.6rem;
 		}
 		.first-delivery {
 			grid-template-columns: 1fr;
 			padding: 1.25rem;
-			gap: 1.8rem;
-			margin-bottom: 3rem;
+			gap: 1.25rem;
+			margin-block: 2rem;
 		}
 		.solar-art {
-			max-width: 420px;
+			max-width: 280px;
 			width: 100%;
 			box-sizing: border-box;
 			justify-self: center;
 		}
+		.solar-preview {
+			height: 252px;
+		}
+		.solar-preview :global(.delivery-art) {
+			width: 142.857143%;
+			height: 360px;
+			max-width: none;
+			transform: scale(0.7);
+			transform-origin: top left;
+		}
 		.first-copy h2 {
-			font-size: 2.2rem;
+			font-size: 2rem;
+			margin-bottom: 0.75rem;
+		}
+		.first-copy .first-intro {
+			font-size: 1.2rem;
 		}
 		.delivery-format {
 			gap: 0.6rem;
@@ -866,31 +1053,41 @@
 			display: block;
 		}
 		.section-heading .term {
-			margin-top: 1.5rem;
+			margin-top: 1rem;
 		}
 		.term {
 			min-width: 0;
 		}
 		.commercial-plans {
 			grid-template-columns: 1fr;
-			gap: 1.3rem;
+			gap: 0.85rem;
 		}
 		.commercial-plans article {
-			padding: 1.5rem;
+			padding: 1rem;
+		}
+		.plan-heading {
+			grid-template-columns: 100px minmax(0, 1fr);
+			gap: 0.75rem;
+			margin-bottom: 0.25rem;
 		}
 		.commercial-plans h3 {
-			font-size: 2rem;
+			font-size: clamp(1.5rem, 5vw, 1.9rem);
 		}
 		.commercial-plans ul {
 			font-size: 0.83rem;
 		}
-		.commercial-plans article > p:not(.eyebrow) {
-			font-size: 0.9rem;
+		.shared-benefit {
+			padding: 0.85rem 1rem;
+			gap: 0.75rem;
+		}
+		.plan-conditions {
+			font-size: 0.75rem;
+			line-height: 1.65;
 		}
 		.edition {
 			grid-template-columns: 1fr;
-			margin: 3rem 0;
-			padding: 3rem 0;
+			margin: 2rem 0;
+			padding: 2rem 0;
 			gap: 1.5rem;
 		}
 		.sample {

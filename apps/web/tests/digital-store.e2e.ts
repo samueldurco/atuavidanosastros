@@ -38,7 +38,7 @@ test.beforeEach(async ({ page }) => {
 	await page.addInitScript(() => localStorage.setItem('atv-analytics-consent', 'denied'));
 });
 
-for (const width of [320, 768, 1440]) {
+for (const width of [320, 390, 768, 1440]) {
 	test(`the three digital store sections remain connected and illustrated at ${width}px`, async ({
 		page
 	}, testInfo) => {
@@ -52,6 +52,12 @@ for (const width of [320, 768, 1440]) {
 			await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1);
 			const navigation = storeNavigation(page);
 			await expect(navigation).toHaveCount(1);
+			if (width <= 390) {
+				const navBounds = await navigation.boundingBox();
+				expect(navBounds!.height, 'Store navigation stays compact on mobile').toBeLessThanOrEqual(
+					110
+				);
+			}
 			await expect(navigation.locator('a[aria-current]')).toHaveCount(1);
 			await expect(navigation.locator(`.store-section[href="${path}"]`)).toHaveAttribute(
 				'aria-current',
@@ -61,6 +67,11 @@ for (const width of [320, 768, 1440]) {
 				const link = navigation.locator(`.store-section[href="${destination}"]`);
 				await expect(link).toHaveCount(1);
 				await expectWithinViewport(link);
+				const linkBounds = await link.boundingBox();
+				expect(
+					linkBounds!.height,
+					'Store links retain a usable touch target'
+				).toBeGreaterThanOrEqual(44);
 				await link.click({ trial: true });
 			}
 			if (path === '/leituras') {
@@ -98,6 +109,42 @@ for (const width of [320, 768, 1440]) {
 				.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth))
 				.toBeLessThanOrEqual(1);
 			await page.evaluate(() => document.fonts.ready);
+			if (width <= 390) {
+				await page.evaluate(() => scrollTo(0, 0));
+				await page.screenshot({ path: testInfo.outputPath(`${path.slice(1)}-${width}-top.png`) });
+				if (path !== '/atv-mais') {
+					const cards = page.locator(
+						path === '/leituras' ? '.public-product-card' : '[data-launch-product]'
+					);
+					const first = await cards.nth(0).boundingBox();
+					const second = await cards.nth(1).boundingBox();
+					if (width === 390) {
+						expect(
+							Math.abs(first!.y - second!.y),
+							'Two products can be compared side by side'
+						).toBeLessThanOrEqual(2);
+					} else {
+						expect(first!.height, 'The compact card fits within a mobile screen').toBeLessThan(550);
+					}
+					await cards.nth(0).scrollIntoViewIfNeeded();
+					await page.screenshot({
+						path: testInfo.outputPath(`${path.slice(1)}-${width}-cards.png`)
+					});
+				} else {
+					const plans = page.locator('#planos');
+					const solar = page.locator('#primeira-entrega');
+					expect(
+						await plans.evaluate((node) =>
+							Boolean(
+								node.compareDocumentPosition(document.querySelector('#primeira-entrega')!) &
+								Node.DOCUMENT_POSITION_FOLLOWING
+							)
+						),
+						'Plans precede the detailed first-delivery explanation'
+					).toBe(true);
+					await expect(solar).toBeAttached();
+				}
+			}
 			await page.screenshot({
 				path: testInfo.outputPath(`${path.slice(1)}-${width}.png`),
 				fullPage: true

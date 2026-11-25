@@ -66,7 +66,11 @@ async function expectDeliveredBrandImages(page: Page, context: string) {
 		.toBe(true);
 }
 
-async function expectProductArtwork(artwork: Locator, productId: string) {
+async function expectProductArtwork(
+	artwork: Locator,
+	productId: string,
+	presentation: 'cover' | 'thumbnail' = 'cover'
+) {
 	const product = customerProduct(productId);
 	const design = approvedProductArt[productId];
 	expect(product, `${productId}: public product copy`).toBeDefined();
@@ -96,7 +100,10 @@ async function expectProductArtwork(artwork: Locator, productId: string) {
 	expect(outer).not.toBeNull();
 	expect(folio).not.toBeNull();
 	if (!outer || !folio) return;
-	expect(folio.width, `${productId}: readable cover width`).toBeGreaterThan(100);
+	// Compact catalog cards repeat the product title in the readable body beside the thumbnail.
+	expect(folio.width, `${productId}: ${presentation} width`).toBeGreaterThan(
+		presentation === 'thumbnail' ? 60 : 100
+	);
 	expect(folio.x, `${productId}: cover left edge`).toBeGreaterThanOrEqual(outer.x - 1);
 	expect(folio.y, `${productId}: cover top edge`).toBeGreaterThanOrEqual(outer.y - 1);
 	expect(folio.x + folio.width, `${productId}: cover right edge`).toBeLessThanOrEqual(
@@ -243,7 +250,20 @@ for (const width of [320, 1440]) {
 				'href',
 				`/produtos/${product.slug}`
 			);
-			await expectProductArtwork(card.locator('[data-product-artwork]'), product.id);
+			await expectProductArtwork(
+				card.locator('[data-product-artwork]'),
+				product.id,
+				width === 320 ? 'thumbnail' : 'cover'
+			);
+			if (width === 320) {
+				await expect(card.getByRole('heading')).toBeVisible();
+				expect(
+					await card
+						.getByRole('heading')
+						.evaluate((element) => Number.parseFloat(getComputedStyle(element).fontSize)),
+					`${product.id}: readable product title beside its thumbnail`
+				).toBeGreaterThanOrEqual(18);
+			}
 			await expect(card.getByRole('link', { name: 'Ver uma amostra' })).toHaveAttribute(
 				'href',
 				`/produtos/${product.slug}#amostra`
