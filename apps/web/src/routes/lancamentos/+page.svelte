@@ -72,25 +72,19 @@
 				{universeLabels[product.universe] ?? 'Leitura digital'}
 			</p>
 			<h3><a href={product.href}>{product.name}</a></h3>
-			{#if product.subtitle}<p class="product-subtitle">{product.subtitle}</p>{/if}
 			<p class="product-summary">{product.summary}</p>
-			<div class="product-includes">
-				<p>Por dentro da leitura</p>
-				<ul>
-					{#each product.receive.slice(0, 2) as item (item)}<li>{item}</li>{/each}
-				</ul>
-			</div>
-			<a class="sample-link" href={`${product.href}#amostra`}
-				>Ver uma amostra <span aria-hidden="true">↗</span></a
-			>
 			<div class="product-access">
-				<p class="trial-status"><span aria-hidden="true">✦</span> Teste gratuito disponível</p>
-				<p class="product-format">Leitura digital na sua conta</p>
+				<a
+					class="sample-link"
+					href={`${product.href}#amostra`}
+					aria-label={`Ver uma amostra de ${product.name}`}
+					>Ver uma amostra <span aria-hidden="true">↗</span></a
+				>
 				<a
 					class="product-cta"
 					href={productTrialHref(product.id)}
 					aria-label={`Testar ${product.name} grátis`}
-					>Testar gratuitamente <span aria-hidden="true">↗</span></a
+					>Testar grátis <span aria-hidden="true">↗</span></a
 				>
 			</div>
 		</div>
@@ -110,14 +104,11 @@
 				<p class="eyebrow">Novas leituras digitais · Testes gratuitos</p>
 				<h1 id="launch-title">Uma situação sua.<br />Uma leitura para ela.</h1>
 				<p class="lead">
-					Uma data para escolher. Um recomeço para pensar. Uma conversa que merece cuidado. Encontre
-					a leitura que conversa com o que você vive agora e veja o que ela inclui.
+					Datas, recomeços e conversas. Encontre uma leitura para o que você vive agora.
 				</p>
 				<div class="intro-actions">
 					<a class="primary-link" href="#catalogo"
 						>Explorar os lançamentos <span aria-hidden="true">↓</span></a
-					><a class="text-link" href="#estreia"
-						>Conhecer as três primeiras <span aria-hidden="true">↗</span></a
 					>
 				</div>
 				<p class="intro-note">
@@ -132,40 +123,36 @@
 					width="240"
 					height="240"
 				/>
-				<div class="showcase-caption">
-					<span class="eyebrow">Em destaque</span><span>01 / Novas leituras</span>
-				</div>
 				<a
 					class="showcase-product"
 					href={data.debut[0].href}
 					aria-label={`Conhecer ${data.debut[0].name}`}
 					><DigitalProductArtwork productId={data.debut[0].id} /></a
 				>
-				<div class="showcase-detail">
-					<span aria-hidden="true">I · II · III</span>
-					<p>Duas ou três datas reais.<br /><strong>Uma comparação para escolher.</strong></p>
+				<div class="showcase-content">
+					<p class="eyebrow">Em destaque</p>
+					<h2><a href={data.debut[0].href}>{data.debut[0].name}</a></h2>
+					<p class="showcase-detail">Duas ou três datas reais. Uma comparação para escolher.</p>
+					<a class="text-link" href={data.debut[0].href}
+						>Ver por dentro <span aria-hidden="true">↗</span></a
+					>
+					<p class="showcase-note">Mockup ilustrativo · leitura digital</p>
 				</div>
-				<p class="showcase-note">Apresentação ilustrativa · entrega digital</p>
 			</div>
 		</div>
 	</section>
 	<section class="wrap catalog-section" id="catalogo" aria-labelledby="catalog-title">
 		<div class="catalog-heading">
 			<div>
-				<p class="eyebrow">A novidade pode ter a ver com você</p>
+				<p class="eyebrow">Novas leituras digitais</p>
 				<h2 id="catalog-title">Explore os lançamentos</h2>
 			</div>
 			<p>
-				{allProducts.length} propostas para situações da vida real.<br />Veja o conteúdo antes de
-				escolher.
+				{allProducts.length} leituras · Amostras em cada produto
 			</p>
 		</div>
 		<div class="catalog-layout">
 			<aside class="catalog-filters" aria-label="Filtros dos lançamentos">
-				<div class="filter-heading">
-					<h3>Encontre sua leitura</h3>
-					<span aria-hidden="true">✦</span>
-				</div>
 				<div class="filter-field">
 					<label for="launch-search">Buscar lançamentos</label><input
 						id="launch-search"
@@ -244,10 +231,6 @@
 									<p class="eyebrow">As três primeiras</p>
 									<h3 id="debut-title">Começamos por aqui.</h3>
 								</div>
-								<p>
-									Uma comparação de datas, uma leitura de um episódio passado e uma previsão de 30
-									dias.
-								</p>
 							</div>
 							<div class="launch-grid">
 								{#each filteredDebut as product (product.id)}{@render productCard(product)}{/each}
@@ -261,10 +244,6 @@
 									<p class="eyebrow">Na sequência</p>
 									<h3 id="next-title">Outros temas da vida real.</h3>
 								</div>
-								<p>
-									Desejo, convivência, emoções, dinheiro ou estilo. Conheça o conteúdo de cada
-									leitura.
-								</p>
 							</div>
 							<div class="launch-grid">
 								{#each filteredNext as product (product.id)}{@render productCard(product)}{/each}
@@ -300,25 +279,24 @@
 	.launch-catalog {
 		color: #183746;
 		background: #f6efdf url('/brand/mvp/assets/papel-fino.webp');
-		padding-bottom: 80px;
+		padding-bottom: 56px;
 	}
 	.launch-catalog .wrap {
-		width: min(1280px, calc(100% - 88px));
+		width: min(1280px, calc(100% - 64px));
 		margin-inline: auto;
 	}
 	.launch-intro {
-		padding-top: 20px;
-		padding-bottom: 60px;
+		padding-block: 8px 32px;
 	}
 	.breadcrumb {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 10px;
+		gap: 8px;
 		font:
-			400 11px/1.7 'Onest',
+			400 11px/1.5 'Onest',
 			sans-serif;
-		margin-bottom: 24px;
+		margin-bottom: 8px;
 	}
 	.breadcrumb a {
 		color: inherit;
@@ -329,102 +307,87 @@
 	}
 	.intro-grid {
 		display: grid;
-		grid-template-columns: 1.1fr 1fr;
+		grid-template-columns: 1fr 1fr;
 		border: 1px solid #b9b6a7;
 	}
 	.intro-copy {
 		min-width: 0;
-		padding: 54px 42px;
+		padding: 30px;
 		background: #fff8e9 url('/brand/mvp/assets/papel-fino.webp');
-		align-self: stretch;
 	}
 	.launch-catalog .eyebrow {
 		font:
-			600 10px/1.6 'Onest',
+			600 10px/1.5 'Onest',
 			sans-serif;
 		text-transform: uppercase;
-		letter-spacing: 0.14em;
+		letter-spacing: 0.12em;
 		margin: 0;
 	}
 	.intro-copy h1 {
 		font:
-			400 clamp(42px, 4.5vw, 66px)/1.04 'Newsreader',
+			400 clamp(38px, 4.3vw, 56px)/1.04 'Newsreader',
 			Georgia,
 			serif;
 		letter-spacing: -0.035em;
-		margin: 22px 0;
+		margin: 16px 0;
 	}
 	.lead {
-		max-width: 520px;
+		max-width: 460px;
 		font:
-			400 15px/1.85 'Onest',
+			400 14px/1.65 'Onest',
 			sans-serif;
 		margin: 0;
 	}
 	.intro-actions {
 		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 16px 24px;
-		margin-top: 30px;
+		margin-top: 20px;
 	}
 	.launch-catalog .primary-link {
 		display: inline-flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 24px;
-		min-height: 48px;
-		padding: 14px 20px;
+		gap: 20px;
+		min-height: 44px;
+		padding: 10px 16px;
 		border: 1px solid #183746;
 		background: #183746;
 		color: #fff8e9;
 		text-decoration: none;
 		font:
-			500 12px/1.6 'Onest',
+			500 12px/1.5 'Onest',
 			sans-serif;
 		cursor: pointer;
 	}
 	.launch-catalog .text-link {
 		min-height: 44px;
 		display: inline-flex;
-		gap: 20px;
+		gap: 16px;
 		align-items: center;
-		padding-block: 10px;
-		border-bottom: 1px solid currentColor;
+		padding-block: 8px;
 		color: #183746;
-		text-decoration: none;
+		text-underline-offset: 4px;
 		font:
-			500 12px/1.6 'Onest',
+			500 12px/1.5 'Onest',
 			sans-serif;
 	}
 	.intro-note {
 		font:
-			400 11px/1.8 'Onest',
+			400 11px/1.6 'Onest',
 			sans-serif;
-		max-width: 420px;
-		margin: 24px 0 0;
+		margin: 14px 0 0;
 		color: #526063;
 	}
 	.launch-showcase {
 		min-width: 0;
 		position: relative;
 		isolation: isolate;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding: 24px 30px 20px;
+		display: grid;
+		grid-template-columns: 1fr 0.85fr;
+		align-items: center;
+		gap: 20px;
+		padding: 22px;
 		background: #eed6c8 url('/brand/mvp/assets/papel-fino.webp');
 		overflow: hidden;
-	}
-	.showcase-caption {
-		display: flex;
-		justify-content: space-between;
-		flex-wrap: wrap;
-		gap: 6px 16px;
-		z-index: 1;
-		font:
-			400 9px/1.7 'Onest',
-			sans-serif;
 	}
 	.showcase-product {
 		display: block;
@@ -432,137 +395,117 @@
 		text-decoration: none;
 		position: relative;
 		z-index: 1;
-		margin: 12px 24px 0;
 	}
 	.showcase-product :global(.digital-artwork) {
-		min-height: 325px;
-		height: 325px;
+		min-height: 270px;
+		height: 270px;
 		aspect-ratio: auto;
 		background: transparent;
-		padding: 15px;
+		padding: 10px;
 		overflow: visible;
 	}
 	.showcase-product :global(.digital-artwork::before) {
 		display: none;
 	}
 	.showcase-product :global(.folio) {
-		height: 295px;
-		width: 225px;
+		height: 245px;
+		width: 185px;
+		padding: 12px;
+	}
+	.showcase-product :global(.folio-title) {
+		font-size: 23px;
 	}
 	.showcase-product :global(.art-edition) {
 		display: none;
 	}
 	.intro-engraving {
 		position: absolute;
-		width: 280px;
-		height: 280px;
+		width: 240px;
+		height: 240px;
 		object-fit: contain;
-		right: -58px;
-		bottom: 45px;
-		opacity: 0.55;
+		right: -56px;
+		bottom: -50px;
+		opacity: 0.35;
 		pointer-events: none;
 		transform: rotate(-25deg);
 	}
-	.showcase-detail {
+	.showcase-content {
 		position: relative;
 		z-index: 1;
-		display: flex;
-		gap: 18px;
-		align-items: center;
-		border-block: 1px solid #b6a397;
-		margin-top: 16px;
-		padding: 15px 0;
+		min-width: 0;
 	}
-	.showcase-detail > span {
+	.showcase-content h2 {
 		font:
-			400 25px/1.2 'Newsreader',
+			400 30px/1.08 'Newsreader',
 			Georgia,
 			serif;
-		letter-spacing: 0.04em;
-		white-space: nowrap;
-		color: #863b45;
+		letter-spacing: -0.02em;
+		margin: 12px 0;
 	}
-	.showcase-detail p {
+	.showcase-content h2 a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.showcase-detail {
 		font:
-			400 11px/1.8 'Onest',
+			400 12px/1.65 'Onest',
 			sans-serif;
 		margin: 0;
 	}
-	.showcase-detail strong {
-		font-weight: 500;
-	}
 	.showcase-note {
 		font:
-			400 9px/1.7 'Onest',
+			400 9px/1.6 'Onest',
 			sans-serif;
-		margin: 12px 0 0;
+		margin: 8px 0 0;
 	}
-	.catalog-section {
+	.catalog-section,
+	.launch-section {
 		scroll-margin-top: 96px;
 	}
 	.catalog-heading {
 		display: flex;
 		align-items: end;
 		justify-content: space-between;
-		gap: 24px;
-		margin-bottom: 30px;
+		gap: 16px;
+		margin-bottom: 20px;
 	}
 	.catalog-heading h2,
 	.continuity h2 {
 		font:
-			400 clamp(34px, 3.5vw, 46px)/1.12 'Newsreader',
+			400 clamp(32px, 3vw, 40px)/1.12 'Newsreader',
 			Georgia,
 			serif;
 		letter-spacing: -0.025em;
-		margin: 12px 0 0;
+		margin: 8px 0 0;
 	}
 	.catalog-heading > p {
 		font:
-			400 12px/1.9 'Onest',
+			400 12px/1.6 'Onest',
 			sans-serif;
 		margin: 0;
 	}
 	.catalog-layout {
 		display: grid;
-		grid-template-columns: 218px minmax(0, 1fr);
+		grid-template-columns: 210px minmax(0, 1fr);
 		align-items: start;
-		gap: 28px;
+		gap: 24px;
 	}
 	.catalog-filters {
 		min-width: 0;
 		border: 1px solid #b8beb1;
-		padding: 18px;
+		padding: 16px;
 		background: #ebe8d8 url('/brand/mvp/assets/papel-fino.webp');
-	}
-	.filter-heading {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 12px;
-		padding-bottom: 20px;
-		border-bottom: 1px solid #c7bfac;
-		margin-bottom: 24px;
-	}
-	.filter-heading h3 {
-		font:
-			400 24px/1.15 'Newsreader',
-			Georgia,
-			serif;
-		margin: 0;
-	}
-	.filter-heading > span {
-		color: #845425;
 	}
 	.filter-field {
 		display: grid;
-		gap: 9px;
-		margin-bottom: 22px;
+		gap: 6px;
+		margin-bottom: 16px;
 	}
 	.filter-field label,
 	.phase-options legend,
 	.order-field label {
 		font:
-			500 11px/1.7 'Onest',
+			500 11px/1.5 'Onest',
 			sans-serif;
 	}
 	.filter-field input,
@@ -575,9 +518,9 @@
 		background: #fff8e9;
 		border: 1px solid #8c9994;
 		border-radius: 0;
-		padding: 10px;
+		padding: 9px;
 		font:
-			400 11px/1.7 'Onest',
+			400 12px/1.5 'Onest',
 			sans-serif;
 	}
 	.filter-field input::placeholder {
@@ -586,30 +529,30 @@
 	}
 	.phase-options {
 		display: grid;
-		gap: 6px;
+		gap: 4px;
 		border: 0;
 		padding: 0;
 		margin: 0;
 		min-width: 0;
 	}
 	.phase-options legend {
-		margin-bottom: 10px;
+		margin-bottom: 6px;
 	}
 	.phase-options button {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 8px;
+		gap: 6px;
 		width: 100%;
 		min-height: 44px;
 		border: 1px solid transparent;
-		padding: 10px;
+		padding: 8px;
 		background: transparent;
 		color: #183746;
 		cursor: pointer;
 		text-align: left;
 		font:
-			400 11px/1.7 'Onest',
+			400 11px/1.5 'Onest',
 			sans-serif;
 	}
 	.phase-options button[aria-pressed='true'] {
@@ -631,20 +574,20 @@
 		color: #183746;
 		border: 0;
 		border-bottom: 1px solid currentColor;
-		padding: 10px 0;
-		margin-top: 12px;
+		padding: 8px 0;
+		margin-top: 8px;
 		cursor: pointer;
 		font:
-			500 11px/1.7 'Onest',
+			500 11px/1.5 'Onest',
 			sans-serif;
 	}
 	.format-note {
 		display: flex;
 		align-items: start;
-		gap: 9px;
+		gap: 8px;
 		border-top: 1px solid #c7bfac;
-		padding-top: 22px;
-		margin-top: 24px;
+		padding-top: 16px;
+		margin-top: 16px;
 	}
 	.format-note > span {
 		font-size: 18px;
@@ -652,14 +595,14 @@
 	}
 	.format-note p {
 		font:
-			400 10px/1.9 'Onest',
+			400 10px/1.7 'Onest',
 			sans-serif;
 		margin: 0;
 	}
 	.format-note strong {
 		display: block;
 		font-weight: 500;
-		margin-bottom: 6px;
+		margin-bottom: 4px;
 	}
 	.catalog-results {
 		min-width: 0;
@@ -668,57 +611,43 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 16px;
+		gap: 12px;
 		border-block: 1px solid #b8beb1;
-		margin-bottom: 28px;
-		padding: 11px 0;
+		margin-bottom: 20px;
+		padding: 8px 0;
 	}
 	.results-toolbar > p {
 		font:
-			400 11px/1.7 'Onest',
+			400 11px/1.5 'Onest',
 			sans-serif;
 		margin: 0;
 	}
 	.order-field {
 		display: flex;
 		align-items: center;
-		gap: 10px;
+		gap: 8px;
 	}
 	.order-field select {
 		width: auto;
 	}
-	.launch-section {
-		scroll-margin-top: 96px;
-	}
 	.section-heading {
-		display: flex;
-		align-items: end;
-		justify-content: space-between;
-		gap: 24px;
-		margin-bottom: 24px;
+		margin-bottom: 16px;
 	}
 	.section-heading h3 {
 		font:
-			400 32px/1.15 'Newsreader',
+			400 28px/1.12 'Newsreader',
 			Georgia,
 			serif;
 		letter-spacing: -0.02em;
-		margin: 9px 0 0;
-	}
-	.section-heading > p {
-		max-width: 265px;
-		font:
-			400 11px/1.85 'Onest',
-			sans-serif;
-		margin: 0;
+		margin: 5px 0 0;
 	}
 	.launch-grid {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 18px;
+		gap: 16px;
 	}
 	.following {
-		padding-top: 56px;
+		padding-top: 32px;
 	}
 	.launch-product-card {
 		min-width: 0;
@@ -735,8 +664,29 @@
 		overflow: hidden;
 	}
 	.product-cover :global(.digital-artwork) {
-		min-height: 305px;
-		padding-inline: 18px;
+		min-height: 260px;
+		height: 260px;
+		aspect-ratio: auto;
+		padding: 16px;
+	}
+	.product-cover :global(.folio) {
+		width: 175px;
+		height: 225px;
+		padding: 10px 12px;
+	}
+	.product-cover :global(.folio-title) {
+		font-size: 20px;
+	}
+	.product-cover :global(.folio-caption) {
+		font-size: 7px;
+	}
+	.product-cover :global(.folio-imprint) {
+		font-size: 6px;
+	}
+	.product-cover :global(.folio-foot) {
+		margin-top: 8px;
+		padding-top: 6px;
+		font-size: 5px;
 	}
 	.product-body {
 		display: flex;
@@ -744,20 +694,19 @@
 		align-items: start;
 		flex: 1;
 		min-width: 0;
-		padding: 22px 19px 18px;
+		padding: 16px;
 	}
 	.launch-catalog .product-universe {
-		font-size: 8px;
-		letter-spacing: 0.1em;
-		min-height: 26px;
+		font-size: 9px;
+		letter-spacing: 0.08em;
 	}
 	.product-body h3 {
 		font:
-			400 27px/1.1 'Newsreader',
+			400 27px/1.08 'Newsreader',
 			Georgia,
 			serif;
 		letter-spacing: -0.02em;
-		margin: 8px 0 14px;
+		margin: 8px 0 10px;
 		overflow-wrap: anywhere;
 	}
 	.product-body h3 a {
@@ -768,228 +717,207 @@
 		text-decoration: underline;
 		text-underline-offset: 4px;
 	}
-	.product-subtitle {
-		font:
-			500 10px/1.7 'Onest',
-			sans-serif;
-		margin: -7px 0 12px;
-	}
 	.product-summary {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
+		overflow: hidden;
 		font:
-			400 12px/1.85 'Onest',
+			400 12px/1.65 'Onest',
 			sans-serif;
-		margin: 0 0 20px;
-	}
-	.product-includes {
-		width: 100%;
-		padding-top: 15px;
-		border-top: 1px solid #c7bfac;
-	}
-	.product-includes > p {
-		font:
-			500 10px/1.7 'Onest',
-			sans-serif;
-		margin: 0 0 9px;
-	}
-	.product-includes ul {
-		padding-left: 14px;
-		margin: 0;
-		font:
-			400 10px/1.85 'Onest',
-			sans-serif;
-	}
-	.product-includes li {
-		padding-left: 2px;
-		margin-bottom: 6px;
-	}
-	.sample-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 14px;
-		min-height: 44px;
-		margin-top: 8px;
-		margin-bottom: 15px;
-		padding-block: 10px;
-		font:
-			500 11px/1.7 'Onest',
-			sans-serif;
-		color: #183746;
-		text-underline-offset: 5px;
+		margin: 0 0 12px;
 	}
 	.product-access {
 		width: 100%;
 		margin-top: auto;
-		padding-top: 18px;
 		border-top: 1px solid #c7bfac;
+		padding-top: 4px;
 	}
-	.trial-status {
+	.sample-link {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 6px;
+		min-height: 44px;
+		padding-block: 8px;
 		font:
-			500 9px/1.7 'Onest',
+			500 12px/1.4 'Onest',
 			sans-serif;
-		margin: 0 0 6px;
-	}
-	.trial-status span {
-		color: #4d6231;
-		padding-right: 3px;
-	}
-	.product-format {
-		font:
-			400 9px/1.7 'Onest',
-			sans-serif;
-		margin: 0 0 16px;
-		color: #526063;
+		color: #183746;
+		text-underline-offset: 4px;
 	}
 	.product-cta {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 10px;
+		gap: 6px;
 		width: 100%;
-		min-height: 46px;
+		min-height: 44px;
 		border: 1px solid #183746;
 		background: #183746;
 		color: #fff8e9;
 		text-decoration: none;
-		padding: 11px 12px;
+		padding: 10px 12px;
 		font:
-			500 11px/1.7 'Onest',
+			500 12px/1.4 'Onest',
 			sans-serif;
 	}
 	.empty-results {
-		padding: 48px 28px;
+		padding: 32px 24px;
 		border: 1px solid #b8beb1;
 		background: #fff8e9 url('/brand/mvp/assets/papel-fino.webp');
 	}
 	.empty-results h3 {
 		font:
-			400 34px/1.2 'Newsreader',
+			400 32px/1.2 'Newsreader',
 			Georgia,
 			serif;
-		margin: 0 0 16px;
+		margin: 0 0 12px;
 	}
 	.empty-results p {
 		max-width: 520px;
 		font:
-			400 13px/1.9 'Onest',
+			400 13px/1.7 'Onest',
 			sans-serif;
-		margin: 0 0 24px;
+		margin: 0 0 20px;
 	}
 	.continuity {
 		display: grid;
-		grid-template-columns: 95px minmax(0, 1fr) auto;
-		gap: 32px;
+		grid-template-columns: 75px minmax(0, 1fr) auto;
+		gap: 24px;
 		align-items: center;
-		margin-top: 72px;
+		margin-top: 48px;
 		border-block: 1px solid #b8beb1;
-		padding-block: 36px;
+		padding-block: 28px;
 	}
 	.continuity > img {
-		width: 95px;
-		height: 110px;
+		width: 75px;
+		height: 95px;
 		object-fit: contain;
 	}
 	.continuity h2 {
-		font-size: 34px;
+		font-size: 32px;
 	}
 	.continuity p:not(.eyebrow) {
 		max-width: 560px;
 		font:
-			400 12px/1.9 'Onest',
+			400 12px/1.7 'Onest',
 			sans-serif;
-		margin: 12px 0 0;
+		margin: 10px 0 0;
 	}
 	.continuity-links {
 		display: flex;
 		flex-direction: column;
 		align-items: start;
-		gap: 12px;
+		gap: 4px;
 	}
 	.launch-catalog :is(a, button, input, select):focus-visible {
 		outline: 2px solid #183746;
-		outline-offset: 4px;
+		outline-offset: 3px;
 	}
 	@media (max-width: 1180px) {
-		.intro-copy {
-			padding: 40px 30px;
-		}
-		.launch-showcase {
-			padding-inline: 22px;
-		}
-		.showcase-product {
-			margin-inline: 0;
-		}
-		.catalog-layout {
-			grid-template-columns: 200px minmax(0, 1fr);
-			gap: 22px;
-		}
 		.launch-grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
-		.section-heading {
-			display: block;
+		.launch-showcase {
+			gap: 12px;
+			padding: 18px;
 		}
-		.section-heading > p {
-			max-width: 420px;
-			margin-top: 12px;
+		.showcase-product :global(.folio) {
+			width: 150px;
+			height: 210px;
+			padding: 10px;
+		}
+		.showcase-product :global(.folio-title) {
+			font-size: 20px;
+		}
+		.showcase-product :global(.digital-artwork) {
+			height: 230px;
+			min-height: 230px;
+		}
+		.showcase-content h2 {
+			font-size: 27px;
 		}
 	}
 	@media (max-width: 900px) {
 		.launch-catalog .wrap {
-			width: calc(100% - 48px);
+			width: calc(100% - 40px);
 		}
 		.intro-copy {
-			padding: 32px 24px;
+			padding: 24px;
 		}
 		.intro-copy h1 {
-			font-size: 44px;
-		}
-		.lead {
-			font-size: 13px;
+			font-size: 39px;
 		}
 		.launch-showcase {
-			padding-inline: 16px;
+			grid-template-columns: 1fr;
+			gap: 8px;
+			padding: 16px;
+		}
+		.showcase-content h2 {
+			font-size: 25px;
+			margin-block: 8px;
+		}
+		.showcase-product :global(.digital-artwork) {
+			height: 185px;
+			min-height: 185px;
 		}
 		.showcase-product :global(.folio) {
-			height: 280px;
-			width: 215px;
+			width: 125px;
+			height: 165px;
+			padding: 8px;
 		}
-		.showcase-detail {
-			gap: 10px;
+		.showcase-product :global(.folio-title) {
+			font-size: 15px;
 		}
-		.showcase-detail > span {
-			font-size: 21px;
+		.showcase-product :global(.folio-caption) {
+			font-size: 5px;
+			margin-top: 4px;
+		}
+		.showcase-product :global(.folio-imprint) {
+			font-size: 4px;
+		}
+		.showcase-product :global(.folio-foot) {
+			font-size: 4px;
+			margin-top: 6px;
+			padding-top: 4px;
+		}
+		.showcase-product :global(.folio-engraving) {
+			margin-block: 4px;
+		}
+		.showcase-content .eyebrow {
+			font-size: 9px;
+		}
+		.showcase-note {
+			font-size: 9px;
+			margin-top: 0;
 		}
 		.catalog-layout {
 			grid-template-columns: 1fr;
+			gap: 16px;
 		}
 		.catalog-filters {
 			display: grid;
 			grid-template-columns: 1fr 1fr;
-			gap: 20px;
-			padding: 20px;
+			gap: 12px;
+			padding: 14px;
 		}
-		.filter-heading,
 		.filter-field {
 			margin: 0;
 		}
-		.filter-heading {
-			grid-column: 1 / -1;
-			padding-bottom: 14px;
-		}
 		.phase-options {
 			grid-column: 1 / -1;
-			display: flex;
-			flex-wrap: wrap;
-			gap: 8px;
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 6px;
 		}
 		.phase-options legend {
-			float: left;
-			width: 100%;
+			float: none;
 		}
 		.phase-options button {
-			width: auto;
 			flex: 1;
-			gap: 12px;
+			width: auto;
 			border-color: #8c9994;
 		}
 		.format-note {
@@ -997,177 +925,316 @@
 		}
 		.clear-filters {
 			margin: 0;
+			grid-column: 1 / -1;
 		}
 		.continuity {
-			grid-template-columns: 75px minmax(0, 1fr);
-			gap: 22px;
+			grid-template-columns: 60px minmax(0, 1fr);
+			gap: 18px;
 		}
 		.continuity > img {
-			width: 75px;
+			width: 60px;
 		}
 		.continuity-links {
 			grid-column: 2;
 			flex-direction: row;
 			flex-wrap: wrap;
-			gap: 12px 24px;
+			gap: 8px 20px;
 		}
 	}
 	@media (max-width: 620px) {
 		.launch-catalog {
-			padding-bottom: 48px;
-		}
-		.launch-catalog .wrap {
-			width: calc(100% - 32px);
-		}
-		.launch-intro {
-			padding-top: 12px;
 			padding-bottom: 36px;
 		}
+		.launch-catalog .wrap {
+			width: calc(100% - 24px);
+		}
+		.launch-intro {
+			padding-block: 0 24px;
+		}
 		.breadcrumb {
-			gap: 8px;
-			margin-bottom: 16px;
 			font-size: 10px;
+			margin-bottom: 0;
+			gap: 6px;
 		}
 		.intro-grid {
 			grid-template-columns: 1fr;
 		}
 		.intro-copy {
-			padding: 30px 23px;
+			padding: 20px;
 		}
 		.intro-copy h1 {
-			font-size: clamp(38px, 10.5vw, 54px);
+			font-size: clamp(34px, 9vw, 45px);
+			margin-block: 12px;
+		}
+		.intro-copy .eyebrow {
+			font-size: 9px;
+			letter-spacing: 0.08em;
 		}
 		.lead {
-			font-size: 14px;
+			font-size: 13px;
+			line-height: 1.6;
 		}
 		.intro-actions {
-			align-items: start;
-			flex-direction: column;
-			gap: 10px;
-			margin-top: 24px;
+			margin-top: 16px;
+		}
+		.intro-note {
+			margin-top: 10px;
+			font-size: 10px;
 		}
 		.launch-showcase {
-			padding: 20px 24px 17px;
+			grid-template-columns: 0.9fr 1fr;
+			gap: 12px;
+			padding: 14px;
 			border-top: 1px solid #b9b6a7;
 		}
-		.showcase-product {
-			margin-block: 8px 0;
-		}
-		.showcase-product :global(.digital-artwork) {
-			min-height: 300px;
-			height: 300px;
-		}
-		.showcase-product :global(.folio) {
-			height: 280px;
-			width: 215px;
+		.showcase-content h2 {
+			font-size: 23px;
 		}
 		.showcase-detail {
-			margin-top: 12px;
-			gap: 16px;
+			font-size: 11px;
 		}
-		.showcase-detail > span {
-			font-size: 24px;
+		.showcase-product :global(.digital-artwork) {
+			min-height: 175px;
+			height: 175px;
+			padding: 6px;
+		}
+		.showcase-product :global(.folio) {
+			width: 118px;
+			height: 155px;
+			padding: 8px;
+		}
+		.showcase-product :global(.folio-title) {
+			font-size: 15px;
+		}
+		.showcase-content .text-link {
+			font-size: 11px;
+			gap: 10px;
+		}
+		.showcase-note {
+			font-size: 8px;
+		}
+		.intro-engraving {
+			width: 180px;
+			height: 180px;
+			right: -70px;
+			bottom: -40px;
 		}
 		.catalog-heading {
 			display: block;
-			margin-bottom: 24px;
+			margin-bottom: 14px;
 		}
-		.catalog-heading > p {
-			margin-top: 14px;
-		}
-		.catalog-filters {
-			grid-template-columns: 1fr;
-			gap: 18px;
-			padding: 18px;
-		}
-		.filter-heading,
-		.phase-options {
-			grid-column: auto;
-		}
-		.phase-options {
-			display: grid;
-			gap: 6px;
-		}
-		.phase-options legend {
-			float: none;
-		}
-		.phase-options button {
-			width: 100%;
-		}
-		.results-toolbar {
-			align-items: start;
-			flex-direction: column;
-			gap: 12px;
-			padding-block: 14px;
-			margin-bottom: 24px;
-		}
-		.order-field {
-			width: 100%;
-			justify-content: space-between;
-		}
-		.order-field select {
-			max-width: 180px;
-		}
-		.launch-grid {
-			grid-template-columns: 1fr;
-			gap: 22px;
-		}
-		.product-cover :global(.digital-artwork) {
-			min-height: 330px;
-		}
-		.product-body {
-			padding: 24px;
-		}
-		.launch-catalog .product-universe {
-			min-height: 0;
+		.catalog-heading .eyebrow {
 			font-size: 9px;
 		}
-		.product-body h3 {
+		.catalog-heading h2 {
 			font-size: 32px;
+			margin-top: 5px;
 		}
-		.product-summary {
-			font-size: 14px;
+		.catalog-heading > p {
+			margin-top: 6px;
+			font-size: 11px;
 		}
-		.product-includes > p,
-		.product-includes ul {
+		.catalog-filters {
+			padding: 12px;
+			gap: 10px;
+		}
+		.filter-field {
+			grid-column: 1 / -1;
+			gap: 4px;
+		}
+		.filter-field input,
+		.filter-field select,
+		.order-field select {
+			font-size: 16px;
+		}
+		.phase-options {
+			gap: 4px;
+		}
+		.phase-options legend {
+			font-size: 11px;
+			margin-bottom: 4px;
+		}
+		.phase-options button {
+			font-size: 11px;
+			padding: 7px;
+			gap: 4px;
+		}
+		.phase-options button span {
+			font-size: 9px;
+		}
+		.results-toolbar {
+			gap: 8px;
+			margin-bottom: 16px;
+			padding-block: 6px;
+		}
+		.results-toolbar > p {
+			font-size: 10px;
+		}
+		.order-field {
+			min-width: 0;
+		}
+		.order-field label {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border: 0;
+		}
+		.order-field select {
+			max-width: 160px;
 			font-size: 12px;
 		}
-		.trial-status,
-		.product-format {
-			font-size: 10px;
+		.section-heading {
+			margin-bottom: 12px;
+		}
+		.section-heading h3 {
+			font-size: 26px;
+		}
+		.section-heading .eyebrow {
+			font-size: 9px;
+		}
+		.launch-grid {
+			gap: 12px;
+		}
+		.product-cover :global(.digital-artwork) {
+			height: 220px;
+			min-height: 220px;
+			padding: 8px;
+		}
+		.product-cover :global(.folio) {
+			width: 150px;
+			height: 190px;
+			padding: 8px;
+		}
+		.product-cover :global(.folio-title) {
+			font-size: 16px;
+		}
+		.product-cover :global(.folio-caption) {
+			font-size: 5px;
+			margin-top: 4px;
+		}
+		.product-cover :global(.folio-imprint) {
+			font-size: 4px;
+		}
+		.product-cover :global(.folio-foot) {
+			font-size: 4px;
+			margin-top: 6px;
+			padding-top: 4px;
+		}
+		.product-cover :global(.folio-engraving) {
+			margin-block: 4px;
+		}
+		.product-cover :global(.art-edition) {
+			font-size: 5px;
+			right: 8px;
+			bottom: 7px;
+		}
+		.product-body {
+			padding: 12px;
+		}
+		.launch-catalog .product-universe {
+			font-size: 8px;
+			line-height: 1.5;
+			min-height: 24px;
+		}
+		.product-body h3 {
+			font-size: 23px;
+			margin-block: 6px 8px;
+		}
+		.product-summary {
+			font-size: 12px;
+			line-height: 1.6;
+			margin-bottom: 10px;
+		}
+		.sample-link {
+			font-size: 11px;
 		}
 		.product-cta {
 			font-size: 12px;
+			padding-inline: 9px;
 		}
 		.following {
-			padding-top: 40px;
+			padding-top: 28px;
 		}
 		.empty-results {
-			padding: 28px 22px;
+			padding: 24px 18px;
 		}
 		.continuity {
-			grid-template-columns: minmax(0, 1fr) 56px;
-			gap: 18px 12px;
-			margin-top: 48px;
-			padding-block: 28px;
+			grid-template-columns: minmax(0, 1fr) 48px;
+			gap: 12px;
+			margin-top: 32px;
+			padding-block: 24px;
 		}
 		.continuity > img {
 			grid-column: 2;
 			grid-row: 1;
-			width: 56px;
-			height: 85px;
+			width: 48px;
+			height: 75px;
 		}
 		.continuity > div:first-of-type {
 			grid-column: 1;
 			grid-row: 1;
 		}
 		.continuity h2 {
-			font-size: 30px;
+			font-size: 28px;
 		}
 		.continuity-links {
 			grid-column: 1 / -1;
-			flex-direction: column;
-			gap: 10px;
+		}
+	}
+	@media (max-width: 389px) {
+		.launch-grid {
+			grid-template-columns: 1fr;
+		}
+		.product-cover :global(.digital-artwork) {
+			height: 225px;
+			min-height: 225px;
+		}
+		.product-cover :global(.folio) {
+			width: 155px;
+			height: 190px;
+			padding: 10px;
+		}
+		.product-cover :global(.folio-title) {
+			font-size: 18px;
+		}
+		.product-cover :global(.folio-caption) {
+			font-size: 6px;
+		}
+		.product-body {
+			padding: 16px;
+		}
+		.launch-catalog .product-universe {
+			font-size: 9px;
+			min-height: 0;
+		}
+		.product-body h3 {
+			font-size: 27px;
+		}
+		.product-summary {
+			font-size: 13px;
+		}
+		.sample-link {
+			font-size: 12px;
+		}
+		.showcase-content h2 {
+			font-size: 21px;
+		}
+		.showcase-product :global(.folio) {
+			width: 100px;
+			height: 145px;
+			padding: 7px;
+		}
+		.showcase-product :global(.folio-title) {
+			font-size: 13px;
+		}
+		.phase-options button {
+			font-size: 10px;
+			padding-inline: 5px;
 		}
 	}
 </style>

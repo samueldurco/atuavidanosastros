@@ -82,11 +82,10 @@
 		<DigitalStoreNav active="readings" />
 		<section class="store-hero" aria-labelledby="store-title">
 			<div class="hero-copy">
-				<p class="eyebrow">A tua vida, em novas páginas</p>
-				<h1 id="store-title">Escolha sua próxima descoberta.</h1>
+				<p class="eyebrow">Leituras avulsas</p>
+				<h1 id="store-title">Encontre sua leitura.</h1>
 				<p class="hero-description">
-					Do seu mapa aos seus próximos passos. Encontre uma leitura para o assunto que importa para
-					você agora.
+					Seu mapa, suas relações, seus próximos passos. Escolha o assunto que importa agora.
 				</p>
 				<form
 					class="catalog-search"
@@ -113,7 +112,7 @@
 						id="reading-search"
 						name="q"
 						type="search"
-						placeholder="Busque por leitura ou assunto"
+						placeholder="Leitura ou assunto"
 						value={query}
 						oninput={(event) => setFilter('q', event.currentTarget.value)}
 					/>
@@ -256,6 +255,7 @@
 						</div>{/if}
 					{#if products.length}<div class="catalog-grid">
 							{#each products as product (product.id)}<CatalogProductCard
+									compact
 									{product}
 									universe={product.universeTitle}
 									trialAccess={Boolean(data.trialAccess)}
@@ -324,7 +324,7 @@
 		grid-template-columns: 1.5fr 1fr;
 		align-items: center;
 		gap: 30px;
-		padding: 26px 40px;
+		padding: 22px 30px;
 		background: #e5e9dc;
 		border: 1px solid #a8b4a3;
 		overflow: hidden;
@@ -344,12 +344,12 @@
 	}
 	h1 {
 		font:
-			400 clamp(38px, 4vw, 56px)/1.02 'Newsreader',
+			400 clamp(34px, 3.5vw, 48px)/1.02 'Newsreader',
 			Georgia,
 			serif;
 		letter-spacing: -0.035em;
 		max-width: 560px;
-		margin: 12px 0 15px;
+		margin: 10px 0 12px;
 	}
 	.hero-description {
 		font:
@@ -357,7 +357,7 @@
 			Arial,
 			sans-serif;
 		max-width: 500px;
-		margin: 0 0 22px;
+		margin: 0 0 16px;
 	}
 	.catalog-search {
 		display: flex;
@@ -879,26 +879,26 @@
 	}
 	@media (max-width: 600px) {
 		.reading-store {
-			padding-top: 18px;
+			padding-top: 12px;
 		}
 		.store-wrap {
 			width: calc(100% - 28px);
 		}
 		.breadcrumb {
 			font-size: 10px;
-			margin-bottom: 16px;
+			margin-bottom: 10px;
 		}
 		.store-hero {
 			display: block;
-			padding: 20px;
+			padding: 16px;
 		}
 		.hero-copy {
 			z-index: 1;
 		}
 		h1 {
-			font-size: 36px;
-			max-width: 340px;
-			margin-top: 12px;
+			font-size: 32px;
+			max-width: calc(100% - 60px);
+			margin: 8px 0 10px;
 		}
 		.hero-description {
 			max-width: 100%;
@@ -906,21 +906,17 @@
 			margin-bottom: 14px;
 		}
 		.hero-art {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			gap: 10px;
-			margin-top: 14px;
-			padding-top: 10px;
-			border-top: 1px solid #9caa9e77;
+			position: absolute;
+			top: 12px;
+			right: 10px;
+			width: 70px;
 		}
 		.hero-art img {
-			width: 95px;
+			width: 100%;
 			margin: 0;
 		}
 		.hero-art span {
-			font-size: 15px;
-			text-align: left;
+			display: none;
 		}
 		.catalog-search {
 			padding-left: 10px;
@@ -928,7 +924,7 @@
 		}
 		.catalog-search input {
 			height: 48px;
-			font-size: 11px;
+			font-size: 16px;
 		}
 		.catalog-search button {
 			padding: 0 12px;
@@ -937,28 +933,28 @@
 			display: none;
 		}
 		.hero-note {
-			font-size: 8px;
+			font-size: 10px;
 		}
 		.departments {
-			margin: 16px 0 24px;
-			grid-template-columns: repeat(7, 145px);
+			margin: 12px 0 18px;
+			grid-template-columns: repeat(7, 134px);
 		}
 		.departments a {
-			padding: 12px 8px;
+			padding: 9px 8px;
 		}
 		.departments img {
-			width: 33px;
-			height: 38px;
+			width: 28px;
+			height: 32px;
 		}
 		.catalog-toolbar {
 			display: block;
-			padding-bottom: 20px;
+			padding-bottom: 14px;
 		}
 		h2 {
-			font-size: 32px;
+			font-size: 28px;
 		}
 		.catalog-controls {
-			margin-top: 18px;
+			margin-top: 10px;
 			align-items: end;
 			justify-content: space-between;
 		}
@@ -973,8 +969,8 @@
 			min-width: 105px;
 		}
 		.catalog-grid {
-			grid-template-columns: minmax(0, 1fr);
-			gap: 22px;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 12px;
 		}
 		.subscription-banner {
 			grid-template-columns: 1fr;
@@ -991,6 +987,11 @@
 		}
 		.subscription-banner h2 {
 			font-size: 30px;
+		}
+	}
+	@media (max-width: 389px) {
+		.catalog-grid {
+			grid-template-columns: minmax(0, 1fr);
 		}
 	}
 </style>

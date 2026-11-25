@@ -93,10 +93,9 @@ test('menu e rodapé distinguem os catálogos e a assinatura', async ({ page }, 
 	).toHaveCount(0);
 	await page.screenshot({ path: testInfo.outputPath('loja-produtos-fisicos.png') });
 	await page.locator('main a[href="/leituras"]').click();
-	await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-		'Escolha sua próxima descoberta.',
-		{ useInnerText: true }
-	);
+	await expect(page.getByRole('heading', { level: 1 })).toHaveText('Encontre sua leitura.', {
+		useInnerText: true
+	});
 	const footer = page.locator('footer');
 	await expect(footer.locator('a[href="/leituras"]')).toHaveText('Produtos digitais');
 	await expect(footer.locator('a[href="/loja"]')).toHaveText('Produtos físicos');

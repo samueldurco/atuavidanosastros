@@ -11,6 +11,7 @@
 			id: 'atv-plus',
 			href: '/atv-mais',
 			label: 'Assinatura ATV+',
+			shortLabel: 'ATV+',
 			description: 'Leituras para acompanhar seus ciclos',
 			icon: 'atv-mais'
 		},
@@ -18,6 +19,7 @@
 			id: 'launches',
 			href: '/lancamentos',
 			label: 'Lançamentos',
+			shortLabel: 'Lançamentos',
 			description: 'Novas leituras para situações concretas',
 			icon: 'lancamentos'
 		},
@@ -25,6 +27,7 @@
 			id: 'readings',
 			href: '/leituras',
 			label: 'Leituras avulsas',
+			shortLabel: 'Avulsas',
 			description: 'Escolha o tema que faz sentido agora',
 			icon: 'leituras-avulsas'
 		}
@@ -41,6 +44,7 @@
 			<a
 				class="store-section"
 				href={section.href}
+				aria-label={section.label}
 				aria-current={active === section.id ? 'page' : undefined}
 			>
 				<svg
@@ -55,7 +59,12 @@
 				>
 					<use href={`/brand/navigation/icons.svg#${section.icon}`} />
 				</svg>
-				<span><strong>{section.label}</strong><small>{section.description}</small></span>
+				<span
+					><strong class="full-label">{section.label}</strong><strong
+						class="short-label"
+						aria-hidden="true">{section.shortLabel}</strong
+					><small>{section.description}</small></span
+				>
 				<span class="section-arrow" aria-hidden="true">↗</span>
 			</a>
 		{/each}
@@ -69,8 +78,8 @@
 		--store-line: #b8b5a5;
 		--store-active: #e4e8da;
 		color: var(--store-ink);
-		margin: 0 0 30px;
-		padding: 22px 24px 0;
+		margin: 0 0 20px;
+		padding: 12px 16px 0;
 		border: 1px solid var(--store-line);
 		background: #f6efdf url('/brand/mvp/assets/papel-fino.webp') center / 520px;
 	}
@@ -79,12 +88,12 @@
 		align-items: baseline;
 		justify-content: space-between;
 		gap: 16px;
-		padding-bottom: 18px;
+		padding-bottom: 10px;
 		border-bottom: 1px solid var(--store-line);
 	}
 	.store-heading a {
 		font:
-			400 28px/1.1 'Newsreader',
+			400 23px/1.1 'Newsreader',
 			Georgia,
 			serif;
 		color: inherit;
@@ -100,15 +109,15 @@
 	.store-sections {
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
-		gap: 20px;
+		gap: 12px;
 	}
 	.store-section {
 		display: flex;
 		align-items: center;
-		gap: 14px;
+		gap: 10px;
 		min-width: 0;
-		min-height: 92px;
-		padding: 18px 8px;
+		min-height: 66px;
+		padding: 10px 8px;
 		border-bottom: 3px solid transparent;
 		color: inherit;
 		text-decoration: none;
@@ -129,6 +138,8 @@
 	.store-section svg {
 		flex-shrink: 0;
 		color: inherit;
+		width: 28px;
+		height: 28px;
 	}
 	.store-section strong,
 	.store-section small {
@@ -143,12 +154,15 @@
 	.store-section small {
 		font-size: 11px;
 		line-height: 1.5;
-		margin-top: 5px;
+		margin-top: 3px;
 		color: var(--store-muted);
 	}
 	.section-arrow {
 		margin-left: auto;
 		font-size: 15px;
+	}
+	.store-section .short-label {
+		display: none;
 	}
 	.dark {
 		--store-ink: #f0d08e;
@@ -161,35 +175,46 @@
 	}
 	@media (max-width: 760px) {
 		.digital-store-nav {
-			padding: 20px 16px 0;
+			padding: 10px 10px 0;
+			margin-bottom: 16px;
 		}
 		.store-heading {
-			align-items: flex-start;
-			flex-direction: column;
-			gap: 7px;
+			padding-bottom: 9px;
 		}
 		.store-heading a {
-			font-size: 26px;
+			font-size: 22px;
+		}
+		.store-heading > span {
+			display: none;
 		}
 		.store-sections {
-			grid-template-columns: 1fr;
 			gap: 0;
 		}
 		.store-section {
-			min-height: 80px;
-			padding: 14px 8px;
-			border-bottom: 1px solid var(--store-line);
+			justify-content: center;
+			min-height: 50px;
+			gap: 6px;
+			padding: 8px 5px;
 		}
-		.store-section[aria-current='page'] {
-			border-left: 3px solid var(--store-ink);
-			border-bottom-color: var(--store-line);
-			padding-left: 5px;
+		.store-section svg {
+			width: 21px;
+			height: 21px;
 		}
-		.store-section:last-child {
-			border-bottom: 0;
+		.store-section strong {
+			font-size: 11px;
 		}
-		.store-section small {
-			margin-top: 3px;
+		.store-section .short-label {
+			display: block;
+		}
+		.store-section .full-label,
+		.store-section small,
+		.section-arrow {
+			display: none;
+		}
+	}
+	@media (max-width: 360px) {
+		.store-section svg {
+			display: none;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
