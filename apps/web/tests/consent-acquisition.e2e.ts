@@ -110,7 +110,10 @@ test('SPA after a refused landing does not start GTM on an internal page', async
 	expect(requests()).toBe(0);
 	await page.reload();
 	await expect.poll(requests).toBe(1);
-	await page.locator('footer a[href="/privacidade"]').click();
+	await page
+		.getByRole('contentinfo')
+		.getByRole('link', { name: 'Privacidade', exact: true })
+		.click();
 	await expect(page).toHaveURL(/\/privacidade$/);
 	await Promise.all([
 		page.waitForEvent('load'),
