@@ -44,8 +44,9 @@ test('optional analytics can be declined again on the privacy page', async ({ pa
 test('legal pages fit a small screen and expose both footer links', async ({ page }) => {
 	await page.setViewportSize({ width: 360, height: 800 });
 	await page.goto('/privacidade');
-	await expect(page.locator('footer a[href="/termos"]')).toBeVisible();
-	await expect(page.locator('footer a[href="/privacidade"]')).toBeVisible();
+	const policies = page.getByRole('navigation', { name: 'Termos e políticas', exact: true });
+	await expect(policies.locator('a[href="/termos"]')).toBeVisible();
+	await expect(policies.locator('a[href="/privacidade"]')).toBeVisible();
 	expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 	await page.screenshot({ path: '../../test-results/social-setup/legal-privacy-mobile.png' });
 });
