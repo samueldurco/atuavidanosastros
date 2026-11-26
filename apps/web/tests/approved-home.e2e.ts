@@ -355,17 +355,21 @@ for (const width of [320, 390, 768, 1440]) {
 			'/loja/frete',
 			'/loja/termos'
 		]) {
-			const link = footer.locator(`a[href="${href}"]`);
+			const link = footer
+				.getByRole('navigation', { name: /^(Informações e atendimento|Termos e políticas)$/ })
+				.locator(`a[href="${href}"]`);
 			await expect(link).toHaveCount(1);
 			await expect(link).toBeVisible();
 		}
 		const footerGeometry = await footer.evaluate((root) => {
 			const bounds = root.getBoundingClientRect();
+			const commerceHeight =
+				root.querySelector('[data-commerce-trust]')?.getBoundingClientRect().height ?? 0;
 			const targets = [...root.querySelectorAll<HTMLElement>('a, button')]
 				.map((element) => element.getBoundingClientRect())
 				.filter((box) => box.width > 0 && box.height > 0);
 			return {
-				height: bounds.height,
+				navigationHeight: bounds.height - commerceHeight,
 				overflow: root.scrollWidth - root.clientWidth,
 				outside: targets.some(
 					(box) =>
@@ -385,7 +389,7 @@ for (const width of [320, 390, 768, 1440]) {
 				)
 			};
 		});
-		expect(footerGeometry.height).toBeLessThan(width < 768 ? 450 : 300);
+		expect(footerGeometry.navigationHeight).toBeLessThan(width < 768 ? 450 : 300);
 		expect(footerGeometry.overflow).toBeLessThanOrEqual(1);
 		expect(footerGeometry.outside).toBe(false);
 		expect(footerGeometry.overlap).toBe(false);

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import ShopNationalDelivery from './ShopNationalDelivery.svelte';
+	import CheckoutAssurance from './CheckoutAssurance.svelte';
 	import type { ShopCatalogProduct } from '$lib/server/shop/shopify-storefront';
 	import {
 		isRetailMug,
@@ -220,6 +221,7 @@
 			/>
 		{/if}
 	{/if}
+	<CheckoutAssurance />
 </section>
 
 <style>

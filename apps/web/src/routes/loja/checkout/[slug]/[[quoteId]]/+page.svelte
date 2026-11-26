@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CheckoutAssurance from '$lib/components/CheckoutAssurance.svelte';
 	import type { PageProps } from './$types';
 	import { onMount } from 'svelte';
 	let { data, form }: PageProps = $props();
@@ -153,6 +154,7 @@
 					>{pending ? 'Abrindo pagamento…' : 'Continuar para pagamento'}</button
 				>
 			</form>
+			<CheckoutAssurance />
 		</div>
 	{:else}
 		<p role="status">

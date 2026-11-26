@@ -1,0 +1,78 @@
+[
+  {
+    "file": "shopify.svg",
+    "url": "https://shopify-assets.shopifycdn.com/shopifycloud/brochure/assets/brand-assets/shopify-logo-primary-logo-456baa801ee66a0a435671082365958316831c9960c480451dd0330bcdae304f.svg"
+  },
+  {
+    "file": "cloudflare.svg",
+    "url": "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/cloudflare.svg"
+  },
+  {
+    "file": "google.svg",
+    "url": "https://www.gstatic.com/images/branding/googlelogo/svg/googlelogo_clr_74x24px.svg"
+  },
+  {
+    "file": "mercadopago.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/mercadopago.svg"
+  },
+  {
+    "file": "nubank.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/nubank.svg"
+  },
+  {
+    "file": "pix.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/pix.svg"
+  },
+  {
+    "file": "visa.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/visa.svg"
+  },
+  {
+    "file": "master.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/master.svg"
+  },
+  {
+    "file": "american_express.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/american_express.svg"
+  },
+  {
+    "file": "diners_club.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/diners_club.svg"
+  },
+  {
+    "file": "elo.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/elo.svg"
+  },
+  {
+    "file": "boleto.svg",
+    "url": "https://raw.githubusercontent.com/activemerchant/payment_icons/master/app/assets/images/payment_icons/boleto.svg"
+  },
+  {
+    "file": "siteblindado.svg",
+    "url": "https://cdn.prod.website-files.com/686fd3c4baa0f126615c68cc/68756d11ab44b920e1451861_logo-aplica%C3%A7%C3%A3o-site.svg"
+  },
+  {
+    "file": "ebit.png",
+    "url": "https://ebit.com.br/Content/img/Ebit-Nielsen-Logo.png"
+  },
+  {
+    "file": "https.svg",
+    "note": "Local illustrative mark / typographic brand label. Not a provider-issued certification seal."
+  },
+  {
+    "file": "reclameaqui.svg",
+    "note": "Local illustrative mark / typographic brand label. Not a provider-issued certification seal."
+  },
+  {
+    "file": "hipercard.svg",
+    "note": "Local illustrative mark / typographic brand label. Not a provider-issued certification seal."
+  },
+  {
+    "file": "two-cards.svg",
+    "note": "Local illustrative mark / typographic brand label. Not a provider-issued certification seal."
+  },
+  {
+    "file": "hiper.svg",
+    "note": "Representação tipográfica da marca para planejamento dos meios de pagamento; não ativa aceitação."
+  }
+]

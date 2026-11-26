@@ -73,6 +73,12 @@ test('Escolha explícita, disponibilidade, quantidade e encaminhamento ao checko
 	);
 	await openProduct(page);
 	const purchase = page.getByRole('region', { name: 'Disponibilidade e compra' });
+	await expect(purchase.locator('[data-checkout-assurance="shopify"]')).toContainText(
+		'Checkout da loja física'
+	);
+	await expect(
+		purchase.getByRole('link', { name: 'Shopify · plataforma do checkout' })
+	).toHaveAttribute('href', 'https://www.shopify.com/');
 	await expect(purchase.getByRole('button', { name: 'Comprar agora' })).toBeDisabled();
 	await expect(purchase.getByRole('option', { name: /Bone · M/ })).toBeDisabled();
 	await purchase.getByRole('combobox').selectOption('gid://shopify/ProductVariant/3');
@@ -244,6 +250,9 @@ test('Ecobag usa a cotação nacional com endereço mesmo em CEP com frete fixo 
 	await expect(summary).toContainText('35160-001');
 	await expect(summary).toContainText('Natural');
 	const address = page.getByRole('form', { name: 'Endereço para pagamento' });
+	await expect(page.locator('[data-checkout-assurance="shopify"]')).toContainText(
+		'Confira as opções disponíveis'
+	);
 	await expect(address).toHaveAttribute('method', 'post');
 	await address.getByLabel('E-mail').fill('pessoa@example.test');
 	await address.getByLabel('Nome', { exact: true }).fill('Pessoa');
