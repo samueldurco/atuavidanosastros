@@ -67,9 +67,21 @@
 		},
 		{
 			id: 'loja',
-			label: 'Loja dos Signos',
+			label: 'Loja',
 			href: '/loja',
 			links: [
+				{
+					href: '/loja',
+					label: 'Loja dos Signos',
+					description: 'Roupas, objetos e artes dos signos',
+					iconHref: `${navigationIcons}#colecoes`
+				},
+				{
+					href: '/loja/livraria',
+					label: 'Livraria ATVNA',
+					description: 'Livros e clube Céu de Papel em preparação',
+					iconHref: `${navigationIcons}#leituras-avulsas`
+				},
 				...shopDepartments.map(({ id, href, label, description }) => ({
 					href,
 					label,

@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { setupProductDatabase, file } from './helpers/product-database.mjs';
+import { setupBookshopTransport, bookshopAnonKey, bookshopOwner } from './helpers/bookshop-e2e-transport.mjs';
 
 // Test transport only: a loopback PostgREST-shaped adapter around the actual migration.
 // It is never imported by the application or deployed. Hosted JWT/PostgREST behavior
@@ -17,12 +18,14 @@ export async function startLedgerRpc(port = 0) {
   const db = await setupProductDatabase({ privateOnly: true });
   await db.exec(await file('supabase/migrations/20261028171546_free_tool_quota_ledger.sql'));
   await db.exec(await file('supabase/migrations/20261117110656_magazine_bulletin_signups.sql'));
+  const bookshopTransport = await setupBookshopTransport(db, serviceKey);
   const server = createServer(async (request, response) => {
     const send = (status, value) => {
       response.writeHead(status, { 'content-type': 'application/json', 'cache-control': 'no-store' });
       response.end(JSON.stringify(value));
     };
     if (request.url === '/health' && request.method === 'GET') return send(200, { testOnly: true });
+    if (await bookshopTransport(request, send)) return;
     const name = request.url?.match(/^\/rest\/v1\/rpc\/([a-z_]+)$/)?.[1];
     const bulletin = request.url === '/rest/v1/magazine_bulletin_signups?on_conflict=email';
     if (request.method !== 'POST' || (!bulletin && !Object.hasOwn(procedures, name ?? ''))) return send(404, { message: 'not_found' });
@@ -80,7 +83,7 @@ async function main() {
     return;
   }
   const receiptKey = 'atv-e2e-only-free-tool-receipt-key-20261013';
-  const bindings = { FREE_TOOL_RECEIPT_KEY: receiptKey, PUBLIC_SUPABASE_URL: ledger.url, SUPABASE_SERVICE_ROLE_KEY: serviceKey };
+  const bindings = { FREE_TOOL_RECEIPT_KEY: receiptKey, PUBLIC_SUPABASE_URL: ledger.url, PUBLIC_SUPABASE_ANON_KEY: bookshopAnonKey, SUPABASE_SERVICE_ROLE_KEY: serviceKey, LIVRARIA_PREVIEW_OWNER_IDS: bookshopOwner };
   const cwd = fileURLToPath(new URL('../apps/web/', import.meta.url));
   let child;
   const stop = async () => { child?.kill(); await ledger.close(); process.exit(0); };
@@ -94,8 +97,11 @@ async function main() {
     child.once('error', reject); child.once('exit', code => code === 0 ? resolve() : reject(new Error(`test_server_exit_${code}`)));
   });
   try {
-    if (!process.argv.includes('--skip-build')) await run(['build']);
-    await run(['exec', 'wrangler', 'pages', 'dev', '.svelte-kit/cloudflare', '--port', String(port), ...Object.entries(bindings).flatMap(([key, value]) => ['--binding', `${key}=${value}`])]);
+    if (process.argv.includes('--vite')) await run(['exec', 'vite', 'dev', '--host', '127.0.0.1', '--port', String(port)]);
+    else {
+      if (!process.argv.includes('--skip-build')) await run(['build']);
+      await run(['exec', 'wrangler', 'pages', 'dev', '.svelte-kit/cloudflare', '--port', String(port), ...Object.entries(bindings).flatMap(([key, value]) => ['--binding', `${key}=${value}`])]);
+    }
   } finally { await ledger.close(); }
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

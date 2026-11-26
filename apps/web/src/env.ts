@@ -35,6 +35,7 @@ export const variables = defineEnvVars({
 	SHOPIFY_STOREFRONT_API_VERSION: { schema: optional },
 	SHOPIFY_STOREFRONT_PRIVATE_TOKEN: { schema: optional },
 	ADMIN_EMAIL_ALLOWLIST: { schema: optional },
+	LIVRARIA_PREVIEW_OWNER_IDS: { schema: optional },
 	TIKTOK_CLIENT_KEY: { schema: optional },
 	TIKTOK_CLIENT_SECRET: { schema: optional },
 	TIKTOK_REDIRECT_URI: { schema: optional },

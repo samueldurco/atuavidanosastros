@@ -7,6 +7,8 @@ declare global {
 		ATV_TRIAL_RUNTIME_KEY?: string;
 		PUBLIC_SUPABASE_PUBLISHABLE_KEY?: string;
 		PUBLIC_SUPABASE_ANON_KEY?: string;
+		LIVRARIA_PREVIEW_OWNER_IDS?: string;
+		ADMIN_EMAIL_ALLOWLIST?: string;
 	}
 	namespace App {
 		interface Platform {
