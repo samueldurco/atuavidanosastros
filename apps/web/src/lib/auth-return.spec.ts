@@ -40,6 +40,39 @@ describe('continuity through authentication', () => {
 		);
 		expect(authReturnPath('/conta/nascimento')).toBe('/conta/nascimento');
 	});
+	it('returns to the protected bookshop page after login and the OAuth callback', () => {
+		for (const destination of [
+			'/loja/livraria/previa',
+			'/loja/livraria/previa/ceu-de-papel',
+			'/loja/livraria/previa/minha-area',
+			'/loja/livraria/previa/livros/livro-de-teste-01'
+		]) {
+			const login = new URL(loginHref(destination), 'https://example.test');
+			const callback = new URL(authCallbackHref(login.origin, login.searchParams.get('next')));
+			expect(callback.pathname).toBe('/auth/callback');
+			expect(authReturnPath(callback.searchParams.get('next'))).toBe(destination);
+		}
+	});
+	it('rejects unknown bookshop routes and unsafe book paths through authentication', () => {
+		for (const destination of [
+			'/loja/livraria/previa/admin',
+			'/loja/livraria/previa/minha-area/pedidos',
+			'/loja/livraria/previa/livros/',
+			'/loja/livraria/previa/livros/-teste',
+			'/loja/livraria/previa/livros/teste--01',
+			'/loja/livraria/previa/livros/Livro',
+			'/loja/livraria/previa/livros/../minha-area',
+			'/loja/livraria/previa/livros/%2e%2e',
+			'/loja/livraria/previa/livros/teste/capa.svg',
+			'/loja/livraria/previa/livros/teste?email=private',
+			'/loja/livraria/previa/livros/teste#pedido',
+			`/loja/livraria/previa/livros/${'a'.repeat(121)}`
+		]) {
+			const login = new URL(loginHref(destination), 'https://example.test');
+			const callback = new URL(authCallbackHref(login.origin, login.searchParams.get('next')));
+			expect(callback.searchParams.get('next')).toBe('/dashboard');
+		}
+	});
 	it('rejects external, encoded, private and authentication-loop destinations', () => {
 		for (const value of [
 			null,

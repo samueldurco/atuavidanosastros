@@ -15,7 +15,9 @@ for (const width of [320, 390, 768, 1440]) {
 			'Livros para conhecer o céu. E a si.',
 			{ useInnerText: true }
 		);
-		await expect(page.getByText('Em preparação', { exact: true })).toBeVisible();
+		await expect(
+			page.locator('.bookshop-hero').getByText('Em preparação', { exact: true })
+		).toBeVisible();
 		await expect(page.locator('.theme-card')).toHaveCount(3);
 		await expect(
 			page.locator('main form, main [href*="checkout"], main [href*="previa"]')

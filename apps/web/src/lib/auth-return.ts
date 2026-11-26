@@ -12,10 +12,16 @@ export function authReturnPath(value: string | null | undefined): string {
 			'/bussola-de-carreira',
 			'/testar-produtos',
 			'/testar-lancamentos',
-			'/testar-produtos/atv-plus'
+			'/testar-produtos/atv-plus',
+			'/loja/livraria/previa',
+			'/loja/livraria/previa/ceu-de-papel',
+			'/loja/livraria/previa/minha-area'
 		].includes(value)
 	)
 		return value;
+	// Route syntax only: the protected server route validates the private catalog.
+	const book = value.match(/^\/loja\/livraria\/previa\/livros\/([a-z0-9]+(?:-[a-z0-9]+)*)$/)?.[1];
+	if (book && book.length <= 120) return value;
 	if (
 		savedFreeToolIds.some((id) => value === `/ferramentas/${id}`) ||
 		value === '/ferramentas/horoscopo'
