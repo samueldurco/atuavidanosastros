@@ -1,4 +1,5 @@
 <script lang="ts">
+	import CheckoutAssurance from '$lib/components/CheckoutAssurance.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
 	import ProductDeliveryPreview from '$lib/components/ProductDeliveryPreview.svelte';
 	import ProductDeliveryFormats from '$lib/components/ProductDeliveryFormats.svelte';
@@ -256,6 +257,7 @@
 						</p>
 					</div>
 				{/if}
+				<CheckoutAssurance provider="hotmart" pending />
 				<FreeReadingDownload productId={data.product.id} />
 				{#if freeEntry && !page.url.searchParams.has('ferramenta')}<div class="free-entry">
 						<h3>Comece gratuitamente</h3>

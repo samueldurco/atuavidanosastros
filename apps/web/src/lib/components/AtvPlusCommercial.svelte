@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import CheckoutAssurance from './CheckoutAssurance.svelte';
 	import {
 		atvPlusCommercialPlans,
 		atvPlusCommercialOffers,
@@ -193,6 +194,10 @@
 				</article>
 			{/each}
 		</div>
+		<CheckoutAssurance
+			provider="hotmart"
+			pending={!membershipState.offers.some((offer) => offer.commercial_enabled)}
+		/>
 		<p class="small plan-conditions">
 			Os três planos têm opções de 3, 6 ou 12 meses. Os mapas natais de presente são concedidos uma
 			vez por pessoa e tipo de mapa, inclusive nas renovações e mudanças de plano. As condições e o

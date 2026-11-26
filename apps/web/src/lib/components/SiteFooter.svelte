@@ -3,6 +3,7 @@
 	import { publicChannels } from '$lib/data/public-channels';
 	import BrandLogo from './BrandLogo.svelte';
 	import SocialIcon from './SocialIcon.svelte';
+	import CommerceTrust from './CommerceTrust.svelte';
 </script>
 
 <footer class="site-footer" data-stitch="SH-01">
@@ -25,6 +26,7 @@
 			<a href="/biblioteca">Minhas leituras</a>
 		</nav>
 	</div>
+	<div class="container"><CommerceTrust /></div>
 	<div class="container footer-details">
 		<nav class="footer-legal" aria-label="Termos e políticas">
 			<a href="/termos">Termos de uso</a>
