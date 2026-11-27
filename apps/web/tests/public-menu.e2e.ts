@@ -32,7 +32,7 @@ for (const width of [320, 390, 820, 1440, 1920]) {
 			'Produtos digitais⌄',
 			'Explorar⌄',
 			'Revista⌄',
-			'Loja dos Signos⌄'
+			'Loja⌄'
 		]);
 		await expect(nav.locator('.account-link')).toHaveAttribute('href', '/entrar');
 		const tools = nav.locator('[aria-controls="nav-ferramentas"]');

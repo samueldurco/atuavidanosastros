@@ -10,6 +10,7 @@
 	import LaunchHighlights from '$lib/components/home/LaunchHighlights.svelte';
 	import ReadingSample from '$lib/components/home/ReadingSample.svelte';
 	import ShopHomeShowcase from '$lib/components/home/ShopHomeShowcase.svelte';
+	import BookshopAnnouncement from '$lib/components/bookshop/BookshopAnnouncement.svelte';
 	import '$lib/styles/home-approved.css';
 	let { data } = $props();
 	let toolActive = $state(false);
@@ -190,6 +191,7 @@
 				<p>Artes dos signos em roupas, objetos e pequenos companheiros do cotidiano.</p>
 			</header>
 			<ShopHomeShowcase {toolActive} />
+			<BookshopAnnouncement />
 		</div>
 	</section>
 </div>

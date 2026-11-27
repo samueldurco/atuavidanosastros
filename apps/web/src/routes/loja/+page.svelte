@@ -2,6 +2,7 @@
 	import { page } from '$app/state';
 	import ShopCatalog from '$lib/components/ShopCatalog.svelte';
 	import ShopPolicyLinks from '$lib/components/ShopPolicyLinks.svelte';
+	import BookshopAnnouncement from '$lib/components/bookshop/BookshopAnnouncement.svelte';
 	import { getShopDepartment } from '$lib/data/shop-departments';
 	import type { PageProps } from './$types';
 	let { data }: PageProps = $props();
@@ -31,6 +32,7 @@
 		>.
 	</p>
 	<ShopPolicyLinks />
+	<BookshopAnnouncement />
 	<aside class="shop-reading" aria-labelledby="shop-reading-title">
 		<div>
 			<p class="eyebrow">Da arte aos símbolos</p>
